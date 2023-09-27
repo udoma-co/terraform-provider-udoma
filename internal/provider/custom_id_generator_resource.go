@@ -1,0 +1,287 @@
+package provider
+
+import (
+	"context"
+	"fmt"
+	"time"
+
+	"github.com/hashicorp/terraform-plugin-framework/path"
+	"github.com/hashicorp/terraform-plugin-framework/resource"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/types"
+	api "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
+	"gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/internal/client"
+)
+
+// Ensure provider defined types fully satisfy framework interfaces.
+var (
+	_ resource.Resource                = &customIDGenerator{}
+	_ resource.ResourceWithConfigure   = &customIDGenerator{}
+	_ resource.ResourceWithImportState = &customIDGenerator{}
+)
+
+func NewCustomIDGenerator() resource.Resource {
+	return &customIDGenerator{}
+}
+
+// customIDGenerator defines the resource implementation.
+type customIDGenerator struct {
+	client *client.UdomaClient
+}
+
+// customIDGeneratorModel describes the resource data model.
+type customIDGeneratorModel struct {
+	ID               types.String `tfsdk:"id"`
+	LastUpdated      types.String `tfsdk:"last_updated"`
+	CreatedAt        types.Int64  `tfsdk:"created_at"`
+	UpdatedAt        types.Int64  `tfsdk:"updated_at"`
+	Name             types.String `tfsdk:"name"`
+	GenerationScript types.String `tfsdk:"generation_script"`
+	LastGeneratedID  types.String `tfsdk:"last_generated_id"`
+}
+
+func (r *customIDGenerator) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_custom_id_generator"
+}
+
+func (r *customIDGenerator) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+	resp.Schema = schema.Schema{
+
+		MarkdownDescription: "Resource represents a custom ID generator",
+
+		Attributes: map[string]schema.Attribute{
+			"id": schema.StringAttribute{
+				Computed:    true,
+				Description: "The unique identifier for the custom ID generator",
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.UseStateForUnknown(),
+				},
+			},
+			"last_updated": schema.StringAttribute{
+				Computed: true,
+			},
+			"created_at": schema.Int64Attribute{
+				Computed:    true,
+				Description: "The date and time the custom ID generatorwas created",
+			},
+			"updated_at": schema.Int64Attribute{
+				Computed:    true,
+				Description: "The date and time the custom ID generatorwas last modified",
+			},
+			"name": schema.StringAttribute{
+				Required:    true,
+				Description: "The name of the custom ID generator",
+			},
+			"generation_script": schema.StringAttribute{
+				Required:    true,
+				Description: "The JS script used to generate a new unique ID",
+			},
+			"last_generated_id": schema.StringAttribute{
+				Optional:    true,
+				Description: "The last generated ID",
+			},
+		},
+	}
+}
+
+func (r *customIDGenerator) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
+	// Prevent panic if the provider has not been configured.
+	if req.ProviderData == nil {
+		return
+	}
+
+	cl, ok := req.ProviderData.(*client.UdomaClient)
+
+	if !ok {
+		resp.Diagnostics.AddError(
+			"Unexpected Resource Configure Type",
+			fmt.Sprintf("Expected *client.UdomaClient, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+		)
+
+		return
+	}
+
+	r.client = cl
+}
+
+func (r *customIDGenerator) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+
+	// Retrieve values from plan
+	var plan customIDGeneratorModel
+	diags := req.Plan.Get(ctx, &plan)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	createReq, err := customIDGeneratorFromModel(&plan)
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"Error Creating Custom ID Generator",
+			"Could not create API request, unexpected error: "+err.Error(),
+		)
+		return
+	}
+
+	generator, _, err := r.client.GetApi().CreateCustomIDGenerator(ctx).CreateOrUpdateCustomIDGeneratorRequest(createReq).Execute()
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"Error Creating Custom ID Generator",
+			"Could not create entity in Udoma, unexpected error: "+getApiErrorMessage(err),
+		)
+		return
+	}
+
+	// update the tf struct with the new values
+	if err := customIDGeneratorToModel(&plan, generator); err != nil {
+		resp.Diagnostics.AddError(
+			"Error Creating Custom ID Generator",
+			"Could not process API response, unexpected error: "+err.Error(),
+		)
+		return
+	}
+
+	plan.LastUpdated = types.StringValue(time.Now().Format(time.RFC850))
+
+	// Set state to fully populated data
+	diags = resp.State.Set(ctx, plan)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+}
+
+func (r *customIDGenerator) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+
+	// Retrieve values from state
+	var state customIDGeneratorModel
+	diags := req.State.Get(ctx, &state)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	generator, _, err := r.client.GetApi().GetCustomIDGenerator(ctx, state.ID.ValueString()).Execute()
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"Error Reading Custom ID Generator",
+			"Could not read entity from Udoma, unexpected error: "+getApiErrorMessage(err),
+		)
+		return
+	}
+
+	// update the tf struct with the new values
+	if err := customIDGeneratorToModel(&state, generator); err != nil {
+		resp.Diagnostics.AddError(
+			"Error Reading Custom ID Generator",
+			"Could not create entity in Udoma, unexpected error: "+err.Error(),
+		)
+		return
+	}
+
+	// Set refreshed state
+	diags = resp.State.Set(ctx, &state)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+}
+
+func (r *customIDGenerator) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+
+	// Retrieve values from plan
+	var plan customIDGeneratorModel
+	diags := req.Plan.Get(ctx, &plan)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	createReq, _ := customIDGeneratorFromModel(&plan)
+
+	id := plan.ID.ValueString()
+
+	newEndpoint, _, err := r.client.GetApi().UpdateCustomIDGenerator(ctx, id).CreateOrUpdateCustomIDGeneratorRequest(createReq).Execute()
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"Error Updating Custom ID Generator",
+			"Could not update entity in Udoma, unexpected error: "+getApiErrorMessage(err),
+		)
+		return
+	}
+
+	// update the tf struct with the new values
+	if err := customIDGeneratorToModel(&plan, newEndpoint); err != nil {
+		resp.Diagnostics.AddError(
+			"Error Updating Custom ID Generator",
+			"Could not process API response, unexpected error: "+err.Error(),
+		)
+		return
+	}
+
+	plan.LastUpdated = types.StringValue(time.Now().Format(time.RFC850))
+
+	// Set state to fully populated data
+	diags = resp.State.Set(ctx, plan)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+}
+
+func (r *customIDGenerator) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+
+	// Retrieve values from state
+	var state customIDGeneratorModel
+	diags := req.State.Get(ctx, &state)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	_, err := r.client.GetApi().DeleteCustomIDGenerator(ctx, state.ID.ValueString()).Execute()
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"Error Deleting Custom ID Generator",
+			"Could not delete entity in Udoma, unexpected error: "+getApiErrorMessage(err),
+		)
+		return
+	}
+}
+
+func (r *customIDGenerator) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+	// Retrieve import ID and save to id attribute
+	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+}
+
+func customIDGeneratorToModel(model *customIDGeneratorModel, generator *api.CustomIDGenerator) error {
+
+	if generator == nil {
+		return fmt.Errorf("custom ID generator is nil")
+	}
+
+	model.ID = types.StringValue(sdp(generator.Id))
+	model.CreatedAt = types.Int64Value(idp(generator.CreatedAt))
+	model.UpdatedAt = types.Int64Value(idp(generator.UpdatedAt))
+	model.Name = types.StringValue(sdp(generator.Name))
+	model.GenerationScript = types.StringValue(sdp(generator.GenerationScript))
+	if !model.LastGeneratedID.IsUnknown() && !model.LastGeneratedID.IsNull() {
+		// don't set the value if it was not provided upfront
+		model.LastGeneratedID = types.StringValue(sdp(generator.LastGeneratedId))
+	}
+
+	return nil
+}
+
+func customIDGeneratorFromModel(model *customIDGeneratorModel) (api.CreateOrUpdateCustomIDGeneratorRequest, error) {
+
+	script := api.CreateOrUpdateCustomIDGeneratorRequest{
+		Name:             model.Name.ValueStringPointer(),
+		GenerationScript: model.GenerationScript.ValueStringPointer(),
+		LastGeneratedId:  model.LastGeneratedID.ValueStringPointer(),
+	}
+
+	return script, nil
+}
