@@ -16,19 +16,21 @@ import (
 
 // CaseParty CaseParty indicates that the referenced account has access to the case.
 type CaseParty struct {
-	// the ID of the account that was granted access
-	AccountRef int64             `json:"account_ref"`
-	Type       CasePartyTypeEnum `json:"type"`
+	Role *UserTypeEnum `json:"role,omitempty"`
+	// The type of the reference. Can be either \"account\" or \"external_user\". If not set, it will be assumed to be \"account\"
+	RefType *string `json:"ref_type,omitempty"`
+	// the ID of the referenced entity (either string or int64)
+	Ref *string `json:"ref,omitempty"`
+	// The name of the party, derived from the referenced entity
+	Name *string `json:"name,omitempty"`
 }
 
 // NewCaseParty instantiates a new CaseParty object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCaseParty(accountRef int64, type_ CasePartyTypeEnum) *CaseParty {
+func NewCaseParty() *CaseParty {
 	this := CaseParty{}
-	this.AccountRef = accountRef
-	this.Type = type_
 	return &this
 }
 
@@ -40,61 +42,147 @@ func NewCasePartyWithDefaults() *CaseParty {
 	return &this
 }
 
-// GetAccountRef returns the AccountRef field value
-func (o *CaseParty) GetAccountRef() int64 {
-	if o == nil {
-		var ret int64
+// GetRole returns the Role field value if set, zero value otherwise.
+func (o *CaseParty) GetRole() UserTypeEnum {
+	if o == nil || o.Role == nil {
+		var ret UserTypeEnum
 		return ret
 	}
-
-	return o.AccountRef
+	return *o.Role
 }
 
-// GetAccountRefOk returns a tuple with the AccountRef field value
+// GetRoleOk returns a tuple with the Role field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CaseParty) GetAccountRefOk() (*int64, bool) {
-	if o == nil {
+func (o *CaseParty) GetRoleOk() (*UserTypeEnum, bool) {
+	if o == nil || o.Role == nil {
 		return nil, false
 	}
-	return &o.AccountRef, true
+	return o.Role, true
 }
 
-// SetAccountRef sets field value
-func (o *CaseParty) SetAccountRef(v int64) {
-	o.AccountRef = v
+// HasRole returns a boolean if a field has been set.
+func (o *CaseParty) HasRole() bool {
+	if o != nil && o.Role != nil {
+		return true
+	}
+
+	return false
 }
 
-// GetType returns the Type field value
-func (o *CaseParty) GetType() CasePartyTypeEnum {
-	if o == nil {
-		var ret CasePartyTypeEnum
+// SetRole gets a reference to the given UserTypeEnum and assigns it to the Role field.
+func (o *CaseParty) SetRole(v UserTypeEnum) {
+	o.Role = &v
+}
+
+// GetRefType returns the RefType field value if set, zero value otherwise.
+func (o *CaseParty) GetRefType() string {
+	if o == nil || o.RefType == nil {
+		var ret string
 		return ret
 	}
-
-	return o.Type
+	return *o.RefType
 }
 
-// GetTypeOk returns a tuple with the Type field value
+// GetRefTypeOk returns a tuple with the RefType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CaseParty) GetTypeOk() (*CasePartyTypeEnum, bool) {
-	if o == nil {
+func (o *CaseParty) GetRefTypeOk() (*string, bool) {
+	if o == nil || o.RefType == nil {
 		return nil, false
 	}
-	return &o.Type, true
+	return o.RefType, true
 }
 
-// SetType sets field value
-func (o *CaseParty) SetType(v CasePartyTypeEnum) {
-	o.Type = v
+// HasRefType returns a boolean if a field has been set.
+func (o *CaseParty) HasRefType() bool {
+	if o != nil && o.RefType != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetRefType gets a reference to the given string and assigns it to the RefType field.
+func (o *CaseParty) SetRefType(v string) {
+	o.RefType = &v
+}
+
+// GetRef returns the Ref field value if set, zero value otherwise.
+func (o *CaseParty) GetRef() string {
+	if o == nil || o.Ref == nil {
+		var ret string
+		return ret
+	}
+	return *o.Ref
+}
+
+// GetRefOk returns a tuple with the Ref field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CaseParty) GetRefOk() (*string, bool) {
+	if o == nil || o.Ref == nil {
+		return nil, false
+	}
+	return o.Ref, true
+}
+
+// HasRef returns a boolean if a field has been set.
+func (o *CaseParty) HasRef() bool {
+	if o != nil && o.Ref != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetRef gets a reference to the given string and assigns it to the Ref field.
+func (o *CaseParty) SetRef(v string) {
+	o.Ref = &v
+}
+
+// GetName returns the Name field value if set, zero value otherwise.
+func (o *CaseParty) GetName() string {
+	if o == nil || o.Name == nil {
+		var ret string
+		return ret
+	}
+	return *o.Name
+}
+
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CaseParty) GetNameOk() (*string, bool) {
+	if o == nil || o.Name == nil {
+		return nil, false
+	}
+	return o.Name, true
+}
+
+// HasName returns a boolean if a field has been set.
+func (o *CaseParty) HasName() bool {
+	if o != nil && o.Name != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
+func (o *CaseParty) SetName(v string) {
+	o.Name = &v
 }
 
 func (o CaseParty) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["account_ref"] = o.AccountRef
+	if o.Role != nil {
+		toSerialize["role"] = o.Role
 	}
-	if true {
-		toSerialize["type"] = o.Type
+	if o.RefType != nil {
+		toSerialize["ref_type"] = o.RefType
+	}
+	if o.Ref != nil {
+		toSerialize["ref"] = o.Ref
+	}
+	if o.Name != nil {
+		toSerialize["name"] = o.Name
 	}
 	return json.Marshal(toSerialize)
 }

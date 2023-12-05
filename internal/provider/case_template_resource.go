@@ -46,6 +46,7 @@ type caseTemplateModel struct {
 	InfoText       types.Map          `tfsdk:"info_text"`
 	Icon           types.String       `tfsdk:"icon"`
 	CustomInputs   tf.JsonObjectValue `tfsdk:"custom_inputs"`
+	Config         tf.JsonObjectValue `tfsdk:"config"`
 }
 
 func (r *caseTemplate) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -107,6 +108,12 @@ func (r *caseTemplate) Schema(ctx context.Context, req resource.SchemaRequest, r
 				Required:    true,
 				CustomType:  tf.JsonObjectType{},
 				Description: "The custom inputs to be displayed on the reporting page (as serialized JSON)",
+			},
+			"config": schema.StringAttribute{
+				Optional:   true,
+				CustomType: tf.JsonObjectType{},
+				Description: "Defines custom behaviour of a case, based on the case template that was " +
+					"used to create it (as serialized JSON)",
 			},
 		},
 	}
@@ -350,12 +357,30 @@ func (model *caseTemplateModel) toAPIRequest() (api.CreateOrUpdateCaseTemplateRe
 
 	template.Icon = model.Icon.ValueStringPointer()
 
-	if model.CustomInputs.IsNull() || model.CustomInputs.IsUnknown() {
-		return template, nil
+	if !model.CustomInputs.IsNull() && !model.CustomInputs.IsUnknown() {
+		if diag := model.CustomInputs.Unmarshal(&template.CustomInputs); diag.HasError() {
+			return template, fmt.Errorf("failed to unmarshal custom inputs: %v", diag)
+		}
+
+		// update model
+		customInputs, err := json.Marshal(template.CustomInputs)
+		if err != nil {
+			return template, fmt.Errorf("failed to marshal custom inputs: %w", err)
+		}
+		model.CustomInputs = tf.NewJsonObjectValue(string(customInputs))
 	}
 
-	if diag := model.CustomInputs.Unmarshal(&template.CustomInputs); diag.HasError() {
-		return template, fmt.Errorf("failed to unmarshal custom inputs: %v", diag)
+	if !model.Config.IsNull() && !model.Config.IsUnknown() {
+		if diag := model.Config.Unmarshal(&template.Config); diag.HasError() {
+			return template, fmt.Errorf("failed to unmarshal config: %v", diag)
+		}
+
+		// update model
+		config, err := json.Marshal(template.Config)
+		if err != nil {
+			return template, fmt.Errorf("failed to marshal config: %w", err)
+		}
+		model.Config = tf.NewJsonObjectValue(string(config))
 	}
 
 	return template, nil

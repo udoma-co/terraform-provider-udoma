@@ -17,8 +17,9 @@ import (
 // UserReference Contains information about a user referenced in other entities
 type UserReference struct {
 	// The ID of the user, can be undefined, if user is not registered, or was already deleted
-	UserId      *string      `json:"user_id,omitempty"`
-	ContactData *ContactData `json:"contact_data,omitempty"`
+	UserId      *string       `json:"user_id,omitempty"`
+	UserRole    *UserTypeEnum `json:"user_role,omitempty"`
+	ContactData *ContactData  `json:"contact_data,omitempty"`
 }
 
 // NewUserReference instantiates a new UserReference object
@@ -70,6 +71,38 @@ func (o *UserReference) SetUserId(v string) {
 	o.UserId = &v
 }
 
+// GetUserRole returns the UserRole field value if set, zero value otherwise.
+func (o *UserReference) GetUserRole() UserTypeEnum {
+	if o == nil || o.UserRole == nil {
+		var ret UserTypeEnum
+		return ret
+	}
+	return *o.UserRole
+}
+
+// GetUserRoleOk returns a tuple with the UserRole field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UserReference) GetUserRoleOk() (*UserTypeEnum, bool) {
+	if o == nil || o.UserRole == nil {
+		return nil, false
+	}
+	return o.UserRole, true
+}
+
+// HasUserRole returns a boolean if a field has been set.
+func (o *UserReference) HasUserRole() bool {
+	if o != nil && o.UserRole != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetUserRole gets a reference to the given UserTypeEnum and assigns it to the UserRole field.
+func (o *UserReference) SetUserRole(v UserTypeEnum) {
+	o.UserRole = &v
+}
+
 // GetContactData returns the ContactData field value if set, zero value otherwise.
 func (o *UserReference) GetContactData() ContactData {
 	if o == nil || o.ContactData == nil {
@@ -106,6 +139,9 @@ func (o UserReference) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.UserId != nil {
 		toSerialize["user_id"] = o.UserId
+	}
+	if o.UserRole != nil {
+		toSerialize["user_role"] = o.UserRole
 	}
 	if o.ContactData != nil {
 		toSerialize["contact_data"] = o.ContactData

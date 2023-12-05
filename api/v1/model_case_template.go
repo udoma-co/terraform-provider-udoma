@@ -35,6 +35,7 @@ type CaseTemplate struct {
 	// The font-awesome icon to use for this template
 	Icon         *string     `json:"icon,omitempty"`
 	CustomInputs *CustomForm `json:"custom_inputs,omitempty"`
+	Config       *CaseConfig `json:"config,omitempty"`
 }
 
 // NewCaseTemplate instantiates a new CaseTemplate object
@@ -374,6 +375,38 @@ func (o *CaseTemplate) SetCustomInputs(v CustomForm) {
 	o.CustomInputs = &v
 }
 
+// GetConfig returns the Config field value if set, zero value otherwise.
+func (o *CaseTemplate) GetConfig() CaseConfig {
+	if o == nil || o.Config == nil {
+		var ret CaseConfig
+		return ret
+	}
+	return *o.Config
+}
+
+// GetConfigOk returns a tuple with the Config field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CaseTemplate) GetConfigOk() (*CaseConfig, bool) {
+	if o == nil || o.Config == nil {
+		return nil, false
+	}
+	return o.Config, true
+}
+
+// HasConfig returns a boolean if a field has been set.
+func (o *CaseTemplate) HasConfig() bool {
+	if o != nil && o.Config != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetConfig gets a reference to the given CaseConfig and assigns it to the Config field.
+func (o *CaseTemplate) SetConfig(v CaseConfig) {
+	o.Config = &v
+}
+
 func (o CaseTemplate) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Id != nil {
@@ -405,6 +438,9 @@ func (o CaseTemplate) MarshalJSON() ([]byte, error) {
 	}
 	if o.CustomInputs != nil {
 		toSerialize["custom_inputs"] = o.CustomInputs
+	}
+	if o.Config != nil {
+		toSerialize["config"] = o.Config
 	}
 	return json.Marshal(toSerialize)
 }

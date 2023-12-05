@@ -33,7 +33,9 @@ type Case struct {
 	// List of all status changes. Latest one is the current one
 	StatusHistory []CaseStatus  `json:"status_history,omitempty"`
 	Comments      []CaseComment `json:"comments,omitempty"`
-	Assignee      *string       `json:"assignee,omitempty"`
+	// List of feedback that was provided by the parties when changing the status of the case
+	Feedback []CaseFeedbackEntry `json:"feedback,omitempty"`
+	Assignee *string             `json:"assignee,omitempty"`
 	// Input provided by the user when raising the case as a key-value map
 	Data map[string]interface{} `json:"data,omitempty"`
 }
@@ -439,6 +441,38 @@ func (o *Case) SetComments(v []CaseComment) {
 	o.Comments = v
 }
 
+// GetFeedback returns the Feedback field value if set, zero value otherwise.
+func (o *Case) GetFeedback() []CaseFeedbackEntry {
+	if o == nil || o.Feedback == nil {
+		var ret []CaseFeedbackEntry
+		return ret
+	}
+	return o.Feedback
+}
+
+// GetFeedbackOk returns a tuple with the Feedback field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Case) GetFeedbackOk() ([]CaseFeedbackEntry, bool) {
+	if o == nil || o.Feedback == nil {
+		return nil, false
+	}
+	return o.Feedback, true
+}
+
+// HasFeedback returns a boolean if a field has been set.
+func (o *Case) HasFeedback() bool {
+	if o != nil && o.Feedback != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetFeedback gets a reference to the given []CaseFeedbackEntry and assigns it to the Feedback field.
+func (o *Case) SetFeedback(v []CaseFeedbackEntry) {
+	o.Feedback = v
+}
+
 // GetAssignee returns the Assignee field value if set, zero value otherwise.
 func (o *Case) GetAssignee() string {
 	if o == nil || o.Assignee == nil {
@@ -540,6 +574,9 @@ func (o Case) MarshalJSON() ([]byte, error) {
 	}
 	if o.Comments != nil {
 		toSerialize["comments"] = o.Comments
+	}
+	if o.Feedback != nil {
+		toSerialize["feedback"] = o.Feedback
 	}
 	if o.Assignee != nil {
 		toSerialize["assignee"] = o.Assignee

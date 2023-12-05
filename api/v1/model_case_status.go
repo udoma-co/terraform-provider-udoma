@@ -23,8 +23,6 @@ type CaseStatus struct {
 	Action    *CaseActionEnum `json:"action,omitempty"`
 	Status    CaseStatusEnum  `json:"status"`
 	Assignee  *CaseAssignee   `json:"assignee,omitempty"`
-	// ID of a comment that was provided with the status change
-	CommentRef *string `json:"comment_ref,omitempty"`
 }
 
 // NewCaseStatus instantiates a new CaseStatus object
@@ -215,38 +213,6 @@ func (o *CaseStatus) SetAssignee(v CaseAssignee) {
 	o.Assignee = &v
 }
 
-// GetCommentRef returns the CommentRef field value if set, zero value otherwise.
-func (o *CaseStatus) GetCommentRef() string {
-	if o == nil || o.CommentRef == nil {
-		var ret string
-		return ret
-	}
-	return *o.CommentRef
-}
-
-// GetCommentRefOk returns a tuple with the CommentRef field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CaseStatus) GetCommentRefOk() (*string, bool) {
-	if o == nil || o.CommentRef == nil {
-		return nil, false
-	}
-	return o.CommentRef, true
-}
-
-// HasCommentRef returns a boolean if a field has been set.
-func (o *CaseStatus) HasCommentRef() bool {
-	if o != nil && o.CommentRef != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetCommentRef gets a reference to the given string and assigns it to the CommentRef field.
-func (o *CaseStatus) SetCommentRef(v string) {
-	o.CommentRef = &v
-}
-
 func (o CaseStatus) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if true {
@@ -266,9 +232,6 @@ func (o CaseStatus) MarshalJSON() ([]byte, error) {
 	}
 	if o.Assignee != nil {
 		toSerialize["assignee"] = o.Assignee
-	}
-	if o.CommentRef != nil {
-		toSerialize["comment_ref"] = o.CommentRef
 	}
 	return json.Marshal(toSerialize)
 }

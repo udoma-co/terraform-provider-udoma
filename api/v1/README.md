@@ -81,6 +81,7 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**AddCaseComment**](docs/DefaultApi.md#addcasecomment) | **Post** /case/{caseId}/comment | Add new case comment
 *DefaultApi* | [**ArchiveCase**](docs/DefaultApi.md#archivecase) | **Post** /case/{caseId}/archive | Mark the case as archived
 *DefaultApi* | [**ArchiveDocumentGeneration**](docs/DefaultApi.md#archivedocumentgeneration) | **Post** /document-generation/documents/{docId}/archive | Move the document generation to the archive
+*DefaultApi* | [**AssignCase**](docs/DefaultApi.md#assigncase) | **Post** /case/{caseId}/assign | Assign case to a service provider
 *DefaultApi* | [**CancelSignaturesForDocument**](docs/DefaultApi.md#cancelsignaturesfordocument) | **Delete** /document-generation/documents/{docId}/esignature | Cancel a signature request for a document
 *DefaultApi* | [**CreateBankAccount**](docs/DefaultApi.md#createbankaccount) | **Post** /bank-account | Create new bank account
 *DefaultApi* | [**CreateCase**](docs/DefaultApi.md#createcase) | **Post** /case | Create a new case
@@ -112,7 +113,7 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**DeleteAttachment**](docs/DefaultApi.md#deleteattachment) | **Delete** /attachment/{attachmentId} | Delete the file upload with the given ID
 *DefaultApi* | [**DeleteBankAccount**](docs/DefaultApi.md#deletebankaccount) | **Delete** /bank-account/{accountId} | Delete an already existing bank account
 *DefaultApi* | [**DeleteCase**](docs/DefaultApi.md#deletecase) | **Delete** /case/{caseId} | Delete case
-*DefaultApi* | [**DeleteCaseComment**](docs/DefaultApi.md#deletecasecomment) | **Delete** /case/{caseId}/comment/{commentId} | Delete a comment
+*DefaultApi* | [**DeleteCaseComment**](docs/DefaultApi.md#deletecasecomment) | **Delete** /case/{caseId}/comment/{commentId} | Mark a case comment as deleted
 *DefaultApi* | [**DeleteCaseReportingEndpoint**](docs/DefaultApi.md#deletecasereportingendpoint) | **Delete** /cases/endpoints/{endpointId} | Delete the case reporting endpoint by ID
 *DefaultApi* | [**DeleteCaseTemplate**](docs/DefaultApi.md#deletecasetemplate) | **Delete** /cases/template/{templateId} | Delete a case template
 *DefaultApi* | [**DeleteConnectorConfiguration**](docs/DefaultApi.md#deleteconnectorconfiguration) | **Delete** /connector/{connectorID}/config | Delete the connector configuration
@@ -147,7 +148,6 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**ExecuteWorkflowEntrypoint**](docs/DefaultApi.md#executeworkflowentrypoint) | **Post** /workflows/entrypoint/{entrypointID}/execute | Execute the workflow entry point
 *DefaultApi* | [**ExecuteWorkflowExecutionStep**](docs/DefaultApi.md#executeworkflowexecutionstep) | **Post** /workflows/execution/{executionID} | Execute workflow execution step
 *DefaultApi* | [**Feedback**](docs/DefaultApi.md#feedback) | **Post** /feedback | User feedback about the product
-*DefaultApi* | [**ForwardCase**](docs/DefaultApi.md#forwardcase) | **Post** /case/{caseId}/forward | Forward case details to a service provider
 *DefaultApi* | [**GenerateCaseReportingEndpointNotice**](docs/DefaultApi.md#generatecasereportingendpointnotice) | **Post** /cases/endpoints/{endpointId}/notice | Generate a PDF for a notice of the case reporting endpoint
 *DefaultApi* | [**GenerateDocumentPDF**](docs/DefaultApi.md#generatedocumentpdf) | **Post** /document-generation/documents/{docId}/generate-pdf | Generate a PDF for the document generation
 *DefaultApi* | [**GenerateDocumentText**](docs/DefaultApi.md#generatedocumenttext) | **Post** /document-generation/documents/{docId}/generate-text | Generate the text for the document, based on template and input data
@@ -239,6 +239,7 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**RespondToInvitation**](docs/DefaultApi.md#respondtoinvitation) | **Post** /invitation/{invitationId} | Respond to invitation
 *DefaultApi* | [**StartWorkflowExecution**](docs/DefaultApi.md#startworkflowexecution) | **Post** /workflows/execution | Start a new workflow execution
 *DefaultApi* | [**SyncConnectorData**](docs/DefaultApi.md#syncconnectordata) | **Post** /connector/sync | Sync the next batch of connector data.
+*DefaultApi* | [**UnassignCase**](docs/DefaultApi.md#unassigncase) | **Post** /case/{caseId}/unassign | Remove access from case
 *DefaultApi* | [**UpdateBankAccount**](docs/DefaultApi.md#updatebankaccount) | **Put** /bank-account/{accountId} | Update the attributes of the already existing bank account
 *DefaultApi* | [**UpdateCase**](docs/DefaultApi.md#updatecase) | **Put** /case/{caseId} | Update case
 *DefaultApi* | [**UpdateCaseReportingEndpoint**](docs/DefaultApi.md#updatecasereportingendpoint) | **Put** /cases/endpoints/{endpointId} | Update the case reporting endpoint by ID
@@ -278,17 +279,25 @@ Class | Method | HTTP request | Description
 
  - [AdditionalTenant](docs/AdditionalTenant.md)
  - [Address](docs/Address.md)
+ - [AssignCaseRequest](docs/AssignCaseRequest.md)
  - [Attachment](docs/Attachment.md)
  - [BankAccount](docs/BankAccount.md)
+ - [BaseCaseConfig](docs/BaseCaseConfig.md)
  - [Case](docs/Case.md)
  - [CaseActionEnum](docs/CaseActionEnum.md)
  - [CaseAssignee](docs/CaseAssignee.md)
+ - [CaseAutomaticStatusChangeConfig](docs/CaseAutomaticStatusChangeConfig.md)
  - [CaseComment](docs/CaseComment.md)
- - [CaseForwardRequest](docs/CaseForwardRequest.md)
+ - [CaseConfig](docs/CaseConfig.md)
+ - [CaseFeedbackConfig](docs/CaseFeedbackConfig.md)
+ - [CaseFeedbackEntry](docs/CaseFeedbackEntry.md)
+ - [CaseFeedbackModeEnum](docs/CaseFeedbackModeEnum.md)
+ - [CaseFeedbackResponse](docs/CaseFeedbackResponse.md)
  - [CaseParty](docs/CaseParty.md)
- - [CasePartyTypeEnum](docs/CasePartyTypeEnum.md)
+ - [CaseReminderConfig](docs/CaseReminderConfig.md)
  - [CaseReportingEndpoint](docs/CaseReportingEndpoint.md)
  - [CaseStatus](docs/CaseStatus.md)
+ - [CaseStatusConfig](docs/CaseStatusConfig.md)
  - [CaseStatusEnum](docs/CaseStatusEnum.md)
  - [CaseTemplate](docs/CaseTemplate.md)
  - [CompanyProfile](docs/CompanyProfile.md)
@@ -443,6 +452,7 @@ Class | Method | HTTP request | Description
  - [TenantChangeRequest](docs/TenantChangeRequest.md)
  - [TenantInfo](docs/TenantInfo.md)
  - [TenantsAdditionalInfo](docs/TenantsAdditionalInfo.md)
+ - [UnssignCaseRequest](docs/UnssignCaseRequest.md)
  - [UpdateCaseRequest](docs/UpdateCaseRequest.md)
  - [UpdateCaseStatusRequest](docs/UpdateCaseStatusRequest.md)
  - [UpdateCompanyProfileRequest](docs/UpdateCompanyProfileRequest.md)
@@ -458,6 +468,7 @@ Class | Method | HTTP request | Description
  - [UpdateWorkflowExecutionRequest](docs/UpdateWorkflowExecutionRequest.md)
  - [UserPreferences](docs/UserPreferences.md)
  - [UserReference](docs/UserReference.md)
+ - [UserTypeEnum](docs/UserTypeEnum.md)
  - [WorkflowDefinition](docs/WorkflowDefinition.md)
  - [WorkflowEntrypoint](docs/WorkflowEntrypoint.md)
  - [WorkflowEntrypointLocation](docs/WorkflowEntrypointLocation.md)
