@@ -12,10 +12,12 @@ func TestAccCaseReportingEndpointResource(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Create and Read testing
 			{
-				Config: `
+				Config: resourceDefinitionCaseTemplate("example template", "A case") +
+					`
 resource udoma_case_reporting_endpoint "test" {
 	name 							= "test endpoint"
 	active 						= true
+	case_templates    = [udoma_case_template.test.id]
 }
 `,
 				Check: resource.ComposeAggregateTestCheckFunc(
@@ -39,10 +41,11 @@ resource udoma_case_reporting_endpoint "test" {
 			},
 			// Update and Read testing
 			{
-				Config: `
+				Config: resourceDefinitionCaseTemplate("example template", "A case") + `
 resource "udoma_case_reporting_endpoint" "test" {
 	name 							= "updated endpoint"
 	active 						= false
+	case_templates    = [udoma_case_template.test.id]
 }
 `,
 

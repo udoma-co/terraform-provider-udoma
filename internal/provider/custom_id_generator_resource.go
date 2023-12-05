@@ -116,7 +116,7 @@ func (r *customIDGenerator) Create(ctx context.Context, req resource.CreateReque
 		return
 	}
 
-	createReq, err := customIDGeneratorFromModel(&plan)
+	createReq, err := plan.toAPIRequest()
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Creating Custom ID Generator",
@@ -135,7 +135,7 @@ func (r *customIDGenerator) Create(ctx context.Context, req resource.CreateReque
 	}
 
 	// update the tf struct with the new values
-	if err := customIDGeneratorToModel(&plan, generator); err != nil {
+	if err := plan.fromAPI(generator); err != nil {
 		resp.Diagnostics.AddError(
 			"Error Creating Custom ID Generator",
 			"Could not process API response, unexpected error: "+err.Error(),
@@ -173,7 +173,7 @@ func (r *customIDGenerator) Read(ctx context.Context, req resource.ReadRequest, 
 	}
 
 	// update the tf struct with the new values
-	if err := customIDGeneratorToModel(&state, generator); err != nil {
+	if err := state.fromAPI(generator); err != nil {
 		resp.Diagnostics.AddError(
 			"Error Reading Custom ID Generator",
 			"Could not create entity in Udoma, unexpected error: "+err.Error(),
@@ -199,7 +199,7 @@ func (r *customIDGenerator) Update(ctx context.Context, req resource.UpdateReque
 		return
 	}
 
-	createReq, _ := customIDGeneratorFromModel(&plan)
+	createReq, _ := plan.toAPIRequest()
 
 	id := plan.ID.ValueString()
 
@@ -213,7 +213,7 @@ func (r *customIDGenerator) Update(ctx context.Context, req resource.UpdateReque
 	}
 
 	// update the tf struct with the new values
-	if err := customIDGeneratorToModel(&plan, newEndpoint); err != nil {
+	if err := plan.fromAPI(newEndpoint); err != nil {
 		resp.Diagnostics.AddError(
 			"Error Updating Custom ID Generator",
 			"Could not process API response, unexpected error: "+err.Error(),
@@ -256,7 +256,7 @@ func (r *customIDGenerator) ImportState(ctx context.Context, req resource.Import
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
 
-func customIDGeneratorToModel(model *customIDGeneratorModel, generator *api.CustomIDGenerator) error {
+func (model *customIDGeneratorModel) fromAPI(generator *api.CustomIDGenerator) error {
 
 	if generator == nil {
 		return fmt.Errorf("custom ID generator is nil")
@@ -275,7 +275,7 @@ func customIDGeneratorToModel(model *customIDGeneratorModel, generator *api.Cust
 	return nil
 }
 
-func customIDGeneratorFromModel(model *customIDGeneratorModel) (api.CreateOrUpdateCustomIDGeneratorRequest, error) {
+func (model *customIDGeneratorModel) toAPIRequest() (api.CreateOrUpdateCustomIDGeneratorRequest, error) {
 
 	script := api.CreateOrUpdateCustomIDGeneratorRequest{
 		Name:             model.Name.ValueStringPointer(),

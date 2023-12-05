@@ -12,49 +12,7 @@ func TestAccCaseTemplateResource(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Create and Read testing
 			{
-				Config: `
-resource udoma_case_template "test" {
-	name 							= "basic template"
-	name_expression 	= "\"Basic case\""
-	icon 							= "fa fa-bug"
-
-	label = {
-		de = "Einfache Meldung"
-		en = "Basic case"
-	}
-
-	description = {
-		de = "Test Beschreibung"
-		en = "Test description"
-	}
-
-	info_text = {
-		de = "Test Info Text"
-		en = "Test info text"
-	}
-
-	custom_inputs = <<EOF
-{
-	"layout": [
-		{
-			"ref_id": "test",
-			"ref_type": "input"
-		}
-	],
-	"inputs": [
-		{
-			"id": "test",
-			"type": "text",
-			"label": {
-				"de": "Test Eingabe",
-				"en": "Test input"
-			}
-		}
-	]
-}
-EOF
-}
-`,
+				Config: resourceDefinitionCaseTemplate("basic template", "Basic case"),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify base addtributes
 					resource.TestCheckResourceAttr("udoma_case_template.test", "name", "basic template"),
@@ -93,49 +51,7 @@ EOF
 			},
 			// Update and Read testing
 			{
-				Config: `
-resource "udoma_case_template" "test" {
-	name 							= "updated template"
-	name_expression 	= "\"Special case\""
-	icon 							= "fa fa-bug"
-
-	label = {
-		de = "Einfache Meldung"
-		en = "Basic case"
-	}
-
-	description = {
-		de = "Test Beschreibung"
-		en = "Test description"
-	}
-
-	info_text = {
-		de = "Test Info Text"
-		en = "Test info text"
-	}
-
-	custom_inputs = <<EOF
-{
-	"layout": [
-		{
-			"ref_id": "test",
-			"ref_type": "input"
-		}
-	],
-	"inputs": [
-		{
-			"id": "test",
-			"type": "text",
-			"label": {
-				"de": "Test Eingabe",
-				"en": "Test input"
-			}
-		}
-	]
-}
-EOF
-}
-`,
+				Config: resourceDefinitionCaseTemplate("updated template", "Special case"),
 
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify attributes were updated
@@ -147,4 +63,50 @@ EOF
 			// Delete testing automatically occurs in TestCase
 		},
 	})
+}
+
+func resourceDefinitionCaseTemplate(name, nameExpression string) string {
+	return `
+	resource udoma_case_template "test" {
+		name 							= "` + name + `"
+		name_expression 	= "\"` + nameExpression + `\""
+		icon 							= "fa fa-bug"
+	
+		label = {
+			de = "Einfache Meldung"
+			en = "Basic case"
+		}
+	
+		description = {
+			de = "Test Beschreibung"
+			en = "Test description"
+		}
+	
+		info_text = {
+			de = "Test Info Text"
+			en = "Test info text"
+		}
+	
+		custom_inputs = <<EOF
+	{
+		"layout": [
+			{
+				"ref_id": "test",
+				"ref_type": "input"
+			}
+		],
+		"inputs": [
+			{
+				"id": "test",
+				"type": "text",
+				"label": {
+					"de": "Test Eingabe",
+					"en": "Test input"
+				}
+			}
+		]
+	}
+	EOF
+	}
+	`
 }

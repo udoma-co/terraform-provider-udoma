@@ -106,7 +106,7 @@ func (r *workflowDefinition) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"init_step": schema.StringAttribute{
 				CustomType:  tf.JsonObjectType{},
-				Required:    true,
+				Optional:    true,
 				Description: "Optional JSON serialised initial step definition",
 			},
 			"steps": schema.StringAttribute{
@@ -148,7 +148,7 @@ func (r *workflowDefinition) Create(ctx context.Context, req resource.CreateRequ
 		return
 	}
 
-	createReq, err := workflowDefinitionFromModel(&plan)
+	createReq, err := plan.toAPIRequest()
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Creating Workflow Definition",
@@ -167,7 +167,7 @@ func (r *workflowDefinition) Create(ctx context.Context, req resource.CreateRequ
 	}
 
 	// update the tf struct with the new values
-	if err := workflowDefinitionToModel(&plan, newEndpoint); err != nil {
+	if err := plan.fromAPI(newEndpoint); err != nil {
 		resp.Diagnostics.AddError(
 			"Error Creating Workflow Definition",
 			"Could not process API response, unexpected error: "+err.Error(),
@@ -205,7 +205,7 @@ func (r *workflowDefinition) Read(ctx context.Context, req resource.ReadRequest,
 	}
 
 	// update the tf struct with the new values
-	if err := workflowDefinitionToModel(&state, workflow); err != nil {
+	if err := state.fromAPI(workflow); err != nil {
 		resp.Diagnostics.AddError(
 			"Error Reading Workflow Definition",
 			"Could not process API response, unexpected error: "+err.Error(),
@@ -231,7 +231,14 @@ func (r *workflowDefinition) Update(ctx context.Context, req resource.UpdateRequ
 		return
 	}
 
-	createReq, _ := workflowDefinitionFromModel(&plan)
+	createReq, err := plan.toAPIRequest()
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"Error Updating Workflow Definition",
+			"Could not create API request, unexpected error: "+err.Error(),
+		)
+		return
+	}
 
 	id := plan.ID.ValueString()
 
@@ -245,7 +252,7 @@ func (r *workflowDefinition) Update(ctx context.Context, req resource.UpdateRequ
 	}
 
 	// update the tf struct with the new values
-	if err := workflowDefinitionToModel(&plan, newEndpoint); err != nil {
+	if err := plan.fromAPI(newEndpoint); err != nil {
 		resp.Diagnostics.AddError(
 			"Error Updating Workflow Definition",
 			"Could not process API response, unexpected error: "+err.Error(),
@@ -288,7 +295,7 @@ func (r *workflowDefinition) ImportState(ctx context.Context, req resource.Impor
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
 
-func workflowDefinitionToModel(model *workflowDefinitionModel, workflowDefinition *api.WorkflowDefinition) error {
+func (model *workflowDefinitionModel) fromAPI(workflowDefinition *api.WorkflowDefinition) error {
 
 	if workflowDefinition == nil {
 		return fmt.Errorf("workflow definition is nil")
@@ -341,7 +348,7 @@ func workflowDefinitionToModel(model *workflowDefinitionModel, workflowDefinitio
 	return nil
 }
 
-func workflowDefinitionFromModel(model *workflowDefinitionModel) (api.CreateOrUpdateWorkflowDefinitionRequest, error) {
+func (model *workflowDefinitionModel) toAPIRequest() (api.CreateOrUpdateWorkflowDefinitionRequest, error) {
 
 	workflowDefinition := api.CreateOrUpdateWorkflowDefinitionRequest{
 		Name:           model.Name.ValueStringPointer(),

@@ -93,6 +93,10 @@ func (t JsonObjectType) Validate(ctx context.Context, value tftypes.Value, value
 		return diags
 	}
 
+	if valueString == "" {
+		return nil
+	}
+
 	var target any
 	if err := json.Unmarshal([]byte(valueString), &target); err != nil {
 		diags.AddAttributeError(

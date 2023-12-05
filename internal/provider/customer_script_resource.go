@@ -121,14 +121,7 @@ func (r *customerScript) Create(ctx context.Context, req resource.CreateRequest,
 		return
 	}
 
-	createReq, err := customerScriptFromModel(&plan)
-	if err != nil {
-		resp.Diagnostics.AddError(
-			"Error Creating Customer Script",
-			"Could not create API request, unexpected error: "+err.Error(),
-		)
-		return
-	}
+	createReq, _ := plan.toAPIRequest()
 
 	newEndpoint, _, err := r.client.GetApi().CreateCustomerScript(ctx).CreateOrUpdateCustomerScriptRequest(createReq).Execute()
 	if err != nil {
@@ -140,7 +133,7 @@ func (r *customerScript) Create(ctx context.Context, req resource.CreateRequest,
 	}
 
 	// update the tf struct with the new values
-	if err := customerScriptToModel(&plan, newEndpoint); err != nil {
+	if err := plan.fromAPI(newEndpoint); err != nil {
 		resp.Diagnostics.AddError(
 			"Error Creating Customer Script",
 			"Could not process API response, unexpected error: "+err.Error(),
@@ -178,7 +171,7 @@ func (r *customerScript) Read(ctx context.Context, req resource.ReadRequest, res
 	}
 
 	// update the tf struct with the new values
-	if err := customerScriptToModel(&state, script); err != nil {
+	if err := state.fromAPI(script); err != nil {
 		resp.Diagnostics.AddError(
 			"Error Reading Customer Script",
 			"Could not process API response, unexpected error: "+err.Error(),
@@ -204,7 +197,7 @@ func (r *customerScript) Update(ctx context.Context, req resource.UpdateRequest,
 		return
 	}
 
-	createReq, _ := customerScriptFromModel(&plan)
+	createReq, _ := plan.toAPIRequest()
 
 	id := plan.ID.ValueString()
 
@@ -218,7 +211,7 @@ func (r *customerScript) Update(ctx context.Context, req resource.UpdateRequest,
 	}
 
 	// update the tf struct with the new values
-	if err := customerScriptToModel(&plan, newEndpoint); err != nil {
+	if err := plan.fromAPI(newEndpoint); err != nil {
 		resp.Diagnostics.AddError(
 			"Error Updating Customer Script",
 			"Could not process API response, unexpected error: "+err.Error(),
@@ -261,7 +254,7 @@ func (r *customerScript) ImportState(ctx context.Context, req resource.ImportSta
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
 
-func customerScriptToModel(model *customerScriptModel, script *api.CustomerScript) error {
+func (model *customerScriptModel) fromAPI(script *api.CustomerScript) error {
 
 	if script == nil {
 		return fmt.Errorf("customer script is nil")
@@ -281,7 +274,7 @@ func customerScriptToModel(model *customerScriptModel, script *api.CustomerScrip
 	return nil
 }
 
-func customerScriptFromModel(model *customerScriptModel) (api.CreateOrUpdateCustomerScriptRequest, error) {
+func (model *customerScriptModel) toAPIRequest() (api.CreateOrUpdateCustomerScriptRequest, error) {
 
 	script := api.CreateOrUpdateCustomerScriptRequest{
 		Name:        model.Name.ValueStringPointer(),

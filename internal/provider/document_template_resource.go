@@ -158,7 +158,7 @@ func (r *documentTemplate) Create(ctx context.Context, req resource.CreateReques
 		return
 	}
 
-	createReq, err := documentTemplateFromModel(&plan)
+	createReq, err := plan.toAPIRequest()
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Creating Document Template",
@@ -167,7 +167,7 @@ func (r *documentTemplate) Create(ctx context.Context, req resource.CreateReques
 		return
 	}
 
-	newEndpoint, _, err := r.client.GetApi().CreateDocumentTemplate(ctx).CreateOrUpdateDocumentTemplateRequest(createReq).Execute()
+	newDoc, _, err := r.client.GetApi().CreateDocumentTemplate(ctx).CreateOrUpdateDocumentTemplateRequest(createReq).Execute()
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Creating Document Template",
@@ -177,7 +177,7 @@ func (r *documentTemplate) Create(ctx context.Context, req resource.CreateReques
 	}
 
 	// update the tf struct with the new values
-	if err := documentTemplateToModel(&plan, newEndpoint); err != nil {
+	if err := plan.fromAPI(newDoc); err != nil {
 		resp.Diagnostics.AddError(
 			"Error Creating Document Template",
 			"Could not process API response, unexpected error: "+err.Error(),
@@ -215,7 +215,7 @@ func (r *documentTemplate) Read(ctx context.Context, req resource.ReadRequest, r
 	}
 
 	// update the tf struct with the new values
-	if err := documentTemplateToModel(&state, template); err != nil {
+	if err := state.fromAPI(template); err != nil {
 		resp.Diagnostics.AddError(
 			"Error Reading Document Template",
 			"Could not process API response, unexpected error: "+err.Error(),
@@ -241,7 +241,7 @@ func (r *documentTemplate) Update(ctx context.Context, req resource.UpdateReques
 		return
 	}
 
-	createReq, err := documentTemplateFromModel(&plan)
+	createReq, err := plan.toAPIRequest()
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Updating Document Template",
@@ -262,7 +262,7 @@ func (r *documentTemplate) Update(ctx context.Context, req resource.UpdateReques
 	}
 
 	// update the tf struct with the new values
-	if err := documentTemplateToModel(&plan, newEndpoint); err != nil {
+	if err := plan.fromAPI(newEndpoint); err != nil {
 		resp.Diagnostics.AddError(
 			"Error Updating Document Template",
 			"Could not process API response, unexpected error: "+err.Error(),
@@ -305,7 +305,7 @@ func (r *documentTemplate) ImportState(ctx context.Context, req resource.ImportS
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
 
-func documentTemplateToModel(model *documentTemplateModel, template *api.DocumentTemplate) error {
+func (model *documentTemplateModel) fromAPI(template *api.DocumentTemplate) error {
 
 	if template == nil {
 		return fmt.Errorf("document template is nil")
@@ -355,7 +355,7 @@ func documentTemplateToModel(model *documentTemplateModel, template *api.Documen
 	return nil
 }
 
-func documentTemplateFromModel(model *documentTemplateModel) (api.CreateOrUpdateDocumentTemplateRequest, error) {
+func (model *documentTemplateModel) toAPIRequest() (api.CreateOrUpdateDocumentTemplateRequest, error) {
 
 	template := api.CreateOrUpdateDocumentTemplateRequest{
 		Name:           model.Name.ValueStringPointer(),
@@ -375,18 +375,39 @@ func documentTemplateFromModel(model *documentTemplateModel) (api.CreateOrUpdate
 		if diag := model.Inputs.Unmarshal(&template.Inputs); diag.HasError() {
 			return template, fmt.Errorf("failed to unmarshal inputs: %v", diag)
 		}
+
+		// update model
+		jsonData, err := json.Marshal(template.Inputs)
+		if err != nil {
+			return template, fmt.Errorf("failed to marshal inputs: %w", err)
+		}
+		model.Inputs = tf.NewJsonObjectValue(string(jsonData))
 	}
 
 	if !model.Placeholders.IsNull() && !model.Placeholders.IsUnknown() {
 		if diag := model.Placeholders.Unmarshal(&template.Placeholders); diag.HasError() {
 			return template, fmt.Errorf("failed to unmarshal placeholders: %v", diag)
 		}
+
+		// update model
+		jsonData, err := json.Marshal(template.Placeholders)
+		if err != nil {
+			return template, fmt.Errorf("failed to marshal placeholders: %w", err)
+		}
+		model.Placeholders = tf.NewJsonObjectValue(string(jsonData))
 	}
 
 	if !model.Signatures.IsNull() && !model.Signatures.IsUnknown() {
 		if diag := model.Signatures.Unmarshal(&template.Signatures); diag.HasError() {
 			return template, fmt.Errorf("failed to unmarshal signatures: %v", diag)
 		}
+
+		// update model
+		jsonData, err := json.Marshal(template.Signatures)
+		if err != nil {
+			return template, fmt.Errorf("failed to marshal signatures: %w", err)
+		}
+		model.Signatures = tf.NewJsonObjectValue(string(jsonData))
 	}
 
 	return template, nil

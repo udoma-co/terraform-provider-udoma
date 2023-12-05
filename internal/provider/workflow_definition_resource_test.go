@@ -12,50 +12,7 @@ func TestAccWorkflowDefinitionResource(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Create and Read testing
 			{
-				Config: `
-resource udoma_workflow_definition "test" {
-	name 							= "basic workflow"
-	description 			= "Test description"
-	name_expression 	= "\"Workflow\""
-	icon 							= "fa-solid fa-file-alt"
-
-	env_vars = {
-		var1 = "val1"
-	}
-
-	first_step_id = "generate_document"
-
-	init_step = jsonencode({
-		id: "init",
-		type: "select_property"
-	})
-
-	steps = jsonencode([
-		{
-			id: "generate_document",
-			type: "generate_document"
-			actions: [
-				{
-					id: "save",
-					label: "Save",
-					next_step_id: "finish"
-				}
-			]
-		},
-
-		{
-			id: "finish",
-			type: "finish_execution"
-			actions: [
-				{
-					id: "finish"
-				}
-			]
-		}
-	])
-
-}
-`,
+				Config: resourceDefinitionWorkflowDefinition(),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify base addtributes
 					resource.TestCheckResourceAttr("udoma_workflow_definition.test", "name", "basic workflow"),
@@ -148,4 +105,46 @@ resource "udoma_workflow_definition" "test" {
 			// Delete testing automatically occurs in TestCase
 		},
 	})
+}
+
+func resourceDefinitionWorkflowDefinition() string {
+	return `
+	resource udoma_workflow_definition "test" {
+		name 							= "basic workflow"
+		description 			= "Test description"
+		name_expression 	= "\"Workflow\""
+		icon 							= "fa-solid fa-file-alt"
+	
+		env_vars = {
+			var1 = "val1"
+		}
+	
+		first_step_id = "generate_document"
+	
+		steps = jsonencode([
+			{
+				id: "generate_document",
+				type: "generate_document"
+				actions: [
+					{
+						id: "save",
+						label: "Save",
+						next_step_id: "finish"
+					}
+				]
+			},
+	
+			{
+				id: "finish",
+				type: "finish_execution"
+				actions: [
+					{
+						id: "finish"
+					}
+				]
+			}
+		])
+	
+	}
+	`
 }

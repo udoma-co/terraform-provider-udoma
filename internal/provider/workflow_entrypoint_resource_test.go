@@ -57,7 +57,7 @@ func TestAccWorkflowEntrypointResource(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Create and Read testing
 			{
-				Config: workflowDefinition + `
+				Config: resourceDefinitionWorkflowDefinition() + `
 resource udoma_workflow_entrypoint "test" {
 	workflow_definition_ref = udoma_workflow_definition.test.id
 	app_location 						= "case"

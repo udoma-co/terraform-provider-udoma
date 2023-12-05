@@ -142,7 +142,7 @@ func (r *caseTemplate) Create(ctx context.Context, req resource.CreateRequest, r
 		return
 	}
 
-	createReq, err := caseTemplateFromModel(&plan)
+	createReq, err := plan.toAPIRequest()
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Creating Case Template",
@@ -161,7 +161,7 @@ func (r *caseTemplate) Create(ctx context.Context, req resource.CreateRequest, r
 	}
 
 	// update the tf struct with the new values
-	if err := caseTemplateToModel(&plan, newEndpoint); err != nil {
+	if err := plan.fromAPI(newEndpoint); err != nil {
 		resp.Diagnostics.AddError(
 			"Error Creating Case Template",
 			"Could not process API response, unexpected error: "+err.Error(),
@@ -199,7 +199,7 @@ func (r *caseTemplate) Read(ctx context.Context, req resource.ReadRequest, resp 
 	}
 
 	// update the tf struct with the new values
-	if err := caseTemplateToModel(&state, template); err != nil {
+	if err := state.fromAPI(template); err != nil {
 		resp.Diagnostics.AddError(
 			"Error Reading Case Template",
 			"Could not process API response, unexpected error: "+err.Error(),
@@ -225,7 +225,14 @@ func (r *caseTemplate) Update(ctx context.Context, req resource.UpdateRequest, r
 		return
 	}
 
-	createReq, _ := caseTemplateFromModel(&plan)
+	createReq, err := plan.toAPIRequest()
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"Error Updating Case Template",
+			"Could not create API request, unexpected error: "+err.Error(),
+		)
+		return
+	}
 
 	id := plan.ID.ValueString()
 
@@ -239,7 +246,7 @@ func (r *caseTemplate) Update(ctx context.Context, req resource.UpdateRequest, r
 	}
 
 	// update the tf struct with the new values
-	if err := caseTemplateToModel(&plan, newEndpoint); err != nil {
+	if err := plan.fromAPI(newEndpoint); err != nil {
 		resp.Diagnostics.AddError(
 			"Error Updating Case Template",
 			"Could not process API response, unexpected error: "+err.Error(),
@@ -282,7 +289,7 @@ func (r *caseTemplate) ImportState(ctx context.Context, req resource.ImportState
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
 
-func caseTemplateToModel(model *caseTemplateModel, template *api.CaseTemplate) error {
+func (model *caseTemplateModel) fromAPI(template *api.CaseTemplate) error {
 
 	if template == nil {
 		return fmt.Errorf("case template is nil")
@@ -330,7 +337,7 @@ func caseTemplateToModel(model *caseTemplateModel, template *api.CaseTemplate) e
 	return nil
 }
 
-func caseTemplateFromModel(model *caseTemplateModel) (api.CreateOrUpdateCaseTemplateRequest, error) {
+func (model *caseTemplateModel) toAPIRequest() (api.CreateOrUpdateCaseTemplateRequest, error) {
 
 	template := api.CreateOrUpdateCaseTemplateRequest{
 		Name:           model.Name.ValueStringPointer(),

@@ -77,6 +77,9 @@ func (r *workflowEntrypoint) Schema(ctx context.Context, req resource.SchemaRequ
 			"workflow_definition_ref": schema.StringAttribute{
 				Required:    true,
 				Description: "The ID of the workflow definition",
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 			},
 			"app_location": schema.StringAttribute{
 				Optional:    true,
@@ -139,14 +142,7 @@ func (r *workflowEntrypoint) Create(ctx context.Context, req resource.CreateRequ
 		return
 	}
 
-	createReq, err := workflowEntrypointFromModel(&plan)
-	if err != nil {
-		resp.Diagnostics.AddError(
-			"Error Creating Workflow Entrypoint",
-			"Could not create API request, unexpected error: "+err.Error(),
-		)
-		return
-	}
+	createReq, _ := plan.toAPIRequest()
 
 	newEndpoint, _, err := r.client.GetApi().CreateWorkflowEntrypoint(ctx, *createReq.WorkflowDefinitionRef).CreateOrUpdateWorkflowEntrypointRequest(createReq).Execute()
 	if err != nil {
@@ -158,7 +154,7 @@ func (r *workflowEntrypoint) Create(ctx context.Context, req resource.CreateRequ
 	}
 
 	// update the tf struct with the new values
-	if err := workflowEntrypointToModel(&plan, newEndpoint); err != nil {
+	if err := plan.fromAPI(newEndpoint); err != nil {
 		resp.Diagnostics.AddError(
 			"Error Creating Workflow Entrypoint",
 			"Could not process API response, unexpected error: "+err.Error(),
@@ -196,7 +192,7 @@ func (r *workflowEntrypoint) Read(ctx context.Context, req resource.ReadRequest,
 	}
 
 	// update the tf struct with the new values
-	if err := workflowEntrypointToModel(&state, workflow); err != nil {
+	if err := state.fromAPI(workflow); err != nil {
 		resp.Diagnostics.AddError(
 			"Error Reading Workflow Entrypoint",
 			"Could not process API response, unexpected error: "+err.Error(),
@@ -222,7 +218,7 @@ func (r *workflowEntrypoint) Update(ctx context.Context, req resource.UpdateRequ
 		return
 	}
 
-	createReq, _ := workflowEntrypointFromModel(&plan)
+	createReq, _ := plan.toAPIRequest()
 
 	id := plan.ID.ValueString()
 
@@ -236,7 +232,7 @@ func (r *workflowEntrypoint) Update(ctx context.Context, req resource.UpdateRequ
 	}
 
 	// update the tf struct with the new values
-	if err := workflowEntrypointToModel(&plan, newEndpoint); err != nil {
+	if err := plan.fromAPI(newEndpoint); err != nil {
 		resp.Diagnostics.AddError(
 			"Error Updating Workflow Entrypoint",
 			"Could process API response, unexpected error: "+err.Error(),
@@ -279,7 +275,7 @@ func (r *workflowEntrypoint) ImportState(ctx context.Context, req resource.Impor
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
 
-func workflowEntrypointToModel(model *workflowEntrypointModel, workflowEntrypoint *api.WorkflowEntrypoint) error {
+func (model *workflowEntrypointModel) fromAPI(workflowEntrypoint *api.WorkflowEntrypoint) error {
 
 	if workflowEntrypoint == nil {
 		return fmt.Errorf("workflow entrypoint is nil")
@@ -323,7 +319,7 @@ func workflowEntrypointToModel(model *workflowEntrypointModel, workflowEntrypoin
 	return nil
 }
 
-func workflowEntrypointFromModel(model *workflowEntrypointModel) (api.CreateOrUpdateWorkflowEntrypointRequest, error) {
+func (model *workflowEntrypointModel) toAPIRequest() (api.CreateOrUpdateWorkflowEntrypointRequest, error) {
 
 	workflowEntrypoint := api.CreateOrUpdateWorkflowEntrypointRequest{
 		WorkflowDefinitionRef: model.WorkflowDefinitionRef.ValueStringPointer(),

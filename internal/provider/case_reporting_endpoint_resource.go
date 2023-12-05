@@ -63,33 +63,33 @@ func (r *CaseReportingEndpoint) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"code": schema.StringAttribute{
 				Computed:            true,
-				MarkdownDescription: "The unique code used for accesssign the endpoint",
+				MarkdownDescription: "The unique code used for accessing the endpoint",
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"created_at": schema.Int64Attribute{
 				Computed:            true,
-				MarkdownDescription: "The date and time the script was created",
+				MarkdownDescription: "The date and time the endpoint was created",
 			},
 			"updated_at": schema.Int64Attribute{
 				Computed:            true,
-				MarkdownDescription: "The date and time the script was last modified",
+				MarkdownDescription: "The date and time the endpoint was last modified",
 			},
 			"last_updated": schema.StringAttribute{
 				Computed: true,
 			},
 			"name": schema.StringAttribute{
 				Required:            true,
-				MarkdownDescription: "The name of the case template, shown in the admin page",
+				MarkdownDescription: "The name of the endpoint, shown in the admin page",
 			},
 			"active": schema.BoolAttribute{
 				Optional:            true,
 				MarkdownDescription: "Whether the endpoint is active or not",
 			},
 			"case_templates": schema.ListAttribute{
-				Optional:            true,
-				MarkdownDescription: "The case templates that can be raised via this endpoint",
+				Required:            true,
+				MarkdownDescription: "Reference to the case templates that can be raised via this endpoint",
 				ElementType:         types.StringType,
 			},
 		},
@@ -126,7 +126,7 @@ func (r *CaseReportingEndpoint) Create(ctx context.Context, req resource.CreateR
 		return
 	}
 
-	createReq, err := caseReportingEndpointFromModel(&plan)
+	createReq, err := plan.toAPIRequest()
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Creating Case Reporting Endpoint",
@@ -145,13 +145,15 @@ func (r *CaseReportingEndpoint) Create(ctx context.Context, req resource.CreateR
 	}
 
 	// update the tf struct with the new values
-	if err := caseReportingEndpointToModel(&plan, newEndpoint); err != nil {
+	if err := plan.fromAPI(newEndpoint); err != nil {
 		resp.Diagnostics.AddError(
 			"Error Creating Case Reporting Endpoint",
 			"Could not process API response, unexpected error: "+err.Error(),
 		)
 		return
 	}
+
+	plan.LastUpdated = types.StringValue(time.Now().Format(time.RFC850))
 
 	// Set state to fully populated data
 	diags = resp.State.Set(ctx, plan)
@@ -181,7 +183,7 @@ func (r *CaseReportingEndpoint) Read(ctx context.Context, req resource.ReadReque
 	}
 
 	// update the tf struct with the new values
-	if err := caseReportingEndpointToModel(&state, endpoint); err != nil {
+	if err := state.fromAPI(endpoint); err != nil {
 		resp.Diagnostics.AddError(
 			"Error Creating Case Reporting Endpoint",
 			"Could not process API response, unexpected error: "+err.Error(),
@@ -207,7 +209,7 @@ func (r *CaseReportingEndpoint) Update(ctx context.Context, req resource.UpdateR
 		return
 	}
 
-	createReq, err := caseReportingEndpointFromModel(&plan)
+	createReq, err := plan.toAPIRequest()
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Updating Case Reporting Endpoint",
@@ -216,7 +218,7 @@ func (r *CaseReportingEndpoint) Update(ctx context.Context, req resource.UpdateR
 		return
 	}
 
-	newEndpoint, _, err := r.client.GetApi().CreateCaseReportingEndpoint(ctx).CreateOrUpdateCaseReportingEndpointRequest(createReq).Execute()
+	newEndpoint, _, err := r.client.GetApi().UpdateCaseReportingEndpoint(ctx, plan.Code.ValueString()).CreateOrUpdateCaseReportingEndpointRequest(createReq).Execute()
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Updating Case Reporting Endpoint",
@@ -226,7 +228,7 @@ func (r *CaseReportingEndpoint) Update(ctx context.Context, req resource.UpdateR
 	}
 
 	// update the tf struct with the new values
-	if err := caseReportingEndpointToModel(&plan, newEndpoint); err != nil {
+	if err := plan.fromAPI(newEndpoint); err != nil {
 		resp.Diagnostics.AddError(
 			"Error Updating Case Reporting Endpoint",
 			"Could not process API response, unexpected error: "+err.Error(),
@@ -269,7 +271,7 @@ func (r *CaseReportingEndpoint) ImportState(ctx context.Context, req resource.Im
 	resource.ImportStatePassthroughID(ctx, path.Root("code"), req, resp)
 }
 
-func caseReportingEndpointToModel(model *CaseReportingEndpointModel, endpoint *api.CaseReportingEndpoint) error {
+func (model *CaseReportingEndpointModel) fromAPI(endpoint *api.CaseReportingEndpoint) error {
 
 	if endpoint == nil {
 		return fmt.Errorf("endpoint is nil")
@@ -289,7 +291,7 @@ func caseReportingEndpointToModel(model *CaseReportingEndpointModel, endpoint *a
 	return nil
 }
 
-func caseReportingEndpointFromModel(model *CaseReportingEndpointModel) (api.CreateOrUpdateCaseReportingEndpointRequest, error) {
+func (model *CaseReportingEndpointModel) toAPIRequest() (api.CreateOrUpdateCaseReportingEndpointRequest, error) {
 
 	endpoint := api.CreateOrUpdateCaseReportingEndpointRequest{
 		Name:          model.Name.ValueStringPointer(),

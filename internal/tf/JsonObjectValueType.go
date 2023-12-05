@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"strings"
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
@@ -16,25 +17,29 @@ var _ basetypes.StringValuable = JsonObjectValue{}
 
 type JsonObjectValue struct {
 	basetypes.StringValue
-	// ... potentially other fields ...
 }
 
-func (v JsonObjectValue) Equal(o attr.Value) bool {
-	other, ok := o.(JsonObjectValue)
+// func (v JsonObjectValue) Equal(o attr.Value) bool {
+// 	other, ok := o.(JsonObjectValue)
 
-	if !ok {
-		return false
-	}
+// 	if !ok {
+// 		return false
+// 	}
 
-	return v.StringValue.Equal(other.StringValue)
-}
+// 	result, err := v.jsonEqual(&other)
+// 	if err != nil {
+// 		return false
+// 	}
+
+// 	return result
+// }
 
 func (v JsonObjectValue) Type(ctx context.Context) attr.Type {
-	// CustomStringType defined in the schema type section
+	// JsonObjectType defined in the schema type section
 	return JsonObjectType{}
 }
 
-// CustomStringValue defined in the value type section
+// JsonObjectValue defined in the value type section
 // Ensure the implementation satisfies the expected interfaces
 var _ basetypes.StringValuableWithSemanticEquals = JsonObjectValue{}
 
@@ -56,7 +61,25 @@ func (v JsonObjectValue) StringSemanticEquals(ctx context.Context, newValuable b
 		return false, diags
 	}
 
-	result, err := jsonEqual(newValue.ValueString(), v.ValueString())
+	if v.IsNull() && newValuable.IsNull() {
+		return true, nil
+	}
+
+	if v.IsUnknown() && newValuable.IsUnknown() {
+		return true, nil
+	}
+
+	if (!v.IsNull() && newValuable.IsNull()) ||
+		(v.IsNull() && !newValuable.IsNull()) {
+		return false, nil
+	}
+
+	if (!v.IsUnknown() && newValuable.IsUnknown()) ||
+		(v.IsUnknown() && !newValuable.IsUnknown()) {
+		return false, nil
+	}
+
+	result, err := v.jsonEqual(&newValue)
 
 	if err != nil {
 		diags.AddError(
@@ -73,10 +96,17 @@ func (v JsonObjectValue) StringSemanticEquals(ctx context.Context, newValuable b
 
 }
 
-func jsonEqual(oldValue, newValue string) (bool, error) {
+func (v *JsonObjectValue) jsonEqual(otherValue *JsonObjectValue) (bool, error) {
 
-	if oldValue == "" || newValue == "" {
+	if otherValue == nil {
 		return false, nil
+	}
+
+	oldValue := strings.Trim(v.ValueString(), `"`)
+	newValue := strings.Trim(otherValue.ValueString(), `"`)
+
+	if oldValue == newValue {
+		return true, nil
 	}
 
 	var oldForm, newForm any
@@ -89,7 +119,7 @@ func jsonEqual(oldValue, newValue string) (bool, error) {
 		return false, fmt.Errorf("failed to unmarshal new value: %w", err)
 	}
 
-	if diff := cmp.Diff(oldForm, newForm); diff != "" {
+	if diff := cmp.Diff(&oldForm, &newForm); diff != "" {
 		return false, nil
 	}
 
@@ -139,7 +169,7 @@ func (v JsonObjectValue) Unmarshal(target any) diag.Diagnostics {
 		return diags
 	}
 
-	if v.ValueString() == "" || v.ValueString() == "{}" {
+	if v.ValueString() == "" || v.ValueString() == "{}" || v.ValueString() == "[]" {
 		return diags
 	}
 
