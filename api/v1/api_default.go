@@ -323,6 +323,107 @@ func (a *DefaultApiService) ArchiveDocumentGenerationExecute(r ApiArchiveDocumen
 	return localVarHTTPResponse, nil
 }
 
+type ApiAssignCaseRequest struct {
+	ctx               context.Context
+	ApiService        *DefaultApiService
+	caseId            string
+	assignCaseRequest *AssignCaseRequest
+}
+
+func (r ApiAssignCaseRequest) AssignCaseRequest(assignCaseRequest AssignCaseRequest) ApiAssignCaseRequest {
+	r.assignCaseRequest = &assignCaseRequest
+	return r
+}
+
+func (r ApiAssignCaseRequest) Execute() (*http.Response, error) {
+	return r.ApiService.AssignCaseExecute(r)
+}
+
+/*
+AssignCase Assign case to a service provider
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param caseId ID of the case to assign
+	@return ApiAssignCaseRequest
+*/
+func (a *DefaultApiService) AssignCase(ctx context.Context, caseId string) ApiAssignCaseRequest {
+	return ApiAssignCaseRequest{
+		ApiService: a,
+		ctx:        ctx,
+		caseId:     caseId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultApiService) AssignCaseExecute(r ApiAssignCaseRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod = http.MethodPost
+		localVarPostBody   interface{}
+		formFiles          []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.AssignCase")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/case/{caseId}/assign"
+	localVarPath = strings.Replace(localVarPath, "{"+"caseId"+"}", url.PathEscape(parameterToString(r.caseId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.assignCaseRequest == nil {
+		return nil, reportError("assignCaseRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.assignCaseRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
 type ApiCancelSignaturesForDocumentRequest struct {
 	ctx        context.Context
 	ApiService *DefaultApiService
@@ -3720,9 +3821,7 @@ func (r ApiDeleteCaseCommentRequest) Execute() (*http.Response, error) {
 }
 
 /*
-DeleteCaseComment Delete a comment
-
-Delete the comment with all it's attachments
+DeleteCaseComment Mark a case comment as deleted
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param caseId ID of the related case
@@ -6968,107 +7067,6 @@ func (a *DefaultApiService) FeedbackExecute(r ApiFeedbackRequest) (*http.Respons
 	}
 	// body params
 	localVarPostBody = r.feedbackRequest
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarHTTPResponse, newErr
-	}
-
-	return localVarHTTPResponse, nil
-}
-
-type ApiForwardCaseRequest struct {
-	ctx                context.Context
-	ApiService         *DefaultApiService
-	caseId             string
-	caseForwardRequest *CaseForwardRequest
-}
-
-func (r ApiForwardCaseRequest) CaseForwardRequest(caseForwardRequest CaseForwardRequest) ApiForwardCaseRequest {
-	r.caseForwardRequest = &caseForwardRequest
-	return r
-}
-
-func (r ApiForwardCaseRequest) Execute() (*http.Response, error) {
-	return r.ApiService.ForwardCaseExecute(r)
-}
-
-/*
-ForwardCase Forward case details to a service provider
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param caseId ID of the case to comment
-	@return ApiForwardCaseRequest
-*/
-func (a *DefaultApiService) ForwardCase(ctx context.Context, caseId string) ApiForwardCaseRequest {
-	return ApiForwardCaseRequest{
-		ApiService: a,
-		ctx:        ctx,
-		caseId:     caseId,
-	}
-}
-
-// Execute executes the request
-func (a *DefaultApiService) ForwardCaseExecute(r ApiForwardCaseRequest) (*http.Response, error) {
-	var (
-		localVarHTTPMethod = http.MethodPost
-		localVarPostBody   interface{}
-		formFiles          []formFile
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.ForwardCase")
-	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/case/{caseId}/forward"
-	localVarPath = strings.Replace(localVarPath, "{"+"caseId"+"}", url.PathEscape(parameterToString(r.caseId, "")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.caseForwardRequest == nil {
-		return nil, reportError("caseForwardRequest is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.caseForwardRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -16540,6 +16538,107 @@ func (a *DefaultApiService) SyncConnectorDataExecute(r ApiSyncConnectorDataReque
 	}
 	// body params
 	localVarPostBody = r.connectorSyncRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiUnassignCaseRequest struct {
+	ctx                context.Context
+	ApiService         *DefaultApiService
+	caseId             string
+	unssignCaseRequest *UnssignCaseRequest
+}
+
+func (r ApiUnassignCaseRequest) UnssignCaseRequest(unssignCaseRequest UnssignCaseRequest) ApiUnassignCaseRequest {
+	r.unssignCaseRequest = &unssignCaseRequest
+	return r
+}
+
+func (r ApiUnassignCaseRequest) Execute() (*http.Response, error) {
+	return r.ApiService.UnassignCaseExecute(r)
+}
+
+/*
+UnassignCase Remove access from case
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param caseId ID of the case to comment
+	@return ApiUnassignCaseRequest
+*/
+func (a *DefaultApiService) UnassignCase(ctx context.Context, caseId string) ApiUnassignCaseRequest {
+	return ApiUnassignCaseRequest{
+		ApiService: a,
+		ctx:        ctx,
+		caseId:     caseId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultApiService) UnassignCaseExecute(r ApiUnassignCaseRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod = http.MethodPost
+		localVarPostBody   interface{}
+		formFiles          []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.UnassignCase")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/case/{caseId}/unassign"
+	localVarPath = strings.Replace(localVarPath, "{"+"caseId"+"}", url.PathEscape(parameterToString(r.caseId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.unssignCaseRequest == nil {
+		return nil, reportError("unssignCaseRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.unssignCaseRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err

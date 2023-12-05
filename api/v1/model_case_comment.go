@@ -18,8 +18,13 @@ import (
 type CaseComment struct {
 	Id        string        `json:"id"`
 	CreatedAt int64         `json:"created_at"`
+	UpdatedAt *int64        `json:"updated_at,omitempty"`
 	AuthorRef UserReference `json:"author_ref"`
-	Content   string        `json:"content"`
+	// Indicates if the comment has been deleted
+	Deleted *bool `json:"deleted,omitempty"`
+	// List of paries that should have access to the comment
+	Visibility []CaseParty `json:"visibility,omitempty"`
+	Content    string      `json:"content"`
 	// list of attachments that should be linked to the comment
 	Attachments []Attachment `json:"attachments,omitempty"`
 }
@@ -93,6 +98,38 @@ func (o *CaseComment) SetCreatedAt(v int64) {
 	o.CreatedAt = v
 }
 
+// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
+func (o *CaseComment) GetUpdatedAt() int64 {
+	if o == nil || o.UpdatedAt == nil {
+		var ret int64
+		return ret
+	}
+	return *o.UpdatedAt
+}
+
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CaseComment) GetUpdatedAtOk() (*int64, bool) {
+	if o == nil || o.UpdatedAt == nil {
+		return nil, false
+	}
+	return o.UpdatedAt, true
+}
+
+// HasUpdatedAt returns a boolean if a field has been set.
+func (o *CaseComment) HasUpdatedAt() bool {
+	if o != nil && o.UpdatedAt != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetUpdatedAt gets a reference to the given int64 and assigns it to the UpdatedAt field.
+func (o *CaseComment) SetUpdatedAt(v int64) {
+	o.UpdatedAt = &v
+}
+
 // GetAuthorRef returns the AuthorRef field value
 func (o *CaseComment) GetAuthorRef() UserReference {
 	if o == nil {
@@ -115,6 +152,70 @@ func (o *CaseComment) GetAuthorRefOk() (*UserReference, bool) {
 // SetAuthorRef sets field value
 func (o *CaseComment) SetAuthorRef(v UserReference) {
 	o.AuthorRef = v
+}
+
+// GetDeleted returns the Deleted field value if set, zero value otherwise.
+func (o *CaseComment) GetDeleted() bool {
+	if o == nil || o.Deleted == nil {
+		var ret bool
+		return ret
+	}
+	return *o.Deleted
+}
+
+// GetDeletedOk returns a tuple with the Deleted field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CaseComment) GetDeletedOk() (*bool, bool) {
+	if o == nil || o.Deleted == nil {
+		return nil, false
+	}
+	return o.Deleted, true
+}
+
+// HasDeleted returns a boolean if a field has been set.
+func (o *CaseComment) HasDeleted() bool {
+	if o != nil && o.Deleted != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetDeleted gets a reference to the given bool and assigns it to the Deleted field.
+func (o *CaseComment) SetDeleted(v bool) {
+	o.Deleted = &v
+}
+
+// GetVisibility returns the Visibility field value if set, zero value otherwise.
+func (o *CaseComment) GetVisibility() []CaseParty {
+	if o == nil || o.Visibility == nil {
+		var ret []CaseParty
+		return ret
+	}
+	return o.Visibility
+}
+
+// GetVisibilityOk returns a tuple with the Visibility field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CaseComment) GetVisibilityOk() ([]CaseParty, bool) {
+	if o == nil || o.Visibility == nil {
+		return nil, false
+	}
+	return o.Visibility, true
+}
+
+// HasVisibility returns a boolean if a field has been set.
+func (o *CaseComment) HasVisibility() bool {
+	if o != nil && o.Visibility != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetVisibility gets a reference to the given []CaseParty and assigns it to the Visibility field.
+func (o *CaseComment) SetVisibility(v []CaseParty) {
+	o.Visibility = v
 }
 
 // GetContent returns the Content field value
@@ -181,8 +282,17 @@ func (o CaseComment) MarshalJSON() ([]byte, error) {
 	if true {
 		toSerialize["created_at"] = o.CreatedAt
 	}
+	if o.UpdatedAt != nil {
+		toSerialize["updated_at"] = o.UpdatedAt
+	}
 	if true {
 		toSerialize["author_ref"] = o.AuthorRef
+	}
+	if o.Deleted != nil {
+		toSerialize["deleted"] = o.Deleted
+	}
+	if o.Visibility != nil {
+		toSerialize["visibility"] = o.Visibility
 	}
 	if true {
 		toSerialize["content"] = o.Content

@@ -16,12 +16,10 @@ import (
 
 // UpdateCaseStatusRequest All the information required for updating the status of a case
 type UpdateCaseStatusRequest struct {
-	Status   *CaseStatusEnum `json:"status,omitempty"`
+	Action   *CaseActionEnum `json:"action,omitempty"`
 	Assignee *CaseAssignee   `json:"assignee,omitempty"`
-	// optional comment that can be provided with the status change
-	Comment *string `json:"comment,omitempty"`
-	// list of attachments that should be linked to the comment
-	Attachments []Attachment `json:"attachments,omitempty"`
+	// Feedback that is provided from the party executing the action. This  information will be visible only to the property manager
+	Feedback []CaseFeedbackResponse `json:"feedback,omitempty"`
 }
 
 // NewUpdateCaseStatusRequest instantiates a new UpdateCaseStatusRequest object
@@ -41,36 +39,36 @@ func NewUpdateCaseStatusRequestWithDefaults() *UpdateCaseStatusRequest {
 	return &this
 }
 
-// GetStatus returns the Status field value if set, zero value otherwise.
-func (o *UpdateCaseStatusRequest) GetStatus() CaseStatusEnum {
-	if o == nil || o.Status == nil {
-		var ret CaseStatusEnum
+// GetAction returns the Action field value if set, zero value otherwise.
+func (o *UpdateCaseStatusRequest) GetAction() CaseActionEnum {
+	if o == nil || o.Action == nil {
+		var ret CaseActionEnum
 		return ret
 	}
-	return *o.Status
+	return *o.Action
 }
 
-// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
+// GetActionOk returns a tuple with the Action field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UpdateCaseStatusRequest) GetStatusOk() (*CaseStatusEnum, bool) {
-	if o == nil || o.Status == nil {
+func (o *UpdateCaseStatusRequest) GetActionOk() (*CaseActionEnum, bool) {
+	if o == nil || o.Action == nil {
 		return nil, false
 	}
-	return o.Status, true
+	return o.Action, true
 }
 
-// HasStatus returns a boolean if a field has been set.
-func (o *UpdateCaseStatusRequest) HasStatus() bool {
-	if o != nil && o.Status != nil {
+// HasAction returns a boolean if a field has been set.
+func (o *UpdateCaseStatusRequest) HasAction() bool {
+	if o != nil && o.Action != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetStatus gets a reference to the given CaseStatusEnum and assigns it to the Status field.
-func (o *UpdateCaseStatusRequest) SetStatus(v CaseStatusEnum) {
-	o.Status = &v
+// SetAction gets a reference to the given CaseActionEnum and assigns it to the Action field.
+func (o *UpdateCaseStatusRequest) SetAction(v CaseActionEnum) {
+	o.Action = &v
 }
 
 // GetAssignee returns the Assignee field value if set, zero value otherwise.
@@ -105,83 +103,48 @@ func (o *UpdateCaseStatusRequest) SetAssignee(v CaseAssignee) {
 	o.Assignee = &v
 }
 
-// GetComment returns the Comment field value if set, zero value otherwise.
-func (o *UpdateCaseStatusRequest) GetComment() string {
-	if o == nil || o.Comment == nil {
-		var ret string
+// GetFeedback returns the Feedback field value if set, zero value otherwise.
+func (o *UpdateCaseStatusRequest) GetFeedback() []CaseFeedbackResponse {
+	if o == nil || o.Feedback == nil {
+		var ret []CaseFeedbackResponse
 		return ret
 	}
-	return *o.Comment
+	return o.Feedback
 }
 
-// GetCommentOk returns a tuple with the Comment field value if set, nil otherwise
+// GetFeedbackOk returns a tuple with the Feedback field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UpdateCaseStatusRequest) GetCommentOk() (*string, bool) {
-	if o == nil || o.Comment == nil {
+func (o *UpdateCaseStatusRequest) GetFeedbackOk() ([]CaseFeedbackResponse, bool) {
+	if o == nil || o.Feedback == nil {
 		return nil, false
 	}
-	return o.Comment, true
+	return o.Feedback, true
 }
 
-// HasComment returns a boolean if a field has been set.
-func (o *UpdateCaseStatusRequest) HasComment() bool {
-	if o != nil && o.Comment != nil {
+// HasFeedback returns a boolean if a field has been set.
+func (o *UpdateCaseStatusRequest) HasFeedback() bool {
+	if o != nil && o.Feedback != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetComment gets a reference to the given string and assigns it to the Comment field.
-func (o *UpdateCaseStatusRequest) SetComment(v string) {
-	o.Comment = &v
-}
-
-// GetAttachments returns the Attachments field value if set, zero value otherwise.
-func (o *UpdateCaseStatusRequest) GetAttachments() []Attachment {
-	if o == nil || o.Attachments == nil {
-		var ret []Attachment
-		return ret
-	}
-	return o.Attachments
-}
-
-// GetAttachmentsOk returns a tuple with the Attachments field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *UpdateCaseStatusRequest) GetAttachmentsOk() ([]Attachment, bool) {
-	if o == nil || o.Attachments == nil {
-		return nil, false
-	}
-	return o.Attachments, true
-}
-
-// HasAttachments returns a boolean if a field has been set.
-func (o *UpdateCaseStatusRequest) HasAttachments() bool {
-	if o != nil && o.Attachments != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetAttachments gets a reference to the given []Attachment and assigns it to the Attachments field.
-func (o *UpdateCaseStatusRequest) SetAttachments(v []Attachment) {
-	o.Attachments = v
+// SetFeedback gets a reference to the given []CaseFeedbackResponse and assigns it to the Feedback field.
+func (o *UpdateCaseStatusRequest) SetFeedback(v []CaseFeedbackResponse) {
+	o.Feedback = v
 }
 
 func (o UpdateCaseStatusRequest) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Status != nil {
-		toSerialize["status"] = o.Status
+	if o.Action != nil {
+		toSerialize["action"] = o.Action
 	}
 	if o.Assignee != nil {
 		toSerialize["assignee"] = o.Assignee
 	}
-	if o.Comment != nil {
-		toSerialize["comment"] = o.Comment
-	}
-	if o.Attachments != nil {
-		toSerialize["attachments"] = o.Attachments
+	if o.Feedback != nil {
+		toSerialize["feedback"] = o.Feedback
 	}
 	return json.Marshal(toSerialize)
 }

@@ -15,31 +15,51 @@ import (
 	"fmt"
 )
 
-// CaseStatusEnum the model 'CaseStatusEnum'
+// CaseStatusEnum The list of statuses that a case can be in as a result of a status change. Each status is a result of a action, where some statuses can be reached from multiple actions being triggered.
 type CaseStatusEnum string
 
 // List of CaseStatusEnum
 const (
-	CASESTATUSENUM_OPEN         CaseStatusEnum = "OPEN"
-	CASESTATUSENUM_FEEDBACK     CaseStatusEnum = "FEEDBACK"
-	CASESTATUSENUM_ACKNOWLEDGED CaseStatusEnum = "ACKNOWLEDGED"
-	CASESTATUSENUM_ASSIGNED     CaseStatusEnum = "ASSIGNED"
-	CASESTATUSENUM_INPROGRESS   CaseStatusEnum = "INPROGRESS"
-	CASESTATUSENUM_RESOLVED     CaseStatusEnum = "RESOLVED"
-	CASESTATUSENUM_REJECTED     CaseStatusEnum = "REJECTED"
-	CASESTATUSENUM_REOPENED     CaseStatusEnum = "REOPENED"
+	CASESTATUSENUM_ACKNOWLEDGED       CaseStatusEnum = "ACKNOWLEDGED"
+	CASESTATUSENUM_ANY                CaseStatusEnum = "ANY"
+	CASESTATUSENUM_ARCHIVED           CaseStatusEnum = "ARCHIVED"
+	CASESTATUSENUM_AWAITING_ACTION    CaseStatusEnum = "AWAITING_ACTION"
+	CASESTATUSENUM_CANCELLED          CaseStatusEnum = "CANCELLED"
+	CASESTATUSENUM_FEEDBACK_REQUESTED CaseStatusEnum = "FEEDBACK_REQUESTED"
+	CASESTATUSENUM_IDLE               CaseStatusEnum = "IDLE"
+	CASESTATUSENUM_IN_PROGRESS        CaseStatusEnum = "IN_PROGRESS"
+	CASESTATUSENUM_OPEN               CaseStatusEnum = "OPEN"
+	CASESTATUSENUM_REJECTED           CaseStatusEnum = "REJECTED"
+	CASESTATUSENUM_REOPENED           CaseStatusEnum = "REOPENED"
+	CASESTATUSENUM_RESOLVED           CaseStatusEnum = "RESOLVED"
+	CASESTATUSENUM_WORK_ACCEPTED      CaseStatusEnum = "WORK_ACCEPTED"
+	CASESTATUSENUM_WORK_COMPLETED     CaseStatusEnum = "WORK_COMPLETED"
+	CASESTATUSENUM_WORK_CANCELLED     CaseStatusEnum = "WORK_CANCELLED"
+	CASESTATUSENUM_WORK_REJECTED      CaseStatusEnum = "WORK_REJECTED"
+	CASESTATUSENUM_WORK_REQUESTED     CaseStatusEnum = "WORK_REQUESTED"
+	CASESTATUSENUM_WORK_SCHEDULED     CaseStatusEnum = "WORK_SCHEDULED"
 )
 
 // All allowed values of CaseStatusEnum enum
 var AllowedCaseStatusEnumEnumValues = []CaseStatusEnum{
-	"OPEN",
-	"FEEDBACK",
 	"ACKNOWLEDGED",
-	"ASSIGNED",
-	"INPROGRESS",
-	"RESOLVED",
+	"ANY",
+	"ARCHIVED",
+	"AWAITING_ACTION",
+	"CANCELLED",
+	"FEEDBACK_REQUESTED",
+	"IDLE",
+	"IN_PROGRESS",
+	"OPEN",
 	"REJECTED",
 	"REOPENED",
+	"RESOLVED",
+	"WORK_ACCEPTED",
+	"WORK_COMPLETED",
+	"WORK_CANCELLED",
+	"WORK_REJECTED",
+	"WORK_REQUESTED",
+	"WORK_SCHEDULED",
 }
 
 func (v *CaseStatusEnum) UnmarshalJSON(src []byte) error {

@@ -19,6 +19,8 @@ type CreateCaseCommentRequest struct {
 	Content string `json:"content"`
 	// list of attachments that should be linked to the comment
 	Attachments []Attachment `json:"attachments,omitempty"`
+	// List of paries that should have access to the comment
+	Visibility []CaseParty `json:"visibility,omitempty"`
 }
 
 // NewCreateCaseCommentRequest instantiates a new CreateCaseCommentRequest object
@@ -95,6 +97,38 @@ func (o *CreateCaseCommentRequest) SetAttachments(v []Attachment) {
 	o.Attachments = v
 }
 
+// GetVisibility returns the Visibility field value if set, zero value otherwise.
+func (o *CreateCaseCommentRequest) GetVisibility() []CaseParty {
+	if o == nil || o.Visibility == nil {
+		var ret []CaseParty
+		return ret
+	}
+	return o.Visibility
+}
+
+// GetVisibilityOk returns a tuple with the Visibility field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateCaseCommentRequest) GetVisibilityOk() ([]CaseParty, bool) {
+	if o == nil || o.Visibility == nil {
+		return nil, false
+	}
+	return o.Visibility, true
+}
+
+// HasVisibility returns a boolean if a field has been set.
+func (o *CreateCaseCommentRequest) HasVisibility() bool {
+	if o != nil && o.Visibility != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetVisibility gets a reference to the given []CaseParty and assigns it to the Visibility field.
+func (o *CreateCaseCommentRequest) SetVisibility(v []CaseParty) {
+	o.Visibility = v
+}
+
 func (o CreateCaseCommentRequest) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if true {
@@ -102,6 +136,9 @@ func (o CreateCaseCommentRequest) MarshalJSON() ([]byte, error) {
 	}
 	if o.Attachments != nil {
 		toSerialize["attachments"] = o.Attachments
+	}
+	if o.Visibility != nil {
+		toSerialize["visibility"] = o.Visibility
 	}
 	return json.Marshal(toSerialize)
 }

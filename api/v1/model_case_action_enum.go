@@ -15,27 +15,57 @@ import (
 	"fmt"
 )
 
-// CaseActionEnum the model 'CaseActionEnum'
+// CaseActionEnum The list of actions that can be performed on a case. Each action has a  predetermined target status that is going to be set once the action is performed.
 type CaseActionEnum string
 
 // List of CaseActionEnum
 const (
-	CASEACTIONENUM_CREATED        CaseActionEnum = "CREATED"
-	CASEACTIONENUM_UPDATED        CaseActionEnum = "UPDATED"
-	CASEACTIONENUM_COMMENTED      CaseActionEnum = "COMMENTED"
-	CASEACTIONENUM_STATUS_CHANGED CaseActionEnum = "STATUS_CHANGED"
-	CASEACTIONENUM_ASSIGNED       CaseActionEnum = "ASSIGNED"
-	CASEACTIONENUM_ARCHIVED       CaseActionEnum = "ARCHIVED"
+	CASEACTIONENUM_ACCEPT_WORK      CaseActionEnum = "ACCEPT_WORK"
+	CASEACTIONENUM_ACKNOWLEDGE      CaseActionEnum = "ACKNOWLEDGE"
+	CASEACTIONENUM_ARCHIVE          CaseActionEnum = "ARCHIVE"
+	CASEACTIONENUM_ASSIGN           CaseActionEnum = "ASSIGN"
+	CASEACTIONENUM_CANCEL           CaseActionEnum = "CANCEL"
+	CASEACTIONENUM_CANCEL_WORK      CaseActionEnum = "CANCEL_WORK"
+	CASEACTIONENUM_COMMENT          CaseActionEnum = "COMMENT"
+	CASEACTIONENUM_FINISH_WORK      CaseActionEnum = "FINISH_WORK"
+	CASEACTIONENUM_OPEN             CaseActionEnum = "OPEN"
+	CASEACTIONENUM_PAUSE_WORK       CaseActionEnum = "PAUSE_WORK"
+	CASEACTIONENUM_REJECT           CaseActionEnum = "REJECT"
+	CASEACTIONENUM_REJECT_WORK      CaseActionEnum = "REJECT_WORK"
+	CASEACTIONENUM_REOPEN           CaseActionEnum = "REOPEN"
+	CASEACTIONENUM_REQUEST_FEEDBACK CaseActionEnum = "REQUEST_FEEDBACK"
+	CASEACTIONENUM_REQUEST_WORK     CaseActionEnum = "REQUEST_WORK"
+	CASEACTIONENUM_RESCHEDULE_WORK  CaseActionEnum = "RESCHEDULE_WORK"
+	CASEACTIONENUM_RESOLVE          CaseActionEnum = "RESOLVE"
+	CASEACTIONENUM_SCHEDULE_WORK    CaseActionEnum = "SCHEDULE_WORK"
+	CASEACTIONENUM_START_WORK       CaseActionEnum = "START_WORK"
+	CASEACTIONENUM_UNASSIGN         CaseActionEnum = "UNASSIGN"
+	CASEACTIONENUM_UPDATE           CaseActionEnum = "UPDATE"
 )
 
 // All allowed values of CaseActionEnum enum
 var AllowedCaseActionEnumEnumValues = []CaseActionEnum{
-	"CREATED",
-	"UPDATED",
-	"COMMENTED",
-	"STATUS_CHANGED",
-	"ASSIGNED",
-	"ARCHIVED",
+	"ACCEPT_WORK",
+	"ACKNOWLEDGE",
+	"ARCHIVE",
+	"ASSIGN",
+	"CANCEL",
+	"CANCEL_WORK",
+	"COMMENT",
+	"FINISH_WORK",
+	"OPEN",
+	"PAUSE_WORK",
+	"REJECT",
+	"REJECT_WORK",
+	"REOPEN",
+	"REQUEST_FEEDBACK",
+	"REQUEST_WORK",
+	"RESCHEDULE_WORK",
+	"RESOLVE",
+	"SCHEDULE_WORK",
+	"START_WORK",
+	"UNASSIGN",
+	"UPDATE",
 }
 
 func (v *CaseActionEnum) UnmarshalJSON(src []byte) error {

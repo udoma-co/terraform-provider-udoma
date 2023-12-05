@@ -21,6 +21,7 @@ type CustomerScriptScope string
 // List of CustomerScriptScope
 const (
 	CUSTOMERSCRIPTSCOPE_GLOBAL     CustomerScriptScope = "GLOBAL"
+	CUSTOMERSCRIPTSCOPE_DOCUMENT   CustomerScriptScope = "DOCUMENT"
 	CUSTOMERSCRIPTSCOPE_WORKFLOW   CustomerScriptScope = "WORKFLOW"
 	CUSTOMERSCRIPTSCOPE_REPORT     CustomerScriptScope = "REPORT"
 	CUSTOMERSCRIPTSCOPE_VALIDATION CustomerScriptScope = "VALIDATION"
@@ -29,6 +30,7 @@ const (
 // All allowed values of CustomerScriptScope enum
 var AllowedCustomerScriptScopeEnumValues = []CustomerScriptScope{
 	"GLOBAL",
+	"DOCUMENT",
 	"WORKFLOW",
 	"REPORT",
 	"VALIDATION",

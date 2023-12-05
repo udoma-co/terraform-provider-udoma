@@ -393,13 +393,9 @@ paths:
         "200":
           content:
             application/json:
-              example:
-                timestamp: 1615715028902
-                status: OPEN
-                assignee_ref: o-vrk4PKbN8C676cHZuhGQDc
               schema:
                 $ref: '#/components/schemas/CaseStatus'
-          description: Successfully updated status
+          description: Successfully updated statusxw
         "400":
           content: {}
           description: Invalid input provided
@@ -478,9 +474,38 @@ paths:
           content: {}
           description: Internal server error
       summary: Add new case comment
-  /case/{caseId}/forward:
+  /case/{caseId}/assign:
     post:
-      operationId: forwardCase
+      operationId: assignCase
+      parameters:
+      - description: ID of the case to assign
+        explode: false
+        in: path
+        name: caseId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssignCaseRequest'
+        required: true
+      responses:
+        "200":
+          content: {}
+          description: Operation successfully performed
+        "403":
+          content: {}
+          description: Access denied
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Assign case to a service provider
+  /case/{caseId}/unassign:
+    post:
+      operationId: unassignCase
       parameters:
       - description: ID of the case to comment
         explode: false
@@ -494,7 +519,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CaseForwardRequest'
+              $ref: '#/components/schemas/UnssignCaseRequest'
         required: true
       responses:
         "200":
@@ -506,10 +531,9 @@ paths:
         "500":
           content: {}
           description: Internal server error
-      summary: Forward case details to a service provider
+      summary: Remove access from case
   /case/{caseId}/comment/{commentId}:
     delete:
-      description: Delete the comment with all it's attachments
       operationId: deleteCaseComment
       parameters:
       - description: ID of the related case
@@ -541,7 +565,7 @@ paths:
         "500":
           content: {}
           description: Internal server error
-      summary: Delete a comment
+      summary: Mark a case comment as deleted
     get:
       description: Get all details of the comment
       operationId: getCaseComment
@@ -6031,7 +6055,8 @@ components:
       example:
         template: template
         comments:
-        - attachments:
+        - deleted: true
+          attachments:
           - ref: ref
             thumbnail: thumbnail
             created: 0
@@ -6048,7 +6073,18 @@ components:
             id: id
             file_size: 6
             url: url
+          updated_at: 2
+          visibility:
+          - ref: ref
+            role: null
+            name: name
+            ref_type: ref_type
+          - ref: ref
+            role: null
+            name: name
+            ref_type: ref_type
           author_ref:
+            user_role: null
             user_id: user_id
             contact_data:
               address:
@@ -6065,10 +6101,11 @@ components:
               title: title
               first_name: first_name
               email: email
-          created_at: 2
+          created_at: 5
           id: id
           content: content
-        - attachments:
+        - deleted: true
+          attachments:
           - ref: ref
             thumbnail: thumbnail
             created: 0
@@ -6085,7 +6122,18 @@ components:
             id: id
             file_size: 6
             url: url
+          updated_at: 2
+          visibility:
+          - ref: ref
+            role: null
+            name: name
+            ref_type: ref_type
+          - ref: ref
+            role: null
+            name: name
+            ref_type: ref_type
           author_ref:
+            user_role: null
             user_id: user_id
             contact_data:
               address:
@@ -6102,14 +6150,14 @@ components:
               title: title
               first_name: first_name
               email: email
-          created_at: 2
+          created_at: 5
           id: id
           content: content
         data:
           key: ""
         status_history:
-        - comment_ref: comment_ref
-          author_ref:
+        - author_ref:
+            user_role: null
             user_id: user_id
             contact_data:
               address:
@@ -6131,10 +6179,10 @@ components:
           assignee:
             contact_ref: contact_ref
             account_ref: 5
-          timestamp: 5
+          timestamp: 1
           status: null
-        - comment_ref: comment_ref
-          author_ref:
+        - author_ref:
+            user_role: null
             user_id: user_id
             contact_data:
               address:
@@ -6156,9 +6204,78 @@ components:
           assignee:
             contact_ref: contact_ref
             account_ref: 5
-          timestamp: 5
+          timestamp: 1
           status: null
         created_at: 0
+        feedback:
+        - form_data:
+            key: ""
+          visibility:
+          - ref: ref
+            role: null
+            name: name
+            ref_type: ref_type
+          - ref: ref
+            role: null
+            name: name
+            ref_type: ref_type
+          author_ref:
+            user_role: null
+            user_id: user_id
+            contact_data:
+              address:
+                line1: 1 ZestLabs Blvd
+                line2: CSS District
+                city: Mannheim
+                postcode: 680001
+                province: Baden-Wuerttemberg
+                country: Germany
+              last_name: last_name
+              company: company
+              phone_number: phone_number
+              id: id
+              title: title
+              first_name: first_name
+              email: email
+          created_at: 7
+          action: null
+          feedback_id: feedback_id
+          id: id
+          source_status: null
+        - form_data:
+            key: ""
+          visibility:
+          - ref: ref
+            role: null
+            name: name
+            ref_type: ref_type
+          - ref: ref
+            role: null
+            name: name
+            ref_type: ref_type
+          author_ref:
+            user_role: null
+            user_id: user_id
+            contact_data:
+              address:
+                line1: 1 ZestLabs Blvd
+                line2: CSS District
+                city: Mannheim
+                postcode: 680001
+                province: Baden-Wuerttemberg
+                country: Germany
+              last_name: last_name
+              company: company
+              phone_number: phone_number
+              id: id
+              title: title
+              first_name: first_name
+              email: email
+          created_at: 7
+          action: null
+          feedback_id: feedback_id
+          id: id
+          source_status: null
         archived: true
         property_address:
           line1: 1 ZestLabs Blvd
@@ -6171,10 +6288,14 @@ components:
         property_ref: property_ref
         name: name
         parties:
-        - account_ref: 1
-          type: null
-        - account_ref: 1
-          type: null
+        - ref: ref
+          role: null
+          name: name
+          ref_type: ref_type
+        - ref: ref
+          role: null
+          name: name
+          ref_type: ref_type
         id: id
         assignee: assignee
         status: null
@@ -6219,6 +6340,12 @@ components:
           items:
             $ref: '#/components/schemas/CaseComment'
           type: array
+        feedback:
+          description: |
+            List of feedback that was provided by the parties when changing the status of the case
+          items:
+            $ref: '#/components/schemas/CaseFeedbackEntry'
+          type: array
         assignee:
           type: string
         data:
@@ -6228,44 +6355,60 @@ components:
           type: object
       type: object
     CaseStatusEnum:
+      description: "The list of statuses that a case can be in as a result of a status\
+        \ change. Each status is a result of a action, where some statuses can be\
+        \ reached from multiple actions being triggered. \n"
       enum:
-      - OPEN
-      - FEEDBACK
       - ACKNOWLEDGED
-      - ASSIGNED
-      - INPROGRESS
-      - RESOLVED
+      - ANY
+      - ARCHIVED
+      - AWAITING_ACTION
+      - CANCELLED
+      - FEEDBACK_REQUESTED
+      - IDLE
+      - IN_PROGRESS
+      - OPEN
       - REJECTED
       - REOPENED
+      - RESOLVED
+      - WORK_ACCEPTED
+      - WORK_COMPLETED
+      - WORK_CANCELLED
+      - WORK_REJECTED
+      - WORK_REQUESTED
+      - WORK_SCHEDULED
       type: string
     CaseParty:
       description: CaseParty indicates that the referenced account has access to the
         case.
       example:
-        account_ref: 1
-        type: null
+        ref: ref
+        role: null
+        name: name
+        ref_type: ref_type
       properties:
-        account_ref:
-          description: the ID of the account that was granted access
-          format: int64
-          type: integer
-        type:
-          $ref: '#/components/schemas/CasePartyTypeEnum'
+        role:
+          $ref: '#/components/schemas/UserTypeEnum'
+        ref_type:
+          description: |
+            The type of the reference. Can be either "account" or "external_user". If not set, it will be assumed to be "account"
+          type: string
+        ref:
+          description: the ID of the referenced entity (either string or int64)
+          type: string
+        name:
+          description: |
+            The name of the party, derived from the referenced entity
+          type: string
       required:
       - account_ref
       - type
       type: object
-    CasePartyTypeEnum:
-      enum:
-      - TENANT
-      - MANAGER
-      - SERVICE_PROVIDER
-      type: string
     CaseStatus:
       description: CaseStatus represents the update to the status of a case
       example:
-        comment_ref: comment_ref
         author_ref:
+          user_role: null
           user_id: user_id
           contact_data:
             address:
@@ -6287,7 +6430,7 @@ components:
         assignee:
           contact_ref: contact_ref
           account_ref: 5
-        timestamp: 5
+        timestamp: 1
         status: null
       properties:
         id:
@@ -6304,22 +6447,36 @@ components:
           $ref: '#/components/schemas/CaseStatusEnum'
         assignee:
           $ref: '#/components/schemas/CaseAssignee'
-        comment_ref:
-          description: ID of a comment that was provided with the status change
-          type: string
       required:
       - id
       - status
       - timestamp
       type: object
     CaseActionEnum:
+      description: |
+        The list of actions that can be performed on a case. Each action has a  predetermined target status that is going to be set once the action is performed.
       enum:
-      - CREATED
-      - UPDATED
-      - COMMENTED
-      - STATUS_CHANGED
-      - ASSIGNED
-      - ARCHIVED
+      - ACCEPT_WORK
+      - ACKNOWLEDGE
+      - ARCHIVE
+      - ASSIGN
+      - CANCEL
+      - CANCEL_WORK
+      - COMMENT
+      - FINISH_WORK
+      - OPEN
+      - PAUSE_WORK
+      - REJECT
+      - REJECT_WORK
+      - REOPEN
+      - REQUEST_FEEDBACK
+      - REQUEST_WORK
+      - RESCHEDULE_WORK
+      - RESOLVE
+      - SCHEDULE_WORK
+      - START_WORK
+      - UNASSIGN
+      - UPDATE
       type: string
     CaseAssignee:
       description: Indicates who is currently assigned to work on the case.
@@ -6332,13 +6489,14 @@ components:
           format: int64
           type: integer
         contact_ref:
-          description: "Set in case the assignee is a service provider, without an\
-            \ account on the plattform"
+          description: |
+            Set in case the assignee is a service provider or tenant, without an  account on the plattform
           type: string
       type: object
     CaseComment:
       description: Comment represents a single user comment on a case
       example:
+        deleted: true
         attachments:
         - ref: ref
           thumbnail: thumbnail
@@ -6356,7 +6514,18 @@ components:
           id: id
           file_size: 6
           url: url
+        updated_at: 2
+        visibility:
+        - ref: ref
+          role: null
+          name: name
+          ref_type: ref_type
+        - ref: ref
+          role: null
+          name: name
+          ref_type: ref_type
         author_ref:
+          user_role: null
           user_id: user_id
           contact_data:
             address:
@@ -6373,7 +6542,7 @@ components:
             title: title
             first_name: first_name
             email: email
-        created_at: 2
+        created_at: 5
         id: id
         content: content
       properties:
@@ -6382,8 +6551,20 @@ components:
         created_at:
           format: int64
           type: integer
+        updated_at:
+          format: int64
+          type: integer
         author_ref:
           $ref: '#/components/schemas/UserReference'
+        deleted:
+          description: Indicates if the comment has been deleted
+          type: boolean
+        visibility:
+          description: |
+            List of paries that should have access to the comment
+          items:
+            $ref: '#/components/schemas/CaseParty'
+          type: array
         content:
           type: string
         attachments:
@@ -6397,6 +6578,74 @@ components:
       - content
       - created_at
       - id
+      type: object
+    CaseFeedbackEntry:
+      description: |
+        Contains the feedback that was provided by a party when changing the status of a case.
+      example:
+        form_data:
+          key: ""
+        visibility:
+        - ref: ref
+          role: null
+          name: name
+          ref_type: ref_type
+        - ref: ref
+          role: null
+          name: name
+          ref_type: ref_type
+        author_ref:
+          user_role: null
+          user_id: user_id
+          contact_data:
+            address:
+              line1: 1 ZestLabs Blvd
+              line2: CSS District
+              city: Mannheim
+              postcode: 680001
+              province: Baden-Wuerttemberg
+              country: Germany
+            last_name: last_name
+            company: company
+            phone_number: phone_number
+            id: id
+            title: title
+            first_name: first_name
+            email: email
+        created_at: 7
+        action: null
+        feedback_id: feedback_id
+        id: id
+        source_status: null
+      properties:
+        id:
+          description: |
+            The unique ID of the feedback entry
+          type: string
+        created_at:
+          format: int64
+          type: integer
+        author_ref:
+          $ref: '#/components/schemas/UserReference'
+        source_status:
+          $ref: '#/components/schemas/CaseStatusEnum'
+        action:
+          $ref: '#/components/schemas/CaseActionEnum'
+        feedback_id:
+          description: |
+            The ID of the feedback entry, used to map responses against the config
+          type: string
+        visibility:
+          description: |
+            List of paries that should have access to the comment
+          items:
+            $ref: '#/components/schemas/CaseParty'
+          type: array
+        form_data:
+          additionalProperties: true
+          description: |
+            Form data that was provided by the party executing the action.
+          type: object
       type: object
     UpdateCaseRequest:
       description: All attributes of a case that can be updated
@@ -6424,47 +6673,98 @@ components:
     UpdateCaseStatusRequest:
       description: All the information required for updating the status of a case
       example:
-        attachments:
-        - ref: ref
-          thumbnail: thumbnail
-          created: 0
-          file_type: file_type
-          file_name: file_name
+        feedback:
+        - form_data:
+            key: ""
+          comment: comment
           id: id
-          file_size: 6
-          url: url
-        - ref: ref
-          thumbnail: thumbnail
-          created: 0
-          file_type: file_type
-          file_name: file_name
+          attachment_refs:
+          - attachment_refs
+          - attachment_refs
+        - form_data:
+            key: ""
+          comment: comment
           id: id
-          file_size: 6
-          url: url
-        comment: comment
+          attachment_refs:
+          - attachment_refs
+          - attachment_refs
+        action: null
         assignee:
           contact_ref: contact_ref
           account_ref: 5
-        status: null
       properties:
-        status:
-          $ref: '#/components/schemas/CaseStatusEnum'
+        action:
+          $ref: '#/components/schemas/CaseActionEnum'
         assignee:
           $ref: '#/components/schemas/CaseAssignee'
-        comment:
-          description: optional comment that can be provided with the status change
-          type: string
-        attachments:
+        feedback:
           description: |
-            list of attachments that should be linked to the comment
+            Feedback that is provided from the party executing the action. This  information will be visible only to the property manager
           items:
-            $ref: '#/components/schemas/Attachment'
+            $ref: '#/components/schemas/CaseFeedbackResponse'
+          type: array
+      type: object
+    CaseFeedbackResponse:
+      description: |
+        Contains the feedback that was provided by a party when changing the status of a case.
+      example:
+        form_data:
+          key: ""
+        comment: comment
+        id: id
+        attachment_refs:
+        - attachment_refs
+        - attachment_refs
+      properties:
+        id:
+          description: |
+            The feedback ID that can be found in the case config
+          type: string
+        form_data:
+          additionalProperties: true
+          description: |
+            Form data that was provided by the party executing the action.
+          type: object
+        comment:
+          description: comment that was provided in case mode was 'comment'
+          type: string
+        attachment_refs:
+          description: |
+            list of IDs of attachments that were provided with the feedback, in case mode was 'comment'
+          items:
+            type: string
           type: array
       type: object
     CreateCaseCommentRequest:
       description: Request that will create a new comment for a case
       example:
-        content: "Thanks for the case, we will contact the electrician to have a look"
+        attachments:
+        - ref: ref
+          thumbnail: thumbnail
+          created: 0
+          file_type: file_type
+          file_name: file_name
+          id: id
+          file_size: 6
+          url: url
+        - ref: ref
+          thumbnail: thumbnail
+          created: 0
+          file_type: file_type
+          file_name: file_name
+          id: id
+          file_size: 6
+          url: url
+        visibility:
+        - ref: ref
+          role: null
+          name: name
+          ref_type: ref_type
+        - ref: ref
+          role: null
+          name: name
+          ref_type: ref_type
+        content: content
       properties:
         content:
           type: string
@@ -6474,15 +6774,22 @@ components:
           items:
             $ref: '#/components/schemas/Attachment'
           type: array
+        visibility:
+          description: |
+            List of paries that should have access to the comment
+          items:
+            $ref: '#/components/schemas/CaseParty'
+          type: array
       required:
       - content
       type: object
-    CaseForwardRequest:
+    AssignCaseRequest:
       description: input used to send out case information to service provider
       example:
         contact_ref: contact_ref
+        private_message: true
         language: language
-        text: text
+        message: message
         attachment_refs:
         - attachment_refs
         - attachment_refs
@@ -6491,13 +6798,30 @@ components:
           type: string
         language:
           type: string
-        text:
-          description: the content of the notification to be sent as an email body
+        message:
+          description: a message to be included in the notification to the service
+            provider
           type: string
+        private_message:
+          description: |
+            indicates if the message should be visible to the tenant or not
+          type: boolean
         attachment_refs:
           items:
             type: string
           type: array
+      type: object
+    UnssignCaseRequest:
+      description: Request used to remove a service provider from a case
+      example:
+        party:
+          ref: ref
+          role: null
+          name: name
+          ref_type: ref_type
+      properties:
+        party:
+          $ref: '#/components/schemas/CaseParty'
       type: object
     QueryCasesRequest:
       description: Request used to get cases by a user
@@ -6738,6 +7062,410 @@ components:
             message:
               key: message
             target: target
+        config:
+          reminders:
+          - schedule:
+            - 7
+            - 14
+            - 30
+            status: null
+          - schedule:
+            - 7
+            - 14
+            - 30
+            status: null
+          automatic_status_changes:
+          - schedule: 5
+            target_status: null
+            status: null
+          - schedule: 5
+            target_status: null
+            status: null
+          base_config: null
+          extend_default_status_config: true
+          status_config:
+          - feedback:
+            - mode: null
+              visibility:
+              - null
+              - null
+              form:
+                layout:
+                - ref_id: ref_id
+                  ref_type: ref_type
+                - ref_id: ref_id
+                  ref_type: ref_type
+                inputs:
+                - view_label:
+                    key: view_label
+                  ephemeral: true
+                  default_value: default_value
+                  attributes:
+                    key: attributes
+                  id: id
+                  label:
+                    key: label
+                  placeholder:
+                    key: placeholder
+                  type: type
+                  items:
+                  - items
+                  - items
+                  required: true
+                  target: target
+                - view_label:
+                    key: view_label
+                  ephemeral: true
+                  default_value: default_value
+                  attributes:
+                    key: attributes
+                  id: id
+                  label:
+                    key: label
+                  placeholder:
+                    key: placeholder
+                  type: type
+                  items:
+                  - items
+                  - items
+                  required: true
+                  target: target
+                groups:
+                - use_item_group: true
+                  bottom_divider: true
+                  top_divider: true
+                  min_size: 1
+                  id: id
+                  label:
+                    key: label
+                  type: type
+                  items:
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  info:
+                    key: info
+                  target: target
+                - use_item_group: true
+                  bottom_divider: true
+                  top_divider: true
+                  min_size: 1
+                  id: id
+                  label:
+                    key: label
+                  type: type
+                  items:
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  info:
+                    key: info
+                  target: target
+                validations:
+                - expression: expression
+                  id: id
+                  message:
+                    key: message
+                  target: target
+                - expression: expression
+                  id: id
+                  message:
+                    key: message
+                  target: target
+              id: id
+            - mode: null
+              visibility:
+              - null
+              - null
+              form:
+                layout:
+                - ref_id: ref_id
+                  ref_type: ref_type
+                - ref_id: ref_id
+                  ref_type: ref_type
+                inputs:
+                - view_label:
+                    key: view_label
+                  ephemeral: true
+                  default_value: default_value
+                  attributes:
+                    key: attributes
+                  id: id
+                  label:
+                    key: label
+                  placeholder:
+                    key: placeholder
+                  type: type
+                  items:
+                  - items
+                  - items
+                  required: true
+                  target: target
+                - view_label:
+                    key: view_label
+                  ephemeral: true
+                  default_value: default_value
+                  attributes:
+                    key: attributes
+                  id: id
+                  label:
+                    key: label
+                  placeholder:
+                    key: placeholder
+                  type: type
+                  items:
+                  - items
+                  - items
+                  required: true
+                  target: target
+                groups:
+                - use_item_group: true
+                  bottom_divider: true
+                  top_divider: true
+                  min_size: 1
+                  id: id
+                  label:
+                    key: label
+                  type: type
+                  items:
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  info:
+                    key: info
+                  target: target
+                - use_item_group: true
+                  bottom_divider: true
+                  top_divider: true
+                  min_size: 1
+                  id: id
+                  label:
+                    key: label
+                  type: type
+                  items:
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  info:
+                    key: info
+                  target: target
+                validations:
+                - expression: expression
+                  id: id
+                  message:
+                    key: message
+                  target: target
+                - expression: expression
+                  id: id
+                  message:
+                    key: message
+                  target: target
+              id: id
+            parties:
+            - null
+            - null
+            action: null
+            source_status:
+            - null
+            - null
+            notify:
+            - null
+            - null
+          - feedback:
+            - mode: null
+              visibility:
+              - null
+              - null
+              form:
+                layout:
+                - ref_id: ref_id
+                  ref_type: ref_type
+                - ref_id: ref_id
+                  ref_type: ref_type
+                inputs:
+                - view_label:
+                    key: view_label
+                  ephemeral: true
+                  default_value: default_value
+                  attributes:
+                    key: attributes
+                  id: id
+                  label:
+                    key: label
+                  placeholder:
+                    key: placeholder
+                  type: type
+                  items:
+                  - items
+                  - items
+                  required: true
+                  target: target
+                - view_label:
+                    key: view_label
+                  ephemeral: true
+                  default_value: default_value
+                  attributes:
+                    key: attributes
+                  id: id
+                  label:
+                    key: label
+                  placeholder:
+                    key: placeholder
+                  type: type
+                  items:
+                  - items
+                  - items
+                  required: true
+                  target: target
+                groups:
+                - use_item_group: true
+                  bottom_divider: true
+                  top_divider: true
+                  min_size: 1
+                  id: id
+                  label:
+                    key: label
+                  type: type
+                  items:
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  info:
+                    key: info
+                  target: target
+                - use_item_group: true
+                  bottom_divider: true
+                  top_divider: true
+                  min_size: 1
+                  id: id
+                  label:
+                    key: label
+                  type: type
+                  items:
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  info:
+                    key: info
+                  target: target
+                validations:
+                - expression: expression
+                  id: id
+                  message:
+                    key: message
+                  target: target
+                - expression: expression
+                  id: id
+                  message:
+                    key: message
+                  target: target
+              id: id
+            - mode: null
+              visibility:
+              - null
+              - null
+              form:
+                layout:
+                - ref_id: ref_id
+                  ref_type: ref_type
+                - ref_id: ref_id
+                  ref_type: ref_type
+                inputs:
+                - view_label:
+                    key: view_label
+                  ephemeral: true
+                  default_value: default_value
+                  attributes:
+                    key: attributes
+                  id: id
+                  label:
+                    key: label
+                  placeholder:
+                    key: placeholder
+                  type: type
+                  items:
+                  - items
+                  - items
+                  required: true
+                  target: target
+                - view_label:
+                    key: view_label
+                  ephemeral: true
+                  default_value: default_value
+                  attributes:
+                    key: attributes
+                  id: id
+                  label:
+                    key: label
+                  placeholder:
+                    key: placeholder
+                  type: type
+                  items:
+                  - items
+                  - items
+                  required: true
+                  target: target
+                groups:
+                - use_item_group: true
+                  bottom_divider: true
+                  top_divider: true
+                  min_size: 1
+                  id: id
+                  label:
+                    key: label
+                  type: type
+                  items:
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  info:
+                    key: info
+                  target: target
+                - use_item_group: true
+                  bottom_divider: true
+                  top_divider: true
+                  min_size: 1
+                  id: id
+                  label:
+                    key: label
+                  type: type
+                  items:
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  info:
+                    key: info
+                  target: target
+                validations:
+                - expression: expression
+                  id: id
+                  message:
+                    key: message
+                  target: target
+                - expression: expression
+                  id: id
+                  message:
+                    key: message
+                  target: target
+              id: id
+            parties:
+            - null
+            - null
+            action: null
+            source_status:
+            - null
+            - null
+            notify:
+            - null
+            - null
       properties:
         name:
           description: |
@@ -6768,6 +7496,828 @@ components:
           type: string
         custom_inputs:
           $ref: '#/components/schemas/CustomForm'
+        config:
+          $ref: '#/components/schemas/CaseConfig'
+      type: object
+    CaseConfig:
+      description: |
+        Defines custom behaviour of a case, based on the case template that was  used to create it.
+      example:
+        reminders:
+        - schedule:
+          - 7
+          - 14
+          - 30
+          status: null
+        - schedule:
+          - 7
+          - 14
+          - 30
+          status: null
+        automatic_status_changes:
+        - schedule: 5
+          target_status: null
+          status: null
+        - schedule: 5
+          target_status: null
+          status: null
+        base_config: null
+        extend_default_status_config: true
+        status_config:
+        - feedback:
+          - mode: null
+            visibility:
+            - null
+            - null
+            form:
+              layout:
+              - ref_id: ref_id
+                ref_type: ref_type
+              - ref_id: ref_id
+                ref_type: ref_type
+              inputs:
+              - view_label:
+                  key: view_label
+                ephemeral: true
+                default_value: default_value
+                attributes:
+                  key: attributes
+                id: id
+                label:
+                  key: label
+                placeholder:
+                  key: placeholder
+                type: type
+                items:
+                - items
+                - items
+                required: true
+                target: target
+              - view_label:
+                  key: view_label
+                ephemeral: true
+                default_value: default_value
+                attributes:
+                  key: attributes
+                id: id
+                label:
+                  key: label
+                placeholder:
+                  key: placeholder
+                type: type
+                items:
+                - items
+                - items
+                required: true
+                target: target
+              groups:
+              - use_item_group: true
+                bottom_divider: true
+                top_divider: true
+                min_size: 1
+                id: id
+                label:
+                  key: label
+                type: type
+                items:
+                - ref_id: ref_id
+                  ref_type: ref_type
+                - ref_id: ref_id
+                  ref_type: ref_type
+                info:
+                  key: info
+                target: target
+              - use_item_group: true
+                bottom_divider: true
+                top_divider: true
+                min_size: 1
+                id: id
+                label:
+                  key: label
+                type: type
+                items:
+                - ref_id: ref_id
+                  ref_type: ref_type
+                - ref_id: ref_id
+                  ref_type: ref_type
+                info:
+                  key: info
+                target: target
+              validations:
+              - expression: expression
+                id: id
+                message:
+                  key: message
+                target: target
+              - expression: expression
+                id: id
+                message:
+                  key: message
+                target: target
+            id: id
+          - mode: null
+            visibility:
+            - null
+            - null
+            form:
+              layout:
+              - ref_id: ref_id
+                ref_type: ref_type
+              - ref_id: ref_id
+                ref_type: ref_type
+              inputs:
+              - view_label:
+                  key: view_label
+                ephemeral: true
+                default_value: default_value
+                attributes:
+                  key: attributes
+                id: id
+                label:
+                  key: label
+                placeholder:
+                  key: placeholder
+                type: type
+                items:
+                - items
+                - items
+                required: true
+                target: target
+              - view_label:
+                  key: view_label
+                ephemeral: true
+                default_value: default_value
+                attributes:
+                  key: attributes
+                id: id
+                label:
+                  key: label
+                placeholder:
+                  key: placeholder
+                type: type
+                items:
+                - items
+                - items
+                required: true
+                target: target
+              groups:
+              - use_item_group: true
+                bottom_divider: true
+                top_divider: true
+                min_size: 1
+                id: id
+                label:
+                  key: label
+                type: type
+                items:
+                - ref_id: ref_id
+                  ref_type: ref_type
+                - ref_id: ref_id
+                  ref_type: ref_type
+                info:
+                  key: info
+                target: target
+              - use_item_group: true
+                bottom_divider: true
+                top_divider: true
+                min_size: 1
+                id: id
+                label:
+                  key: label
+                type: type
+                items:
+                - ref_id: ref_id
+                  ref_type: ref_type
+                - ref_id: ref_id
+                  ref_type: ref_type
+                info:
+                  key: info
+                target: target
+              validations:
+              - expression: expression
+                id: id
+                message:
+                  key: message
+                target: target
+              - expression: expression
+                id: id
+                message:
+                  key: message
+                target: target
+            id: id
+          parties:
+          - null
+          - null
+          action: null
+          source_status:
+          - null
+          - null
+          notify:
+          - null
+          - null
+        - feedback:
+          - mode: null
+            visibility:
+            - null
+            - null
+            form:
+              layout:
+              - ref_id: ref_id
+                ref_type: ref_type
+              - ref_id: ref_id
+                ref_type: ref_type
+              inputs:
+              - view_label:
+                  key: view_label
+                ephemeral: true
+                default_value: default_value
+                attributes:
+                  key: attributes
+                id: id
+                label:
+                  key: label
+                placeholder:
+                  key: placeholder
+                type: type
+                items:
+                - items
+                - items
+                required: true
+                target: target
+              - view_label:
+                  key: view_label
+                ephemeral: true
+                default_value: default_value
+                attributes:
+                  key: attributes
+                id: id
+                label:
+                  key: label
+                placeholder:
+                  key: placeholder
+                type: type
+                items:
+                - items
+                - items
+                required: true
+                target: target
+              groups:
+              - use_item_group: true
+                bottom_divider: true
+                top_divider: true
+                min_size: 1
+                id: id
+                label:
+                  key: label
+                type: type
+                items:
+                - ref_id: ref_id
+                  ref_type: ref_type
+                - ref_id: ref_id
+                  ref_type: ref_type
+                info:
+                  key: info
+                target: target
+              - use_item_group: true
+                bottom_divider: true
+                top_divider: true
+                min_size: 1
+                id: id
+                label:
+                  key: label
+                type: type
+                items:
+                - ref_id: ref_id
+                  ref_type: ref_type
+                - ref_id: ref_id
+                  ref_type: ref_type
+                info:
+                  key: info
+                target: target
+              validations:
+              - expression: expression
+                id: id
+                message:
+                  key: message
+                target: target
+              - expression: expression
+                id: id
+                message:
+                  key: message
+                target: target
+            id: id
+          - mode: null
+            visibility:
+            - null
+            - null
+            form:
+              layout:
+              - ref_id: ref_id
+                ref_type: ref_type
+              - ref_id: ref_id
+                ref_type: ref_type
+              inputs:
+              - view_label:
+                  key: view_label
+                ephemeral: true
+                default_value: default_value
+                attributes:
+                  key: attributes
+                id: id
+                label:
+                  key: label
+                placeholder:
+                  key: placeholder
+                type: type
+                items:
+                - items
+                - items
+                required: true
+                target: target
+              - view_label:
+                  key: view_label
+                ephemeral: true
+                default_value: default_value
+                attributes:
+                  key: attributes
+                id: id
+                label:
+                  key: label
+                placeholder:
+                  key: placeholder
+                type: type
+                items:
+                - items
+                - items
+                required: true
+                target: target
+              groups:
+              - use_item_group: true
+                bottom_divider: true
+                top_divider: true
+                min_size: 1
+                id: id
+                label:
+                  key: label
+                type: type
+                items:
+                - ref_id: ref_id
+                  ref_type: ref_type
+                - ref_id: ref_id
+                  ref_type: ref_type
+                info:
+                  key: info
+                target: target
+              - use_item_group: true
+                bottom_divider: true
+                top_divider: true
+                min_size: 1
+                id: id
+                label:
+                  key: label
+                type: type
+                items:
+                - ref_id: ref_id
+                  ref_type: ref_type
+                - ref_id: ref_id
+                  ref_type: ref_type
+                info:
+                  key: info
+                target: target
+              validations:
+              - expression: expression
+                id: id
+                message:
+                  key: message
+                target: target
+              - expression: expression
+                id: id
+                message:
+                  key: message
+                target: target
+            id: id
+          parties:
+          - null
+          - null
+          action: null
+          source_status:
+          - null
+          - null
+          notify:
+          - null
+          - null
+      properties:
+        base_config:
+          $ref: '#/components/schemas/BaseCaseConfig'
+        extend_default_status_config:
+          description: |
+            Indicates if the default status configuration should be extended with  the custom configuration. If false, the custom configuration will  replace the default configuration. If true, only the actions that are  defined in the custom configuration will override the default ones.
+          type: boolean
+        status_config:
+          description: |
+            The configuration for the status transition of a case. This is used to  determine which status changes are allowed by which party at which time.
+          items:
+            $ref: '#/components/schemas/CaseStatusConfig'
+          type: array
+        reminders:
+          description: |
+            The configuration for sending out reminders for a case.
+          items:
+            $ref: '#/components/schemas/CaseReminderConfig'
+          type: array
+        automatic_status_changes:
+          description: |
+            The configuration for automatic status changes of a case. This is used to  determine which status changes are allowed by which party at which time.
+          items:
+            $ref: '#/components/schemas/CaseAutomaticStatusChangeConfig'
+          type: array
+      type: object
+    BaseCaseConfig:
+      description: |
+        The list of base case configs that can be used to define the behaviour of a case.
+      enum:
+      - DEFAULT
+      - SIMPLE
+      - FULL
+      type: string
+    CaseStatusConfig:
+      description: |
+        Contains the configuration for the status of a case. This is used to  determine which status changes are allowed.
+      example:
+        feedback:
+        - mode: null
+          visibility:
+          - null
+          - null
+          form:
+            layout:
+            - ref_id: ref_id
+              ref_type: ref_type
+            - ref_id: ref_id
+              ref_type: ref_type
+            inputs:
+            - view_label:
+                key: view_label
+              ephemeral: true
+              default_value: default_value
+              attributes:
+                key: attributes
+              id: id
+              label:
+                key: label
+              placeholder:
+                key: placeholder
+              type: type
+              items:
+              - items
+              - items
+              required: true
+              target: target
+            - view_label:
+                key: view_label
+              ephemeral: true
+              default_value: default_value
+              attributes:
+                key: attributes
+              id: id
+              label:
+                key: label
+              placeholder:
+                key: placeholder
+              type: type
+              items:
+              - items
+              - items
+              required: true
+              target: target
+            groups:
+            - use_item_group: true
+              bottom_divider: true
+              top_divider: true
+              min_size: 1
+              id: id
+              label:
+                key: label
+              type: type
+              items:
+              - ref_id: ref_id
+                ref_type: ref_type
+              - ref_id: ref_id
+                ref_type: ref_type
+              info:
+                key: info
+              target: target
+            - use_item_group: true
+              bottom_divider: true
+              top_divider: true
+              min_size: 1
+              id: id
+              label:
+                key: label
+              type: type
+              items:
+              - ref_id: ref_id
+                ref_type: ref_type
+              - ref_id: ref_id
+                ref_type: ref_type
+              info:
+                key: info
+              target: target
+            validations:
+            - expression: expression
+              id: id
+              message:
+                key: message
+              target: target
+            - expression: expression
+              id: id
+              message:
+                key: message
+              target: target
+          id: id
+        - mode: null
+          visibility:
+          - null
+          - null
+          form:
+            layout:
+            - ref_id: ref_id
+              ref_type: ref_type
+            - ref_id: ref_id
+              ref_type: ref_type
+            inputs:
+            - view_label:
+                key: view_label
+              ephemeral: true
+              default_value: default_value
+              attributes:
+                key: attributes
+              id: id
+              label:
+                key: label
+              placeholder:
+                key: placeholder
+              type: type
+              items:
+              - items
+              - items
+              required: true
+              target: target
+            - view_label:
+                key: view_label
+              ephemeral: true
+              default_value: default_value
+              attributes:
+                key: attributes
+              id: id
+              label:
+                key: label
+              placeholder:
+                key: placeholder
+              type: type
+              items:
+              - items
+              - items
+              required: true
+              target: target
+            groups:
+            - use_item_group: true
+              bottom_divider: true
+              top_divider: true
+              min_size: 1
+              id: id
+              label:
+                key: label
+              type: type
+              items:
+              - ref_id: ref_id
+                ref_type: ref_type
+              - ref_id: ref_id
+                ref_type: ref_type
+              info:
+                key: info
+              target: target
+            - use_item_group: true
+              bottom_divider: true
+              top_divider: true
+              min_size: 1
+              id: id
+              label:
+                key: label
+              type: type
+              items:
+              - ref_id: ref_id
+                ref_type: ref_type
+              - ref_id: ref_id
+                ref_type: ref_type
+              info:
+                key: info
+              target: target
+            validations:
+            - expression: expression
+              id: id
+              message:
+                key: message
+              target: target
+            - expression: expression
+              id: id
+              message:
+                key: message
+              target: target
+          id: id
+        parties:
+        - null
+        - null
+        action: null
+        source_status:
+        - null
+        - null
+        notify:
+        - null
+        - null
+      properties:
+        action:
+          $ref: '#/components/schemas/CaseActionEnum'
+        source_status:
+          description: |
+            A list of possible statuses in which the case must be, so that the configuration applies.
+          items:
+            $ref: '#/components/schemas/CaseStatusEnum'
+          type: array
+        parties:
+          description: |
+            The parties for which the configuration applies, that is the parties that are allowed to  execute the action when the case is in onf of the source status.
+          items:
+            $ref: '#/components/schemas/UserTypeEnum'
+          type: array
+        feedback:
+          description: |
+            Optional list of feedback that is requested from the party executing the action.
+          items:
+            $ref: '#/components/schemas/CaseFeedbackConfig'
+          type: array
+        notify:
+          description: |
+            The list of parties that should be notified of the status change.
+          items:
+            $ref: '#/components/schemas/UserTypeEnum'
+          type: array
+      type: object
+    CaseFeedbackConfig:
+      example:
+        mode: null
+        visibility:
+        - null
+        - null
+        form:
+          layout:
+          - ref_id: ref_id
+            ref_type: ref_type
+          - ref_id: ref_id
+            ref_type: ref_type
+          inputs:
+          - view_label:
+              key: view_label
+            ephemeral: true
+            default_value: default_value
+            attributes:
+              key: attributes
+            id: id
+            label:
+              key: label
+            placeholder:
+              key: placeholder
+            type: type
+            items:
+            - items
+            - items
+            required: true
+            target: target
+          - view_label:
+              key: view_label
+            ephemeral: true
+            default_value: default_value
+            attributes:
+              key: attributes
+            id: id
+            label:
+              key: label
+            placeholder:
+              key: placeholder
+            type: type
+            items:
+            - items
+            - items
+            required: true
+            target: target
+          groups:
+          - use_item_group: true
+            bottom_divider: true
+            top_divider: true
+            min_size: 1
+            id: id
+            label:
+              key: label
+            type: type
+            items:
+            - ref_id: ref_id
+              ref_type: ref_type
+            - ref_id: ref_id
+              ref_type: ref_type
+            info:
+              key: info
+            target: target
+          - use_item_group: true
+            bottom_divider: true
+            top_divider: true
+            min_size: 1
+            id: id
+            label:
+              key: label
+            type: type
+            items:
+            - ref_id: ref_id
+              ref_type: ref_type
+            - ref_id: ref_id
+              ref_type: ref_type
+            info:
+              key: info
+            target: target
+          validations:
+          - expression: expression
+            id: id
+            message:
+              key: message
+            target: target
+          - expression: expression
+            id: id
+            message:
+              key: message
+            target: target
+        id: id
+      properties:
+        id:
+          description: |
+            The ID of the feedback entry, used to map responses against the config
+          type: string
+        visibility:
+          description: |
+            The visibility of the feedback entry. This is used to determine which  parties can see the feedback entry.
+          items:
+            $ref: '#/components/schemas/UserTypeEnum'
+          type: array
+        mode:
+          $ref: '#/components/schemas/CaseFeedbackModeEnum'
+        form:
+          $ref: '#/components/schemas/CustomForm'
+      type: object
+    CaseFeedbackModeEnum:
+      description: |
+        The list of feedback modes that can be used to collect information from a case party.
+      enum:
+      - OPTIONAL_COMMENT
+      - REQUIRED_COMMENT
+      - FORM
+      type: string
+    CaseReminderConfig:
+      description: |
+        Defines the configuration for sending out reminders for a case.
+      example:
+        schedule:
+        - 7
+        - 14
+        - 30
+        status: null
+      properties:
+        status:
+          $ref: '#/components/schemas/CaseStatusEnum'
+        schedule:
+          description: |
+            The number of days after which the reminder should be sent out. The updated_at attribute is considered for the calculation.
+          example:
+          - 7
+          - 14
+          - 30
+          items:
+            type: integer
+          type: array
+      type: object
+    CaseAutomaticStatusChangeConfig:
+      description: |
+        Defines the configuration for automatic status changes of a case.
+      example:
+        schedule: 5
+        target_status: null
+        status: null
+      properties:
+        status:
+          $ref: '#/components/schemas/CaseStatusEnum'
+        schedule:
+          description: |
+            The number of days after which the status change should be triggered. The updated_at attribute is considered for the calculation.
+          type: integer
+        target_status:
+          $ref: '#/components/schemas/CaseStatusEnum'
       type: object
     CaseTemplate:
       description: |
@@ -6870,6 +8420,410 @@ components:
             message:
               key: message
             target: target
+        config:
+          reminders:
+          - schedule:
+            - 7
+            - 14
+            - 30
+            status: null
+          - schedule:
+            - 7
+            - 14
+            - 30
+            status: null
+          automatic_status_changes:
+          - schedule: 5
+            target_status: null
+            status: null
+          - schedule: 5
+            target_status: null
+            status: null
+          base_config: null
+          extend_default_status_config: true
+          status_config:
+          - feedback:
+            - mode: null
+              visibility:
+              - null
+              - null
+              form:
+                layout:
+                - ref_id: ref_id
+                  ref_type: ref_type
+                - ref_id: ref_id
+                  ref_type: ref_type
+                inputs:
+                - view_label:
+                    key: view_label
+                  ephemeral: true
+                  default_value: default_value
+                  attributes:
+                    key: attributes
+                  id: id
+                  label:
+                    key: label
+                  placeholder:
+                    key: placeholder
+                  type: type
+                  items:
+                  - items
+                  - items
+                  required: true
+                  target: target
+                - view_label:
+                    key: view_label
+                  ephemeral: true
+                  default_value: default_value
+                  attributes:
+                    key: attributes
+                  id: id
+                  label:
+                    key: label
+                  placeholder:
+                    key: placeholder
+                  type: type
+                  items:
+                  - items
+                  - items
+                  required: true
+                  target: target
+                groups:
+                - use_item_group: true
+                  bottom_divider: true
+                  top_divider: true
+                  min_size: 1
+                  id: id
+                  label:
+                    key: label
+                  type: type
+                  items:
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  info:
+                    key: info
+                  target: target
+                - use_item_group: true
+                  bottom_divider: true
+                  top_divider: true
+                  min_size: 1
+                  id: id
+                  label:
+                    key: label
+                  type: type
+                  items:
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  info:
+                    key: info
+                  target: target
+                validations:
+                - expression: expression
+                  id: id
+                  message:
+                    key: message
+                  target: target
+                - expression: expression
+                  id: id
+                  message:
+                    key: message
+                  target: target
+              id: id
+            - mode: null
+              visibility:
+              - null
+              - null
+              form:
+                layout:
+                - ref_id: ref_id
+                  ref_type: ref_type
+                - ref_id: ref_id
+                  ref_type: ref_type
+                inputs:
+                - view_label:
+                    key: view_label
+                  ephemeral: true
+                  default_value: default_value
+                  attributes:
+                    key: attributes
+                  id: id
+                  label:
+                    key: label
+                  placeholder:
+                    key: placeholder
+                  type: type
+                  items:
+                  - items
+                  - items
+                  required: true
+                  target: target
+                - view_label:
+                    key: view_label
+                  ephemeral: true
+                  default_value: default_value
+                  attributes:
+                    key: attributes
+                  id: id
+                  label:
+                    key: label
+                  placeholder:
+                    key: placeholder
+                  type: type
+                  items:
+                  - items
+                  - items
+                  required: true
+                  target: target
+                groups:
+                - use_item_group: true
+                  bottom_divider: true
+                  top_divider: true
+                  min_size: 1
+                  id: id
+                  label:
+                    key: label
+                  type: type
+                  items:
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  info:
+                    key: info
+                  target: target
+                - use_item_group: true
+                  bottom_divider: true
+                  top_divider: true
+                  min_size: 1
+                  id: id
+                  label:
+                    key: label
+                  type: type
+                  items:
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  info:
+                    key: info
+                  target: target
+                validations:
+                - expression: expression
+                  id: id
+                  message:
+                    key: message
+                  target: target
+                - expression: expression
+                  id: id
+                  message:
+                    key: message
+                  target: target
+              id: id
+            parties:
+            - null
+            - null
+            action: null
+            source_status:
+            - null
+            - null
+            notify:
+            - null
+            - null
+          - feedback:
+            - mode: null
+              visibility:
+              - null
+              - null
+              form:
+                layout:
+                - ref_id: ref_id
+                  ref_type: ref_type
+                - ref_id: ref_id
+                  ref_type: ref_type
+                inputs:
+                - view_label:
+                    key: view_label
+                  ephemeral: true
+                  default_value: default_value
+                  attributes:
+                    key: attributes
+                  id: id
+                  label:
+                    key: label
+                  placeholder:
+                    key: placeholder
+                  type: type
+                  items:
+                  - items
+                  - items
+                  required: true
+                  target: target
+                - view_label:
+                    key: view_label
+                  ephemeral: true
+                  default_value: default_value
+                  attributes:
+                    key: attributes
+                  id: id
+                  label:
+                    key: label
+                  placeholder:
+                    key: placeholder
+                  type: type
+                  items:
+                  - items
+                  - items
+                  required: true
+                  target: target
+                groups:
+                - use_item_group: true
+                  bottom_divider: true
+                  top_divider: true
+                  min_size: 1
+                  id: id
+                  label:
+                    key: label
+                  type: type
+                  items:
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  info:
+                    key: info
+                  target: target
+                - use_item_group: true
+                  bottom_divider: true
+                  top_divider: true
+                  min_size: 1
+                  id: id
+                  label:
+                    key: label
+                  type: type
+                  items:
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  info:
+                    key: info
+                  target: target
+                validations:
+                - expression: expression
+                  id: id
+                  message:
+                    key: message
+                  target: target
+                - expression: expression
+                  id: id
+                  message:
+                    key: message
+                  target: target
+              id: id
+            - mode: null
+              visibility:
+              - null
+              - null
+              form:
+                layout:
+                - ref_id: ref_id
+                  ref_type: ref_type
+                - ref_id: ref_id
+                  ref_type: ref_type
+                inputs:
+                - view_label:
+                    key: view_label
+                  ephemeral: true
+                  default_value: default_value
+                  attributes:
+                    key: attributes
+                  id: id
+                  label:
+                    key: label
+                  placeholder:
+                    key: placeholder
+                  type: type
+                  items:
+                  - items
+                  - items
+                  required: true
+                  target: target
+                - view_label:
+                    key: view_label
+                  ephemeral: true
+                  default_value: default_value
+                  attributes:
+                    key: attributes
+                  id: id
+                  label:
+                    key: label
+                  placeholder:
+                    key: placeholder
+                  type: type
+                  items:
+                  - items
+                  - items
+                  required: true
+                  target: target
+                groups:
+                - use_item_group: true
+                  bottom_divider: true
+                  top_divider: true
+                  min_size: 1
+                  id: id
+                  label:
+                    key: label
+                  type: type
+                  items:
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  info:
+                    key: info
+                  target: target
+                - use_item_group: true
+                  bottom_divider: true
+                  top_divider: true
+                  min_size: 1
+                  id: id
+                  label:
+                    key: label
+                  type: type
+                  items:
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  info:
+                    key: info
+                  target: target
+                validations:
+                - expression: expression
+                  id: id
+                  message:
+                    key: message
+                  target: target
+                - expression: expression
+                  id: id
+                  message:
+                    key: message
+                  target: target
+              id: id
+            parties:
+            - null
+            - null
+            action: null
+            source_status:
+            - null
+            - null
+            notify:
+            - null
+            - null
       properties:
         id:
           description: |
@@ -6912,6 +8866,8 @@ components:
           type: string
         custom_inputs:
           $ref: '#/components/schemas/CustomForm'
+        config:
+          $ref: '#/components/schemas/CaseConfig'
       type: object
     QueryCaseTemplatesRequest:
       example:
@@ -7287,6 +9243,7 @@ components:
     CustomerScriptScope:
       enum:
       - GLOBAL
+      - DOCUMENT
       - WORKFLOW
       - REPORT
       - VALIDATION
@@ -14396,9 +16353,17 @@ components:
         address:
           $ref: '#/components/schemas/Address'
       type: object
+    UserTypeEnum:
+      enum:
+      - ANY
+      - TENANT
+      - MANAGER
+      - SERVICE_PROVIDER
+      type: string
     UserReference:
       description: Contains information about a user referenced in other entities
       example:
+        user_role: null
         user_id: user_id
         contact_data:
           address:
@@ -14420,6 +16385,8 @@ components:
           description: "The ID of the user, can be undefined, if user is not registered,\
             \ or was already deleted"
           type: string
+        user_role:
+          $ref: '#/components/schemas/UserTypeEnum'
         contact_data:
           $ref: '#/components/schemas/ContactData'
       type: object
