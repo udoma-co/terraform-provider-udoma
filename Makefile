@@ -1,3 +1,8 @@
+include .env
+export
+
+test:
+	go test ./...
 
 .PHONY: generate-client
 generate-client:
@@ -7,6 +12,7 @@ generate-client:
 	docker run --rm \
 		-v "${PWD}/api/v1/spec:/local/api:ro" \
 		-v "${PWD}/gen:/local/gen" \
+		-u "$(shell id -u):$(shell id -g)" \
 		registry.gitlab.com/zestlabs-io/ci/codegen/openapi:v0.1.2 generate-go-client \
 		-i /local/api/udoma-openapi.yml \
 		-o /local/gen \
