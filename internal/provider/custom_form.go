@@ -10,59 +10,59 @@ import (
 )
 
 type CustomFormModel struct {
-	Layout []CustomFormItemModel `tfsdk:"layout"`	
-	Group []CustomFormGroupModel `tfsdk:"groups"`	
-	Input []CustomFormInputModel `tfsdk:"inputs"`
-	Validation []CustomFormValidationModel `tfsdk:"validation"`	
+	Layout     []CustomFormItemModel       `tfsdk:"layout"`
+	Group      []CustomFormGroupModel      `tfsdk:"groups"`
+	Input      []CustomFormInputModel      `tfsdk:"inputs"`
+	Validation []CustomFormValidationModel `tfsdk:"validation"`
 }
 
 type CustomFormItemModel struct {
-	RefID types.String `tfsdk:"ref_id"`
+	RefID   types.String `tfsdk:"ref_id"`
 	RefType types.String `tfsdk:"ref_type"`
 }
 
 func NewCustomFormGroupNull() CustomFormGroupModel {
 	return CustomFormGroupModel{
 		Label: basetypes.NewMapNull(types.StringType),
-		Info: basetypes.NewMapNull(types.StringType),
+		Info:  basetypes.NewMapNull(types.StringType),
 	}
 }
 
 type CustomFormGroupModel struct {
-	ID types.String `tfsdk:"id"`
-	Type types.String `tfsdk:"type"`
-	Label types.Map `tfsdk:"label"`
-	Info types.Map `tfsdk:"info"`
-	Items []CustomFormItemModel `tfsdk:"items"`
-	Target types.String `tfsdk:"target"`
-	TopDivider types.Bool `tfsdk:"top_divider"`
-	BottomDivider types.Bool `tfsdk:"bottom_divider"`
-	UseItemGroup types.Bool `tfsdk:"use_item_group"`
-	MinSize types.Int64 `tfsdk:"min_size"`
+	ID            types.String          `tfsdk:"id"`
+	Type          types.String          `tfsdk:"type"`
+	Label         types.Map             `tfsdk:"label"`
+	Info          types.Map             `tfsdk:"info"`
+	Items         []CustomFormItemModel `tfsdk:"items"`
+	Target        types.String          `tfsdk:"target"`
+	TopDivider    types.Bool            `tfsdk:"top_divider"`
+	BottomDivider types.Bool            `tfsdk:"bottom_divider"`
+	UseItemGroup  types.Bool            `tfsdk:"use_item_group"`
+	MinSize       types.Int64           `tfsdk:"min_size"`
 }
 
 func NewCustomFormInputNull() CustomFormInputModel {
 	return CustomFormInputModel{
-		Label: basetypes.NewMapNull(types.StringType),
-		ViewLabel: basetypes.NewMapNull(types.StringType),
+		Label:       basetypes.NewMapNull(types.StringType),
+		ViewLabel:   basetypes.NewMapNull(types.StringType),
 		Placeholder: basetypes.NewMapNull(types.StringType),
-		Attributes: basetypes.NewMapNull(types.StringType),
-		Items: basetypes.NewListNull(types.StringType),
+		Attributes:  basetypes.NewMapNull(types.StringType),
+		Items:       basetypes.NewListNull(types.StringType),
 	}
 }
 
 type CustomFormInputModel struct {
-	ID types.String `tfsdk:"id"`
-	Label types.Map `tfsdk:"label"`
-	ViewLabel types.Map `tfsdk:"view_label"`
-	Placeholder types.Map `tfsdk:"placeholder"`
-	Type types.String `tfsdk:"type"`
+	ID           types.String `tfsdk:"id"`
+	Label        types.Map    `tfsdk:"label"`
+	ViewLabel    types.Map    `tfsdk:"view_label"`
+	Placeholder  types.Map    `tfsdk:"placeholder"`
+	Type         types.String `tfsdk:"type"`
 	DefaultValue types.String `tfsdk:"default_value"`
-	Required types.Bool `tfsdk:"required"`
-	Ephemeral types.Bool `tfsdk:"ephemeral"`
-	Target types.String `tfsdk:"target"`
-	Attributes types.Map `tfsdk:"attributes"`
-	Items types.List `tfsdk:"items"`
+	Required     types.Bool   `tfsdk:"required"`
+	Ephemeral    types.Bool   `tfsdk:"ephemeral"`
+	Target       types.String `tfsdk:"target"`
+	Attributes   types.Map    `tfsdk:"attributes"`
+	Items        types.List   `tfsdk:"items"`
 }
 
 func NewCustomFormValidationNull() CustomFormValidationModel {
@@ -72,33 +72,33 @@ func NewCustomFormValidationNull() CustomFormValidationModel {
 }
 
 type CustomFormValidationModel struct {
-	ID types.String `tfsdk:"id"`
+	ID         types.String `tfsdk:"id"`
 	Expression types.String `tfsdk:"expression"`
-	Target types.String `tfsdk:"target"`
-	Message types.Map `tfsdk:"message"`
+	Target     types.String `tfsdk:"target"`
+	Message    types.Map    `tfsdk:"message"`
 }
 
 func CustomFormNestedSchema() map[string]schema.Attribute {
 	return map[string]schema.Attribute{
 		"layout": schema.ListNestedAttribute{
-			Required: true,
+			Required:     true,
 			NestedObject: customFormItemNestedSchema(),
-			Description: "The layout of the form, which groups and inputs will be displayed",
+			Description:  "The layout of the form, which groups and inputs will be displayed",
 		},
 		"groups": schema.ListNestedAttribute{
-			Optional: true,
+			Optional:     true,
 			NestedObject: customFormGroupNestedSchema(),
-			Description: "The groups of inputs that will be displayed to the user",
+			Description:  "The groups of inputs that will be displayed to the user",
 		},
 		"inputs": schema.ListNestedAttribute{
-			Required: true,
+			Required:     true,
 			NestedObject: customFormInputNestedSchema(),
-			Description: "The inputs that will be displayed to the user",
+			Description:  "The inputs that will be displayed to the user",
 		},
 		"validation": schema.ListNestedAttribute{
-			Optional: true,
+			Optional:     true,
 			NestedObject: customFormValidationNestedSchema(),
-			Description: "The validations that will be performed on the data provided by the user",
+			Description:  "The validations that will be performed on the data provided by the user",
 		},
 	}
 }
@@ -107,11 +107,11 @@ func customFormItemNestedSchema() schema.NestedAttributeObject {
 	return schema.NestedAttributeObject{
 		Attributes: map[string]schema.Attribute{
 			"ref_id": schema.StringAttribute{
-				Required: true,
+				Required:    true,
 				Description: "The ID of the entity that will be referenced",
 			},
 			"ref_type": schema.StringAttribute{
-				Required: true,
+				Required:    true,
 				Description: "The type of the entity that will be referenced",
 			},
 		},
@@ -123,47 +123,47 @@ func customFormGroupNestedSchema() schema.NestedAttributeObject {
 	return schema.NestedAttributeObject{
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				Required: true,
+				Required:    true,
 				Description: "The ID of the group",
 			},
 			"type": schema.StringAttribute{
-				Required: true,
+				Required:    true,
 				Description: "The type of the group",
 			},
 			"label": schema.MapAttribute{
-				Required: true,
+				Optional:    true,
 				ElementType: types.StringType,
 				Description: "The label of the group",
 			},
 			"info": schema.MapAttribute{
-				Required: true,
+				Optional:    true,
 				ElementType: types.StringType,
 				Description: "The info of the group",
 			},
 			"items": schema.ListNestedAttribute{
-				Required: true,
+				Required:     true,
 				NestedObject: customFormItemNestedSchema(),
-				Description: "The items of the group",
+				Description:  "the IDs of the inputs that will be displayed in the group",
 			},
 			"target": schema.StringAttribute{
-				Required: true,
-				Description: "The target of the group",
+				Optional:    true,
+				Description: "the attribute name to use when exporting the result of this group (only used for repeat groups)",
 			},
 			"top_divider": schema.BoolAttribute{
-				Required: true,
-				Description: "The top divider of the group",
+				Optional:    true,
+				Description: "if true, a divider will be displayed above the group",
 			},
 			"bottom_divider": schema.BoolAttribute{
-				Required: true,
-				Description: "The bottom divider of the group",
+				Optional:    true,
+				Description: "if true, a divider will be displayed below the group",
 			},
 			"use_item_group": schema.BoolAttribute{
-				Required: true,
-				Description: "The use item group of the group",
+				Optional:    true,
+				Description: "if true, the inputs will be displayed in a group, otherwise they will be displayed in a row",
 			},
 			"min_size": schema.Int64Attribute{
-				Required: true,
-				Description: "The min size of the group",
+				Optional:    true,
+				Description: "the minimum number of items that must be submitted in the group (only used for repeat groups)",
 			},
 		},
 	}
@@ -173,53 +173,53 @@ func customFormInputNestedSchema() schema.NestedAttributeObject {
 	return schema.NestedAttributeObject{
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				Required: true,
-				Description: "The ID of the input",
+				Required:    true,
+				Description: "the ID of the input field, used to identify it and later access the data",
 			},
 			"label": schema.MapAttribute{
-				Required: true,
+				Required:    true,
 				ElementType: types.StringType,
-				Description: "The label of the input",
+				Description: "a map of values, where the key and values are strings",
 			},
 			"view_label": schema.MapAttribute{
-				Optional: true,
+				Optional:    true,
 				ElementType: types.StringType,
-				Description: "The view label of the input",
+				Description: "a map of values, where the key and values are strings",
 			},
 			"placeholder": schema.MapAttribute{
-				Optional: true,
+				Optional:    true,
 				ElementType: types.StringType,
-				Description: "The placeholder of the input",
+				Description: "a map of values, where the key and values are strings",
 			},
 			"type": schema.StringAttribute{
-				Required: true,
+				Required:    true,
 				Description: "The type of the input",
 			},
 			"default_value": schema.StringAttribute{
-				Optional: true,
-				Description: "The default value of the input",
+				Optional:    true,
+				Description: "optional default value for the input field (as a JSON string)",
 			},
 			"required": schema.BoolAttribute{
-				Optional: true,
-				Description: "The required of the input",
+				Optional:    true,
+				Description: "if true, the user will be required to provide a value",
 			},
 			"ephemeral": schema.BoolAttribute{
-				Optional: true,
-				Description: "The ephemeral of the input",
+				Optional:    true,
+				Description: "if true, the value of the input will not be persisted",
 			},
 			"target": schema.StringAttribute{
-				Optional: true,
-				Description: "The target of the input",
+				Optional:    true,
+				Description: "the attribute name to use when exporting the result of this input",
 			},
 			"attributes": schema.MapAttribute{
-				Optional: true,
+				Optional:    true,
 				ElementType: types.StringType,
-				Description: "The attributes of the input",
+				Description: "a map of values, where the key and values are strings",
 			},
 			"items": schema.ListAttribute{
-				Optional: true,
+				Optional:    true,
 				ElementType: types.StringType,
-				Description: "The items of the input",
+				Description: "only used when the type is select or multi select. This is a list of values that the user can choose from",
 			},
 		},
 	}
@@ -229,27 +229,27 @@ func customFormValidationNestedSchema() schema.NestedAttributeObject {
 	return schema.NestedAttributeObject{
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				Required: true,
-				Description: "The ID of the validation",
+				Required:    true,
+				Description: "the ID of the validation, used to identify it",
 			},
 			"expression": schema.StringAttribute{
-				Required: true,
-				Description: "The expression of the validation",
+				Required:    true,
+				Description: "a JS expression that will be evaluated to determine if the validation passes or fails",
 			},
 			"target": schema.StringAttribute{
-				Required: true,
-				Description: "The target of the validation",
+				Required:    true,
+				Description: "the index of the input should be highlighted if the validation fails (nesting is supported via dot notation)",
 			},
 			"message": schema.MapAttribute{
-				Required: true,
+				Required:    true,
 				ElementType: types.StringType,
-				Description: "The message of the validation",
+				Description: "a map of values, where the key and values are strings",
 			},
 		},
 	}
 }
 
-func (form *CustomFormModel) toApiRequest() (*v1.CustomForm) {
+func (form *CustomFormModel) toApiRequest() *v1.CustomForm {
 
 	layout := make([]v1.FormItem, len(form.Layout))
 	for i := range form.Layout {
@@ -272,9 +272,9 @@ func (form *CustomFormModel) toApiRequest() (*v1.CustomForm) {
 	}
 
 	return &v1.CustomForm{
-		Layout: layout,
-		Groups: groups,
-		Inputs: inputs,
+		Layout:      layout,
+		Groups:      groups,
+		Inputs:      inputs,
 		Validations: validations,
 	}
 }
@@ -324,18 +324,18 @@ func (form *CustomFormModel) fromApiResponse(resp *v1.CustomForm) (diags diag.Di
 	return
 }
 
-func (item *CustomFormItemModel) toApiRequest() (*v1.FormItem) {
+func (item *CustomFormItemModel) toApiRequest() *v1.FormItem {
 
 	refType := v1.FormItemType(item.RefType.ValueString())
 
 	return &v1.FormItem{
 		RefId:   item.RefID.ValueStringPointer(),
 		RefType: &refType,
-	}	
+	}
 }
 
 func (item *CustomFormItemModel) fromApiResponse(resp *v1.FormItem) {
-	
+
 	item.RefID = types.StringValue(sdp(resp.RefId))
 	if resp.RefType != nil {
 		item.RefType = types.StringValue(string(*resp.RefType))
@@ -344,7 +344,7 @@ func (item *CustomFormItemModel) fromApiResponse(resp *v1.FormItem) {
 	}
 }
 
-func (group *CustomFormGroupModel) toApiRequest() (*v1.FormGroup) {
+func (group *CustomFormGroupModel) toApiRequest() *v1.FormGroup {
 
 	groupType := v1.FormGroupType(group.Type.ValueString())
 
@@ -356,16 +356,16 @@ func (group *CustomFormGroupModel) toApiRequest() (*v1.FormGroup) {
 	minSize := int32(group.MinSize.ValueInt64())
 
 	return &v1.FormGroup{
-		Id: group.ID.ValueStringPointer(),
-		Type: &groupType,
-		Label: modelMapToStringMap(group.Label),
-		Info: modelMapToStringMap(group.Info),
-		Items: items,
-		Target: group.Target.ValueStringPointer(),
-		TopDivider: group.TopDivider.ValueBoolPointer(),
+		Id:            group.ID.ValueStringPointer(),
+		Type:          &groupType,
+		Label:         modelMapToStringMap(group.Label),
+		Info:          modelMapToStringMap(group.Info),
+		Items:         items,
+		Target:        group.Target.ValueStringPointer(),
+		TopDivider:    group.TopDivider.ValueBoolPointer(),
 		BottomDivider: group.BottomDivider.ValueBoolPointer(),
-		UseItemGroup: group.UseItemGroup.ValueBoolPointer(),
-		MinSize: &minSize,
+		UseItemGroup:  group.UseItemGroup.ValueBoolPointer(),
+		MinSize:       &minSize,
 	}
 }
 
@@ -415,17 +415,17 @@ func (input *CustomFormInputModel) toApiRequest() *v1.FormInput {
 	inputType := v1.FormInputType(input.Type.ValueString())
 
 	return &v1.FormInput{
-		Id: input.ID.ValueStringPointer(),
-		Label: modelMapToStringMap(input.Label),
-		ViewLabel: modelMapToStringMap(input.ViewLabel),
-		Placeholder: modelMapToStringMap(input.Placeholder),
-		Type: &inputType,
+		Id:           input.ID.ValueStringPointer(),
+		Label:        modelMapToStringMap(input.Label),
+		ViewLabel:    modelMapToStringMap(input.ViewLabel),
+		Placeholder:  modelMapToStringMap(input.Placeholder),
+		Type:         &inputType,
 		DefaultValue: input.DefaultValue.ValueStringPointer(),
-		Required: input.Required.ValueBoolPointer(),
-		Ephemeral: input.Ephemeral.ValueBoolPointer(),
-		Target: input.Target.ValueStringPointer(),
-		Attributes: modelMapToStringMap(input.Attributes),
-		Items: modelListToStringSlice(input.Items),
+		Required:     input.Required.ValueBoolPointer(),
+		Ephemeral:    input.Ephemeral.ValueBoolPointer(),
+		Target:       input.Target.ValueStringPointer(),
+		Attributes:   modelMapToStringMap(input.Attributes),
+		Items:        modelListToStringSlice(input.Items),
 	}
 }
 
@@ -502,10 +502,10 @@ func (validation *CustomFormValidationModel) toApiRequest() *v1.FormValidation {
 	}
 
 	return &v1.FormValidation{
-		Id: validation.ID.ValueStringPointer(),
+		Id:         validation.ID.ValueStringPointer(),
 		Expression: validation.Expression.ValueStringPointer(),
-		Target: validation.Target.ValueStringPointer(),
-		Message: &message,
+		Target:     validation.Target.ValueStringPointer(),
+		Message:    &message,
 	}
 }
 

@@ -31,11 +31,11 @@ type AppointmentTemplate struct {
 
 // AppointmentTemplateModel describes the resource data model
 type AppointmentTemplateModel struct {
-	ID types.String `tfsdk:"id"`
-	Name types.String `tfsdk:"name"`
-	NameExpression types.String `tfsdk:"name_expression"`
-	Description types.String `tfsdk:"description"`
-	Inputs *CustomFormModel `tfsdk:"inputs"`
+	ID             types.String     `tfsdk:"id"`
+	Name           types.String     `tfsdk:"name"`
+	NameExpression types.String     `tfsdk:"name_expression"`
+	Description    types.String     `tfsdk:"description"`
+	Inputs         *CustomFormModel `tfsdk:"inputs"`
 }
 
 func (r *AppointmentTemplate) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -46,28 +46,28 @@ func (r *AppointmentTemplate) Schema(ctx context.Context, req resource.SchemaReq
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				Computed: true,
+				Computed:    true,
 				Description: "The ID of the appointment template.",
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"name": schema.StringAttribute{
-				Required: true,
+				Required:    true,
 				Description: "The name of the appointment template.",
 			},
 			"name_expression": schema.StringAttribute{
-				Required: true,
+				Required:    true,
 				Description: "The name expression of the appointment template.",
 			},
 			"description": schema.StringAttribute{
-				Required: true,
+				Required:    true,
 				Description: "The description of the appointment template.",
 			},
 			"inputs": schema.SingleNestedAttribute{
-				Required: true,
+				Required:    true,
 				Description: "A custom form to collect data with",
-				Attributes: CustomFormNestedSchema(),
+				Attributes:  CustomFormNestedSchema(),
 			},
 		},
 	}
@@ -101,7 +101,7 @@ func (r *AppointmentTemplate) Create(ctx context.Context, req resource.CreateReq
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	
+
 	templateReq := plan.toApiRequest()
 	newTemplate, _, err := r.client.GetApi().CreateAppointmentTemplate(ctx).CreateOrUpdateAppointmentTemplateRequest(*templateReq).Execute()
 	if err != nil {
@@ -210,7 +210,7 @@ func (template *AppointmentTemplateModel) toApiRequest() *v1.CreateOrUpdateAppoi
 		Name:           template.Name.ValueStringPointer(),
 		NameExpression: template.NameExpression.ValueStringPointer(),
 		Description:    template.Description.ValueStringPointer(),
-		Form:						template.Inputs.toApiRequest(),
+		Form:           template.Inputs.toApiRequest(),
 	}
 }
 

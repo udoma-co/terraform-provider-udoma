@@ -1,9 +1,10 @@
 include .env
 export
 
+.PHONY: test
 test:
-	go test ./...
-
+	TF_ACC=1 go test ./...
+	
 .PHONY: generate-client
 generate-client:
 	rm -rf gen && mkdir -p gen/
@@ -21,3 +22,9 @@ generate-client:
 	cp -R gen/* api/v1
 	rm -rf gen api/v1/spec
 	go fmt ./... && go vet ./...
+
+
+.PHONY: sanitize
+sanitize:
+	go fmt ./...
+	go vet ./...

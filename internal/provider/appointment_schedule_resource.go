@@ -32,13 +32,13 @@ type AppointmentSchedule struct {
 
 // AppointmentScheduleModel describes the resource data model
 type AppointmentScheduleModel struct {
-	ID types.String `tfsdk:"id"`
-	Name types.String `tfsdk:"name"`
-	Description types.Map `tfsdk:"description"`
-	TemplateRef types.String `tfsdk:"template_ref"`
-	SlotDuration types.Int64 `tfsdk:"slot_duration"`
-	GapDuration types.Int64 `tfsdk:"gap_duration"`
-	Color types.String `tfsdk:"color"`
+	ID           types.String `tfsdk:"id"`
+	Name         types.String `tfsdk:"name"`
+	Description  types.Map    `tfsdk:"description"`
+	TemplateRef  types.String `tfsdk:"template_ref"`
+	SlotDuration types.Int64  `tfsdk:"slot_duration"`
+	GapDuration  types.Int64  `tfsdk:"gap_duration"`
+	Color        types.String `tfsdk:"color"`
 }
 
 func (r *AppointmentSchedule) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -51,35 +51,35 @@ func (r *AppointmentSchedule) Schema(ctx context.Context, req resource.SchemaReq
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				Computed: true,
+				Computed:    true,
 				Description: "The unique identifier for the appointment schedule",
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"name": schema.StringAttribute{
-				Required: true,
+				Required:    true,
 				Description: "The name of the appointment schedule",
 			},
 			"description": schema.MapAttribute{
-				ElementType:         types.StringType,
-				Required:            true,
-				Description:         "Description of the appointment schedule in all different languages",
+				ElementType: types.StringType,
+				Required:    true,
+				Description: "Description of the appointment schedule in all different languages",
 			},
 			"template_ref": schema.StringAttribute{
-				Required: true,
+				Required:    true,
 				Description: "ID of the template to be used in the schedule",
 			},
 			"slot_duration": schema.Int64Attribute{
-				Required: true,
+				Required:    true,
 				Description: "The length of a single appointment",
 			},
 			"gap_duration": schema.Int64Attribute{
-				Required: true,
+				Required:    true,
 				Description: "The length of the gap in-between slots",
 			},
 			"color": schema.StringAttribute{
-				Required: true,
+				Required:    true,
 				Description: "The color to use when displaying the schedule",
 			},
 		},

@@ -11,8 +11,8 @@ func TestConfig(t *testing.T) {
 
 	cfg := Config{
 		Endpoint:     "http://hostlocal",
-		ApiKey:       "HGBAAAAAFW1I5X3IPGY50L7LNHRQ",
-		ApiSecretKey: "xWa4-ZtAfZCzslUlD4wppvwJH2Vc2XQekasHHupyz_.txOaxIWPzT96ckQhI3dgx",
+		ApiKey:       "CBAAAAAATG919N5RAPBZ75UF8WF7",
+		ApiSecretKey: "NR3qQ.kppGek19q-ZIkXzmSFyJDxhR1gTyhdwh8nFj4_TK8d.jpaMOQyuVxGjJHJ",
 	}
 
 	cl, err := NewClient(cfg)
