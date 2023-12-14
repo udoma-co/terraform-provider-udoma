@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"os"
 	"testing"
 
 	v1 "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
@@ -10,9 +11,9 @@ import (
 func TestConfig(t *testing.T) {
 
 	cfg := Config{
-		Endpoint:     "http://hostlocal",
-		ApiKey:       "HGBAAAAAFW1I5X3IPGY50L7LNHRQ",
-		ApiSecretKey: "xWa4-ZtAfZCzslUlD4wppvwJH2Vc2XQekasHHupyz_.txOaxIWPzT96ckQhI3dgx",
+		Endpoint:     os.Getenv("UDOMA_ENDPOINT"),
+		ApiKey:       os.Getenv("UDOMA_API_KEY"),
+		ApiSecretKey: os.Getenv("UDOMA_KEY_SECRET"),
 	}
 
 	cl, err := NewClient(cfg)

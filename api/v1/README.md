@@ -83,6 +83,9 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**ArchiveDocumentGeneration**](docs/DefaultApi.md#archivedocumentgeneration) | **Post** /document-generation/documents/{docId}/archive | Move the document generation to the archive
 *DefaultApi* | [**AssignCase**](docs/DefaultApi.md#assigncase) | **Post** /case/{caseId}/assign | Assign case to a service provider
 *DefaultApi* | [**CancelSignaturesForDocument**](docs/DefaultApi.md#cancelsignaturesfordocument) | **Delete** /document-generation/documents/{docId}/esignature | Cancel a signature request for a document
+*DefaultApi* | [**CreateAppointment**](docs/DefaultApi.md#createappointment) | **Post** /calendar/appointments/schedule/{scheduleId}/appointment | Create new appointment for a given schedule
+*DefaultApi* | [**CreateAppointmentSchedule**](docs/DefaultApi.md#createappointmentschedule) | **Post** /calendar/appointments/schedule | Create new appointment schedule
+*DefaultApi* | [**CreateAppointmentTemplate**](docs/DefaultApi.md#createappointmenttemplate) | **Post** /calendar/appointments/template | Create new appointment template
 *DefaultApi* | [**CreateBankAccount**](docs/DefaultApi.md#createbankaccount) | **Post** /bank-account | Create new bank account
 *DefaultApi* | [**CreateCase**](docs/DefaultApi.md#createcase) | **Post** /case | Create a new case
 *DefaultApi* | [**CreateCaseReportingEndpoint**](docs/DefaultApi.md#createcasereportingendpoint) | **Post** /cases/endpoint | Create new case reporting endpoint
@@ -110,6 +113,9 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**CreateTenant**](docs/DefaultApi.md#createtenant) | **Post** /tenant | Create a new tenant and optionally invites them to join the platform
 *DefaultApi* | [**CreateWorkflowDefinition**](docs/DefaultApi.md#createworkflowdefinition) | **Post** /workflows/definition | Create a new workflow definition
 *DefaultApi* | [**CreateWorkflowEntrypoint**](docs/DefaultApi.md#createworkflowentrypoint) | **Post** /workflows/definition/{definitionID}/entrypoint | Create a new workflow entry point for the workflow definition
+*DefaultApi* | [**DeleteAppointment**](docs/DefaultApi.md#deleteappointment) | **Delete** /calendar/appointments/entry/{entryId} | Delete an appointment
+*DefaultApi* | [**DeleteAppointmentSchedule**](docs/DefaultApi.md#deleteappointmentschedule) | **Delete** /calendar/appointments/schedule/{scheduleId} | Delete an appointment schedule
+*DefaultApi* | [**DeleteAppointmentTemplate**](docs/DefaultApi.md#deleteappointmenttemplate) | **Delete** /calendar/appointments/template/{templateId} | Delete an appointment template
 *DefaultApi* | [**DeleteAttachment**](docs/DefaultApi.md#deleteattachment) | **Delete** /attachment/{attachmentId} | Delete the file upload with the given ID
 *DefaultApi* | [**DeleteBankAccount**](docs/DefaultApi.md#deletebankaccount) | **Delete** /bank-account/{accountId} | Delete an already existing bank account
 *DefaultApi* | [**DeleteCase**](docs/DefaultApi.md#deletecase) | **Delete** /case/{caseId} | Delete case
@@ -153,6 +159,9 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**GenerateDocumentText**](docs/DefaultApi.md#generatedocumenttext) | **Post** /document-generation/documents/{docId}/generate-text | Generate the text for the document, based on template and input data
 *DefaultApi* | [**GenerateESignatureRequest**](docs/DefaultApi.md#generateesignaturerequest) | **Get** /document-generation/documents/{docId}/esignature/request | Generate an eSignature request for a document, based on template signature config
 *DefaultApi* | [**GetAccountSummary**](docs/DefaultApi.md#getaccountsummary) | **Post** /summary | Get overview of data in the system for current account
+*DefaultApi* | [**GetAppointment**](docs/DefaultApi.md#getappointment) | **Get** /calendar/appointments/entry/{entryId} | Get the appointment by ID
+*DefaultApi* | [**GetAppointmentSchedule**](docs/DefaultApi.md#getappointmentschedule) | **Get** /calendar/appointments/schedule/{scheduleId} | Get the appointment schedule by ID
+*DefaultApi* | [**GetAppointmentTemplate**](docs/DefaultApi.md#getappointmenttemplate) | **Get** /calendar/appointments/template/{templateId} | Get the appointment template by ID
 *DefaultApi* | [**GetAttachment**](docs/DefaultApi.md#getattachment) | **Get** /attachment/{attachmentId} | Get a file attachment
 *DefaultApi* | [**GetBankAccount**](docs/DefaultApi.md#getbankaccount) | **Get** /bank-account/{accountId} | Get the bank account with the given ID
 *DefaultApi* | [**GetCase**](docs/DefaultApi.md#getcase) | **Get** /case/{caseId} | Get case details
@@ -220,6 +229,9 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**InviteTenant**](docs/DefaultApi.md#invitetenant) | **Post** /invitation | Invite a tenant
 *DefaultApi* | [**InviteTenantToDataCollectionEndpoint**](docs/DefaultApi.md#invitetenanttodatacollectionendpoint) | **Post** /data-collection/tenants/endpoint/{endpointId}/invite | Send the link of the data collection endpoint to a tenant
 *DefaultApi* | [**PingConnector**](docs/DefaultApi.md#pingconnector) | **Post** /connector/ping | Ping the connector
+*DefaultApi* | [**QueryAppointmentSchedules**](docs/DefaultApi.md#queryappointmentschedules) | **Post** /calendar/appointments/schedules | Query all appointment schedules for given criteria
+*DefaultApi* | [**QueryAppointmentTemplates**](docs/DefaultApi.md#queryappointmenttemplates) | **Post** /calendar/appointments/templates | Query all appointment templates for given criteria
+*DefaultApi* | [**QueryAppointments**](docs/DefaultApi.md#queryappointments) | **Get** /calendar/appointments/window/{windowId} | Get the appointments of a Window
 *DefaultApi* | [**QueryArchivedDocumentGenerations**](docs/DefaultApi.md#queryarchiveddocumentgenerations) | **Post** /document-generation/documents/archive | Request a list of archived document generations
 *DefaultApi* | [**QueryBankAccounts**](docs/DefaultApi.md#querybankaccounts) | **Post** /bank-accounts | Query bank accounts
 *DefaultApi* | [**QueryCaseReportingEndpoints**](docs/DefaultApi.md#querycasereportingendpoints) | **Post** /cases/endpoints | Query all case reporting endpoints for given criteria
@@ -240,6 +252,9 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**StartWorkflowExecution**](docs/DefaultApi.md#startworkflowexecution) | **Post** /workflows/execution | Start a new workflow execution
 *DefaultApi* | [**SyncConnectorData**](docs/DefaultApi.md#syncconnectordata) | **Post** /connector/sync | Sync the next batch of connector data.
 *DefaultApi* | [**UnassignCase**](docs/DefaultApi.md#unassigncase) | **Post** /case/{caseId}/unassign | Remove access from case
+*DefaultApi* | [**UpdateAppointment**](docs/DefaultApi.md#updateappointment) | **Put** /calendar/appointments/entry/{entryId} | Update appointment
+*DefaultApi* | [**UpdateAppointmentSchedule**](docs/DefaultApi.md#updateappointmentschedule) | **Put** /calendar/appointments/schedule/{scheduleId} | Update appointment schedule
+*DefaultApi* | [**UpdateAppointmentTemplate**](docs/DefaultApi.md#updateappointmenttemplate) | **Put** /calendar/appointments/template/{templateId} | Update appointment template
 *DefaultApi* | [**UpdateBankAccount**](docs/DefaultApi.md#updatebankaccount) | **Put** /bank-account/{accountId} | Update the attributes of the already existing bank account
 *DefaultApi* | [**UpdateCase**](docs/DefaultApi.md#updatecase) | **Put** /case/{caseId} | Update case
 *DefaultApi* | [**UpdateCaseReportingEndpoint**](docs/DefaultApi.md#updatecasereportingendpoint) | **Put** /cases/endpoints/{endpointId} | Update the case reporting endpoint by ID
@@ -279,6 +294,11 @@ Class | Method | HTTP request | Description
 
  - [AdditionalTenant](docs/AdditionalTenant.md)
  - [Address](docs/Address.md)
+ - [Appointment](docs/Appointment.md)
+ - [AppointmentSchedule](docs/AppointmentSchedule.md)
+ - [AppointmentSlot](docs/AppointmentSlot.md)
+ - [AppointmentTemplate](docs/AppointmentTemplate.md)
+ - [AppointmentWindow](docs/AppointmentWindow.md)
  - [AssignCaseRequest](docs/AssignCaseRequest.md)
  - [Attachment](docs/Attachment.md)
  - [BankAccount](docs/BankAccount.md)
@@ -322,6 +342,9 @@ Class | Method | HTTP request | Description
  - [CreateDocumentGenerationRequest](docs/CreateDocumentGenerationRequest.md)
  - [CreateInvitationRequest](docs/CreateInvitationRequest.md)
  - [CreateNoteRequest](docs/CreateNoteRequest.md)
+ - [CreateOrUpdateAppointmentRequest](docs/CreateOrUpdateAppointmentRequest.md)
+ - [CreateOrUpdateAppointmentScheduleRequest](docs/CreateOrUpdateAppointmentScheduleRequest.md)
+ - [CreateOrUpdateAppointmentTemplateRequest](docs/CreateOrUpdateAppointmentTemplateRequest.md)
  - [CreateOrUpdateBankAccountRequest](docs/CreateOrUpdateBankAccountRequest.md)
  - [CreateOrUpdateCaseReportingEndpointRequest](docs/CreateOrUpdateCaseReportingEndpointRequest.md)
  - [CreateOrUpdateCaseTemplateRequest](docs/CreateOrUpdateCaseTemplateRequest.md)
@@ -405,6 +428,8 @@ Class | Method | HTTP request | Description
  - [PropertyParkingTypeEnum](docs/PropertyParkingTypeEnum.md)
  - [PropertyType](docs/PropertyType.md)
  - [PropertyWindowTypeEnum](docs/PropertyWindowTypeEnum.md)
+ - [QueryAppointmentSchedulesRequest](docs/QueryAppointmentSchedulesRequest.md)
+ - [QueryAppointmentTemplatesRequest](docs/QueryAppointmentTemplatesRequest.md)
  - [QueryBankAccountsRequest](docs/QueryBankAccountsRequest.md)
  - [QueryBankAccountsResponse](docs/QueryBankAccountsResponse.md)
  - [QueryBooleanParameter](docs/QueryBooleanParameter.md)

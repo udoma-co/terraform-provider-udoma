@@ -526,6 +526,340 @@ func (a *DefaultApiService) CancelSignaturesForDocumentExecute(r ApiCancelSignat
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiCreateAppointmentRequest struct {
+	ctx                              context.Context
+	ApiService                       *DefaultApiService
+	scheduleId                       string
+	createOrUpdateAppointmentRequest *CreateOrUpdateAppointmentRequest
+}
+
+// Definition of an appointment
+func (r ApiCreateAppointmentRequest) CreateOrUpdateAppointmentRequest(createOrUpdateAppointmentRequest CreateOrUpdateAppointmentRequest) ApiCreateAppointmentRequest {
+	r.createOrUpdateAppointmentRequest = &createOrUpdateAppointmentRequest
+	return r
+}
+
+func (r ApiCreateAppointmentRequest) Execute() (*Appointment, *http.Response, error) {
+	return r.ApiService.CreateAppointmentExecute(r)
+}
+
+/*
+CreateAppointment Create new appointment for a given schedule
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param scheduleId ID of the appointment schedule
+	@return ApiCreateAppointmentRequest
+*/
+func (a *DefaultApiService) CreateAppointment(ctx context.Context, scheduleId string) ApiCreateAppointmentRequest {
+	return ApiCreateAppointmentRequest{
+		ApiService: a,
+		ctx:        ctx,
+		scheduleId: scheduleId,
+	}
+}
+
+// Execute executes the request
+//
+//	@return Appointment
+func (a *DefaultApiService) CreateAppointmentExecute(r ApiCreateAppointmentRequest) (*Appointment, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Appointment
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.CreateAppointment")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/calendar/appointments/schedule/{scheduleId}/appointment"
+	localVarPath = strings.Replace(localVarPath, "{"+"scheduleId"+"}", url.PathEscape(parameterToString(r.scheduleId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createOrUpdateAppointmentRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdateAppointmentRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrUpdateAppointmentRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiCreateAppointmentScheduleRequest struct {
+	ctx                                      context.Context
+	ApiService                               *DefaultApiService
+	createOrUpdateAppointmentScheduleRequest *CreateOrUpdateAppointmentScheduleRequest
+}
+
+// Definition of an appointment schedule
+func (r ApiCreateAppointmentScheduleRequest) CreateOrUpdateAppointmentScheduleRequest(createOrUpdateAppointmentScheduleRequest CreateOrUpdateAppointmentScheduleRequest) ApiCreateAppointmentScheduleRequest {
+	r.createOrUpdateAppointmentScheduleRequest = &createOrUpdateAppointmentScheduleRequest
+	return r
+}
+
+func (r ApiCreateAppointmentScheduleRequest) Execute() (*AppointmentSchedule, *http.Response, error) {
+	return r.ApiService.CreateAppointmentScheduleExecute(r)
+}
+
+/*
+CreateAppointmentSchedule Create new appointment schedule
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiCreateAppointmentScheduleRequest
+*/
+func (a *DefaultApiService) CreateAppointmentSchedule(ctx context.Context) ApiCreateAppointmentScheduleRequest {
+	return ApiCreateAppointmentScheduleRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return AppointmentSchedule
+func (a *DefaultApiService) CreateAppointmentScheduleExecute(r ApiCreateAppointmentScheduleRequest) (*AppointmentSchedule, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *AppointmentSchedule
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.CreateAppointmentSchedule")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/calendar/appointments/schedule"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createOrUpdateAppointmentScheduleRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdateAppointmentScheduleRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrUpdateAppointmentScheduleRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiCreateAppointmentTemplateRequest struct {
+	ctx                                      context.Context
+	ApiService                               *DefaultApiService
+	createOrUpdateAppointmentTemplateRequest *CreateOrUpdateAppointmentTemplateRequest
+}
+
+// Definition of an appointment template
+func (r ApiCreateAppointmentTemplateRequest) CreateOrUpdateAppointmentTemplateRequest(createOrUpdateAppointmentTemplateRequest CreateOrUpdateAppointmentTemplateRequest) ApiCreateAppointmentTemplateRequest {
+	r.createOrUpdateAppointmentTemplateRequest = &createOrUpdateAppointmentTemplateRequest
+	return r
+}
+
+func (r ApiCreateAppointmentTemplateRequest) Execute() (*AppointmentTemplate, *http.Response, error) {
+	return r.ApiService.CreateAppointmentTemplateExecute(r)
+}
+
+/*
+CreateAppointmentTemplate Create new appointment template
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiCreateAppointmentTemplateRequest
+*/
+func (a *DefaultApiService) CreateAppointmentTemplate(ctx context.Context) ApiCreateAppointmentTemplateRequest {
+	return ApiCreateAppointmentTemplateRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return AppointmentTemplate
+func (a *DefaultApiService) CreateAppointmentTemplateExecute(r ApiCreateAppointmentTemplateRequest) (*AppointmentTemplate, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *AppointmentTemplate
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.CreateAppointmentTemplate")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/calendar/appointments/template"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createOrUpdateAppointmentTemplateRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdateAppointmentTemplateRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrUpdateAppointmentTemplateRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiCreateBankAccountRequest struct {
 	ctx                              context.Context
 	ApiService                       *DefaultApiService
@@ -3533,6 +3867,282 @@ func (a *DefaultApiService) CreateWorkflowEntrypointExecute(r ApiCreateWorkflowE
 	}
 
 	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiDeleteAppointmentRequest struct {
+	ctx        context.Context
+	ApiService *DefaultApiService
+	entryId    string
+}
+
+func (r ApiDeleteAppointmentRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteAppointmentExecute(r)
+}
+
+/*
+DeleteAppointment Delete an appointment
+
+Delete the appointment
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param entryId ID of the appointment
+	@return ApiDeleteAppointmentRequest
+*/
+func (a *DefaultApiService) DeleteAppointment(ctx context.Context, entryId string) ApiDeleteAppointmentRequest {
+	return ApiDeleteAppointmentRequest{
+		ApiService: a,
+		ctx:        ctx,
+		entryId:    entryId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultApiService) DeleteAppointmentExecute(r ApiDeleteAppointmentRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.DeleteAppointment")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/calendar/appointments/entry/{entryId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"entryId"+"}", url.PathEscape(parameterToString(r.entryId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDeleteAppointmentScheduleRequest struct {
+	ctx        context.Context
+	ApiService *DefaultApiService
+	scheduleId string
+}
+
+func (r ApiDeleteAppointmentScheduleRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteAppointmentScheduleExecute(r)
+}
+
+/*
+DeleteAppointmentSchedule Delete an appointment schedule
+
+Delete the appointment schedule with all appointments
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param scheduleId ID of the appointment schedule
+	@return ApiDeleteAppointmentScheduleRequest
+*/
+func (a *DefaultApiService) DeleteAppointmentSchedule(ctx context.Context, scheduleId string) ApiDeleteAppointmentScheduleRequest {
+	return ApiDeleteAppointmentScheduleRequest{
+		ApiService: a,
+		ctx:        ctx,
+		scheduleId: scheduleId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultApiService) DeleteAppointmentScheduleExecute(r ApiDeleteAppointmentScheduleRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.DeleteAppointmentSchedule")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/calendar/appointments/schedule/{scheduleId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"scheduleId"+"}", url.PathEscape(parameterToString(r.scheduleId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDeleteAppointmentTemplateRequest struct {
+	ctx        context.Context
+	ApiService *DefaultApiService
+	templateId string
+}
+
+func (r ApiDeleteAppointmentTemplateRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteAppointmentTemplateExecute(r)
+}
+
+/*
+DeleteAppointmentTemplate Delete an appointment template
+
+Delete the appointment template with all it's attachments
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param templateId ID of the appointment template
+	@return ApiDeleteAppointmentTemplateRequest
+*/
+func (a *DefaultApiService) DeleteAppointmentTemplate(ctx context.Context, templateId string) ApiDeleteAppointmentTemplateRequest {
+	return ApiDeleteAppointmentTemplateRequest{
+		ApiService: a,
+		ctx:        ctx,
+		templateId: templateId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultApiService) DeleteAppointmentTemplateExecute(r ApiDeleteAppointmentTemplateRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.DeleteAppointmentTemplate")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/calendar/appointments/template/{templateId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"templateId"+"}", url.PathEscape(parameterToString(r.templateId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
 }
 
 type ApiDeleteAttachmentRequest struct {
@@ -7586,6 +8196,312 @@ func (a *DefaultApiService) GetAccountSummaryExecute(r ApiGetAccountSummaryReque
 	}
 	// body params
 	localVarPostBody = r.getSummaryRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetAppointmentRequest struct {
+	ctx        context.Context
+	ApiService *DefaultApiService
+	entryId    string
+}
+
+func (r ApiGetAppointmentRequest) Execute() (*Appointment, *http.Response, error) {
+	return r.ApiService.GetAppointmentExecute(r)
+}
+
+/*
+GetAppointment Get the appointment by ID
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param entryId ID of the appointment
+	@return ApiGetAppointmentRequest
+*/
+func (a *DefaultApiService) GetAppointment(ctx context.Context, entryId string) ApiGetAppointmentRequest {
+	return ApiGetAppointmentRequest{
+		ApiService: a,
+		ctx:        ctx,
+		entryId:    entryId,
+	}
+}
+
+// Execute executes the request
+//
+//	@return Appointment
+func (a *DefaultApiService) GetAppointmentExecute(r ApiGetAppointmentRequest) (*Appointment, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Appointment
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetAppointment")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/calendar/appointments/entry/{entryId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"entryId"+"}", url.PathEscape(parameterToString(r.entryId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetAppointmentScheduleRequest struct {
+	ctx        context.Context
+	ApiService *DefaultApiService
+	scheduleId string
+}
+
+func (r ApiGetAppointmentScheduleRequest) Execute() (*AppointmentSchedule, *http.Response, error) {
+	return r.ApiService.GetAppointmentScheduleExecute(r)
+}
+
+/*
+GetAppointmentSchedule Get the appointment schedule by ID
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param scheduleId ID of the appointment schedule
+	@return ApiGetAppointmentScheduleRequest
+*/
+func (a *DefaultApiService) GetAppointmentSchedule(ctx context.Context, scheduleId string) ApiGetAppointmentScheduleRequest {
+	return ApiGetAppointmentScheduleRequest{
+		ApiService: a,
+		ctx:        ctx,
+		scheduleId: scheduleId,
+	}
+}
+
+// Execute executes the request
+//
+//	@return AppointmentSchedule
+func (a *DefaultApiService) GetAppointmentScheduleExecute(r ApiGetAppointmentScheduleRequest) (*AppointmentSchedule, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *AppointmentSchedule
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetAppointmentSchedule")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/calendar/appointments/schedule/{scheduleId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"scheduleId"+"}", url.PathEscape(parameterToString(r.scheduleId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetAppointmentTemplateRequest struct {
+	ctx        context.Context
+	ApiService *DefaultApiService
+	templateId string
+}
+
+func (r ApiGetAppointmentTemplateRequest) Execute() (*AppointmentTemplate, *http.Response, error) {
+	return r.ApiService.GetAppointmentTemplateExecute(r)
+}
+
+/*
+GetAppointmentTemplate Get the appointment template by ID
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param templateId ID of the appointment template
+	@return ApiGetAppointmentTemplateRequest
+*/
+func (a *DefaultApiService) GetAppointmentTemplate(ctx context.Context, templateId string) ApiGetAppointmentTemplateRequest {
+	return ApiGetAppointmentTemplateRequest{
+		ApiService: a,
+		ctx:        ctx,
+		templateId: templateId,
+	}
+}
+
+// Execute executes the request
+//
+//	@return AppointmentTemplate
+func (a *DefaultApiService) GetAppointmentTemplateExecute(r ApiGetAppointmentTemplateRequest) (*AppointmentTemplate, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *AppointmentTemplate
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetAppointmentTemplate")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/calendar/appointments/template/{templateId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"templateId"+"}", url.PathEscape(parameterToString(r.templateId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -14505,6 +15421,326 @@ func (a *DefaultApiService) PingConnectorExecute(r ApiPingConnectorRequest) (*Pi
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiQueryAppointmentSchedulesRequest struct {
+	ctx                              context.Context
+	ApiService                       *DefaultApiService
+	queryAppointmentSchedulesRequest *QueryAppointmentSchedulesRequest
+}
+
+func (r ApiQueryAppointmentSchedulesRequest) QueryAppointmentSchedulesRequest(queryAppointmentSchedulesRequest QueryAppointmentSchedulesRequest) ApiQueryAppointmentSchedulesRequest {
+	r.queryAppointmentSchedulesRequest = &queryAppointmentSchedulesRequest
+	return r
+}
+
+func (r ApiQueryAppointmentSchedulesRequest) Execute() ([]AppointmentSchedule, *http.Response, error) {
+	return r.ApiService.QueryAppointmentSchedulesExecute(r)
+}
+
+/*
+QueryAppointmentSchedules Query all appointment schedules for given criteria
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiQueryAppointmentSchedulesRequest
+*/
+func (a *DefaultApiService) QueryAppointmentSchedules(ctx context.Context) ApiQueryAppointmentSchedulesRequest {
+	return ApiQueryAppointmentSchedulesRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return []AppointmentSchedule
+func (a *DefaultApiService) QueryAppointmentSchedulesExecute(r ApiQueryAppointmentSchedulesRequest) ([]AppointmentSchedule, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []AppointmentSchedule
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.QueryAppointmentSchedules")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/calendar/appointments/schedules"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.queryAppointmentSchedulesRequest == nil {
+		return localVarReturnValue, nil, reportError("queryAppointmentSchedulesRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.queryAppointmentSchedulesRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiQueryAppointmentTemplatesRequest struct {
+	ctx                              context.Context
+	ApiService                       *DefaultApiService
+	queryAppointmentTemplatesRequest *QueryAppointmentTemplatesRequest
+}
+
+func (r ApiQueryAppointmentTemplatesRequest) QueryAppointmentTemplatesRequest(queryAppointmentTemplatesRequest QueryAppointmentTemplatesRequest) ApiQueryAppointmentTemplatesRequest {
+	r.queryAppointmentTemplatesRequest = &queryAppointmentTemplatesRequest
+	return r
+}
+
+func (r ApiQueryAppointmentTemplatesRequest) Execute() ([]AppointmentTemplate, *http.Response, error) {
+	return r.ApiService.QueryAppointmentTemplatesExecute(r)
+}
+
+/*
+QueryAppointmentTemplates Query all appointment templates for given criteria
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiQueryAppointmentTemplatesRequest
+*/
+func (a *DefaultApiService) QueryAppointmentTemplates(ctx context.Context) ApiQueryAppointmentTemplatesRequest {
+	return ApiQueryAppointmentTemplatesRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return []AppointmentTemplate
+func (a *DefaultApiService) QueryAppointmentTemplatesExecute(r ApiQueryAppointmentTemplatesRequest) ([]AppointmentTemplate, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []AppointmentTemplate
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.QueryAppointmentTemplates")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/calendar/appointments/templates"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.queryAppointmentTemplatesRequest == nil {
+		return localVarReturnValue, nil, reportError("queryAppointmentTemplatesRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.queryAppointmentTemplatesRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiQueryAppointmentsRequest struct {
+	ctx        context.Context
+	ApiService *DefaultApiService
+	windowId   string
+}
+
+func (r ApiQueryAppointmentsRequest) Execute() ([]Appointment, *http.Response, error) {
+	return r.ApiService.QueryAppointmentsExecute(r)
+}
+
+/*
+QueryAppointments Get the appointments of a Window
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param windowId ID of the appointment window
+	@return ApiQueryAppointmentsRequest
+*/
+func (a *DefaultApiService) QueryAppointments(ctx context.Context, windowId string) ApiQueryAppointmentsRequest {
+	return ApiQueryAppointmentsRequest{
+		ApiService: a,
+		ctx:        ctx,
+		windowId:   windowId,
+	}
+}
+
+// Execute executes the request
+//
+//	@return []Appointment
+func (a *DefaultApiService) QueryAppointmentsExecute(r ApiQueryAppointmentsRequest) ([]Appointment, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []Appointment
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.QueryAppointments")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/calendar/appointments/window/{windowId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"windowId"+"}", url.PathEscape(parameterToString(r.windowId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiQueryArchivedDocumentGenerationsRequest struct {
 	ctx                             context.Context
 	ApiService                      *DefaultApiService
@@ -16665,6 +17901,348 @@ func (a *DefaultApiService) UnassignCaseExecute(r ApiUnassignCaseRequest) (*http
 	}
 
 	return localVarHTTPResponse, nil
+}
+
+type ApiUpdateAppointmentRequest struct {
+	ctx                              context.Context
+	ApiService                       *DefaultApiService
+	entryId                          string
+	createOrUpdateAppointmentRequest *CreateOrUpdateAppointmentRequest
+}
+
+// Updated appointment entry object
+func (r ApiUpdateAppointmentRequest) CreateOrUpdateAppointmentRequest(createOrUpdateAppointmentRequest CreateOrUpdateAppointmentRequest) ApiUpdateAppointmentRequest {
+	r.createOrUpdateAppointmentRequest = &createOrUpdateAppointmentRequest
+	return r
+}
+
+func (r ApiUpdateAppointmentRequest) Execute() (*Appointment, *http.Response, error) {
+	return r.ApiService.UpdateAppointmentExecute(r)
+}
+
+/*
+UpdateAppointment Update appointment
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param entryId ID of the appointment
+	@return ApiUpdateAppointmentRequest
+*/
+func (a *DefaultApiService) UpdateAppointment(ctx context.Context, entryId string) ApiUpdateAppointmentRequest {
+	return ApiUpdateAppointmentRequest{
+		ApiService: a,
+		ctx:        ctx,
+		entryId:    entryId,
+	}
+}
+
+// Execute executes the request
+//
+//	@return Appointment
+func (a *DefaultApiService) UpdateAppointmentExecute(r ApiUpdateAppointmentRequest) (*Appointment, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Appointment
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.UpdateAppointment")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/calendar/appointments/entry/{entryId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"entryId"+"}", url.PathEscape(parameterToString(r.entryId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createOrUpdateAppointmentRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdateAppointmentRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrUpdateAppointmentRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdateAppointmentScheduleRequest struct {
+	ctx                                      context.Context
+	ApiService                               *DefaultApiService
+	scheduleId                               string
+	createOrUpdateAppointmentScheduleRequest *CreateOrUpdateAppointmentScheduleRequest
+}
+
+// Updated appointment schedule object
+func (r ApiUpdateAppointmentScheduleRequest) CreateOrUpdateAppointmentScheduleRequest(createOrUpdateAppointmentScheduleRequest CreateOrUpdateAppointmentScheduleRequest) ApiUpdateAppointmentScheduleRequest {
+	r.createOrUpdateAppointmentScheduleRequest = &createOrUpdateAppointmentScheduleRequest
+	return r
+}
+
+func (r ApiUpdateAppointmentScheduleRequest) Execute() (*AppointmentSchedule, *http.Response, error) {
+	return r.ApiService.UpdateAppointmentScheduleExecute(r)
+}
+
+/*
+UpdateAppointmentSchedule Update appointment schedule
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param scheduleId ID of the appointment schedule
+	@return ApiUpdateAppointmentScheduleRequest
+*/
+func (a *DefaultApiService) UpdateAppointmentSchedule(ctx context.Context, scheduleId string) ApiUpdateAppointmentScheduleRequest {
+	return ApiUpdateAppointmentScheduleRequest{
+		ApiService: a,
+		ctx:        ctx,
+		scheduleId: scheduleId,
+	}
+}
+
+// Execute executes the request
+//
+//	@return AppointmentSchedule
+func (a *DefaultApiService) UpdateAppointmentScheduleExecute(r ApiUpdateAppointmentScheduleRequest) (*AppointmentSchedule, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *AppointmentSchedule
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.UpdateAppointmentSchedule")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/calendar/appointments/schedule/{scheduleId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"scheduleId"+"}", url.PathEscape(parameterToString(r.scheduleId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createOrUpdateAppointmentScheduleRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdateAppointmentScheduleRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrUpdateAppointmentScheduleRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdateAppointmentTemplateRequest struct {
+	ctx                                      context.Context
+	ApiService                               *DefaultApiService
+	templateId                               string
+	createOrUpdateAppointmentTemplateRequest *CreateOrUpdateAppointmentTemplateRequest
+}
+
+// Updated appointment template object
+func (r ApiUpdateAppointmentTemplateRequest) CreateOrUpdateAppointmentTemplateRequest(createOrUpdateAppointmentTemplateRequest CreateOrUpdateAppointmentTemplateRequest) ApiUpdateAppointmentTemplateRequest {
+	r.createOrUpdateAppointmentTemplateRequest = &createOrUpdateAppointmentTemplateRequest
+	return r
+}
+
+func (r ApiUpdateAppointmentTemplateRequest) Execute() (*AppointmentTemplate, *http.Response, error) {
+	return r.ApiService.UpdateAppointmentTemplateExecute(r)
+}
+
+/*
+UpdateAppointmentTemplate Update appointment template
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param templateId ID of the appointment template
+	@return ApiUpdateAppointmentTemplateRequest
+*/
+func (a *DefaultApiService) UpdateAppointmentTemplate(ctx context.Context, templateId string) ApiUpdateAppointmentTemplateRequest {
+	return ApiUpdateAppointmentTemplateRequest{
+		ApiService: a,
+		ctx:        ctx,
+		templateId: templateId,
+	}
+}
+
+// Execute executes the request
+//
+//	@return AppointmentTemplate
+func (a *DefaultApiService) UpdateAppointmentTemplateExecute(r ApiUpdateAppointmentTemplateRequest) (*AppointmentTemplate, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *AppointmentTemplate
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.UpdateAppointmentTemplate")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/calendar/appointments/template/{templateId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"templateId"+"}", url.PathEscape(parameterToString(r.templateId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createOrUpdateAppointmentTemplateRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdateAppointmentTemplateRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrUpdateAppointmentTemplateRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiUpdateBankAccountRequest struct {

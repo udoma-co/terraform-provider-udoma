@@ -241,6 +241,408 @@ paths:
           content: {}
           description: Internal server error
       summary: Update the attributes of the already existing bank account
+  /calendar/appointments/template:
+    post:
+      operationId: createAppointmentTemplate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrUpdateAppointmentTemplateRequest'
+        description: Definition of an appointment template
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppointmentTemplate'
+          description: successful operation
+        "400":
+          content: {}
+          description: Invalid input provided
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Create new appointment template
+  /calendar/appointments/templates:
+    post:
+      operationId: queryAppointmentTemplates
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryAppointmentTemplatesRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppointmentTemplate'
+                type: array
+          description: successful operation
+        "400":
+          content: {}
+          description: Invalid input provided
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Query all appointment templates for given criteria
+  /calendar/appointments/template/{templateId}:
+    delete:
+      description: Delete the appointment template with all it's attachments
+      operationId: deleteAppointmentTemplate
+      parameters:
+      - description: ID of the appointment template
+        explode: false
+        in: path
+        name: templateId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          content: {}
+          description: Invalid input provided
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Delete an appointment template
+    get:
+      operationId: getAppointmentTemplate
+      parameters:
+      - description: ID of the appointment template
+        explode: false
+        in: path
+        name: templateId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppointmentTemplate'
+          description: successful operation
+        "400":
+          content: {}
+          description: Invalid input provided
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Get the appointment template by ID
+    put:
+      operationId: updateAppointmentTemplate
+      parameters:
+      - description: ID of the appointment template
+        explode: false
+        in: path
+        name: templateId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrUpdateAppointmentTemplateRequest'
+        description: Updated appointment template object
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppointmentTemplate'
+          description: Successfully updated appointment template
+        "400":
+          content: {}
+          description: Invalid input provided
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Update appointment template
+  /calendar/appointments/schedule:
+    post:
+      operationId: createAppointmentSchedule
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrUpdateAppointmentScheduleRequest'
+        description: Definition of an appointment schedule
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppointmentSchedule'
+          description: successful operation
+        "400":
+          content: {}
+          description: Invalid input provided
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Create new appointment schedule
+  /calendar/appointments/schedules:
+    post:
+      operationId: queryAppointmentSchedules
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryAppointmentSchedulesRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppointmentSchedule'
+                type: array
+          description: successful operation
+        "400":
+          content: {}
+          description: Invalid input provided
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Query all appointment schedules for given criteria
+  /calendar/appointments/schedule/{scheduleId}:
+    delete:
+      description: Delete the appointment schedule with all appointments
+      operationId: deleteAppointmentSchedule
+      parameters:
+      - description: ID of the appointment schedule
+        explode: false
+        in: path
+        name: scheduleId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          content: {}
+          description: Invalid input provided
+        "403":
+          content: {}
+          description: Access denied
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Delete an appointment schedule
+    get:
+      operationId: getAppointmentSchedule
+      parameters:
+      - description: ID of the appointment schedule
+        explode: false
+        in: path
+        name: scheduleId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppointmentSchedule'
+          description: successful operation
+        "400":
+          content: {}
+          description: Invalid input provided
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Get the appointment schedule by ID
+    put:
+      operationId: updateAppointmentSchedule
+      parameters:
+      - description: ID of the appointment schedule
+        explode: false
+        in: path
+        name: scheduleId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrUpdateAppointmentScheduleRequest'
+        description: Updated appointment schedule object
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppointmentSchedule'
+          description: Successfully updated appointment schedule
+        "400":
+          content: {}
+          description: Invalid input provided
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Update appointment schedule
+  /calendar/appointments/schedule/{scheduleId}/appointment:
+    post:
+      operationId: createAppointment
+      parameters:
+      - description: ID of the appointment schedule
+        explode: false
+        in: path
+        name: scheduleId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrUpdateAppointmentRequest'
+        description: Definition of an appointment
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Appointment'
+          description: successful operation
+        "400":
+          content: {}
+          description: Invalid input provided
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Create new appointment for a given schedule
+  /calendar/appointments/entry/{entryId}:
+    delete:
+      description: Delete the appointment
+      operationId: deleteAppointment
+      parameters:
+      - description: ID of the appointment
+        explode: false
+        in: path
+        name: entryId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          content: {}
+          description: Invalid input provided
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Delete an appointment
+    get:
+      operationId: getAppointment
+      parameters:
+      - description: ID of the appointment
+        explode: false
+        in: path
+        name: entryId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Appointment'
+          description: successful operation
+        "400":
+          content: {}
+          description: Invalid input provided
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Get the appointment by ID
+    put:
+      operationId: updateAppointment
+      parameters:
+      - description: ID of the appointment
+        explode: false
+        in: path
+        name: entryId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrUpdateAppointmentRequest'
+        description: Updated appointment entry object
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Appointment'
+          description: Successfully updated appointment
+        "400":
+          content: {}
+          description: Invalid input provided
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Update appointment
+  /calendar/appointments/window/{windowId}:
+    get:
+      operationId: queryAppointments
+      parameters:
+      - description: ID of the appointment window
+        explode: false
+        in: path
+        name: windowId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Appointment'
+                type: array
+          description: successful operation
+        "400":
+          content: {}
+          description: Invalid input provided
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Get the appointments of a Window
   /case:
     post:
       description: Create a new case for the provided organization/property.
@@ -6002,6 +6404,881 @@ components:
             $ref: '#/components/schemas/BankAccount'
           type: array
       type: object
+    CreateOrUpdateAppointmentTemplateRequest:
+      example:
+        form:
+          layout:
+          - ref_id: ref_id
+            ref_type: ref_type
+          - ref_id: ref_id
+            ref_type: ref_type
+          inputs:
+          - view_label:
+              key: view_label
+            ephemeral: true
+            default_value: default_value
+            attributes:
+              key: attributes
+            id: id
+            label:
+              key: label
+            placeholder:
+              key: placeholder
+            type: type
+            items:
+            - items
+            - items
+            required: true
+            target: target
+          - view_label:
+              key: view_label
+            ephemeral: true
+            default_value: default_value
+            attributes:
+              key: attributes
+            id: id
+            label:
+              key: label
+            placeholder:
+              key: placeholder
+            type: type
+            items:
+            - items
+            - items
+            required: true
+            target: target
+          groups:
+          - use_item_group: true
+            bottom_divider: true
+            top_divider: true
+            min_size: 0
+            id: id
+            label:
+              key: label
+            type: type
+            items:
+            - ref_id: ref_id
+              ref_type: ref_type
+            - ref_id: ref_id
+              ref_type: ref_type
+            info:
+              key: info
+            target: target
+          - use_item_group: true
+            bottom_divider: true
+            top_divider: true
+            min_size: 0
+            id: id
+            label:
+              key: label
+            type: type
+            items:
+            - ref_id: ref_id
+              ref_type: ref_type
+            - ref_id: ref_id
+              ref_type: ref_type
+            info:
+              key: info
+            target: target
+          validations:
+          - expression: expression
+            id: id
+            message:
+              key: message
+            target: target
+          - expression: expression
+            id: id
+            message:
+              key: message
+            target: target
+        name_expression: name_expression
+        name: name
+        description: description
+      properties:
+        name:
+          description: The name of the appointment template
+          type: string
+        description:
+          description: The description of the appointment template
+          type: string
+        name_expression:
+          description: |
+            The expression that is used to generate the name of the appointment from the data that the user has entered when booking the appointment
+          type: string
+        form:
+          $ref: '#/components/schemas/CustomForm'
+      type: object
+    AppointmentTemplate:
+      example:
+        form:
+          layout:
+          - ref_id: ref_id
+            ref_type: ref_type
+          - ref_id: ref_id
+            ref_type: ref_type
+          inputs:
+          - view_label:
+              key: view_label
+            ephemeral: true
+            default_value: default_value
+            attributes:
+              key: attributes
+            id: id
+            label:
+              key: label
+            placeholder:
+              key: placeholder
+            type: type
+            items:
+            - items
+            - items
+            required: true
+            target: target
+          - view_label:
+              key: view_label
+            ephemeral: true
+            default_value: default_value
+            attributes:
+              key: attributes
+            id: id
+            label:
+              key: label
+            placeholder:
+              key: placeholder
+            type: type
+            items:
+            - items
+            - items
+            required: true
+            target: target
+          groups:
+          - use_item_group: true
+            bottom_divider: true
+            top_divider: true
+            min_size: 0
+            id: id
+            label:
+              key: label
+            type: type
+            items:
+            - ref_id: ref_id
+              ref_type: ref_type
+            - ref_id: ref_id
+              ref_type: ref_type
+            info:
+              key: info
+            target: target
+          - use_item_group: true
+            bottom_divider: true
+            top_divider: true
+            min_size: 0
+            id: id
+            label:
+              key: label
+            type: type
+            items:
+            - ref_id: ref_id
+              ref_type: ref_type
+            - ref_id: ref_id
+              ref_type: ref_type
+            info:
+              key: info
+            target: target
+          validations:
+          - expression: expression
+            id: id
+            message:
+              key: message
+            target: target
+          - expression: expression
+            id: id
+            message:
+              key: message
+            target: target
+        name_expression: name_expression
+        name: name
+        description: description
+        id: id
+      properties:
+        id:
+          description: The unique identifier of the appointment template
+          type: string
+        name:
+          description: The name of the appointment template
+          type: string
+        name_expression:
+          description: |
+            The expression that is used to generate the name of the appointment from the data that the user has entered when booking the appointment
+          type: string
+        description:
+          description: The description of the appointment template
+          type: string
+        form:
+          $ref: '#/components/schemas/CustomForm'
+      required:
+      - form
+      - id
+      - name
+      - name_expression
+      type: object
+    QueryAppointmentTemplatesRequest:
+      example:
+        offset: 6
+        limit: 0
+      properties:
+        limit:
+          format: int32
+          type: integer
+        offset:
+          format: int32
+          type: integer
+      type: object
+    CreateOrUpdateAppointmentScheduleRequest:
+      example:
+        template: template
+        gap_duration: 6
+        slot_duration: 0
+        color: color
+        name: name
+        description:
+          key: description
+        windows:
+        - start_time: 1
+          slots:
+          - start_time: 5
+            end_time: 2
+            appointment:
+              start_time: 3
+              code: code
+              updated_at: 9
+              data:
+                key: ""
+              contact:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+              end_time: 2
+              name: name
+              created_at: 7
+              id: id
+          - start_time: 5
+            end_time: 2
+            appointment:
+              start_time: 3
+              code: code
+              updated_at: 9
+              data:
+                key: ""
+              contact:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+              end_time: 2
+              name: name
+              created_at: 7
+              id: id
+          end_time: 5
+          id: id
+        - start_time: 1
+          slots:
+          - start_time: 5
+            end_time: 2
+            appointment:
+              start_time: 3
+              code: code
+              updated_at: 9
+              data:
+                key: ""
+              contact:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+              end_time: 2
+              name: name
+              created_at: 7
+              id: id
+          - start_time: 5
+            end_time: 2
+            appointment:
+              start_time: 3
+              code: code
+              updated_at: 9
+              data:
+                key: ""
+              contact:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+              end_time: 2
+              name: name
+              created_at: 7
+              id: id
+          end_time: 5
+          id: id
+      properties:
+        name:
+          description: The name of the appointment window
+          type: string
+        description:
+          additionalProperties:
+            type: string
+          description: "a map of values, where the key and values are strings"
+          type: object
+        template:
+          description: The reference to the appointment template that is used to determine
+            what data to collect when booking a slot.
+          type: string
+        slot_duration:
+          description: The duration of the appointment window in minutes
+          format: int32
+          type: integer
+        gap_duration:
+          description: The duration of the gap between appointments in minutes
+          format: int32
+          type: integer
+        color:
+          description: The color to use when displaying the appointment window in
+            a calendar view
+          type: string
+        windows:
+          description: The appointment windows
+          items:
+            $ref: '#/components/schemas/AppointmentWindow'
+          type: array
+      type: object
+    AppointmentWindow:
+      example:
+        start_time: 1
+        slots:
+        - start_time: 5
+          end_time: 2
+          appointment:
+            start_time: 3
+            code: code
+            updated_at: 9
+            data:
+              key: ""
+            contact:
+              address:
+                line1: 1 ZestLabs Blvd
+                line2: CSS District
+                city: Mannheim
+                postcode: 680001
+                province: Baden-Wuerttemberg
+                country: Germany
+              last_name: last_name
+              company: company
+              phone_number: phone_number
+              id: id
+              title: title
+              first_name: first_name
+              email: email
+            end_time: 2
+            name: name
+            created_at: 7
+            id: id
+        - start_time: 5
+          end_time: 2
+          appointment:
+            start_time: 3
+            code: code
+            updated_at: 9
+            data:
+              key: ""
+            contact:
+              address:
+                line1: 1 ZestLabs Blvd
+                line2: CSS District
+                city: Mannheim
+                postcode: 680001
+                province: Baden-Wuerttemberg
+                country: Germany
+              last_name: last_name
+              company: company
+              phone_number: phone_number
+              id: id
+              title: title
+              first_name: first_name
+              email: email
+            end_time: 2
+            name: name
+            created_at: 7
+            id: id
+        end_time: 5
+        id: id
+      properties:
+        id:
+          description: |
+            The id of the window - only provided as a response or in update requests
+          type: string
+        start_time:
+          description: The timestamp of the beginning of the appointment window
+          format: int64
+          type: integer
+        end_time:
+          description: The timestamp of the end of the appointment window
+          format: int64
+          type: integer
+        slots:
+          description: List of slots that are available or booked
+          items:
+            $ref: '#/components/schemas/AppointmentSlot'
+          type: array
+      required:
+      - end_time
+      - start_time
+      type: object
+    AppointmentSlot:
+      description: |
+        An appointment slot is a time slot within a appointment window that is available for booking.
+      example:
+        start_time: 5
+        end_time: 2
+        appointment:
+          start_time: 3
+          code: code
+          updated_at: 9
+          data:
+            key: ""
+          contact:
+            address:
+              line1: 1 ZestLabs Blvd
+              line2: CSS District
+              city: Mannheim
+              postcode: 680001
+              province: Baden-Wuerttemberg
+              country: Germany
+            last_name: last_name
+            company: company
+            phone_number: phone_number
+            id: id
+            title: title
+            first_name: first_name
+            email: email
+          end_time: 2
+          name: name
+          created_at: 7
+          id: id
+      properties:
+        start_time:
+          description: The timestamp of the beginning of the appointment slot
+          format: int64
+          type: integer
+        end_time:
+          description: The timestamp of the end of the appointment slot
+          format: int64
+          type: integer
+        appointment:
+          $ref: '#/components/schemas/Appointment'
+      type: object
+    Appointment:
+      description: |
+        An appointment is a time slot that has already been booked by a user.
+      example:
+        start_time: 3
+        code: code
+        updated_at: 9
+        data:
+          key: ""
+        contact:
+          address:
+            line1: 1 ZestLabs Blvd
+            line2: CSS District
+            city: Mannheim
+            postcode: 680001
+            province: Baden-Wuerttemberg
+            country: Germany
+          last_name: last_name
+          company: company
+          phone_number: phone_number
+          id: id
+          title: title
+          first_name: first_name
+          email: email
+        end_time: 2
+        name: name
+        created_at: 7
+        id: id
+      properties:
+        id:
+          description: The unique identifier of the appointment
+          type: string
+        code:
+          description: The code of the appointment if the appointment is public
+          type: string
+        created_at:
+          description: The timestamp of when the appointment was created
+          format: int64
+          type: integer
+        updated_at:
+          description: The timestamp of when the appointment was last updated
+          format: int64
+          type: integer
+        start_time:
+          description: "The timestamp of the appointment, i.e. when it starts"
+          format: int64
+          type: integer
+        end_time:
+          description: "The timestamp of the appointment, i.e. when it ends"
+          format: int64
+          type: integer
+        name:
+          description: "A descriptive name for the appointment, displayed on the calendar\
+            \ overview"
+          type: string
+        contact:
+          $ref: '#/components/schemas/ContactData'
+        data:
+          additionalProperties: true
+          description: |
+            Input provided by the user when booking the appointment
+          type: object
+      type: object
+    AppointmentSchedule:
+      example:
+        template:
+          form:
+            layout:
+            - ref_id: ref_id
+              ref_type: ref_type
+            - ref_id: ref_id
+              ref_type: ref_type
+            inputs:
+            - view_label:
+                key: view_label
+              ephemeral: true
+              default_value: default_value
+              attributes:
+                key: attributes
+              id: id
+              label:
+                key: label
+              placeholder:
+                key: placeholder
+              type: type
+              items:
+              - items
+              - items
+              required: true
+              target: target
+            - view_label:
+                key: view_label
+              ephemeral: true
+              default_value: default_value
+              attributes:
+                key: attributes
+              id: id
+              label:
+                key: label
+              placeholder:
+                key: placeholder
+              type: type
+              items:
+              - items
+              - items
+              required: true
+              target: target
+            groups:
+            - use_item_group: true
+              bottom_divider: true
+              top_divider: true
+              min_size: 0
+              id: id
+              label:
+                key: label
+              type: type
+              items:
+              - ref_id: ref_id
+                ref_type: ref_type
+              - ref_id: ref_id
+                ref_type: ref_type
+              info:
+                key: info
+              target: target
+            - use_item_group: true
+              bottom_divider: true
+              top_divider: true
+              min_size: 0
+              id: id
+              label:
+                key: label
+              type: type
+              items:
+              - ref_id: ref_id
+                ref_type: ref_type
+              - ref_id: ref_id
+                ref_type: ref_type
+              info:
+                key: info
+              target: target
+            validations:
+            - expression: expression
+              id: id
+              message:
+                key: message
+              target: target
+            - expression: expression
+              id: id
+              message:
+                key: message
+              target: target
+          name_expression: name_expression
+          name: name
+          description: description
+          id: id
+        gap_duration: 6
+        slot_duration: 0
+        color: color
+        name: name
+        description:
+          key: description
+        id: id
+        windows:
+        - start_time: 1
+          slots:
+          - start_time: 5
+            end_time: 2
+            appointment:
+              start_time: 3
+              code: code
+              updated_at: 9
+              data:
+                key: ""
+              contact:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+              end_time: 2
+              name: name
+              created_at: 7
+              id: id
+          - start_time: 5
+            end_time: 2
+            appointment:
+              start_time: 3
+              code: code
+              updated_at: 9
+              data:
+                key: ""
+              contact:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+              end_time: 2
+              name: name
+              created_at: 7
+              id: id
+          end_time: 5
+          id: id
+        - start_time: 1
+          slots:
+          - start_time: 5
+            end_time: 2
+            appointment:
+              start_time: 3
+              code: code
+              updated_at: 9
+              data:
+                key: ""
+              contact:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+              end_time: 2
+              name: name
+              created_at: 7
+              id: id
+          - start_time: 5
+            end_time: 2
+            appointment:
+              start_time: 3
+              code: code
+              updated_at: 9
+              data:
+                key: ""
+              contact:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+              end_time: 2
+              name: name
+              created_at: 7
+              id: id
+          end_time: 5
+          id: id
+      properties:
+        id:
+          description: The unique identifier of the appointment window
+          type: string
+        name:
+          description: The name of the appointment window
+          type: string
+        description:
+          additionalProperties:
+            type: string
+          description: "a map of values, where the key and values are strings"
+          type: object
+        template:
+          $ref: '#/components/schemas/AppointmentTemplate'
+        slot_duration:
+          description: The duration of the appointment slot in minutes
+          format: int32
+          type: integer
+        gap_duration:
+          description: The duration of the gap between appointments in minutes
+          format: int32
+          type: integer
+        color:
+          description: The color to use when displaying the appointment window in
+            a calendar view
+          type: string
+        windows:
+          description: The appointment windows
+          items:
+            $ref: '#/components/schemas/AppointmentWindow'
+          type: array
+      type: object
+    QueryAppointmentSchedulesRequest:
+      example:
+        start_time: 0
+        offset: 1
+        limit: 6
+      properties:
+        start_time:
+          description: The timestamp of the beginning of the time range
+          format: int64
+          type: integer
+        limit:
+          format: int32
+          type: integer
+        offset:
+          format: int32
+          type: integer
+      type: object
+    CreateOrUpdateAppointmentRequest:
+      example:
+        data:
+          key: ""
+        appointment_window_id: appointment_window_id
+        contact:
+          address:
+            line1: 1 ZestLabs Blvd
+            line2: CSS District
+            city: Mannheim
+            postcode: 680001
+            province: Baden-Wuerttemberg
+            country: Germany
+          last_name: last_name
+          company: company
+          phone_number: phone_number
+          id: id
+          title: title
+          first_name: first_name
+          email: email
+        slot_idx: 0
+      properties:
+        appointment_window_id:
+          description: The id of the appointment window that the user wants to book
+          type: string
+        slot_idx:
+          description: The offset within the appointment window which should be booked
+          format: int32
+          type: integer
+        contact:
+          $ref: '#/components/schemas/ContactData'
+        data:
+          additionalProperties: true
+          description: The data that the user has entered when booking the appointment
+          type: object
+      type: object
     CreateCaseRequest:
       description: All the information required for raising a new case
       example:
@@ -7022,7 +8299,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 1
+            min_size: 0
             id: id
             label:
               key: label
@@ -7038,7 +8315,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 1
+            min_size: 0
             id: id
             label:
               key: label
@@ -7075,10 +8352,10 @@ components:
             - 30
             status: null
           automatic_status_changes:
-          - schedule: 5
+          - schedule: 1
             target_status: null
             status: null
-          - schedule: 5
+          - schedule: 1
             target_status: null
             status: null
           base_config: null
@@ -7134,7 +8411,7 @@ components:
                 - use_item_group: true
                   bottom_divider: true
                   top_divider: true
-                  min_size: 1
+                  min_size: 0
                   id: id
                   label:
                     key: label
@@ -7150,7 +8427,7 @@ components:
                 - use_item_group: true
                   bottom_divider: true
                   top_divider: true
-                  min_size: 1
+                  min_size: 0
                   id: id
                   label:
                     key: label
@@ -7224,7 +8501,7 @@ components:
                 - use_item_group: true
                   bottom_divider: true
                   top_divider: true
-                  min_size: 1
+                  min_size: 0
                   id: id
                   label:
                     key: label
@@ -7240,7 +8517,7 @@ components:
                 - use_item_group: true
                   bottom_divider: true
                   top_divider: true
-                  min_size: 1
+                  min_size: 0
                   id: id
                   label:
                     key: label
@@ -7325,7 +8602,7 @@ components:
                 - use_item_group: true
                   bottom_divider: true
                   top_divider: true
-                  min_size: 1
+                  min_size: 0
                   id: id
                   label:
                     key: label
@@ -7341,7 +8618,7 @@ components:
                 - use_item_group: true
                   bottom_divider: true
                   top_divider: true
-                  min_size: 1
+                  min_size: 0
                   id: id
                   label:
                     key: label
@@ -7415,7 +8692,7 @@ components:
                 - use_item_group: true
                   bottom_divider: true
                   top_divider: true
-                  min_size: 1
+                  min_size: 0
                   id: id
                   label:
                     key: label
@@ -7431,7 +8708,7 @@ components:
                 - use_item_group: true
                   bottom_divider: true
                   top_divider: true
-                  min_size: 1
+                  min_size: 0
                   id: id
                   label:
                     key: label
@@ -7515,10 +8792,10 @@ components:
           - 30
           status: null
         automatic_status_changes:
-        - schedule: 5
+        - schedule: 1
           target_status: null
           status: null
-        - schedule: 5
+        - schedule: 1
           target_status: null
           status: null
         base_config: null
@@ -7574,7 +8851,7 @@ components:
               - use_item_group: true
                 bottom_divider: true
                 top_divider: true
-                min_size: 1
+                min_size: 0
                 id: id
                 label:
                   key: label
@@ -7590,7 +8867,7 @@ components:
               - use_item_group: true
                 bottom_divider: true
                 top_divider: true
-                min_size: 1
+                min_size: 0
                 id: id
                 label:
                   key: label
@@ -7664,7 +8941,7 @@ components:
               - use_item_group: true
                 bottom_divider: true
                 top_divider: true
-                min_size: 1
+                min_size: 0
                 id: id
                 label:
                   key: label
@@ -7680,7 +8957,7 @@ components:
               - use_item_group: true
                 bottom_divider: true
                 top_divider: true
-                min_size: 1
+                min_size: 0
                 id: id
                 label:
                   key: label
@@ -7765,7 +9042,7 @@ components:
               - use_item_group: true
                 bottom_divider: true
                 top_divider: true
-                min_size: 1
+                min_size: 0
                 id: id
                 label:
                   key: label
@@ -7781,7 +9058,7 @@ components:
               - use_item_group: true
                 bottom_divider: true
                 top_divider: true
-                min_size: 1
+                min_size: 0
                 id: id
                 label:
                   key: label
@@ -7855,7 +9132,7 @@ components:
               - use_item_group: true
                 bottom_divider: true
                 top_divider: true
-                min_size: 1
+                min_size: 0
                 id: id
                 label:
                   key: label
@@ -7871,7 +9148,7 @@ components:
               - use_item_group: true
                 bottom_divider: true
                 top_divider: true
-                min_size: 1
+                min_size: 0
                 id: id
                 label:
                   key: label
@@ -7994,7 +9271,7 @@ components:
             - use_item_group: true
               bottom_divider: true
               top_divider: true
-              min_size: 1
+              min_size: 0
               id: id
               label:
                 key: label
@@ -8010,7 +9287,7 @@ components:
             - use_item_group: true
               bottom_divider: true
               top_divider: true
-              min_size: 1
+              min_size: 0
               id: id
               label:
                 key: label
@@ -8084,7 +9361,7 @@ components:
             - use_item_group: true
               bottom_divider: true
               top_divider: true
-              min_size: 1
+              min_size: 0
               id: id
               label:
                 key: label
@@ -8100,7 +9377,7 @@ components:
             - use_item_group: true
               bottom_divider: true
               top_divider: true
-              min_size: 1
+              min_size: 0
               id: id
               label:
                 key: label
@@ -8214,7 +9491,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 1
+            min_size: 0
             id: id
             label:
               key: label
@@ -8230,7 +9507,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 1
+            min_size: 0
             id: id
             label:
               key: label
@@ -8306,7 +9583,7 @@ components:
       description: |
         Defines the configuration for automatic status changes of a case.
       example:
-        schedule: 5
+        schedule: 1
         target_status: null
         status: null
       properties:
@@ -8380,7 +9657,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 1
+            min_size: 0
             id: id
             label:
               key: label
@@ -8396,7 +9673,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 1
+            min_size: 0
             id: id
             label:
               key: label
@@ -8433,10 +9710,10 @@ components:
             - 30
             status: null
           automatic_status_changes:
-          - schedule: 5
+          - schedule: 1
             target_status: null
             status: null
-          - schedule: 5
+          - schedule: 1
             target_status: null
             status: null
           base_config: null
@@ -8492,7 +9769,7 @@ components:
                 - use_item_group: true
                   bottom_divider: true
                   top_divider: true
-                  min_size: 1
+                  min_size: 0
                   id: id
                   label:
                     key: label
@@ -8508,7 +9785,7 @@ components:
                 - use_item_group: true
                   bottom_divider: true
                   top_divider: true
-                  min_size: 1
+                  min_size: 0
                   id: id
                   label:
                     key: label
@@ -8582,7 +9859,7 @@ components:
                 - use_item_group: true
                   bottom_divider: true
                   top_divider: true
-                  min_size: 1
+                  min_size: 0
                   id: id
                   label:
                     key: label
@@ -8598,7 +9875,7 @@ components:
                 - use_item_group: true
                   bottom_divider: true
                   top_divider: true
-                  min_size: 1
+                  min_size: 0
                   id: id
                   label:
                     key: label
@@ -8683,7 +9960,7 @@ components:
                 - use_item_group: true
                   bottom_divider: true
                   top_divider: true
-                  min_size: 1
+                  min_size: 0
                   id: id
                   label:
                     key: label
@@ -8699,7 +9976,7 @@ components:
                 - use_item_group: true
                   bottom_divider: true
                   top_divider: true
-                  min_size: 1
+                  min_size: 0
                   id: id
                   label:
                     key: label
@@ -8773,7 +10050,7 @@ components:
                 - use_item_group: true
                   bottom_divider: true
                   top_divider: true
-                  min_size: 1
+                  min_size: 0
                   id: id
                   label:
                     key: label
@@ -8789,7 +10066,7 @@ components:
                 - use_item_group: true
                   bottom_divider: true
                   top_divider: true
-                  min_size: 1
+                  min_size: 0
                   id: id
                   label:
                     key: label
@@ -10094,7 +11371,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 1
+            min_size: 0
             id: id
             label:
               key: label
@@ -10110,7 +11387,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 1
+            min_size: 0
             id: id
             label:
               key: label
@@ -10203,7 +11480,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 1
+            min_size: 0
             id: id
             label:
               key: label
@@ -10219,7 +11496,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 1
+            min_size: 0
             id: id
             label:
               key: label
@@ -10307,7 +11584,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 1
+            min_size: 0
             id: id
             label:
               key: label
@@ -10323,7 +11600,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 1
+            min_size: 0
             id: id
             label:
               key: label
@@ -10450,7 +11727,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 1
+            min_size: 0
             id: id
             label:
               key: label
@@ -10466,7 +11743,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 1
+            min_size: 0
             id: id
             label:
               key: label
@@ -10592,7 +11869,7 @@ components:
             - use_item_group: true
               bottom_divider: true
               top_divider: true
-              min_size: 1
+              min_size: 0
               id: id
               label:
                 key: label
@@ -10608,7 +11885,7 @@ components:
             - use_item_group: true
               bottom_divider: true
               top_divider: true
-              min_size: 1
+              min_size: 0
               id: id
               label:
                 key: label
@@ -10687,7 +11964,7 @@ components:
             - use_item_group: true
               bottom_divider: true
               top_divider: true
-              min_size: 1
+              min_size: 0
               id: id
               label:
                 key: label
@@ -10703,7 +11980,7 @@ components:
             - use_item_group: true
               bottom_divider: true
               top_divider: true
-              min_size: 1
+              min_size: 0
               id: id
               label:
                 key: label
@@ -10796,7 +12073,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 1
+            min_size: 0
             id: id
             label:
               key: label
@@ -10812,7 +12089,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 1
+            min_size: 0
             id: id
             label:
               key: label
@@ -11200,7 +12477,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 1
+            min_size: 0
             id: id
             label:
               key: label
@@ -11216,7 +12493,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 1
+            min_size: 0
             id: id
             label:
               key: label
@@ -11522,7 +12799,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 1
+            min_size: 0
             id: id
             label:
               key: label
@@ -11538,7 +12815,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 1
+            min_size: 0
             id: id
             label:
               key: label
@@ -13583,7 +14860,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 1
+            min_size: 0
             id: id
             label:
               key: label
@@ -13599,7 +14876,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 1
+            min_size: 0
             id: id
             label:
               key: label
@@ -13744,7 +15021,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 1
+            min_size: 0
             id: id
             label:
               key: label
@@ -13760,7 +15037,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 1
+            min_size: 0
             id: id
             label:
               key: label
@@ -16283,118 +17560,6 @@ components:
           description: the name of the related workflow execution
           type: string
       type: object
-    Address:
-      description: "Address is the physical address of a property, a person, or an\
-        \ organization"
-      example:
-        line1: 1 ZestLabs Blvd
-        line2: CSS District
-        city: Mannheim
-        postcode: 680001
-        province: Baden-Wuerttemberg
-        country: Germany
-      properties:
-        line1:
-          type: string
-        line2:
-          type: string
-        city:
-          type: string
-        postcode:
-          type: string
-        province:
-          type: string
-        country:
-          type: string
-      type: object
-    ContactData:
-      description: a common set of attributes used to identify a person or a company
-      example:
-        address:
-          line1: 1 ZestLabs Blvd
-          line2: CSS District
-          city: Mannheim
-          postcode: 680001
-          province: Baden-Wuerttemberg
-          country: Germany
-        last_name: last_name
-        company: company
-        phone_number: phone_number
-        id: id
-        title: title
-        first_name: first_name
-        email: email
-      properties:
-        id:
-          description: "optional ID referencing another existing entity (e.g. Tenant,\
-            \ Owner, etc.)"
-          type: string
-        title:
-          description: "the title of the party (e.g. Mr, Mrs, Company, etc.)"
-          type: string
-        first_name:
-          description: |
-            First name(s) of the contact. In case of a company, this is the first name of the contact person within the company.
-          type: string
-        last_name:
-          description: |
-            Last name of the contact. In case of a company, this is the last name of the contact person within the company.
-          type: string
-        company:
-          description: |
-            Name of the company. Only used in case contact is a company, otherwise this  field should be left empty.
-          type: string
-        email:
-          description: optional email of the party
-          type: string
-        phone_number:
-          description: optional phone number of the party
-          type: string
-        address:
-          $ref: '#/components/schemas/Address'
-      type: object
-    UserTypeEnum:
-      enum:
-      - ANY
-      - TENANT
-      - MANAGER
-      - SERVICE_PROVIDER
-      type: string
-    UserReference:
-      description: Contains information about a user referenced in other entities
-      example:
-        user_role: null
-        user_id: user_id
-        contact_data:
-          address:
-            line1: 1 ZestLabs Blvd
-            line2: CSS District
-            city: Mannheim
-            postcode: 680001
-            province: Baden-Wuerttemberg
-            country: Germany
-          last_name: last_name
-          company: company
-          phone_number: phone_number
-          id: id
-          title: title
-          first_name: first_name
-          email: email
-      properties:
-        user_id:
-          description: "The ID of the user, can be undefined, if user is not registered,\
-            \ or was already deleted"
-          type: string
-        user_role:
-          $ref: '#/components/schemas/UserTypeEnum'
-        contact_data:
-          $ref: '#/components/schemas/ContactData'
-      type: object
-    ValueMap:
-      additionalProperties:
-        type: string
-      description: "a map of values, where the key and values are strings"
-      type: object
     CustomForm:
       description: a custom form that is used to collect data from the user
       example:
@@ -16442,7 +17607,7 @@ components:
         - use_item_group: true
           bottom_divider: true
           top_divider: true
-          min_size: 1
+          min_size: 0
           id: id
           label:
             key: label
@@ -16458,7 +17623,7 @@ components:
         - use_item_group: true
           bottom_divider: true
           top_divider: true
-          min_size: 1
+          min_size: 0
           id: id
           label:
             key: label
@@ -16528,7 +17693,7 @@ components:
         use_item_group: true
         bottom_divider: true
         top_divider: true
-        min_size: 1
+        min_size: 0
         id: id
         label:
           key: label
@@ -16698,6 +17863,118 @@ components:
             type: string
           description: "a map of values, where the key and values are strings"
           type: object
+      type: object
+    ValueMap:
+      additionalProperties:
+        type: string
+      description: "a map of values, where the key and values are strings"
+      type: object
+    ContactData:
+      description: a common set of attributes used to identify a person or a company
+      example:
+        address:
+          line1: 1 ZestLabs Blvd
+          line2: CSS District
+          city: Mannheim
+          postcode: 680001
+          province: Baden-Wuerttemberg
+          country: Germany
+        last_name: last_name
+        company: company
+        phone_number: phone_number
+        id: id
+        title: title
+        first_name: first_name
+        email: email
+      properties:
+        id:
+          description: "optional ID referencing another existing entity (e.g. Tenant,\
+            \ Owner, etc.)"
+          type: string
+        title:
+          description: "the title of the party (e.g. Mr, Mrs, Company, etc.)"
+          type: string
+        first_name:
+          description: |
+            First name(s) of the contact. In case of a company, this is the first name of the contact person within the company.
+          type: string
+        last_name:
+          description: |
+            Last name of the contact. In case of a company, this is the last name of the contact person within the company.
+          type: string
+        company:
+          description: |
+            Name of the company. Only used in case contact is a company, otherwise this  field should be left empty.
+          type: string
+        email:
+          description: optional email of the party
+          type: string
+        phone_number:
+          description: optional phone number of the party
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+      type: object
+    Address:
+      description: "Address is the physical address of a property, a person, or an\
+        \ organization"
+      example:
+        line1: 1 ZestLabs Blvd
+        line2: CSS District
+        city: Mannheim
+        postcode: 680001
+        province: Baden-Wuerttemberg
+        country: Germany
+      properties:
+        line1:
+          type: string
+        line2:
+          type: string
+        city:
+          type: string
+        postcode:
+          type: string
+        province:
+          type: string
+        country:
+          type: string
+      type: object
+    UserTypeEnum:
+      enum:
+      - ANY
+      - TENANT
+      - MANAGER
+      - SERVICE_PROVIDER
+      type: string
+    UserReference:
+      description: Contains information about a user referenced in other entities
+      example:
+        user_role: null
+        user_id: user_id
+        contact_data:
+          address:
+            line1: 1 ZestLabs Blvd
+            line2: CSS District
+            city: Mannheim
+            postcode: 680001
+            province: Baden-Wuerttemberg
+            country: Germany
+          last_name: last_name
+          company: company
+          phone_number: phone_number
+          id: id
+          title: title
+          first_name: first_name
+          email: email
+      properties:
+        user_id:
+          description: "The ID of the user, can be undefined, if user is not registered,\
+            \ or was already deleted"
+          type: string
+        user_role:
+          $ref: '#/components/schemas/UserTypeEnum'
+        contact_data:
+          $ref: '#/components/schemas/ContactData'
       type: object
     IDUpload:
       description: |

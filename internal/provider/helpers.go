@@ -49,6 +49,13 @@ func idp(in *int64) int64 {
 	return *in
 }
 
+func idp32(in *int32) int32 {
+	if in == nil {
+		return 0
+	}
+	return *in
+}
+
 // func anyToMapStringString(v any) map[string]string {
 // 	t := v.(map[string]any)
 // 	nm := map[string]string{}
@@ -91,4 +98,30 @@ func modelMapToStringMap(in basetypes.MapValue) *map[string]string {
 	}
 
 	return &ret
+}
+
+func modelListToStringSlice(in basetypes.ListValue) []string {
+
+	if in.IsNull() || in.IsUnknown() {
+		return nil
+	}
+	ret := make([]string, len(in.Elements()))
+	for i := range in.Elements() {
+		ret[i] = (in.Elements()[i].(types.String)).ValueString()
+	}
+
+	return ret
+}
+
+func stringSliceToValueList(in []string) []attr.Value {
+	ret := make([]attr.Value, len(in))
+	for i := range in {
+		ret[i] = types.StringValue(in[i])
+	}
+	return ret
+}
+
+func i64ToI32Ptr(val int64) *int32 {
+	res := int32(val)
+	return &res
 }
