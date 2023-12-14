@@ -17,8 +17,12 @@ func TestAppointmentTemplateResource(t *testing.T) {
 					resource.TestCheckResourceAttr("udoma_appointment_template.test", "name_expression", "\"Basic template\""),
 					resource.TestCheckResourceAttr("udoma_appointment_template.test", "description", "Basic template description"),
 
-					// Verify custom_inputs
-					// TODO
+					resource.TestCheckResourceAttr("udoma_appointment_template.test", "inputs.layout.0.ref_id", "test"),
+					resource.TestCheckResourceAttr("udoma_appointment_template.test", "inputs.layout.0.ref_type", "input"),
+					resource.TestCheckResourceAttr("udoma_appointment_template.test", "inputs.inputs.0.id", "test"),
+					resource.TestCheckResourceAttr("udoma_appointment_template.test", "inputs.inputs.0.type", "text"),
+					resource.TestCheckResourceAttr("udoma_appointment_template.test", "inputs.inputs.0.label.de", "Test Eingabe"),
+					resource.TestCheckResourceAttr("udoma_appointment_template.test", "inputs.inputs.0.label.en", "Test input"),
 				),
 			},
 			// ImportState testing
