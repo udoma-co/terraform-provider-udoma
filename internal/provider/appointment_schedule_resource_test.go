@@ -38,29 +38,35 @@ func TestAppointmentScheduleResource(t *testing.T) {
 
 func resourceDefinitionAppointmentSchedule(name, description string) string {
 	return `
+	locals {
+		inputs = <<-EOT
+							{
+								"layout": [
+									{
+										"ref_id": "test",
+										"ref_type": "input"
+									}
+								],
+								"inputs": [
+									{
+										"id": "test",
+										"type": "text",
+										"label": {
+											"de": "Test Eingabe",
+											"en": "Test input"
+										}
+									}
+								]
+							}
+						EOT
+	}
+
 	resource udoma_appointment_template "test_template" {
 		name = "Test template"
 		name_expression = "\"Hello appointment\""
 		description = "Basic template description"
 
-		inputs = {
-			"layout" = [
-				{
-					"ref_id" = "test",
-					"ref_type" = "input"
-				}
-			]
-			"inputs" = [
-				{
-					"id" = "test",
-					"type" = "text",
-					"label" = {
-						de = "Test Eingabe",
-						en = "Test input"
-					}
-				}
-			]
-		}
+		inputs = jsondecode(local.inputs)
 	}
 
 	resource udoma_appointment_schedule "test_schedule" {
