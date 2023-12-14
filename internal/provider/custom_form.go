@@ -119,7 +119,6 @@ func customFormItemNestedSchema() schema.NestedAttributeObject {
 }
 
 func customFormGroupNestedSchema() schema.NestedAttributeObject {
-	// TODO: Figure out what's actaully required and what isn't
 	return schema.NestedAttributeObject{
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
