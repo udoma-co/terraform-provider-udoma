@@ -28,3 +28,6 @@ generate-client:
 sanitize:
 	go fmt ./...
 	go vet ./...
+
+generate-docs:
+	tfplugindocs generate
