@@ -29,5 +29,6 @@ sanitize:
 	go fmt ./...
 	go vet ./...
 
+.PHONY: generate-docs
 generate-docs:
 	tfplugindocs generate
