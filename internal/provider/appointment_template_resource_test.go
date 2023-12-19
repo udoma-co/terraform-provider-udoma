@@ -68,6 +68,28 @@ func resourceDefinitionAppointmentTemplate(name, nameExpression string) string {
 					}
 				}
 			]
+			"groups" = [
+				{
+					"id" = "test"
+					"type" = "row"
+					"items" = [
+						{
+							"ref_id" = "test"
+							"ref_type" = "input"
+						}
+					]
+				}
+			]
+			"validation" = [
+				{
+					"id" = "test"
+					"expression" = "1 == 1"
+					"target" = "test"
+					"message" = {
+						"en" = "Helloooo"
+					}
+				}
+			]
 		}
 	}
 	`
