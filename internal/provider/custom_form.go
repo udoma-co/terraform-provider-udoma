@@ -398,13 +398,25 @@ func (group *CustomFormGroupModel) fromApiResponse(resp *v1.FormGroup) (diags di
 		group.Items[i].fromApiResponse(&resp.Items[i])
 	}
 
-	group.ID = types.StringValue(sdp(resp.Id))
+	if resp.Id != nil {
+		group.ID = types.StringValue(*resp.Id)
+	}
 	group.Type = types.StringValue(groupType)
-	group.Target = types.StringValue(sdp(resp.Target))
-	group.TopDivider = types.BoolValue(bdp(resp.TopDivider))
-	group.BottomDivider = types.BoolValue(bdp(resp.BottomDivider))
-	group.UseItemGroup = types.BoolValue(bdp(resp.UseItemGroup))
-	group.MinSize = types.Int64Value(minSize)
+	if resp.Target != nil {
+		group.Target = types.StringValue(*resp.Target)
+	}
+	if resp.TopDivider != nil {
+		group.TopDivider = types.BoolValue(*resp.TopDivider)
+	}
+	if resp.BottomDivider != nil {
+		group.BottomDivider = types.BoolValue(*resp.BottomDivider)
+	}
+	if resp.UseItemGroup != nil {
+		group.UseItemGroup = types.BoolValue(*resp.UseItemGroup)
+	}
+	if resp.MinSize != nil {
+		group.MinSize = types.Int64Value(minSize)
+	}
 
 	return
 }
@@ -430,19 +442,14 @@ func (input *CustomFormInputModel) toApiRequest() *v1.FormInput {
 
 func (input *CustomFormInputModel) fromApiResponse(resp *v1.FormInput) (diags diag.Diagnostics) {
 
-	inputType := ""
+	if resp.Id != nil {
+		input.ID = types.StringValue(*resp.Id)
+	}
 	if resp.Type != nil {
-		inputType = string(*resp.Type)
+		input.Type = types.StringValue(string(*resp.Type))
 	}
 
-	if resp.HasId() {
-		input.ID = types.StringValue(sdp(resp.Id))
-	}
-	if resp.HasType() {
-		input.Type = types.StringValue(inputType)
-	}
-
-	if resp != nil {
+	if resp.Label != nil {
 		input.Label, diags = types.MapValue(types.StringType, stringMapToValueMap(*resp.Label))
 		if diags.HasError() {
 			return
@@ -463,16 +470,16 @@ func (input *CustomFormInputModel) fromApiResponse(resp *v1.FormInput) (diags di
 		}
 	}
 
-	if resp.HasDefaultValue() {
-		input.DefaultValue = types.StringValue(sdp(resp.DefaultValue))
+	if resp.DefaultValue != nil {
+		input.DefaultValue = types.StringValue(*resp.DefaultValue)
 	}
-	if resp.HasRequired() {
-		input.Required = types.BoolValue(bdp(resp.Required))
+	if resp.Required != nil {
+		input.Required = types.BoolValue(*resp.Required)
 	}
-	if resp.HasEphemeral() {
+	if resp.Ephemeral != nil {
 		input.Ephemeral = types.BoolValue(bdp(resp.Ephemeral))
 	}
-	if resp.HasTarget() {
+	if resp.Target != nil {
 		input.Target = types.StringValue(sdp(resp.Target))
 	}
 
@@ -483,7 +490,7 @@ func (input *CustomFormInputModel) fromApiResponse(resp *v1.FormInput) (diags di
 		}
 	}
 
-	if resp.HasItems() {
+	if resp.Items != nil {
 		input.Items, diags = types.ListValue(types.StringType, stringSliceToValueList(resp.Items))
 		if diags.HasError() {
 			return
@@ -494,17 +501,11 @@ func (input *CustomFormInputModel) fromApiResponse(resp *v1.FormInput) (diags di
 }
 
 func (validation *CustomFormValidationModel) toApiRequest() *v1.FormValidation {
-
-	message := make(map[string]string)
-	for key, value := range validation.Message.Elements() {
-		message[key] = value.String()
-	}
-
 	return &v1.FormValidation{
 		Id:         validation.ID.ValueStringPointer(),
 		Expression: validation.Expression.ValueStringPointer(),
 		Target:     validation.Target.ValueStringPointer(),
-		Message:    &message,
+		Message:    modelMapToStringMap(validation.Message),
 	}
 }
 
