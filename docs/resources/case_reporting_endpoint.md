@@ -17,19 +17,19 @@ Resource represents an endpoint where tenants can raise cases
 
 ### Required
 
-- `name` (String) The name of the case template, shown in the admin page
+- `case_templates` (List of String) Reference to the case templates that can be raised via this endpoint
+- `name` (String) The name of the endpoint, shown in the admin page
 
 ### Optional
 
 - `active` (Boolean) Whether the endpoint is active or not
-- `case_templates` (List of String) The case templates that can be raised via this endpoint
 
 ### Read-Only
 
-- `code` (String) The unique code used for accesssign the endpoint
-- `created_at` (Number) The date and time the script was created
+- `code` (String) The unique code used for accessing the endpoint
+- `created_at` (Number) The date and time the endpoint was created
 - `id` (String) The ID of this resource.
 - `last_updated` (String)
-- `updated_at` (Number) The date and time the script was last modified
+- `updated_at` (Number) The date and time the endpoint was last modified
 
 

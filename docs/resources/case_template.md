@@ -22,6 +22,7 @@ Resource represents a template for raising cases
 
 ### Optional
 
+- `config` (String) Defines custom behaviour of a case, based on the case template that was used to create it (as serialized JSON)
 - `description` (Map of String) The description of the case template, shown in the reporting page
 - `icon` (String) The icon to be displayed on the reporting page
 - `info_text` (Map of String) A longer introduction text, shown in the case specific reporting page
