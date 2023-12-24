@@ -14,7 +14,7 @@ import (
 	"encoding/json"
 )
 
-// WorkflowExecutionStepResult an execution result of a workflow step
+// WorkflowExecutionStepResult this holds the result of the execution of a single workflow step
 type WorkflowExecutionStepResult struct {
 	StepRef *string `json:"step_ref,omitempty"`
 	// the ID of the action that was executed

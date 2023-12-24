@@ -14,7 +14,7 @@ import (
 	"encoding/json"
 )
 
-// WorkflowStepAction an action that can be performed on a workflow step
+// WorkflowStepAction an action that can be performed on a workflow execution step. This is derived from the step action definition, however, dynamic data is computed and populated by the backend, before the result is being sent to the client.
 type WorkflowStepAction struct {
 	// the ID of the action
 	Id *string `json:"id,omitempty"`
@@ -26,22 +26,8 @@ type WorkflowStepAction struct {
 	ButtonModifier *string `json:"button_modifier,omitempty"`
 	// optional filter that can be used by the UI to show or hide the action
 	UiFilter *string `json:"ui_filter,omitempty"`
-	// a parameter of a workflow step or step action. The value of the parameter is contextual and can vary in type and meaning depending on the step or action that uses it. If used in a step, the parameter will be available in the UI and will not be interpreted, i.e. JS expressions are not allowed. In actions however, the parameter might be interpreted as a JS expression, if the action type requires it.
-	Parameters map[string]interface{} `json:"parameters,omitempty"`
-	// An optional JS expression that determines whether the action can be executed or  not. If not set, this will default to true.
-	CanBeExecutedExpression *string `json:"can_be_executed_expression,omitempty"`
 	// the ID of the next step of the workflow
 	NextStepId *string `json:"next_step_id,omitempty"`
-	// Optional JS expression that will be executed before any step- and action-specific logic is executed.
-	ExecBefore *string `json:"execBefore,omitempty"`
-	// Optional JS expression that will be executed after the step- and action-specific logic is executed.
-	ExecAfter *string `json:"execAfter,omitempty"`
-	// optional ID of a workflow definition that should be executed
-	StartChildWorkflow *string `json:"start_child_workflow,omitempty"`
-	// An optional JS expression that returns an array of entities. For each entity, a new workflow execution will be started. The entity will be available as a parameter `iterator` in the child execution context expression.
-	ChildExecutionIteratorExpression *string `json:"child_execution_iterator_expression,omitempty"`
-	// An optional JS expression that determines the context of the child workflow execution. If not set, the context of the parent workflow execution will be used.
-	ChildExecutionContextExpression *string `json:"child_execution_context_expression,omitempty"`
 }
 
 // NewWorkflowStepAction instantiates a new WorkflowStepAction object
@@ -221,70 +207,6 @@ func (o *WorkflowStepAction) SetUiFilter(v string) {
 	o.UiFilter = &v
 }
 
-// GetParameters returns the Parameters field value if set, zero value otherwise.
-func (o *WorkflowStepAction) GetParameters() map[string]interface{} {
-	if o == nil || o.Parameters == nil {
-		var ret map[string]interface{}
-		return ret
-	}
-	return o.Parameters
-}
-
-// GetParametersOk returns a tuple with the Parameters field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *WorkflowStepAction) GetParametersOk() (map[string]interface{}, bool) {
-	if o == nil || o.Parameters == nil {
-		return nil, false
-	}
-	return o.Parameters, true
-}
-
-// HasParameters returns a boolean if a field has been set.
-func (o *WorkflowStepAction) HasParameters() bool {
-	if o != nil && o.Parameters != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetParameters gets a reference to the given map[string]interface{} and assigns it to the Parameters field.
-func (o *WorkflowStepAction) SetParameters(v map[string]interface{}) {
-	o.Parameters = v
-}
-
-// GetCanBeExecutedExpression returns the CanBeExecutedExpression field value if set, zero value otherwise.
-func (o *WorkflowStepAction) GetCanBeExecutedExpression() string {
-	if o == nil || o.CanBeExecutedExpression == nil {
-		var ret string
-		return ret
-	}
-	return *o.CanBeExecutedExpression
-}
-
-// GetCanBeExecutedExpressionOk returns a tuple with the CanBeExecutedExpression field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *WorkflowStepAction) GetCanBeExecutedExpressionOk() (*string, bool) {
-	if o == nil || o.CanBeExecutedExpression == nil {
-		return nil, false
-	}
-	return o.CanBeExecutedExpression, true
-}
-
-// HasCanBeExecutedExpression returns a boolean if a field has been set.
-func (o *WorkflowStepAction) HasCanBeExecutedExpression() bool {
-	if o != nil && o.CanBeExecutedExpression != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetCanBeExecutedExpression gets a reference to the given string and assigns it to the CanBeExecutedExpression field.
-func (o *WorkflowStepAction) SetCanBeExecutedExpression(v string) {
-	o.CanBeExecutedExpression = &v
-}
-
 // GetNextStepId returns the NextStepId field value if set, zero value otherwise.
 func (o *WorkflowStepAction) GetNextStepId() string {
 	if o == nil || o.NextStepId == nil {
@@ -317,166 +239,6 @@ func (o *WorkflowStepAction) SetNextStepId(v string) {
 	o.NextStepId = &v
 }
 
-// GetExecBefore returns the ExecBefore field value if set, zero value otherwise.
-func (o *WorkflowStepAction) GetExecBefore() string {
-	if o == nil || o.ExecBefore == nil {
-		var ret string
-		return ret
-	}
-	return *o.ExecBefore
-}
-
-// GetExecBeforeOk returns a tuple with the ExecBefore field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *WorkflowStepAction) GetExecBeforeOk() (*string, bool) {
-	if o == nil || o.ExecBefore == nil {
-		return nil, false
-	}
-	return o.ExecBefore, true
-}
-
-// HasExecBefore returns a boolean if a field has been set.
-func (o *WorkflowStepAction) HasExecBefore() bool {
-	if o != nil && o.ExecBefore != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetExecBefore gets a reference to the given string and assigns it to the ExecBefore field.
-func (o *WorkflowStepAction) SetExecBefore(v string) {
-	o.ExecBefore = &v
-}
-
-// GetExecAfter returns the ExecAfter field value if set, zero value otherwise.
-func (o *WorkflowStepAction) GetExecAfter() string {
-	if o == nil || o.ExecAfter == nil {
-		var ret string
-		return ret
-	}
-	return *o.ExecAfter
-}
-
-// GetExecAfterOk returns a tuple with the ExecAfter field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *WorkflowStepAction) GetExecAfterOk() (*string, bool) {
-	if o == nil || o.ExecAfter == nil {
-		return nil, false
-	}
-	return o.ExecAfter, true
-}
-
-// HasExecAfter returns a boolean if a field has been set.
-func (o *WorkflowStepAction) HasExecAfter() bool {
-	if o != nil && o.ExecAfter != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetExecAfter gets a reference to the given string and assigns it to the ExecAfter field.
-func (o *WorkflowStepAction) SetExecAfter(v string) {
-	o.ExecAfter = &v
-}
-
-// GetStartChildWorkflow returns the StartChildWorkflow field value if set, zero value otherwise.
-func (o *WorkflowStepAction) GetStartChildWorkflow() string {
-	if o == nil || o.StartChildWorkflow == nil {
-		var ret string
-		return ret
-	}
-	return *o.StartChildWorkflow
-}
-
-// GetStartChildWorkflowOk returns a tuple with the StartChildWorkflow field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *WorkflowStepAction) GetStartChildWorkflowOk() (*string, bool) {
-	if o == nil || o.StartChildWorkflow == nil {
-		return nil, false
-	}
-	return o.StartChildWorkflow, true
-}
-
-// HasStartChildWorkflow returns a boolean if a field has been set.
-func (o *WorkflowStepAction) HasStartChildWorkflow() bool {
-	if o != nil && o.StartChildWorkflow != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetStartChildWorkflow gets a reference to the given string and assigns it to the StartChildWorkflow field.
-func (o *WorkflowStepAction) SetStartChildWorkflow(v string) {
-	o.StartChildWorkflow = &v
-}
-
-// GetChildExecutionIteratorExpression returns the ChildExecutionIteratorExpression field value if set, zero value otherwise.
-func (o *WorkflowStepAction) GetChildExecutionIteratorExpression() string {
-	if o == nil || o.ChildExecutionIteratorExpression == nil {
-		var ret string
-		return ret
-	}
-	return *o.ChildExecutionIteratorExpression
-}
-
-// GetChildExecutionIteratorExpressionOk returns a tuple with the ChildExecutionIteratorExpression field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *WorkflowStepAction) GetChildExecutionIteratorExpressionOk() (*string, bool) {
-	if o == nil || o.ChildExecutionIteratorExpression == nil {
-		return nil, false
-	}
-	return o.ChildExecutionIteratorExpression, true
-}
-
-// HasChildExecutionIteratorExpression returns a boolean if a field has been set.
-func (o *WorkflowStepAction) HasChildExecutionIteratorExpression() bool {
-	if o != nil && o.ChildExecutionIteratorExpression != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetChildExecutionIteratorExpression gets a reference to the given string and assigns it to the ChildExecutionIteratorExpression field.
-func (o *WorkflowStepAction) SetChildExecutionIteratorExpression(v string) {
-	o.ChildExecutionIteratorExpression = &v
-}
-
-// GetChildExecutionContextExpression returns the ChildExecutionContextExpression field value if set, zero value otherwise.
-func (o *WorkflowStepAction) GetChildExecutionContextExpression() string {
-	if o == nil || o.ChildExecutionContextExpression == nil {
-		var ret string
-		return ret
-	}
-	return *o.ChildExecutionContextExpression
-}
-
-// GetChildExecutionContextExpressionOk returns a tuple with the ChildExecutionContextExpression field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *WorkflowStepAction) GetChildExecutionContextExpressionOk() (*string, bool) {
-	if o == nil || o.ChildExecutionContextExpression == nil {
-		return nil, false
-	}
-	return o.ChildExecutionContextExpression, true
-}
-
-// HasChildExecutionContextExpression returns a boolean if a field has been set.
-func (o *WorkflowStepAction) HasChildExecutionContextExpression() bool {
-	if o != nil && o.ChildExecutionContextExpression != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetChildExecutionContextExpression gets a reference to the given string and assigns it to the ChildExecutionContextExpression field.
-func (o *WorkflowStepAction) SetChildExecutionContextExpression(v string) {
-	o.ChildExecutionContextExpression = &v
-}
-
 func (o WorkflowStepAction) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Id != nil {
@@ -494,29 +256,8 @@ func (o WorkflowStepAction) MarshalJSON() ([]byte, error) {
 	if o.UiFilter != nil {
 		toSerialize["ui_filter"] = o.UiFilter
 	}
-	if o.Parameters != nil {
-		toSerialize["parameters"] = o.Parameters
-	}
-	if o.CanBeExecutedExpression != nil {
-		toSerialize["can_be_executed_expression"] = o.CanBeExecutedExpression
-	}
 	if o.NextStepId != nil {
 		toSerialize["next_step_id"] = o.NextStepId
-	}
-	if o.ExecBefore != nil {
-		toSerialize["execBefore"] = o.ExecBefore
-	}
-	if o.ExecAfter != nil {
-		toSerialize["execAfter"] = o.ExecAfter
-	}
-	if o.StartChildWorkflow != nil {
-		toSerialize["start_child_workflow"] = o.StartChildWorkflow
-	}
-	if o.ChildExecutionIteratorExpression != nil {
-		toSerialize["child_execution_iterator_expression"] = o.ChildExecutionIteratorExpression
-	}
-	if o.ChildExecutionContextExpression != nil {
-		toSerialize["child_execution_context_expression"] = o.ChildExecutionContextExpression
 	}
 	return json.Marshal(toSerialize)
 }

@@ -20,8 +20,6 @@ type UserPreferences struct {
 	NotifyOnNewCase []NotificationType `json:"notify_on_new_case,omitempty"`
 	// Notify when a new case has been updated, which the user or their  company has been active on.
 	NotifyOnCaseUpdate []NotificationType `json:"notify_on_case_update,omitempty"`
-	// Notify a manager when new tenant data has been submitted.
-	NotifyOnNewDataCapture []NotificationType `json:"notify_on_new_data_capture,omitempty"`
 }
 
 // NewUserPreferences instantiates a new UserPreferences object
@@ -105,38 +103,6 @@ func (o *UserPreferences) SetNotifyOnCaseUpdate(v []NotificationType) {
 	o.NotifyOnCaseUpdate = v
 }
 
-// GetNotifyOnNewDataCapture returns the NotifyOnNewDataCapture field value if set, zero value otherwise.
-func (o *UserPreferences) GetNotifyOnNewDataCapture() []NotificationType {
-	if o == nil || o.NotifyOnNewDataCapture == nil {
-		var ret []NotificationType
-		return ret
-	}
-	return o.NotifyOnNewDataCapture
-}
-
-// GetNotifyOnNewDataCaptureOk returns a tuple with the NotifyOnNewDataCapture field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *UserPreferences) GetNotifyOnNewDataCaptureOk() ([]NotificationType, bool) {
-	if o == nil || o.NotifyOnNewDataCapture == nil {
-		return nil, false
-	}
-	return o.NotifyOnNewDataCapture, true
-}
-
-// HasNotifyOnNewDataCapture returns a boolean if a field has been set.
-func (o *UserPreferences) HasNotifyOnNewDataCapture() bool {
-	if o != nil && o.NotifyOnNewDataCapture != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetNotifyOnNewDataCapture gets a reference to the given []NotificationType and assigns it to the NotifyOnNewDataCapture field.
-func (o *UserPreferences) SetNotifyOnNewDataCapture(v []NotificationType) {
-	o.NotifyOnNewDataCapture = v
-}
-
 func (o UserPreferences) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.NotifyOnNewCase != nil {
@@ -144,9 +110,6 @@ func (o UserPreferences) MarshalJSON() ([]byte, error) {
 	}
 	if o.NotifyOnCaseUpdate != nil {
 		toSerialize["notify_on_case_update"] = o.NotifyOnCaseUpdate
-	}
-	if o.NotifyOnNewDataCapture != nil {
-		toSerialize["notify_on_new_data_capture"] = o.NotifyOnNewDataCapture
 	}
 	return json.Marshal(toSerialize)
 }

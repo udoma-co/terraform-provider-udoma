@@ -26,8 +26,6 @@ type GetSummaryResponse struct {
 	TotalCases *int64 `json:"total_cases,omitempty"`
 	// The total number of service providers
 	TotalServiceProviders *int64 `json:"total_service_providers,omitempty"`
-	// The total number of data collection items that were not archived
-	ActiveDataCollectionItems *int64 `json:"active_data_collection_items,omitempty"`
 	// The total number of document generation flows that were not archived
 	ActiveDocumentGenerationFlows *int64 `json:"active_document_generation_flows,omitempty"`
 }
@@ -209,38 +207,6 @@ func (o *GetSummaryResponse) SetTotalServiceProviders(v int64) {
 	o.TotalServiceProviders = &v
 }
 
-// GetActiveDataCollectionItems returns the ActiveDataCollectionItems field value if set, zero value otherwise.
-func (o *GetSummaryResponse) GetActiveDataCollectionItems() int64 {
-	if o == nil || o.ActiveDataCollectionItems == nil {
-		var ret int64
-		return ret
-	}
-	return *o.ActiveDataCollectionItems
-}
-
-// GetActiveDataCollectionItemsOk returns a tuple with the ActiveDataCollectionItems field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *GetSummaryResponse) GetActiveDataCollectionItemsOk() (*int64, bool) {
-	if o == nil || o.ActiveDataCollectionItems == nil {
-		return nil, false
-	}
-	return o.ActiveDataCollectionItems, true
-}
-
-// HasActiveDataCollectionItems returns a boolean if a field has been set.
-func (o *GetSummaryResponse) HasActiveDataCollectionItems() bool {
-	if o != nil && o.ActiveDataCollectionItems != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetActiveDataCollectionItems gets a reference to the given int64 and assigns it to the ActiveDataCollectionItems field.
-func (o *GetSummaryResponse) SetActiveDataCollectionItems(v int64) {
-	o.ActiveDataCollectionItems = &v
-}
-
 // GetActiveDocumentGenerationFlows returns the ActiveDocumentGenerationFlows field value if set, zero value otherwise.
 func (o *GetSummaryResponse) GetActiveDocumentGenerationFlows() int64 {
 	if o == nil || o.ActiveDocumentGenerationFlows == nil {
@@ -289,9 +255,6 @@ func (o GetSummaryResponse) MarshalJSON() ([]byte, error) {
 	}
 	if o.TotalServiceProviders != nil {
 		toSerialize["total_service_providers"] = o.TotalServiceProviders
-	}
-	if o.ActiveDataCollectionItems != nil {
-		toSerialize["active_data_collection_items"] = o.ActiveDataCollectionItems
 	}
 	if o.ActiveDocumentGenerationFlows != nil {
 		toSerialize["active_document_generation_flows"] = o.ActiveDocumentGenerationFlows

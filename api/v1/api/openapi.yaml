@@ -1887,339 +1887,6 @@ paths:
           content: {}
           description: Internal server error
       summary: Update an already existing script
-  /data-collection/query:
-    post:
-      description: Query the data collection items for the current account
-      operationId: queryDataCollections
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/QueryDataCollectionRequest'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/QueryDataCollectionResponse'
-          description: Successful operation
-        "403":
-          content: {}
-          description: Access denied
-        "500":
-          content: {}
-          description: Internal server error
-      summary: Query the data collection items for the current account
-  /data-collection/tenants/config:
-    get:
-      description: Get the data collection configuration for the current account
-      operationId: getDataCollectionConfiguration
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DataCollectionConfiguration'
-          description: Successful operation
-        "403":
-          content: {}
-          description: Access denied
-        "500":
-          content: {}
-          description: Internal server error
-      summary: Get the data collection configuration for the current account
-    post:
-      description: Update the data collection configuration for the current account
-      operationId: updateDataCollectionConfiguration
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateDataCollectionConfiguration'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DataCollectionConfiguration'
-          description: Successful operation
-        "403":
-          content: {}
-          description: Access denied
-        "500":
-          content: {}
-          description: Internal server error
-      summary: Update the data collection configuration for the current account
-  /data-collection/tenants/endpoint:
-    post:
-      description: Create a new data collection endpoint
-      operationId: createDataCollectionEndpoint
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateDataCollectionEndpointRequest'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DataCollectionEndpoint'
-          description: Successful operation
-        "403":
-          content: {}
-          description: Access denied
-        "500":
-          content: {}
-          description: Internal server error
-      summary: Create a new data collection endpoint
-  /data-collection/tenants/endpoints:
-    post:
-      operationId: queryDataCollectionEndpoints
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/QueryDataCollectionEndpointsRequest'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/QueryDataCollectionEndpointsResponse'
-          description: Successful operation
-        "403":
-          content: {}
-          description: Access denied
-        "500":
-          content: {}
-          description: Internal server error
-      summary: Query the custom data collection endpoints for the current account
-  /data-collection/tenants/endpoint/{endpointId}:
-    delete:
-      operationId: deleteDataCollectionEndpoint
-      parameters:
-      - description: ID of the required data collection endpoint
-        explode: false
-        in: path
-        name: endpointId
-        required: true
-        schema:
-          type: string
-        style: simple
-      responses:
-        "200":
-          content: {}
-          description: Operation successfully performed
-        "403":
-          content: {}
-          description: Access denied
-        "500":
-          content: {}
-          description: Internal server error
-      summary: Delete an already existing data collection endpoint
-    get:
-      description: Get a single data collection endpoint
-      operationId: getDataCollectionEndpoint
-      parameters:
-      - description: ID of the required data collection endpoint
-        explode: false
-        in: path
-        name: endpointId
-        required: true
-        schema:
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DataCollectionEndpoint'
-          description: Successful operation
-        "403":
-          content: {}
-          description: Access denied
-        "500":
-          content: {}
-          description: Internal server error
-      summary: Get a single data collection endpoint
-    put:
-      operationId: updateDataCollectionEndpoint
-      parameters:
-      - description: ID of the required data collection endpoint
-        explode: false
-        in: path
-        name: endpointId
-        required: true
-        schema:
-          type: string
-        style: simple
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateDataCollectionEndpointRequest'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DataCollectionEndpoint'
-          description: Successful operation
-        "403":
-          content: {}
-          description: Access denied
-        "500":
-          content: {}
-          description: Internal server error
-      summary: Update an already existing data collection endpoint
-  /data-collection/tenants/endpoint/{endpointId}/items:
-    get:
-      operationId: getDataCollectionEndpointItems
-      parameters:
-      - description: ID of the required data collection endpoint
-        explode: false
-        in: path
-        name: endpointId
-        required: true
-        schema:
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/DataCollectionItem'
-                type: array
-          description: Successful operation
-        "403":
-          content: {}
-          description: Access denied
-        "500":
-          content: {}
-          description: Internal server error
-      summary: Get all data collection items for a given endpoint
-  /data-collection/tenants/endpoint/{endpointId}/invite:
-    post:
-      operationId: inviteTenantToDataCollectionEndpoint
-      parameters:
-      - description: ID of the required data collection endpoint
-        explode: false
-        in: path
-        name: endpointId
-        required: true
-        schema:
-          type: string
-        style: simple
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/InviteDataCollectionEndpointRequest'
-        required: true
-      responses:
-        "200":
-          content: {}
-          description: Operation successfully performed
-        "403":
-          content: {}
-          description: Access denied
-        "500":
-          content: {}
-          description: Internal server error
-      summary: Send the link of the data collection endpoint to a tenant
-  /data-collection/tenants/items/{itemId}:
-    delete:
-      description: Delete an existing data collection item
-      operationId: deleteDataCollectionItem
-      parameters:
-      - description: ID of the required data collection item
-        explode: false
-        in: path
-        name: itemId
-        required: true
-        schema:
-          type: string
-        style: simple
-      responses:
-        "200":
-          content: {}
-          description: Operation successfully performed
-        "403":
-          content: {}
-          description: Access denied
-        "500":
-          content: {}
-          description: Internal server error
-      summary: Delete an existing data collection item
-    get:
-      description: Get a single data collection item
-      operationId: getDataCollectionItem
-      parameters:
-      - description: ID of the required data collection item
-        explode: false
-        in: path
-        name: itemId
-        required: true
-        schema:
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DataCollectionItem'
-          description: Successful operation
-        "403":
-          content: {}
-          description: Access denied
-        "500":
-          content: {}
-          description: Internal server error
-      summary: Get a single data collection item
-    put:
-      description: Update an already existing data collection item
-      operationId: updateDataCollectionItem
-      parameters:
-      - description: ID of the required data collection item
-        explode: false
-        in: path
-        name: itemId
-        required: true
-        schema:
-          type: string
-        style: simple
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DataCollectionItem'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/TenantInfo'
-                type: array
-          description: Successful operation
-        "403":
-          content: {}
-          description: Access denied
-        "500":
-          content: {}
-          description: Internal server error
-      summary: Update an already existing data collection item
   /document-generation/document:
     post:
       operationId: createDocumentGeneration
@@ -6219,6 +5886,27 @@ components:
       content: {}
       description: Requested entity not found
   schemas:
+    YesNoOrValue:
+      properties:
+        v:
+          description: true or false value
+          type: boolean
+        s:
+          description: additional string value (e.g. if value set to true)
+          type: string
+        "n":
+          description: additional numeric value (e.g. if value set to true)
+          type: number
+      type: object
+    IDUpload:
+      description: |
+        an ID document uploaded by the user, consisting of a photo from the front and back of the ID
+      properties:
+        front:
+          $ref: '#/components/schemas/Attachment'
+        back:
+          $ref: '#/components/schemas/Attachment'
+      type: object
     ConnectorCustomSyncEntityTenancy:
       description: "Used by connectors to push tenancy data to the backend. \n"
       properties:
@@ -10560,1608 +10248,6 @@ components:
             The actual JS script code
           type: string
       type: object
-    QueryDataCollectionRequest:
-      description: query parameters for loading data collection items
-      example:
-        offset: 6
-        limit: 0
-      properties:
-        limit:
-          format: int64
-          type: integer
-        offset:
-          format: int64
-          type: integer
-      type: object
-    QueryDataCollectionResponse:
-      description: "query result, containing data collection items"
-      example:
-        data:
-        - date: 6
-          tenants:
-          - profession: profession
-            day_of_birth: day_of_birth
-            address:
-              line1: 1 ZestLabs Blvd
-              line2: CSS District
-              city: Mannheim
-              postcode: 680001
-              province: Baden-Wuerttemberg
-              country: Germany
-            last_name: last_name
-            title: title
-            marital_status: marital_status
-            employer: employer
-            phone_number: phone_number
-            id: id
-            net_income: 5.962133916683182
-            employement_since: 1
-            employer_contact:
-              address:
-                line1: 1 ZestLabs Blvd
-                line2: CSS District
-                city: Mannheim
-                postcode: 680001
-                province: Baden-Wuerttemberg
-                country: Germany
-              last_name: last_name
-              company: company
-              phone_number: phone_number
-              id: id
-              title: title
-              first_name: first_name
-              email: email
-            first_name: first_name
-            email: email
-            id_upload:
-              back:
-                ref: ref
-                thumbnail: thumbnail
-                created: 0
-                file_type: file_type
-                file_name: file_name
-                id: id
-                file_size: 6
-                url: url
-              front:
-                ref: ref
-                thumbnail: thumbnail
-                created: 0
-                file_type: file_type
-                file_name: file_name
-                id: id
-                file_size: 6
-                url: url
-          - profession: profession
-            day_of_birth: day_of_birth
-            address:
-              line1: 1 ZestLabs Blvd
-              line2: CSS District
-              city: Mannheim
-              postcode: 680001
-              province: Baden-Wuerttemberg
-              country: Germany
-            last_name: last_name
-            title: title
-            marital_status: marital_status
-            employer: employer
-            phone_number: phone_number
-            id: id
-            net_income: 5.962133916683182
-            employement_since: 1
-            employer_contact:
-              address:
-                line1: 1 ZestLabs Blvd
-                line2: CSS District
-                city: Mannheim
-                postcode: 680001
-                province: Baden-Wuerttemberg
-                country: Germany
-              last_name: last_name
-              company: company
-              phone_number: phone_number
-              id: id
-              title: title
-              first_name: first_name
-              email: email
-            first_name: first_name
-            email: email
-            id_upload:
-              back:
-                ref: ref
-                thumbnail: thumbnail
-                created: 0
-                file_type: file_type
-                file_name: file_name
-                id: id
-                file_size: 6
-                url: url
-              front:
-                ref: ref
-                thumbnail: thumbnail
-                created: 0
-                file_type: file_type
-                file_name: file_name
-                id: id
-                file_size: 6
-                url: url
-          property_address:
-            line1: 1 ZestLabs Blvd
-            line2: CSS District
-            city: Mannheim
-            postcode: 680001
-            province: Baden-Wuerttemberg
-            country: Germany
-          additional_data:
-            key: additional_data
-          start_of_tenancy: 0
-          property_ref: property_ref
-          additional_info:
-            commercial_use:
-              s: s
-              v: true
-              "n": 5.637376656633329
-            pets:
-              s: s
-              v: true
-              "n": 5.637376656633329
-            affidavit:
-              s: s
-              v: true
-              "n": 5.637376656633329
-            foreclosure:
-              s: s
-              v: true
-              "n": 5.637376656633329
-            subletting:
-              s: s
-              v: true
-              "n": 5.637376656633329
-            eviction:
-              s: s
-              v: true
-              "n": 5.637376656633329
-            criminal_record:
-              s: s
-              v: true
-              "n": 5.637376656633329
-            social_benefits:
-              s: s
-              v: true
-              "n": 5.637376656633329
-            rent_arrears: true
-            bankruptcy:
-              s: s
-              v: true
-              "n": 5.637376656633329
-            musical_instruments:
-              s: s
-              v: true
-              "n": 5.637376656633329
-          endpoint_id: endpoint_id
-          id: id
-          additional_tenants:
-          - day_of_birth: day_of_birth
-            name: name
-            relationship: relationship
-          - day_of_birth: day_of_birth
-            name: name
-            relationship: relationship
-        - date: 6
-          tenants:
-          - profession: profession
-            day_of_birth: day_of_birth
-            address:
-              line1: 1 ZestLabs Blvd
-              line2: CSS District
-              city: Mannheim
-              postcode: 680001
-              province: Baden-Wuerttemberg
-              country: Germany
-            last_name: last_name
-            title: title
-            marital_status: marital_status
-            employer: employer
-            phone_number: phone_number
-            id: id
-            net_income: 5.962133916683182
-            employement_since: 1
-            employer_contact:
-              address:
-                line1: 1 ZestLabs Blvd
-                line2: CSS District
-                city: Mannheim
-                postcode: 680001
-                province: Baden-Wuerttemberg
-                country: Germany
-              last_name: last_name
-              company: company
-              phone_number: phone_number
-              id: id
-              title: title
-              first_name: first_name
-              email: email
-            first_name: first_name
-            email: email
-            id_upload:
-              back:
-                ref: ref
-                thumbnail: thumbnail
-                created: 0
-                file_type: file_type
-                file_name: file_name
-                id: id
-                file_size: 6
-                url: url
-              front:
-                ref: ref
-                thumbnail: thumbnail
-                created: 0
-                file_type: file_type
-                file_name: file_name
-                id: id
-                file_size: 6
-                url: url
-          - profession: profession
-            day_of_birth: day_of_birth
-            address:
-              line1: 1 ZestLabs Blvd
-              line2: CSS District
-              city: Mannheim
-              postcode: 680001
-              province: Baden-Wuerttemberg
-              country: Germany
-            last_name: last_name
-            title: title
-            marital_status: marital_status
-            employer: employer
-            phone_number: phone_number
-            id: id
-            net_income: 5.962133916683182
-            employement_since: 1
-            employer_contact:
-              address:
-                line1: 1 ZestLabs Blvd
-                line2: CSS District
-                city: Mannheim
-                postcode: 680001
-                province: Baden-Wuerttemberg
-                country: Germany
-              last_name: last_name
-              company: company
-              phone_number: phone_number
-              id: id
-              title: title
-              first_name: first_name
-              email: email
-            first_name: first_name
-            email: email
-            id_upload:
-              back:
-                ref: ref
-                thumbnail: thumbnail
-                created: 0
-                file_type: file_type
-                file_name: file_name
-                id: id
-                file_size: 6
-                url: url
-              front:
-                ref: ref
-                thumbnail: thumbnail
-                created: 0
-                file_type: file_type
-                file_name: file_name
-                id: id
-                file_size: 6
-                url: url
-          property_address:
-            line1: 1 ZestLabs Blvd
-            line2: CSS District
-            city: Mannheim
-            postcode: 680001
-            province: Baden-Wuerttemberg
-            country: Germany
-          additional_data:
-            key: additional_data
-          start_of_tenancy: 0
-          property_ref: property_ref
-          additional_info:
-            commercial_use:
-              s: s
-              v: true
-              "n": 5.637376656633329
-            pets:
-              s: s
-              v: true
-              "n": 5.637376656633329
-            affidavit:
-              s: s
-              v: true
-              "n": 5.637376656633329
-            foreclosure:
-              s: s
-              v: true
-              "n": 5.637376656633329
-            subletting:
-              s: s
-              v: true
-              "n": 5.637376656633329
-            eviction:
-              s: s
-              v: true
-              "n": 5.637376656633329
-            criminal_record:
-              s: s
-              v: true
-              "n": 5.637376656633329
-            social_benefits:
-              s: s
-              v: true
-              "n": 5.637376656633329
-            rent_arrears: true
-            bankruptcy:
-              s: s
-              v: true
-              "n": 5.637376656633329
-            musical_instruments:
-              s: s
-              v: true
-              "n": 5.637376656633329
-          endpoint_id: endpoint_id
-          id: id
-          additional_tenants:
-          - day_of_birth: day_of_birth
-            name: name
-            relationship: relationship
-          - day_of_birth: day_of_birth
-            name: name
-            relationship: relationship
-        offset: 7
-        limit: 2
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/DataCollectionItem'
-          type: array
-        limit:
-          format: int64
-          type: integer
-        offset:
-          format: int64
-          type: integer
-      type: object
-    DataCollectionItem:
-      description: Data that must be collected from tenants
-      example:
-        date: 6
-        tenants:
-        - profession: profession
-          day_of_birth: day_of_birth
-          address:
-            line1: 1 ZestLabs Blvd
-            line2: CSS District
-            city: Mannheim
-            postcode: 680001
-            province: Baden-Wuerttemberg
-            country: Germany
-          last_name: last_name
-          title: title
-          marital_status: marital_status
-          employer: employer
-          phone_number: phone_number
-          id: id
-          net_income: 5.962133916683182
-          employement_since: 1
-          employer_contact:
-            address:
-              line1: 1 ZestLabs Blvd
-              line2: CSS District
-              city: Mannheim
-              postcode: 680001
-              province: Baden-Wuerttemberg
-              country: Germany
-            last_name: last_name
-            company: company
-            phone_number: phone_number
-            id: id
-            title: title
-            first_name: first_name
-            email: email
-          first_name: first_name
-          email: email
-          id_upload:
-            back:
-              ref: ref
-              thumbnail: thumbnail
-              created: 0
-              file_type: file_type
-              file_name: file_name
-              id: id
-              file_size: 6
-              url: url
-            front:
-              ref: ref
-              thumbnail: thumbnail
-              created: 0
-              file_type: file_type
-              file_name: file_name
-              id: id
-              file_size: 6
-              url: url
-        - profession: profession
-          day_of_birth: day_of_birth
-          address:
-            line1: 1 ZestLabs Blvd
-            line2: CSS District
-            city: Mannheim
-            postcode: 680001
-            province: Baden-Wuerttemberg
-            country: Germany
-          last_name: last_name
-          title: title
-          marital_status: marital_status
-          employer: employer
-          phone_number: phone_number
-          id: id
-          net_income: 5.962133916683182
-          employement_since: 1
-          employer_contact:
-            address:
-              line1: 1 ZestLabs Blvd
-              line2: CSS District
-              city: Mannheim
-              postcode: 680001
-              province: Baden-Wuerttemberg
-              country: Germany
-            last_name: last_name
-            company: company
-            phone_number: phone_number
-            id: id
-            title: title
-            first_name: first_name
-            email: email
-          first_name: first_name
-          email: email
-          id_upload:
-            back:
-              ref: ref
-              thumbnail: thumbnail
-              created: 0
-              file_type: file_type
-              file_name: file_name
-              id: id
-              file_size: 6
-              url: url
-            front:
-              ref: ref
-              thumbnail: thumbnail
-              created: 0
-              file_type: file_type
-              file_name: file_name
-              id: id
-              file_size: 6
-              url: url
-        property_address:
-          line1: 1 ZestLabs Blvd
-          line2: CSS District
-          city: Mannheim
-          postcode: 680001
-          province: Baden-Wuerttemberg
-          country: Germany
-        additional_data:
-          key: additional_data
-        start_of_tenancy: 0
-        property_ref: property_ref
-        additional_info:
-          commercial_use:
-            s: s
-            v: true
-            "n": 5.637376656633329
-          pets:
-            s: s
-            v: true
-            "n": 5.637376656633329
-          affidavit:
-            s: s
-            v: true
-            "n": 5.637376656633329
-          foreclosure:
-            s: s
-            v: true
-            "n": 5.637376656633329
-          subletting:
-            s: s
-            v: true
-            "n": 5.637376656633329
-          eviction:
-            s: s
-            v: true
-            "n": 5.637376656633329
-          criminal_record:
-            s: s
-            v: true
-            "n": 5.637376656633329
-          social_benefits:
-            s: s
-            v: true
-            "n": 5.637376656633329
-          rent_arrears: true
-          bankruptcy:
-            s: s
-            v: true
-            "n": 5.637376656633329
-          musical_instruments:
-            s: s
-            v: true
-            "n": 5.637376656633329
-        endpoint_id: endpoint_id
-        id: id
-        additional_tenants:
-        - day_of_birth: day_of_birth
-          name: name
-          relationship: relationship
-        - day_of_birth: day_of_birth
-          name: name
-          relationship: relationship
-      properties:
-        id:
-          description: the ID of the item that is generated by the system once the
-            data is submitted
-          type: string
-        endpoint_id:
-          description: the ID of the endpoint that was used to collect the data
-          type: string
-        property_address:
-          $ref: '#/components/schemas/Address'
-        property_ref:
-          description: a reference to the property
-          type: string
-        start_of_tenancy:
-          description: the date at which the tenancy will officially begin
-          format: int64
-          type: integer
-        date:
-          description: time of submission of the data collection item (generated by
-            the server)
-          format: int64
-          type: integer
-        tenants:
-          items:
-            $ref: '#/components/schemas/TenantInfo'
-          type: array
-        additional_tenants:
-          items:
-            $ref: '#/components/schemas/AdditionalTenant'
-          type: array
-        additional_info:
-          $ref: '#/components/schemas/TenantsAdditionalInfo'
-        additional_data:
-          additionalProperties:
-            type: string
-          description: "a map of values, where the key and values are strings"
-          type: object
-      type: object
-    TenantInfo:
-      description: "Information about an individual potential tenant, collected via\
-        \ the public form"
-      example:
-        profession: profession
-        day_of_birth: day_of_birth
-        address:
-          line1: 1 ZestLabs Blvd
-          line2: CSS District
-          city: Mannheim
-          postcode: 680001
-          province: Baden-Wuerttemberg
-          country: Germany
-        last_name: last_name
-        title: title
-        marital_status: marital_status
-        employer: employer
-        phone_number: phone_number
-        id: id
-        net_income: 5.962133916683182
-        employement_since: 1
-        employer_contact:
-          address:
-            line1: 1 ZestLabs Blvd
-            line2: CSS District
-            city: Mannheim
-            postcode: 680001
-            province: Baden-Wuerttemberg
-            country: Germany
-          last_name: last_name
-          company: company
-          phone_number: phone_number
-          id: id
-          title: title
-          first_name: first_name
-          email: email
-        first_name: first_name
-        email: email
-        id_upload:
-          back:
-            ref: ref
-            thumbnail: thumbnail
-            created: 0
-            file_type: file_type
-            file_name: file_name
-            id: id
-            file_size: 6
-            url: url
-          front:
-            ref: ref
-            thumbnail: thumbnail
-            created: 0
-            file_type: file_type
-            file_name: file_name
-            id: id
-            file_size: 6
-            url: url
-      properties:
-        id:
-          type: string
-        title:
-          type: string
-        first_name:
-          type: string
-        last_name:
-          type: string
-        marital_status:
-          type: string
-        day_of_birth:
-          type: string
-        phone_number:
-          type: string
-        email:
-          type: string
-        address:
-          $ref: '#/components/schemas/Address'
-        profession:
-          type: string
-        employer:
-          type: string
-        employement_since:
-          format: int64
-          type: integer
-        employer_contact:
-          $ref: '#/components/schemas/ContactData'
-        net_income:
-          type: number
-        id_upload:
-          $ref: '#/components/schemas/IDUpload'
-      type: object
-    AdditionalTenant:
-      description: additional tenants who will not be included in the contract
-      example:
-        day_of_birth: day_of_birth
-        name: name
-        relationship: relationship
-      properties:
-        name:
-          type: string
-        day_of_birth:
-          type: string
-        relationship:
-          type: string
-      type: object
-    TenantsAdditionalInfo:
-      description: "Additional information about future tenantes, collected via public\
-        \ form"
-      example:
-        commercial_use:
-          s: s
-          v: true
-          "n": 5.637376656633329
-        pets:
-          s: s
-          v: true
-          "n": 5.637376656633329
-        affidavit:
-          s: s
-          v: true
-          "n": 5.637376656633329
-        foreclosure:
-          s: s
-          v: true
-          "n": 5.637376656633329
-        subletting:
-          s: s
-          v: true
-          "n": 5.637376656633329
-        eviction:
-          s: s
-          v: true
-          "n": 5.637376656633329
-        criminal_record:
-          s: s
-          v: true
-          "n": 5.637376656633329
-        social_benefits:
-          s: s
-          v: true
-          "n": 5.637376656633329
-        rent_arrears: true
-        bankruptcy:
-          s: s
-          v: true
-          "n": 5.637376656633329
-        musical_instruments:
-          s: s
-          v: true
-          "n": 5.637376656633329
-      properties:
-        rent_arrears:
-          description: has one of the tenants have any rent arrears from previous
-            tenancies
-          type: boolean
-        eviction:
-          $ref: '#/components/schemas/YesNoOrValue'
-        foreclosure:
-          $ref: '#/components/schemas/YesNoOrValue'
-        affidavit:
-          $ref: '#/components/schemas/YesNoOrValue'
-        bankruptcy:
-          $ref: '#/components/schemas/YesNoOrValue'
-        criminal_record:
-          $ref: '#/components/schemas/YesNoOrValue'
-        social_benefits:
-          $ref: '#/components/schemas/YesNoOrValue'
-        commercial_use:
-          $ref: '#/components/schemas/YesNoOrValue'
-        subletting:
-          $ref: '#/components/schemas/YesNoOrValue'
-        musical_instruments:
-          $ref: '#/components/schemas/YesNoOrValue'
-        pets:
-          $ref: '#/components/schemas/YesNoOrValue'
-      type: object
-    DataCollectionConfiguration:
-      description: the configuration of the data collection setup
-      example:
-        default_endpoint_enabled: true
-        inputs:
-        - id: id
-          collect: skip
-        - id: id
-          collect: skip
-        additional_questions:
-          layout:
-          - ref_id: ref_id
-            ref_type: ref_type
-          - ref_id: ref_id
-            ref_type: ref_type
-          inputs:
-          - view_label:
-              key: view_label
-            ephemeral: true
-            default_value: default_value
-            attributes:
-              key: attributes
-            id: id
-            label:
-              key: label
-            placeholder:
-              key: placeholder
-            type: type
-            items:
-            - items
-            - items
-            required: true
-            target: target
-          - view_label:
-              key: view_label
-            ephemeral: true
-            default_value: default_value
-            attributes:
-              key: attributes
-            id: id
-            label:
-              key: label
-            placeholder:
-              key: placeholder
-            type: type
-            items:
-            - items
-            - items
-            required: true
-            target: target
-          groups:
-          - use_item_group: true
-            bottom_divider: true
-            top_divider: true
-            min_size: 0
-            id: id
-            label:
-              key: label
-            type: type
-            items:
-            - ref_id: ref_id
-              ref_type: ref_type
-            - ref_id: ref_id
-              ref_type: ref_type
-            info:
-              key: info
-            target: target
-          - use_item_group: true
-            bottom_divider: true
-            top_divider: true
-            min_size: 0
-            id: id
-            label:
-              key: label
-            type: type
-            items:
-            - ref_id: ref_id
-              ref_type: ref_type
-            - ref_id: ref_id
-              ref_type: ref_type
-            info:
-              key: info
-            target: target
-          validations:
-          - expression: expression
-            id: id
-            message:
-              key: message
-            target: target
-          - expression: expression
-            id: id
-            message:
-              key: message
-            target: target
-        default_endpoint_code: default_endpoint_code
-      properties:
-        default_endpoint_enabled:
-          description: "if true, the default endpoint will be enabled for this setup"
-          type: boolean
-        default_endpoint_code:
-          description: the code that is used for the default endpoint
-          type: string
-        inputs:
-          items:
-            $ref: '#/components/schemas/DefaultInputConfig'
-          type: array
-        additional_questions:
-          $ref: '#/components/schemas/CustomForm'
-      type: object
-    UpdateDataCollectionConfiguration:
-      description: request to update the data collection setup
-      example:
-        default_endpoint_enabled: true
-        inputs:
-        - id: id
-          collect: skip
-        - id: id
-          collect: skip
-        additional_questions:
-          layout:
-          - ref_id: ref_id
-            ref_type: ref_type
-          - ref_id: ref_id
-            ref_type: ref_type
-          inputs:
-          - view_label:
-              key: view_label
-            ephemeral: true
-            default_value: default_value
-            attributes:
-              key: attributes
-            id: id
-            label:
-              key: label
-            placeholder:
-              key: placeholder
-            type: type
-            items:
-            - items
-            - items
-            required: true
-            target: target
-          - view_label:
-              key: view_label
-            ephemeral: true
-            default_value: default_value
-            attributes:
-              key: attributes
-            id: id
-            label:
-              key: label
-            placeholder:
-              key: placeholder
-            type: type
-            items:
-            - items
-            - items
-            required: true
-            target: target
-          groups:
-          - use_item_group: true
-            bottom_divider: true
-            top_divider: true
-            min_size: 0
-            id: id
-            label:
-              key: label
-            type: type
-            items:
-            - ref_id: ref_id
-              ref_type: ref_type
-            - ref_id: ref_id
-              ref_type: ref_type
-            info:
-              key: info
-            target: target
-          - use_item_group: true
-            bottom_divider: true
-            top_divider: true
-            min_size: 0
-            id: id
-            label:
-              key: label
-            type: type
-            items:
-            - ref_id: ref_id
-              ref_type: ref_type
-            - ref_id: ref_id
-              ref_type: ref_type
-            info:
-              key: info
-            target: target
-          validations:
-          - expression: expression
-            id: id
-            message:
-              key: message
-            target: target
-          - expression: expression
-            id: id
-            message:
-              key: message
-            target: target
-      properties:
-        default_endpoint_enabled:
-          description: "if true, the default endpoint will be enabled for this setup"
-          type: boolean
-        inputs:
-          items:
-            $ref: '#/components/schemas/DefaultInputConfig'
-          type: array
-        additional_questions:
-          $ref: '#/components/schemas/CustomForm'
-      type: object
-    CreateDataCollectionEndpointRequest:
-      description: request used to create a new custom data collection endpoint
-      example:
-        property_refs:
-        - property_refs
-        - property_refs
-        single_use: true
-        message: message
-        additional_questions:
-          layout:
-          - ref_id: ref_id
-            ref_type: ref_type
-          - ref_id: ref_id
-            ref_type: ref_type
-          inputs:
-          - view_label:
-              key: view_label
-            ephemeral: true
-            default_value: default_value
-            attributes:
-              key: attributes
-            id: id
-            label:
-              key: label
-            placeholder:
-              key: placeholder
-            type: type
-            items:
-            - items
-            - items
-            required: true
-            target: target
-          - view_label:
-              key: view_label
-            ephemeral: true
-            default_value: default_value
-            attributes:
-              key: attributes
-            id: id
-            label:
-              key: label
-            placeholder:
-              key: placeholder
-            type: type
-            items:
-            - items
-            - items
-            required: true
-            target: target
-          groups:
-          - use_item_group: true
-            bottom_divider: true
-            top_divider: true
-            min_size: 0
-            id: id
-            label:
-              key: label
-            type: type
-            items:
-            - ref_id: ref_id
-              ref_type: ref_type
-            - ref_id: ref_id
-              ref_type: ref_type
-            info:
-              key: info
-            target: target
-          - use_item_group: true
-            bottom_divider: true
-            top_divider: true
-            min_size: 0
-            id: id
-            label:
-              key: label
-            type: type
-            items:
-            - ref_id: ref_id
-              ref_type: ref_type
-            - ref_id: ref_id
-              ref_type: ref_type
-            info:
-              key: info
-            target: target
-          validations:
-          - expression: expression
-            id: id
-            message:
-              key: message
-            target: target
-          - expression: expression
-            id: id
-            message:
-              key: message
-            target: target
-        tenant:
-          address:
-            line1: 1 ZestLabs Blvd
-            line2: CSS District
-            city: Mannheim
-            postcode: 680001
-            province: Baden-Wuerttemberg
-            country: Germany
-          last_name: last_name
-          company: company
-          phone_number: phone_number
-          id: id
-          title: title
-          first_name: first_name
-          email: email
-        property_addresses:
-        - property_addresses
-        - property_addresses
-        send_to_tenant: true
-      properties:
-        single_use:
-          description: "if true, the endpoint will be disabled after it has been used\
-            \ once"
-          type: boolean
-        property_refs:
-          items:
-            description: "optional list of IDs of the properties, for which this endpoint\
-              \ is valid"
-            type: string
-          type: array
-        property_addresses:
-          items:
-            description: temporarily we will just use the address of the property.
-              Later this will be replaced by a reference to the property instead
-            type: string
-          type: array
-        additional_questions:
-          $ref: '#/components/schemas/CustomForm'
-        send_to_tenant:
-          description: "if true, the tenant will receive an email with the data collection\
-            \ link"
-          type: boolean
-        tenant:
-          $ref: '#/components/schemas/ContactData'
-        message:
-          description: a custom message that is included in the email to the tenant
-          type: string
-      type: object
-    DataCollectionEndpoint:
-      description: custom data collection endpoint
-      example:
-        code: code
-        data_items: 6
-        property_refs:
-        - property_refs
-        - property_refs
-        single_use: true
-        creation_date: 0
-        additional_questions:
-          layout:
-          - ref_id: ref_id
-            ref_type: ref_type
-          - ref_id: ref_id
-            ref_type: ref_type
-          inputs:
-          - view_label:
-              key: view_label
-            ephemeral: true
-            default_value: default_value
-            attributes:
-              key: attributes
-            id: id
-            label:
-              key: label
-            placeholder:
-              key: placeholder
-            type: type
-            items:
-            - items
-            - items
-            required: true
-            target: target
-          - view_label:
-              key: view_label
-            ephemeral: true
-            default_value: default_value
-            attributes:
-              key: attributes
-            id: id
-            label:
-              key: label
-            placeholder:
-              key: placeholder
-            type: type
-            items:
-            - items
-            - items
-            required: true
-            target: target
-          groups:
-          - use_item_group: true
-            bottom_divider: true
-            top_divider: true
-            min_size: 0
-            id: id
-            label:
-              key: label
-            type: type
-            items:
-            - ref_id: ref_id
-              ref_type: ref_type
-            - ref_id: ref_id
-              ref_type: ref_type
-            info:
-              key: info
-            target: target
-          - use_item_group: true
-            bottom_divider: true
-            top_divider: true
-            min_size: 0
-            id: id
-            label:
-              key: label
-            type: type
-            items:
-            - ref_id: ref_id
-              ref_type: ref_type
-            - ref_id: ref_id
-              ref_type: ref_type
-            info:
-              key: info
-            target: target
-          validations:
-          - expression: expression
-            id: id
-            message:
-              key: message
-            target: target
-          - expression: expression
-            id: id
-            message:
-              key: message
-            target: target
-        property_addresses:
-        - property_addresses
-        - property_addresses
-      properties:
-        code:
-          type: string
-        creation_date:
-          description: the date at which the endpoint was created
-          format: int64
-          type: integer
-        single_use:
-          description: "if true, the endpoint will be disabled after it has been used\
-            \ once"
-          type: boolean
-        data_items:
-          description: the number of data items that have been collected using this
-            endpoint
-          format: int32
-          type: integer
-        property_refs:
-          items:
-            description: "optional list of IDs of the properties, for which this endpoint\
-              \ is valid"
-            type: string
-          type: array
-        property_addresses:
-          items:
-            description: "alternatively, a list of addresses can be specified (deprecated)"
-            type: string
-          type: array
-        additional_questions:
-          $ref: '#/components/schemas/CustomForm'
-      type: object
-    QueryDataCollectionEndpointsRequest:
-      description: query parameters for loading data collection endpoints
-      example:
-        offset: 6
-        limit: 0
-      properties:
-        limit:
-          format: int64
-          type: integer
-        offset:
-          format: int64
-          type: integer
-      type: object
-    QueryDataCollectionEndpointsResponse:
-      description: "query result, containing data collection endpoints"
-      example:
-        endpoints:
-        - code: code
-          data_items: 6
-          property_refs:
-          - property_refs
-          - property_refs
-          single_use: true
-          creation_date: 0
-          additional_questions:
-            layout:
-            - ref_id: ref_id
-              ref_type: ref_type
-            - ref_id: ref_id
-              ref_type: ref_type
-            inputs:
-            - view_label:
-                key: view_label
-              ephemeral: true
-              default_value: default_value
-              attributes:
-                key: attributes
-              id: id
-              label:
-                key: label
-              placeholder:
-                key: placeholder
-              type: type
-              items:
-              - items
-              - items
-              required: true
-              target: target
-            - view_label:
-                key: view_label
-              ephemeral: true
-              default_value: default_value
-              attributes:
-                key: attributes
-              id: id
-              label:
-                key: label
-              placeholder:
-                key: placeholder
-              type: type
-              items:
-              - items
-              - items
-              required: true
-              target: target
-            groups:
-            - use_item_group: true
-              bottom_divider: true
-              top_divider: true
-              min_size: 0
-              id: id
-              label:
-                key: label
-              type: type
-              items:
-              - ref_id: ref_id
-                ref_type: ref_type
-              - ref_id: ref_id
-                ref_type: ref_type
-              info:
-                key: info
-              target: target
-            - use_item_group: true
-              bottom_divider: true
-              top_divider: true
-              min_size: 0
-              id: id
-              label:
-                key: label
-              type: type
-              items:
-              - ref_id: ref_id
-                ref_type: ref_type
-              - ref_id: ref_id
-                ref_type: ref_type
-              info:
-                key: info
-              target: target
-            validations:
-            - expression: expression
-              id: id
-              message:
-                key: message
-              target: target
-            - expression: expression
-              id: id
-              message:
-                key: message
-              target: target
-          property_addresses:
-          - property_addresses
-          - property_addresses
-        - code: code
-          data_items: 6
-          property_refs:
-          - property_refs
-          - property_refs
-          single_use: true
-          creation_date: 0
-          additional_questions:
-            layout:
-            - ref_id: ref_id
-              ref_type: ref_type
-            - ref_id: ref_id
-              ref_type: ref_type
-            inputs:
-            - view_label:
-                key: view_label
-              ephemeral: true
-              default_value: default_value
-              attributes:
-                key: attributes
-              id: id
-              label:
-                key: label
-              placeholder:
-                key: placeholder
-              type: type
-              items:
-              - items
-              - items
-              required: true
-              target: target
-            - view_label:
-                key: view_label
-              ephemeral: true
-              default_value: default_value
-              attributes:
-                key: attributes
-              id: id
-              label:
-                key: label
-              placeholder:
-                key: placeholder
-              type: type
-              items:
-              - items
-              - items
-              required: true
-              target: target
-            groups:
-            - use_item_group: true
-              bottom_divider: true
-              top_divider: true
-              min_size: 0
-              id: id
-              label:
-                key: label
-              type: type
-              items:
-              - ref_id: ref_id
-                ref_type: ref_type
-              - ref_id: ref_id
-                ref_type: ref_type
-              info:
-                key: info
-              target: target
-            - use_item_group: true
-              bottom_divider: true
-              top_divider: true
-              min_size: 0
-              id: id
-              label:
-                key: label
-              type: type
-              items:
-              - ref_id: ref_id
-                ref_type: ref_type
-              - ref_id: ref_id
-                ref_type: ref_type
-              info:
-                key: info
-              target: target
-            validations:
-            - expression: expression
-              id: id
-              message:
-                key: message
-              target: target
-            - expression: expression
-              id: id
-              message:
-                key: message
-              target: target
-          property_addresses:
-          - property_addresses
-          - property_addresses
-        offset: 6
-        limit: 0
-      properties:
-        endpoints:
-          items:
-            $ref: '#/components/schemas/DataCollectionEndpoint'
-          type: array
-        limit:
-          format: int64
-          type: integer
-        offset:
-          format: int64
-          type: integer
-      type: object
-    UpdateDataCollectionEndpointRequest:
-      description: request used to update an existing data collection endpoint
-      example:
-        property_refs:
-        - property_refs
-        - property_refs
-        single_use: true
-        additional_questions:
-          layout:
-          - ref_id: ref_id
-            ref_type: ref_type
-          - ref_id: ref_id
-            ref_type: ref_type
-          inputs:
-          - view_label:
-              key: view_label
-            ephemeral: true
-            default_value: default_value
-            attributes:
-              key: attributes
-            id: id
-            label:
-              key: label
-            placeholder:
-              key: placeholder
-            type: type
-            items:
-            - items
-            - items
-            required: true
-            target: target
-          - view_label:
-              key: view_label
-            ephemeral: true
-            default_value: default_value
-            attributes:
-              key: attributes
-            id: id
-            label:
-              key: label
-            placeholder:
-              key: placeholder
-            type: type
-            items:
-            - items
-            - items
-            required: true
-            target: target
-          groups:
-          - use_item_group: true
-            bottom_divider: true
-            top_divider: true
-            min_size: 0
-            id: id
-            label:
-              key: label
-            type: type
-            items:
-            - ref_id: ref_id
-              ref_type: ref_type
-            - ref_id: ref_id
-              ref_type: ref_type
-            info:
-              key: info
-            target: target
-          - use_item_group: true
-            bottom_divider: true
-            top_divider: true
-            min_size: 0
-            id: id
-            label:
-              key: label
-            type: type
-            items:
-            - ref_id: ref_id
-              ref_type: ref_type
-            - ref_id: ref_id
-              ref_type: ref_type
-            info:
-              key: info
-            target: target
-          validations:
-          - expression: expression
-            id: id
-            message:
-              key: message
-            target: target
-          - expression: expression
-            id: id
-            message:
-              key: message
-            target: target
-        property_addresses:
-        - property_addresses
-        - property_addresses
-      properties:
-        single_use:
-          description: "if true, the endpoint will be disabled after it has been used\
-            \ once"
-          type: boolean
-        property_refs:
-          items:
-            description: "optional list of IDs of the properties, for which this endpoint\
-              \ is valid"
-            type: string
-          type: array
-        property_addresses:
-          items:
-            description: temporarily we will just use the address of the property.
-              Later this will be replaced by a reference to the property instead
-            type: string
-          type: array
-        additional_questions:
-          $ref: '#/components/schemas/CustomForm'
-      type: object
-    InviteDataCollectionEndpointRequest:
-      description: request used to send an exsting data collection endpoint to a tenant
-      example:
-        message: message
-        tenant:
-          address:
-            line1: 1 ZestLabs Blvd
-            line2: CSS District
-            city: Mannheim
-            postcode: 680001
-            province: Baden-Wuerttemberg
-            country: Germany
-          last_name: last_name
-          company: company
-          phone_number: phone_number
-          id: id
-          title: title
-          first_name: first_name
-          email: email
-      properties:
-        tenant:
-          $ref: '#/components/schemas/ContactData'
-        message:
-          description: a custom message that is included in the email to the tenant
-          type: string
-      type: object
     CreateDocumentGenerationRequest:
       description: |
         Start a new document generation based on the given template. This will also trigger the initialisation of the inputs, defined in the template and store the result in the new generation object.
@@ -13622,9 +11708,6 @@ components:
         notify_on_case_update:
         - null
         - null
-        notify_on_new_data_capture:
-        - null
-        - null
         notify_on_new_case:
         - null
         - null
@@ -13638,12 +11721,6 @@ components:
         notify_on_case_update:
           description: |
             Notify when a new case has been updated, which the user or their  company has been active on.
-          items:
-            $ref: '#/components/schemas/NotificationType'
-          type: array
-        notify_on_new_data_capture:
-          description: |
-            Notify a manager when new tenant data has been submitted.
           items:
             $ref: '#/components/schemas/NotificationType'
           type: array
@@ -13658,9 +11735,6 @@ components:
         notify_on_case_update:
         - null
         - null
-        notify_on_new_data_capture:
-        - null
-        - null
         notify_on_new_case:
         - null
         - null
@@ -13674,12 +11748,6 @@ components:
         notify_on_case_update:
           description: |
             Notify when a new case has been updated, which the user or their  company has been active on.
-          items:
-            $ref: '#/components/schemas/NotificationType'
-          type: array
-        notify_on_new_data_capture:
-          description: |
-            Notify a manager when new tenant data has been submitted.
           items:
             $ref: '#/components/schemas/NotificationType'
           type: array
@@ -15260,7 +13328,6 @@ components:
         active_document_generation_flows: true
         total_tenancies: true
         total_tenants: true
-        active_data_collection_items: true
       properties:
         total_properties:
           description: "If true, the total number of properties will be returned"
@@ -15277,10 +13344,6 @@ components:
         total_service_providers:
           description: "If true, the total number of service providers will be returned"
           type: boolean
-        active_data_collection_items:
-          description: "If true, the total number of data collection items will be\
-            \ returned that were not archived"
-          type: boolean
         active_document_generation_flows:
           description: "If true, the total number of document generation flows will\
             \ be returned that were not archived"
@@ -15292,10 +13355,9 @@ components:
         total_properties: 0
         total_service_providers: 5
         total_cases: 5
-        active_document_generation_flows: 7
+        active_document_generation_flows: 2
         total_tenancies: 1
         total_tenants: 6
-        active_data_collection_items: 2
       properties:
         total_properties:
           description: The total number of properties
@@ -15315,10 +13377,6 @@ components:
           type: integer
         total_service_providers:
           description: The total number of service providers
-          format: int64
-          type: integer
-        active_data_collection_items:
-          description: The total number of data collection items that were not archived
           format: int64
           type: integer
         active_document_generation_flows:
@@ -15800,16 +13858,18 @@ components:
             button_modifier: button_modifier
             child_execution_iterator_expression: child_execution_iterator_expression
             child_execution_context_expression: child_execution_context_expression
+            dynamic_parameters:
+              key: dynamic_parameters
             icon: icon
+            exec_before: exec_before
             label: label
             next_step_id: next_step_id
             can_be_executed_expression: can_be_executed_expression
             ui_filter: ui_filter
             id: id
-            execBefore: execBefore
             parameters:
               key: ""
-            execAfter: execAfter
+            exec_after: exec_after
             start_child_workflow: start_child_workflow
           id: id
           type: type
@@ -15819,30 +13879,34 @@ components:
           - button_modifier: button_modifier
             child_execution_iterator_expression: child_execution_iterator_expression
             child_execution_context_expression: child_execution_context_expression
+            dynamic_parameters:
+              key: dynamic_parameters
             icon: icon
+            exec_before: exec_before
             label: label
             next_step_id: next_step_id
             can_be_executed_expression: can_be_executed_expression
             ui_filter: ui_filter
             id: id
-            execBefore: execBefore
             parameters:
               key: ""
-            execAfter: execAfter
+            exec_after: exec_after
             start_child_workflow: start_child_workflow
           - button_modifier: button_modifier
             child_execution_iterator_expression: child_execution_iterator_expression
             child_execution_context_expression: child_execution_context_expression
+            dynamic_parameters:
+              key: dynamic_parameters
             icon: icon
+            exec_before: exec_before
             label: label
             next_step_id: next_step_id
             can_be_executed_expression: can_be_executed_expression
             ui_filter: ui_filter
             id: id
-            execBefore: execBefore
             parameters:
               key: ""
-            execAfter: execAfter
+            exec_after: exec_after
             start_child_workflow: start_child_workflow
         - group_name: group_name
           dynamic_parameters:
@@ -15854,16 +13918,18 @@ components:
             button_modifier: button_modifier
             child_execution_iterator_expression: child_execution_iterator_expression
             child_execution_context_expression: child_execution_context_expression
+            dynamic_parameters:
+              key: dynamic_parameters
             icon: icon
+            exec_before: exec_before
             label: label
             next_step_id: next_step_id
             can_be_executed_expression: can_be_executed_expression
             ui_filter: ui_filter
             id: id
-            execBefore: execBefore
             parameters:
               key: ""
-            execAfter: execAfter
+            exec_after: exec_after
             start_child_workflow: start_child_workflow
           id: id
           type: type
@@ -15873,30 +13939,34 @@ components:
           - button_modifier: button_modifier
             child_execution_iterator_expression: child_execution_iterator_expression
             child_execution_context_expression: child_execution_context_expression
+            dynamic_parameters:
+              key: dynamic_parameters
             icon: icon
+            exec_before: exec_before
             label: label
             next_step_id: next_step_id
             can_be_executed_expression: can_be_executed_expression
             ui_filter: ui_filter
             id: id
-            execBefore: execBefore
             parameters:
               key: ""
-            execAfter: execAfter
+            exec_after: exec_after
             start_child_workflow: start_child_workflow
           - button_modifier: button_modifier
             child_execution_iterator_expression: child_execution_iterator_expression
             child_execution_context_expression: child_execution_context_expression
+            dynamic_parameters:
+              key: dynamic_parameters
             icon: icon
+            exec_before: exec_before
             label: label
             next_step_id: next_step_id
             can_be_executed_expression: can_be_executed_expression
             ui_filter: ui_filter
             id: id
-            execBefore: execBefore
             parameters:
               key: ""
-            execAfter: execAfter
+            exec_after: exec_after
             start_child_workflow: start_child_workflow
         released: true
         env_vars:
@@ -15913,16 +13983,18 @@ components:
             button_modifier: button_modifier
             child_execution_iterator_expression: child_execution_iterator_expression
             child_execution_context_expression: child_execution_context_expression
+            dynamic_parameters:
+              key: dynamic_parameters
             icon: icon
+            exec_before: exec_before
             label: label
             next_step_id: next_step_id
             can_be_executed_expression: can_be_executed_expression
             ui_filter: ui_filter
             id: id
-            execBefore: execBefore
             parameters:
               key: ""
-            execAfter: execAfter
+            exec_after: exec_after
             start_child_workflow: start_child_workflow
           id: id
           type: type
@@ -15932,30 +14004,34 @@ components:
           - button_modifier: button_modifier
             child_execution_iterator_expression: child_execution_iterator_expression
             child_execution_context_expression: child_execution_context_expression
+            dynamic_parameters:
+              key: dynamic_parameters
             icon: icon
+            exec_before: exec_before
             label: label
             next_step_id: next_step_id
             can_be_executed_expression: can_be_executed_expression
             ui_filter: ui_filter
             id: id
-            execBefore: execBefore
             parameters:
               key: ""
-            execAfter: execAfter
+            exec_after: exec_after
             start_child_workflow: start_child_workflow
           - button_modifier: button_modifier
             child_execution_iterator_expression: child_execution_iterator_expression
             child_execution_context_expression: child_execution_context_expression
+            dynamic_parameters:
+              key: dynamic_parameters
             icon: icon
+            exec_before: exec_before
             label: label
             next_step_id: next_step_id
             can_be_executed_expression: can_be_executed_expression
             ui_filter: ui_filter
             id: id
-            execBefore: execBefore
             parameters:
               key: ""
-            execAfter: execAfter
+            exec_after: exec_after
             start_child_workflow: start_child_workflow
       properties:
         name:
@@ -16002,7 +14078,7 @@ components:
           type: array
       type: object
     WorkflowStepDefinition:
-      description: a step of a workflow
+      description: the definition of a single step within a workflow
       example:
         group_name: group_name
         dynamic_parameters:
@@ -16014,16 +14090,18 @@ components:
           button_modifier: button_modifier
           child_execution_iterator_expression: child_execution_iterator_expression
           child_execution_context_expression: child_execution_context_expression
+          dynamic_parameters:
+            key: dynamic_parameters
           icon: icon
+          exec_before: exec_before
           label: label
           next_step_id: next_step_id
           can_be_executed_expression: can_be_executed_expression
           ui_filter: ui_filter
           id: id
-          execBefore: execBefore
           parameters:
             key: ""
-          execAfter: execAfter
+          exec_after: exec_after
           start_child_workflow: start_child_workflow
         id: id
         type: type
@@ -16033,30 +14111,34 @@ components:
         - button_modifier: button_modifier
           child_execution_iterator_expression: child_execution_iterator_expression
           child_execution_context_expression: child_execution_context_expression
+          dynamic_parameters:
+            key: dynamic_parameters
           icon: icon
+          exec_before: exec_before
           label: label
           next_step_id: next_step_id
           can_be_executed_expression: can_be_executed_expression
           ui_filter: ui_filter
           id: id
-          execBefore: execBefore
           parameters:
             key: ""
-          execAfter: execAfter
+          exec_after: exec_after
           start_child_workflow: start_child_workflow
         - button_modifier: button_modifier
           child_execution_iterator_expression: child_execution_iterator_expression
           child_execution_context_expression: child_execution_context_expression
+          dynamic_parameters:
+            key: dynamic_parameters
           icon: icon
+          exec_before: exec_before
           label: label
           next_step_id: next_step_id
           can_be_executed_expression: can_be_executed_expression
           ui_filter: ui_filter
           id: id
-          execBefore: execBefore
           parameters:
             key: ""
-          execAfter: execAfter
+          exec_after: exec_after
           start_child_workflow: start_child_workflow
       nullable: true
       properties:
@@ -16089,14 +14171,14 @@ components:
           description: "a map of values, where the key and values are strings"
           type: object
         prerun_action:
-          $ref: '#/components/schemas/WorkflowStepAction'
+          $ref: '#/components/schemas/WorkflowStepActionDefinition'
         can_be_executed_expression:
           description: |
             An optional JS expression that determines whether the step can be executed or  not. If not set, this will default to true, once the previous step has been  executed.
           type: string
         actions:
           items:
-            $ref: '#/components/schemas/WorkflowStepAction'
+            $ref: '#/components/schemas/WorkflowStepActionDefinition'
           type: array
       type: object
     WorkflowParameters:
@@ -16104,22 +14186,24 @@ components:
       description: |
         a parameter of a workflow step or step action. The value of the parameter is contextual and can vary in type and meaning depending on the step or action that uses it. If used in a step, the parameter will be available in the UI and will not be interpreted, i.e. JS expressions are not allowed. In actions however, the parameter might be interpreted as a JS expression, if the action type requires it.
       type: object
-    WorkflowStepAction:
+    WorkflowStepActionDefinition:
       description: an action that can be performed on a workflow step
       example:
         button_modifier: button_modifier
         child_execution_iterator_expression: child_execution_iterator_expression
         child_execution_context_expression: child_execution_context_expression
+        dynamic_parameters:
+          key: dynamic_parameters
         icon: icon
+        exec_before: exec_before
         label: label
         next_step_id: next_step_id
         can_be_executed_expression: can_be_executed_expression
         ui_filter: ui_filter
         id: id
-        execBefore: execBefore
         parameters:
           key: ""
-        execAfter: execAfter
+        exec_after: exec_after
         start_child_workflow: start_child_workflow
       properties:
         id:
@@ -16143,18 +14227,23 @@ components:
           description: |
             a parameter of a workflow step or step action. The value of the parameter is contextual and can vary in type and meaning depending on the step or action that uses it. If used in a step, the parameter will be available in the UI and will not be interpreted, i.e. JS expressions are not allowed. In actions however, the parameter might be interpreted as a JS expression, if the action type requires it.
           type: object
+        dynamic_parameters:
+          additionalProperties:
+            type: string
+          description: "a map of values, where the key and values are strings"
+          type: object
         can_be_executed_expression:
           description: |
-            An optional JS expression that determines whether the action can be executed or  not. If not set, this will default to true.
+            An optional JS expression that determines whether the action can be executed or  not. If not set, this will default to true. If the expression returns false, the action will not show up in the UI.
           type: string
         next_step_id:
           description: the ID of the next step of the workflow
           type: string
-        execBefore:
+        exec_before:
           description: |
             Optional JS expression that will be executed before any step- and action-specific logic is executed.
           type: string
-        execAfter:
+        exec_after:
           description: |
             Optional JS expression that will be executed after the step- and action-specific logic is executed.
           type: string
@@ -16191,16 +14280,18 @@ components:
             button_modifier: button_modifier
             child_execution_iterator_expression: child_execution_iterator_expression
             child_execution_context_expression: child_execution_context_expression
+            dynamic_parameters:
+              key: dynamic_parameters
             icon: icon
+            exec_before: exec_before
             label: label
             next_step_id: next_step_id
             can_be_executed_expression: can_be_executed_expression
             ui_filter: ui_filter
             id: id
-            execBefore: execBefore
             parameters:
               key: ""
-            execAfter: execAfter
+            exec_after: exec_after
             start_child_workflow: start_child_workflow
           id: id
           type: type
@@ -16210,30 +14301,34 @@ components:
           - button_modifier: button_modifier
             child_execution_iterator_expression: child_execution_iterator_expression
             child_execution_context_expression: child_execution_context_expression
+            dynamic_parameters:
+              key: dynamic_parameters
             icon: icon
+            exec_before: exec_before
             label: label
             next_step_id: next_step_id
             can_be_executed_expression: can_be_executed_expression
             ui_filter: ui_filter
             id: id
-            execBefore: execBefore
             parameters:
               key: ""
-            execAfter: execAfter
+            exec_after: exec_after
             start_child_workflow: start_child_workflow
           - button_modifier: button_modifier
             child_execution_iterator_expression: child_execution_iterator_expression
             child_execution_context_expression: child_execution_context_expression
+            dynamic_parameters:
+              key: dynamic_parameters
             icon: icon
+            exec_before: exec_before
             label: label
             next_step_id: next_step_id
             can_be_executed_expression: can_be_executed_expression
             ui_filter: ui_filter
             id: id
-            execBefore: execBefore
             parameters:
               key: ""
-            execAfter: execAfter
+            exec_after: exec_after
             start_child_workflow: start_child_workflow
         - group_name: group_name
           dynamic_parameters:
@@ -16245,16 +14340,18 @@ components:
             button_modifier: button_modifier
             child_execution_iterator_expression: child_execution_iterator_expression
             child_execution_context_expression: child_execution_context_expression
+            dynamic_parameters:
+              key: dynamic_parameters
             icon: icon
+            exec_before: exec_before
             label: label
             next_step_id: next_step_id
             can_be_executed_expression: can_be_executed_expression
             ui_filter: ui_filter
             id: id
-            execBefore: execBefore
             parameters:
               key: ""
-            execAfter: execAfter
+            exec_after: exec_after
             start_child_workflow: start_child_workflow
           id: id
           type: type
@@ -16264,30 +14361,34 @@ components:
           - button_modifier: button_modifier
             child_execution_iterator_expression: child_execution_iterator_expression
             child_execution_context_expression: child_execution_context_expression
+            dynamic_parameters:
+              key: dynamic_parameters
             icon: icon
+            exec_before: exec_before
             label: label
             next_step_id: next_step_id
             can_be_executed_expression: can_be_executed_expression
             ui_filter: ui_filter
             id: id
-            execBefore: execBefore
             parameters:
               key: ""
-            execAfter: execAfter
+            exec_after: exec_after
             start_child_workflow: start_child_workflow
           - button_modifier: button_modifier
             child_execution_iterator_expression: child_execution_iterator_expression
             child_execution_context_expression: child_execution_context_expression
+            dynamic_parameters:
+              key: dynamic_parameters
             icon: icon
+            exec_before: exec_before
             label: label
             next_step_id: next_step_id
             can_be_executed_expression: can_be_executed_expression
             ui_filter: ui_filter
             id: id
-            execBefore: execBefore
             parameters:
               key: ""
-            execAfter: execAfter
+            exec_after: exec_after
             start_child_workflow: start_child_workflow
         env_vars:
           key: env_vars
@@ -16307,16 +14408,18 @@ components:
             button_modifier: button_modifier
             child_execution_iterator_expression: child_execution_iterator_expression
             child_execution_context_expression: child_execution_context_expression
+            dynamic_parameters:
+              key: dynamic_parameters
             icon: icon
+            exec_before: exec_before
             label: label
             next_step_id: next_step_id
             can_be_executed_expression: can_be_executed_expression
             ui_filter: ui_filter
             id: id
-            execBefore: execBefore
             parameters:
               key: ""
-            execAfter: execAfter
+            exec_after: exec_after
             start_child_workflow: start_child_workflow
           id: id
           type: type
@@ -16326,30 +14429,34 @@ components:
           - button_modifier: button_modifier
             child_execution_iterator_expression: child_execution_iterator_expression
             child_execution_context_expression: child_execution_context_expression
+            dynamic_parameters:
+              key: dynamic_parameters
             icon: icon
+            exec_before: exec_before
             label: label
             next_step_id: next_step_id
             can_be_executed_expression: can_be_executed_expression
             ui_filter: ui_filter
             id: id
-            execBefore: execBefore
             parameters:
               key: ""
-            execAfter: execAfter
+            exec_after: exec_after
             start_child_workflow: start_child_workflow
           - button_modifier: button_modifier
             child_execution_iterator_expression: child_execution_iterator_expression
             child_execution_context_expression: child_execution_context_expression
+            dynamic_parameters:
+              key: dynamic_parameters
             icon: icon
+            exec_before: exec_before
             label: label
             next_step_id: next_step_id
             can_be_executed_expression: can_be_executed_expression
             ui_filter: ui_filter
             id: id
-            execBefore: execBefore
             parameters:
               key: ""
-            execAfter: execAfter
+            exec_after: exec_after
             start_child_workflow: start_child_workflow
       properties:
         id:
@@ -16436,16 +14543,18 @@ components:
               button_modifier: button_modifier
               child_execution_iterator_expression: child_execution_iterator_expression
               child_execution_context_expression: child_execution_context_expression
+              dynamic_parameters:
+                key: dynamic_parameters
               icon: icon
+              exec_before: exec_before
               label: label
               next_step_id: next_step_id
               can_be_executed_expression: can_be_executed_expression
               ui_filter: ui_filter
               id: id
-              execBefore: execBefore
               parameters:
                 key: ""
-              execAfter: execAfter
+              exec_after: exec_after
               start_child_workflow: start_child_workflow
             id: id
             type: type
@@ -16455,30 +14564,34 @@ components:
             - button_modifier: button_modifier
               child_execution_iterator_expression: child_execution_iterator_expression
               child_execution_context_expression: child_execution_context_expression
+              dynamic_parameters:
+                key: dynamic_parameters
               icon: icon
+              exec_before: exec_before
               label: label
               next_step_id: next_step_id
               can_be_executed_expression: can_be_executed_expression
               ui_filter: ui_filter
               id: id
-              execBefore: execBefore
               parameters:
                 key: ""
-              execAfter: execAfter
+              exec_after: exec_after
               start_child_workflow: start_child_workflow
             - button_modifier: button_modifier
               child_execution_iterator_expression: child_execution_iterator_expression
               child_execution_context_expression: child_execution_context_expression
+              dynamic_parameters:
+                key: dynamic_parameters
               icon: icon
+              exec_before: exec_before
               label: label
               next_step_id: next_step_id
               can_be_executed_expression: can_be_executed_expression
               ui_filter: ui_filter
               id: id
-              execBefore: execBefore
               parameters:
                 key: ""
-              execAfter: execAfter
+              exec_after: exec_after
               start_child_workflow: start_child_workflow
           - group_name: group_name
             dynamic_parameters:
@@ -16490,16 +14603,18 @@ components:
               button_modifier: button_modifier
               child_execution_iterator_expression: child_execution_iterator_expression
               child_execution_context_expression: child_execution_context_expression
+              dynamic_parameters:
+                key: dynamic_parameters
               icon: icon
+              exec_before: exec_before
               label: label
               next_step_id: next_step_id
               can_be_executed_expression: can_be_executed_expression
               ui_filter: ui_filter
               id: id
-              execBefore: execBefore
               parameters:
                 key: ""
-              execAfter: execAfter
+              exec_after: exec_after
               start_child_workflow: start_child_workflow
             id: id
             type: type
@@ -16509,30 +14624,34 @@ components:
             - button_modifier: button_modifier
               child_execution_iterator_expression: child_execution_iterator_expression
               child_execution_context_expression: child_execution_context_expression
+              dynamic_parameters:
+                key: dynamic_parameters
               icon: icon
+              exec_before: exec_before
               label: label
               next_step_id: next_step_id
               can_be_executed_expression: can_be_executed_expression
               ui_filter: ui_filter
               id: id
-              execBefore: execBefore
               parameters:
                 key: ""
-              execAfter: execAfter
+              exec_after: exec_after
               start_child_workflow: start_child_workflow
             - button_modifier: button_modifier
               child_execution_iterator_expression: child_execution_iterator_expression
               child_execution_context_expression: child_execution_context_expression
+              dynamic_parameters:
+                key: dynamic_parameters
               icon: icon
+              exec_before: exec_before
               label: label
               next_step_id: next_step_id
               can_be_executed_expression: can_be_executed_expression
               ui_filter: ui_filter
               id: id
-              execBefore: execBefore
               parameters:
                 key: ""
-              execAfter: execAfter
+              exec_after: exec_after
               start_child_workflow: start_child_workflow
           env_vars:
             key: env_vars
@@ -16552,16 +14671,18 @@ components:
               button_modifier: button_modifier
               child_execution_iterator_expression: child_execution_iterator_expression
               child_execution_context_expression: child_execution_context_expression
+              dynamic_parameters:
+                key: dynamic_parameters
               icon: icon
+              exec_before: exec_before
               label: label
               next_step_id: next_step_id
               can_be_executed_expression: can_be_executed_expression
               ui_filter: ui_filter
               id: id
-              execBefore: execBefore
               parameters:
                 key: ""
-              execAfter: execAfter
+              exec_after: exec_after
               start_child_workflow: start_child_workflow
             id: id
             type: type
@@ -16571,30 +14692,34 @@ components:
             - button_modifier: button_modifier
               child_execution_iterator_expression: child_execution_iterator_expression
               child_execution_context_expression: child_execution_context_expression
+              dynamic_parameters:
+                key: dynamic_parameters
               icon: icon
+              exec_before: exec_before
               label: label
               next_step_id: next_step_id
               can_be_executed_expression: can_be_executed_expression
               ui_filter: ui_filter
               id: id
-              execBefore: execBefore
               parameters:
                 key: ""
-              execAfter: execAfter
+              exec_after: exec_after
               start_child_workflow: start_child_workflow
             - button_modifier: button_modifier
               child_execution_iterator_expression: child_execution_iterator_expression
               child_execution_context_expression: child_execution_context_expression
+              dynamic_parameters:
+                key: dynamic_parameters
               icon: icon
+              exec_before: exec_before
               label: label
               next_step_id: next_step_id
               can_be_executed_expression: can_be_executed_expression
               ui_filter: ui_filter
               id: id
-              execBefore: execBefore
               parameters:
                 key: ""
-              execAfter: execAfter
+              exec_after: exec_after
               start_child_workflow: start_child_workflow
         - first_step_id: first_step_id
           name_expression: name_expression
@@ -16614,16 +14739,18 @@ components:
               button_modifier: button_modifier
               child_execution_iterator_expression: child_execution_iterator_expression
               child_execution_context_expression: child_execution_context_expression
+              dynamic_parameters:
+                key: dynamic_parameters
               icon: icon
+              exec_before: exec_before
               label: label
               next_step_id: next_step_id
               can_be_executed_expression: can_be_executed_expression
               ui_filter: ui_filter
               id: id
-              execBefore: execBefore
               parameters:
                 key: ""
-              execAfter: execAfter
+              exec_after: exec_after
               start_child_workflow: start_child_workflow
             id: id
             type: type
@@ -16633,30 +14760,34 @@ components:
             - button_modifier: button_modifier
               child_execution_iterator_expression: child_execution_iterator_expression
               child_execution_context_expression: child_execution_context_expression
+              dynamic_parameters:
+                key: dynamic_parameters
               icon: icon
+              exec_before: exec_before
               label: label
               next_step_id: next_step_id
               can_be_executed_expression: can_be_executed_expression
               ui_filter: ui_filter
               id: id
-              execBefore: execBefore
               parameters:
                 key: ""
-              execAfter: execAfter
+              exec_after: exec_after
               start_child_workflow: start_child_workflow
             - button_modifier: button_modifier
               child_execution_iterator_expression: child_execution_iterator_expression
               child_execution_context_expression: child_execution_context_expression
+              dynamic_parameters:
+                key: dynamic_parameters
               icon: icon
+              exec_before: exec_before
               label: label
               next_step_id: next_step_id
               can_be_executed_expression: can_be_executed_expression
               ui_filter: ui_filter
               id: id
-              execBefore: execBefore
               parameters:
                 key: ""
-              execAfter: execAfter
+              exec_after: exec_after
               start_child_workflow: start_child_workflow
           - group_name: group_name
             dynamic_parameters:
@@ -16668,16 +14799,18 @@ components:
               button_modifier: button_modifier
               child_execution_iterator_expression: child_execution_iterator_expression
               child_execution_context_expression: child_execution_context_expression
+              dynamic_parameters:
+                key: dynamic_parameters
               icon: icon
+              exec_before: exec_before
               label: label
               next_step_id: next_step_id
               can_be_executed_expression: can_be_executed_expression
               ui_filter: ui_filter
               id: id
-              execBefore: execBefore
               parameters:
                 key: ""
-              execAfter: execAfter
+              exec_after: exec_after
               start_child_workflow: start_child_workflow
             id: id
             type: type
@@ -16687,30 +14820,34 @@ components:
             - button_modifier: button_modifier
               child_execution_iterator_expression: child_execution_iterator_expression
               child_execution_context_expression: child_execution_context_expression
+              dynamic_parameters:
+                key: dynamic_parameters
               icon: icon
+              exec_before: exec_before
               label: label
               next_step_id: next_step_id
               can_be_executed_expression: can_be_executed_expression
               ui_filter: ui_filter
               id: id
-              execBefore: execBefore
               parameters:
                 key: ""
-              execAfter: execAfter
+              exec_after: exec_after
               start_child_workflow: start_child_workflow
             - button_modifier: button_modifier
               child_execution_iterator_expression: child_execution_iterator_expression
               child_execution_context_expression: child_execution_context_expression
+              dynamic_parameters:
+                key: dynamic_parameters
               icon: icon
+              exec_before: exec_before
               label: label
               next_step_id: next_step_id
               can_be_executed_expression: can_be_executed_expression
               ui_filter: ui_filter
               id: id
-              execBefore: execBefore
               parameters:
                 key: ""
-              execAfter: execAfter
+              exec_after: exec_after
               start_child_workflow: start_child_workflow
           env_vars:
             key: env_vars
@@ -16730,16 +14867,18 @@ components:
               button_modifier: button_modifier
               child_execution_iterator_expression: child_execution_iterator_expression
               child_execution_context_expression: child_execution_context_expression
+              dynamic_parameters:
+                key: dynamic_parameters
               icon: icon
+              exec_before: exec_before
               label: label
               next_step_id: next_step_id
               can_be_executed_expression: can_be_executed_expression
               ui_filter: ui_filter
               id: id
-              execBefore: execBefore
               parameters:
                 key: ""
-              execAfter: execAfter
+              exec_after: exec_after
               start_child_workflow: start_child_workflow
             id: id
             type: type
@@ -16749,30 +14888,34 @@ components:
             - button_modifier: button_modifier
               child_execution_iterator_expression: child_execution_iterator_expression
               child_execution_context_expression: child_execution_context_expression
+              dynamic_parameters:
+                key: dynamic_parameters
               icon: icon
+              exec_before: exec_before
               label: label
               next_step_id: next_step_id
               can_be_executed_expression: can_be_executed_expression
               ui_filter: ui_filter
               id: id
-              execBefore: execBefore
               parameters:
                 key: ""
-              execAfter: execAfter
+              exec_after: exec_after
               start_child_workflow: start_child_workflow
             - button_modifier: button_modifier
               child_execution_iterator_expression: child_execution_iterator_expression
               child_execution_context_expression: child_execution_context_expression
+              dynamic_parameters:
+                key: dynamic_parameters
               icon: icon
+              exec_before: exec_before
               label: label
               next_step_id: next_step_id
               can_be_executed_expression: can_be_executed_expression
               ui_filter: ui_filter
               id: id
-              execBefore: execBefore
               parameters:
                 key: ""
-              execAfter: execAfter
+              exec_after: exec_after
               start_child_workflow: start_child_workflow
       properties:
         workflows:
@@ -16825,7 +14968,6 @@ components:
       - tenant
       - case
       - report
-      - data_collection
       type: string
     WorkflowEntrypoint:
       description: an app entrypoint to a workflow execution
@@ -16922,34 +15064,18 @@ components:
             parameters:
               key: ""
             actions:
-            - button_modifier: button_modifier
-              child_execution_iterator_expression: child_execution_iterator_expression
-              child_execution_context_expression: child_execution_context_expression
+            - next_step_id: next_step_id
+              button_modifier: button_modifier
               icon: icon
-              label: label
-              next_step_id: next_step_id
-              can_be_executed_expression: can_be_executed_expression
               ui_filter: ui_filter
               id: id
-              execBefore: execBefore
-              parameters:
-                key: ""
-              execAfter: execAfter
-              start_child_workflow: start_child_workflow
-            - button_modifier: button_modifier
-              child_execution_iterator_expression: child_execution_iterator_expression
-              child_execution_context_expression: child_execution_context_expression
-              icon: icon
               label: label
-              next_step_id: next_step_id
-              can_be_executed_expression: can_be_executed_expression
+            - next_step_id: next_step_id
+              button_modifier: button_modifier
+              icon: icon
               ui_filter: ui_filter
               id: id
-              execBefore: execBefore
-              parameters:
-                key: ""
-              execAfter: execAfter
-              start_child_workflow: start_child_workflow
+              label: label
             is_completed: true
           - can_be_executed: true
             group_name: group_name
@@ -16960,34 +15086,18 @@ components:
             parameters:
               key: ""
             actions:
-            - button_modifier: button_modifier
-              child_execution_iterator_expression: child_execution_iterator_expression
-              child_execution_context_expression: child_execution_context_expression
+            - next_step_id: next_step_id
+              button_modifier: button_modifier
               icon: icon
-              label: label
-              next_step_id: next_step_id
-              can_be_executed_expression: can_be_executed_expression
               ui_filter: ui_filter
               id: id
-              execBefore: execBefore
-              parameters:
-                key: ""
-              execAfter: execAfter
-              start_child_workflow: start_child_workflow
-            - button_modifier: button_modifier
-              child_execution_iterator_expression: child_execution_iterator_expression
-              child_execution_context_expression: child_execution_context_expression
-              icon: icon
               label: label
-              next_step_id: next_step_id
-              can_be_executed_expression: can_be_executed_expression
+            - next_step_id: next_step_id
+              button_modifier: button_modifier
+              icon: icon
               ui_filter: ui_filter
               id: id
-              execBefore: execBefore
-              parameters:
-                key: ""
-              execAfter: execAfter
-              start_child_workflow: start_child_workflow
+              label: label
             is_completed: true
           parent_ref: parent_ref
           archived: true
@@ -17011,7 +15121,7 @@ components:
           $ref: '#/components/schemas/WorkflowExecution'
       type: object
     WorkflowExecution:
-      description: an execution of a workflow
+      description: contains all information of the execution of a single workflow
       example:
         definition_ref: definition_ref
         created_at: 0
@@ -17034,34 +15144,18 @@ components:
           parameters:
             key: ""
           actions:
-          - button_modifier: button_modifier
-            child_execution_iterator_expression: child_execution_iterator_expression
-            child_execution_context_expression: child_execution_context_expression
+          - next_step_id: next_step_id
+            button_modifier: button_modifier
             icon: icon
-            label: label
-            next_step_id: next_step_id
-            can_be_executed_expression: can_be_executed_expression
             ui_filter: ui_filter
             id: id
-            execBefore: execBefore
-            parameters:
-              key: ""
-            execAfter: execAfter
-            start_child_workflow: start_child_workflow
-          - button_modifier: button_modifier
-            child_execution_iterator_expression: child_execution_iterator_expression
-            child_execution_context_expression: child_execution_context_expression
-            icon: icon
             label: label
-            next_step_id: next_step_id
-            can_be_executed_expression: can_be_executed_expression
+          - next_step_id: next_step_id
+            button_modifier: button_modifier
+            icon: icon
             ui_filter: ui_filter
             id: id
-            execBefore: execBefore
-            parameters:
-              key: ""
-            execAfter: execAfter
-            start_child_workflow: start_child_workflow
+            label: label
           is_completed: true
         - can_be_executed: true
           group_name: group_name
@@ -17072,34 +15166,18 @@ components:
           parameters:
             key: ""
           actions:
-          - button_modifier: button_modifier
-            child_execution_iterator_expression: child_execution_iterator_expression
-            child_execution_context_expression: child_execution_context_expression
+          - next_step_id: next_step_id
+            button_modifier: button_modifier
             icon: icon
-            label: label
-            next_step_id: next_step_id
-            can_be_executed_expression: can_be_executed_expression
             ui_filter: ui_filter
             id: id
-            execBefore: execBefore
-            parameters:
-              key: ""
-            execAfter: execAfter
-            start_child_workflow: start_child_workflow
-          - button_modifier: button_modifier
-            child_execution_iterator_expression: child_execution_iterator_expression
-            child_execution_context_expression: child_execution_context_expression
-            icon: icon
             label: label
-            next_step_id: next_step_id
-            can_be_executed_expression: can_be_executed_expression
+          - next_step_id: next_step_id
+            button_modifier: button_modifier
+            icon: icon
             ui_filter: ui_filter
             id: id
-            execBefore: execBefore
-            parameters:
-              key: ""
-            execAfter: execAfter
-            start_child_workflow: start_child_workflow
+            label: label
           is_completed: true
         parent_ref: parent_ref
         archived: true
@@ -17112,6 +15190,7 @@ components:
         current_step: current_step
       properties:
         id:
+          description: the unique ID generated when the workflow execution was started
           type: string
         created_at:
           description: The timestamp of when the workflow execution was created
@@ -17129,7 +15208,8 @@ components:
           description: optional ID of the parent workflow execution
           type: string
         name:
-          description: the name of the workflow execution
+          description: the name of the workflow execution generated by the name expression
+            of the workflow definition
           type: string
         status:
           $ref: '#/components/schemas/WorkflowExecutionStatus'
@@ -17137,18 +15217,20 @@ components:
           description: whether the workflow execution is archived or not
           type: boolean
         current_step:
-          description: the ID of the step that is the current step of the workflow
-            execution
+          description: |
+            the ID of the step that is the current step of the workflow execution, i.e. it's  the next step to be executed
           type: string
         current_step_name:
-          description: the name of the step that is the current step of the workflow
-            execution
+          description: |
+            the name of the step that is the current step of the workflow execution. This is used in the UI to display the current step, without loading the step definition.
           type: string
         context:
           description: |
-            the data collected and generated during the workflow execution as JSON
+            the data collected and generated during the workflow execution, serialiased as JSON
           type: string
         steps:
+          description: |
+            the steps of the workflow execution, including the result of the execution of each step
           items:
             $ref: '#/components/schemas/WorkflowExecutionStep'
           type: array
@@ -17165,7 +15247,8 @@ components:
       - archived
       type: string
     WorkflowExecutionStep:
-      description: a step of a workflow
+      description: |
+        a single step within a workflow execution. This is derived from the step definition, however, dynamic data is computed and populated by the backend, before the result is  being sent to the client.
       example:
         can_be_executed: true
         group_name: group_name
@@ -17176,34 +15259,18 @@ components:
         parameters:
           key: ""
         actions:
-        - button_modifier: button_modifier
-          child_execution_iterator_expression: child_execution_iterator_expression
-          child_execution_context_expression: child_execution_context_expression
+        - next_step_id: next_step_id
+          button_modifier: button_modifier
           icon: icon
-          label: label
-          next_step_id: next_step_id
-          can_be_executed_expression: can_be_executed_expression
           ui_filter: ui_filter
           id: id
-          execBefore: execBefore
-          parameters:
-            key: ""
-          execAfter: execAfter
-          start_child_workflow: start_child_workflow
-        - button_modifier: button_modifier
-          child_execution_iterator_expression: child_execution_iterator_expression
-          child_execution_context_expression: child_execution_context_expression
-          icon: icon
           label: label
-          next_step_id: next_step_id
-          can_be_executed_expression: can_be_executed_expression
+        - next_step_id: next_step_id
+          button_modifier: button_modifier
+          icon: icon
           ui_filter: ui_filter
           id: id
-          execBefore: execBefore
-          parameters:
-            key: ""
-          execAfter: execAfter
-          start_child_workflow: start_child_workflow
+          label: label
         is_completed: true
       nullable: true
       properties:
@@ -17243,8 +15310,40 @@ components:
             Indicates whether the step can be executed or not.
           type: boolean
       type: object
+    WorkflowStepAction:
+      description: |
+        an action that can be performed on a workflow execution step. This is derived from the step action definition, however, dynamic data is computed and populated by the backend, before the result is being sent to the client.
+      example:
+        next_step_id: next_step_id
+        button_modifier: button_modifier
+        icon: icon
+        ui_filter: ui_filter
+        id: id
+        label: label
+      properties:
+        id:
+          description: the ID of the action
+          type: string
+        icon:
+          description: the icon of the action
+          type: string
+        label:
+          description: the button label for the action
+          type: string
+        button_modifier:
+          description: optional button modifier of the action
+          type: string
+        ui_filter:
+          description: optional filter that can be used by the UI to show or hide
+            the action
+          type: string
+        next_step_id:
+          description: the ID of the next step of the workflow
+          type: string
+      type: object
     WorkflowExecutionStepResult:
-      description: an execution result of a workflow step
+      description: |
+        this holds the result of the execution of a single workflow step
       example:
         data: data
         executed_at: 1
@@ -17315,34 +15414,18 @@ components:
             parameters:
               key: ""
             actions:
-            - button_modifier: button_modifier
-              child_execution_iterator_expression: child_execution_iterator_expression
-              child_execution_context_expression: child_execution_context_expression
+            - next_step_id: next_step_id
+              button_modifier: button_modifier
               icon: icon
-              label: label
-              next_step_id: next_step_id
-              can_be_executed_expression: can_be_executed_expression
               ui_filter: ui_filter
               id: id
-              execBefore: execBefore
-              parameters:
-                key: ""
-              execAfter: execAfter
-              start_child_workflow: start_child_workflow
-            - button_modifier: button_modifier
-              child_execution_iterator_expression: child_execution_iterator_expression
-              child_execution_context_expression: child_execution_context_expression
-              icon: icon
               label: label
-              next_step_id: next_step_id
-              can_be_executed_expression: can_be_executed_expression
+            - next_step_id: next_step_id
+              button_modifier: button_modifier
+              icon: icon
               ui_filter: ui_filter
               id: id
-              execBefore: execBefore
-              parameters:
-                key: ""
-              execAfter: execAfter
-              start_child_workflow: start_child_workflow
+              label: label
             is_completed: true
           - can_be_executed: true
             group_name: group_name
@@ -17353,34 +15436,18 @@ components:
             parameters:
               key: ""
             actions:
-            - button_modifier: button_modifier
-              child_execution_iterator_expression: child_execution_iterator_expression
-              child_execution_context_expression: child_execution_context_expression
+            - next_step_id: next_step_id
+              button_modifier: button_modifier
               icon: icon
-              label: label
-              next_step_id: next_step_id
-              can_be_executed_expression: can_be_executed_expression
               ui_filter: ui_filter
               id: id
-              execBefore: execBefore
-              parameters:
-                key: ""
-              execAfter: execAfter
-              start_child_workflow: start_child_workflow
-            - button_modifier: button_modifier
-              child_execution_iterator_expression: child_execution_iterator_expression
-              child_execution_context_expression: child_execution_context_expression
-              icon: icon
               label: label
-              next_step_id: next_step_id
-              can_be_executed_expression: can_be_executed_expression
+            - next_step_id: next_step_id
+              button_modifier: button_modifier
+              icon: icon
               ui_filter: ui_filter
               id: id
-              execBefore: execBefore
-              parameters:
-                key: ""
-              execAfter: execAfter
-              start_child_workflow: start_child_workflow
+              label: label
             is_completed: true
           parent_ref: parent_ref
           archived: true
@@ -17412,34 +15479,18 @@ components:
             parameters:
               key: ""
             actions:
-            - button_modifier: button_modifier
-              child_execution_iterator_expression: child_execution_iterator_expression
-              child_execution_context_expression: child_execution_context_expression
+            - next_step_id: next_step_id
+              button_modifier: button_modifier
               icon: icon
-              label: label
-              next_step_id: next_step_id
-              can_be_executed_expression: can_be_executed_expression
               ui_filter: ui_filter
               id: id
-              execBefore: execBefore
-              parameters:
-                key: ""
-              execAfter: execAfter
-              start_child_workflow: start_child_workflow
-            - button_modifier: button_modifier
-              child_execution_iterator_expression: child_execution_iterator_expression
-              child_execution_context_expression: child_execution_context_expression
-              icon: icon
               label: label
-              next_step_id: next_step_id
-              can_be_executed_expression: can_be_executed_expression
+            - next_step_id: next_step_id
+              button_modifier: button_modifier
+              icon: icon
               ui_filter: ui_filter
               id: id
-              execBefore: execBefore
-              parameters:
-                key: ""
-              execAfter: execAfter
-              start_child_workflow: start_child_workflow
+              label: label
             is_completed: true
           - can_be_executed: true
             group_name: group_name
@@ -17450,34 +15501,18 @@ components:
             parameters:
               key: ""
             actions:
-            - button_modifier: button_modifier
-              child_execution_iterator_expression: child_execution_iterator_expression
-              child_execution_context_expression: child_execution_context_expression
+            - next_step_id: next_step_id
+              button_modifier: button_modifier
               icon: icon
-              label: label
-              next_step_id: next_step_id
-              can_be_executed_expression: can_be_executed_expression
               ui_filter: ui_filter
               id: id
-              execBefore: execBefore
-              parameters:
-                key: ""
-              execAfter: execAfter
-              start_child_workflow: start_child_workflow
-            - button_modifier: button_modifier
-              child_execution_iterator_expression: child_execution_iterator_expression
-              child_execution_context_expression: child_execution_context_expression
-              icon: icon
               label: label
-              next_step_id: next_step_id
-              can_be_executed_expression: can_be_executed_expression
+            - next_step_id: next_step_id
+              button_modifier: button_modifier
+              icon: icon
               ui_filter: ui_filter
               id: id
-              execBefore: execBefore
-              parameters:
-                key: ""
-              execAfter: execAfter
-              start_child_workflow: start_child_workflow
+              label: label
             is_completed: true
           parent_ref: parent_ref
           archived: true
@@ -17975,68 +16010,6 @@ components:
           $ref: '#/components/schemas/UserTypeEnum'
         contact_data:
           $ref: '#/components/schemas/ContactData'
-      type: object
-    IDUpload:
-      description: |
-        an ID document uploaded by the user, consisting of a photo from the front and back of the ID
-      example:
-        back:
-          ref: ref
-          thumbnail: thumbnail
-          created: 0
-          file_type: file_type
-          file_name: file_name
-          id: id
-          file_size: 6
-          url: url
-        front:
-          ref: ref
-          thumbnail: thumbnail
-          created: 0
-          file_type: file_type
-          file_name: file_name
-          id: id
-          file_size: 6
-          url: url
-      properties:
-        front:
-          $ref: '#/components/schemas/Attachment'
-        back:
-          $ref: '#/components/schemas/Attachment'
-      type: object
-    YesNoOrValue:
-      example:
-        s: s
-        v: true
-        "n": 5.637376656633329
-      properties:
-        v:
-          description: true or false value
-          type: boolean
-        s:
-          description: additional string value (e.g. if value set to true)
-          type: string
-        "n":
-          description: additional numeric value (e.g. if value set to true)
-          type: number
-      type: object
-    DefaultInputConfig:
-      description: "configuration of default predefault inputs, e.g. given by a template"
-      example:
-        id: id
-        collect: skip
-      properties:
-        id:
-          description: "the id of the input, used to identify it"
-          type: string
-        collect:
-          description: "whether the input is required, optional or skipped (not displayed\
-            \ to the tenant)"
-          enum:
-          - skip
-          - required
-          - optional
-          type: string
       type: object
     FloatNumber:
       example:
