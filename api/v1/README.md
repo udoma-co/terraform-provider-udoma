@@ -94,7 +94,6 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**CreateConnectorCredentials**](docs/DefaultApi.md#createconnectorcredentials) | **Post** /connector/credentials | Create new connector credentials
 *DefaultApi* | [**CreateCustomIDGenerator**](docs/DefaultApi.md#createcustomidgenerator) | **Post** /id-generator | Create a new customer specififc ID generator
 *DefaultApi* | [**CreateCustomerScript**](docs/DefaultApi.md#createcustomerscript) | **Post** /customer-script | Create a new customer specififc JS script
-*DefaultApi* | [**CreateDataCollectionEndpoint**](docs/DefaultApi.md#createdatacollectionendpoint) | **Post** /data-collection/tenants/endpoint | Create a new data collection endpoint
 *DefaultApi* | [**CreateDocumentGeneration**](docs/DefaultApi.md#createdocumentgeneration) | **Post** /document-generation/document | Create a new document generation for a template
 *DefaultApi* | [**CreateDocumentTemplate**](docs/DefaultApi.md#createdocumenttemplate) | **Post** /document-generation/template | Create a new document template
 *DefaultApi* | [**CreateFAQEntry**](docs/DefaultApi.md#createfaqentry) | **Post** /faqs/entry | Create a new FAQ entry
@@ -127,8 +126,6 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**DeleteConnectorEntities**](docs/DefaultApi.md#deleteconnectorentities) | **Delete** /connector/{connectorID}/status/{entity} | Delete all entities synchronised via the connector
 *DefaultApi* | [**DeleteCustomIDGenerator**](docs/DefaultApi.md#deletecustomidgenerator) | **Delete** /id-generators/{generatorID} | Delete the custom ID generator with all its related data
 *DefaultApi* | [**DeleteCustomerScript**](docs/DefaultApi.md#deletecustomerscript) | **Delete** /customer-scripts/{scriptID} | Delete the script with all its related data
-*DefaultApi* | [**DeleteDataCollectionEndpoint**](docs/DefaultApi.md#deletedatacollectionendpoint) | **Delete** /data-collection/tenants/endpoint/{endpointId} | Delete an already existing data collection endpoint
-*DefaultApi* | [**DeleteDataCollectionItem**](docs/DefaultApi.md#deletedatacollectionitem) | **Delete** /data-collection/tenants/items/{itemId} | Delete an existing data collection item
 *DefaultApi* | [**DeleteDocumentGeneration**](docs/DefaultApi.md#deletedocumentgeneration) | **Delete** /document-generation/documents/{docId} | Delete an existing document generation
 *DefaultApi* | [**DeleteDocumentTemplate**](docs/DefaultApi.md#deletedocumenttemplate) | **Delete** /document-generation/template/{templateId} | Delete a document template
 *DefaultApi* | [**DeleteFAQEntry**](docs/DefaultApi.md#deletefaqentry) | **Delete** /faqs/entry/{entryId} | Delete a FAQ entry
@@ -178,10 +175,6 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**GetCustomIDGenerators**](docs/DefaultApi.md#getcustomidgenerators) | **Get** /id-generators | Get all customer specific ID generators
 *DefaultApi* | [**GetCustomerScript**](docs/DefaultApi.md#getcustomerscript) | **Get** /customer-scripts/{scriptID} | Get the script with all its attributes
 *DefaultApi* | [**GetCustomerScripts**](docs/DefaultApi.md#getcustomerscripts) | **Get** /customer-scripts | Get all customer specific JS scripts
-*DefaultApi* | [**GetDataCollectionConfiguration**](docs/DefaultApi.md#getdatacollectionconfiguration) | **Get** /data-collection/tenants/config | Get the data collection configuration for the current account
-*DefaultApi* | [**GetDataCollectionEndpoint**](docs/DefaultApi.md#getdatacollectionendpoint) | **Get** /data-collection/tenants/endpoint/{endpointId} | Get a single data collection endpoint
-*DefaultApi* | [**GetDataCollectionEndpointItems**](docs/DefaultApi.md#getdatacollectionendpointitems) | **Get** /data-collection/tenants/endpoint/{endpointId}/items | Get all data collection items for a given endpoint
-*DefaultApi* | [**GetDataCollectionItem**](docs/DefaultApi.md#getdatacollectionitem) | **Get** /data-collection/tenants/items/{itemId} | Get a single data collection item
 *DefaultApi* | [**GetDocumentGeneration**](docs/DefaultApi.md#getdocumentgeneration) | **Get** /document-generation/documents/{docId} | Get a single document generation
 *DefaultApi* | [**GetDocumentTemplate**](docs/DefaultApi.md#getdocumenttemplate) | **Get** /document-generation/template/{templateId} | Get a document template
 *DefaultApi* | [**GetDocumentTemplates**](docs/DefaultApi.md#getdocumenttemplates) | **Get** /document-generation/templates | Get all available document templates
@@ -227,7 +220,6 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**GetWorkflowExecutionTrigger**](docs/DefaultApi.md#getworkflowexecutiontrigger) | **Get** /workflows/triggers/{executionID} | Get workflow trigger for an execution
 *DefaultApi* | [**GetWorkflowTriggersForSource**](docs/DefaultApi.md#getworkflowtriggersforsource) | **Get** /workflows/trigger/source/{sourceID} | Get workflow triggers for a source
 *DefaultApi* | [**InviteTenant**](docs/DefaultApi.md#invitetenant) | **Post** /invitation | Invite a tenant
-*DefaultApi* | [**InviteTenantToDataCollectionEndpoint**](docs/DefaultApi.md#invitetenanttodatacollectionendpoint) | **Post** /data-collection/tenants/endpoint/{endpointId}/invite | Send the link of the data collection endpoint to a tenant
 *DefaultApi* | [**PingConnector**](docs/DefaultApi.md#pingconnector) | **Post** /connector/ping | Ping the connector
 *DefaultApi* | [**QueryAppointmentSchedules**](docs/DefaultApi.md#queryappointmentschedules) | **Post** /calendar/appointments/schedules | Query all appointment schedules for given criteria
 *DefaultApi* | [**QueryAppointmentTemplates**](docs/DefaultApi.md#queryappointmenttemplates) | **Post** /calendar/appointments/templates | Query all appointment templates for given criteria
@@ -237,8 +229,6 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**QueryCaseReportingEndpoints**](docs/DefaultApi.md#querycasereportingendpoints) | **Post** /cases/endpoints | Query all case reporting endpoints for given criteria
 *DefaultApi* | [**QueryCaseTemplates**](docs/DefaultApi.md#querycasetemplates) | **Post** /cases/templates | Query all case templates for given criteria
 *DefaultApi* | [**QueryCases**](docs/DefaultApi.md#querycases) | **Post** /cases | Query cases for the current user
-*DefaultApi* | [**QueryDataCollectionEndpoints**](docs/DefaultApi.md#querydatacollectionendpoints) | **Post** /data-collection/tenants/endpoints | Query the custom data collection endpoints for the current account
-*DefaultApi* | [**QueryDataCollections**](docs/DefaultApi.md#querydatacollections) | **Post** /data-collection/query | Query the data collection items for the current account
 *DefaultApi* | [**QueryDocumentGenerations**](docs/DefaultApi.md#querydocumentgenerations) | **Post** /document-generation/documents | Request a list of document generations
 *DefaultApi* | [**QueryProperties**](docs/DefaultApi.md#queryproperties) | **Post** /properties | Query properties
 *DefaultApi* | [**QueryPropertyOwners**](docs/DefaultApi.md#querypropertyowners) | **Post** /owners | Query property owners
@@ -264,9 +254,6 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**UpdateConnectorConfiguration**](docs/DefaultApi.md#updateconnectorconfiguration) | **Post** /connector/{connectorID}/config | Update the connector configuration
 *DefaultApi* | [**UpdateCustomIDGenerator**](docs/DefaultApi.md#updatecustomidgenerator) | **Put** /id-generators/{generatorID} | Update an already existing ID generator
 *DefaultApi* | [**UpdateCustomerScript**](docs/DefaultApi.md#updatecustomerscript) | **Put** /customer-scripts/{scriptID} | Update an already existing script
-*DefaultApi* | [**UpdateDataCollectionConfiguration**](docs/DefaultApi.md#updatedatacollectionconfiguration) | **Post** /data-collection/tenants/config | Update the data collection configuration for the current account
-*DefaultApi* | [**UpdateDataCollectionEndpoint**](docs/DefaultApi.md#updatedatacollectionendpoint) | **Put** /data-collection/tenants/endpoint/{endpointId} | Update an already existing data collection endpoint
-*DefaultApi* | [**UpdateDataCollectionItem**](docs/DefaultApi.md#updatedatacollectionitem) | **Put** /data-collection/tenants/items/{itemId} | Update an already existing data collection item
 *DefaultApi* | [**UpdateDocumentGeneration**](docs/DefaultApi.md#updatedocumentgeneration) | **Put** /document-generation/documents/{docId} | Update an already existing document generation
 *DefaultApi* | [**UpdateDocumentTemplate**](docs/DefaultApi.md#updatedocumenttemplate) | **Put** /document-generation/template/{templateId} | Update an existing document template
 *DefaultApi* | [**UpdateFAQEntry**](docs/DefaultApi.md#updatefaqentry) | **Put** /faqs/entry/{entryId} | Update an existing FAQ entry
@@ -292,7 +279,6 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
- - [AdditionalTenant](docs/AdditionalTenant.md)
  - [Address](docs/Address.md)
  - [Appointment](docs/Appointment.md)
  - [AppointmentSchedule](docs/AppointmentSchedule.md)
@@ -338,7 +324,6 @@ Class | Method | HTTP request | Description
  - [CreateCaseRequest](docs/CreateCaseRequest.md)
  - [CreateConnectorConfigRequest](docs/CreateConnectorConfigRequest.md)
  - [CreateConnectorCredentialsRequest](docs/CreateConnectorCredentialsRequest.md)
- - [CreateDataCollectionEndpointRequest](docs/CreateDataCollectionEndpointRequest.md)
  - [CreateDocumentGenerationRequest](docs/CreateDocumentGenerationRequest.md)
  - [CreateInvitationRequest](docs/CreateInvitationRequest.md)
  - [CreateNoteRequest](docs/CreateNoteRequest.md)
@@ -370,10 +355,6 @@ Class | Method | HTTP request | Description
  - [CustomIDGenerator](docs/CustomIDGenerator.md)
  - [CustomerScript](docs/CustomerScript.md)
  - [CustomerScriptScope](docs/CustomerScriptScope.md)
- - [DataCollectionConfiguration](docs/DataCollectionConfiguration.md)
- - [DataCollectionEndpoint](docs/DataCollectionEndpoint.md)
- - [DataCollectionItem](docs/DataCollectionItem.md)
- - [DefaultInputConfig](docs/DefaultInputConfig.md)
  - [DocumentESignatureRequest](docs/DocumentESignatureRequest.md)
  - [DocumentESignatureStatus](docs/DocumentESignatureStatus.md)
  - [DocumentGeneration](docs/DocumentGeneration.md)
@@ -408,7 +389,6 @@ Class | Method | HTTP request | Description
  - [Invitation](docs/Invitation.md)
  - [InvitationResponseAction](docs/InvitationResponseAction.md)
  - [InvitationStatus](docs/InvitationStatus.md)
- - [InviteDataCollectionEndpointRequest](docs/InviteDataCollectionEndpointRequest.md)
  - [Meter](docs/Meter.md)
  - [MeterReading](docs/MeterReading.md)
  - [MeterTypeEnum](docs/MeterTypeEnum.md)
@@ -437,10 +417,6 @@ Class | Method | HTTP request | Description
  - [QueryCaseReportingEndpointsResponse](docs/QueryCaseReportingEndpointsResponse.md)
  - [QueryCaseTemplatesRequest](docs/QueryCaseTemplatesRequest.md)
  - [QueryCasesRequest](docs/QueryCasesRequest.md)
- - [QueryDataCollectionEndpointsRequest](docs/QueryDataCollectionEndpointsRequest.md)
- - [QueryDataCollectionEndpointsResponse](docs/QueryDataCollectionEndpointsResponse.md)
- - [QueryDataCollectionRequest](docs/QueryDataCollectionRequest.md)
- - [QueryDataCollectionResponse](docs/QueryDataCollectionResponse.md)
  - [QueryDocumentGenerationsRequest](docs/QueryDocumentGenerationsRequest.md)
  - [QueryDocumentGenerationsResponse](docs/QueryDocumentGenerationsResponse.md)
  - [QueryPropertiesRequest](docs/QueryPropertiesRequest.md)
@@ -475,15 +451,11 @@ Class | Method | HTTP request | Description
  - [TenantChange](docs/TenantChange.md)
  - [TenantChangeActionEnum](docs/TenantChangeActionEnum.md)
  - [TenantChangeRequest](docs/TenantChangeRequest.md)
- - [TenantInfo](docs/TenantInfo.md)
- - [TenantsAdditionalInfo](docs/TenantsAdditionalInfo.md)
  - [UnssignCaseRequest](docs/UnssignCaseRequest.md)
  - [UpdateCaseRequest](docs/UpdateCaseRequest.md)
  - [UpdateCaseStatusRequest](docs/UpdateCaseStatusRequest.md)
  - [UpdateCompanyProfileRequest](docs/UpdateCompanyProfileRequest.md)
  - [UpdateConnectorConfigRequest](docs/UpdateConnectorConfigRequest.md)
- - [UpdateDataCollectionConfiguration](docs/UpdateDataCollectionConfiguration.md)
- - [UpdateDataCollectionEndpointRequest](docs/UpdateDataCollectionEndpointRequest.md)
  - [UpdateNoteRequest](docs/UpdateNoteRequest.md)
  - [UpdatePropertyRequest](docs/UpdatePropertyRequest.md)
  - [UpdateTenancyRequest](docs/UpdateTenancyRequest.md)
@@ -503,6 +475,7 @@ Class | Method | HTTP request | Description
  - [WorkflowExecutionStep](docs/WorkflowExecutionStep.md)
  - [WorkflowExecutionStepResult](docs/WorkflowExecutionStepResult.md)
  - [WorkflowStepAction](docs/WorkflowStepAction.md)
+ - [WorkflowStepActionDefinition](docs/WorkflowStepActionDefinition.md)
  - [WorkflowStepDefinition](docs/WorkflowStepDefinition.md)
  - [WorkflowTrigger](docs/WorkflowTrigger.md)
  - [YesNoOrValue](docs/YesNoOrValue.md)

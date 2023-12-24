@@ -14,7 +14,7 @@ import (
 	"encoding/json"
 )
 
-// WorkflowStepDefinition a step of a workflow
+// WorkflowStepDefinition the definition of a single step within a workflow
 type WorkflowStepDefinition struct {
 	// the ID of the step, unique within the workflow
 	Id *string `json:"id,omitempty"`
@@ -29,11 +29,11 @@ type WorkflowStepDefinition struct {
 	// a parameter of a workflow step or step action. The value of the parameter is contextual and can vary in type and meaning depending on the step or action that uses it. If used in a step, the parameter will be available in the UI and will not be interpreted, i.e. JS expressions are not allowed. In actions however, the parameter might be interpreted as a JS expression, if the action type requires it.
 	Parameters map[string]interface{} `json:"parameters,omitempty"`
 	// a map of values, where the key and values are strings
-	DynamicParameters *map[string]string  `json:"dynamic_parameters,omitempty"`
-	PrerunAction      *WorkflowStepAction `json:"prerun_action,omitempty"`
+	DynamicParameters *map[string]string            `json:"dynamic_parameters,omitempty"`
+	PrerunAction      *WorkflowStepActionDefinition `json:"prerun_action,omitempty"`
 	// An optional JS expression that determines whether the step can be executed or  not. If not set, this will default to true, once the previous step has been  executed.
-	CanBeExecutedExpression *string              `json:"can_be_executed_expression,omitempty"`
-	Actions                 []WorkflowStepAction `json:"actions,omitempty"`
+	CanBeExecutedExpression *string                        `json:"can_be_executed_expression,omitempty"`
+	Actions                 []WorkflowStepActionDefinition `json:"actions,omitempty"`
 }
 
 // NewWorkflowStepDefinition instantiates a new WorkflowStepDefinition object
@@ -278,9 +278,9 @@ func (o *WorkflowStepDefinition) SetDynamicParameters(v map[string]string) {
 }
 
 // GetPrerunAction returns the PrerunAction field value if set, zero value otherwise.
-func (o *WorkflowStepDefinition) GetPrerunAction() WorkflowStepAction {
+func (o *WorkflowStepDefinition) GetPrerunAction() WorkflowStepActionDefinition {
 	if o == nil || o.PrerunAction == nil {
-		var ret WorkflowStepAction
+		var ret WorkflowStepActionDefinition
 		return ret
 	}
 	return *o.PrerunAction
@@ -288,7 +288,7 @@ func (o *WorkflowStepDefinition) GetPrerunAction() WorkflowStepAction {
 
 // GetPrerunActionOk returns a tuple with the PrerunAction field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *WorkflowStepDefinition) GetPrerunActionOk() (*WorkflowStepAction, bool) {
+func (o *WorkflowStepDefinition) GetPrerunActionOk() (*WorkflowStepActionDefinition, bool) {
 	if o == nil || o.PrerunAction == nil {
 		return nil, false
 	}
@@ -304,8 +304,8 @@ func (o *WorkflowStepDefinition) HasPrerunAction() bool {
 	return false
 }
 
-// SetPrerunAction gets a reference to the given WorkflowStepAction and assigns it to the PrerunAction field.
-func (o *WorkflowStepDefinition) SetPrerunAction(v WorkflowStepAction) {
+// SetPrerunAction gets a reference to the given WorkflowStepActionDefinition and assigns it to the PrerunAction field.
+func (o *WorkflowStepDefinition) SetPrerunAction(v WorkflowStepActionDefinition) {
 	o.PrerunAction = &v
 }
 
@@ -342,9 +342,9 @@ func (o *WorkflowStepDefinition) SetCanBeExecutedExpression(v string) {
 }
 
 // GetActions returns the Actions field value if set, zero value otherwise.
-func (o *WorkflowStepDefinition) GetActions() []WorkflowStepAction {
+func (o *WorkflowStepDefinition) GetActions() []WorkflowStepActionDefinition {
 	if o == nil || o.Actions == nil {
-		var ret []WorkflowStepAction
+		var ret []WorkflowStepActionDefinition
 		return ret
 	}
 	return o.Actions
@@ -352,7 +352,7 @@ func (o *WorkflowStepDefinition) GetActions() []WorkflowStepAction {
 
 // GetActionsOk returns a tuple with the Actions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *WorkflowStepDefinition) GetActionsOk() ([]WorkflowStepAction, bool) {
+func (o *WorkflowStepDefinition) GetActionsOk() ([]WorkflowStepActionDefinition, bool) {
 	if o == nil || o.Actions == nil {
 		return nil, false
 	}
@@ -368,8 +368,8 @@ func (o *WorkflowStepDefinition) HasActions() bool {
 	return false
 }
 
-// SetActions gets a reference to the given []WorkflowStepAction and assigns it to the Actions field.
-func (o *WorkflowStepDefinition) SetActions(v []WorkflowStepAction) {
+// SetActions gets a reference to the given []WorkflowStepActionDefinition and assigns it to the Actions field.
+func (o *WorkflowStepDefinition) SetActions(v []WorkflowStepActionDefinition) {
 	o.Actions = v
 }
 

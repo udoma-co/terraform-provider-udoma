@@ -14,7 +14,7 @@ import (
 	"encoding/json"
 )
 
-// WorkflowExecutionStep a step of a workflow
+// WorkflowExecutionStep a single step within a workflow execution. This is derived from the step definition, however, dynamic data is computed and populated by the backend, before the result is  being sent to the client.
 type WorkflowExecutionStep struct {
 	// the ID of the step, unique within the workflow
 	Id *string `json:"id,omitempty"`
