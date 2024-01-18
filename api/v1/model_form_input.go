@@ -31,6 +31,8 @@ type FormInput struct {
 	Required *bool `json:"required,omitempty"`
 	// if true, the value of the input will not be persisted
 	Ephemeral *bool `json:"ephemeral,omitempty"`
+	// if true, changes to the input will be propagated to event listeners for the custom form
+	PropagateChanges *bool `json:"propagate_changes,omitempty"`
 	// the attribute name to use when exporting the result of this input
 	Target *string `json:"target,omitempty"`
 	// a map of values, where the key and values are strings
@@ -312,6 +314,38 @@ func (o *FormInput) SetEphemeral(v bool) {
 	o.Ephemeral = &v
 }
 
+// GetPropagateChanges returns the PropagateChanges field value if set, zero value otherwise.
+func (o *FormInput) GetPropagateChanges() bool {
+	if o == nil || o.PropagateChanges == nil {
+		var ret bool
+		return ret
+	}
+	return *o.PropagateChanges
+}
+
+// GetPropagateChangesOk returns a tuple with the PropagateChanges field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *FormInput) GetPropagateChangesOk() (*bool, bool) {
+	if o == nil || o.PropagateChanges == nil {
+		return nil, false
+	}
+	return o.PropagateChanges, true
+}
+
+// HasPropagateChanges returns a boolean if a field has been set.
+func (o *FormInput) HasPropagateChanges() bool {
+	if o != nil && o.PropagateChanges != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetPropagateChanges gets a reference to the given bool and assigns it to the PropagateChanges field.
+func (o *FormInput) SetPropagateChanges(v bool) {
+	o.PropagateChanges = &v
+}
+
 // GetTarget returns the Target field value if set, zero value otherwise.
 func (o *FormInput) GetTarget() string {
 	if o == nil || o.Target == nil {
@@ -433,6 +467,9 @@ func (o FormInput) MarshalJSON() ([]byte, error) {
 	}
 	if o.Ephemeral != nil {
 		toSerialize["ephemeral"] = o.Ephemeral
+	}
+	if o.PropagateChanges != nil {
+		toSerialize["propagate_changes"] = o.PropagateChanges
 	}
 	if o.Target != nil {
 		toSerialize["target"] = o.Target

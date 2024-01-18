@@ -22,12 +22,14 @@ type FormItemType string
 const (
 	FORMITEMTYPE_INPUT FormItemType = "input"
 	FORMITEMTYPE_GROUP FormItemType = "group"
+	FORMITEMTYPE_SLOT  FormItemType = "slot"
 )
 
 // All allowed values of FormItemType enum
 var AllowedFormItemTypeEnumValues = []FormItemType{
 	"input",
 	"group",
+	"slot",
 }
 
 func (v *FormItemType) UnmarshalJSON(src []byte) error {

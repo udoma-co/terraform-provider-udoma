@@ -94,6 +94,7 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**CreateConnectorCredentials**](docs/DefaultApi.md#createconnectorcredentials) | **Post** /connector/credentials | Create new connector credentials
 *DefaultApi* | [**CreateCustomIDGenerator**](docs/DefaultApi.md#createcustomidgenerator) | **Post** /id-generator | Create a new customer specififc ID generator
 *DefaultApi* | [**CreateCustomerScript**](docs/DefaultApi.md#createcustomerscript) | **Post** /customer-script | Create a new customer specififc JS script
+*DefaultApi* | [**CreateDocument**](docs/DefaultApi.md#createdocument) | **Post** /document-repository/entry | Create a new document
 *DefaultApi* | [**CreateDocumentGeneration**](docs/DefaultApi.md#createdocumentgeneration) | **Post** /document-generation/document | Create a new document generation for a template
 *DefaultApi* | [**CreateDocumentTemplate**](docs/DefaultApi.md#createdocumenttemplate) | **Post** /document-generation/template | Create a new document template
 *DefaultApi* | [**CreateFAQEntry**](docs/DefaultApi.md#createfaqentry) | **Post** /faqs/entry | Create a new FAQ entry
@@ -102,7 +103,6 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**CreateNote**](docs/DefaultApi.md#createnote) | **Post** /note | Create a new note
 *DefaultApi* | [**CreateProperty**](docs/DefaultApi.md#createproperty) | **Post** /property | Create property
 *DefaultApi* | [**CreatePropertyContact**](docs/DefaultApi.md#createpropertycontact) | **Post** /property/{propId}/contacts | Create a property contact
-*DefaultApi* | [**CreatePropertyDocumentRepositoryEntry**](docs/DefaultApi.md#createpropertydocumentrepositoryentry) | **Post** /property/{propId}/documents | Create a new document entry
 *DefaultApi* | [**CreatePropertyHistoryEntry**](docs/DefaultApi.md#createpropertyhistoryentry) | **Post** /property/{propId}/history | Create a property history entry
 *DefaultApi* | [**CreatePropertyOwner**](docs/DefaultApi.md#createpropertyowner) | **Post** /owner | Create a new property owner
 *DefaultApi* | [**CreateReportDefinition**](docs/DefaultApi.md#createreportdefinition) | **Post** /report | Create a new report definition
@@ -126,6 +126,7 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**DeleteConnectorEntities**](docs/DefaultApi.md#deleteconnectorentities) | **Delete** /connector/{connectorID}/status/{entity} | Delete all entities synchronised via the connector
 *DefaultApi* | [**DeleteCustomIDGenerator**](docs/DefaultApi.md#deletecustomidgenerator) | **Delete** /id-generators/{generatorID} | Delete the custom ID generator with all its related data
 *DefaultApi* | [**DeleteCustomerScript**](docs/DefaultApi.md#deletecustomerscript) | **Delete** /customer-scripts/{scriptID} | Delete the script with all its related data
+*DefaultApi* | [**DeleteDocument**](docs/DefaultApi.md#deletedocument) | **Delete** /document-repository/entry/{documentId} | Delete a single document
 *DefaultApi* | [**DeleteDocumentGeneration**](docs/DefaultApi.md#deletedocumentgeneration) | **Delete** /document-generation/documents/{docId} | Delete an existing document generation
 *DefaultApi* | [**DeleteDocumentTemplate**](docs/DefaultApi.md#deletedocumenttemplate) | **Delete** /document-generation/template/{templateId} | Delete a document template
 *DefaultApi* | [**DeleteFAQEntry**](docs/DefaultApi.md#deletefaqentry) | **Delete** /faqs/entry/{entryId} | Delete a FAQ entry
@@ -135,7 +136,6 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**DeleteNote**](docs/DefaultApi.md#deletenote) | **Delete** /note/{noteId} | Delete note
 *DefaultApi* | [**DeleteProperty**](docs/DefaultApi.md#deleteproperty) | **Delete** /properties/{propId} | Delete property
 *DefaultApi* | [**DeletePropertyContact**](docs/DefaultApi.md#deletepropertycontact) | **Delete** /property/{propId}/contacts/{entryId} | Delete a property contact
-*DefaultApi* | [**DeletePropertyDocumentRepositoryEntry**](docs/DefaultApi.md#deletepropertydocumentrepositoryentry) | **Delete** /property/{propId}/documents/{entryId} | Delete a single document entry
 *DefaultApi* | [**DeletePropertyHistoryEntry**](docs/DefaultApi.md#deletepropertyhistoryentry) | **Delete** /property/{propId}/history/{entryId} | Delete a history entry
 *DefaultApi* | [**DeletePropertyOwner**](docs/DefaultApi.md#deletepropertyowner) | **Delete** /owner/{ownerId} | Delete property owner
 *DefaultApi* | [**DeleteReportDefinition**](docs/DefaultApi.md#deletereportdefinition) | **Delete** /report/{definitionId} | 
@@ -175,6 +175,7 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**GetCustomIDGenerators**](docs/DefaultApi.md#getcustomidgenerators) | **Get** /id-generators | Get all customer specific ID generators
 *DefaultApi* | [**GetCustomerScript**](docs/DefaultApi.md#getcustomerscript) | **Get** /customer-scripts/{scriptID} | Get the script with all its attributes
 *DefaultApi* | [**GetCustomerScripts**](docs/DefaultApi.md#getcustomerscripts) | **Get** /customer-scripts | Get all customer specific JS scripts
+*DefaultApi* | [**GetDocument**](docs/DefaultApi.md#getdocument) | **Get** /document-repository/entry/{documentId} | Get an already existing document
 *DefaultApi* | [**GetDocumentGeneration**](docs/DefaultApi.md#getdocumentgeneration) | **Get** /document-generation/documents/{docId} | Get a single document generation
 *DefaultApi* | [**GetDocumentTemplate**](docs/DefaultApi.md#getdocumenttemplate) | **Get** /document-generation/template/{templateId} | Get a document template
 *DefaultApi* | [**GetDocumentTemplates**](docs/DefaultApi.md#getdocumenttemplates) | **Get** /document-generation/templates | Get all available document templates
@@ -192,8 +193,6 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**GetPropertyCases**](docs/DefaultApi.md#getpropertycases) | **Post** /property/{propId}/cases | Get property cases
 *DefaultApi* | [**GetPropertyContact**](docs/DefaultApi.md#getpropertycontact) | **Get** /property/{propId}/contacts/{entryId} | Get details of a property contact
 *DefaultApi* | [**GetPropertyContacts**](docs/DefaultApi.md#getpropertycontacts) | **Get** /property/{propId}/contacts | Get all contacts for this property
-*DefaultApi* | [**GetPropertyDocumentRepo**](docs/DefaultApi.md#getpropertydocumentrepo) | **Get** /property/{propId}/documents | Get all documents for this property
-*DefaultApi* | [**GetPropertyDocumentRepositoryEntry**](docs/DefaultApi.md#getpropertydocumentrepositoryentry) | **Get** /property/{propId}/documents/{entryId} | Get details of a document repo entry
 *DefaultApi* | [**GetPropertyHistory**](docs/DefaultApi.md#getpropertyhistory) | **Get** /property/{propId}/history | Get property history
 *DefaultApi* | [**GetPropertyHistoryEntry**](docs/DefaultApi.md#getpropertyhistoryentry) | **Get** /property/{propId}/history/{entryId} | Get property history entry
 *DefaultApi* | [**GetPropertyOwner**](docs/DefaultApi.md#getpropertyowner) | **Get** /owner/{ownerId} | Get property owner details
@@ -230,6 +229,7 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**QueryCaseTemplates**](docs/DefaultApi.md#querycasetemplates) | **Post** /cases/templates | Query all case templates for given criteria
 *DefaultApi* | [**QueryCases**](docs/DefaultApi.md#querycases) | **Post** /cases | Query cases for the current user
 *DefaultApi* | [**QueryDocumentGenerations**](docs/DefaultApi.md#querydocumentgenerations) | **Post** /document-generation/documents | Request a list of document generations
+*DefaultApi* | [**QueryDocuments**](docs/DefaultApi.md#querydocuments) | **Post** /document-repository/entries | Query all document for a certain ref type
 *DefaultApi* | [**QueryProperties**](docs/DefaultApi.md#queryproperties) | **Post** /properties | Query properties
 *DefaultApi* | [**QueryPropertyOwners**](docs/DefaultApi.md#querypropertyowners) | **Post** /owners | Query property owners
 *DefaultApi* | [**QueryServiceProviders**](docs/DefaultApi.md#queryserviceproviders) | **Post** /service-providers | Query all service providers for certain criteria
@@ -254,6 +254,7 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**UpdateConnectorConfiguration**](docs/DefaultApi.md#updateconnectorconfiguration) | **Post** /connector/{connectorID}/config | Update the connector configuration
 *DefaultApi* | [**UpdateCustomIDGenerator**](docs/DefaultApi.md#updatecustomidgenerator) | **Put** /id-generators/{generatorID} | Update an already existing ID generator
 *DefaultApi* | [**UpdateCustomerScript**](docs/DefaultApi.md#updatecustomerscript) | **Put** /customer-scripts/{scriptID} | Update an already existing script
+*DefaultApi* | [**UpdateDocument**](docs/DefaultApi.md#updatedocument) | **Put** /document-repository/entry/{documentId} | Update an already existing document
 *DefaultApi* | [**UpdateDocumentGeneration**](docs/DefaultApi.md#updatedocumentgeneration) | **Put** /document-generation/documents/{docId} | Update an already existing document generation
 *DefaultApi* | [**UpdateDocumentTemplate**](docs/DefaultApi.md#updatedocumenttemplate) | **Put** /document-generation/template/{templateId} | Update an existing document template
 *DefaultApi* | [**UpdateFAQEntry**](docs/DefaultApi.md#updatefaqentry) | **Put** /faqs/entry/{entryId} | Update an existing FAQ entry
@@ -262,7 +263,6 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**UpdateNote**](docs/DefaultApi.md#updatenote) | **Put** /note/{noteId} | Update note
 *DefaultApi* | [**UpdateProperty**](docs/DefaultApi.md#updateproperty) | **Put** /properties/{propId} | Update property
 *DefaultApi* | [**UpdatePropertyContact**](docs/DefaultApi.md#updatepropertycontact) | **Put** /property/{propId}/contacts/{entryId} | Update a property contact
-*DefaultApi* | [**UpdatePropertyDocumentRepositoryEntry**](docs/DefaultApi.md#updatepropertydocumentrepositoryentry) | **Put** /property/{propId}/documents/{entryId} | Update an already existing document entry
 *DefaultApi* | [**UpdatePropertyHistoryEntry**](docs/DefaultApi.md#updatepropertyhistoryentry) | **Put** /property/{propId}/history/{entryId} | Update history entry
 *DefaultApi* | [**UpdatePropertyOwner**](docs/DefaultApi.md#updatepropertyowner) | **Put** /owner/{ownerId} | Update property owner
 *DefaultApi* | [**UpdateReportDefinition**](docs/DefaultApi.md#updatereportdefinition) | **Put** /report/{definitionId} | 
@@ -325,6 +325,7 @@ Class | Method | HTTP request | Description
  - [CreateConnectorConfigRequest](docs/CreateConnectorConfigRequest.md)
  - [CreateConnectorCredentialsRequest](docs/CreateConnectorCredentialsRequest.md)
  - [CreateDocumentGenerationRequest](docs/CreateDocumentGenerationRequest.md)
+ - [CreateDocumentRequest](docs/CreateDocumentRequest.md)
  - [CreateInvitationRequest](docs/CreateInvitationRequest.md)
  - [CreateNoteRequest](docs/CreateNoteRequest.md)
  - [CreateOrUpdateAppointmentRequest](docs/CreateOrUpdateAppointmentRequest.md)
@@ -335,7 +336,6 @@ Class | Method | HTTP request | Description
  - [CreateOrUpdateCaseTemplateRequest](docs/CreateOrUpdateCaseTemplateRequest.md)
  - [CreateOrUpdateCustomIDGeneratorRequest](docs/CreateOrUpdateCustomIDGeneratorRequest.md)
  - [CreateOrUpdateCustomerScriptRequest](docs/CreateOrUpdateCustomerScriptRequest.md)
- - [CreateOrUpdateDocumentRepositoryEntry](docs/CreateOrUpdateDocumentRepositoryEntry.md)
  - [CreateOrUpdateDocumentTemplateRequest](docs/CreateOrUpdateDocumentTemplateRequest.md)
  - [CreateOrUpdateFAQEntryRequest](docs/CreateOrUpdateFAQEntryRequest.md)
  - [CreateOrUpdateMeterReadingRequest](docs/CreateOrUpdateMeterReadingRequest.md)
@@ -355,13 +355,13 @@ Class | Method | HTTP request | Description
  - [CustomIDGenerator](docs/CustomIDGenerator.md)
  - [CustomerScript](docs/CustomerScript.md)
  - [CustomerScriptScope](docs/CustomerScriptScope.md)
+ - [Document](docs/Document.md)
  - [DocumentESignatureRequest](docs/DocumentESignatureRequest.md)
  - [DocumentESignatureStatus](docs/DocumentESignatureStatus.md)
  - [DocumentGeneration](docs/DocumentGeneration.md)
  - [DocumentPDFResponse](docs/DocumentPDFResponse.md)
  - [DocumentPlaceholder](docs/DocumentPlaceholder.md)
- - [DocumentRepository](docs/DocumentRepository.md)
- - [DocumentRepositoryEntry](docs/DocumentRepositoryEntry.md)
+ - [DocumentRefTypeEnum](docs/DocumentRefTypeEnum.md)
  - [DocumentSigner](docs/DocumentSigner.md)
  - [DocumentTemplate](docs/DocumentTemplate.md)
  - [DocumentTemplateOptions](docs/DocumentTemplateOptions.md)
@@ -419,6 +419,7 @@ Class | Method | HTTP request | Description
  - [QueryCasesRequest](docs/QueryCasesRequest.md)
  - [QueryDocumentGenerationsRequest](docs/QueryDocumentGenerationsRequest.md)
  - [QueryDocumentGenerationsResponse](docs/QueryDocumentGenerationsResponse.md)
+ - [QueryDocumentsRequest](docs/QueryDocumentsRequest.md)
  - [QueryPropertiesRequest](docs/QueryPropertiesRequest.md)
  - [QueryPropertiesResponse](docs/QueryPropertiesResponse.md)
  - [QueryPropertyOwnersRequest](docs/QueryPropertyOwnersRequest.md)
@@ -456,6 +457,7 @@ Class | Method | HTTP request | Description
  - [UpdateCaseStatusRequest](docs/UpdateCaseStatusRequest.md)
  - [UpdateCompanyProfileRequest](docs/UpdateCompanyProfileRequest.md)
  - [UpdateConnectorConfigRequest](docs/UpdateConnectorConfigRequest.md)
+ - [UpdateDocumentRequest](docs/UpdateDocumentRequest.md)
  - [UpdateNoteRequest](docs/UpdateNoteRequest.md)
  - [UpdatePropertyRequest](docs/UpdatePropertyRequest.md)
  - [UpdateTenancyRequest](docs/UpdateTenancyRequest.md)

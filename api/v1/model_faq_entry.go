@@ -20,7 +20,8 @@ type FAQEntry struct {
 	// a map of values, where the key and values are strings
 	Question *map[string]string `json:"question,omitempty"`
 	// a map of values, where the key and values are strings
-	Answer *map[string]string `json:"answer,omitempty"`
+	Answer   *map[string]string `json:"answer,omitempty"`
+	Keywords []string           `json:"keywords,omitempty"`
 }
 
 // NewFAQEntry instantiates a new FAQEntry object
@@ -136,6 +137,38 @@ func (o *FAQEntry) SetAnswer(v map[string]string) {
 	o.Answer = &v
 }
 
+// GetKeywords returns the Keywords field value if set, zero value otherwise.
+func (o *FAQEntry) GetKeywords() []string {
+	if o == nil || o.Keywords == nil {
+		var ret []string
+		return ret
+	}
+	return o.Keywords
+}
+
+// GetKeywordsOk returns a tuple with the Keywords field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *FAQEntry) GetKeywordsOk() ([]string, bool) {
+	if o == nil || o.Keywords == nil {
+		return nil, false
+	}
+	return o.Keywords, true
+}
+
+// HasKeywords returns a boolean if a field has been set.
+func (o *FAQEntry) HasKeywords() bool {
+	if o != nil && o.Keywords != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetKeywords gets a reference to the given []string and assigns it to the Keywords field.
+func (o *FAQEntry) SetKeywords(v []string) {
+	o.Keywords = v
+}
+
 func (o FAQEntry) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Id != nil {
@@ -146,6 +179,9 @@ func (o FAQEntry) MarshalJSON() ([]byte, error) {
 	}
 	if o.Answer != nil {
 		toSerialize["answer"] = o.Answer
+	}
+	if o.Keywords != nil {
+		toSerialize["keywords"] = o.Keywords
 	}
 	return json.Marshal(toSerialize)
 }

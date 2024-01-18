@@ -1743,6 +1743,115 @@ func (a *DefaultApiService) CreateCustomerScriptExecute(r ApiCreateCustomerScrip
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiCreateDocumentRequest struct {
+	ctx                   context.Context
+	ApiService            *DefaultApiService
+	createDocumentRequest *CreateDocumentRequest
+}
+
+func (r ApiCreateDocumentRequest) CreateDocumentRequest(createDocumentRequest CreateDocumentRequest) ApiCreateDocumentRequest {
+	r.createDocumentRequest = &createDocumentRequest
+	return r
+}
+
+func (r ApiCreateDocumentRequest) Execute() (*Document, *http.Response, error) {
+	return r.ApiService.CreateDocumentExecute(r)
+}
+
+/*
+CreateDocument Create a new document
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiCreateDocumentRequest
+*/
+func (a *DefaultApiService) CreateDocument(ctx context.Context) ApiCreateDocumentRequest {
+	return ApiCreateDocumentRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return Document
+func (a *DefaultApiService) CreateDocumentExecute(r ApiCreateDocumentRequest) (*Document, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Document
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.CreateDocument")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/document-repository/entry"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createDocumentRequest == nil {
+		return localVarReturnValue, nil, reportError("createDocumentRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createDocumentRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiCreateDocumentGenerationRequest struct {
 	ctx                             context.Context
 	ApiService                      *DefaultApiService
@@ -2599,122 +2708,6 @@ func (a *DefaultApiService) CreatePropertyContactExecute(r ApiCreatePropertyCont
 	}
 	// body params
 	localVarPostBody = r.createOrUpdatePropertyContact
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiCreatePropertyDocumentRepositoryEntryRequest struct {
-	ctx                                   context.Context
-	ApiService                            *DefaultApiService
-	propId                                string
-	createOrUpdateDocumentRepositoryEntry *CreateOrUpdateDocumentRepositoryEntry
-}
-
-// Document repository entry to be created
-func (r ApiCreatePropertyDocumentRepositoryEntryRequest) CreateOrUpdateDocumentRepositoryEntry(createOrUpdateDocumentRepositoryEntry CreateOrUpdateDocumentRepositoryEntry) ApiCreatePropertyDocumentRepositoryEntryRequest {
-	r.createOrUpdateDocumentRepositoryEntry = &createOrUpdateDocumentRepositoryEntry
-	return r
-}
-
-func (r ApiCreatePropertyDocumentRepositoryEntryRequest) Execute() (*DocumentRepositoryEntry, *http.Response, error) {
-	return r.ApiService.CreatePropertyDocumentRepositoryEntryExecute(r)
-}
-
-/*
-CreatePropertyDocumentRepositoryEntry Create a new document entry
-
-Create a new document entry with an attachment that
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param propId ID of the property
-	@return ApiCreatePropertyDocumentRepositoryEntryRequest
-*/
-func (a *DefaultApiService) CreatePropertyDocumentRepositoryEntry(ctx context.Context, propId string) ApiCreatePropertyDocumentRepositoryEntryRequest {
-	return ApiCreatePropertyDocumentRepositoryEntryRequest{
-		ApiService: a,
-		ctx:        ctx,
-		propId:     propId,
-	}
-}
-
-// Execute executes the request
-//
-//	@return DocumentRepositoryEntry
-func (a *DefaultApiService) CreatePropertyDocumentRepositoryEntryExecute(r ApiCreatePropertyDocumentRepositoryEntryRequest) (*DocumentRepositoryEntry, *http.Response, error) {
-	var (
-		localVarHTTPMethod  = http.MethodPost
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *DocumentRepositoryEntry
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.CreatePropertyDocumentRepositoryEntry")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/property/{propId}/documents"
-	localVarPath = strings.Replace(localVarPath, "{"+"propId"+"}", url.PathEscape(parameterToString(r.propId, "")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.createOrUpdateDocumentRepositoryEntry == nil {
-		return localVarReturnValue, nil, reportError("createOrUpdateDocumentRepositoryEntry is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.createOrUpdateDocumentRepositoryEntry
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -5038,6 +5031,96 @@ func (a *DefaultApiService) DeleteCustomerScriptExecute(r ApiDeleteCustomerScrip
 	return localVarHTTPResponse, nil
 }
 
+type ApiDeleteDocumentRequest struct {
+	ctx        context.Context
+	ApiService *DefaultApiService
+	documentId string
+}
+
+func (r ApiDeleteDocumentRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteDocumentExecute(r)
+}
+
+/*
+DeleteDocument Delete a single document
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param documentId ID of the document
+	@return ApiDeleteDocumentRequest
+*/
+func (a *DefaultApiService) DeleteDocument(ctx context.Context, documentId string) ApiDeleteDocumentRequest {
+	return ApiDeleteDocumentRequest{
+		ApiService: a,
+		ctx:        ctx,
+		documentId: documentId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultApiService) DeleteDocumentExecute(r ApiDeleteDocumentRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.DeleteDocument")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/document-repository/entry/{documentId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"documentId"+"}", url.PathEscape(parameterToString(r.documentId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
 type ApiDeleteDocumentGenerationRequest struct {
 	ctx        context.Context
 	ApiService *DefaultApiService
@@ -5816,102 +5899,6 @@ func (a *DefaultApiService) DeletePropertyContactExecute(r ApiDeletePropertyCont
 	}
 
 	localVarPath := localBasePath + "/property/{propId}/contacts/{entryId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"propId"+"}", url.PathEscape(parameterToString(r.propId, "")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"entryId"+"}", url.PathEscape(parameterToString(r.entryId, "")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarHTTPResponse, newErr
-	}
-
-	return localVarHTTPResponse, nil
-}
-
-type ApiDeletePropertyDocumentRepositoryEntryRequest struct {
-	ctx        context.Context
-	ApiService *DefaultApiService
-	propId     string
-	entryId    string
-}
-
-func (r ApiDeletePropertyDocumentRepositoryEntryRequest) Execute() (*http.Response, error) {
-	return r.ApiService.DeletePropertyDocumentRepositoryEntryExecute(r)
-}
-
-/*
-DeletePropertyDocumentRepositoryEntry Delete a single document entry
-
-Delete an entry from a property's document repo
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param propId ID of the property
-	@param entryId ID of the entry
-	@return ApiDeletePropertyDocumentRepositoryEntryRequest
-*/
-func (a *DefaultApiService) DeletePropertyDocumentRepositoryEntry(ctx context.Context, propId string, entryId string) ApiDeletePropertyDocumentRepositoryEntryRequest {
-	return ApiDeletePropertyDocumentRepositoryEntryRequest{
-		ApiService: a,
-		ctx:        ctx,
-		propId:     propId,
-		entryId:    entryId,
-	}
-}
-
-// Execute executes the request
-func (a *DefaultApiService) DeletePropertyDocumentRepositoryEntryExecute(r ApiDeletePropertyDocumentRepositoryEntryRequest) (*http.Response, error) {
-	var (
-		localVarHTTPMethod = http.MethodDelete
-		localVarPostBody   interface{}
-		formFiles          []formFile
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.DeletePropertyDocumentRepositoryEntry")
-	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/property/{propId}/documents/{entryId}"
 	localVarPath = strings.Replace(localVarPath, "{"+"propId"+"}", url.PathEscape(parameterToString(r.propId, "")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"entryId"+"}", url.PathEscape(parameterToString(r.entryId, "")), -1)
 
@@ -9870,6 +9857,108 @@ func (a *DefaultApiService) GetCustomerScriptsExecute(r ApiGetCustomerScriptsReq
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetDocumentRequest struct {
+	ctx        context.Context
+	ApiService *DefaultApiService
+	documentId string
+}
+
+func (r ApiGetDocumentRequest) Execute() (*Document, *http.Response, error) {
+	return r.ApiService.GetDocumentExecute(r)
+}
+
+/*
+GetDocument Get an already existing document
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param documentId ID of the document
+	@return ApiGetDocumentRequest
+*/
+func (a *DefaultApiService) GetDocument(ctx context.Context, documentId string) ApiGetDocumentRequest {
+	return ApiGetDocumentRequest{
+		ApiService: a,
+		ctx:        ctx,
+		documentId: documentId,
+	}
+}
+
+// Execute executes the request
+//
+//	@return Document
+func (a *DefaultApiService) GetDocumentExecute(r ApiGetDocumentRequest) (*Document, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Document
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetDocument")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/document-repository/entry/{documentId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"documentId"+"}", url.PathEscape(parameterToString(r.documentId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetDocumentGenerationRequest struct {
 	ctx        context.Context
 	ApiService *DefaultApiService
@@ -11559,218 +11648,6 @@ func (a *DefaultApiService) GetPropertyContactsExecute(r ApiGetPropertyContactsR
 
 	localVarPath := localBasePath + "/property/{propId}/contacts"
 	localVarPath = strings.Replace(localVarPath, "{"+"propId"+"}", url.PathEscape(parameterToString(r.propId, "")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiGetPropertyDocumentRepoRequest struct {
-	ctx        context.Context
-	ApiService *DefaultApiService
-	propId     string
-}
-
-func (r ApiGetPropertyDocumentRepoRequest) Execute() (*DocumentRepository, *http.Response, error) {
-	return r.ApiService.GetPropertyDocumentRepoExecute(r)
-}
-
-/*
-GetPropertyDocumentRepo Get all documents for this property
-
-Get a list of the documents that were uploaded for this property
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param propId ID of the property
-	@return ApiGetPropertyDocumentRepoRequest
-*/
-func (a *DefaultApiService) GetPropertyDocumentRepo(ctx context.Context, propId string) ApiGetPropertyDocumentRepoRequest {
-	return ApiGetPropertyDocumentRepoRequest{
-		ApiService: a,
-		ctx:        ctx,
-		propId:     propId,
-	}
-}
-
-// Execute executes the request
-//
-//	@return DocumentRepository
-func (a *DefaultApiService) GetPropertyDocumentRepoExecute(r ApiGetPropertyDocumentRepoRequest) (*DocumentRepository, *http.Response, error) {
-	var (
-		localVarHTTPMethod  = http.MethodGet
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *DocumentRepository
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetPropertyDocumentRepo")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/property/{propId}/documents"
-	localVarPath = strings.Replace(localVarPath, "{"+"propId"+"}", url.PathEscape(parameterToString(r.propId, "")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiGetPropertyDocumentRepositoryEntryRequest struct {
-	ctx        context.Context
-	ApiService *DefaultApiService
-	propId     string
-	entryId    string
-}
-
-func (r ApiGetPropertyDocumentRepositoryEntryRequest) Execute() (*DocumentRepositoryEntry, *http.Response, error) {
-	return r.ApiService.GetPropertyDocumentRepositoryEntryExecute(r)
-}
-
-/*
-GetPropertyDocumentRepositoryEntry Get details of a document repo entry
-
-Get the details for a document repository entry
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param propId ID of the property
-	@param entryId ID of the entry
-	@return ApiGetPropertyDocumentRepositoryEntryRequest
-*/
-func (a *DefaultApiService) GetPropertyDocumentRepositoryEntry(ctx context.Context, propId string, entryId string) ApiGetPropertyDocumentRepositoryEntryRequest {
-	return ApiGetPropertyDocumentRepositoryEntryRequest{
-		ApiService: a,
-		ctx:        ctx,
-		propId:     propId,
-		entryId:    entryId,
-	}
-}
-
-// Execute executes the request
-//
-//	@return DocumentRepositoryEntry
-func (a *DefaultApiService) GetPropertyDocumentRepositoryEntryExecute(r ApiGetPropertyDocumentRepositoryEntryRequest) (*DocumentRepositoryEntry, *http.Response, error) {
-	var (
-		localVarHTTPMethod  = http.MethodGet
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *DocumentRepositoryEntry
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetPropertyDocumentRepositoryEntry")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/property/{propId}/documents/{entryId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"propId"+"}", url.PathEscape(parameterToString(r.propId, "")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"entryId"+"}", url.PathEscape(parameterToString(r.entryId, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -15597,6 +15474,115 @@ func (a *DefaultApiService) QueryDocumentGenerationsExecute(r ApiQueryDocumentGe
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiQueryDocumentsRequest struct {
+	ctx                   context.Context
+	ApiService            *DefaultApiService
+	queryDocumentsRequest *QueryDocumentsRequest
+}
+
+func (r ApiQueryDocumentsRequest) QueryDocumentsRequest(queryDocumentsRequest QueryDocumentsRequest) ApiQueryDocumentsRequest {
+	r.queryDocumentsRequest = &queryDocumentsRequest
+	return r
+}
+
+func (r ApiQueryDocumentsRequest) Execute() ([]Document, *http.Response, error) {
+	return r.ApiService.QueryDocumentsExecute(r)
+}
+
+/*
+QueryDocuments Query all document for a certain ref type
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiQueryDocumentsRequest
+*/
+func (a *DefaultApiService) QueryDocuments(ctx context.Context) ApiQueryDocumentsRequest {
+	return ApiQueryDocumentsRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return []Document
+func (a *DefaultApiService) QueryDocumentsExecute(r ApiQueryDocumentsRequest) ([]Document, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []Document
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.QueryDocuments")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/document-repository/entries"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.queryDocumentsRequest == nil {
+		return localVarReturnValue, nil, reportError("queryDocumentsRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.queryDocumentsRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiQueryPropertiesRequest struct {
 	ctx                    context.Context
 	ApiService             *DefaultApiService
@@ -18246,6 +18232,119 @@ func (a *DefaultApiService) UpdateCustomerScriptExecute(r ApiUpdateCustomerScrip
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiUpdateDocumentRequest struct {
+	ctx                   context.Context
+	ApiService            *DefaultApiService
+	documentId            string
+	updateDocumentRequest *UpdateDocumentRequest
+}
+
+func (r ApiUpdateDocumentRequest) UpdateDocumentRequest(updateDocumentRequest UpdateDocumentRequest) ApiUpdateDocumentRequest {
+	r.updateDocumentRequest = &updateDocumentRequest
+	return r
+}
+
+func (r ApiUpdateDocumentRequest) Execute() (*Document, *http.Response, error) {
+	return r.ApiService.UpdateDocumentExecute(r)
+}
+
+/*
+UpdateDocument Update an already existing document
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param documentId ID of the document
+	@return ApiUpdateDocumentRequest
+*/
+func (a *DefaultApiService) UpdateDocument(ctx context.Context, documentId string) ApiUpdateDocumentRequest {
+	return ApiUpdateDocumentRequest{
+		ApiService: a,
+		ctx:        ctx,
+		documentId: documentId,
+	}
+}
+
+// Execute executes the request
+//
+//	@return Document
+func (a *DefaultApiService) UpdateDocumentExecute(r ApiUpdateDocumentRequest) (*Document, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Document
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.UpdateDocument")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/document-repository/entry/{documentId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"documentId"+"}", url.PathEscape(parameterToString(r.documentId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.updateDocumentRequest == nil {
+		return localVarReturnValue, nil, reportError("updateDocumentRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.updateDocumentRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiUpdateDocumentGenerationRequest struct {
 	ctx                context.Context
 	ApiService         *DefaultApiService
@@ -19124,123 +19223,6 @@ func (a *DefaultApiService) UpdatePropertyContactExecute(r ApiUpdatePropertyCont
 	}
 	// body params
 	localVarPostBody = r.createOrUpdatePropertyContact
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiUpdatePropertyDocumentRepositoryEntryRequest struct {
-	ctx                                   context.Context
-	ApiService                            *DefaultApiService
-	propId                                string
-	entryId                               string
-	createOrUpdateDocumentRepositoryEntry *CreateOrUpdateDocumentRepositoryEntry
-}
-
-// Updated property object
-func (r ApiUpdatePropertyDocumentRepositoryEntryRequest) CreateOrUpdateDocumentRepositoryEntry(createOrUpdateDocumentRepositoryEntry CreateOrUpdateDocumentRepositoryEntry) ApiUpdatePropertyDocumentRepositoryEntryRequest {
-	r.createOrUpdateDocumentRepositoryEntry = &createOrUpdateDocumentRepositoryEntry
-	return r
-}
-
-func (r ApiUpdatePropertyDocumentRepositoryEntryRequest) Execute() (*DocumentRepositoryEntry, *http.Response, error) {
-	return r.ApiService.UpdatePropertyDocumentRepositoryEntryExecute(r)
-}
-
-/*
-UpdatePropertyDocumentRepositoryEntry Update an already existing document entry
-
-Update an already existing entry from a property's document repository
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param propId ID of the property
-	@param entryId ID of the entry
-	@return ApiUpdatePropertyDocumentRepositoryEntryRequest
-*/
-func (a *DefaultApiService) UpdatePropertyDocumentRepositoryEntry(ctx context.Context, propId string, entryId string) ApiUpdatePropertyDocumentRepositoryEntryRequest {
-	return ApiUpdatePropertyDocumentRepositoryEntryRequest{
-		ApiService: a,
-		ctx:        ctx,
-		propId:     propId,
-		entryId:    entryId,
-	}
-}
-
-// Execute executes the request
-//
-//	@return DocumentRepositoryEntry
-func (a *DefaultApiService) UpdatePropertyDocumentRepositoryEntryExecute(r ApiUpdatePropertyDocumentRepositoryEntryRequest) (*DocumentRepositoryEntry, *http.Response, error) {
-	var (
-		localVarHTTPMethod  = http.MethodPut
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *DocumentRepositoryEntry
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.UpdatePropertyDocumentRepositoryEntry")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/property/{propId}/documents/{entryId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"propId"+"}", url.PathEscape(parameterToString(r.propId, "")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"entryId"+"}", url.PathEscape(parameterToString(r.entryId, "")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.createOrUpdateDocumentRepositoryEntry
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

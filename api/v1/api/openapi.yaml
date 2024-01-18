@@ -2404,6 +2404,142 @@ paths:
           content: {}
           description: Internal server error
       summary: Update an existing document template
+  /document-repository/entries:
+    post:
+      operationId: queryDocuments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryDocumentsRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Document'
+                type: array
+          description: successful operation
+        "403":
+          content: {}
+          description: Access denied
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Query all document for a certain ref type
+  /document-repository/entry:
+    post:
+      operationId: createDocument
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDocumentRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+          description: successful operation
+        "403":
+          content: {}
+          description: Access denied
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Create a new document
+  /document-repository/entry/{documentId}:
+    delete:
+      operationId: deleteDocument
+      parameters:
+      - description: ID of the document
+        explode: false
+        in: path
+        name: documentId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content: {}
+          description: Operation successfully performed
+        "403":
+          content: {}
+          description: Access denied
+        "404":
+          content: {}
+          description: Requested entity not found
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Delete a single document
+    get:
+      operationId: getDocument
+      parameters:
+      - description: ID of the document
+        explode: false
+        in: path
+        name: documentId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+          description: successful operation
+        "403":
+          content: {}
+          description: Access denied
+        "404":
+          content: {}
+          description: Requested entity not found
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Get an already existing document
+    put:
+      operationId: updateDocument
+      parameters:
+      - description: ID of the document
+        explode: false
+        in: path
+        name: documentId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateDocumentRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+          description: successful operation
+        "403":
+          content: {}
+          description: Access denied
+        "404":
+          content: {}
+          description: Requested entity not found
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Update an already existing document
   /faqs/entries:
     get:
       operationId: getFAQEntries
@@ -3895,187 +4031,6 @@ paths:
           content: {}
           description: Internal server error
       summary: Update a property contact
-  /property/{propId}/documents:
-    get:
-      description: Get a list of the documents that were uploaded for this property
-      operationId: getPropertyDocumentRepo
-      parameters:
-      - description: ID of the property
-        explode: false
-        in: path
-        name: propId
-        required: true
-        schema:
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DocumentRepository'
-          description: successful operation
-        "403":
-          content: {}
-          description: Access denied
-        "404":
-          content: {}
-          description: Requested entity not found
-        "500":
-          content: {}
-          description: Internal server error
-      summary: Get all documents for this property
-    post:
-      description: Create a new document entry with an attachment that
-      operationId: createPropertyDocumentRepositoryEntry
-      parameters:
-      - description: ID of the property
-        explode: false
-        in: path
-        name: propId
-        required: true
-        schema:
-          type: string
-        style: simple
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateOrUpdateDocumentRepositoryEntry'
-        description: Document repository entry to be created
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DocumentRepositoryEntry'
-          description: successful operation
-        "403":
-          content: {}
-          description: Access denied
-        "404":
-          content: {}
-          description: Requested entity not found
-        "500":
-          content: {}
-          description: Internal server error
-      summary: Create a new document entry
-  /property/{propId}/documents/{entryId}:
-    delete:
-      description: Delete an entry from a property's document repo
-      operationId: deletePropertyDocumentRepositoryEntry
-      parameters:
-      - description: ID of the property
-        explode: false
-        in: path
-        name: propId
-        required: true
-        schema:
-          type: string
-        style: simple
-      - description: ID of the entry
-        explode: false
-        in: path
-        name: entryId
-        required: true
-        schema:
-          type: string
-        style: simple
-      responses:
-        "200":
-          content: {}
-          description: Operation successfully performed
-        "403":
-          content: {}
-          description: Access denied
-        "404":
-          content: {}
-          description: Requested entity not found
-        "500":
-          content: {}
-          description: Internal server error
-      summary: Delete a single document entry
-    get:
-      description: Get the details for a document repository entry
-      operationId: getPropertyDocumentRepositoryEntry
-      parameters:
-      - description: ID of the property
-        explode: false
-        in: path
-        name: propId
-        required: true
-        schema:
-          type: string
-        style: simple
-      - description: ID of the entry
-        explode: false
-        in: path
-        name: entryId
-        required: true
-        schema:
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DocumentRepositoryEntry'
-          description: successful operation
-        "403":
-          content: {}
-          description: Access denied
-        "404":
-          content: {}
-          description: Requested entity not found
-        "500":
-          content: {}
-          description: Internal server error
-      summary: Get details of a document repo entry
-    put:
-      description: Update an already existing entry from a property's document repository
-      operationId: updatePropertyDocumentRepositoryEntry
-      parameters:
-      - description: ID of the property
-        explode: false
-        in: path
-        name: propId
-        required: true
-        schema:
-          type: string
-        style: simple
-      - description: ID of the entry
-        explode: false
-        in: path
-        name: entryId
-        required: true
-        schema:
-          type: string
-        style: simple
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateOrUpdateDocumentRepositoryEntry'
-        description: Updated property object
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DocumentRepositoryEntry'
-          description: successful operation
-        "403":
-          content: {}
-          description: Access denied
-        "404":
-          content: {}
-          description: Requested entity not found
-        "500":
-          content: {}
-          description: Internal server error
-      summary: Update an already existing document entry
   /property/{propId}/history:
     get:
       description: Get a list of all events that were captured for the related property
@@ -6101,7 +6056,8 @@ components:
           - ref_id: ref_id
             ref_type: ref_type
           inputs:
-          - view_label:
+          - propagate_changes: true
+            view_label:
               key: view_label
             ephemeral: true
             default_value: default_value
@@ -6118,7 +6074,8 @@ components:
             - items
             required: true
             target: target
-          - view_label:
+          - propagate_changes: true
+            view_label:
               key: view_label
             ephemeral: true
             default_value: default_value
@@ -6205,7 +6162,8 @@ components:
           - ref_id: ref_id
             ref_type: ref_type
           inputs:
-          - view_label:
+          - propagate_changes: true
+            view_label:
               key: view_label
             ephemeral: true
             default_value: default_value
@@ -6222,7 +6180,8 @@ components:
             - items
             required: true
             target: target
-          - view_label:
+          - propagate_changes: true
+            view_label:
               key: view_label
             ephemeral: true
             default_value: default_value
@@ -6676,7 +6635,8 @@ components:
             - ref_id: ref_id
               ref_type: ref_type
             inputs:
-            - view_label:
+            - propagate_changes: true
+              view_label:
                 key: view_label
               ephemeral: true
               default_value: default_value
@@ -6693,7 +6653,8 @@ components:
               - items
               required: true
               target: target
-            - view_label:
+            - propagate_changes: true
+              view_label:
                 key: view_label
               ephemeral: true
               default_value: default_value
@@ -7949,7 +7910,8 @@ components:
           - ref_id: ref_id
             ref_type: ref_type
           inputs:
-          - view_label:
+          - propagate_changes: true
+            view_label:
               key: view_label
             ephemeral: true
             default_value: default_value
@@ -7966,7 +7928,8 @@ components:
             - items
             required: true
             target: target
-          - view_label:
+          - propagate_changes: true
+            view_label:
               key: view_label
             ephemeral: true
             default_value: default_value
@@ -8061,7 +8024,8 @@ components:
                 - ref_id: ref_id
                   ref_type: ref_type
                 inputs:
-                - view_label:
+                - propagate_changes: true
+                  view_label:
                     key: view_label
                   ephemeral: true
                   default_value: default_value
@@ -8078,7 +8042,8 @@ components:
                   - items
                   required: true
                   target: target
-                - view_label:
+                - propagate_changes: true
+                  view_label:
                     key: view_label
                   ephemeral: true
                   default_value: default_value
@@ -8151,7 +8116,8 @@ components:
                 - ref_id: ref_id
                   ref_type: ref_type
                 inputs:
-                - view_label:
+                - propagate_changes: true
+                  view_label:
                     key: view_label
                   ephemeral: true
                   default_value: default_value
@@ -8168,7 +8134,8 @@ components:
                   - items
                   required: true
                   target: target
-                - view_label:
+                - propagate_changes: true
+                  view_label:
                     key: view_label
                   ephemeral: true
                   default_value: default_value
@@ -8252,7 +8219,8 @@ components:
                 - ref_id: ref_id
                   ref_type: ref_type
                 inputs:
-                - view_label:
+                - propagate_changes: true
+                  view_label:
                     key: view_label
                   ephemeral: true
                   default_value: default_value
@@ -8269,7 +8237,8 @@ components:
                   - items
                   required: true
                   target: target
-                - view_label:
+                - propagate_changes: true
+                  view_label:
                     key: view_label
                   ephemeral: true
                   default_value: default_value
@@ -8342,7 +8311,8 @@ components:
                 - ref_id: ref_id
                   ref_type: ref_type
                 inputs:
-                - view_label:
+                - propagate_changes: true
+                  view_label:
                     key: view_label
                   ephemeral: true
                   default_value: default_value
@@ -8359,7 +8329,8 @@ components:
                   - items
                   required: true
                   target: target
-                - view_label:
+                - propagate_changes: true
+                  view_label:
                     key: view_label
                   ephemeral: true
                   default_value: default_value
@@ -8501,7 +8472,8 @@ components:
               - ref_id: ref_id
                 ref_type: ref_type
               inputs:
-              - view_label:
+              - propagate_changes: true
+                view_label:
                   key: view_label
                 ephemeral: true
                 default_value: default_value
@@ -8518,7 +8490,8 @@ components:
                 - items
                 required: true
                 target: target
-              - view_label:
+              - propagate_changes: true
+                view_label:
                   key: view_label
                 ephemeral: true
                 default_value: default_value
@@ -8591,7 +8564,8 @@ components:
               - ref_id: ref_id
                 ref_type: ref_type
               inputs:
-              - view_label:
+              - propagate_changes: true
+                view_label:
                   key: view_label
                 ephemeral: true
                 default_value: default_value
@@ -8608,7 +8582,8 @@ components:
                 - items
                 required: true
                 target: target
-              - view_label:
+              - propagate_changes: true
+                view_label:
                   key: view_label
                 ephemeral: true
                 default_value: default_value
@@ -8692,7 +8667,8 @@ components:
               - ref_id: ref_id
                 ref_type: ref_type
               inputs:
-              - view_label:
+              - propagate_changes: true
+                view_label:
                   key: view_label
                 ephemeral: true
                 default_value: default_value
@@ -8709,7 +8685,8 @@ components:
                 - items
                 required: true
                 target: target
-              - view_label:
+              - propagate_changes: true
+                view_label:
                   key: view_label
                 ephemeral: true
                 default_value: default_value
@@ -8782,7 +8759,8 @@ components:
               - ref_id: ref_id
                 ref_type: ref_type
               inputs:
-              - view_label:
+              - propagate_changes: true
+                view_label:
                   key: view_label
                 ephemeral: true
                 default_value: default_value
@@ -8799,7 +8777,8 @@ components:
                 - items
                 required: true
                 target: target
-              - view_label:
+              - propagate_changes: true
+                view_label:
                   key: view_label
                 ephemeral: true
                 default_value: default_value
@@ -8921,7 +8900,8 @@ components:
             - ref_id: ref_id
               ref_type: ref_type
             inputs:
-            - view_label:
+            - propagate_changes: true
+              view_label:
                 key: view_label
               ephemeral: true
               default_value: default_value
@@ -8938,7 +8918,8 @@ components:
               - items
               required: true
               target: target
-            - view_label:
+            - propagate_changes: true
+              view_label:
                 key: view_label
               ephemeral: true
               default_value: default_value
@@ -9011,7 +8992,8 @@ components:
             - ref_id: ref_id
               ref_type: ref_type
             inputs:
-            - view_label:
+            - propagate_changes: true
+              view_label:
                 key: view_label
               ephemeral: true
               default_value: default_value
@@ -9028,7 +9010,8 @@ components:
               - items
               required: true
               target: target
-            - view_label:
+            - propagate_changes: true
+              view_label:
                 key: view_label
               ephemeral: true
               default_value: default_value
@@ -9141,7 +9124,8 @@ components:
           - ref_id: ref_id
             ref_type: ref_type
           inputs:
-          - view_label:
+          - propagate_changes: true
+            view_label:
               key: view_label
             ephemeral: true
             default_value: default_value
@@ -9158,7 +9142,8 @@ components:
             - items
             required: true
             target: target
-          - view_label:
+          - propagate_changes: true
+            view_label:
               key: view_label
             ephemeral: true
             default_value: default_value
@@ -9307,7 +9292,8 @@ components:
           - ref_id: ref_id
             ref_type: ref_type
           inputs:
-          - view_label:
+          - propagate_changes: true
+            view_label:
               key: view_label
             ephemeral: true
             default_value: default_value
@@ -9324,7 +9310,8 @@ components:
             - items
             required: true
             target: target
-          - view_label:
+          - propagate_changes: true
+            view_label:
               key: view_label
             ephemeral: true
             default_value: default_value
@@ -9419,7 +9406,8 @@ components:
                 - ref_id: ref_id
                   ref_type: ref_type
                 inputs:
-                - view_label:
+                - propagate_changes: true
+                  view_label:
                     key: view_label
                   ephemeral: true
                   default_value: default_value
@@ -9436,7 +9424,8 @@ components:
                   - items
                   required: true
                   target: target
-                - view_label:
+                - propagate_changes: true
+                  view_label:
                     key: view_label
                   ephemeral: true
                   default_value: default_value
@@ -9509,7 +9498,8 @@ components:
                 - ref_id: ref_id
                   ref_type: ref_type
                 inputs:
-                - view_label:
+                - propagate_changes: true
+                  view_label:
                     key: view_label
                   ephemeral: true
                   default_value: default_value
@@ -9526,7 +9516,8 @@ components:
                   - items
                   required: true
                   target: target
-                - view_label:
+                - propagate_changes: true
+                  view_label:
                     key: view_label
                   ephemeral: true
                   default_value: default_value
@@ -9610,7 +9601,8 @@ components:
                 - ref_id: ref_id
                   ref_type: ref_type
                 inputs:
-                - view_label:
+                - propagate_changes: true
+                  view_label:
                     key: view_label
                   ephemeral: true
                   default_value: default_value
@@ -9627,7 +9619,8 @@ components:
                   - items
                   required: true
                   target: target
-                - view_label:
+                - propagate_changes: true
+                  view_label:
                     key: view_label
                   ephemeral: true
                   default_value: default_value
@@ -9700,7 +9693,8 @@ components:
                 - ref_id: ref_id
                   ref_type: ref_type
                 inputs:
-                - view_label:
+                - propagate_changes: true
+                  view_label:
                     key: view_label
                   ephemeral: true
                   default_value: default_value
@@ -9717,7 +9711,8 @@ components:
                   - items
                   required: true
                   target: target
-                - view_label:
+                - propagate_changes: true
+                  view_label:
                     key: view_label
                   ephemeral: true
                   default_value: default_value
@@ -10525,7 +10520,8 @@ components:
           - ref_id: ref_id
             ref_type: ref_type
           inputs:
-          - view_label:
+          - propagate_changes: true
+            view_label:
               key: view_label
             ephemeral: true
             default_value: default_value
@@ -10542,7 +10538,8 @@ components:
             - items
             required: true
             target: target
-          - view_label:
+          - propagate_changes: true
+            view_label:
               key: view_label
             ephemeral: true
             default_value: default_value
@@ -10847,7 +10844,8 @@ components:
           - ref_id: ref_id
             ref_type: ref_type
           inputs:
-          - view_label:
+          - propagate_changes: true
+            view_label:
               key: view_label
             ephemeral: true
             default_value: default_value
@@ -10864,7 +10862,8 @@ components:
             - items
             required: true
             target: target
-          - view_label:
+          - propagate_changes: true
+            view_label:
               key: view_label
             ephemeral: true
             default_value: default_value
@@ -11014,12 +11013,145 @@ components:
         signatures:
           $ref: '#/components/schemas/DocumentTemplateSignatureConfguration'
       type: object
+    QueryDocumentsRequest:
+      description: |
+        Attributes needed for querying document repository entries
+      example:
+        ref_id: ref_id
+        public: true
+        offset: 6
+        name: name
+        limit: 0
+        ref_type: null
+      properties:
+        ref_id:
+          description: The ID of the entity for which the documents are uploaded
+          type: string
+        ref_type:
+          $ref: '#/components/schemas/DocumentRefTypeEnum'
+        name:
+          description: The name of the document for which to query
+          type: string
+        public:
+          description: "Indicator, controlling whether the document is visible to\
+            \ tenants"
+          type: boolean
+        limit:
+          format: int32
+          type: integer
+        offset:
+          format: int32
+          type: integer
+      type: object
+    DocumentRefTypeEnum:
+      enum:
+      - property
+      - static
+      type: string
+    Document:
+      description: |
+        A single document uploaded in the document repository or for a specific property
+      example:
+        path: path
+        updated_at: 6
+        public: true
+        attachment:
+          ref: ref
+          thumbnail: thumbnail
+          created: 0
+          file_type: file_type
+          file_name: file_name
+          id: id
+          file_size: 6
+          url: url
+        name: name
+        created_at: 0
+        id: id
+      properties:
+        id:
+          description: "the unique ID of the document, generated upon upload"
+          type: string
+        created_at:
+          description: The date the document was created
+          format: int64
+          type: integer
+        updated_at:
+          description: The date the document was last updated
+          format: int64
+          type: integer
+        name:
+          description: "the name of the document, as displayed to the user"
+          type: string
+        path:
+          description: optional path that can be used to nest documents in folder
+            like structures
+          type: string
+        public:
+          description: |
+            depending on the reference type of a document, public can mean that it is  visible to tenants or service providers
+          type: boolean
+        attachment:
+          $ref: '#/components/schemas/Attachment'
+      type: object
+    CreateDocumentRequest:
+      description: |
+        Attributes needed for creating a document uploaded in the system
+      example:
+        ref_id: ref_id
+        path: path
+        public: true
+        name: name
+        attachment_ref: attachment_ref
+        ref_type: null
+      properties:
+        ref_type:
+          $ref: '#/components/schemas/DocumentRefTypeEnum'
+        ref_id:
+          description: |
+            The ID of the entity for which the document is uploaded. Can be empty, if the  reference type is 'static'.
+          type: string
+        attachment_ref:
+          description: The ID of the already uploaded attachment
+          type: string
+        name:
+          description: The name of the document entry
+          type: string
+        path:
+          description: Optional path that can be used to nest documents in folder
+            like structures
+          type: string
+        public:
+          description: |
+            Indicator, controlling whether tenants can see the document (only relevant for  reference type 'property')
+          type: boolean
+      type: object
+    UpdateDocumentRequest:
+      description: |
+        Attributes needed for creating or updating document repository entries
+      example:
+        path: path
+        public: true
+        name: name
+      properties:
+        name:
+          description: The name of the document entry
+          type: string
+        path:
+          description: The relative folder path of the document
+          type: string
+        public:
+          description: "Indicator, controlling whether tenants can see the document"
+          type: boolean
+      type: object
     FAQEntry:
       example:
         question:
           key: question
         answer:
           key: answer
+        keywords:
+        - keywords
+        - keywords
         id: id
       properties:
         id:
@@ -11034,6 +11166,10 @@ components:
             type: string
           description: "a map of values, where the key and values are strings"
           type: object
+        keywords:
+          items:
+            type: string
+          type: array
       type: object
     CreateOrUpdateFAQEntryRequest:
       example:
@@ -11041,6 +11177,9 @@ components:
           key: question
         answer:
           key: answer
+        keywords:
+        - keywords
+        - keywords
       properties:
         question:
           additionalProperties:
@@ -11052,6 +11191,10 @@ components:
             type: string
           description: "a map of values, where the key and values are strings"
           type: object
+        keywords:
+          items:
+            type: string
+          type: array
       type: object
     FeedbackRequest:
       example:
@@ -12419,100 +12562,6 @@ components:
           description: reference to the service provider that is linked as a contact
           type: string
       type: object
-    DocumentRepository:
-      description: |
-        A structured list of documents attached to a property
-      example:
-        entries:
-        - path: path
-          public: true
-          attachment:
-            ref: ref
-            thumbnail: thumbnail
-            created: 0
-            file_type: file_type
-            file_name: file_name
-            id: id
-            file_size: 6
-            url: url
-          name: name
-          id: id
-        - path: path
-          public: true
-          attachment:
-            ref: ref
-            thumbnail: thumbnail
-            created: 0
-            file_type: file_type
-            file_name: file_name
-            id: id
-            file_size: 6
-            url: url
-          name: name
-          id: id
-        prop_ref: prop_ref
-      properties:
-        prop_ref:
-          description: the ID of the property for which the documents are uploaded
-          type: string
-        entries:
-          items:
-            $ref: '#/components/schemas/DocumentRepositoryEntry'
-          type: array
-      type: object
-    DocumentRepositoryEntry:
-      description: |
-        A single document uploaded in a document repository
-      example:
-        path: path
-        public: true
-        attachment:
-          ref: ref
-          thumbnail: thumbnail
-          created: 0
-          file_type: file_type
-          file_name: file_name
-          id: id
-          file_size: 6
-          url: url
-        name: name
-        id: id
-      properties:
-        id:
-          description: the unique ID of the document entry
-          type: string
-        path:
-          type: string
-        name:
-          description: The name of the document entry
-          type: string
-        public:
-          type: boolean
-        attachment:
-          $ref: '#/components/schemas/Attachment'
-      type: object
-    CreateOrUpdateDocumentRepositoryEntry:
-      description: |
-        Attributes needed for creating or updating document repository entries
-      example:
-        path: path
-        public: true
-        name: name
-        attachment_ref: attachment_ref
-      properties:
-        attachment_ref:
-          description: The ID of the previously uploaded attachment
-          type: string
-        path:
-          description: The relative folder path of the document
-          type: string
-        name:
-          description: The name of the document entry
-          type: string
-        public:
-          description: "Indicator, controlling whether tenants can see the document"
-          type: boolean
-      type: object
     PropertyHistory:
       example:
         entries:
@@ -12890,7 +12939,8 @@ components:
           - ref_id: ref_id
             ref_type: ref_type
           inputs:
-          - view_label:
+          - propagate_changes: true
+            view_label:
               key: view_label
             ephemeral: true
             default_value: default_value
@@ -12907,7 +12957,8 @@ components:
             - items
             required: true
             target: target
-          - view_label:
+          - propagate_changes: true
+            view_label:
               key: view_label
             ephemeral: true
             default_value: default_value
@@ -13051,7 +13102,8 @@ components:
           - ref_id: ref_id
             ref_type: ref_type
           inputs:
-          - view_label:
+          - propagate_changes: true
+            view_label:
               key: view_label
             ephemeral: true
             default_value: default_value
@@ -13068,7 +13120,8 @@ components:
             - items
             required: true
             target: target
-          - view_label:
+          - propagate_changes: true
+            view_label:
               key: view_label
             ephemeral: true
             default_value: default_value
@@ -15604,7 +15657,8 @@ components:
         - ref_id: ref_id
           ref_type: ref_type
         inputs:
-        - view_label:
+        - propagate_changes: true
+          view_label:
             key: view_label
           ephemeral: true
           default_value: default_value
@@ -15621,7 +15675,8 @@ components:
           - items
           required: true
           target: target
-        - view_label:
+        - propagate_changes: true
+          view_label:
             key: view_label
           ephemeral: true
           default_value: default_value
@@ -15721,6 +15776,7 @@ components:
       enum:
       - input
       - group
+      - slot
       type: string
     FormGroup:
       description: a group of inputs that will be displayed together in the UI
@@ -15791,6 +15847,7 @@ components:
       description: a custom input that is used in dynamic forms to collect data from
         the user
       example:
+        propagate_changes: true
         view_label:
           key: view_label
         ephemeral: true
@@ -15838,6 +15895,10 @@ components:
           type: boolean
         ephemeral:
           description: "if true, the value of the input will not be persisted"
+          type: boolean
+        propagate_changes:
+          description: "if true, changes to the input will be propagated to event\
+            \ listeners for the custom form"
           type: boolean
         target:
           description: the attribute name to use when exporting the result of this
