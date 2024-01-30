@@ -205,8 +205,11 @@ func (r *documentTemplate) Read(ctx context.Context, req resource.ReadRequest, r
 		return
 	}
 
-	template, _, err := r.client.GetApi().GetDocumentTemplate(ctx, state.ID.ValueString()).Execute()
-	if err != nil {
+	template, httpResp, err := r.client.GetApi().GetDocumentTemplate(ctx, state.ID.ValueString()).Execute()
+	if httpResp != nil && httpResp.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
+		return
+	} else if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Reading Document Template",
 			"Could not read entity from Udoma, unexpected error: "+getApiErrorMessage(err),

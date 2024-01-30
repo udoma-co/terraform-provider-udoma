@@ -52,17 +52,18 @@ func NewCustomFormInputNull() CustomFormInputModel {
 }
 
 type CustomFormInputModel struct {
-	ID           types.String `tfsdk:"id"`
-	Label        types.Map    `tfsdk:"label"`
-	ViewLabel    types.Map    `tfsdk:"view_label"`
-	Placeholder  types.Map    `tfsdk:"placeholder"`
-	Type         types.String `tfsdk:"type"`
-	DefaultValue types.String `tfsdk:"default_value"`
-	Required     types.Bool   `tfsdk:"required"`
-	Ephemeral    types.Bool   `tfsdk:"ephemeral"`
-	Target       types.String `tfsdk:"target"`
-	Attributes   types.Map    `tfsdk:"attributes"`
-	Items        types.List   `tfsdk:"items"`
+	ID               types.String `tfsdk:"id"`
+	Label            types.Map    `tfsdk:"label"`
+	ViewLabel        types.Map    `tfsdk:"view_label"`
+	Placeholder      types.Map    `tfsdk:"placeholder"`
+	Type             types.String `tfsdk:"type"`
+	DefaultValue     types.String `tfsdk:"default_value"`
+	Required         types.Bool   `tfsdk:"required"`
+	Ephemeral        types.Bool   `tfsdk:"ephemeral"`
+	PropagateChanges types.Bool   `tfsdk:"propagate_changes"`
+	Target           types.String `tfsdk:"target"`
+	Attributes       types.Map    `tfsdk:"attributes"`
+	Items            types.List   `tfsdk:"items"`
 }
 
 func NewCustomFormValidationNull() CustomFormValidationModel {

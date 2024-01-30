@@ -196,8 +196,11 @@ func (r *caseTemplate) Read(ctx context.Context, req resource.ReadRequest, resp 
 		return
 	}
 
-	template, _, err := r.client.GetApi().GetCaseTemplate(ctx, state.ID.ValueString()).Execute()
-	if err != nil {
+	template, httpResp, err := r.client.GetApi().GetCaseTemplate(ctx, state.ID.ValueString()).Execute()
+	if httpResp != nil && httpResp.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
+		return
+	} else if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Reading Case Template",
 			"Could not read entity from Udoma, unexpected error: "+getApiErrorMessage(err),

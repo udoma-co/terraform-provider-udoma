@@ -55,6 +55,7 @@ Optional:
 - `ephemeral` (Boolean) if true, the value of the input will not be persisted
 - `items` (List of String) only used when the type is select or multi select. This is a list of values that the user can choose from
 - `placeholder` (Map of String) a map of values, where the key and values are strings
+- `propagate_changes` (Boolean) if true, changes to the input will be propagated to event listeners for the custom form
 - `required` (Boolean) if true, the user will be required to provide a value
 - `target` (String) the attribute name to use when exporting the result of this input
 - `view_label` (Map of String) a map of values, where the key and values are strings

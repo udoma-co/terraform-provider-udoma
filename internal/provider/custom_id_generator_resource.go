@@ -163,8 +163,11 @@ func (r *customIDGenerator) Read(ctx context.Context, req resource.ReadRequest, 
 		return
 	}
 
-	generator, _, err := r.client.GetApi().GetCustomIDGenerator(ctx, state.ID.ValueString()).Execute()
-	if err != nil {
+	generator, httpResp, err := r.client.GetApi().GetCustomIDGenerator(ctx, state.ID.ValueString()).Execute()
+	if httpResp != nil && httpResp.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
+		return
+	} else if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Reading Custom ID Generator",
 			"Could not read entity from Udoma, unexpected error: "+getApiErrorMessage(err),

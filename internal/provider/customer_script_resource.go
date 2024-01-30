@@ -161,8 +161,11 @@ func (r *customerScript) Read(ctx context.Context, req resource.ReadRequest, res
 		return
 	}
 
-	script, _, err := r.client.GetApi().GetCustomerScript(ctx, state.ID.ValueString()).Execute()
-	if err != nil {
+	script, httpResp, err := r.client.GetApi().GetCustomerScript(ctx, state.ID.ValueString()).Execute()
+	if httpResp != nil && httpResp.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
+		return
+	} else if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Reading Customer Script",
 			"Could not read entity from Udoma, unexpected error: "+getApiErrorMessage(err),
