@@ -28,6 +28,7 @@ const (
 	CASEACTIONENUM_CANCEL_WORK      CaseActionEnum = "CANCEL_WORK"
 	CASEACTIONENUM_COMMENT          CaseActionEnum = "COMMENT"
 	CASEACTIONENUM_FINISH_WORK      CaseActionEnum = "FINISH_WORK"
+	CASEACTIONENUM_SEND_REMINDER    CaseActionEnum = "SEND_REMINDER"
 	CASEACTIONENUM_OPEN             CaseActionEnum = "OPEN"
 	CASEACTIONENUM_PAUSE_WORK       CaseActionEnum = "PAUSE_WORK"
 	CASEACTIONENUM_REJECT           CaseActionEnum = "REJECT"
@@ -53,6 +54,7 @@ var AllowedCaseActionEnumEnumValues = []CaseActionEnum{
 	"CANCEL_WORK",
 	"COMMENT",
 	"FINISH_WORK",
+	"SEND_REMINDER",
 	"OPEN",
 	"PAUSE_WORK",
 	"REJECT",

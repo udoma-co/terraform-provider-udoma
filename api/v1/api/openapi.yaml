@@ -7326,9 +7326,6 @@ components:
           description: |
             The name of the party, derived from the referenced entity
           type: string
-      required:
-      - account_ref
-      - type
       type: object
     CaseStatus:
       description: CaseStatus represents the update to the status of a case
@@ -7390,6 +7387,7 @@ components:
       - CANCEL_WORK
       - COMMENT
       - FINISH_WORK
+      - SEND_REMINDER
       - OPEN
       - PAUSE_WORK
       - REJECT
@@ -7993,24 +7991,24 @@ components:
         config:
           reminders:
           - schedule:
-            - 7
-            - 14
-            - 30
+            - 2
+            - 5
+            - 10
             status: null
           - schedule:
-            - 7
-            - 14
-            - 30
-            status: null
-          automatic_status_changes:
-          - schedule: 1
-            target_status: null
-            status: null
-          - schedule: 1
-            target_status: null
+            - 2
+            - 5
+            - 10
             status: null
           base_config: null
           extend_default_status_config: true
+          automatic_actions:
+          - schedule: 1
+            action: action
+            status: null
+          - schedule: 1
+            action: action
+            status: null
           status_config:
           - feedback:
             - mode: null
@@ -8441,24 +8439,24 @@ components:
       example:
         reminders:
         - schedule:
-          - 7
-          - 14
-          - 30
+          - 2
+          - 5
+          - 10
           status: null
         - schedule:
-          - 7
-          - 14
-          - 30
-          status: null
-        automatic_status_changes:
-        - schedule: 1
-          target_status: null
-          status: null
-        - schedule: 1
-          target_status: null
+          - 2
+          - 5
+          - 10
           status: null
         base_config: null
         extend_default_status_config: true
+        automatic_actions:
+        - schedule: 1
+          action: action
+          status: null
+        - schedule: 1
+          action: action
+          status: null
         status_config:
         - feedback:
           - mode: null
@@ -8869,11 +8867,11 @@ components:
           items:
             $ref: '#/components/schemas/CaseReminderConfig'
           type: array
-        automatic_status_changes:
+        automatic_actions:
           description: |
-            The configuration for automatic status changes of a case. This is used to  determine which status changes are allowed by which party at which time.
+            The configuration for automatic actions to be performed for case. This is used to perform complex actions, like changing the status of a case or adding an automatic comment.
           items:
-            $ref: '#/components/schemas/CaseAutomaticStatusChangeConfig'
+            $ref: '#/components/schemas/CaseAutomaticActionConfig'
           type: array
       type: object
     BaseCaseConfig:
@@ -9234,40 +9232,42 @@ components:
         Defines the configuration for sending out reminders for a case.
       example:
         schedule:
-        - 7
-        - 14
-        - 30
+        - 2
+        - 5
+        - 10
         status: null
       properties:
         status:
           $ref: '#/components/schemas/CaseStatusEnum'
         schedule:
           description: |
-            The number of days after which the reminder should be sent out. The updated_at attribute is considered for the calculation.
+            The number of days after which a reminder should be sent out. The list is  taken as provided and a reminder will be set for the amount of days as set in the first element of the list. Once that time has passed, the reminder will be rescheduled for the next element in the list. This is repeated until the list is empty. The values in the list are considered relative to the previous reminder. So [2, 2] will send out a reminder after 2 and 4 days. The reminders will, however, not be sent out on weekends. So if the first reminder is sent out on a Friday, the second reminder will be sent out on Tuesday. All reminders are reset, whenever the case is updated.
           example:
-          - 7
-          - 14
-          - 30
+          - 2
+          - 5
+          - 10
           items:
             type: integer
           type: array
       type: object
-    CaseAutomaticStatusChangeConfig:
+    CaseAutomaticActionConfig:
       description: |
-        Defines the configuration for automatic status changes of a case.
+        Defines the configuration for an automatic action a case.
       example:
         schedule: 1
-        target_status: null
+        action: action
         status: null
       properties:
         status:
           $ref: '#/components/schemas/CaseStatusEnum'
         schedule:
           description: |
-            The number of days after which the status change should be triggered. The updated_at attribute is considered for the calculation.
+            The number of days after which the status change should be triggered. The  schedule is reset, whenever the case is updated. 0 means that the action should be triggered immediately.
           type: integer
-        target_status:
-          $ref: '#/components/schemas/CaseStatusEnum'
+        action:
+          description: |
+            JSON script of the action that should be executed, if the schedule and execution check are successful.
+          type: string
       type: object
     CaseTemplate:
       description: |
@@ -9375,24 +9375,24 @@ components:
         config:
           reminders:
           - schedule:
-            - 7
-            - 14
-            - 30
+            - 2
+            - 5
+            - 10
             status: null
           - schedule:
-            - 7
-            - 14
-            - 30
-            status: null
-          automatic_status_changes:
-          - schedule: 1
-            target_status: null
-            status: null
-          - schedule: 1
-            target_status: null
+            - 2
+            - 5
+            - 10
             status: null
           base_config: null
           extend_default_status_config: true
+          automatic_actions:
+          - schedule: 1
+            action: action
+            status: null
+          - schedule: 1
+            action: action
+            status: null
           status_config:
           - feedback:
             - mode: null
@@ -16041,6 +16041,7 @@ components:
       - TENANT
       - MANAGER
       - SERVICE_PROVIDER
+      - AUTOMATION
       type: string
     UserReference:
       description: Contains information about a user referenced in other entities
