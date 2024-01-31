@@ -141,8 +141,11 @@ func (r *AppointmentSchedule) Read(ctx context.Context, req resource.ReadRequest
 		return
 	}
 
-	newApp, _, err := r.client.GetApi().GetAppointmentSchedule(ctx, state.ID.ValueString()).Execute()
-	if err != nil {
+	newApp, httpResp, err := r.client.GetApi().GetAppointmentSchedule(ctx, state.ID.ValueString()).Execute()
+	if httpResp != nil && httpResp.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
+		return
+	} else if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Reading Appointment Schedule",
 			fmt.Sprintf("Could not read entity in Udoma, unexpected error: %s", getApiErrorMessage(err)),

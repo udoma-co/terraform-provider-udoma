@@ -52,17 +52,18 @@ func NewCustomFormInputNull() CustomFormInputModel {
 }
 
 type CustomFormInputModel struct {
-	ID           types.String `tfsdk:"id"`
-	Label        types.Map    `tfsdk:"label"`
-	ViewLabel    types.Map    `tfsdk:"view_label"`
-	Placeholder  types.Map    `tfsdk:"placeholder"`
-	Type         types.String `tfsdk:"type"`
-	DefaultValue types.String `tfsdk:"default_value"`
-	Required     types.Bool   `tfsdk:"required"`
-	Ephemeral    types.Bool   `tfsdk:"ephemeral"`
-	Target       types.String `tfsdk:"target"`
-	Attributes   types.Map    `tfsdk:"attributes"`
-	Items        types.List   `tfsdk:"items"`
+	ID               types.String `tfsdk:"id"`
+	Label            types.Map    `tfsdk:"label"`
+	ViewLabel        types.Map    `tfsdk:"view_label"`
+	Placeholder      types.Map    `tfsdk:"placeholder"`
+	Type             types.String `tfsdk:"type"`
+	DefaultValue     types.String `tfsdk:"default_value"`
+	Required         types.Bool   `tfsdk:"required"`
+	Ephemeral        types.Bool   `tfsdk:"ephemeral"`
+	PropagateChanges types.Bool   `tfsdk:"propagate_changes"`
+	Target           types.String `tfsdk:"target"`
+	Attributes       types.Map    `tfsdk:"attributes"`
+	Items            types.List   `tfsdk:"items"`
 }
 
 func NewCustomFormValidationNull() CustomFormValidationModel {
@@ -430,17 +431,18 @@ func (input *CustomFormInputModel) toApiRequest() *v1.FormInput {
 	inputType := v1.FormInputType(input.Type.ValueString())
 
 	return &v1.FormInput{
-		Id:           input.ID.ValueStringPointer(),
-		Label:        modelMapToStringMap(input.Label),
-		ViewLabel:    modelMapToStringMap(input.ViewLabel),
-		Placeholder:  modelMapToStringMap(input.Placeholder),
-		Type:         &inputType,
-		DefaultValue: input.DefaultValue.ValueStringPointer(),
-		Required:     input.Required.ValueBoolPointer(),
-		Ephemeral:    input.Ephemeral.ValueBoolPointer(),
-		Target:       input.Target.ValueStringPointer(),
-		Attributes:   modelMapToStringMap(input.Attributes),
-		Items:        modelListToStringSlice(input.Items),
+		Id:               input.ID.ValueStringPointer(),
+		Label:            modelMapToStringMap(input.Label),
+		ViewLabel:        modelMapToStringMap(input.ViewLabel),
+		Placeholder:      modelMapToStringMap(input.Placeholder),
+		Type:             &inputType,
+		DefaultValue:     input.DefaultValue.ValueStringPointer(),
+		Required:         input.Required.ValueBoolPointer(),
+		PropagateChanges: input.PropagateChanges.ValueBoolPointer(),
+		Ephemeral:        input.Ephemeral.ValueBoolPointer(),
+		Target:           input.Target.ValueStringPointer(),
+		Attributes:       modelMapToStringMap(input.Attributes),
+		Items:            modelListToStringSlice(input.Items),
 	}
 }
 
@@ -480,11 +482,14 @@ func (input *CustomFormInputModel) fromApiResponse(resp *v1.FormInput) (diags di
 	if resp.Required != nil {
 		input.Required = types.BoolValue(*resp.Required)
 	}
+	if resp.PropagateChanges != nil {
+		input.PropagateChanges = types.BoolValue(*resp.PropagateChanges)
+	}
 	if resp.Ephemeral != nil {
-		input.Ephemeral = types.BoolValue(bdp(resp.Ephemeral))
+		input.Ephemeral = types.BoolValue(*resp.Ephemeral)
 	}
 	if resp.Target != nil {
-		input.Target = types.StringValue(sdp(resp.Target))
+		input.Target = types.StringValue(*resp.Target)
 	}
 
 	if resp.Attributes != nil {

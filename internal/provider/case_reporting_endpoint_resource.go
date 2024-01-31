@@ -173,8 +173,11 @@ func (r *CaseReportingEndpoint) Read(ctx context.Context, req resource.ReadReque
 		return
 	}
 
-	endpoint, _, err := r.client.GetApi().GetCaseReportingEndpoint(ctx, state.Code.ValueString()).Execute()
-	if err != nil {
+	endpoint, httpResp, err := r.client.GetApi().GetCaseReportingEndpoint(ctx, state.Code.ValueString()).Execute()
+	if httpResp != nil && httpResp.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
+		return
+	} else if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Reading Case Reporting Endpoint",
 			"Could not read entity from Udoma, unexpected error: "+err.Error(),

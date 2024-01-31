@@ -49,6 +49,13 @@ type workflowDefinitionModel struct {
 	Steps          tf.JsonObjectValue `tfsdk:"steps"`
 }
 
+func NewWorkflowDefinitionModelNull() *workflowDefinitionModel {
+	return &workflowDefinitionModel{
+		InitStep: tf.NewJsonObjectNull(),
+		Steps:    tf.NewJsonObjectNull(),
+	}
+}
+
 func (r *workflowDefinition) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 	resp.TypeName = req.ProviderTypeName + "_workflow_definition"
 }
@@ -195,8 +202,11 @@ func (r *workflowDefinition) Read(ctx context.Context, req resource.ReadRequest,
 		return
 	}
 
-	workflow, _, err := r.client.GetApi().GetWorkflowDefinition(ctx, state.ID.ValueString()).Execute()
-	if err != nil {
+	workflow, httpResp, err := r.client.GetApi().GetWorkflowDefinition(ctx, state.ID.ValueString()).Execute()
+	if httpResp != nil && httpResp.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
+		return
+	} else if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Reading Workflow Definition",
 			"Could not read entity from Udooma, unexpected error: "+getApiErrorMessage(err),
