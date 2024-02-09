@@ -292,7 +292,7 @@ Class | Method | HTTP request | Description
  - [Case](docs/Case.md)
  - [CaseActionEnum](docs/CaseActionEnum.md)
  - [CaseAssignee](docs/CaseAssignee.md)
- - [CaseAutomaticStatusChangeConfig](docs/CaseAutomaticStatusChangeConfig.md)
+ - [CaseAutomaticActionConfig](docs/CaseAutomaticActionConfig.md)
  - [CaseComment](docs/CaseComment.md)
  - [CaseConfig](docs/CaseConfig.md)
  - [CaseFeedbackConfig](docs/CaseFeedbackConfig.md)

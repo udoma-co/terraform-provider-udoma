@@ -23,8 +23,8 @@ type CaseConfig struct {
 	StatusConfig []CaseStatusConfig `json:"status_config,omitempty"`
 	// The configuration for sending out reminders for a case.
 	Reminders []CaseReminderConfig `json:"reminders,omitempty"`
-	// The configuration for automatic status changes of a case. This is used to  determine which status changes are allowed by which party at which time.
-	AutomaticStatusChanges []CaseAutomaticStatusChangeConfig `json:"automatic_status_changes,omitempty"`
+	// The configuration for automatic actions to be performed for case. This is used to perform complex actions, like changing the status of a case or adding an automatic comment.
+	AutomaticActions []CaseAutomaticActionConfig `json:"automatic_actions,omitempty"`
 }
 
 // NewCaseConfig instantiates a new CaseConfig object
@@ -172,36 +172,36 @@ func (o *CaseConfig) SetReminders(v []CaseReminderConfig) {
 	o.Reminders = v
 }
 
-// GetAutomaticStatusChanges returns the AutomaticStatusChanges field value if set, zero value otherwise.
-func (o *CaseConfig) GetAutomaticStatusChanges() []CaseAutomaticStatusChangeConfig {
-	if o == nil || o.AutomaticStatusChanges == nil {
-		var ret []CaseAutomaticStatusChangeConfig
+// GetAutomaticActions returns the AutomaticActions field value if set, zero value otherwise.
+func (o *CaseConfig) GetAutomaticActions() []CaseAutomaticActionConfig {
+	if o == nil || o.AutomaticActions == nil {
+		var ret []CaseAutomaticActionConfig
 		return ret
 	}
-	return o.AutomaticStatusChanges
+	return o.AutomaticActions
 }
 
-// GetAutomaticStatusChangesOk returns a tuple with the AutomaticStatusChanges field value if set, nil otherwise
+// GetAutomaticActionsOk returns a tuple with the AutomaticActions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CaseConfig) GetAutomaticStatusChangesOk() ([]CaseAutomaticStatusChangeConfig, bool) {
-	if o == nil || o.AutomaticStatusChanges == nil {
+func (o *CaseConfig) GetAutomaticActionsOk() ([]CaseAutomaticActionConfig, bool) {
+	if o == nil || o.AutomaticActions == nil {
 		return nil, false
 	}
-	return o.AutomaticStatusChanges, true
+	return o.AutomaticActions, true
 }
 
-// HasAutomaticStatusChanges returns a boolean if a field has been set.
-func (o *CaseConfig) HasAutomaticStatusChanges() bool {
-	if o != nil && o.AutomaticStatusChanges != nil {
+// HasAutomaticActions returns a boolean if a field has been set.
+func (o *CaseConfig) HasAutomaticActions() bool {
+	if o != nil && o.AutomaticActions != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetAutomaticStatusChanges gets a reference to the given []CaseAutomaticStatusChangeConfig and assigns it to the AutomaticStatusChanges field.
-func (o *CaseConfig) SetAutomaticStatusChanges(v []CaseAutomaticStatusChangeConfig) {
-	o.AutomaticStatusChanges = v
+// SetAutomaticActions gets a reference to the given []CaseAutomaticActionConfig and assigns it to the AutomaticActions field.
+func (o *CaseConfig) SetAutomaticActions(v []CaseAutomaticActionConfig) {
+	o.AutomaticActions = v
 }
 
 func (o CaseConfig) MarshalJSON() ([]byte, error) {
@@ -218,8 +218,8 @@ func (o CaseConfig) MarshalJSON() ([]byte, error) {
 	if o.Reminders != nil {
 		toSerialize["reminders"] = o.Reminders
 	}
-	if o.AutomaticStatusChanges != nil {
-		toSerialize["automatic_status_changes"] = o.AutomaticStatusChanges
+	if o.AutomaticActions != nil {
+		toSerialize["automatic_actions"] = o.AutomaticActions
 	}
 	return json.Marshal(toSerialize)
 }

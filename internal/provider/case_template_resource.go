@@ -46,7 +46,7 @@ type caseTemplateModel struct {
 	InfoText       types.Map          `tfsdk:"info_text"`
 	Icon           types.String       `tfsdk:"icon"`
 	CustomInputs   tf.JsonObjectValue `tfsdk:"custom_inputs"`
-	Config         tf.JsonObjectValue `tfsdk:"config"`
+	Config         *CaseConfigModel   `tfsdk:"config"`
 }
 
 func (r *caseTemplate) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -109,11 +109,11 @@ func (r *caseTemplate) Schema(ctx context.Context, req resource.SchemaRequest, r
 				CustomType:  tf.JsonObjectType{},
 				Description: "The custom inputs to be displayed on the reporting page (as serialized JSON)",
 			},
-			"config": schema.StringAttribute{
-				Optional:   true,
-				CustomType: tf.JsonObjectType{},
+			"config": schema.SingleNestedAttribute{
+				Optional: true,
 				Description: "Defines custom behaviour of a case, based on the case template that was " +
-					"used to create it (as serialized JSON)",
+					"used to create it",
+				Attributes: CaseConfigModelNestedSchema(),
 			},
 		},
 	}
@@ -344,6 +344,12 @@ func (model *caseTemplateModel) fromAPI(template *api.CaseTemplate) error {
 		model.CustomInputs = tf.NewJsonObjectValue(string(customInputs))
 	}
 
+	if model.Config == nil {
+		model.Config = &CaseConfigModel{}
+	}
+	// XXX
+	_ = model.Config.fromApiResponse(template.Config)
+
 	return nil
 }
 
@@ -373,18 +379,10 @@ func (model *caseTemplateModel) toAPIRequest() (api.CreateOrUpdateCaseTemplateRe
 		model.CustomInputs = tf.NewJsonObjectValue(string(customInputs))
 	}
 
-	if !model.Config.IsNull() && !model.Config.IsUnknown() {
-		if diag := model.Config.Unmarshal(&template.Config); diag.HasError() {
-			return template, fmt.Errorf("failed to unmarshal config: %v", diag)
-		}
-
-		// update model
-		config, err := json.Marshal(template.Config)
-		if err != nil {
-			return template, fmt.Errorf("failed to marshal config: %w", err)
-		}
-		model.Config = tf.NewJsonObjectValue(string(config))
+	if model.Config == nil {
+		model.Config = NewCaseConfigModelNull()
 	}
+	template.Config = model.Config.toApiRequest()
 
 	return template, nil
 }

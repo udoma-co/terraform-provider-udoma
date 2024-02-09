@@ -438,8 +438,8 @@ func (input *CustomFormInputModel) toApiRequest() *v1.FormInput {
 		Type:             &inputType,
 		DefaultValue:     input.DefaultValue.ValueStringPointer(),
 		Required:         input.Required.ValueBoolPointer(),
-		PropagateChanges: input.PropagateChanges.ValueBoolPointer(),
 		Ephemeral:        input.Ephemeral.ValueBoolPointer(),
+		PropagateChanges: input.PropagateChanges.ValueBoolPointer(),
 		Target:           input.Target.ValueStringPointer(),
 		Attributes:       modelMapToStringMap(input.Attributes),
 		Items:            modelListToStringSlice(input.Items),
@@ -487,6 +487,9 @@ func (input *CustomFormInputModel) fromApiResponse(resp *v1.FormInput) (diags di
 	}
 	if resp.Ephemeral != nil {
 		input.Ephemeral = types.BoolValue(*resp.Ephemeral)
+	}
+	if resp.PropagateChanges != nil {
+		input.PropagateChanges = types.BoolValue(*resp.PropagateChanges)
 	}
 	if resp.Target != nil {
 		input.Target = types.StringValue(*resp.Target)
