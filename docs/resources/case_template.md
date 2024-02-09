@@ -22,7 +22,7 @@ Resource represents a template for raising cases
 
 ### Optional
 
-- `config` (String) Defines custom behaviour of a case, based on the case template that was used to create it (as serialized JSON)
+- `config` (Attributes) Defines custom behaviour of a case, based on the case template that was used to create it (see [below for nested schema](#nestedatt--config))
 - `description` (Map of String) The description of the case template, shown in the reporting page
 - `icon` (String) The icon to be displayed on the reporting page
 - `info_text` (Map of String) A longer introduction text, shown in the case specific reporting page
@@ -35,5 +35,165 @@ Resource represents a template for raising cases
 - `id` (String) The unique identifier for the case template
 - `last_updated` (String)
 - `updated_at` (Number) The date and time the template was last modified
+
+<a id="nestedatt--config"></a>
+### Nested Schema for `config`
+
+Optional:
+
+- `automatic_actions` (Attributes List) The configuration for automatic status changes of a case. This is 
+			used to determine which status changes are allowed by which party at which time. (see [below for nested schema](#nestedatt--config--automatic_actions))
+- `base_config` (String) The ID of the base config that should be used for this case. If 
+			not set, the default config will be used.
+- `extend_default_status_config` (Boolean) Indicates if the default status configuration should be extended 
+			with the custom configuration. If false, the custom configuration will replace 
+			the default configuration. If true, only the actions that are defined in the 
+			custom configuration will override the default ones.
+- `reminders` (Attributes List) The configuration for sending out reminders for a case. (see [below for nested schema](#nestedatt--config--reminders))
+- `status_config` (Attributes List) The configuration for the status transition of a case. This is 
+			used to determine which status changes are allowed by which party at which time. (see [below for nested schema](#nestedatt--config--status_config))
+
+<a id="nestedatt--config--automatic_actions"></a>
+### Nested Schema for `config.automatic_actions`
+
+Required:
+
+- `action` (String) JSON script of the action that should be executed, if the schedule and execution
+        check are successful.
+- `schedule` (Number) The number of days after which the status change should be triggered. The 
+        schedule is reset, whenever the case is updated. 0 means that the action
+        should be triggered immediately.
+- `status` (String) The status in which the case has to be, for the automatic action to be triggered.
+
+
+<a id="nestedatt--config--reminders"></a>
+### Nested Schema for `config.reminders`
+
+Required:
+
+- `schedule` (List of Number) The number of days after which a reminder should be sent out. The list is 
+        taken as provided and a reminder will be set for the amount of days as set
+        in the first element of the list. Once that time has passed, the reminder
+        will be rescheduled for the next element in the list. This is repeated until
+        the list is empty. The values in the list are considered relative to the
+        previous reminder. So [2, 2] will send out a reminder after 2 and 4 days.
+        The reminders will, however, not be sent out on weekends. So if the first
+        reminder is sent out on a Friday, the second reminder will be sent out on
+        Tuesday. All reminders are reset, whenever the case is updated.
+- `status` (String) The status in which the case has to be, for the reminder to be sent out.
+
+
+<a id="nestedatt--config--status_config"></a>
+### Nested Schema for `config.status_config`
+
+Required:
+
+- `action` (String) The action that is allowed to be executed for the below statuses 
+				and parties.
+- `parties` (List of String) The parties that are allowed to execute the action.
+- `source_status` (List of String) A list of possible statuses in which the case must be, so that the 
+				configuration applies.
+
+Optional:
+
+- `feedback` (Attributes List) Optional list of feedback that is requested from the party 
+				executing the action. (see [below for nested schema](#nestedatt--config--status_config--feedback))
+- `notify` (List of String) The list of parties that should be notified of the status change.
+
+<a id="nestedatt--config--status_config--feedback"></a>
+### Nested Schema for `config.status_config.feedback`
+
+Required:
+
+- `id` (String) The ID of the feedback that is requested.
+- `mode` (String) The mode in which the feedback should be requested.
+- `visibility` (List of String) The list of parties that should be able to see the feedback.
+
+Optional:
+
+- `form` (Attributes) A custom form to collect data with (see [below for nested schema](#nestedatt--config--status_config--feedback--form))
+
+<a id="nestedatt--config--status_config--feedback--form"></a>
+### Nested Schema for `config.status_config.feedback.form`
+
+Required:
+
+- `inputs` (Attributes List) The inputs that will be displayed to the user (see [below for nested schema](#nestedatt--config--status_config--feedback--form--inputs))
+- `layout` (Attributes List) The layout of the form, which groups and inputs will be displayed (see [below for nested schema](#nestedatt--config--status_config--feedback--form--layout))
+
+Optional:
+
+- `groups` (Attributes List) The groups of inputs that will be displayed to the user (see [below for nested schema](#nestedatt--config--status_config--feedback--form--groups))
+- `validation` (Attributes List) The validations that will be performed on the data provided by the user (see [below for nested schema](#nestedatt--config--status_config--feedback--form--validation))
+
+<a id="nestedatt--config--status_config--feedback--form--inputs"></a>
+### Nested Schema for `config.status_config.feedback.form.inputs`
+
+Required:
+
+- `id` (String) the ID of the input field, used to identify it and later access the data
+- `label` (Map of String) a map of values, where the key and values are strings
+- `type` (String) The type of the input
+
+Optional:
+
+- `attributes` (Map of String) a map of values, where the key and values are strings
+- `default_value` (String) optional default value for the input field (as a JSON string)
+- `ephemeral` (Boolean) if true, the value of the input will not be persisted
+- `items` (List of String) only used when the type is select or multi select. This is a list of values that the user can choose from
+- `placeholder` (Map of String) a map of values, where the key and values are strings
+- `propagate_changes` (Boolean) if true, changes to the input will be propagated to event listeners for the custom form
+- `required` (Boolean) if true, the user will be required to provide a value
+- `target` (String) the attribute name to use when exporting the result of this input
+- `view_label` (Map of String) a map of values, where the key and values are strings
+
+
+<a id="nestedatt--config--status_config--feedback--form--layout"></a>
+### Nested Schema for `config.status_config.feedback.form.layout`
+
+Required:
+
+- `ref_id` (String) The ID of the entity that will be referenced
+- `ref_type` (String) The type of the entity that will be referenced
+
+
+<a id="nestedatt--config--status_config--feedback--form--groups"></a>
+### Nested Schema for `config.status_config.feedback.form.groups`
+
+Required:
+
+- `id` (String) The ID of the group
+- `items` (Attributes List) the IDs of the inputs that will be displayed in the group (see [below for nested schema](#nestedatt--config--status_config--feedback--form--groups--items))
+- `type` (String) The type of the group
+
+Optional:
+
+- `bottom_divider` (Boolean) if true, a divider will be displayed below the group
+- `info` (Map of String) The info of the group
+- `label` (Map of String) The label of the group
+- `min_size` (Number) the minimum number of items that must be submitted in the group (only used for repeat groups)
+- `target` (String) the attribute name to use when exporting the result of this group (only used for repeat groups)
+- `top_divider` (Boolean) if true, a divider will be displayed above the group
+- `use_item_group` (Boolean) if true, the inputs will be displayed in a group, otherwise they will be displayed in a row
+
+<a id="nestedatt--config--status_config--feedback--form--groups--items"></a>
+### Nested Schema for `config.status_config.feedback.form.groups.use_item_group`
+
+Required:
+
+- `ref_id` (String) The ID of the entity that will be referenced
+- `ref_type` (String) The type of the entity that will be referenced
+
+
+
+<a id="nestedatt--config--status_config--feedback--form--validation"></a>
+### Nested Schema for `config.status_config.feedback.form.validation`
+
+Required:
+
+- `expression` (String) a JS expression that will be evaluated to determine if the validation passes or fails
+- `id` (String) the ID of the validation, used to identify it
+- `message` (Map of String) a map of values, where the key and values are strings
+- `target` (String) the index of the input should be highlighted if the validation fails (nesting is supported via dot notation)
 
 

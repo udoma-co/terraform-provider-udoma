@@ -7,33 +7,12 @@ import (
 	api "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
 )
 
-// func isResourceTimeOut(err error) bool {
-// 	if err == nil {
-// 		return false
-// 	}
-
-// 	timeOut, ok := err.(*resource.TimeoutError)
-// 	if !ok {
-// 		return false
-// 	}
-
-// 	return timeOut.LastError == nil
-// }
-
-// func sp(in string) *string {
-// 	return &in
-// }
-
 func sdp(in *string) string {
 	if in == nil {
 		return ""
 	}
 	return *in
 }
-
-// func bp(in bool) *bool {
-// 	return &in
-// }
 
 func bdp(in *bool) bool {
 	if in == nil {
@@ -55,15 +34,6 @@ func idp32(in *int32) int32 {
 	}
 	return *in
 }
-
-// func anyToMapStringString(v any) map[string]string {
-// 	t := v.(map[string]any)
-// 	nm := map[string]string{}
-// 	for k, v := range t {
-// 		nm[k] = v.(string)
-// 	}
-// 	return nm
-// }
 
 func getApiErrorMessage(err error) string {
 
@@ -113,6 +83,39 @@ func modelListToStringSlice(in basetypes.ListValue) []string {
 	return ret
 }
 
+type EnumType interface {
+	api.CaseStatusEnum | api.CaseActionEnum | api.UserTypeEnum |
+		api.BaseCaseConfig | api.CaseFeedbackModeEnum
+}
+
+func modelListToEnumSlice[T EnumType](in basetypes.ListValue) []T {
+
+	if in.IsNull() || in.IsUnknown() {
+		return nil
+	}
+	ret := make([]T, len(in.Elements()))
+	for i := range in.Elements() {
+		strV := (in.Elements()[i].(types.String)).ValueString()
+		ret[i] = T(strV)
+	}
+
+	return ret
+}
+
+func modelListToInt32Slice(in basetypes.ListValue) []int32 {
+
+	if in.IsNull() || in.IsUnknown() {
+		return nil
+	}
+	ret := make([]int32, len(in.Elements()))
+	for i := range in.Elements() {
+		i64 := (in.Elements()[i].(types.Int64)).ValueInt64()
+		ret[i] = int32(i64)
+	}
+
+	return ret
+}
+
 func stringSliceToValueList(in []string) []attr.Value {
 	ret := make([]attr.Value, len(in))
 	for i := range in {
@@ -121,7 +124,35 @@ func stringSliceToValueList(in []string) []attr.Value {
 	return ret
 }
 
+func enumSliceToValueList[T EnumType](in []T) []attr.Value {
+	ret := make([]attr.Value, len(in))
+	for i := range in {
+		ret[i] = types.StringValue(string(in[i]))
+	}
+	return ret
+}
+
+func int32SliceToValueList(in []int32) []attr.Value {
+	ret := make([]attr.Value, len(in))
+	for i := range in {
+		ret[i] = types.Int64Value(int64(in[i]))
+	}
+	return ret
+}
+
 func i64ToI32Ptr(val int64) *int32 {
 	res := int32(val)
 	return &res
+}
+
+func isEmptyBool(s *bool) bool {
+	return s == nil || !*s
+}
+
+func isEmptyEnum[T EnumType](e *T) bool {
+	if e == nil {
+		return true
+	}
+	strV := string(*e)
+	return strV == ""
 }
