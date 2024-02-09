@@ -17,7 +17,21 @@ func TestAccCaseReportingEndpointResource(t *testing.T) {
 resource udoma_case_reporting_endpoint "test" {
 	name 							= "test endpoint"
 	active 						= true
-	case_templates    = [udoma_case_template.test.id]
+	case_categories   = [
+		{
+			priority = 1
+			name = {
+				"en" = "A case"
+				"de" = "Ein Fall"
+			}
+			templates = [
+				{
+					priority = 1
+					id = udoma_case_template.test.id
+				}
+			]
+		}
+	]
 }
 `,
 				Check: resource.ComposeAggregateTestCheckFunc(
@@ -45,7 +59,21 @@ resource udoma_case_reporting_endpoint "test" {
 resource "udoma_case_reporting_endpoint" "test" {
 	name 							= "updated endpoint"
 	active 						= false
-	case_templates    = [udoma_case_template.test.id]
+	case_categories   = [
+		{
+			priority = 1
+			name = {
+				en = "A case"
+				de = "Ein Fall"
+			}
+			templates = [
+				{
+					priority = 1
+					id = udoma_case_template.test.id
+				}
+			]
+		}
+	]
 }
 `,
 

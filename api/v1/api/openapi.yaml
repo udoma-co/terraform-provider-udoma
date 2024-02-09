@@ -5883,6 +5883,7 @@ components:
         file_type: file_type
         file_name: file_name
         id: id
+        file_sha256: file_sha256
         file_size: 6
         url: url
       properties:
@@ -5906,6 +5907,9 @@ components:
           type: integer
         file_name:
           description: the original file name
+          type: string
+        file_sha256:
+          description: the sha256 sum of the file
           type: string
         thumbnail:
           description: optional link to thumbnail (only if file is an image)
@@ -6096,7 +6100,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 0
+            min_size: 6
             id: id
             label:
               key: label
@@ -6112,7 +6116,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 0
+            min_size: 6
             id: id
             label:
               key: label
@@ -6139,17 +6143,23 @@ components:
         name_expression: name_expression
         name: name
         description: description
+        schedule_before: 0
       properties:
         name:
           description: The name of the appointment template
-          type: string
-        description:
-          description: The description of the appointment template
           type: string
         name_expression:
           description: |
             The expression that is used to generate the name of the appointment from the data that the user has entered when booking the appointment
           type: string
+        description:
+          description: The description of the appointment template
+          type: string
+        schedule_before:
+          description: |
+            Constrain the minimum amount of time between the scheduling and the beginning of the appointment in minutes. Set this to 10 and people won't be able to schedule an appointment that's in less than 10 minutes.
+          format: int32
+          type: integer
         form:
           $ref: '#/components/schemas/CustomForm'
       type: object
@@ -6202,7 +6212,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 0
+            min_size: 6
             id: id
             label:
               key: label
@@ -6218,7 +6228,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 0
+            min_size: 6
             id: id
             label:
               key: label
@@ -6246,6 +6256,7 @@ components:
         name: name
         description: description
         id: id
+        schedule_before: 0
       properties:
         id:
           description: The unique identifier of the appointment template
@@ -6260,6 +6271,11 @@ components:
         description:
           description: The description of the appointment template
           type: string
+        schedule_before:
+          description: |
+            Constrain the minimum amount of time between the scheduling and the beginning of the appointment in minutes. Set this to 10 and people won't be able to schedule an appointment that's in less than 10 minutes.
+          format: int32
+          type: integer
         form:
           $ref: '#/components/schemas/CustomForm'
       required:
@@ -6675,7 +6691,7 @@ components:
             - use_item_group: true
               bottom_divider: true
               top_divider: true
-              min_size: 0
+              min_size: 6
               id: id
               label:
                 key: label
@@ -6691,7 +6707,7 @@ components:
             - use_item_group: true
               bottom_divider: true
               top_divider: true
-              min_size: 0
+              min_size: 6
               id: id
               label:
                 key: label
@@ -6719,6 +6735,7 @@ components:
           name: name
           description: description
           id: id
+          schedule_before: 0
         gap_duration: 6
         slot_duration: 0
         color: color
@@ -6989,6 +7006,7 @@ components:
             file_type: file_type
             file_name: file_name
             id: id
+            file_sha256: file_sha256
             file_size: 6
             url: url
           - ref: ref
@@ -6997,6 +7015,7 @@ components:
             file_type: file_type
             file_name: file_name
             id: id
+            file_sha256: file_sha256
             file_size: 6
             url: url
           updated_at: 2
@@ -7038,6 +7057,7 @@ components:
             file_type: file_type
             file_name: file_name
             id: id
+            file_sha256: file_sha256
             file_size: 6
             url: url
           - ref: ref
@@ -7046,6 +7066,7 @@ components:
             file_type: file_type
             file_name: file_name
             id: id
+            file_sha256: file_sha256
             file_size: 6
             url: url
           updated_at: 2
@@ -7428,6 +7449,7 @@ components:
           file_type: file_type
           file_name: file_name
           id: id
+          file_sha256: file_sha256
           file_size: 6
           url: url
         - ref: ref
@@ -7436,6 +7458,7 @@ components:
           file_type: file_type
           file_name: file_name
           id: id
+          file_sha256: file_sha256
           file_size: 6
           url: url
         updated_at: 2
@@ -7669,6 +7692,7 @@ components:
           file_type: file_type
           file_name: file_name
           id: id
+          file_sha256: file_sha256
           file_size: 6
           url: url
         - ref: ref
@@ -7677,6 +7701,7 @@ components:
           file_type: file_type
           file_name: file_name
           id: id
+          file_sha256: file_sha256
           file_size: 6
           url: url
         visibility:
@@ -7758,14 +7783,28 @@ components:
       type: object
     CreateOrUpdateCaseReportingEndpointRequest:
       example:
+        case_categories:
+        - templates:
+          - id: id
+            priority: 5
+          - id: id
+            priority: 5
+          name:
+            key: name
+          priority: 1
+        - templates:
+          - id: id
+            priority: 5
+          - id: id
+            priority: 5
+          name:
+            key: name
+          priority: 1
         property_refs:
         - property_refs
         - property_refs
         name: name
         active: true
-        case_templates:
-        - case_templates
-        - case_templates
       properties:
         name:
           description: |
@@ -7781,17 +7820,62 @@ components:
           items:
             type: string
           type: array
-        case_templates:
+        case_categories:
           description: |
-            The IDs of the case templates that should be available on this endpoint
+            Categories, used to group the templates, in order not to clutter the Case Reporting Endpoint page.
           items:
+            $ref: '#/components/schemas/CaseReportingEndpointCategory'
+          type: array
+      type: object
+    CaseReportingEndpointCategory:
+      example:
+        templates:
+        - id: id
+          priority: 5
+        - id: id
+          priority: 5
+        name:
+          key: name
+        priority: 1
+      properties:
+        name:
+          additionalProperties:
             type: string
+          description: "a map of values, where the key and values are strings"
+          type: object
+        priority:
+          description: |
+            The priority of the Category, used to decide the order in which to display the categories in the initial Case Reporting Endpoint page.
+          format: int32
+          type: integer
+        templates:
+          description: |
+            A list of Template objects, that contain the unique IDs of the template and priorities.
+          items:
+            $ref: '#/components/schemas/CaseReportingEndpointCategory_templates_inner'
           type: array
       type: object
     CaseReportingEndpoint:
       description: |
         Contains necessary information for displaying a publicly available form,  where tenants who don't have a login can raise cases.
       example:
+        case_categories:
+        - templates:
+          - id: id
+            priority: 5
+          - id: id
+            priority: 5
+          name:
+            key: name
+          priority: 1
+        - templates:
+          - id: id
+            priority: 5
+          - id: id
+            priority: 5
+          name:
+            key: name
+          priority: 1
         code: code
         updated_at: 6
         property_refs:
@@ -7800,9 +7884,6 @@ components:
         name: name
         created_at: 0
         active: true
-        case_templates:
-        - case_templates
-        - case_templates
       properties:
         code:
           description: |
@@ -7830,11 +7911,11 @@ components:
               Optional IDs of the properties for which the endpoint can be used to  raise cases
             type: string
           type: array
-        case_templates:
+        case_categories:
           description: |
-            The IDs of the cases templates that should be available on this endpoint
+            Categories, used to group the templates, in order not to clutter the Case Reporting Endpoint page.
           items:
-            type: string
+            $ref: '#/components/schemas/CaseReportingEndpointCategory'
           type: array
       type: object
     QueryCaseReportingEndpointsRequest:
@@ -7849,7 +7930,24 @@ components:
     QueryCaseReportingEndpointsResponse:
       example:
         endpoints:
-        - code: code
+        - case_categories:
+          - templates:
+            - id: id
+              priority: 5
+            - id: id
+              priority: 5
+            name:
+              key: name
+            priority: 1
+          - templates:
+            - id: id
+              priority: 5
+            - id: id
+              priority: 5
+            name:
+              key: name
+            priority: 1
+          code: code
           updated_at: 6
           property_refs:
           - property_refs
@@ -7857,10 +7955,24 @@ components:
           name: name
           created_at: 0
           active: true
-          case_templates:
-          - case_templates
-          - case_templates
-        - code: code
+        - case_categories:
+          - templates:
+            - id: id
+              priority: 5
+            - id: id
+              priority: 5
+            name:
+              key: name
+            priority: 1
+          - templates:
+            - id: id
+              priority: 5
+            - id: id
+              priority: 5
+            name:
+              key: name
+            priority: 1
+          code: code
           updated_at: 6
           property_refs:
           - property_refs
@@ -7868,9 +7980,6 @@ components:
           name: name
           created_at: 0
           active: true
-          case_templates:
-          - case_templates
-          - case_templates
       properties:
         endpoints:
           items:
@@ -7948,7 +8057,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 0
+            min_size: 6
             id: id
             label:
               key: label
@@ -7964,7 +8073,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 0
+            min_size: 6
             id: id
             label:
               key: label
@@ -8062,7 +8171,7 @@ components:
                 - use_item_group: true
                   bottom_divider: true
                   top_divider: true
-                  min_size: 0
+                  min_size: 6
                   id: id
                   label:
                     key: label
@@ -8078,7 +8187,7 @@ components:
                 - use_item_group: true
                   bottom_divider: true
                   top_divider: true
-                  min_size: 0
+                  min_size: 6
                   id: id
                   label:
                     key: label
@@ -8154,7 +8263,7 @@ components:
                 - use_item_group: true
                   bottom_divider: true
                   top_divider: true
-                  min_size: 0
+                  min_size: 6
                   id: id
                   label:
                     key: label
@@ -8170,7 +8279,7 @@ components:
                 - use_item_group: true
                   bottom_divider: true
                   top_divider: true
-                  min_size: 0
+                  min_size: 6
                   id: id
                   label:
                     key: label
@@ -8257,7 +8366,7 @@ components:
                 - use_item_group: true
                   bottom_divider: true
                   top_divider: true
-                  min_size: 0
+                  min_size: 6
                   id: id
                   label:
                     key: label
@@ -8273,7 +8382,7 @@ components:
                 - use_item_group: true
                   bottom_divider: true
                   top_divider: true
-                  min_size: 0
+                  min_size: 6
                   id: id
                   label:
                     key: label
@@ -8349,7 +8458,7 @@ components:
                 - use_item_group: true
                   bottom_divider: true
                   top_divider: true
-                  min_size: 0
+                  min_size: 6
                   id: id
                   label:
                     key: label
@@ -8365,7 +8474,7 @@ components:
                 - use_item_group: true
                   bottom_divider: true
                   top_divider: true
-                  min_size: 0
+                  min_size: 6
                   id: id
                   label:
                     key: label
@@ -8510,7 +8619,7 @@ components:
               - use_item_group: true
                 bottom_divider: true
                 top_divider: true
-                min_size: 0
+                min_size: 6
                 id: id
                 label:
                   key: label
@@ -8526,7 +8635,7 @@ components:
               - use_item_group: true
                 bottom_divider: true
                 top_divider: true
-                min_size: 0
+                min_size: 6
                 id: id
                 label:
                   key: label
@@ -8602,7 +8711,7 @@ components:
               - use_item_group: true
                 bottom_divider: true
                 top_divider: true
-                min_size: 0
+                min_size: 6
                 id: id
                 label:
                   key: label
@@ -8618,7 +8727,7 @@ components:
               - use_item_group: true
                 bottom_divider: true
                 top_divider: true
-                min_size: 0
+                min_size: 6
                 id: id
                 label:
                   key: label
@@ -8705,7 +8814,7 @@ components:
               - use_item_group: true
                 bottom_divider: true
                 top_divider: true
-                min_size: 0
+                min_size: 6
                 id: id
                 label:
                   key: label
@@ -8721,7 +8830,7 @@ components:
               - use_item_group: true
                 bottom_divider: true
                 top_divider: true
-                min_size: 0
+                min_size: 6
                 id: id
                 label:
                   key: label
@@ -8797,7 +8906,7 @@ components:
               - use_item_group: true
                 bottom_divider: true
                 top_divider: true
-                min_size: 0
+                min_size: 6
                 id: id
                 label:
                   key: label
@@ -8813,7 +8922,7 @@ components:
               - use_item_group: true
                 bottom_divider: true
                 top_divider: true
-                min_size: 0
+                min_size: 6
                 id: id
                 label:
                   key: label
@@ -8938,7 +9047,7 @@ components:
             - use_item_group: true
               bottom_divider: true
               top_divider: true
-              min_size: 0
+              min_size: 6
               id: id
               label:
                 key: label
@@ -8954,7 +9063,7 @@ components:
             - use_item_group: true
               bottom_divider: true
               top_divider: true
-              min_size: 0
+              min_size: 6
               id: id
               label:
                 key: label
@@ -9030,7 +9139,7 @@ components:
             - use_item_group: true
               bottom_divider: true
               top_divider: true
-              min_size: 0
+              min_size: 6
               id: id
               label:
                 key: label
@@ -9046,7 +9155,7 @@ components:
             - use_item_group: true
               bottom_divider: true
               top_divider: true
-              min_size: 0
+              min_size: 6
               id: id
               label:
                 key: label
@@ -9162,7 +9271,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 0
+            min_size: 6
             id: id
             label:
               key: label
@@ -9178,7 +9287,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 0
+            min_size: 6
             id: id
             label:
               key: label
@@ -9262,7 +9371,7 @@ components:
           $ref: '#/components/schemas/CaseStatusEnum'
         schedule:
           description: |
-            The number of days after which the status change should be triggered. The  schedule is reset, whenever the case is updated. 0 means that the action should be triggered immediately.
+            The number of days after which the status change should be triggered. The  schedule is reset, whenever the case is updated. A negative value means that  the action should be triggered immediately.
           type: integer
         action:
           description: |
@@ -9332,7 +9441,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 0
+            min_size: 6
             id: id
             label:
               key: label
@@ -9348,7 +9457,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 0
+            min_size: 6
             id: id
             label:
               key: label
@@ -9446,7 +9555,7 @@ components:
                 - use_item_group: true
                   bottom_divider: true
                   top_divider: true
-                  min_size: 0
+                  min_size: 6
                   id: id
                   label:
                     key: label
@@ -9462,7 +9571,7 @@ components:
                 - use_item_group: true
                   bottom_divider: true
                   top_divider: true
-                  min_size: 0
+                  min_size: 6
                   id: id
                   label:
                     key: label
@@ -9538,7 +9647,7 @@ components:
                 - use_item_group: true
                   bottom_divider: true
                   top_divider: true
-                  min_size: 0
+                  min_size: 6
                   id: id
                   label:
                     key: label
@@ -9554,7 +9663,7 @@ components:
                 - use_item_group: true
                   bottom_divider: true
                   top_divider: true
-                  min_size: 0
+                  min_size: 6
                   id: id
                   label:
                     key: label
@@ -9641,7 +9750,7 @@ components:
                 - use_item_group: true
                   bottom_divider: true
                   top_divider: true
-                  min_size: 0
+                  min_size: 6
                   id: id
                   label:
                     key: label
@@ -9657,7 +9766,7 @@ components:
                 - use_item_group: true
                   bottom_divider: true
                   top_divider: true
-                  min_size: 0
+                  min_size: 6
                   id: id
                   label:
                     key: label
@@ -9733,7 +9842,7 @@ components:
                 - use_item_group: true
                   bottom_divider: true
                   top_divider: true
-                  min_size: 0
+                  min_size: 6
                   id: id
                   label:
                     key: label
@@ -9749,7 +9858,7 @@ components:
                 - use_item_group: true
                   bottom_divider: true
                   top_divider: true
-                  min_size: 0
+                  min_size: 6
                   id: id
                   label:
                     key: label
@@ -10560,7 +10669,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 0
+            min_size: 6
             id: id
             label:
               key: label
@@ -10576,7 +10685,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 0
+            min_size: 6
             id: id
             label:
               key: label
@@ -10884,7 +10993,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 0
+            min_size: 6
             id: id
             label:
               key: label
@@ -10900,7 +11009,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 0
+            min_size: 6
             id: id
             label:
               key: label
@@ -11062,6 +11171,7 @@ components:
           file_type: file_type
           file_name: file_name
           id: id
+          file_sha256: file_sha256
           file_size: 6
           url: url
         name: name
@@ -12979,7 +13089,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 0
+            min_size: 6
             id: id
             label:
               key: label
@@ -12995,7 +13105,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 0
+            min_size: 6
             id: id
             label:
               key: label
@@ -13142,7 +13252,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 0
+            min_size: 6
             id: id
             label:
               key: label
@@ -13158,7 +13268,7 @@ components:
           - use_item_group: true
             bottom_divider: true
             top_divider: true
-            min_size: 0
+            min_size: 6
             id: id
             label:
               key: label
@@ -15697,7 +15807,7 @@ components:
         - use_item_group: true
           bottom_divider: true
           top_divider: true
-          min_size: 0
+          min_size: 6
           id: id
           label:
             key: label
@@ -15713,7 +15823,7 @@ components:
         - use_item_group: true
           bottom_divider: true
           top_divider: true
-          min_size: 0
+          min_size: 6
           id: id
           label:
             key: label
@@ -15784,7 +15894,7 @@ components:
         use_item_group: true
         bottom_divider: true
         top_divider: true
-        min_size: 0
+        min_size: 6
         id: id
         label:
           key: label
@@ -16175,4 +16285,19 @@ components:
         data:
           format: binary
           type: string
+      type: object
+    CaseReportingEndpointCategory_templates_inner:
+      example:
+        id: id
+        priority: 5
+      properties:
+        id:
+          description: |
+            The ID of the Case Template
+          type: string
+        priority:
+          description: |
+            The priority of the Template, used to decide the order in which to display the tempaltes in the category.
+          format: int32
+          type: integer
       type: object

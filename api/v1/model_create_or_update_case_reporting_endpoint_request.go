@@ -22,8 +22,8 @@ type CreateOrUpdateCaseReportingEndpointRequest struct {
 	Active *bool `json:"active,omitempty"`
 	// The IDs of the properties for which the endpoint can be used to raise cases
 	PropertyRefs []string `json:"property_refs,omitempty"`
-	// The IDs of the case templates that should be available on this endpoint
-	CaseTemplates []string `json:"case_templates,omitempty"`
+	// Categories, used to group the templates, in order not to clutter the Case Reporting Endpoint page.
+	CaseCategories []CaseReportingEndpointCategory `json:"case_categories,omitempty"`
 }
 
 // NewCreateOrUpdateCaseReportingEndpointRequest instantiates a new CreateOrUpdateCaseReportingEndpointRequest object
@@ -139,36 +139,36 @@ func (o *CreateOrUpdateCaseReportingEndpointRequest) SetPropertyRefs(v []string)
 	o.PropertyRefs = v
 }
 
-// GetCaseTemplates returns the CaseTemplates field value if set, zero value otherwise.
-func (o *CreateOrUpdateCaseReportingEndpointRequest) GetCaseTemplates() []string {
-	if o == nil || o.CaseTemplates == nil {
-		var ret []string
+// GetCaseCategories returns the CaseCategories field value if set, zero value otherwise.
+func (o *CreateOrUpdateCaseReportingEndpointRequest) GetCaseCategories() []CaseReportingEndpointCategory {
+	if o == nil || o.CaseCategories == nil {
+		var ret []CaseReportingEndpointCategory
 		return ret
 	}
-	return o.CaseTemplates
+	return o.CaseCategories
 }
 
-// GetCaseTemplatesOk returns a tuple with the CaseTemplates field value if set, nil otherwise
+// GetCaseCategoriesOk returns a tuple with the CaseCategories field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CreateOrUpdateCaseReportingEndpointRequest) GetCaseTemplatesOk() ([]string, bool) {
-	if o == nil || o.CaseTemplates == nil {
+func (o *CreateOrUpdateCaseReportingEndpointRequest) GetCaseCategoriesOk() ([]CaseReportingEndpointCategory, bool) {
+	if o == nil || o.CaseCategories == nil {
 		return nil, false
 	}
-	return o.CaseTemplates, true
+	return o.CaseCategories, true
 }
 
-// HasCaseTemplates returns a boolean if a field has been set.
-func (o *CreateOrUpdateCaseReportingEndpointRequest) HasCaseTemplates() bool {
-	if o != nil && o.CaseTemplates != nil {
+// HasCaseCategories returns a boolean if a field has been set.
+func (o *CreateOrUpdateCaseReportingEndpointRequest) HasCaseCategories() bool {
+	if o != nil && o.CaseCategories != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetCaseTemplates gets a reference to the given []string and assigns it to the CaseTemplates field.
-func (o *CreateOrUpdateCaseReportingEndpointRequest) SetCaseTemplates(v []string) {
-	o.CaseTemplates = v
+// SetCaseCategories gets a reference to the given []CaseReportingEndpointCategory and assigns it to the CaseCategories field.
+func (o *CreateOrUpdateCaseReportingEndpointRequest) SetCaseCategories(v []CaseReportingEndpointCategory) {
+	o.CaseCategories = v
 }
 
 func (o CreateOrUpdateCaseReportingEndpointRequest) MarshalJSON() ([]byte, error) {
@@ -182,8 +182,8 @@ func (o CreateOrUpdateCaseReportingEndpointRequest) MarshalJSON() ([]byte, error
 	if o.PropertyRefs != nil {
 		toSerialize["property_refs"] = o.PropertyRefs
 	}
-	if o.CaseTemplates != nil {
-		toSerialize["case_templates"] = o.CaseTemplates
+	if o.CaseCategories != nil {
+		toSerialize["case_categories"] = o.CaseCategories
 	}
 	return json.Marshal(toSerialize)
 }

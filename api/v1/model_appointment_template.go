@@ -23,8 +23,10 @@ type AppointmentTemplate struct {
 	// The expression that is used to generate the name of the appointment from the data that the user has entered when booking the appointment
 	NameExpression string `json:"name_expression"`
 	// The description of the appointment template
-	Description *string    `json:"description,omitempty"`
-	Form        CustomForm `json:"form"`
+	Description *string `json:"description,omitempty"`
+	// Constrain the minimum amount of time between the scheduling and the beginning of the appointment in minutes. Set this to 10 and people won't be able to schedule an appointment that's in less than 10 minutes.
+	ScheduleBefore *int32     `json:"schedule_before,omitempty"`
+	Form           CustomForm `json:"form"`
 }
 
 // NewAppointmentTemplate instantiates a new AppointmentTemplate object
@@ -152,6 +154,38 @@ func (o *AppointmentTemplate) SetDescription(v string) {
 	o.Description = &v
 }
 
+// GetScheduleBefore returns the ScheduleBefore field value if set, zero value otherwise.
+func (o *AppointmentTemplate) GetScheduleBefore() int32 {
+	if o == nil || o.ScheduleBefore == nil {
+		var ret int32
+		return ret
+	}
+	return *o.ScheduleBefore
+}
+
+// GetScheduleBeforeOk returns a tuple with the ScheduleBefore field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AppointmentTemplate) GetScheduleBeforeOk() (*int32, bool) {
+	if o == nil || o.ScheduleBefore == nil {
+		return nil, false
+	}
+	return o.ScheduleBefore, true
+}
+
+// HasScheduleBefore returns a boolean if a field has been set.
+func (o *AppointmentTemplate) HasScheduleBefore() bool {
+	if o != nil && o.ScheduleBefore != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetScheduleBefore gets a reference to the given int32 and assigns it to the ScheduleBefore field.
+func (o *AppointmentTemplate) SetScheduleBefore(v int32) {
+	o.ScheduleBefore = &v
+}
+
 // GetForm returns the Form field value
 func (o *AppointmentTemplate) GetForm() CustomForm {
 	if o == nil {
@@ -189,6 +223,9 @@ func (o AppointmentTemplate) MarshalJSON() ([]byte, error) {
 	}
 	if o.Description != nil {
 		toSerialize["description"] = o.Description
+	}
+	if o.ScheduleBefore != nil {
+		toSerialize["schedule_before"] = o.ScheduleBefore
 	}
 	if true {
 		toSerialize["form"] = o.Form

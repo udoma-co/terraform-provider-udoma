@@ -302,6 +302,8 @@ Class | Method | HTTP request | Description
  - [CaseParty](docs/CaseParty.md)
  - [CaseReminderConfig](docs/CaseReminderConfig.md)
  - [CaseReportingEndpoint](docs/CaseReportingEndpoint.md)
+ - [CaseReportingEndpointCategory](docs/CaseReportingEndpointCategory.md)
+ - [CaseReportingEndpointCategoryTemplatesInner](docs/CaseReportingEndpointCategoryTemplatesInner.md)
  - [CaseStatus](docs/CaseStatus.md)
  - [CaseStatusConfig](docs/CaseStatusConfig.md)
  - [CaseStatusEnum](docs/CaseStatusEnum.md)

@@ -18,10 +18,12 @@ import (
 type CreateOrUpdateAppointmentTemplateRequest struct {
 	// The name of the appointment template
 	Name *string `json:"name,omitempty"`
+	// The expression that is used to generate the name of the appointment from the data that the user has entered when booking the appointment
+	NameExpression *string `json:"name_expression,omitempty"`
 	// The description of the appointment template
 	Description *string `json:"description,omitempty"`
-	// The expression that is used to generate the name of the appointment from the data that the user has entered when booking the appointment
-	NameExpression *string     `json:"name_expression,omitempty"`
+	// Constrain the minimum amount of time between the scheduling and the beginning of the appointment in minutes. Set this to 10 and people won't be able to schedule an appointment that's in less than 10 minutes.
+	ScheduleBefore *int32      `json:"schedule_before,omitempty"`
 	Form           *CustomForm `json:"form,omitempty"`
 }
 
@@ -74,6 +76,38 @@ func (o *CreateOrUpdateAppointmentTemplateRequest) SetName(v string) {
 	o.Name = &v
 }
 
+// GetNameExpression returns the NameExpression field value if set, zero value otherwise.
+func (o *CreateOrUpdateAppointmentTemplateRequest) GetNameExpression() string {
+	if o == nil || o.NameExpression == nil {
+		var ret string
+		return ret
+	}
+	return *o.NameExpression
+}
+
+// GetNameExpressionOk returns a tuple with the NameExpression field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateAppointmentTemplateRequest) GetNameExpressionOk() (*string, bool) {
+	if o == nil || o.NameExpression == nil {
+		return nil, false
+	}
+	return o.NameExpression, true
+}
+
+// HasNameExpression returns a boolean if a field has been set.
+func (o *CreateOrUpdateAppointmentTemplateRequest) HasNameExpression() bool {
+	if o != nil && o.NameExpression != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetNameExpression gets a reference to the given string and assigns it to the NameExpression field.
+func (o *CreateOrUpdateAppointmentTemplateRequest) SetNameExpression(v string) {
+	o.NameExpression = &v
+}
+
 // GetDescription returns the Description field value if set, zero value otherwise.
 func (o *CreateOrUpdateAppointmentTemplateRequest) GetDescription() string {
 	if o == nil || o.Description == nil {
@@ -106,36 +140,36 @@ func (o *CreateOrUpdateAppointmentTemplateRequest) SetDescription(v string) {
 	o.Description = &v
 }
 
-// GetNameExpression returns the NameExpression field value if set, zero value otherwise.
-func (o *CreateOrUpdateAppointmentTemplateRequest) GetNameExpression() string {
-	if o == nil || o.NameExpression == nil {
-		var ret string
+// GetScheduleBefore returns the ScheduleBefore field value if set, zero value otherwise.
+func (o *CreateOrUpdateAppointmentTemplateRequest) GetScheduleBefore() int32 {
+	if o == nil || o.ScheduleBefore == nil {
+		var ret int32
 		return ret
 	}
-	return *o.NameExpression
+	return *o.ScheduleBefore
 }
 
-// GetNameExpressionOk returns a tuple with the NameExpression field value if set, nil otherwise
+// GetScheduleBeforeOk returns a tuple with the ScheduleBefore field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CreateOrUpdateAppointmentTemplateRequest) GetNameExpressionOk() (*string, bool) {
-	if o == nil || o.NameExpression == nil {
+func (o *CreateOrUpdateAppointmentTemplateRequest) GetScheduleBeforeOk() (*int32, bool) {
+	if o == nil || o.ScheduleBefore == nil {
 		return nil, false
 	}
-	return o.NameExpression, true
+	return o.ScheduleBefore, true
 }
 
-// HasNameExpression returns a boolean if a field has been set.
-func (o *CreateOrUpdateAppointmentTemplateRequest) HasNameExpression() bool {
-	if o != nil && o.NameExpression != nil {
+// HasScheduleBefore returns a boolean if a field has been set.
+func (o *CreateOrUpdateAppointmentTemplateRequest) HasScheduleBefore() bool {
+	if o != nil && o.ScheduleBefore != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetNameExpression gets a reference to the given string and assigns it to the NameExpression field.
-func (o *CreateOrUpdateAppointmentTemplateRequest) SetNameExpression(v string) {
-	o.NameExpression = &v
+// SetScheduleBefore gets a reference to the given int32 and assigns it to the ScheduleBefore field.
+func (o *CreateOrUpdateAppointmentTemplateRequest) SetScheduleBefore(v int32) {
+	o.ScheduleBefore = &v
 }
 
 // GetForm returns the Form field value if set, zero value otherwise.
@@ -175,11 +209,14 @@ func (o CreateOrUpdateAppointmentTemplateRequest) MarshalJSON() ([]byte, error) 
 	if o.Name != nil {
 		toSerialize["name"] = o.Name
 	}
+	if o.NameExpression != nil {
+		toSerialize["name_expression"] = o.NameExpression
+	}
 	if o.Description != nil {
 		toSerialize["description"] = o.Description
 	}
-	if o.NameExpression != nil {
-		toSerialize["name_expression"] = o.NameExpression
+	if o.ScheduleBefore != nil {
+		toSerialize["schedule_before"] = o.ScheduleBefore
 	}
 	if o.Form != nil {
 		toSerialize["form"] = o.Form

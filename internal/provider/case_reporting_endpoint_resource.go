@@ -5,13 +5,16 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 	api "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
+	v1 "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
 	"gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/internal/client"
 )
 
@@ -31,17 +34,27 @@ type CaseReportingEndpoint struct {
 	client *client.UdomaClient
 }
 
+type CaseReportingEndpointTemplateModel struct {
+	Priority types.Int64  `tfsdk:"priority"`
+	ID       types.String `tfsdk:"id"`
+}
+
+type CaseReportingEndpointCategoryModel struct {
+	Name      types.Map                            `tfsdk:"name"`
+	Priority  types.Int64                          `tfsdk:"priority"`
+	Templates []CaseReportingEndpointTemplateModel `tfsdk:"templates"`
+}
+
 // CaseReportingEndpointModel describes the resource data model.
 type CaseReportingEndpointModel struct {
-	ID            types.String   `tfsdk:"id"`
-	Code          types.String   `tfsdk:"code"`
-	CreatedAt     types.Int64    `tfsdk:"created_at"`
-	UpdatedAt     types.Int64    `tfsdk:"updated_at"`
-	Name          types.String   `tfsdk:"name"`
-	Active        types.Bool     `tfsdk:"active"`
-	CaseTemplates []types.String `tfsdk:"case_templates"`
-	// PropertyRefs []string `tfsdk:"property_refs"`
-	LastUpdated types.String `tfsdk:"last_updated"`
+	ID             types.String                         `tfsdk:"id"`
+	Code           types.String                         `tfsdk:"code"`
+	CreatedAt      types.Int64                          `tfsdk:"created_at"`
+	UpdatedAt      types.Int64                          `tfsdk:"updated_at"`
+	Name           types.String                         `tfsdk:"name"`
+	Active         types.Bool                           `tfsdk:"active"`
+	CaseCategories []CaseReportingEndpointCategoryModel `tfsdk:"case_categories"`
+	LastUpdated    types.String                         `tfsdk:"last_updated"`
 }
 
 func (r *CaseReportingEndpoint) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -87,10 +100,38 @@ func (r *CaseReportingEndpoint) Schema(ctx context.Context, req resource.SchemaR
 				Optional:            true,
 				MarkdownDescription: "Whether the endpoint is active or not",
 			},
-			"case_templates": schema.ListAttribute{
+			"case_categories": schema.ListNestedAttribute{
 				Required:            true,
 				MarkdownDescription: "Reference to the case templates that can be raised via this endpoint",
-				ElementType:         types.StringType,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"name": schema.MapAttribute{
+							Required:            true,
+							MarkdownDescription: "The name of the category in different languages",
+							ElementType:         types.StringType,
+						},
+						"priority": schema.Int64Attribute{
+							Required:            true,
+							MarkdownDescription: "The priority of the category - used to order the categories",
+						},
+						"templates": schema.ListNestedAttribute{
+							Required:            true,
+							MarkdownDescription: "Reference to the templates that would show up in this category",
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"priority": schema.Int64Attribute{
+										Required:            true,
+										MarkdownDescription: "The priority of the template - used to order the templates in the category",
+									},
+									"id": schema.StringAttribute{
+										Required:            true,
+										MarkdownDescription: "A reference to the appointment template",
+									},
+								},
+							},
+						},
+					},
+				},
 			},
 		},
 	}
@@ -145,11 +186,9 @@ func (r *CaseReportingEndpoint) Create(ctx context.Context, req resource.CreateR
 	}
 
 	// update the tf struct with the new values
-	if err := plan.fromAPI(newEndpoint); err != nil {
-		resp.Diagnostics.AddError(
-			"Error Creating Case Reporting Endpoint",
-			"Could not process API response, unexpected error: "+err.Error(),
-		)
+	diags = plan.fromAPI(newEndpoint)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
 		return
 	}
 
@@ -186,11 +225,9 @@ func (r *CaseReportingEndpoint) Read(ctx context.Context, req resource.ReadReque
 	}
 
 	// update the tf struct with the new values
-	if err := state.fromAPI(endpoint); err != nil {
-		resp.Diagnostics.AddError(
-			"Error Creating Case Reporting Endpoint",
-			"Could not process API response, unexpected error: "+err.Error(),
-		)
+	diags = state.fromAPI(endpoint)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
 		return
 	}
 
@@ -231,11 +268,9 @@ func (r *CaseReportingEndpoint) Update(ctx context.Context, req resource.UpdateR
 	}
 
 	// update the tf struct with the new values
-	if err := plan.fromAPI(newEndpoint); err != nil {
-		resp.Diagnostics.AddError(
-			"Error Updating Case Reporting Endpoint",
-			"Could not process API response, unexpected error: "+err.Error(),
-		)
+	diags = plan.fromAPI(newEndpoint)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
 		return
 	}
 
@@ -274,10 +309,14 @@ func (r *CaseReportingEndpoint) ImportState(ctx context.Context, req resource.Im
 	resource.ImportStatePassthroughID(ctx, path.Root("code"), req, resp)
 }
 
-func (model *CaseReportingEndpointModel) fromAPI(endpoint *api.CaseReportingEndpoint) error {
+func (model *CaseReportingEndpointModel) fromAPI(endpoint *api.CaseReportingEndpoint) (diags diag.Diagnostics) {
 
 	if endpoint == nil {
-		return fmt.Errorf("endpoint is nil")
+		diags.AddError(
+			"endpoint is nil",
+			"the endpoint is used for mapping values to the CaseReportingEndpoint state and cannot be nil",
+		)
+		return
 	}
 
 	model.ID = types.StringValue(sdp(endpoint.Code))
@@ -286,24 +325,96 @@ func (model *CaseReportingEndpointModel) fromAPI(endpoint *api.CaseReportingEndp
 	model.UpdatedAt = types.Int64Value(idp(endpoint.UpdatedAt))
 	model.Name = types.StringValue(sdp(endpoint.Name))
 	model.Active = types.BoolValue(bdp(endpoint.Active))
-	model.CaseTemplates = []types.String{}
-	for _, ct := range endpoint.CaseTemplates {
-		model.CaseTemplates = append(model.CaseTemplates, types.StringValue(ct))
+	model.CaseCategories = make([]CaseReportingEndpointCategoryModel, len(endpoint.CaseCategories))
+
+	for i := range endpoint.CaseCategories {
+		model.CaseCategories[i].Name = basetypes.NewMapNull(types.StringType)
+
+		diags = model.CaseCategories[i].fromAPIResponse(&endpoint.CaseCategories[i])
+		if diags.HasError() {
+			return
+		}
 	}
 
-	return nil
+	return
+}
+
+func (model *CaseReportingEndpointCategoryModel) fromAPIResponse(category *v1.CaseReportingEndpointCategory) (diags diag.Diagnostics) {
+	if category == nil {
+		diags.AddError(
+			"category is nil",
+			"the category is used for mapping values to the CaseReportingEndpoint state and cannot be nil",
+		)
+		return
+	}
+
+	if category.Name != nil {
+		model.Name, diags = types.MapValue(types.StringType, stringMapToValueMap(*category.Name))
+		if diags.HasError() {
+			return
+		}
+	}
+
+	model.Priority = types.Int64Value(int64(idp32(category.Priority)))
+
+	model.Templates = make([]CaseReportingEndpointTemplateModel, len(category.Templates))
+	for i := range category.Templates {
+		diags = model.Templates[i].fromAPIResponse(&category.Templates[i])
+		if diags.HasError() {
+			return
+		}
+	}
+
+	return
+}
+
+func (model *CaseReportingEndpointTemplateModel) fromAPIResponse(template *v1.CaseReportingEndpointCategoryTemplatesInner) (diags diag.Diagnostics) {
+	if template == nil {
+		diags.AddError(
+			"template is nil",
+			"the template is used for mapping values to the CaseReportingEndpoint state and cannot be nil",
+		)
+		return
+	}
+
+	model.ID = types.StringValue(sdp(template.Id))
+	model.Priority = types.Int64Value(int64(idp32(template.Priority)))
+
+	return
+}
+
+func (model *CaseReportingEndpointCategoryModel) toAPIRequest() v1.CaseReportingEndpointCategory {
+
+	category := v1.CaseReportingEndpointCategory{
+		Name:      modelMapToStringMap(model.Name),
+		Priority:  i64ToI32Ptr(model.Priority.ValueInt64()),
+		Templates: make([]v1.CaseReportingEndpointCategoryTemplatesInner, len(model.Templates)),
+	}
+
+	for i := range model.Templates {
+		category.Templates[i] = model.Templates[i].toAPIRequest()
+	}
+
+	return category
+}
+
+func (model *CaseReportingEndpointTemplateModel) toAPIRequest() v1.CaseReportingEndpointCategoryTemplatesInner {
+	return v1.CaseReportingEndpointCategoryTemplatesInner{
+		Id:       model.ID.ValueStringPointer(),
+		Priority: i64ToI32Ptr(model.Priority.ValueInt64()),
+	}
 }
 
 func (model *CaseReportingEndpointModel) toAPIRequest() (api.CreateOrUpdateCaseReportingEndpointRequest, error) {
 
 	endpoint := api.CreateOrUpdateCaseReportingEndpointRequest{
-		Name:          model.Name.ValueStringPointer(),
-		Active:        model.Active.ValueBoolPointer(),
-		CaseTemplates: []string{},
+		Name:           model.Name.ValueStringPointer(),
+		Active:         model.Active.ValueBoolPointer(),
+		CaseCategories: make([]api.CaseReportingEndpointCategory, len(model.CaseCategories)),
 	}
 
-	for _, ct := range model.CaseTemplates {
-		endpoint.CaseTemplates = append(endpoint.CaseTemplates, ct.ValueString())
+	for i := range model.CaseCategories {
+		endpoint.CaseCategories[i] = model.CaseCategories[i].toAPIRequest()
 	}
 
 	return endpoint, nil

@@ -195,12 +195,14 @@ func (p *UdomaProvider) Configure(ctx context.Context, req provider.ConfigureReq
 
 func (p *UdomaProvider) Resources(ctx context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
+		NewAttachment,
 		NewAppointmentSchedule,
 		NewAppointmentTemplate,
 		NewCaseReportingEndpoint,
 		NewCaseTemplate,
 		NewCustomIDGenerator,
 		NewCustomerScript,
+		NewDocument,
 		NewDocumentTemplate,
 		NewWorkflowDefinition,
 		NewWorkflowEntrypoint,
