@@ -28,6 +28,8 @@ type Attachment struct {
 	FileSize *int64 `json:"file_size,omitempty"`
 	// the original file name
 	FileName *string `json:"file_name,omitempty"`
+	// the sha256 sum of the file
+	FileSha256 *string `json:"file_sha256,omitempty"`
 	// optional link to thumbnail (only if file is an image)
 	Thumbnail *string `json:"thumbnail,omitempty"`
 	// link to the actual file, through whitch it can be downloaded
@@ -243,6 +245,38 @@ func (o *Attachment) SetFileName(v string) {
 	o.FileName = &v
 }
 
+// GetFileSha256 returns the FileSha256 field value if set, zero value otherwise.
+func (o *Attachment) GetFileSha256() string {
+	if o == nil || o.FileSha256 == nil {
+		var ret string
+		return ret
+	}
+	return *o.FileSha256
+}
+
+// GetFileSha256Ok returns a tuple with the FileSha256 field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Attachment) GetFileSha256Ok() (*string, bool) {
+	if o == nil || o.FileSha256 == nil {
+		return nil, false
+	}
+	return o.FileSha256, true
+}
+
+// HasFileSha256 returns a boolean if a field has been set.
+func (o *Attachment) HasFileSha256() bool {
+	if o != nil && o.FileSha256 != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetFileSha256 gets a reference to the given string and assigns it to the FileSha256 field.
+func (o *Attachment) SetFileSha256(v string) {
+	o.FileSha256 = &v
+}
+
 // GetThumbnail returns the Thumbnail field value if set, zero value otherwise.
 func (o *Attachment) GetThumbnail() string {
 	if o == nil || o.Thumbnail == nil {
@@ -326,6 +360,9 @@ func (o Attachment) MarshalJSON() ([]byte, error) {
 	}
 	if o.FileName != nil {
 		toSerialize["file_name"] = o.FileName
+	}
+	if o.FileSha256 != nil {
+		toSerialize["file_sha256"] = o.FileSha256
 	}
 	if o.Thumbnail != nil {
 		toSerialize["thumbnail"] = o.Thumbnail
