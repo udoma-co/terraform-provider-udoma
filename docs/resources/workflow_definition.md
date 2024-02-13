@@ -37,5 +37,3 @@ Resource represents a defintion of a workflow
 - `id` (String) The unique identifier for the workflow definition
 - `last_updated` (String)
 - `updated_at` (Number) The date and time the workflow definition was last modified
-
-

@@ -43,5 +43,3 @@ Optional:
 - `allow_text_edit` (Boolean) Controls if the generated document may be edited by the user
 - `include_footer_branding` (Boolean) Controls if the footer branding should be included in the document PDF
 - `include_page_numbers` (Boolean) Controls if the page numbers should be included in the document PDF
-
-

@@ -31,5 +31,3 @@ Resource represents a customer specific JS script
 - `id` (String) The unique identifier for the customer script
 - `last_updated` (String)
 - `updated_at` (Number) The date and time the customer script was last modified
-
-

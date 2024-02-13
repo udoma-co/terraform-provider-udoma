@@ -36,5 +36,3 @@ Resource represents an entrypoint to a workflow
 - `id` (String) The unique identifier for the workflow entrypoint.
 - `last_updated` (String)
 - `updated_at` (Number) The date and time the workflow entrypoint was last modified
-
-
