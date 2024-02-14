@@ -17,7 +17,7 @@ Resource represents an endpoint where tenants can raise cases
 
 ### Required
 
-- `case_templates` (List of String) Reference to the case templates that can be raised via this endpoint
+- `case_categories` (Attributes List) Reference to the case templates that can be raised via this endpoint (see [below for nested schema](#nestedatt--case_categories))
 - `name` (String) The name of the endpoint, shown in the admin page
 
 ### Optional
@@ -32,4 +32,19 @@ Resource represents an endpoint where tenants can raise cases
 - `last_updated` (String)
 - `updated_at` (Number) The date and time the endpoint was last modified
 
+<a id="nestedatt--case_categories"></a>
+### Nested Schema for `case_categories`
 
+Required:
+
+- `name` (Map of String) The name of the category in different languages
+- `priority` (Number) The priority of the category - used to order the categories
+- `templates` (Attributes List) Reference to the templates that would show up in this category (see [below for nested schema](#nestedatt--case_categories--templates))
+
+<a id="nestedatt--case_categories--templates"></a>
+### Nested Schema for `case_categories.templates`
+
+Required:
+
+- `id` (String) A reference to the appointment template
+- `priority` (Number) The priority of the template - used to order the templates in the category

@@ -27,5 +27,3 @@ Resource represents an appointment schedule
 ### Read-Only
 
 - `id` (String) The unique identifier for the appointment schedule
-
-

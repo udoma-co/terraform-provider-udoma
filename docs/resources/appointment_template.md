@@ -108,5 +108,3 @@ Required:
 - `id` (String) the ID of the validation, used to identify it
 - `message` (Map of String) a map of values, where the key and values are strings
 - `target` (String) the index of the input should be highlighted if the validation fails (nesting is supported via dot notation)
-
-

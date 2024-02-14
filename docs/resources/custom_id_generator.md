@@ -30,5 +30,3 @@ Resource represents a custom ID generator
 - `id` (String) The unique identifier for the custom ID generator
 - `last_updated` (String)
 - `updated_at` (Number) The date and time the custom ID generatorwas last modified
-
-

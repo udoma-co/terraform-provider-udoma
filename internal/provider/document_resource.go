@@ -78,7 +78,7 @@ func (d *Document) Schema(ctx context.Context, req resource.SchemaRequest, resp 
 				Description: "The path of the document in the storage",
 			},
 			"public": schema.BoolAttribute{
-				Required:    true,
+				Optional:    true,
 				Description: "The public status of the document",
 			},
 			"ref_type": schema.StringAttribute{

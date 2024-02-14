@@ -22,5 +22,3 @@ Resource represents a JSON source file that may contain references to other file
 ### Read-Only
 
 - `content` (String) The content read from the file, with other files referenced by the source attribute embedded
-
-
