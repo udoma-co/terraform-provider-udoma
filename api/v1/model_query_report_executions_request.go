@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the QueryReportExecutionsRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &QueryReportExecutionsRequest{}
+
 // QueryReportExecutionsRequest The data required to query report executions
 type QueryReportExecutionsRequest struct {
 	ReportRef *string                    `json:"report_ref,omitempty"`
@@ -40,7 +43,7 @@ func NewQueryReportExecutionsRequestWithDefaults() *QueryReportExecutionsRequest
 
 // GetReportRef returns the ReportRef field value if set, zero value otherwise.
 func (o *QueryReportExecutionsRequest) GetReportRef() string {
-	if o == nil || o.ReportRef == nil {
+	if o == nil || IsNil(o.ReportRef) {
 		var ret string
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *QueryReportExecutionsRequest) GetReportRef() string {
 // GetReportRefOk returns a tuple with the ReportRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryReportExecutionsRequest) GetReportRefOk() (*string, bool) {
-	if o == nil || o.ReportRef == nil {
+	if o == nil || IsNil(o.ReportRef) {
 		return nil, false
 	}
 	return o.ReportRef, true
@@ -58,7 +61,7 @@ func (o *QueryReportExecutionsRequest) GetReportRefOk() (*string, bool) {
 
 // HasReportRef returns a boolean if a field has been set.
 func (o *QueryReportExecutionsRequest) HasReportRef() bool {
-	if o != nil && o.ReportRef != nil {
+	if o != nil && !IsNil(o.ReportRef) {
 		return true
 	}
 
@@ -72,7 +75,7 @@ func (o *QueryReportExecutionsRequest) SetReportRef(v string) {
 
 // GetStatus returns the Status field value if set, zero value otherwise.
 func (o *QueryReportExecutionsRequest) GetStatus() ReportExecutionStatusEnum {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		var ret ReportExecutionStatusEnum
 		return ret
 	}
@@ -82,7 +85,7 @@ func (o *QueryReportExecutionsRequest) GetStatus() ReportExecutionStatusEnum {
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryReportExecutionsRequest) GetStatusOk() (*ReportExecutionStatusEnum, bool) {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
 	return o.Status, true
@@ -90,7 +93,7 @@ func (o *QueryReportExecutionsRequest) GetStatusOk() (*ReportExecutionStatusEnum
 
 // HasStatus returns a boolean if a field has been set.
 func (o *QueryReportExecutionsRequest) HasStatus() bool {
-	if o != nil && o.Status != nil {
+	if o != nil && !IsNil(o.Status) {
 		return true
 	}
 
@@ -104,7 +107,7 @@ func (o *QueryReportExecutionsRequest) SetStatus(v ReportExecutionStatusEnum) {
 
 // GetLimit returns the Limit field value if set, zero value otherwise.
 func (o *QueryReportExecutionsRequest) GetLimit() int32 {
-	if o == nil || o.Limit == nil {
+	if o == nil || IsNil(o.Limit) {
 		var ret int32
 		return ret
 	}
@@ -114,7 +117,7 @@ func (o *QueryReportExecutionsRequest) GetLimit() int32 {
 // GetLimitOk returns a tuple with the Limit field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryReportExecutionsRequest) GetLimitOk() (*int32, bool) {
-	if o == nil || o.Limit == nil {
+	if o == nil || IsNil(o.Limit) {
 		return nil, false
 	}
 	return o.Limit, true
@@ -122,7 +125,7 @@ func (o *QueryReportExecutionsRequest) GetLimitOk() (*int32, bool) {
 
 // HasLimit returns a boolean if a field has been set.
 func (o *QueryReportExecutionsRequest) HasLimit() bool {
-	if o != nil && o.Limit != nil {
+	if o != nil && !IsNil(o.Limit) {
 		return true
 	}
 
@@ -135,17 +138,25 @@ func (o *QueryReportExecutionsRequest) SetLimit(v int32) {
 }
 
 func (o QueryReportExecutionsRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.ReportRef != nil {
-		toSerialize["report_ref"] = o.ReportRef
-	}
-	if o.Status != nil {
-		toSerialize["status"] = o.Status
-	}
-	if o.Limit != nil {
-		toSerialize["limit"] = o.Limit
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o QueryReportExecutionsRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.ReportRef) {
+		toSerialize["report_ref"] = o.ReportRef
+	}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.Limit) {
+		toSerialize["limit"] = o.Limit
+	}
+	return toSerialize, nil
 }
 
 type NullableQueryReportExecutionsRequest struct {

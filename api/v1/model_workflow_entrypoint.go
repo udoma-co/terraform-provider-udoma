@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the WorkflowEntrypoint type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &WorkflowEntrypoint{}
+
 // WorkflowEntrypoint an app entrypoint to a workflow execution
 type WorkflowEntrypoint struct {
 	// the ID of the entrypoint
@@ -56,7 +59,7 @@ func NewWorkflowEntrypointWithDefaults() *WorkflowEntrypoint {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *WorkflowEntrypoint) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -66,7 +69,7 @@ func (o *WorkflowEntrypoint) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowEntrypoint) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -74,7 +77,7 @@ func (o *WorkflowEntrypoint) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *WorkflowEntrypoint) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -88,7 +91,7 @@ func (o *WorkflowEntrypoint) SetId(v string) {
 
 // GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
 func (o *WorkflowEntrypoint) GetCreatedAt() int64 {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		var ret int64
 		return ret
 	}
@@ -98,7 +101,7 @@ func (o *WorkflowEntrypoint) GetCreatedAt() int64 {
 // GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowEntrypoint) GetCreatedAtOk() (*int64, bool) {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
 	return o.CreatedAt, true
@@ -106,7 +109,7 @@ func (o *WorkflowEntrypoint) GetCreatedAtOk() (*int64, bool) {
 
 // HasCreatedAt returns a boolean if a field has been set.
 func (o *WorkflowEntrypoint) HasCreatedAt() bool {
-	if o != nil && o.CreatedAt != nil {
+	if o != nil && !IsNil(o.CreatedAt) {
 		return true
 	}
 
@@ -120,7 +123,7 @@ func (o *WorkflowEntrypoint) SetCreatedAt(v int64) {
 
 // GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
 func (o *WorkflowEntrypoint) GetUpdatedAt() int64 {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		var ret int64
 		return ret
 	}
@@ -130,7 +133,7 @@ func (o *WorkflowEntrypoint) GetUpdatedAt() int64 {
 // GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowEntrypoint) GetUpdatedAtOk() (*int64, bool) {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
 	return o.UpdatedAt, true
@@ -138,7 +141,7 @@ func (o *WorkflowEntrypoint) GetUpdatedAtOk() (*int64, bool) {
 
 // HasUpdatedAt returns a boolean if a field has been set.
 func (o *WorkflowEntrypoint) HasUpdatedAt() bool {
-	if o != nil && o.UpdatedAt != nil {
+	if o != nil && !IsNil(o.UpdatedAt) {
 		return true
 	}
 
@@ -152,7 +155,7 @@ func (o *WorkflowEntrypoint) SetUpdatedAt(v int64) {
 
 // GetWorkflowDefinitionRef returns the WorkflowDefinitionRef field value if set, zero value otherwise.
 func (o *WorkflowEntrypoint) GetWorkflowDefinitionRef() string {
-	if o == nil || o.WorkflowDefinitionRef == nil {
+	if o == nil || IsNil(o.WorkflowDefinitionRef) {
 		var ret string
 		return ret
 	}
@@ -162,7 +165,7 @@ func (o *WorkflowEntrypoint) GetWorkflowDefinitionRef() string {
 // GetWorkflowDefinitionRefOk returns a tuple with the WorkflowDefinitionRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowEntrypoint) GetWorkflowDefinitionRefOk() (*string, bool) {
-	if o == nil || o.WorkflowDefinitionRef == nil {
+	if o == nil || IsNil(o.WorkflowDefinitionRef) {
 		return nil, false
 	}
 	return o.WorkflowDefinitionRef, true
@@ -170,7 +173,7 @@ func (o *WorkflowEntrypoint) GetWorkflowDefinitionRefOk() (*string, bool) {
 
 // HasWorkflowDefinitionRef returns a boolean if a field has been set.
 func (o *WorkflowEntrypoint) HasWorkflowDefinitionRef() bool {
-	if o != nil && o.WorkflowDefinitionRef != nil {
+	if o != nil && !IsNil(o.WorkflowDefinitionRef) {
 		return true
 	}
 
@@ -184,7 +187,7 @@ func (o *WorkflowEntrypoint) SetWorkflowDefinitionRef(v string) {
 
 // GetAppLocation returns the AppLocation field value if set, zero value otherwise.
 func (o *WorkflowEntrypoint) GetAppLocation() WorkflowEntrypointLocation {
-	if o == nil || o.AppLocation == nil {
+	if o == nil || IsNil(o.AppLocation) {
 		var ret WorkflowEntrypointLocation
 		return ret
 	}
@@ -194,7 +197,7 @@ func (o *WorkflowEntrypoint) GetAppLocation() WorkflowEntrypointLocation {
 // GetAppLocationOk returns a tuple with the AppLocation field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowEntrypoint) GetAppLocationOk() (*WorkflowEntrypointLocation, bool) {
-	if o == nil || o.AppLocation == nil {
+	if o == nil || IsNil(o.AppLocation) {
 		return nil, false
 	}
 	return o.AppLocation, true
@@ -202,7 +205,7 @@ func (o *WorkflowEntrypoint) GetAppLocationOk() (*WorkflowEntrypointLocation, bo
 
 // HasAppLocation returns a boolean if a field has been set.
 func (o *WorkflowEntrypoint) HasAppLocation() bool {
-	if o != nil && o.AppLocation != nil {
+	if o != nil && !IsNil(o.AppLocation) {
 		return true
 	}
 
@@ -216,7 +219,7 @@ func (o *WorkflowEntrypoint) SetAppLocation(v WorkflowEntrypointLocation) {
 
 // GetLocationFilter returns the LocationFilter field value if set, zero value otherwise.
 func (o *WorkflowEntrypoint) GetLocationFilter() string {
-	if o == nil || o.LocationFilter == nil {
+	if o == nil || IsNil(o.LocationFilter) {
 		var ret string
 		return ret
 	}
@@ -226,7 +229,7 @@ func (o *WorkflowEntrypoint) GetLocationFilter() string {
 // GetLocationFilterOk returns a tuple with the LocationFilter field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowEntrypoint) GetLocationFilterOk() (*string, bool) {
-	if o == nil || o.LocationFilter == nil {
+	if o == nil || IsNil(o.LocationFilter) {
 		return nil, false
 	}
 	return o.LocationFilter, true
@@ -234,7 +237,7 @@ func (o *WorkflowEntrypoint) GetLocationFilterOk() (*string, bool) {
 
 // HasLocationFilter returns a boolean if a field has been set.
 func (o *WorkflowEntrypoint) HasLocationFilter() bool {
-	if o != nil && o.LocationFilter != nil {
+	if o != nil && !IsNil(o.LocationFilter) {
 		return true
 	}
 
@@ -248,7 +251,7 @@ func (o *WorkflowEntrypoint) SetLocationFilter(v string) {
 
 // GetIcon returns the Icon field value if set, zero value otherwise.
 func (o *WorkflowEntrypoint) GetIcon() string {
-	if o == nil || o.Icon == nil {
+	if o == nil || IsNil(o.Icon) {
 		var ret string
 		return ret
 	}
@@ -258,7 +261,7 @@ func (o *WorkflowEntrypoint) GetIcon() string {
 // GetIconOk returns a tuple with the Icon field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowEntrypoint) GetIconOk() (*string, bool) {
-	if o == nil || o.Icon == nil {
+	if o == nil || IsNil(o.Icon) {
 		return nil, false
 	}
 	return o.Icon, true
@@ -266,7 +269,7 @@ func (o *WorkflowEntrypoint) GetIconOk() (*string, bool) {
 
 // HasIcon returns a boolean if a field has been set.
 func (o *WorkflowEntrypoint) HasIcon() bool {
-	if o != nil && o.Icon != nil {
+	if o != nil && !IsNil(o.Icon) {
 		return true
 	}
 
@@ -280,7 +283,7 @@ func (o *WorkflowEntrypoint) SetIcon(v string) {
 
 // GetLabel returns the Label field value if set, zero value otherwise.
 func (o *WorkflowEntrypoint) GetLabel() map[string]string {
-	if o == nil || o.Label == nil {
+	if o == nil || IsNil(o.Label) {
 		var ret map[string]string
 		return ret
 	}
@@ -290,7 +293,7 @@ func (o *WorkflowEntrypoint) GetLabel() map[string]string {
 // GetLabelOk returns a tuple with the Label field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowEntrypoint) GetLabelOk() (*map[string]string, bool) {
-	if o == nil || o.Label == nil {
+	if o == nil || IsNil(o.Label) {
 		return nil, false
 	}
 	return o.Label, true
@@ -298,7 +301,7 @@ func (o *WorkflowEntrypoint) GetLabelOk() (*map[string]string, bool) {
 
 // HasLabel returns a boolean if a field has been set.
 func (o *WorkflowEntrypoint) HasLabel() bool {
-	if o != nil && o.Label != nil {
+	if o != nil && !IsNil(o.Label) {
 		return true
 	}
 
@@ -312,7 +315,7 @@ func (o *WorkflowEntrypoint) SetLabel(v map[string]string) {
 
 // GetInitScript returns the InitScript field value if set, zero value otherwise.
 func (o *WorkflowEntrypoint) GetInitScript() string {
-	if o == nil || o.InitScript == nil {
+	if o == nil || IsNil(o.InitScript) {
 		var ret string
 		return ret
 	}
@@ -322,7 +325,7 @@ func (o *WorkflowEntrypoint) GetInitScript() string {
 // GetInitScriptOk returns a tuple with the InitScript field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowEntrypoint) GetInitScriptOk() (*string, bool) {
-	if o == nil || o.InitScript == nil {
+	if o == nil || IsNil(o.InitScript) {
 		return nil, false
 	}
 	return o.InitScript, true
@@ -330,7 +333,7 @@ func (o *WorkflowEntrypoint) GetInitScriptOk() (*string, bool) {
 
 // HasInitScript returns a boolean if a field has been set.
 func (o *WorkflowEntrypoint) HasInitScript() bool {
-	if o != nil && o.InitScript != nil {
+	if o != nil && !IsNil(o.InitScript) {
 		return true
 	}
 
@@ -344,7 +347,7 @@ func (o *WorkflowEntrypoint) SetInitScript(v string) {
 
 // GetSkipInitStep returns the SkipInitStep field value if set, zero value otherwise.
 func (o *WorkflowEntrypoint) GetSkipInitStep() bool {
-	if o == nil || o.SkipInitStep == nil {
+	if o == nil || IsNil(o.SkipInitStep) {
 		var ret bool
 		return ret
 	}
@@ -354,7 +357,7 @@ func (o *WorkflowEntrypoint) GetSkipInitStep() bool {
 // GetSkipInitStepOk returns a tuple with the SkipInitStep field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowEntrypoint) GetSkipInitStepOk() (*bool, bool) {
-	if o == nil || o.SkipInitStep == nil {
+	if o == nil || IsNil(o.SkipInitStep) {
 		return nil, false
 	}
 	return o.SkipInitStep, true
@@ -362,7 +365,7 @@ func (o *WorkflowEntrypoint) GetSkipInitStepOk() (*bool, bool) {
 
 // HasSkipInitStep returns a boolean if a field has been set.
 func (o *WorkflowEntrypoint) HasSkipInitStep() bool {
-	if o != nil && o.SkipInitStep != nil {
+	if o != nil && !IsNil(o.SkipInitStep) {
 		return true
 	}
 
@@ -375,38 +378,46 @@ func (o *WorkflowEntrypoint) SetSkipInitStep(v bool) {
 }
 
 func (o WorkflowEntrypoint) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.CreatedAt != nil {
-		toSerialize["created_at"] = o.CreatedAt
-	}
-	if o.UpdatedAt != nil {
-		toSerialize["updated_at"] = o.UpdatedAt
-	}
-	if o.WorkflowDefinitionRef != nil {
-		toSerialize["workflow_definition_ref"] = o.WorkflowDefinitionRef
-	}
-	if o.AppLocation != nil {
-		toSerialize["app_location"] = o.AppLocation
-	}
-	if o.LocationFilter != nil {
-		toSerialize["location_filter"] = o.LocationFilter
-	}
-	if o.Icon != nil {
-		toSerialize["icon"] = o.Icon
-	}
-	if o.Label != nil {
-		toSerialize["label"] = o.Label
-	}
-	if o.InitScript != nil {
-		toSerialize["init_script"] = o.InitScript
-	}
-	if o.SkipInitStep != nil {
-		toSerialize["skip_init_step"] = o.SkipInitStep
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o WorkflowEntrypoint) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.CreatedAt) {
+		toSerialize["created_at"] = o.CreatedAt
+	}
+	if !IsNil(o.UpdatedAt) {
+		toSerialize["updated_at"] = o.UpdatedAt
+	}
+	if !IsNil(o.WorkflowDefinitionRef) {
+		toSerialize["workflow_definition_ref"] = o.WorkflowDefinitionRef
+	}
+	if !IsNil(o.AppLocation) {
+		toSerialize["app_location"] = o.AppLocation
+	}
+	if !IsNil(o.LocationFilter) {
+		toSerialize["location_filter"] = o.LocationFilter
+	}
+	if !IsNil(o.Icon) {
+		toSerialize["icon"] = o.Icon
+	}
+	if !IsNil(o.Label) {
+		toSerialize["label"] = o.Label
+	}
+	if !IsNil(o.InitScript) {
+		toSerialize["init_script"] = o.InitScript
+	}
+	if !IsNil(o.SkipInitStep) {
+		toSerialize["skip_init_step"] = o.SkipInitStep
+	}
+	return toSerialize, nil
 }
 
 type NullableWorkflowEntrypoint struct {

@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the QueryWorkflowExecutionsRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &QueryWorkflowExecutionsRequest{}
+
 // QueryWorkflowExecutionsRequest a request for querying workflow executions
 type QueryWorkflowExecutionsRequest struct {
 	WorkflowRef                NullableString         `json:"workflow_ref,omitempty"`
@@ -43,7 +46,7 @@ func NewQueryWorkflowExecutionsRequestWithDefaults() *QueryWorkflowExecutionsReq
 
 // GetWorkflowRef returns the WorkflowRef field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *QueryWorkflowExecutionsRequest) GetWorkflowRef() string {
-	if o == nil || o.WorkflowRef.Get() == nil {
+	if o == nil || IsNil(o.WorkflowRef.Get()) {
 		var ret string
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *QueryWorkflowExecutionsRequest) UnsetWorkflowRef() {
 
 // GetParentWorkflowExecutionRef returns the ParentWorkflowExecutionRef field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *QueryWorkflowExecutionsRequest) GetParentWorkflowExecutionRef() string {
-	if o == nil || o.ParentWorkflowExecutionRef.Get() == nil {
+	if o == nil || IsNil(o.ParentWorkflowExecutionRef.Get()) {
 		var ret string
 		return ret
 	}
@@ -129,7 +132,7 @@ func (o *QueryWorkflowExecutionsRequest) UnsetParentWorkflowExecutionRef() {
 
 // GetActive returns the Active field value if set, zero value otherwise.
 func (o *QueryWorkflowExecutionsRequest) GetActive() QueryBooleanParameter {
-	if o == nil || o.Active == nil {
+	if o == nil || IsNil(o.Active) {
 		var ret QueryBooleanParameter
 		return ret
 	}
@@ -139,7 +142,7 @@ func (o *QueryWorkflowExecutionsRequest) GetActive() QueryBooleanParameter {
 // GetActiveOk returns a tuple with the Active field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryWorkflowExecutionsRequest) GetActiveOk() (*QueryBooleanParameter, bool) {
-	if o == nil || o.Active == nil {
+	if o == nil || IsNil(o.Active) {
 		return nil, false
 	}
 	return o.Active, true
@@ -147,7 +150,7 @@ func (o *QueryWorkflowExecutionsRequest) GetActiveOk() (*QueryBooleanParameter, 
 
 // HasActive returns a boolean if a field has been set.
 func (o *QueryWorkflowExecutionsRequest) HasActive() bool {
-	if o != nil && o.Active != nil {
+	if o != nil && !IsNil(o.Active) {
 		return true
 	}
 
@@ -161,7 +164,7 @@ func (o *QueryWorkflowExecutionsRequest) SetActive(v QueryBooleanParameter) {
 
 // GetFinished returns the Finished field value if set, zero value otherwise.
 func (o *QueryWorkflowExecutionsRequest) GetFinished() QueryBooleanParameter {
-	if o == nil || o.Finished == nil {
+	if o == nil || IsNil(o.Finished) {
 		var ret QueryBooleanParameter
 		return ret
 	}
@@ -171,7 +174,7 @@ func (o *QueryWorkflowExecutionsRequest) GetFinished() QueryBooleanParameter {
 // GetFinishedOk returns a tuple with the Finished field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryWorkflowExecutionsRequest) GetFinishedOk() (*QueryBooleanParameter, bool) {
-	if o == nil || o.Finished == nil {
+	if o == nil || IsNil(o.Finished) {
 		return nil, false
 	}
 	return o.Finished, true
@@ -179,7 +182,7 @@ func (o *QueryWorkflowExecutionsRequest) GetFinishedOk() (*QueryBooleanParameter
 
 // HasFinished returns a boolean if a field has been set.
 func (o *QueryWorkflowExecutionsRequest) HasFinished() bool {
-	if o != nil && o.Finished != nil {
+	if o != nil && !IsNil(o.Finished) {
 		return true
 	}
 
@@ -193,7 +196,7 @@ func (o *QueryWorkflowExecutionsRequest) SetFinished(v QueryBooleanParameter) {
 
 // GetArchived returns the Archived field value if set, zero value otherwise.
 func (o *QueryWorkflowExecutionsRequest) GetArchived() QueryBooleanParameter {
-	if o == nil || o.Archived == nil {
+	if o == nil || IsNil(o.Archived) {
 		var ret QueryBooleanParameter
 		return ret
 	}
@@ -203,7 +206,7 @@ func (o *QueryWorkflowExecutionsRequest) GetArchived() QueryBooleanParameter {
 // GetArchivedOk returns a tuple with the Archived field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryWorkflowExecutionsRequest) GetArchivedOk() (*QueryBooleanParameter, bool) {
-	if o == nil || o.Archived == nil {
+	if o == nil || IsNil(o.Archived) {
 		return nil, false
 	}
 	return o.Archived, true
@@ -211,7 +214,7 @@ func (o *QueryWorkflowExecutionsRequest) GetArchivedOk() (*QueryBooleanParameter
 
 // HasArchived returns a boolean if a field has been set.
 func (o *QueryWorkflowExecutionsRequest) HasArchived() bool {
-	if o != nil && o.Archived != nil {
+	if o != nil && !IsNil(o.Archived) {
 		return true
 	}
 
@@ -225,7 +228,7 @@ func (o *QueryWorkflowExecutionsRequest) SetArchived(v QueryBooleanParameter) {
 
 // GetLimit returns the Limit field value if set, zero value otherwise.
 func (o *QueryWorkflowExecutionsRequest) GetLimit() int32 {
-	if o == nil || o.Limit == nil {
+	if o == nil || IsNil(o.Limit) {
 		var ret int32
 		return ret
 	}
@@ -235,7 +238,7 @@ func (o *QueryWorkflowExecutionsRequest) GetLimit() int32 {
 // GetLimitOk returns a tuple with the Limit field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryWorkflowExecutionsRequest) GetLimitOk() (*int32, bool) {
-	if o == nil || o.Limit == nil {
+	if o == nil || IsNil(o.Limit) {
 		return nil, false
 	}
 	return o.Limit, true
@@ -243,7 +246,7 @@ func (o *QueryWorkflowExecutionsRequest) GetLimitOk() (*int32, bool) {
 
 // HasLimit returns a boolean if a field has been set.
 func (o *QueryWorkflowExecutionsRequest) HasLimit() bool {
-	if o != nil && o.Limit != nil {
+	if o != nil && !IsNil(o.Limit) {
 		return true
 	}
 
@@ -256,6 +259,14 @@ func (o *QueryWorkflowExecutionsRequest) SetLimit(v int32) {
 }
 
 func (o QueryWorkflowExecutionsRequest) MarshalJSON() ([]byte, error) {
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o QueryWorkflowExecutionsRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.WorkflowRef.IsSet() {
 		toSerialize["workflow_ref"] = o.WorkflowRef.Get()
@@ -263,19 +274,19 @@ func (o QueryWorkflowExecutionsRequest) MarshalJSON() ([]byte, error) {
 	if o.ParentWorkflowExecutionRef.IsSet() {
 		toSerialize["parent_workflow_execution_ref"] = o.ParentWorkflowExecutionRef.Get()
 	}
-	if o.Active != nil {
+	if !IsNil(o.Active) {
 		toSerialize["active"] = o.Active
 	}
-	if o.Finished != nil {
+	if !IsNil(o.Finished) {
 		toSerialize["finished"] = o.Finished
 	}
-	if o.Archived != nil {
+	if !IsNil(o.Archived) {
 		toSerialize["archived"] = o.Archived
 	}
-	if o.Limit != nil {
+	if !IsNil(o.Limit) {
 		toSerialize["limit"] = o.Limit
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableQueryWorkflowExecutionsRequest struct {

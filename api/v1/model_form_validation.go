@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the FormValidation type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &FormValidation{}
+
 // FormValidation a custom validation that is used to validate data provided by the user
 type FormValidation struct {
 	// the ID of the validation, used to identify it
@@ -45,7 +48,7 @@ func NewFormValidationWithDefaults() *FormValidation {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *FormValidation) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -55,7 +58,7 @@ func (o *FormValidation) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FormValidation) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -63,7 +66,7 @@ func (o *FormValidation) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *FormValidation) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -77,7 +80,7 @@ func (o *FormValidation) SetId(v string) {
 
 // GetExpression returns the Expression field value if set, zero value otherwise.
 func (o *FormValidation) GetExpression() string {
-	if o == nil || o.Expression == nil {
+	if o == nil || IsNil(o.Expression) {
 		var ret string
 		return ret
 	}
@@ -87,7 +90,7 @@ func (o *FormValidation) GetExpression() string {
 // GetExpressionOk returns a tuple with the Expression field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FormValidation) GetExpressionOk() (*string, bool) {
-	if o == nil || o.Expression == nil {
+	if o == nil || IsNil(o.Expression) {
 		return nil, false
 	}
 	return o.Expression, true
@@ -95,7 +98,7 @@ func (o *FormValidation) GetExpressionOk() (*string, bool) {
 
 // HasExpression returns a boolean if a field has been set.
 func (o *FormValidation) HasExpression() bool {
-	if o != nil && o.Expression != nil {
+	if o != nil && !IsNil(o.Expression) {
 		return true
 	}
 
@@ -109,7 +112,7 @@ func (o *FormValidation) SetExpression(v string) {
 
 // GetTarget returns the Target field value if set, zero value otherwise.
 func (o *FormValidation) GetTarget() string {
-	if o == nil || o.Target == nil {
+	if o == nil || IsNil(o.Target) {
 		var ret string
 		return ret
 	}
@@ -119,7 +122,7 @@ func (o *FormValidation) GetTarget() string {
 // GetTargetOk returns a tuple with the Target field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FormValidation) GetTargetOk() (*string, bool) {
-	if o == nil || o.Target == nil {
+	if o == nil || IsNil(o.Target) {
 		return nil, false
 	}
 	return o.Target, true
@@ -127,7 +130,7 @@ func (o *FormValidation) GetTargetOk() (*string, bool) {
 
 // HasTarget returns a boolean if a field has been set.
 func (o *FormValidation) HasTarget() bool {
-	if o != nil && o.Target != nil {
+	if o != nil && !IsNil(o.Target) {
 		return true
 	}
 
@@ -141,7 +144,7 @@ func (o *FormValidation) SetTarget(v string) {
 
 // GetMessage returns the Message field value if set, zero value otherwise.
 func (o *FormValidation) GetMessage() map[string]string {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		var ret map[string]string
 		return ret
 	}
@@ -151,7 +154,7 @@ func (o *FormValidation) GetMessage() map[string]string {
 // GetMessageOk returns a tuple with the Message field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FormValidation) GetMessageOk() (*map[string]string, bool) {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		return nil, false
 	}
 	return o.Message, true
@@ -159,7 +162,7 @@ func (o *FormValidation) GetMessageOk() (*map[string]string, bool) {
 
 // HasMessage returns a boolean if a field has been set.
 func (o *FormValidation) HasMessage() bool {
-	if o != nil && o.Message != nil {
+	if o != nil && !IsNil(o.Message) {
 		return true
 	}
 
@@ -172,20 +175,28 @@ func (o *FormValidation) SetMessage(v map[string]string) {
 }
 
 func (o FormValidation) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Expression != nil {
-		toSerialize["expression"] = o.Expression
-	}
-	if o.Target != nil {
-		toSerialize["target"] = o.Target
-	}
-	if o.Message != nil {
-		toSerialize["message"] = o.Message
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o FormValidation) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Expression) {
+		toSerialize["expression"] = o.Expression
+	}
+	if !IsNil(o.Target) {
+		toSerialize["target"] = o.Target
+	}
+	if !IsNil(o.Message) {
+		toSerialize["message"] = o.Message
+	}
+	return toSerialize, nil
 }
 
 type NullableFormValidation struct {

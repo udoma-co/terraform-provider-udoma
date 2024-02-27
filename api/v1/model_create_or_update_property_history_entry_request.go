@@ -11,8 +11,13 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the CreateOrUpdatePropertyHistoryEntryRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CreateOrUpdatePropertyHistoryEntryRequest{}
 
 // CreateOrUpdatePropertyHistoryEntryRequest struct for CreateOrUpdatePropertyHistoryEntryRequest
 type CreateOrUpdatePropertyHistoryEntryRequest struct {
@@ -22,6 +27,8 @@ type CreateOrUpdatePropertyHistoryEntryRequest struct {
 	// Text describing the event
 	Comment *string `json:"comment,omitempty"`
 }
+
+type _CreateOrUpdatePropertyHistoryEntryRequest CreateOrUpdatePropertyHistoryEntryRequest
 
 // NewCreateOrUpdatePropertyHistoryEntryRequest instantiates a new CreateOrUpdatePropertyHistoryEntryRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -92,7 +99,7 @@ func (o *CreateOrUpdatePropertyHistoryEntryRequest) SetEventType(v PropertyHisto
 
 // GetComment returns the Comment field value if set, zero value otherwise.
 func (o *CreateOrUpdatePropertyHistoryEntryRequest) GetComment() string {
-	if o == nil || o.Comment == nil {
+	if o == nil || IsNil(o.Comment) {
 		var ret string
 		return ret
 	}
@@ -102,7 +109,7 @@ func (o *CreateOrUpdatePropertyHistoryEntryRequest) GetComment() string {
 // GetCommentOk returns a tuple with the Comment field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdatePropertyHistoryEntryRequest) GetCommentOk() (*string, bool) {
-	if o == nil || o.Comment == nil {
+	if o == nil || IsNil(o.Comment) {
 		return nil, false
 	}
 	return o.Comment, true
@@ -110,7 +117,7 @@ func (o *CreateOrUpdatePropertyHistoryEntryRequest) GetCommentOk() (*string, boo
 
 // HasComment returns a boolean if a field has been set.
 func (o *CreateOrUpdatePropertyHistoryEntryRequest) HasComment() bool {
-	if o != nil && o.Comment != nil {
+	if o != nil && !IsNil(o.Comment) {
 		return true
 	}
 
@@ -123,17 +130,59 @@ func (o *CreateOrUpdatePropertyHistoryEntryRequest) SetComment(v string) {
 }
 
 func (o CreateOrUpdatePropertyHistoryEntryRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["date"] = o.Date
-	}
-	if true {
-		toSerialize["eventType"] = o.EventType
-	}
-	if o.Comment != nil {
-		toSerialize["comment"] = o.Comment
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CreateOrUpdatePropertyHistoryEntryRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["date"] = o.Date
+	toSerialize["eventType"] = o.EventType
+	if !IsNil(o.Comment) {
+		toSerialize["comment"] = o.Comment
+	}
+	return toSerialize, nil
+}
+
+func (o *CreateOrUpdatePropertyHistoryEntryRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"date",
+		"eventType",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCreateOrUpdatePropertyHistoryEntryRequest := _CreateOrUpdatePropertyHistoryEntryRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCreateOrUpdatePropertyHistoryEntryRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CreateOrUpdatePropertyHistoryEntryRequest(varCreateOrUpdatePropertyHistoryEntryRequest)
+
+	return err
 }
 
 type NullableCreateOrUpdatePropertyHistoryEntryRequest struct {

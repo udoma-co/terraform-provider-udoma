@@ -3659,6 +3659,89 @@ paths:
           content: {}
           description: Internal server error
       summary: Update the user preferences
+  /price-index:
+    post:
+      description: Gets price index
+      operationId: getPriceIndexPoint
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PriceIndexPointQueryRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceIndexPoint'
+          description: Successful operation
+        "403":
+          content: {}
+          description: Access denied
+        "404":
+          content: {}
+          description: Requested entity not found
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Get the PriceIndexPoint
+    put:
+      description: Upload a new value for the inflation index
+      operationId: internalAddPriceIndexPoint
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePriceIndexPointRequest'
+        description: Price point that will be pushed to the database
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceIndexPoint'
+          description: Successful operation
+        "400":
+          content: {}
+          description: Invalid input provided
+        "403":
+          content: {}
+          description: Access denied
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Push a new value for the inflation index
+  /price-index/latest/{countryCode}:
+    get:
+      operationId: getLatestPriceIndexPoint
+      parameters:
+      - description: The country to get the latest inflation index of
+        explode: false
+        in: path
+        name: countryCode
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceIndexPoint'
+          description: Successful operation
+        "403":
+          content: {}
+          description: Access denied
+        "404":
+          content: {}
+          description: Requested entity not found
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Get the current latest PriceIndexPoint
   /properties:
     post:
       description: Get all properties that are registured under the user's organization
@@ -7988,16 +8071,12 @@ components:
       type: object
     GenerateCaseReportingEndpointNoticeRequest:
       example:
-        languages:
-        - languages
-        - languages
+        language: language
       properties:
-        languages:
+        language:
           description: |
             The language in which the PDF should be generated
-          items:
-            type: string
-          type: array
+          type: string
       type: object
     CreateOrUpdateCaseTemplateRequest:
       example:
@@ -12004,6 +12083,65 @@ components:
           items:
             $ref: '#/components/schemas/NotificationType'
           type: array
+      type: object
+    CreatePriceIndexPointRequest:
+      description: used to create a price index point
+      example:
+        date: 0
+        country: country
+        value: ""
+      properties:
+        value:
+          description: the value of the price index at the point of pushing
+          type: double
+        date:
+          description: the time point(usually month) the value corresponds to
+          format: int64
+          type: integer
+        country:
+          description: the country code the price index belongs to
+          type: string
+      type: object
+    PriceIndexPoint:
+      description: |
+        A value, corresponding to a specific time point, that represends the price index value of a specific country.
+      example:
+        date: 6
+        country: country
+        created_at: 0
+        id: id
+        value: ""
+      properties:
+        id:
+          description: the unique ID of the value
+          type: string
+        created_at:
+          description: timestamp indicating when it was pushed
+          format: int64
+          type: integer
+        value:
+          description: the value of the price index at the point of pushing
+          type: double
+        date:
+          description: the time point(usually month) the value corresponds to
+          format: int64
+          type: integer
+        country:
+          description: the country code the price index belongs to
+          type: string
+      type: object
+    PriceIndexPointQueryRequest:
+      description: The request used to query a price index point
+      example:
+        date: 0
+        country_code: country_code
+      properties:
+        country_code:
+          type: string
+        date:
+          description: The date to look for.
+          format: int64
+          type: integer
       type: object
     QueryPropertiesRequest:
       description: Request used to get a list of properties for the curent user

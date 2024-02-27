@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CreateOrUpdateCaseReportingEndpointRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CreateOrUpdateCaseReportingEndpointRequest{}
+
 // CreateOrUpdateCaseReportingEndpointRequest struct for CreateOrUpdateCaseReportingEndpointRequest
 type CreateOrUpdateCaseReportingEndpointRequest struct {
 	// The name of the endpoint (only used in admin pages)
@@ -45,7 +48,7 @@ func NewCreateOrUpdateCaseReportingEndpointRequestWithDefaults() *CreateOrUpdate
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *CreateOrUpdateCaseReportingEndpointRequest) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -55,7 +58,7 @@ func (o *CreateOrUpdateCaseReportingEndpointRequest) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateCaseReportingEndpointRequest) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -63,7 +66,7 @@ func (o *CreateOrUpdateCaseReportingEndpointRequest) GetNameOk() (*string, bool)
 
 // HasName returns a boolean if a field has been set.
 func (o *CreateOrUpdateCaseReportingEndpointRequest) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -77,7 +80,7 @@ func (o *CreateOrUpdateCaseReportingEndpointRequest) SetName(v string) {
 
 // GetActive returns the Active field value if set, zero value otherwise.
 func (o *CreateOrUpdateCaseReportingEndpointRequest) GetActive() bool {
-	if o == nil || o.Active == nil {
+	if o == nil || IsNil(o.Active) {
 		var ret bool
 		return ret
 	}
@@ -87,7 +90,7 @@ func (o *CreateOrUpdateCaseReportingEndpointRequest) GetActive() bool {
 // GetActiveOk returns a tuple with the Active field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateCaseReportingEndpointRequest) GetActiveOk() (*bool, bool) {
-	if o == nil || o.Active == nil {
+	if o == nil || IsNil(o.Active) {
 		return nil, false
 	}
 	return o.Active, true
@@ -95,7 +98,7 @@ func (o *CreateOrUpdateCaseReportingEndpointRequest) GetActiveOk() (*bool, bool)
 
 // HasActive returns a boolean if a field has been set.
 func (o *CreateOrUpdateCaseReportingEndpointRequest) HasActive() bool {
-	if o != nil && o.Active != nil {
+	if o != nil && !IsNil(o.Active) {
 		return true
 	}
 
@@ -109,7 +112,7 @@ func (o *CreateOrUpdateCaseReportingEndpointRequest) SetActive(v bool) {
 
 // GetPropertyRefs returns the PropertyRefs field value if set, zero value otherwise.
 func (o *CreateOrUpdateCaseReportingEndpointRequest) GetPropertyRefs() []string {
-	if o == nil || o.PropertyRefs == nil {
+	if o == nil || IsNil(o.PropertyRefs) {
 		var ret []string
 		return ret
 	}
@@ -119,7 +122,7 @@ func (o *CreateOrUpdateCaseReportingEndpointRequest) GetPropertyRefs() []string 
 // GetPropertyRefsOk returns a tuple with the PropertyRefs field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateCaseReportingEndpointRequest) GetPropertyRefsOk() ([]string, bool) {
-	if o == nil || o.PropertyRefs == nil {
+	if o == nil || IsNil(o.PropertyRefs) {
 		return nil, false
 	}
 	return o.PropertyRefs, true
@@ -127,7 +130,7 @@ func (o *CreateOrUpdateCaseReportingEndpointRequest) GetPropertyRefsOk() ([]stri
 
 // HasPropertyRefs returns a boolean if a field has been set.
 func (o *CreateOrUpdateCaseReportingEndpointRequest) HasPropertyRefs() bool {
-	if o != nil && o.PropertyRefs != nil {
+	if o != nil && !IsNil(o.PropertyRefs) {
 		return true
 	}
 
@@ -141,7 +144,7 @@ func (o *CreateOrUpdateCaseReportingEndpointRequest) SetPropertyRefs(v []string)
 
 // GetCaseCategories returns the CaseCategories field value if set, zero value otherwise.
 func (o *CreateOrUpdateCaseReportingEndpointRequest) GetCaseCategories() []CaseReportingEndpointCategory {
-	if o == nil || o.CaseCategories == nil {
+	if o == nil || IsNil(o.CaseCategories) {
 		var ret []CaseReportingEndpointCategory
 		return ret
 	}
@@ -151,7 +154,7 @@ func (o *CreateOrUpdateCaseReportingEndpointRequest) GetCaseCategories() []CaseR
 // GetCaseCategoriesOk returns a tuple with the CaseCategories field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateCaseReportingEndpointRequest) GetCaseCategoriesOk() ([]CaseReportingEndpointCategory, bool) {
-	if o == nil || o.CaseCategories == nil {
+	if o == nil || IsNil(o.CaseCategories) {
 		return nil, false
 	}
 	return o.CaseCategories, true
@@ -159,7 +162,7 @@ func (o *CreateOrUpdateCaseReportingEndpointRequest) GetCaseCategoriesOk() ([]Ca
 
 // HasCaseCategories returns a boolean if a field has been set.
 func (o *CreateOrUpdateCaseReportingEndpointRequest) HasCaseCategories() bool {
-	if o != nil && o.CaseCategories != nil {
+	if o != nil && !IsNil(o.CaseCategories) {
 		return true
 	}
 
@@ -172,20 +175,28 @@ func (o *CreateOrUpdateCaseReportingEndpointRequest) SetCaseCategories(v []CaseR
 }
 
 func (o CreateOrUpdateCaseReportingEndpointRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.Active != nil {
-		toSerialize["active"] = o.Active
-	}
-	if o.PropertyRefs != nil {
-		toSerialize["property_refs"] = o.PropertyRefs
-	}
-	if o.CaseCategories != nil {
-		toSerialize["case_categories"] = o.CaseCategories
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CreateOrUpdateCaseReportingEndpointRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Active) {
+		toSerialize["active"] = o.Active
+	}
+	if !IsNil(o.PropertyRefs) {
+		toSerialize["property_refs"] = o.PropertyRefs
+	}
+	if !IsNil(o.CaseCategories) {
+		toSerialize["case_categories"] = o.CaseCategories
+	}
+	return toSerialize, nil
 }
 
 type NullableCreateOrUpdateCaseReportingEndpointRequest struct {

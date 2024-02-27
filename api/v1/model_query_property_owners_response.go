@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the QueryPropertyOwnersResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &QueryPropertyOwnersResponse{}
+
 // QueryPropertyOwnersResponse A list of all property owners that are requested by the user
 type QueryPropertyOwnersResponse struct {
 	// number of items to include in the result
@@ -45,7 +48,7 @@ func NewQueryPropertyOwnersResponseWithDefaults() *QueryPropertyOwnersResponse {
 
 // GetLimit returns the Limit field value if set, zero value otherwise.
 func (o *QueryPropertyOwnersResponse) GetLimit() int64 {
-	if o == nil || o.Limit == nil {
+	if o == nil || IsNil(o.Limit) {
 		var ret int64
 		return ret
 	}
@@ -55,7 +58,7 @@ func (o *QueryPropertyOwnersResponse) GetLimit() int64 {
 // GetLimitOk returns a tuple with the Limit field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryPropertyOwnersResponse) GetLimitOk() (*int64, bool) {
-	if o == nil || o.Limit == nil {
+	if o == nil || IsNil(o.Limit) {
 		return nil, false
 	}
 	return o.Limit, true
@@ -63,7 +66,7 @@ func (o *QueryPropertyOwnersResponse) GetLimitOk() (*int64, bool) {
 
 // HasLimit returns a boolean if a field has been set.
 func (o *QueryPropertyOwnersResponse) HasLimit() bool {
-	if o != nil && o.Limit != nil {
+	if o != nil && !IsNil(o.Limit) {
 		return true
 	}
 
@@ -77,7 +80,7 @@ func (o *QueryPropertyOwnersResponse) SetLimit(v int64) {
 
 // GetOffset returns the Offset field value if set, zero value otherwise.
 func (o *QueryPropertyOwnersResponse) GetOffset() int64 {
-	if o == nil || o.Offset == nil {
+	if o == nil || IsNil(o.Offset) {
 		var ret int64
 		return ret
 	}
@@ -87,7 +90,7 @@ func (o *QueryPropertyOwnersResponse) GetOffset() int64 {
 // GetOffsetOk returns a tuple with the Offset field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryPropertyOwnersResponse) GetOffsetOk() (*int64, bool) {
-	if o == nil || o.Offset == nil {
+	if o == nil || IsNil(o.Offset) {
 		return nil, false
 	}
 	return o.Offset, true
@@ -95,7 +98,7 @@ func (o *QueryPropertyOwnersResponse) GetOffsetOk() (*int64, bool) {
 
 // HasOffset returns a boolean if a field has been set.
 func (o *QueryPropertyOwnersResponse) HasOffset() bool {
-	if o != nil && o.Offset != nil {
+	if o != nil && !IsNil(o.Offset) {
 		return true
 	}
 
@@ -109,7 +112,7 @@ func (o *QueryPropertyOwnersResponse) SetOffset(v int64) {
 
 // GetPropertyOwners returns the PropertyOwners field value if set, zero value otherwise.
 func (o *QueryPropertyOwnersResponse) GetPropertyOwners() []PropertyOwner {
-	if o == nil || o.PropertyOwners == nil {
+	if o == nil || IsNil(o.PropertyOwners) {
 		var ret []PropertyOwner
 		return ret
 	}
@@ -119,7 +122,7 @@ func (o *QueryPropertyOwnersResponse) GetPropertyOwners() []PropertyOwner {
 // GetPropertyOwnersOk returns a tuple with the PropertyOwners field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryPropertyOwnersResponse) GetPropertyOwnersOk() ([]PropertyOwner, bool) {
-	if o == nil || o.PropertyOwners == nil {
+	if o == nil || IsNil(o.PropertyOwners) {
 		return nil, false
 	}
 	return o.PropertyOwners, true
@@ -127,7 +130,7 @@ func (o *QueryPropertyOwnersResponse) GetPropertyOwnersOk() ([]PropertyOwner, bo
 
 // HasPropertyOwners returns a boolean if a field has been set.
 func (o *QueryPropertyOwnersResponse) HasPropertyOwners() bool {
-	if o != nil && o.PropertyOwners != nil {
+	if o != nil && !IsNil(o.PropertyOwners) {
 		return true
 	}
 
@@ -141,7 +144,7 @@ func (o *QueryPropertyOwnersResponse) SetPropertyOwners(v []PropertyOwner) {
 
 // GetTotalCount returns the TotalCount field value if set, zero value otherwise.
 func (o *QueryPropertyOwnersResponse) GetTotalCount() int64 {
-	if o == nil || o.TotalCount == nil {
+	if o == nil || IsNil(o.TotalCount) {
 		var ret int64
 		return ret
 	}
@@ -151,7 +154,7 @@ func (o *QueryPropertyOwnersResponse) GetTotalCount() int64 {
 // GetTotalCountOk returns a tuple with the TotalCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryPropertyOwnersResponse) GetTotalCountOk() (*int64, bool) {
-	if o == nil || o.TotalCount == nil {
+	if o == nil || IsNil(o.TotalCount) {
 		return nil, false
 	}
 	return o.TotalCount, true
@@ -159,7 +162,7 @@ func (o *QueryPropertyOwnersResponse) GetTotalCountOk() (*int64, bool) {
 
 // HasTotalCount returns a boolean if a field has been set.
 func (o *QueryPropertyOwnersResponse) HasTotalCount() bool {
-	if o != nil && o.TotalCount != nil {
+	if o != nil && !IsNil(o.TotalCount) {
 		return true
 	}
 
@@ -172,20 +175,28 @@ func (o *QueryPropertyOwnersResponse) SetTotalCount(v int64) {
 }
 
 func (o QueryPropertyOwnersResponse) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Limit != nil {
-		toSerialize["limit"] = o.Limit
-	}
-	if o.Offset != nil {
-		toSerialize["offset"] = o.Offset
-	}
-	if o.PropertyOwners != nil {
-		toSerialize["property_owners"] = o.PropertyOwners
-	}
-	if o.TotalCount != nil {
-		toSerialize["total_count"] = o.TotalCount
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o QueryPropertyOwnersResponse) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Limit) {
+		toSerialize["limit"] = o.Limit
+	}
+	if !IsNil(o.Offset) {
+		toSerialize["offset"] = o.Offset
+	}
+	if !IsNil(o.PropertyOwners) {
+		toSerialize["property_owners"] = o.PropertyOwners
+	}
+	if !IsNil(o.TotalCount) {
+		toSerialize["total_count"] = o.TotalCount
+	}
+	return toSerialize, nil
 }
 
 type NullableQueryPropertyOwnersResponse struct {

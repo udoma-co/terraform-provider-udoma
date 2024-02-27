@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CreateConnectorCredentialsRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CreateConnectorCredentialsRequest{}
+
 // CreateConnectorCredentialsRequest Request used to create connector credentials
 type CreateConnectorCredentialsRequest struct {
 	// id of the connector
@@ -39,7 +42,7 @@ func NewCreateConnectorCredentialsRequestWithDefaults() *CreateConnectorCredenti
 
 // GetConnectorId returns the ConnectorId field value if set, zero value otherwise.
 func (o *CreateConnectorCredentialsRequest) GetConnectorId() string {
-	if o == nil || o.ConnectorId == nil {
+	if o == nil || IsNil(o.ConnectorId) {
 		var ret string
 		return ret
 	}
@@ -49,7 +52,7 @@ func (o *CreateConnectorCredentialsRequest) GetConnectorId() string {
 // GetConnectorIdOk returns a tuple with the ConnectorId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateConnectorCredentialsRequest) GetConnectorIdOk() (*string, bool) {
-	if o == nil || o.ConnectorId == nil {
+	if o == nil || IsNil(o.ConnectorId) {
 		return nil, false
 	}
 	return o.ConnectorId, true
@@ -57,7 +60,7 @@ func (o *CreateConnectorCredentialsRequest) GetConnectorIdOk() (*string, bool) {
 
 // HasConnectorId returns a boolean if a field has been set.
 func (o *CreateConnectorCredentialsRequest) HasConnectorId() bool {
-	if o != nil && o.ConnectorId != nil {
+	if o != nil && !IsNil(o.ConnectorId) {
 		return true
 	}
 
@@ -70,11 +73,19 @@ func (o *CreateConnectorCredentialsRequest) SetConnectorId(v string) {
 }
 
 func (o CreateConnectorCredentialsRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.ConnectorId != nil {
-		toSerialize["connector_id"] = o.ConnectorId
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CreateConnectorCredentialsRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.ConnectorId) {
+		toSerialize["connector_id"] = o.ConnectorId
+	}
+	return toSerialize, nil
 }
 
 type NullableCreateConnectorCredentialsRequest struct {

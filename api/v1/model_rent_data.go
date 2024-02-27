@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the RentData type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &RentData{}
+
 // RentData Information about the rent of a property
 type RentData struct {
 	// the monthly rent amount
@@ -41,7 +44,7 @@ func NewRentDataWithDefaults() *RentData {
 
 // GetRent returns the Rent field value if set, zero value otherwise.
 func (o *RentData) GetRent() float64 {
-	if o == nil || o.Rent == nil {
+	if o == nil || IsNil(o.Rent) {
 		var ret float64
 		return ret
 	}
@@ -51,7 +54,7 @@ func (o *RentData) GetRent() float64 {
 // GetRentOk returns a tuple with the Rent field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RentData) GetRentOk() (*float64, bool) {
-	if o == nil || o.Rent == nil {
+	if o == nil || IsNil(o.Rent) {
 		return nil, false
 	}
 	return o.Rent, true
@@ -59,7 +62,7 @@ func (o *RentData) GetRentOk() (*float64, bool) {
 
 // HasRent returns a boolean if a field has been set.
 func (o *RentData) HasRent() bool {
-	if o != nil && o.Rent != nil {
+	if o != nil && !IsNil(o.Rent) {
 		return true
 	}
 
@@ -73,7 +76,7 @@ func (o *RentData) SetRent(v float64) {
 
 // GetIncidentals returns the Incidentals field value if set, zero value otherwise.
 func (o *RentData) GetIncidentals() float64 {
-	if o == nil || o.Incidentals == nil {
+	if o == nil || IsNil(o.Incidentals) {
 		var ret float64
 		return ret
 	}
@@ -83,7 +86,7 @@ func (o *RentData) GetIncidentals() float64 {
 // GetIncidentalsOk returns a tuple with the Incidentals field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RentData) GetIncidentalsOk() (*float64, bool) {
-	if o == nil || o.Incidentals == nil {
+	if o == nil || IsNil(o.Incidentals) {
 		return nil, false
 	}
 	return o.Incidentals, true
@@ -91,7 +94,7 @@ func (o *RentData) GetIncidentalsOk() (*float64, bool) {
 
 // HasIncidentals returns a boolean if a field has been set.
 func (o *RentData) HasIncidentals() bool {
-	if o != nil && o.Incidentals != nil {
+	if o != nil && !IsNil(o.Incidentals) {
 		return true
 	}
 
@@ -104,14 +107,22 @@ func (o *RentData) SetIncidentals(v float64) {
 }
 
 func (o RentData) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Rent != nil {
-		toSerialize["rent"] = o.Rent
-	}
-	if o.Incidentals != nil {
-		toSerialize["incidentals"] = o.Incidentals
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o RentData) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Rent) {
+		toSerialize["rent"] = o.Rent
+	}
+	if !IsNil(o.Incidentals) {
+		toSerialize["incidentals"] = o.Incidentals
+	}
+	return toSerialize, nil
 }
 
 type NullableRentData struct {

@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the PingResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &PingResponse{}
+
 // PingResponse Response used for connector pings
 type PingResponse struct {
 	Config   *ConnectorConfig          `json:"config,omitempty"`
@@ -39,7 +42,7 @@ func NewPingResponseWithDefaults() *PingResponse {
 
 // GetConfig returns the Config field value if set, zero value otherwise.
 func (o *PingResponse) GetConfig() ConnectorConfig {
-	if o == nil || o.Config == nil {
+	if o == nil || IsNil(o.Config) {
 		var ret ConnectorConfig
 		return ret
 	}
@@ -49,7 +52,7 @@ func (o *PingResponse) GetConfig() ConnectorConfig {
 // GetConfigOk returns a tuple with the Config field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PingResponse) GetConfigOk() (*ConnectorConfig, bool) {
-	if o == nil || o.Config == nil {
+	if o == nil || IsNil(o.Config) {
 		return nil, false
 	}
 	return o.Config, true
@@ -57,7 +60,7 @@ func (o *PingResponse) GetConfigOk() (*ConnectorConfig, bool) {
 
 // HasConfig returns a boolean if a field has been set.
 func (o *PingResponse) HasConfig() bool {
-	if o != nil && o.Config != nil {
+	if o != nil && !IsNil(o.Config) {
 		return true
 	}
 
@@ -71,7 +74,7 @@ func (o *PingResponse) SetConfig(v ConnectorConfig) {
 
 // GetEntities returns the Entities field value if set, zero value otherwise.
 func (o *PingResponse) GetEntities() []ConnectorEntitySyncInfo {
-	if o == nil || o.Entities == nil {
+	if o == nil || IsNil(o.Entities) {
 		var ret []ConnectorEntitySyncInfo
 		return ret
 	}
@@ -81,7 +84,7 @@ func (o *PingResponse) GetEntities() []ConnectorEntitySyncInfo {
 // GetEntitiesOk returns a tuple with the Entities field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PingResponse) GetEntitiesOk() ([]ConnectorEntitySyncInfo, bool) {
-	if o == nil || o.Entities == nil {
+	if o == nil || IsNil(o.Entities) {
 		return nil, false
 	}
 	return o.Entities, true
@@ -89,7 +92,7 @@ func (o *PingResponse) GetEntitiesOk() ([]ConnectorEntitySyncInfo, bool) {
 
 // HasEntities returns a boolean if a field has been set.
 func (o *PingResponse) HasEntities() bool {
-	if o != nil && o.Entities != nil {
+	if o != nil && !IsNil(o.Entities) {
 		return true
 	}
 
@@ -102,14 +105,22 @@ func (o *PingResponse) SetEntities(v []ConnectorEntitySyncInfo) {
 }
 
 func (o PingResponse) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Config != nil {
-		toSerialize["config"] = o.Config
-	}
-	if o.Entities != nil {
-		toSerialize["entities"] = o.Entities
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o PingResponse) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Config) {
+		toSerialize["config"] = o.Config
+	}
+	if !IsNil(o.Entities) {
+		toSerialize["entities"] = o.Entities
+	}
+	return toSerialize, nil
 }
 
 type NullablePingResponse struct {

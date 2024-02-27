@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the QueryPropertiesResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &QueryPropertiesResponse{}
+
 // QueryPropertiesResponse A list of all properties that are requested by the user
 type QueryPropertiesResponse struct {
 	// list of properties that match the query request
@@ -43,7 +46,7 @@ func NewQueryPropertiesResponseWithDefaults() *QueryPropertiesResponse {
 
 // GetProperties returns the Properties field value if set, zero value otherwise.
 func (o *QueryPropertiesResponse) GetProperties() []Property {
-	if o == nil || o.Properties == nil {
+	if o == nil || IsNil(o.Properties) {
 		var ret []Property
 		return ret
 	}
@@ -53,7 +56,7 @@ func (o *QueryPropertiesResponse) GetProperties() []Property {
 // GetPropertiesOk returns a tuple with the Properties field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryPropertiesResponse) GetPropertiesOk() ([]Property, bool) {
-	if o == nil || o.Properties == nil {
+	if o == nil || IsNil(o.Properties) {
 		return nil, false
 	}
 	return o.Properties, true
@@ -61,7 +64,7 @@ func (o *QueryPropertiesResponse) GetPropertiesOk() ([]Property, bool) {
 
 // HasProperties returns a boolean if a field has been set.
 func (o *QueryPropertiesResponse) HasProperties() bool {
-	if o != nil && o.Properties != nil {
+	if o != nil && !IsNil(o.Properties) {
 		return true
 	}
 
@@ -75,7 +78,7 @@ func (o *QueryPropertiesResponse) SetProperties(v []Property) {
 
 // GetTotalCount returns the TotalCount field value if set, zero value otherwise.
 func (o *QueryPropertiesResponse) GetTotalCount() int64 {
-	if o == nil || o.TotalCount == nil {
+	if o == nil || IsNil(o.TotalCount) {
 		var ret int64
 		return ret
 	}
@@ -85,7 +88,7 @@ func (o *QueryPropertiesResponse) GetTotalCount() int64 {
 // GetTotalCountOk returns a tuple with the TotalCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryPropertiesResponse) GetTotalCountOk() (*int64, bool) {
-	if o == nil || o.TotalCount == nil {
+	if o == nil || IsNil(o.TotalCount) {
 		return nil, false
 	}
 	return o.TotalCount, true
@@ -93,7 +96,7 @@ func (o *QueryPropertiesResponse) GetTotalCountOk() (*int64, bool) {
 
 // HasTotalCount returns a boolean if a field has been set.
 func (o *QueryPropertiesResponse) HasTotalCount() bool {
-	if o != nil && o.TotalCount != nil {
+	if o != nil && !IsNil(o.TotalCount) {
 		return true
 	}
 
@@ -107,7 +110,7 @@ func (o *QueryPropertiesResponse) SetTotalCount(v int64) {
 
 // GetOffset returns the Offset field value if set, zero value otherwise.
 func (o *QueryPropertiesResponse) GetOffset() int32 {
-	if o == nil || o.Offset == nil {
+	if o == nil || IsNil(o.Offset) {
 		var ret int32
 		return ret
 	}
@@ -117,7 +120,7 @@ func (o *QueryPropertiesResponse) GetOffset() int32 {
 // GetOffsetOk returns a tuple with the Offset field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryPropertiesResponse) GetOffsetOk() (*int32, bool) {
-	if o == nil || o.Offset == nil {
+	if o == nil || IsNil(o.Offset) {
 		return nil, false
 	}
 	return o.Offset, true
@@ -125,7 +128,7 @@ func (o *QueryPropertiesResponse) GetOffsetOk() (*int32, bool) {
 
 // HasOffset returns a boolean if a field has been set.
 func (o *QueryPropertiesResponse) HasOffset() bool {
-	if o != nil && o.Offset != nil {
+	if o != nil && !IsNil(o.Offset) {
 		return true
 	}
 
@@ -138,17 +141,25 @@ func (o *QueryPropertiesResponse) SetOffset(v int32) {
 }
 
 func (o QueryPropertiesResponse) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Properties != nil {
-		toSerialize["properties"] = o.Properties
-	}
-	if o.TotalCount != nil {
-		toSerialize["total_count"] = o.TotalCount
-	}
-	if o.Offset != nil {
-		toSerialize["offset"] = o.Offset
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o QueryPropertiesResponse) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Properties) {
+		toSerialize["properties"] = o.Properties
+	}
+	if !IsNil(o.TotalCount) {
+		toSerialize["total_count"] = o.TotalCount
+	}
+	if !IsNil(o.Offset) {
+		toSerialize["offset"] = o.Offset
+	}
+	return toSerialize, nil
 }
 
 type NullableQueryPropertiesResponse struct {

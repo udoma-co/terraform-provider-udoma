@@ -18,7 +18,7 @@ func TestAppointmentTemplateResource(t *testing.T) {
 					resource.TestCheckResourceAttr("udoma_appointment_template.test", "description", "Basic template description"),
 
 					resource.TestCheckResourceAttr("udoma_appointment_template.test", "inputs.layout.0.ref_id", "test"),
-					resource.TestCheckResourceAttr("udoma_appointment_template.test", "inputs.layout.0.ref_type", "input"),
+					resource.TestCheckResourceAttr("udoma_appointment_template.test", "inputs.layout.0.ref_type", "group"),
 					resource.TestCheckResourceAttr("udoma_appointment_template.test", "inputs.inputs.0.id", "test"),
 					resource.TestCheckResourceAttr("udoma_appointment_template.test", "inputs.inputs.0.type", "text"),
 					resource.TestCheckResourceAttr("udoma_appointment_template.test", "inputs.inputs.0.label.de", "Test Eingabe"),
@@ -55,7 +55,7 @@ func resourceDefinitionAppointmentTemplate(name, nameExpression string) string {
 			"layout" = [
 				{
 					"ref_id" = "test",
-					"ref_type" = "input"
+					"ref_type" = "group"
 				}
 			]
 			"inputs" = [

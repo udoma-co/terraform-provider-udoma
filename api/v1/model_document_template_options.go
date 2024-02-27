@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the DocumentTemplateOptions type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DocumentTemplateOptions{}
+
 // DocumentTemplateOptions Additional options for a document template
 type DocumentTemplateOptions struct {
 	// True if the generated document may be edited by the user
@@ -43,7 +46,7 @@ func NewDocumentTemplateOptionsWithDefaults() *DocumentTemplateOptions {
 
 // GetAllowTextEdit returns the AllowTextEdit field value if set, zero value otherwise.
 func (o *DocumentTemplateOptions) GetAllowTextEdit() bool {
-	if o == nil || o.AllowTextEdit == nil {
+	if o == nil || IsNil(o.AllowTextEdit) {
 		var ret bool
 		return ret
 	}
@@ -53,7 +56,7 @@ func (o *DocumentTemplateOptions) GetAllowTextEdit() bool {
 // GetAllowTextEditOk returns a tuple with the AllowTextEdit field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentTemplateOptions) GetAllowTextEditOk() (*bool, bool) {
-	if o == nil || o.AllowTextEdit == nil {
+	if o == nil || IsNil(o.AllowTextEdit) {
 		return nil, false
 	}
 	return o.AllowTextEdit, true
@@ -61,7 +64,7 @@ func (o *DocumentTemplateOptions) GetAllowTextEditOk() (*bool, bool) {
 
 // HasAllowTextEdit returns a boolean if a field has been set.
 func (o *DocumentTemplateOptions) HasAllowTextEdit() bool {
-	if o != nil && o.AllowTextEdit != nil {
+	if o != nil && !IsNil(o.AllowTextEdit) {
 		return true
 	}
 
@@ -75,7 +78,7 @@ func (o *DocumentTemplateOptions) SetAllowTextEdit(v bool) {
 
 // GetIncludeFooterBranding returns the IncludeFooterBranding field value if set, zero value otherwise.
 func (o *DocumentTemplateOptions) GetIncludeFooterBranding() bool {
-	if o == nil || o.IncludeFooterBranding == nil {
+	if o == nil || IsNil(o.IncludeFooterBranding) {
 		var ret bool
 		return ret
 	}
@@ -85,7 +88,7 @@ func (o *DocumentTemplateOptions) GetIncludeFooterBranding() bool {
 // GetIncludeFooterBrandingOk returns a tuple with the IncludeFooterBranding field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentTemplateOptions) GetIncludeFooterBrandingOk() (*bool, bool) {
-	if o == nil || o.IncludeFooterBranding == nil {
+	if o == nil || IsNil(o.IncludeFooterBranding) {
 		return nil, false
 	}
 	return o.IncludeFooterBranding, true
@@ -93,7 +96,7 @@ func (o *DocumentTemplateOptions) GetIncludeFooterBrandingOk() (*bool, bool) {
 
 // HasIncludeFooterBranding returns a boolean if a field has been set.
 func (o *DocumentTemplateOptions) HasIncludeFooterBranding() bool {
-	if o != nil && o.IncludeFooterBranding != nil {
+	if o != nil && !IsNil(o.IncludeFooterBranding) {
 		return true
 	}
 
@@ -107,7 +110,7 @@ func (o *DocumentTemplateOptions) SetIncludeFooterBranding(v bool) {
 
 // GetIncludePageNumbers returns the IncludePageNumbers field value if set, zero value otherwise.
 func (o *DocumentTemplateOptions) GetIncludePageNumbers() bool {
-	if o == nil || o.IncludePageNumbers == nil {
+	if o == nil || IsNil(o.IncludePageNumbers) {
 		var ret bool
 		return ret
 	}
@@ -117,7 +120,7 @@ func (o *DocumentTemplateOptions) GetIncludePageNumbers() bool {
 // GetIncludePageNumbersOk returns a tuple with the IncludePageNumbers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentTemplateOptions) GetIncludePageNumbersOk() (*bool, bool) {
-	if o == nil || o.IncludePageNumbers == nil {
+	if o == nil || IsNil(o.IncludePageNumbers) {
 		return nil, false
 	}
 	return o.IncludePageNumbers, true
@@ -125,7 +128,7 @@ func (o *DocumentTemplateOptions) GetIncludePageNumbersOk() (*bool, bool) {
 
 // HasIncludePageNumbers returns a boolean if a field has been set.
 func (o *DocumentTemplateOptions) HasIncludePageNumbers() bool {
-	if o != nil && o.IncludePageNumbers != nil {
+	if o != nil && !IsNil(o.IncludePageNumbers) {
 		return true
 	}
 
@@ -138,17 +141,25 @@ func (o *DocumentTemplateOptions) SetIncludePageNumbers(v bool) {
 }
 
 func (o DocumentTemplateOptions) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.AllowTextEdit != nil {
-		toSerialize["allow_text_edit"] = o.AllowTextEdit
-	}
-	if o.IncludeFooterBranding != nil {
-		toSerialize["include_footer_branding"] = o.IncludeFooterBranding
-	}
-	if o.IncludePageNumbers != nil {
-		toSerialize["include_page_numbers"] = o.IncludePageNumbers
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DocumentTemplateOptions) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.AllowTextEdit) {
+		toSerialize["allow_text_edit"] = o.AllowTextEdit
+	}
+	if !IsNil(o.IncludeFooterBranding) {
+		toSerialize["include_footer_branding"] = o.IncludeFooterBranding
+	}
+	if !IsNil(o.IncludePageNumbers) {
+		toSerialize["include_page_numbers"] = o.IncludePageNumbers
+	}
+	return toSerialize, nil
 }
 
 type NullableDocumentTemplateOptions struct {

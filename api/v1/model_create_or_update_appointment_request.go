@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CreateOrUpdateAppointmentRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CreateOrUpdateAppointmentRequest{}
+
 // CreateOrUpdateAppointmentRequest struct for CreateOrUpdateAppointmentRequest
 type CreateOrUpdateAppointmentRequest struct {
 	// The id of the appointment window that the user wants to book
@@ -44,7 +47,7 @@ func NewCreateOrUpdateAppointmentRequestWithDefaults() *CreateOrUpdateAppointmen
 
 // GetAppointmentWindowId returns the AppointmentWindowId field value if set, zero value otherwise.
 func (o *CreateOrUpdateAppointmentRequest) GetAppointmentWindowId() string {
-	if o == nil || o.AppointmentWindowId == nil {
+	if o == nil || IsNil(o.AppointmentWindowId) {
 		var ret string
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *CreateOrUpdateAppointmentRequest) GetAppointmentWindowId() string {
 // GetAppointmentWindowIdOk returns a tuple with the AppointmentWindowId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateAppointmentRequest) GetAppointmentWindowIdOk() (*string, bool) {
-	if o == nil || o.AppointmentWindowId == nil {
+	if o == nil || IsNil(o.AppointmentWindowId) {
 		return nil, false
 	}
 	return o.AppointmentWindowId, true
@@ -62,7 +65,7 @@ func (o *CreateOrUpdateAppointmentRequest) GetAppointmentWindowIdOk() (*string, 
 
 // HasAppointmentWindowId returns a boolean if a field has been set.
 func (o *CreateOrUpdateAppointmentRequest) HasAppointmentWindowId() bool {
-	if o != nil && o.AppointmentWindowId != nil {
+	if o != nil && !IsNil(o.AppointmentWindowId) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *CreateOrUpdateAppointmentRequest) SetAppointmentWindowId(v string) {
 
 // GetSlotIdx returns the SlotIdx field value if set, zero value otherwise.
 func (o *CreateOrUpdateAppointmentRequest) GetSlotIdx() int32 {
-	if o == nil || o.SlotIdx == nil {
+	if o == nil || IsNil(o.SlotIdx) {
 		var ret int32
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *CreateOrUpdateAppointmentRequest) GetSlotIdx() int32 {
 // GetSlotIdxOk returns a tuple with the SlotIdx field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateAppointmentRequest) GetSlotIdxOk() (*int32, bool) {
-	if o == nil || o.SlotIdx == nil {
+	if o == nil || IsNil(o.SlotIdx) {
 		return nil, false
 	}
 	return o.SlotIdx, true
@@ -94,7 +97,7 @@ func (o *CreateOrUpdateAppointmentRequest) GetSlotIdxOk() (*int32, bool) {
 
 // HasSlotIdx returns a boolean if a field has been set.
 func (o *CreateOrUpdateAppointmentRequest) HasSlotIdx() bool {
-	if o != nil && o.SlotIdx != nil {
+	if o != nil && !IsNil(o.SlotIdx) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *CreateOrUpdateAppointmentRequest) SetSlotIdx(v int32) {
 
 // GetContact returns the Contact field value if set, zero value otherwise.
 func (o *CreateOrUpdateAppointmentRequest) GetContact() ContactData {
-	if o == nil || o.Contact == nil {
+	if o == nil || IsNil(o.Contact) {
 		var ret ContactData
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *CreateOrUpdateAppointmentRequest) GetContact() ContactData {
 // GetContactOk returns a tuple with the Contact field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateAppointmentRequest) GetContactOk() (*ContactData, bool) {
-	if o == nil || o.Contact == nil {
+	if o == nil || IsNil(o.Contact) {
 		return nil, false
 	}
 	return o.Contact, true
@@ -126,7 +129,7 @@ func (o *CreateOrUpdateAppointmentRequest) GetContactOk() (*ContactData, bool) {
 
 // HasContact returns a boolean if a field has been set.
 func (o *CreateOrUpdateAppointmentRequest) HasContact() bool {
-	if o != nil && o.Contact != nil {
+	if o != nil && !IsNil(o.Contact) {
 		return true
 	}
 
@@ -140,7 +143,7 @@ func (o *CreateOrUpdateAppointmentRequest) SetContact(v ContactData) {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *CreateOrUpdateAppointmentRequest) GetData() map[string]interface{} {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -150,15 +153,15 @@ func (o *CreateOrUpdateAppointmentRequest) GetData() map[string]interface{} {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateAppointmentRequest) GetDataOk() (map[string]interface{}, bool) {
-	if o == nil || o.Data == nil {
-		return nil, false
+	if o == nil || IsNil(o.Data) {
+		return map[string]interface{}{}, false
 	}
 	return o.Data, true
 }
 
 // HasData returns a boolean if a field has been set.
 func (o *CreateOrUpdateAppointmentRequest) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -171,20 +174,28 @@ func (o *CreateOrUpdateAppointmentRequest) SetData(v map[string]interface{}) {
 }
 
 func (o CreateOrUpdateAppointmentRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.AppointmentWindowId != nil {
-		toSerialize["appointment_window_id"] = o.AppointmentWindowId
-	}
-	if o.SlotIdx != nil {
-		toSerialize["slot_idx"] = o.SlotIdx
-	}
-	if o.Contact != nil {
-		toSerialize["contact"] = o.Contact
-	}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CreateOrUpdateAppointmentRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.AppointmentWindowId) {
+		toSerialize["appointment_window_id"] = o.AppointmentWindowId
+	}
+	if !IsNil(o.SlotIdx) {
+		toSerialize["slot_idx"] = o.SlotIdx
+	}
+	if !IsNil(o.Contact) {
+		toSerialize["contact"] = o.Contact
+	}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	return toSerialize, nil
 }
 
 type NullableCreateOrUpdateAppointmentRequest struct {

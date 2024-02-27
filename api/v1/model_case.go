@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the Case type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Case{}
+
 // Case Case represents a single case, typically raised by a tenant
 type Case struct {
 	Id        *string `json:"id,omitempty"`
@@ -59,7 +62,7 @@ func NewCaseWithDefaults() *Case {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *Case) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -69,7 +72,7 @@ func (o *Case) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Case) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -77,7 +80,7 @@ func (o *Case) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *Case) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -91,7 +94,7 @@ func (o *Case) SetId(v string) {
 
 // GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
 func (o *Case) GetCreatedAt() int64 {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		var ret int64
 		return ret
 	}
@@ -101,7 +104,7 @@ func (o *Case) GetCreatedAt() int64 {
 // GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Case) GetCreatedAtOk() (*int64, bool) {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
 	return o.CreatedAt, true
@@ -109,7 +112,7 @@ func (o *Case) GetCreatedAtOk() (*int64, bool) {
 
 // HasCreatedAt returns a boolean if a field has been set.
 func (o *Case) HasCreatedAt() bool {
-	if o != nil && o.CreatedAt != nil {
+	if o != nil && !IsNil(o.CreatedAt) {
 		return true
 	}
 
@@ -123,7 +126,7 @@ func (o *Case) SetCreatedAt(v int64) {
 
 // GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
 func (o *Case) GetUpdatedAt() int64 {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		var ret int64
 		return ret
 	}
@@ -133,7 +136,7 @@ func (o *Case) GetUpdatedAt() int64 {
 // GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Case) GetUpdatedAtOk() (*int64, bool) {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
 	return o.UpdatedAt, true
@@ -141,7 +144,7 @@ func (o *Case) GetUpdatedAtOk() (*int64, bool) {
 
 // HasUpdatedAt returns a boolean if a field has been set.
 func (o *Case) HasUpdatedAt() bool {
-	if o != nil && o.UpdatedAt != nil {
+	if o != nil && !IsNil(o.UpdatedAt) {
 		return true
 	}
 
@@ -155,7 +158,7 @@ func (o *Case) SetUpdatedAt(v int64) {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *Case) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -165,7 +168,7 @@ func (o *Case) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Case) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -173,7 +176,7 @@ func (o *Case) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *Case) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -187,7 +190,7 @@ func (o *Case) SetName(v string) {
 
 // GetArchived returns the Archived field value if set, zero value otherwise.
 func (o *Case) GetArchived() bool {
-	if o == nil || o.Archived == nil {
+	if o == nil || IsNil(o.Archived) {
 		var ret bool
 		return ret
 	}
@@ -197,7 +200,7 @@ func (o *Case) GetArchived() bool {
 // GetArchivedOk returns a tuple with the Archived field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Case) GetArchivedOk() (*bool, bool) {
-	if o == nil || o.Archived == nil {
+	if o == nil || IsNil(o.Archived) {
 		return nil, false
 	}
 	return o.Archived, true
@@ -205,7 +208,7 @@ func (o *Case) GetArchivedOk() (*bool, bool) {
 
 // HasArchived returns a boolean if a field has been set.
 func (o *Case) HasArchived() bool {
-	if o != nil && o.Archived != nil {
+	if o != nil && !IsNil(o.Archived) {
 		return true
 	}
 
@@ -219,7 +222,7 @@ func (o *Case) SetArchived(v bool) {
 
 // GetPropertyRef returns the PropertyRef field value if set, zero value otherwise.
 func (o *Case) GetPropertyRef() string {
-	if o == nil || o.PropertyRef == nil {
+	if o == nil || IsNil(o.PropertyRef) {
 		var ret string
 		return ret
 	}
@@ -229,7 +232,7 @@ func (o *Case) GetPropertyRef() string {
 // GetPropertyRefOk returns a tuple with the PropertyRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Case) GetPropertyRefOk() (*string, bool) {
-	if o == nil || o.PropertyRef == nil {
+	if o == nil || IsNil(o.PropertyRef) {
 		return nil, false
 	}
 	return o.PropertyRef, true
@@ -237,7 +240,7 @@ func (o *Case) GetPropertyRefOk() (*string, bool) {
 
 // HasPropertyRef returns a boolean if a field has been set.
 func (o *Case) HasPropertyRef() bool {
-	if o != nil && o.PropertyRef != nil {
+	if o != nil && !IsNil(o.PropertyRef) {
 		return true
 	}
 
@@ -251,7 +254,7 @@ func (o *Case) SetPropertyRef(v string) {
 
 // GetPropertyAddress returns the PropertyAddress field value if set, zero value otherwise.
 func (o *Case) GetPropertyAddress() Address {
-	if o == nil || o.PropertyAddress == nil {
+	if o == nil || IsNil(o.PropertyAddress) {
 		var ret Address
 		return ret
 	}
@@ -261,7 +264,7 @@ func (o *Case) GetPropertyAddress() Address {
 // GetPropertyAddressOk returns a tuple with the PropertyAddress field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Case) GetPropertyAddressOk() (*Address, bool) {
-	if o == nil || o.PropertyAddress == nil {
+	if o == nil || IsNil(o.PropertyAddress) {
 		return nil, false
 	}
 	return o.PropertyAddress, true
@@ -269,7 +272,7 @@ func (o *Case) GetPropertyAddressOk() (*Address, bool) {
 
 // HasPropertyAddress returns a boolean if a field has been set.
 func (o *Case) HasPropertyAddress() bool {
-	if o != nil && o.PropertyAddress != nil {
+	if o != nil && !IsNil(o.PropertyAddress) {
 		return true
 	}
 
@@ -283,7 +286,7 @@ func (o *Case) SetPropertyAddress(v Address) {
 
 // GetTemplate returns the Template field value if set, zero value otherwise.
 func (o *Case) GetTemplate() string {
-	if o == nil || o.Template == nil {
+	if o == nil || IsNil(o.Template) {
 		var ret string
 		return ret
 	}
@@ -293,7 +296,7 @@ func (o *Case) GetTemplate() string {
 // GetTemplateOk returns a tuple with the Template field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Case) GetTemplateOk() (*string, bool) {
-	if o == nil || o.Template == nil {
+	if o == nil || IsNil(o.Template) {
 		return nil, false
 	}
 	return o.Template, true
@@ -301,7 +304,7 @@ func (o *Case) GetTemplateOk() (*string, bool) {
 
 // HasTemplate returns a boolean if a field has been set.
 func (o *Case) HasTemplate() bool {
-	if o != nil && o.Template != nil {
+	if o != nil && !IsNil(o.Template) {
 		return true
 	}
 
@@ -315,7 +318,7 @@ func (o *Case) SetTemplate(v string) {
 
 // GetStatus returns the Status field value if set, zero value otherwise.
 func (o *Case) GetStatus() CaseStatusEnum {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		var ret CaseStatusEnum
 		return ret
 	}
@@ -325,7 +328,7 @@ func (o *Case) GetStatus() CaseStatusEnum {
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Case) GetStatusOk() (*CaseStatusEnum, bool) {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
 	return o.Status, true
@@ -333,7 +336,7 @@ func (o *Case) GetStatusOk() (*CaseStatusEnum, bool) {
 
 // HasStatus returns a boolean if a field has been set.
 func (o *Case) HasStatus() bool {
-	if o != nil && o.Status != nil {
+	if o != nil && !IsNil(o.Status) {
 		return true
 	}
 
@@ -347,7 +350,7 @@ func (o *Case) SetStatus(v CaseStatusEnum) {
 
 // GetParties returns the Parties field value if set, zero value otherwise.
 func (o *Case) GetParties() []CaseParty {
-	if o == nil || o.Parties == nil {
+	if o == nil || IsNil(o.Parties) {
 		var ret []CaseParty
 		return ret
 	}
@@ -357,7 +360,7 @@ func (o *Case) GetParties() []CaseParty {
 // GetPartiesOk returns a tuple with the Parties field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Case) GetPartiesOk() ([]CaseParty, bool) {
-	if o == nil || o.Parties == nil {
+	if o == nil || IsNil(o.Parties) {
 		return nil, false
 	}
 	return o.Parties, true
@@ -365,7 +368,7 @@ func (o *Case) GetPartiesOk() ([]CaseParty, bool) {
 
 // HasParties returns a boolean if a field has been set.
 func (o *Case) HasParties() bool {
-	if o != nil && o.Parties != nil {
+	if o != nil && !IsNil(o.Parties) {
 		return true
 	}
 
@@ -379,7 +382,7 @@ func (o *Case) SetParties(v []CaseParty) {
 
 // GetStatusHistory returns the StatusHistory field value if set, zero value otherwise.
 func (o *Case) GetStatusHistory() []CaseStatus {
-	if o == nil || o.StatusHistory == nil {
+	if o == nil || IsNil(o.StatusHistory) {
 		var ret []CaseStatus
 		return ret
 	}
@@ -389,7 +392,7 @@ func (o *Case) GetStatusHistory() []CaseStatus {
 // GetStatusHistoryOk returns a tuple with the StatusHistory field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Case) GetStatusHistoryOk() ([]CaseStatus, bool) {
-	if o == nil || o.StatusHistory == nil {
+	if o == nil || IsNil(o.StatusHistory) {
 		return nil, false
 	}
 	return o.StatusHistory, true
@@ -397,7 +400,7 @@ func (o *Case) GetStatusHistoryOk() ([]CaseStatus, bool) {
 
 // HasStatusHistory returns a boolean if a field has been set.
 func (o *Case) HasStatusHistory() bool {
-	if o != nil && o.StatusHistory != nil {
+	if o != nil && !IsNil(o.StatusHistory) {
 		return true
 	}
 
@@ -411,7 +414,7 @@ func (o *Case) SetStatusHistory(v []CaseStatus) {
 
 // GetComments returns the Comments field value if set, zero value otherwise.
 func (o *Case) GetComments() []CaseComment {
-	if o == nil || o.Comments == nil {
+	if o == nil || IsNil(o.Comments) {
 		var ret []CaseComment
 		return ret
 	}
@@ -421,7 +424,7 @@ func (o *Case) GetComments() []CaseComment {
 // GetCommentsOk returns a tuple with the Comments field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Case) GetCommentsOk() ([]CaseComment, bool) {
-	if o == nil || o.Comments == nil {
+	if o == nil || IsNil(o.Comments) {
 		return nil, false
 	}
 	return o.Comments, true
@@ -429,7 +432,7 @@ func (o *Case) GetCommentsOk() ([]CaseComment, bool) {
 
 // HasComments returns a boolean if a field has been set.
 func (o *Case) HasComments() bool {
-	if o != nil && o.Comments != nil {
+	if o != nil && !IsNil(o.Comments) {
 		return true
 	}
 
@@ -443,7 +446,7 @@ func (o *Case) SetComments(v []CaseComment) {
 
 // GetFeedback returns the Feedback field value if set, zero value otherwise.
 func (o *Case) GetFeedback() []CaseFeedbackEntry {
-	if o == nil || o.Feedback == nil {
+	if o == nil || IsNil(o.Feedback) {
 		var ret []CaseFeedbackEntry
 		return ret
 	}
@@ -453,7 +456,7 @@ func (o *Case) GetFeedback() []CaseFeedbackEntry {
 // GetFeedbackOk returns a tuple with the Feedback field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Case) GetFeedbackOk() ([]CaseFeedbackEntry, bool) {
-	if o == nil || o.Feedback == nil {
+	if o == nil || IsNil(o.Feedback) {
 		return nil, false
 	}
 	return o.Feedback, true
@@ -461,7 +464,7 @@ func (o *Case) GetFeedbackOk() ([]CaseFeedbackEntry, bool) {
 
 // HasFeedback returns a boolean if a field has been set.
 func (o *Case) HasFeedback() bool {
-	if o != nil && o.Feedback != nil {
+	if o != nil && !IsNil(o.Feedback) {
 		return true
 	}
 
@@ -475,7 +478,7 @@ func (o *Case) SetFeedback(v []CaseFeedbackEntry) {
 
 // GetAssignee returns the Assignee field value if set, zero value otherwise.
 func (o *Case) GetAssignee() string {
-	if o == nil || o.Assignee == nil {
+	if o == nil || IsNil(o.Assignee) {
 		var ret string
 		return ret
 	}
@@ -485,7 +488,7 @@ func (o *Case) GetAssignee() string {
 // GetAssigneeOk returns a tuple with the Assignee field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Case) GetAssigneeOk() (*string, bool) {
-	if o == nil || o.Assignee == nil {
+	if o == nil || IsNil(o.Assignee) {
 		return nil, false
 	}
 	return o.Assignee, true
@@ -493,7 +496,7 @@ func (o *Case) GetAssigneeOk() (*string, bool) {
 
 // HasAssignee returns a boolean if a field has been set.
 func (o *Case) HasAssignee() bool {
-	if o != nil && o.Assignee != nil {
+	if o != nil && !IsNil(o.Assignee) {
 		return true
 	}
 
@@ -507,7 +510,7 @@ func (o *Case) SetAssignee(v string) {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *Case) GetData() map[string]interface{} {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -517,15 +520,15 @@ func (o *Case) GetData() map[string]interface{} {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Case) GetDataOk() (map[string]interface{}, bool) {
-	if o == nil || o.Data == nil {
-		return nil, false
+	if o == nil || IsNil(o.Data) {
+		return map[string]interface{}{}, false
 	}
 	return o.Data, true
 }
 
 // HasData returns a boolean if a field has been set.
 func (o *Case) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -538,53 +541,61 @@ func (o *Case) SetData(v map[string]interface{}) {
 }
 
 func (o Case) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.CreatedAt != nil {
-		toSerialize["created_at"] = o.CreatedAt
-	}
-	if o.UpdatedAt != nil {
-		toSerialize["updated_at"] = o.UpdatedAt
-	}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.Archived != nil {
-		toSerialize["archived"] = o.Archived
-	}
-	if o.PropertyRef != nil {
-		toSerialize["property_ref"] = o.PropertyRef
-	}
-	if o.PropertyAddress != nil {
-		toSerialize["property_address"] = o.PropertyAddress
-	}
-	if o.Template != nil {
-		toSerialize["template"] = o.Template
-	}
-	if o.Status != nil {
-		toSerialize["status"] = o.Status
-	}
-	if o.Parties != nil {
-		toSerialize["parties"] = o.Parties
-	}
-	if o.StatusHistory != nil {
-		toSerialize["status_history"] = o.StatusHistory
-	}
-	if o.Comments != nil {
-		toSerialize["comments"] = o.Comments
-	}
-	if o.Feedback != nil {
-		toSerialize["feedback"] = o.Feedback
-	}
-	if o.Assignee != nil {
-		toSerialize["assignee"] = o.Assignee
-	}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Case) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.CreatedAt) {
+		toSerialize["created_at"] = o.CreatedAt
+	}
+	if !IsNil(o.UpdatedAt) {
+		toSerialize["updated_at"] = o.UpdatedAt
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Archived) {
+		toSerialize["archived"] = o.Archived
+	}
+	if !IsNil(o.PropertyRef) {
+		toSerialize["property_ref"] = o.PropertyRef
+	}
+	if !IsNil(o.PropertyAddress) {
+		toSerialize["property_address"] = o.PropertyAddress
+	}
+	if !IsNil(o.Template) {
+		toSerialize["template"] = o.Template
+	}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.Parties) {
+		toSerialize["parties"] = o.Parties
+	}
+	if !IsNil(o.StatusHistory) {
+		toSerialize["status_history"] = o.StatusHistory
+	}
+	if !IsNil(o.Comments) {
+		toSerialize["comments"] = o.Comments
+	}
+	if !IsNil(o.Feedback) {
+		toSerialize["feedback"] = o.Feedback
+	}
+	if !IsNil(o.Assignee) {
+		toSerialize["assignee"] = o.Assignee
+	}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	return toSerialize, nil
 }
 
 type NullableCase struct {

@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the UpdateTenantRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &UpdateTenantRequest{}
+
 // UpdateTenantRequest Request issued by a property manager to add a new tenant to an existing property
 type UpdateTenantRequest struct {
 	// The salutation to be used for the tenant (Miss, Mister, Family)
@@ -49,7 +52,7 @@ func NewUpdateTenantRequestWithDefaults() *UpdateTenantRequest {
 
 // GetTitle returns the Title field value if set, zero value otherwise.
 func (o *UpdateTenantRequest) GetTitle() string {
-	if o == nil || o.Title == nil {
+	if o == nil || IsNil(o.Title) {
 		var ret string
 		return ret
 	}
@@ -59,7 +62,7 @@ func (o *UpdateTenantRequest) GetTitle() string {
 // GetTitleOk returns a tuple with the Title field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateTenantRequest) GetTitleOk() (*string, bool) {
-	if o == nil || o.Title == nil {
+	if o == nil || IsNil(o.Title) {
 		return nil, false
 	}
 	return o.Title, true
@@ -67,7 +70,7 @@ func (o *UpdateTenantRequest) GetTitleOk() (*string, bool) {
 
 // HasTitle returns a boolean if a field has been set.
 func (o *UpdateTenantRequest) HasTitle() bool {
-	if o != nil && o.Title != nil {
+	if o != nil && !IsNil(o.Title) {
 		return true
 	}
 
@@ -81,7 +84,7 @@ func (o *UpdateTenantRequest) SetTitle(v string) {
 
 // GetFirstName returns the FirstName field value if set, zero value otherwise.
 func (o *UpdateTenantRequest) GetFirstName() string {
-	if o == nil || o.FirstName == nil {
+	if o == nil || IsNil(o.FirstName) {
 		var ret string
 		return ret
 	}
@@ -91,7 +94,7 @@ func (o *UpdateTenantRequest) GetFirstName() string {
 // GetFirstNameOk returns a tuple with the FirstName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateTenantRequest) GetFirstNameOk() (*string, bool) {
-	if o == nil || o.FirstName == nil {
+	if o == nil || IsNil(o.FirstName) {
 		return nil, false
 	}
 	return o.FirstName, true
@@ -99,7 +102,7 @@ func (o *UpdateTenantRequest) GetFirstNameOk() (*string, bool) {
 
 // HasFirstName returns a boolean if a field has been set.
 func (o *UpdateTenantRequest) HasFirstName() bool {
-	if o != nil && o.FirstName != nil {
+	if o != nil && !IsNil(o.FirstName) {
 		return true
 	}
 
@@ -113,7 +116,7 @@ func (o *UpdateTenantRequest) SetFirstName(v string) {
 
 // GetLastName returns the LastName field value if set, zero value otherwise.
 func (o *UpdateTenantRequest) GetLastName() string {
-	if o == nil || o.LastName == nil {
+	if o == nil || IsNil(o.LastName) {
 		var ret string
 		return ret
 	}
@@ -123,7 +126,7 @@ func (o *UpdateTenantRequest) GetLastName() string {
 // GetLastNameOk returns a tuple with the LastName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateTenantRequest) GetLastNameOk() (*string, bool) {
-	if o == nil || o.LastName == nil {
+	if o == nil || IsNil(o.LastName) {
 		return nil, false
 	}
 	return o.LastName, true
@@ -131,7 +134,7 @@ func (o *UpdateTenantRequest) GetLastNameOk() (*string, bool) {
 
 // HasLastName returns a boolean if a field has been set.
 func (o *UpdateTenantRequest) HasLastName() bool {
-	if o != nil && o.LastName != nil {
+	if o != nil && !IsNil(o.LastName) {
 		return true
 	}
 
@@ -145,7 +148,7 @@ func (o *UpdateTenantRequest) SetLastName(v string) {
 
 // GetCompany returns the Company field value if set, zero value otherwise.
 func (o *UpdateTenantRequest) GetCompany() string {
-	if o == nil || o.Company == nil {
+	if o == nil || IsNil(o.Company) {
 		var ret string
 		return ret
 	}
@@ -155,7 +158,7 @@ func (o *UpdateTenantRequest) GetCompany() string {
 // GetCompanyOk returns a tuple with the Company field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateTenantRequest) GetCompanyOk() (*string, bool) {
-	if o == nil || o.Company == nil {
+	if o == nil || IsNil(o.Company) {
 		return nil, false
 	}
 	return o.Company, true
@@ -163,7 +166,7 @@ func (o *UpdateTenantRequest) GetCompanyOk() (*string, bool) {
 
 // HasCompany returns a boolean if a field has been set.
 func (o *UpdateTenantRequest) HasCompany() bool {
-	if o != nil && o.Company != nil {
+	if o != nil && !IsNil(o.Company) {
 		return true
 	}
 
@@ -177,7 +180,7 @@ func (o *UpdateTenantRequest) SetCompany(v string) {
 
 // GetEmail returns the Email field value if set, zero value otherwise.
 func (o *UpdateTenantRequest) GetEmail() string {
-	if o == nil || o.Email == nil {
+	if o == nil || IsNil(o.Email) {
 		var ret string
 		return ret
 	}
@@ -187,7 +190,7 @@ func (o *UpdateTenantRequest) GetEmail() string {
 // GetEmailOk returns a tuple with the Email field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateTenantRequest) GetEmailOk() (*string, bool) {
-	if o == nil || o.Email == nil {
+	if o == nil || IsNil(o.Email) {
 		return nil, false
 	}
 	return o.Email, true
@@ -195,7 +198,7 @@ func (o *UpdateTenantRequest) GetEmailOk() (*string, bool) {
 
 // HasEmail returns a boolean if a field has been set.
 func (o *UpdateTenantRequest) HasEmail() bool {
-	if o != nil && o.Email != nil {
+	if o != nil && !IsNil(o.Email) {
 		return true
 	}
 
@@ -209,7 +212,7 @@ func (o *UpdateTenantRequest) SetEmail(v string) {
 
 // GetPhoneNumber returns the PhoneNumber field value if set, zero value otherwise.
 func (o *UpdateTenantRequest) GetPhoneNumber() string {
-	if o == nil || o.PhoneNumber == nil {
+	if o == nil || IsNil(o.PhoneNumber) {
 		var ret string
 		return ret
 	}
@@ -219,7 +222,7 @@ func (o *UpdateTenantRequest) GetPhoneNumber() string {
 // GetPhoneNumberOk returns a tuple with the PhoneNumber field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateTenantRequest) GetPhoneNumberOk() (*string, bool) {
-	if o == nil || o.PhoneNumber == nil {
+	if o == nil || IsNil(o.PhoneNumber) {
 		return nil, false
 	}
 	return o.PhoneNumber, true
@@ -227,7 +230,7 @@ func (o *UpdateTenantRequest) GetPhoneNumberOk() (*string, bool) {
 
 // HasPhoneNumber returns a boolean if a field has been set.
 func (o *UpdateTenantRequest) HasPhoneNumber() bool {
-	if o != nil && o.PhoneNumber != nil {
+	if o != nil && !IsNil(o.PhoneNumber) {
 		return true
 	}
 
@@ -240,26 +243,34 @@ func (o *UpdateTenantRequest) SetPhoneNumber(v string) {
 }
 
 func (o UpdateTenantRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Title != nil {
-		toSerialize["title"] = o.Title
-	}
-	if o.FirstName != nil {
-		toSerialize["first_name"] = o.FirstName
-	}
-	if o.LastName != nil {
-		toSerialize["last_name"] = o.LastName
-	}
-	if o.Company != nil {
-		toSerialize["company"] = o.Company
-	}
-	if o.Email != nil {
-		toSerialize["email"] = o.Email
-	}
-	if o.PhoneNumber != nil {
-		toSerialize["phone_number"] = o.PhoneNumber
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o UpdateTenantRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Title) {
+		toSerialize["title"] = o.Title
+	}
+	if !IsNil(o.FirstName) {
+		toSerialize["first_name"] = o.FirstName
+	}
+	if !IsNil(o.LastName) {
+		toSerialize["last_name"] = o.LastName
+	}
+	if !IsNil(o.Company) {
+		toSerialize["company"] = o.Company
+	}
+	if !IsNil(o.Email) {
+		toSerialize["email"] = o.Email
+	}
+	if !IsNil(o.PhoneNumber) {
+		toSerialize["phone_number"] = o.PhoneNumber
+	}
+	return toSerialize, nil
 }
 
 type NullableUpdateTenantRequest struct {

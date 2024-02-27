@@ -1,10 +1,12 @@
 package provider
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"testing"
 
+	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
@@ -57,6 +59,8 @@ func appendToTestFile(file string) error {
 		return fmt.Errorf("failed to open file: %w", err)
 	}
 	defer f.Close()
+
+	tflog.Info(context.Background(), "Appending to file: "+file)
 
 	if _, err = f.WriteString("test"); err != nil {
 		return fmt.Errorf("failed to write to file: %w", err)

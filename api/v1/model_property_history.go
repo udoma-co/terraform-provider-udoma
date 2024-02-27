@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the PropertyHistory type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &PropertyHistory{}
+
 // PropertyHistory struct for PropertyHistory
 type PropertyHistory struct {
 	// Reference to the property for which this history object applies
@@ -40,7 +43,7 @@ func NewPropertyHistoryWithDefaults() *PropertyHistory {
 
 // GetPropertyRef returns the PropertyRef field value if set, zero value otherwise.
 func (o *PropertyHistory) GetPropertyRef() string {
-	if o == nil || o.PropertyRef == nil {
+	if o == nil || IsNil(o.PropertyRef) {
 		var ret string
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *PropertyHistory) GetPropertyRef() string {
 // GetPropertyRefOk returns a tuple with the PropertyRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PropertyHistory) GetPropertyRefOk() (*string, bool) {
-	if o == nil || o.PropertyRef == nil {
+	if o == nil || IsNil(o.PropertyRef) {
 		return nil, false
 	}
 	return o.PropertyRef, true
@@ -58,7 +61,7 @@ func (o *PropertyHistory) GetPropertyRefOk() (*string, bool) {
 
 // HasPropertyRef returns a boolean if a field has been set.
 func (o *PropertyHistory) HasPropertyRef() bool {
-	if o != nil && o.PropertyRef != nil {
+	if o != nil && !IsNil(o.PropertyRef) {
 		return true
 	}
 
@@ -72,7 +75,7 @@ func (o *PropertyHistory) SetPropertyRef(v string) {
 
 // GetEntries returns the Entries field value if set, zero value otherwise.
 func (o *PropertyHistory) GetEntries() []PropertyHistoryEntry {
-	if o == nil || o.Entries == nil {
+	if o == nil || IsNil(o.Entries) {
 		var ret []PropertyHistoryEntry
 		return ret
 	}
@@ -82,7 +85,7 @@ func (o *PropertyHistory) GetEntries() []PropertyHistoryEntry {
 // GetEntriesOk returns a tuple with the Entries field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PropertyHistory) GetEntriesOk() ([]PropertyHistoryEntry, bool) {
-	if o == nil || o.Entries == nil {
+	if o == nil || IsNil(o.Entries) {
 		return nil, false
 	}
 	return o.Entries, true
@@ -90,7 +93,7 @@ func (o *PropertyHistory) GetEntriesOk() ([]PropertyHistoryEntry, bool) {
 
 // HasEntries returns a boolean if a field has been set.
 func (o *PropertyHistory) HasEntries() bool {
-	if o != nil && o.Entries != nil {
+	if o != nil && !IsNil(o.Entries) {
 		return true
 	}
 
@@ -103,14 +106,22 @@ func (o *PropertyHistory) SetEntries(v []PropertyHistoryEntry) {
 }
 
 func (o PropertyHistory) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.PropertyRef != nil {
-		toSerialize["property_ref"] = o.PropertyRef
-	}
-	if o.Entries != nil {
-		toSerialize["entries"] = o.Entries
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o PropertyHistory) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.PropertyRef) {
+		toSerialize["property_ref"] = o.PropertyRef
+	}
+	if !IsNil(o.Entries) {
+		toSerialize["entries"] = o.Entries
+	}
+	return toSerialize, nil
 }
 
 type NullablePropertyHistory struct {

@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the UpdateWorkflowExecutionRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &UpdateWorkflowExecutionRequest{}
+
 // UpdateWorkflowExecutionRequest a request for updating a workflow execution
 type UpdateWorkflowExecutionRequest struct {
 	Status *WorkflowExecutionStatus `json:"status,omitempty"`
@@ -38,7 +41,7 @@ func NewUpdateWorkflowExecutionRequestWithDefaults() *UpdateWorkflowExecutionReq
 
 // GetStatus returns the Status field value if set, zero value otherwise.
 func (o *UpdateWorkflowExecutionRequest) GetStatus() WorkflowExecutionStatus {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		var ret WorkflowExecutionStatus
 		return ret
 	}
@@ -48,7 +51,7 @@ func (o *UpdateWorkflowExecutionRequest) GetStatus() WorkflowExecutionStatus {
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateWorkflowExecutionRequest) GetStatusOk() (*WorkflowExecutionStatus, bool) {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
 	return o.Status, true
@@ -56,7 +59,7 @@ func (o *UpdateWorkflowExecutionRequest) GetStatusOk() (*WorkflowExecutionStatus
 
 // HasStatus returns a boolean if a field has been set.
 func (o *UpdateWorkflowExecutionRequest) HasStatus() bool {
-	if o != nil && o.Status != nil {
+	if o != nil && !IsNil(o.Status) {
 		return true
 	}
 
@@ -69,11 +72,19 @@ func (o *UpdateWorkflowExecutionRequest) SetStatus(v WorkflowExecutionStatus) {
 }
 
 func (o UpdateWorkflowExecutionRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Status != nil {
-		toSerialize["status"] = o.Status
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o UpdateWorkflowExecutionRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	return toSerialize, nil
 }
 
 type NullableUpdateWorkflowExecutionRequest struct {

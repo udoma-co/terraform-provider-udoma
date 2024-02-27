@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the QueryDocumentGenerationsResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &QueryDocumentGenerationsResponse{}
+
 // QueryDocumentGenerationsResponse Result of a document generation query
 type QueryDocumentGenerationsResponse struct {
 	Limit     *int32               `json:"limit,omitempty"`
@@ -41,7 +44,7 @@ func NewQueryDocumentGenerationsResponseWithDefaults() *QueryDocumentGenerations
 
 // GetLimit returns the Limit field value if set, zero value otherwise.
 func (o *QueryDocumentGenerationsResponse) GetLimit() int32 {
-	if o == nil || o.Limit == nil {
+	if o == nil || IsNil(o.Limit) {
 		var ret int32
 		return ret
 	}
@@ -51,7 +54,7 @@ func (o *QueryDocumentGenerationsResponse) GetLimit() int32 {
 // GetLimitOk returns a tuple with the Limit field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryDocumentGenerationsResponse) GetLimitOk() (*int32, bool) {
-	if o == nil || o.Limit == nil {
+	if o == nil || IsNil(o.Limit) {
 		return nil, false
 	}
 	return o.Limit, true
@@ -59,7 +62,7 @@ func (o *QueryDocumentGenerationsResponse) GetLimitOk() (*int32, bool) {
 
 // HasLimit returns a boolean if a field has been set.
 func (o *QueryDocumentGenerationsResponse) HasLimit() bool {
-	if o != nil && o.Limit != nil {
+	if o != nil && !IsNil(o.Limit) {
 		return true
 	}
 
@@ -73,7 +76,7 @@ func (o *QueryDocumentGenerationsResponse) SetLimit(v int32) {
 
 // GetOffset returns the Offset field value if set, zero value otherwise.
 func (o *QueryDocumentGenerationsResponse) GetOffset() int32 {
-	if o == nil || o.Offset == nil {
+	if o == nil || IsNil(o.Offset) {
 		var ret int32
 		return ret
 	}
@@ -83,7 +86,7 @@ func (o *QueryDocumentGenerationsResponse) GetOffset() int32 {
 // GetOffsetOk returns a tuple with the Offset field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryDocumentGenerationsResponse) GetOffsetOk() (*int32, bool) {
-	if o == nil || o.Offset == nil {
+	if o == nil || IsNil(o.Offset) {
 		return nil, false
 	}
 	return o.Offset, true
@@ -91,7 +94,7 @@ func (o *QueryDocumentGenerationsResponse) GetOffsetOk() (*int32, bool) {
 
 // HasOffset returns a boolean if a field has been set.
 func (o *QueryDocumentGenerationsResponse) HasOffset() bool {
-	if o != nil && o.Offset != nil {
+	if o != nil && !IsNil(o.Offset) {
 		return true
 	}
 
@@ -105,7 +108,7 @@ func (o *QueryDocumentGenerationsResponse) SetOffset(v int32) {
 
 // GetTotal returns the Total field value if set, zero value otherwise.
 func (o *QueryDocumentGenerationsResponse) GetTotal() int32 {
-	if o == nil || o.Total == nil {
+	if o == nil || IsNil(o.Total) {
 		var ret int32
 		return ret
 	}
@@ -115,7 +118,7 @@ func (o *QueryDocumentGenerationsResponse) GetTotal() int32 {
 // GetTotalOk returns a tuple with the Total field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryDocumentGenerationsResponse) GetTotalOk() (*int32, bool) {
-	if o == nil || o.Total == nil {
+	if o == nil || IsNil(o.Total) {
 		return nil, false
 	}
 	return o.Total, true
@@ -123,7 +126,7 @@ func (o *QueryDocumentGenerationsResponse) GetTotalOk() (*int32, bool) {
 
 // HasTotal returns a boolean if a field has been set.
 func (o *QueryDocumentGenerationsResponse) HasTotal() bool {
-	if o != nil && o.Total != nil {
+	if o != nil && !IsNil(o.Total) {
 		return true
 	}
 
@@ -137,7 +140,7 @@ func (o *QueryDocumentGenerationsResponse) SetTotal(v int32) {
 
 // GetDocuments returns the Documents field value if set, zero value otherwise.
 func (o *QueryDocumentGenerationsResponse) GetDocuments() []DocumentGeneration {
-	if o == nil || o.Documents == nil {
+	if o == nil || IsNil(o.Documents) {
 		var ret []DocumentGeneration
 		return ret
 	}
@@ -147,7 +150,7 @@ func (o *QueryDocumentGenerationsResponse) GetDocuments() []DocumentGeneration {
 // GetDocumentsOk returns a tuple with the Documents field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryDocumentGenerationsResponse) GetDocumentsOk() ([]DocumentGeneration, bool) {
-	if o == nil || o.Documents == nil {
+	if o == nil || IsNil(o.Documents) {
 		return nil, false
 	}
 	return o.Documents, true
@@ -155,7 +158,7 @@ func (o *QueryDocumentGenerationsResponse) GetDocumentsOk() ([]DocumentGeneratio
 
 // HasDocuments returns a boolean if a field has been set.
 func (o *QueryDocumentGenerationsResponse) HasDocuments() bool {
-	if o != nil && o.Documents != nil {
+	if o != nil && !IsNil(o.Documents) {
 		return true
 	}
 
@@ -168,20 +171,28 @@ func (o *QueryDocumentGenerationsResponse) SetDocuments(v []DocumentGeneration) 
 }
 
 func (o QueryDocumentGenerationsResponse) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Limit != nil {
-		toSerialize["limit"] = o.Limit
-	}
-	if o.Offset != nil {
-		toSerialize["offset"] = o.Offset
-	}
-	if o.Total != nil {
-		toSerialize["total"] = o.Total
-	}
-	if o.Documents != nil {
-		toSerialize["documents"] = o.Documents
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o QueryDocumentGenerationsResponse) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Limit) {
+		toSerialize["limit"] = o.Limit
+	}
+	if !IsNil(o.Offset) {
+		toSerialize["offset"] = o.Offset
+	}
+	if !IsNil(o.Total) {
+		toSerialize["total"] = o.Total
+	}
+	if !IsNil(o.Documents) {
+		toSerialize["documents"] = o.Documents
+	}
+	return toSerialize, nil
 }
 
 type NullableQueryDocumentGenerationsResponse struct {

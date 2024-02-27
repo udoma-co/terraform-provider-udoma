@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the UnssignCaseRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &UnssignCaseRequest{}
+
 // UnssignCaseRequest Request used to remove a service provider from a case
 type UnssignCaseRequest struct {
 	Party *CaseParty `json:"party,omitempty"`
@@ -38,7 +41,7 @@ func NewUnssignCaseRequestWithDefaults() *UnssignCaseRequest {
 
 // GetParty returns the Party field value if set, zero value otherwise.
 func (o *UnssignCaseRequest) GetParty() CaseParty {
-	if o == nil || o.Party == nil {
+	if o == nil || IsNil(o.Party) {
 		var ret CaseParty
 		return ret
 	}
@@ -48,7 +51,7 @@ func (o *UnssignCaseRequest) GetParty() CaseParty {
 // GetPartyOk returns a tuple with the Party field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UnssignCaseRequest) GetPartyOk() (*CaseParty, bool) {
-	if o == nil || o.Party == nil {
+	if o == nil || IsNil(o.Party) {
 		return nil, false
 	}
 	return o.Party, true
@@ -56,7 +59,7 @@ func (o *UnssignCaseRequest) GetPartyOk() (*CaseParty, bool) {
 
 // HasParty returns a boolean if a field has been set.
 func (o *UnssignCaseRequest) HasParty() bool {
-	if o != nil && o.Party != nil {
+	if o != nil && !IsNil(o.Party) {
 		return true
 	}
 
@@ -69,11 +72,19 @@ func (o *UnssignCaseRequest) SetParty(v CaseParty) {
 }
 
 func (o UnssignCaseRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Party != nil {
-		toSerialize["party"] = o.Party
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o UnssignCaseRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Party) {
+		toSerialize["party"] = o.Party
+	}
+	return toSerialize, nil
 }
 
 type NullableUnssignCaseRequest struct {

@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ReportResultSchemaProperty type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ReportResultSchemaProperty{}
+
 // ReportResultSchemaProperty struct for ReportResultSchemaProperty
 type ReportResultSchemaProperty struct {
 	Id *string `json:"id,omitempty"`
@@ -41,7 +44,7 @@ func NewReportResultSchemaPropertyWithDefaults() *ReportResultSchemaProperty {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *ReportResultSchemaProperty) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -51,7 +54,7 @@ func (o *ReportResultSchemaProperty) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReportResultSchemaProperty) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -59,7 +62,7 @@ func (o *ReportResultSchemaProperty) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *ReportResultSchemaProperty) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -73,7 +76,7 @@ func (o *ReportResultSchemaProperty) SetId(v string) {
 
 // GetLabel returns the Label field value if set, zero value otherwise.
 func (o *ReportResultSchemaProperty) GetLabel() map[string]string {
-	if o == nil || o.Label == nil {
+	if o == nil || IsNil(o.Label) {
 		var ret map[string]string
 		return ret
 	}
@@ -83,7 +86,7 @@ func (o *ReportResultSchemaProperty) GetLabel() map[string]string {
 // GetLabelOk returns a tuple with the Label field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReportResultSchemaProperty) GetLabelOk() (*map[string]string, bool) {
-	if o == nil || o.Label == nil {
+	if o == nil || IsNil(o.Label) {
 		return nil, false
 	}
 	return o.Label, true
@@ -91,7 +94,7 @@ func (o *ReportResultSchemaProperty) GetLabelOk() (*map[string]string, bool) {
 
 // HasLabel returns a boolean if a field has been set.
 func (o *ReportResultSchemaProperty) HasLabel() bool {
-	if o != nil && o.Label != nil {
+	if o != nil && !IsNil(o.Label) {
 		return true
 	}
 
@@ -105,7 +108,7 @@ func (o *ReportResultSchemaProperty) SetLabel(v map[string]string) {
 
 // GetSequence returns the Sequence field value if set, zero value otherwise.
 func (o *ReportResultSchemaProperty) GetSequence() int32 {
-	if o == nil || o.Sequence == nil {
+	if o == nil || IsNil(o.Sequence) {
 		var ret int32
 		return ret
 	}
@@ -115,7 +118,7 @@ func (o *ReportResultSchemaProperty) GetSequence() int32 {
 // GetSequenceOk returns a tuple with the Sequence field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReportResultSchemaProperty) GetSequenceOk() (*int32, bool) {
-	if o == nil || o.Sequence == nil {
+	if o == nil || IsNil(o.Sequence) {
 		return nil, false
 	}
 	return o.Sequence, true
@@ -123,7 +126,7 @@ func (o *ReportResultSchemaProperty) GetSequenceOk() (*int32, bool) {
 
 // HasSequence returns a boolean if a field has been set.
 func (o *ReportResultSchemaProperty) HasSequence() bool {
-	if o != nil && o.Sequence != nil {
+	if o != nil && !IsNil(o.Sequence) {
 		return true
 	}
 
@@ -136,17 +139,25 @@ func (o *ReportResultSchemaProperty) SetSequence(v int32) {
 }
 
 func (o ReportResultSchemaProperty) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Label != nil {
-		toSerialize["label"] = o.Label
-	}
-	if o.Sequence != nil {
-		toSerialize["sequence"] = o.Sequence
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ReportResultSchemaProperty) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Label) {
+		toSerialize["label"] = o.Label
+	}
+	if !IsNil(o.Sequence) {
+		toSerialize["sequence"] = o.Sequence
+	}
+	return toSerialize, nil
 }
 
 type NullableReportResultSchemaProperty struct {

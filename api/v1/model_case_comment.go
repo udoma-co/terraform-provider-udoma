@@ -11,8 +11,13 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the CaseComment type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CaseComment{}
 
 // CaseComment Comment represents a single user comment on a case
 type CaseComment struct {
@@ -28,6 +33,8 @@ type CaseComment struct {
 	// list of attachments that should be linked to the comment
 	Attachments []Attachment `json:"attachments,omitempty"`
 }
+
+type _CaseComment CaseComment
 
 // NewCaseComment instantiates a new CaseComment object
 // This constructor will assign default values to properties that have it defined,
@@ -100,7 +107,7 @@ func (o *CaseComment) SetCreatedAt(v int64) {
 
 // GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
 func (o *CaseComment) GetUpdatedAt() int64 {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		var ret int64
 		return ret
 	}
@@ -110,7 +117,7 @@ func (o *CaseComment) GetUpdatedAt() int64 {
 // GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseComment) GetUpdatedAtOk() (*int64, bool) {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
 	return o.UpdatedAt, true
@@ -118,7 +125,7 @@ func (o *CaseComment) GetUpdatedAtOk() (*int64, bool) {
 
 // HasUpdatedAt returns a boolean if a field has been set.
 func (o *CaseComment) HasUpdatedAt() bool {
-	if o != nil && o.UpdatedAt != nil {
+	if o != nil && !IsNil(o.UpdatedAt) {
 		return true
 	}
 
@@ -156,7 +163,7 @@ func (o *CaseComment) SetAuthorRef(v UserReference) {
 
 // GetDeleted returns the Deleted field value if set, zero value otherwise.
 func (o *CaseComment) GetDeleted() bool {
-	if o == nil || o.Deleted == nil {
+	if o == nil || IsNil(o.Deleted) {
 		var ret bool
 		return ret
 	}
@@ -166,7 +173,7 @@ func (o *CaseComment) GetDeleted() bool {
 // GetDeletedOk returns a tuple with the Deleted field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseComment) GetDeletedOk() (*bool, bool) {
-	if o == nil || o.Deleted == nil {
+	if o == nil || IsNil(o.Deleted) {
 		return nil, false
 	}
 	return o.Deleted, true
@@ -174,7 +181,7 @@ func (o *CaseComment) GetDeletedOk() (*bool, bool) {
 
 // HasDeleted returns a boolean if a field has been set.
 func (o *CaseComment) HasDeleted() bool {
-	if o != nil && o.Deleted != nil {
+	if o != nil && !IsNil(o.Deleted) {
 		return true
 	}
 
@@ -188,7 +195,7 @@ func (o *CaseComment) SetDeleted(v bool) {
 
 // GetVisibility returns the Visibility field value if set, zero value otherwise.
 func (o *CaseComment) GetVisibility() []CaseParty {
-	if o == nil || o.Visibility == nil {
+	if o == nil || IsNil(o.Visibility) {
 		var ret []CaseParty
 		return ret
 	}
@@ -198,7 +205,7 @@ func (o *CaseComment) GetVisibility() []CaseParty {
 // GetVisibilityOk returns a tuple with the Visibility field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseComment) GetVisibilityOk() ([]CaseParty, bool) {
-	if o == nil || o.Visibility == nil {
+	if o == nil || IsNil(o.Visibility) {
 		return nil, false
 	}
 	return o.Visibility, true
@@ -206,7 +213,7 @@ func (o *CaseComment) GetVisibilityOk() ([]CaseParty, bool) {
 
 // HasVisibility returns a boolean if a field has been set.
 func (o *CaseComment) HasVisibility() bool {
-	if o != nil && o.Visibility != nil {
+	if o != nil && !IsNil(o.Visibility) {
 		return true
 	}
 
@@ -244,7 +251,7 @@ func (o *CaseComment) SetContent(v string) {
 
 // GetAttachments returns the Attachments field value if set, zero value otherwise.
 func (o *CaseComment) GetAttachments() []Attachment {
-	if o == nil || o.Attachments == nil {
+	if o == nil || IsNil(o.Attachments) {
 		var ret []Attachment
 		return ret
 	}
@@ -254,7 +261,7 @@ func (o *CaseComment) GetAttachments() []Attachment {
 // GetAttachmentsOk returns a tuple with the Attachments field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseComment) GetAttachmentsOk() ([]Attachment, bool) {
-	if o == nil || o.Attachments == nil {
+	if o == nil || IsNil(o.Attachments) {
 		return nil, false
 	}
 	return o.Attachments, true
@@ -262,7 +269,7 @@ func (o *CaseComment) GetAttachmentsOk() ([]Attachment, bool) {
 
 // HasAttachments returns a boolean if a field has been set.
 func (o *CaseComment) HasAttachments() bool {
-	if o != nil && o.Attachments != nil {
+	if o != nil && !IsNil(o.Attachments) {
 		return true
 	}
 
@@ -275,32 +282,72 @@ func (o *CaseComment) SetAttachments(v []Attachment) {
 }
 
 func (o CaseComment) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["id"] = o.Id
-	}
-	if true {
-		toSerialize["created_at"] = o.CreatedAt
-	}
-	if o.UpdatedAt != nil {
-		toSerialize["updated_at"] = o.UpdatedAt
-	}
-	if true {
-		toSerialize["author_ref"] = o.AuthorRef
-	}
-	if o.Deleted != nil {
-		toSerialize["deleted"] = o.Deleted
-	}
-	if o.Visibility != nil {
-		toSerialize["visibility"] = o.Visibility
-	}
-	if true {
-		toSerialize["content"] = o.Content
-	}
-	if o.Attachments != nil {
-		toSerialize["attachments"] = o.Attachments
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CaseComment) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["id"] = o.Id
+	toSerialize["created_at"] = o.CreatedAt
+	if !IsNil(o.UpdatedAt) {
+		toSerialize["updated_at"] = o.UpdatedAt
+	}
+	toSerialize["author_ref"] = o.AuthorRef
+	if !IsNil(o.Deleted) {
+		toSerialize["deleted"] = o.Deleted
+	}
+	if !IsNil(o.Visibility) {
+		toSerialize["visibility"] = o.Visibility
+	}
+	toSerialize["content"] = o.Content
+	if !IsNil(o.Attachments) {
+		toSerialize["attachments"] = o.Attachments
+	}
+	return toSerialize, nil
+}
+
+func (o *CaseComment) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"id",
+		"created_at",
+		"author_ref",
+		"content",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCaseComment := _CaseComment{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCaseComment)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CaseComment(varCaseComment)
+
+	return err
 }
 
 type NullableCaseComment struct {

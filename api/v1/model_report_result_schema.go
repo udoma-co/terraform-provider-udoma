@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ReportResultSchema type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ReportResultSchema{}
+
 // ReportResultSchema struct for ReportResultSchema
 type ReportResultSchema struct {
 	// Whether the result is a list of items
@@ -40,7 +43,7 @@ func NewReportResultSchemaWithDefaults() *ReportResultSchema {
 
 // GetIsList returns the IsList field value if set, zero value otherwise.
 func (o *ReportResultSchema) GetIsList() bool {
-	if o == nil || o.IsList == nil {
+	if o == nil || IsNil(o.IsList) {
 		var ret bool
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *ReportResultSchema) GetIsList() bool {
 // GetIsListOk returns a tuple with the IsList field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReportResultSchema) GetIsListOk() (*bool, bool) {
-	if o == nil || o.IsList == nil {
+	if o == nil || IsNil(o.IsList) {
 		return nil, false
 	}
 	return o.IsList, true
@@ -58,7 +61,7 @@ func (o *ReportResultSchema) GetIsListOk() (*bool, bool) {
 
 // HasIsList returns a boolean if a field has been set.
 func (o *ReportResultSchema) HasIsList() bool {
-	if o != nil && o.IsList != nil {
+	if o != nil && !IsNil(o.IsList) {
 		return true
 	}
 
@@ -72,7 +75,7 @@ func (o *ReportResultSchema) SetIsList(v bool) {
 
 // GetProperties returns the Properties field value if set, zero value otherwise.
 func (o *ReportResultSchema) GetProperties() []ReportResultSchemaProperty {
-	if o == nil || o.Properties == nil {
+	if o == nil || IsNil(o.Properties) {
 		var ret []ReportResultSchemaProperty
 		return ret
 	}
@@ -82,7 +85,7 @@ func (o *ReportResultSchema) GetProperties() []ReportResultSchemaProperty {
 // GetPropertiesOk returns a tuple with the Properties field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReportResultSchema) GetPropertiesOk() ([]ReportResultSchemaProperty, bool) {
-	if o == nil || o.Properties == nil {
+	if o == nil || IsNil(o.Properties) {
 		return nil, false
 	}
 	return o.Properties, true
@@ -90,7 +93,7 @@ func (o *ReportResultSchema) GetPropertiesOk() ([]ReportResultSchemaProperty, bo
 
 // HasProperties returns a boolean if a field has been set.
 func (o *ReportResultSchema) HasProperties() bool {
-	if o != nil && o.Properties != nil {
+	if o != nil && !IsNil(o.Properties) {
 		return true
 	}
 
@@ -103,14 +106,22 @@ func (o *ReportResultSchema) SetProperties(v []ReportResultSchemaProperty) {
 }
 
 func (o ReportResultSchema) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.IsList != nil {
-		toSerialize["is_list"] = o.IsList
-	}
-	if o.Properties != nil {
-		toSerialize["properties"] = o.Properties
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ReportResultSchema) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.IsList) {
+		toSerialize["is_list"] = o.IsList
+	}
+	if !IsNil(o.Properties) {
+		toSerialize["properties"] = o.Properties
+	}
+	return toSerialize, nil
 }
 
 type NullableReportResultSchema struct {

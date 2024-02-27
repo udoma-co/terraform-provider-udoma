@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the DocumentESignatureRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DocumentESignatureRequest{}
+
 // DocumentESignatureRequest The request to start a document signing process
 type DocumentESignatureRequest struct {
 	// The list of signers
@@ -45,7 +48,7 @@ func NewDocumentESignatureRequestWithDefaults() *DocumentESignatureRequest {
 
 // GetSigners returns the Signers field value if set, zero value otherwise.
 func (o *DocumentESignatureRequest) GetSigners() []DocumentSigner {
-	if o == nil || o.Signers == nil {
+	if o == nil || IsNil(o.Signers) {
 		var ret []DocumentSigner
 		return ret
 	}
@@ -55,7 +58,7 @@ func (o *DocumentESignatureRequest) GetSigners() []DocumentSigner {
 // GetSignersOk returns a tuple with the Signers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentESignatureRequest) GetSignersOk() ([]DocumentSigner, bool) {
-	if o == nil || o.Signers == nil {
+	if o == nil || IsNil(o.Signers) {
 		return nil, false
 	}
 	return o.Signers, true
@@ -63,7 +66,7 @@ func (o *DocumentESignatureRequest) GetSignersOk() ([]DocumentSigner, bool) {
 
 // HasSigners returns a boolean if a field has been set.
 func (o *DocumentESignatureRequest) HasSigners() bool {
-	if o != nil && o.Signers != nil {
+	if o != nil && !IsNil(o.Signers) {
 		return true
 	}
 
@@ -77,7 +80,7 @@ func (o *DocumentESignatureRequest) SetSigners(v []DocumentSigner) {
 
 // GetMessage returns the Message field value if set, zero value otherwise.
 func (o *DocumentESignatureRequest) GetMessage() string {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		var ret string
 		return ret
 	}
@@ -87,7 +90,7 @@ func (o *DocumentESignatureRequest) GetMessage() string {
 // GetMessageOk returns a tuple with the Message field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentESignatureRequest) GetMessageOk() (*string, bool) {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		return nil, false
 	}
 	return o.Message, true
@@ -95,7 +98,7 @@ func (o *DocumentESignatureRequest) GetMessageOk() (*string, bool) {
 
 // HasMessage returns a boolean if a field has been set.
 func (o *DocumentESignatureRequest) HasMessage() bool {
-	if o != nil && o.Message != nil {
+	if o != nil && !IsNil(o.Message) {
 		return true
 	}
 
@@ -109,7 +112,7 @@ func (o *DocumentESignatureRequest) SetMessage(v string) {
 
 // GetExpirationDate returns the ExpirationDate field value if set, zero value otherwise.
 func (o *DocumentESignatureRequest) GetExpirationDate() int64 {
-	if o == nil || o.ExpirationDate == nil {
+	if o == nil || IsNil(o.ExpirationDate) {
 		var ret int64
 		return ret
 	}
@@ -119,7 +122,7 @@ func (o *DocumentESignatureRequest) GetExpirationDate() int64 {
 // GetExpirationDateOk returns a tuple with the ExpirationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentESignatureRequest) GetExpirationDateOk() (*int64, bool) {
-	if o == nil || o.ExpirationDate == nil {
+	if o == nil || IsNil(o.ExpirationDate) {
 		return nil, false
 	}
 	return o.ExpirationDate, true
@@ -127,7 +130,7 @@ func (o *DocumentESignatureRequest) GetExpirationDateOk() (*int64, bool) {
 
 // HasExpirationDate returns a boolean if a field has been set.
 func (o *DocumentESignatureRequest) HasExpirationDate() bool {
-	if o != nil && o.ExpirationDate != nil {
+	if o != nil && !IsNil(o.ExpirationDate) {
 		return true
 	}
 
@@ -141,7 +144,7 @@ func (o *DocumentESignatureRequest) SetExpirationDate(v int64) {
 
 // GetQes returns the Qes field value if set, zero value otherwise.
 func (o *DocumentESignatureRequest) GetQes() bool {
-	if o == nil || o.Qes == nil {
+	if o == nil || IsNil(o.Qes) {
 		var ret bool
 		return ret
 	}
@@ -151,7 +154,7 @@ func (o *DocumentESignatureRequest) GetQes() bool {
 // GetQesOk returns a tuple with the Qes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentESignatureRequest) GetQesOk() (*bool, bool) {
-	if o == nil || o.Qes == nil {
+	if o == nil || IsNil(o.Qes) {
 		return nil, false
 	}
 	return o.Qes, true
@@ -159,7 +162,7 @@ func (o *DocumentESignatureRequest) GetQesOk() (*bool, bool) {
 
 // HasQes returns a boolean if a field has been set.
 func (o *DocumentESignatureRequest) HasQes() bool {
-	if o != nil && o.Qes != nil {
+	if o != nil && !IsNil(o.Qes) {
 		return true
 	}
 
@@ -172,20 +175,28 @@ func (o *DocumentESignatureRequest) SetQes(v bool) {
 }
 
 func (o DocumentESignatureRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Signers != nil {
-		toSerialize["signers"] = o.Signers
-	}
-	if o.Message != nil {
-		toSerialize["message"] = o.Message
-	}
-	if o.ExpirationDate != nil {
-		toSerialize["expiration_date"] = o.ExpirationDate
-	}
-	if o.Qes != nil {
-		toSerialize["qes"] = o.Qes
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DocumentESignatureRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Signers) {
+		toSerialize["signers"] = o.Signers
+	}
+	if !IsNil(o.Message) {
+		toSerialize["message"] = o.Message
+	}
+	if !IsNil(o.ExpirationDate) {
+		toSerialize["expiration_date"] = o.ExpirationDate
+	}
+	if !IsNil(o.Qes) {
+		toSerialize["qes"] = o.Qes
+	}
+	return toSerialize, nil
 }
 
 type NullableDocumentESignatureRequest struct {

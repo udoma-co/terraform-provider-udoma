@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ReportExecution type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ReportExecution{}
+
 // ReportExecution struct for ReportExecution
 type ReportExecution struct {
 	Id *string `json:"id,omitempty"`
@@ -50,7 +53,7 @@ func NewReportExecutionWithDefaults() *ReportExecution {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *ReportExecution) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -60,7 +63,7 @@ func (o *ReportExecution) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReportExecution) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -68,7 +71,7 @@ func (o *ReportExecution) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *ReportExecution) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -82,7 +85,7 @@ func (o *ReportExecution) SetId(v string) {
 
 // GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
 func (o *ReportExecution) GetCreatedAt() int64 {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		var ret int64
 		return ret
 	}
@@ -92,7 +95,7 @@ func (o *ReportExecution) GetCreatedAt() int64 {
 // GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReportExecution) GetCreatedAtOk() (*int64, bool) {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
 	return o.CreatedAt, true
@@ -100,7 +103,7 @@ func (o *ReportExecution) GetCreatedAtOk() (*int64, bool) {
 
 // HasCreatedAt returns a boolean if a field has been set.
 func (o *ReportExecution) HasCreatedAt() bool {
-	if o != nil && o.CreatedAt != nil {
+	if o != nil && !IsNil(o.CreatedAt) {
 		return true
 	}
 
@@ -114,7 +117,7 @@ func (o *ReportExecution) SetCreatedAt(v int64) {
 
 // GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
 func (o *ReportExecution) GetUpdatedAt() int64 {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		var ret int64
 		return ret
 	}
@@ -124,7 +127,7 @@ func (o *ReportExecution) GetUpdatedAt() int64 {
 // GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReportExecution) GetUpdatedAtOk() (*int64, bool) {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
 	return o.UpdatedAt, true
@@ -132,7 +135,7 @@ func (o *ReportExecution) GetUpdatedAtOk() (*int64, bool) {
 
 // HasUpdatedAt returns a boolean if a field has been set.
 func (o *ReportExecution) HasUpdatedAt() bool {
-	if o != nil && o.UpdatedAt != nil {
+	if o != nil && !IsNil(o.UpdatedAt) {
 		return true
 	}
 
@@ -146,7 +149,7 @@ func (o *ReportExecution) SetUpdatedAt(v int64) {
 
 // GetReportRef returns the ReportRef field value if set, zero value otherwise.
 func (o *ReportExecution) GetReportRef() string {
-	if o == nil || o.ReportRef == nil {
+	if o == nil || IsNil(o.ReportRef) {
 		var ret string
 		return ret
 	}
@@ -156,7 +159,7 @@ func (o *ReportExecution) GetReportRef() string {
 // GetReportRefOk returns a tuple with the ReportRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReportExecution) GetReportRefOk() (*string, bool) {
-	if o == nil || o.ReportRef == nil {
+	if o == nil || IsNil(o.ReportRef) {
 		return nil, false
 	}
 	return o.ReportRef, true
@@ -164,7 +167,7 @@ func (o *ReportExecution) GetReportRefOk() (*string, bool) {
 
 // HasReportRef returns a boolean if a field has been set.
 func (o *ReportExecution) HasReportRef() bool {
-	if o != nil && o.ReportRef != nil {
+	if o != nil && !IsNil(o.ReportRef) {
 		return true
 	}
 
@@ -178,7 +181,7 @@ func (o *ReportExecution) SetReportRef(v string) {
 
 // GetStatus returns the Status field value if set, zero value otherwise.
 func (o *ReportExecution) GetStatus() ReportExecutionStatusEnum {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		var ret ReportExecutionStatusEnum
 		return ret
 	}
@@ -188,7 +191,7 @@ func (o *ReportExecution) GetStatus() ReportExecutionStatusEnum {
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReportExecution) GetStatusOk() (*ReportExecutionStatusEnum, bool) {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
 	return o.Status, true
@@ -196,7 +199,7 @@ func (o *ReportExecution) GetStatusOk() (*ReportExecutionStatusEnum, bool) {
 
 // HasStatus returns a boolean if a field has been set.
 func (o *ReportExecution) HasStatus() bool {
-	if o != nil && o.Status != nil {
+	if o != nil && !IsNil(o.Status) {
 		return true
 	}
 
@@ -210,7 +213,7 @@ func (o *ReportExecution) SetStatus(v ReportExecutionStatusEnum) {
 
 // GetParameters returns the Parameters field value if set, zero value otherwise.
 func (o *ReportExecution) GetParameters() map[string]interface{} {
-	if o == nil || o.Parameters == nil {
+	if o == nil || IsNil(o.Parameters) {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -220,15 +223,15 @@ func (o *ReportExecution) GetParameters() map[string]interface{} {
 // GetParametersOk returns a tuple with the Parameters field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReportExecution) GetParametersOk() (map[string]interface{}, bool) {
-	if o == nil || o.Parameters == nil {
-		return nil, false
+	if o == nil || IsNil(o.Parameters) {
+		return map[string]interface{}{}, false
 	}
 	return o.Parameters, true
 }
 
 // HasParameters returns a boolean if a field has been set.
 func (o *ReportExecution) HasParameters() bool {
-	if o != nil && o.Parameters != nil {
+	if o != nil && !IsNil(o.Parameters) {
 		return true
 	}
 
@@ -242,7 +245,7 @@ func (o *ReportExecution) SetParameters(v map[string]interface{}) {
 
 // GetResult returns the Result field value if set, zero value otherwise.
 func (o *ReportExecution) GetResult() string {
-	if o == nil || o.Result == nil {
+	if o == nil || IsNil(o.Result) {
 		var ret string
 		return ret
 	}
@@ -252,7 +255,7 @@ func (o *ReportExecution) GetResult() string {
 // GetResultOk returns a tuple with the Result field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReportExecution) GetResultOk() (*string, bool) {
-	if o == nil || o.Result == nil {
+	if o == nil || IsNil(o.Result) {
 		return nil, false
 	}
 	return o.Result, true
@@ -260,7 +263,7 @@ func (o *ReportExecution) GetResultOk() (*string, bool) {
 
 // HasResult returns a boolean if a field has been set.
 func (o *ReportExecution) HasResult() bool {
-	if o != nil && o.Result != nil {
+	if o != nil && !IsNil(o.Result) {
 		return true
 	}
 
@@ -274,7 +277,7 @@ func (o *ReportExecution) SetResult(v string) {
 
 // GetError returns the Error field value if set, zero value otherwise.
 func (o *ReportExecution) GetError() string {
-	if o == nil || o.Error == nil {
+	if o == nil || IsNil(o.Error) {
 		var ret string
 		return ret
 	}
@@ -284,7 +287,7 @@ func (o *ReportExecution) GetError() string {
 // GetErrorOk returns a tuple with the Error field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReportExecution) GetErrorOk() (*string, bool) {
-	if o == nil || o.Error == nil {
+	if o == nil || IsNil(o.Error) {
 		return nil, false
 	}
 	return o.Error, true
@@ -292,7 +295,7 @@ func (o *ReportExecution) GetErrorOk() (*string, bool) {
 
 // HasError returns a boolean if a field has been set.
 func (o *ReportExecution) HasError() bool {
-	if o != nil && o.Error != nil {
+	if o != nil && !IsNil(o.Error) {
 		return true
 	}
 
@@ -305,32 +308,40 @@ func (o *ReportExecution) SetError(v string) {
 }
 
 func (o ReportExecution) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.CreatedAt != nil {
-		toSerialize["created_at"] = o.CreatedAt
-	}
-	if o.UpdatedAt != nil {
-		toSerialize["updated_at"] = o.UpdatedAt
-	}
-	if o.ReportRef != nil {
-		toSerialize["report_ref"] = o.ReportRef
-	}
-	if o.Status != nil {
-		toSerialize["status"] = o.Status
-	}
-	if o.Parameters != nil {
-		toSerialize["parameters"] = o.Parameters
-	}
-	if o.Result != nil {
-		toSerialize["result"] = o.Result
-	}
-	if o.Error != nil {
-		toSerialize["error"] = o.Error
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ReportExecution) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.CreatedAt) {
+		toSerialize["created_at"] = o.CreatedAt
+	}
+	if !IsNil(o.UpdatedAt) {
+		toSerialize["updated_at"] = o.UpdatedAt
+	}
+	if !IsNil(o.ReportRef) {
+		toSerialize["report_ref"] = o.ReportRef
+	}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.Parameters) {
+		toSerialize["parameters"] = o.Parameters
+	}
+	if !IsNil(o.Result) {
+		toSerialize["result"] = o.Result
+	}
+	if !IsNil(o.Error) {
+		toSerialize["error"] = o.Error
+	}
+	return toSerialize, nil
 }
 
 type NullableReportExecution struct {

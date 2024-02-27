@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ConnectorStatus type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ConnectorStatus{}
+
 // ConnectorStatus Information about the status of the connector
 type ConnectorStatus struct {
 	// timestamp of the last ping
@@ -43,7 +46,7 @@ func NewConnectorStatusWithDefaults() *ConnectorStatus {
 
 // GetLastPing returns the LastPing field value if set, zero value otherwise.
 func (o *ConnectorStatus) GetLastPing() int64 {
-	if o == nil || o.LastPing == nil {
+	if o == nil || IsNil(o.LastPing) {
 		var ret int64
 		return ret
 	}
@@ -53,7 +56,7 @@ func (o *ConnectorStatus) GetLastPing() int64 {
 // GetLastPingOk returns a tuple with the LastPing field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectorStatus) GetLastPingOk() (*int64, bool) {
-	if o == nil || o.LastPing == nil {
+	if o == nil || IsNil(o.LastPing) {
 		return nil, false
 	}
 	return o.LastPing, true
@@ -61,7 +64,7 @@ func (o *ConnectorStatus) GetLastPingOk() (*int64, bool) {
 
 // HasLastPing returns a boolean if a field has been set.
 func (o *ConnectorStatus) HasLastPing() bool {
-	if o != nil && o.LastPing != nil {
+	if o != nil && !IsNil(o.LastPing) {
 		return true
 	}
 
@@ -75,7 +78,7 @@ func (o *ConnectorStatus) SetLastPing(v int64) {
 
 // GetLastSync returns the LastSync field value if set, zero value otherwise.
 func (o *ConnectorStatus) GetLastSync() int64 {
-	if o == nil || o.LastSync == nil {
+	if o == nil || IsNil(o.LastSync) {
 		var ret int64
 		return ret
 	}
@@ -85,7 +88,7 @@ func (o *ConnectorStatus) GetLastSync() int64 {
 // GetLastSyncOk returns a tuple with the LastSync field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectorStatus) GetLastSyncOk() (*int64, bool) {
-	if o == nil || o.LastSync == nil {
+	if o == nil || IsNil(o.LastSync) {
 		return nil, false
 	}
 	return o.LastSync, true
@@ -93,7 +96,7 @@ func (o *ConnectorStatus) GetLastSyncOk() (*int64, bool) {
 
 // HasLastSync returns a boolean if a field has been set.
 func (o *ConnectorStatus) HasLastSync() bool {
-	if o != nil && o.LastSync != nil {
+	if o != nil && !IsNil(o.LastSync) {
 		return true
 	}
 
@@ -107,7 +110,7 @@ func (o *ConnectorStatus) SetLastSync(v int64) {
 
 // GetEntityInfos returns the EntityInfos field value if set, zero value otherwise.
 func (o *ConnectorStatus) GetEntityInfos() []ConnectorEntitySyncInfo {
-	if o == nil || o.EntityInfos == nil {
+	if o == nil || IsNil(o.EntityInfos) {
 		var ret []ConnectorEntitySyncInfo
 		return ret
 	}
@@ -117,7 +120,7 @@ func (o *ConnectorStatus) GetEntityInfos() []ConnectorEntitySyncInfo {
 // GetEntityInfosOk returns a tuple with the EntityInfos field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectorStatus) GetEntityInfosOk() ([]ConnectorEntitySyncInfo, bool) {
-	if o == nil || o.EntityInfos == nil {
+	if o == nil || IsNil(o.EntityInfos) {
 		return nil, false
 	}
 	return o.EntityInfos, true
@@ -125,7 +128,7 @@ func (o *ConnectorStatus) GetEntityInfosOk() ([]ConnectorEntitySyncInfo, bool) {
 
 // HasEntityInfos returns a boolean if a field has been set.
 func (o *ConnectorStatus) HasEntityInfos() bool {
-	if o != nil && o.EntityInfos != nil {
+	if o != nil && !IsNil(o.EntityInfos) {
 		return true
 	}
 
@@ -138,17 +141,25 @@ func (o *ConnectorStatus) SetEntityInfos(v []ConnectorEntitySyncInfo) {
 }
 
 func (o ConnectorStatus) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.LastPing != nil {
-		toSerialize["last_ping"] = o.LastPing
-	}
-	if o.LastSync != nil {
-		toSerialize["last_sync"] = o.LastSync
-	}
-	if o.EntityInfos != nil {
-		toSerialize["entity_infos"] = o.EntityInfos
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ConnectorStatus) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.LastPing) {
+		toSerialize["last_ping"] = o.LastPing
+	}
+	if !IsNil(o.LastSync) {
+		toSerialize["last_sync"] = o.LastSync
+	}
+	if !IsNil(o.EntityInfos) {
+		toSerialize["entity_infos"] = o.EntityInfos
+	}
+	return toSerialize, nil
 }
 
 type NullableConnectorStatus struct {

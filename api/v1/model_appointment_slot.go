@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AppointmentSlot type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppointmentSlot{}
+
 // AppointmentSlot An appointment slot is a time slot within a appointment window that is available for booking.
 type AppointmentSlot struct {
 	// The timestamp of the beginning of the appointment slot
@@ -42,7 +45,7 @@ func NewAppointmentSlotWithDefaults() *AppointmentSlot {
 
 // GetStartTime returns the StartTime field value if set, zero value otherwise.
 func (o *AppointmentSlot) GetStartTime() int64 {
-	if o == nil || o.StartTime == nil {
+	if o == nil || IsNil(o.StartTime) {
 		var ret int64
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *AppointmentSlot) GetStartTime() int64 {
 // GetStartTimeOk returns a tuple with the StartTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppointmentSlot) GetStartTimeOk() (*int64, bool) {
-	if o == nil || o.StartTime == nil {
+	if o == nil || IsNil(o.StartTime) {
 		return nil, false
 	}
 	return o.StartTime, true
@@ -60,7 +63,7 @@ func (o *AppointmentSlot) GetStartTimeOk() (*int64, bool) {
 
 // HasStartTime returns a boolean if a field has been set.
 func (o *AppointmentSlot) HasStartTime() bool {
-	if o != nil && o.StartTime != nil {
+	if o != nil && !IsNil(o.StartTime) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *AppointmentSlot) SetStartTime(v int64) {
 
 // GetEndTime returns the EndTime field value if set, zero value otherwise.
 func (o *AppointmentSlot) GetEndTime() int64 {
-	if o == nil || o.EndTime == nil {
+	if o == nil || IsNil(o.EndTime) {
 		var ret int64
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *AppointmentSlot) GetEndTime() int64 {
 // GetEndTimeOk returns a tuple with the EndTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppointmentSlot) GetEndTimeOk() (*int64, bool) {
-	if o == nil || o.EndTime == nil {
+	if o == nil || IsNil(o.EndTime) {
 		return nil, false
 	}
 	return o.EndTime, true
@@ -92,7 +95,7 @@ func (o *AppointmentSlot) GetEndTimeOk() (*int64, bool) {
 
 // HasEndTime returns a boolean if a field has been set.
 func (o *AppointmentSlot) HasEndTime() bool {
-	if o != nil && o.EndTime != nil {
+	if o != nil && !IsNil(o.EndTime) {
 		return true
 	}
 
@@ -106,7 +109,7 @@ func (o *AppointmentSlot) SetEndTime(v int64) {
 
 // GetAppointment returns the Appointment field value if set, zero value otherwise.
 func (o *AppointmentSlot) GetAppointment() Appointment {
-	if o == nil || o.Appointment == nil {
+	if o == nil || IsNil(o.Appointment) {
 		var ret Appointment
 		return ret
 	}
@@ -116,7 +119,7 @@ func (o *AppointmentSlot) GetAppointment() Appointment {
 // GetAppointmentOk returns a tuple with the Appointment field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppointmentSlot) GetAppointmentOk() (*Appointment, bool) {
-	if o == nil || o.Appointment == nil {
+	if o == nil || IsNil(o.Appointment) {
 		return nil, false
 	}
 	return o.Appointment, true
@@ -124,7 +127,7 @@ func (o *AppointmentSlot) GetAppointmentOk() (*Appointment, bool) {
 
 // HasAppointment returns a boolean if a field has been set.
 func (o *AppointmentSlot) HasAppointment() bool {
-	if o != nil && o.Appointment != nil {
+	if o != nil && !IsNil(o.Appointment) {
 		return true
 	}
 
@@ -137,17 +140,25 @@ func (o *AppointmentSlot) SetAppointment(v Appointment) {
 }
 
 func (o AppointmentSlot) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.StartTime != nil {
-		toSerialize["start_time"] = o.StartTime
-	}
-	if o.EndTime != nil {
-		toSerialize["end_time"] = o.EndTime
-	}
-	if o.Appointment != nil {
-		toSerialize["appointment"] = o.Appointment
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppointmentSlot) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.StartTime) {
+		toSerialize["start_time"] = o.StartTime
+	}
+	if !IsNil(o.EndTime) {
+		toSerialize["end_time"] = o.EndTime
+	}
+	if !IsNil(o.Appointment) {
+		toSerialize["appointment"] = o.Appointment
+	}
+	return toSerialize, nil
 }
 
 type NullableAppointmentSlot struct {

@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the QueryPropertyOwnersRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &QueryPropertyOwnersRequest{}
+
 // QueryPropertyOwnersRequest Request used to get a list of property owners for the curent user
 type QueryPropertyOwnersRequest struct {
 	// number of items to include in the result
@@ -41,7 +44,7 @@ func NewQueryPropertyOwnersRequestWithDefaults() *QueryPropertyOwnersRequest {
 
 // GetLimit returns the Limit field value if set, zero value otherwise.
 func (o *QueryPropertyOwnersRequest) GetLimit() int64 {
-	if o == nil || o.Limit == nil {
+	if o == nil || IsNil(o.Limit) {
 		var ret int64
 		return ret
 	}
@@ -51,7 +54,7 @@ func (o *QueryPropertyOwnersRequest) GetLimit() int64 {
 // GetLimitOk returns a tuple with the Limit field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryPropertyOwnersRequest) GetLimitOk() (*int64, bool) {
-	if o == nil || o.Limit == nil {
+	if o == nil || IsNil(o.Limit) {
 		return nil, false
 	}
 	return o.Limit, true
@@ -59,7 +62,7 @@ func (o *QueryPropertyOwnersRequest) GetLimitOk() (*int64, bool) {
 
 // HasLimit returns a boolean if a field has been set.
 func (o *QueryPropertyOwnersRequest) HasLimit() bool {
-	if o != nil && o.Limit != nil {
+	if o != nil && !IsNil(o.Limit) {
 		return true
 	}
 
@@ -73,7 +76,7 @@ func (o *QueryPropertyOwnersRequest) SetLimit(v int64) {
 
 // GetOffset returns the Offset field value if set, zero value otherwise.
 func (o *QueryPropertyOwnersRequest) GetOffset() int64 {
-	if o == nil || o.Offset == nil {
+	if o == nil || IsNil(o.Offset) {
 		var ret int64
 		return ret
 	}
@@ -83,7 +86,7 @@ func (o *QueryPropertyOwnersRequest) GetOffset() int64 {
 // GetOffsetOk returns a tuple with the Offset field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryPropertyOwnersRequest) GetOffsetOk() (*int64, bool) {
-	if o == nil || o.Offset == nil {
+	if o == nil || IsNil(o.Offset) {
 		return nil, false
 	}
 	return o.Offset, true
@@ -91,7 +94,7 @@ func (o *QueryPropertyOwnersRequest) GetOffsetOk() (*int64, bool) {
 
 // HasOffset returns a boolean if a field has been set.
 func (o *QueryPropertyOwnersRequest) HasOffset() bool {
-	if o != nil && o.Offset != nil {
+	if o != nil && !IsNil(o.Offset) {
 		return true
 	}
 
@@ -104,14 +107,22 @@ func (o *QueryPropertyOwnersRequest) SetOffset(v int64) {
 }
 
 func (o QueryPropertyOwnersRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Limit != nil {
-		toSerialize["limit"] = o.Limit
-	}
-	if o.Offset != nil {
-		toSerialize["offset"] = o.Offset
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o QueryPropertyOwnersRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Limit) {
+		toSerialize["limit"] = o.Limit
+	}
+	if !IsNil(o.Offset) {
+		toSerialize["offset"] = o.Offset
+	}
+	return toSerialize, nil
 }
 
 type NullableQueryPropertyOwnersRequest struct {

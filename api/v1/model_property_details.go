@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the PropertyDetails type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &PropertyDetails{}
+
 // PropertyDetails Holds extra details about a property
 type PropertyDetails struct {
 	// Floor/storey of a building.
@@ -57,7 +60,7 @@ func NewPropertyDetailsWithDefaults() *PropertyDetails {
 
 // GetFloor returns the Floor field value if set, zero value otherwise.
 func (o *PropertyDetails) GetFloor() string {
-	if o == nil || o.Floor == nil {
+	if o == nil || IsNil(o.Floor) {
 		var ret string
 		return ret
 	}
@@ -67,7 +70,7 @@ func (o *PropertyDetails) GetFloor() string {
 // GetFloorOk returns a tuple with the Floor field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PropertyDetails) GetFloorOk() (*string, bool) {
-	if o == nil || o.Floor == nil {
+	if o == nil || IsNil(o.Floor) {
 		return nil, false
 	}
 	return o.Floor, true
@@ -75,7 +78,7 @@ func (o *PropertyDetails) GetFloorOk() (*string, bool) {
 
 // HasFloor returns a boolean if a field has been set.
 func (o *PropertyDetails) HasFloor() bool {
-	if o != nil && o.Floor != nil {
+	if o != nil && !IsNil(o.Floor) {
 		return true
 	}
 
@@ -89,7 +92,7 @@ func (o *PropertyDetails) SetFloor(v string) {
 
 // GetUnitNumber returns the UnitNumber field value if set, zero value otherwise.
 func (o *PropertyDetails) GetUnitNumber() string {
-	if o == nil || o.UnitNumber == nil {
+	if o == nil || IsNil(o.UnitNumber) {
 		var ret string
 		return ret
 	}
@@ -99,7 +102,7 @@ func (o *PropertyDetails) GetUnitNumber() string {
 // GetUnitNumberOk returns a tuple with the UnitNumber field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PropertyDetails) GetUnitNumberOk() (*string, bool) {
-	if o == nil || o.UnitNumber == nil {
+	if o == nil || IsNil(o.UnitNumber) {
 		return nil, false
 	}
 	return o.UnitNumber, true
@@ -107,7 +110,7 @@ func (o *PropertyDetails) GetUnitNumberOk() (*string, bool) {
 
 // HasUnitNumber returns a boolean if a field has been set.
 func (o *PropertyDetails) HasUnitNumber() bool {
-	if o != nil && o.UnitNumber != nil {
+	if o != nil && !IsNil(o.UnitNumber) {
 		return true
 	}
 
@@ -121,7 +124,7 @@ func (o *PropertyDetails) SetUnitNumber(v string) {
 
 // GetArea returns the Area field value if set, zero value otherwise.
 func (o *PropertyDetails) GetArea() float32 {
-	if o == nil || o.Area == nil {
+	if o == nil || IsNil(o.Area) {
 		var ret float32
 		return ret
 	}
@@ -131,7 +134,7 @@ func (o *PropertyDetails) GetArea() float32 {
 // GetAreaOk returns a tuple with the Area field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PropertyDetails) GetAreaOk() (*float32, bool) {
-	if o == nil || o.Area == nil {
+	if o == nil || IsNil(o.Area) {
 		return nil, false
 	}
 	return o.Area, true
@@ -139,7 +142,7 @@ func (o *PropertyDetails) GetAreaOk() (*float32, bool) {
 
 // HasArea returns a boolean if a field has been set.
 func (o *PropertyDetails) HasArea() bool {
-	if o != nil && o.Area != nil {
+	if o != nil && !IsNil(o.Area) {
 		return true
 	}
 
@@ -153,7 +156,7 @@ func (o *PropertyDetails) SetArea(v float32) {
 
 // GetRooms returns the Rooms field value if set, zero value otherwise.
 func (o *PropertyDetails) GetRooms() float32 {
-	if o == nil || o.Rooms == nil {
+	if o == nil || IsNil(o.Rooms) {
 		var ret float32
 		return ret
 	}
@@ -163,7 +166,7 @@ func (o *PropertyDetails) GetRooms() float32 {
 // GetRoomsOk returns a tuple with the Rooms field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PropertyDetails) GetRoomsOk() (*float32, bool) {
-	if o == nil || o.Rooms == nil {
+	if o == nil || IsNil(o.Rooms) {
 		return nil, false
 	}
 	return o.Rooms, true
@@ -171,7 +174,7 @@ func (o *PropertyDetails) GetRoomsOk() (*float32, bool) {
 
 // HasRooms returns a boolean if a field has been set.
 func (o *PropertyDetails) HasRooms() bool {
-	if o != nil && o.Rooms != nil {
+	if o != nil && !IsNil(o.Rooms) {
 		return true
 	}
 
@@ -185,7 +188,7 @@ func (o *PropertyDetails) SetRooms(v float32) {
 
 // GetBedrooms returns the Bedrooms field value if set, zero value otherwise.
 func (o *PropertyDetails) GetBedrooms() float32 {
-	if o == nil || o.Bedrooms == nil {
+	if o == nil || IsNil(o.Bedrooms) {
 		var ret float32
 		return ret
 	}
@@ -195,7 +198,7 @@ func (o *PropertyDetails) GetBedrooms() float32 {
 // GetBedroomsOk returns a tuple with the Bedrooms field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PropertyDetails) GetBedroomsOk() (*float32, bool) {
-	if o == nil || o.Bedrooms == nil {
+	if o == nil || IsNil(o.Bedrooms) {
 		return nil, false
 	}
 	return o.Bedrooms, true
@@ -203,7 +206,7 @@ func (o *PropertyDetails) GetBedroomsOk() (*float32, bool) {
 
 // HasBedrooms returns a boolean if a field has been set.
 func (o *PropertyDetails) HasBedrooms() bool {
-	if o != nil && o.Bedrooms != nil {
+	if o != nil && !IsNil(o.Bedrooms) {
 		return true
 	}
 
@@ -217,7 +220,7 @@ func (o *PropertyDetails) SetBedrooms(v float32) {
 
 // GetBathrooms returns the Bathrooms field value if set, zero value otherwise.
 func (o *PropertyDetails) GetBathrooms() float32 {
-	if o == nil || o.Bathrooms == nil {
+	if o == nil || IsNil(o.Bathrooms) {
 		var ret float32
 		return ret
 	}
@@ -227,7 +230,7 @@ func (o *PropertyDetails) GetBathrooms() float32 {
 // GetBathroomsOk returns a tuple with the Bathrooms field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PropertyDetails) GetBathroomsOk() (*float32, bool) {
-	if o == nil || o.Bathrooms == nil {
+	if o == nil || IsNil(o.Bathrooms) {
 		return nil, false
 	}
 	return o.Bathrooms, true
@@ -235,7 +238,7 @@ func (o *PropertyDetails) GetBathroomsOk() (*float32, bool) {
 
 // HasBathrooms returns a boolean if a field has been set.
 func (o *PropertyDetails) HasBathrooms() bool {
-	if o != nil && o.Bathrooms != nil {
+	if o != nil && !IsNil(o.Bathrooms) {
 		return true
 	}
 
@@ -249,7 +252,7 @@ func (o *PropertyDetails) SetBathrooms(v float32) {
 
 // GetBalcony returns the Balcony field value if set, zero value otherwise.
 func (o *PropertyDetails) GetBalcony() float32 {
-	if o == nil || o.Balcony == nil {
+	if o == nil || IsNil(o.Balcony) {
 		var ret float32
 		return ret
 	}
@@ -259,7 +262,7 @@ func (o *PropertyDetails) GetBalcony() float32 {
 // GetBalconyOk returns a tuple with the Balcony field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PropertyDetails) GetBalconyOk() (*float32, bool) {
-	if o == nil || o.Balcony == nil {
+	if o == nil || IsNil(o.Balcony) {
 		return nil, false
 	}
 	return o.Balcony, true
@@ -267,7 +270,7 @@ func (o *PropertyDetails) GetBalconyOk() (*float32, bool) {
 
 // HasBalcony returns a boolean if a field has been set.
 func (o *PropertyDetails) HasBalcony() bool {
-	if o != nil && o.Balcony != nil {
+	if o != nil && !IsNil(o.Balcony) {
 		return true
 	}
 
@@ -281,7 +284,7 @@ func (o *PropertyDetails) SetBalcony(v float32) {
 
 // GetConstructionYear returns the ConstructionYear field value if set, zero value otherwise.
 func (o *PropertyDetails) GetConstructionYear() float32 {
-	if o == nil || o.ConstructionYear == nil {
+	if o == nil || IsNil(o.ConstructionYear) {
 		var ret float32
 		return ret
 	}
@@ -291,7 +294,7 @@ func (o *PropertyDetails) GetConstructionYear() float32 {
 // GetConstructionYearOk returns a tuple with the ConstructionYear field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PropertyDetails) GetConstructionYearOk() (*float32, bool) {
-	if o == nil || o.ConstructionYear == nil {
+	if o == nil || IsNil(o.ConstructionYear) {
 		return nil, false
 	}
 	return o.ConstructionYear, true
@@ -299,7 +302,7 @@ func (o *PropertyDetails) GetConstructionYearOk() (*float32, bool) {
 
 // HasConstructionYear returns a boolean if a field has been set.
 func (o *PropertyDetails) HasConstructionYear() bool {
-	if o != nil && o.ConstructionYear != nil {
+	if o != nil && !IsNil(o.ConstructionYear) {
 		return true
 	}
 
@@ -313,7 +316,7 @@ func (o *PropertyDetails) SetConstructionYear(v float32) {
 
 // GetParking returns the Parking field value if set, zero value otherwise.
 func (o *PropertyDetails) GetParking() PropertyParkingTypeEnum {
-	if o == nil || o.Parking == nil {
+	if o == nil || IsNil(o.Parking) {
 		var ret PropertyParkingTypeEnum
 		return ret
 	}
@@ -323,7 +326,7 @@ func (o *PropertyDetails) GetParking() PropertyParkingTypeEnum {
 // GetParkingOk returns a tuple with the Parking field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PropertyDetails) GetParkingOk() (*PropertyParkingTypeEnum, bool) {
-	if o == nil || o.Parking == nil {
+	if o == nil || IsNil(o.Parking) {
 		return nil, false
 	}
 	return o.Parking, true
@@ -331,7 +334,7 @@ func (o *PropertyDetails) GetParkingOk() (*PropertyParkingTypeEnum, bool) {
 
 // HasParking returns a boolean if a field has been set.
 func (o *PropertyDetails) HasParking() bool {
-	if o != nil && o.Parking != nil {
+	if o != nil && !IsNil(o.Parking) {
 		return true
 	}
 
@@ -345,7 +348,7 @@ func (o *PropertyDetails) SetParking(v PropertyParkingTypeEnum) {
 
 // GetFloorType returns the FloorType field value if set, zero value otherwise.
 func (o *PropertyDetails) GetFloorType() []PropertyFloorTypeEnum {
-	if o == nil || o.FloorType == nil {
+	if o == nil || IsNil(o.FloorType) {
 		var ret []PropertyFloorTypeEnum
 		return ret
 	}
@@ -355,7 +358,7 @@ func (o *PropertyDetails) GetFloorType() []PropertyFloorTypeEnum {
 // GetFloorTypeOk returns a tuple with the FloorType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PropertyDetails) GetFloorTypeOk() ([]PropertyFloorTypeEnum, bool) {
-	if o == nil || o.FloorType == nil {
+	if o == nil || IsNil(o.FloorType) {
 		return nil, false
 	}
 	return o.FloorType, true
@@ -363,7 +366,7 @@ func (o *PropertyDetails) GetFloorTypeOk() ([]PropertyFloorTypeEnum, bool) {
 
 // HasFloorType returns a boolean if a field has been set.
 func (o *PropertyDetails) HasFloorType() bool {
-	if o != nil && o.FloorType != nil {
+	if o != nil && !IsNil(o.FloorType) {
 		return true
 	}
 
@@ -377,7 +380,7 @@ func (o *PropertyDetails) SetFloorType(v []PropertyFloorTypeEnum) {
 
 // GetHeatingType returns the HeatingType field value if set, zero value otherwise.
 func (o *PropertyDetails) GetHeatingType() []PropertyHeatingTypeEnum {
-	if o == nil || o.HeatingType == nil {
+	if o == nil || IsNil(o.HeatingType) {
 		var ret []PropertyHeatingTypeEnum
 		return ret
 	}
@@ -387,7 +390,7 @@ func (o *PropertyDetails) GetHeatingType() []PropertyHeatingTypeEnum {
 // GetHeatingTypeOk returns a tuple with the HeatingType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PropertyDetails) GetHeatingTypeOk() ([]PropertyHeatingTypeEnum, bool) {
-	if o == nil || o.HeatingType == nil {
+	if o == nil || IsNil(o.HeatingType) {
 		return nil, false
 	}
 	return o.HeatingType, true
@@ -395,7 +398,7 @@ func (o *PropertyDetails) GetHeatingTypeOk() ([]PropertyHeatingTypeEnum, bool) {
 
 // HasHeatingType returns a boolean if a field has been set.
 func (o *PropertyDetails) HasHeatingType() bool {
-	if o != nil && o.HeatingType != nil {
+	if o != nil && !IsNil(o.HeatingType) {
 		return true
 	}
 
@@ -409,7 +412,7 @@ func (o *PropertyDetails) SetHeatingType(v []PropertyHeatingTypeEnum) {
 
 // GetWindowType returns the WindowType field value if set, zero value otherwise.
 func (o *PropertyDetails) GetWindowType() []PropertyWindowTypeEnum {
-	if o == nil || o.WindowType == nil {
+	if o == nil || IsNil(o.WindowType) {
 		var ret []PropertyWindowTypeEnum
 		return ret
 	}
@@ -419,7 +422,7 @@ func (o *PropertyDetails) GetWindowType() []PropertyWindowTypeEnum {
 // GetWindowTypeOk returns a tuple with the WindowType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PropertyDetails) GetWindowTypeOk() ([]PropertyWindowTypeEnum, bool) {
-	if o == nil || o.WindowType == nil {
+	if o == nil || IsNil(o.WindowType) {
 		return nil, false
 	}
 	return o.WindowType, true
@@ -427,7 +430,7 @@ func (o *PropertyDetails) GetWindowTypeOk() ([]PropertyWindowTypeEnum, bool) {
 
 // HasWindowType returns a boolean if a field has been set.
 func (o *PropertyDetails) HasWindowType() bool {
-	if o != nil && o.WindowType != nil {
+	if o != nil && !IsNil(o.WindowType) {
 		return true
 	}
 
@@ -441,7 +444,7 @@ func (o *PropertyDetails) SetWindowType(v []PropertyWindowTypeEnum) {
 
 // GetFurnishing returns the Furnishing field value if set, zero value otherwise.
 func (o *PropertyDetails) GetFurnishing() PropertyFurnishingEnum {
-	if o == nil || o.Furnishing == nil {
+	if o == nil || IsNil(o.Furnishing) {
 		var ret PropertyFurnishingEnum
 		return ret
 	}
@@ -451,7 +454,7 @@ func (o *PropertyDetails) GetFurnishing() PropertyFurnishingEnum {
 // GetFurnishingOk returns a tuple with the Furnishing field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PropertyDetails) GetFurnishingOk() (*PropertyFurnishingEnum, bool) {
-	if o == nil || o.Furnishing == nil {
+	if o == nil || IsNil(o.Furnishing) {
 		return nil, false
 	}
 	return o.Furnishing, true
@@ -459,7 +462,7 @@ func (o *PropertyDetails) GetFurnishingOk() (*PropertyFurnishingEnum, bool) {
 
 // HasFurnishing returns a boolean if a field has been set.
 func (o *PropertyDetails) HasFurnishing() bool {
-	if o != nil && o.Furnishing != nil {
+	if o != nil && !IsNil(o.Furnishing) {
 		return true
 	}
 
@@ -473,7 +476,7 @@ func (o *PropertyDetails) SetFurnishing(v PropertyFurnishingEnum) {
 
 // GetHistoricProperty returns the HistoricProperty field value if set, zero value otherwise.
 func (o *PropertyDetails) GetHistoricProperty() bool {
-	if o == nil || o.HistoricProperty == nil {
+	if o == nil || IsNil(o.HistoricProperty) {
 		var ret bool
 		return ret
 	}
@@ -483,7 +486,7 @@ func (o *PropertyDetails) GetHistoricProperty() bool {
 // GetHistoricPropertyOk returns a tuple with the HistoricProperty field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PropertyDetails) GetHistoricPropertyOk() (*bool, bool) {
-	if o == nil || o.HistoricProperty == nil {
+	if o == nil || IsNil(o.HistoricProperty) {
 		return nil, false
 	}
 	return o.HistoricProperty, true
@@ -491,7 +494,7 @@ func (o *PropertyDetails) GetHistoricPropertyOk() (*bool, bool) {
 
 // HasHistoricProperty returns a boolean if a field has been set.
 func (o *PropertyDetails) HasHistoricProperty() bool {
-	if o != nil && o.HistoricProperty != nil {
+	if o != nil && !IsNil(o.HistoricProperty) {
 		return true
 	}
 
@@ -504,50 +507,58 @@ func (o *PropertyDetails) SetHistoricProperty(v bool) {
 }
 
 func (o PropertyDetails) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Floor != nil {
-		toSerialize["floor"] = o.Floor
-	}
-	if o.UnitNumber != nil {
-		toSerialize["unit_number"] = o.UnitNumber
-	}
-	if o.Area != nil {
-		toSerialize["area"] = o.Area
-	}
-	if o.Rooms != nil {
-		toSerialize["rooms"] = o.Rooms
-	}
-	if o.Bedrooms != nil {
-		toSerialize["bedrooms"] = o.Bedrooms
-	}
-	if o.Bathrooms != nil {
-		toSerialize["bathrooms"] = o.Bathrooms
-	}
-	if o.Balcony != nil {
-		toSerialize["balcony"] = o.Balcony
-	}
-	if o.ConstructionYear != nil {
-		toSerialize["construction_year"] = o.ConstructionYear
-	}
-	if o.Parking != nil {
-		toSerialize["parking"] = o.Parking
-	}
-	if o.FloorType != nil {
-		toSerialize["floor_type"] = o.FloorType
-	}
-	if o.HeatingType != nil {
-		toSerialize["heating_type"] = o.HeatingType
-	}
-	if o.WindowType != nil {
-		toSerialize["window_type"] = o.WindowType
-	}
-	if o.Furnishing != nil {
-		toSerialize["furnishing"] = o.Furnishing
-	}
-	if o.HistoricProperty != nil {
-		toSerialize["historic_property"] = o.HistoricProperty
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o PropertyDetails) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Floor) {
+		toSerialize["floor"] = o.Floor
+	}
+	if !IsNil(o.UnitNumber) {
+		toSerialize["unit_number"] = o.UnitNumber
+	}
+	if !IsNil(o.Area) {
+		toSerialize["area"] = o.Area
+	}
+	if !IsNil(o.Rooms) {
+		toSerialize["rooms"] = o.Rooms
+	}
+	if !IsNil(o.Bedrooms) {
+		toSerialize["bedrooms"] = o.Bedrooms
+	}
+	if !IsNil(o.Bathrooms) {
+		toSerialize["bathrooms"] = o.Bathrooms
+	}
+	if !IsNil(o.Balcony) {
+		toSerialize["balcony"] = o.Balcony
+	}
+	if !IsNil(o.ConstructionYear) {
+		toSerialize["construction_year"] = o.ConstructionYear
+	}
+	if !IsNil(o.Parking) {
+		toSerialize["parking"] = o.Parking
+	}
+	if !IsNil(o.FloorType) {
+		toSerialize["floor_type"] = o.FloorType
+	}
+	if !IsNil(o.HeatingType) {
+		toSerialize["heating_type"] = o.HeatingType
+	}
+	if !IsNil(o.WindowType) {
+		toSerialize["window_type"] = o.WindowType
+	}
+	if !IsNil(o.Furnishing) {
+		toSerialize["furnishing"] = o.Furnishing
+	}
+	if !IsNil(o.HistoricProperty) {
+		toSerialize["historic_property"] = o.HistoricProperty
+	}
+	return toSerialize, nil
 }
 
 type NullablePropertyDetails struct {

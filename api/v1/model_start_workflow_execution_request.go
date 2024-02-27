@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the StartWorkflowExecutionRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &StartWorkflowExecutionRequest{}
+
 // StartWorkflowExecutionRequest a request for starting a workflow execution
 type StartWorkflowExecutionRequest struct {
 	WorkflowRef                *string `json:"workflow_ref,omitempty"`
@@ -41,7 +44,7 @@ func NewStartWorkflowExecutionRequestWithDefaults() *StartWorkflowExecutionReque
 
 // GetWorkflowRef returns the WorkflowRef field value if set, zero value otherwise.
 func (o *StartWorkflowExecutionRequest) GetWorkflowRef() string {
-	if o == nil || o.WorkflowRef == nil {
+	if o == nil || IsNil(o.WorkflowRef) {
 		var ret string
 		return ret
 	}
@@ -51,7 +54,7 @@ func (o *StartWorkflowExecutionRequest) GetWorkflowRef() string {
 // GetWorkflowRefOk returns a tuple with the WorkflowRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StartWorkflowExecutionRequest) GetWorkflowRefOk() (*string, bool) {
-	if o == nil || o.WorkflowRef == nil {
+	if o == nil || IsNil(o.WorkflowRef) {
 		return nil, false
 	}
 	return o.WorkflowRef, true
@@ -59,7 +62,7 @@ func (o *StartWorkflowExecutionRequest) GetWorkflowRefOk() (*string, bool) {
 
 // HasWorkflowRef returns a boolean if a field has been set.
 func (o *StartWorkflowExecutionRequest) HasWorkflowRef() bool {
-	if o != nil && o.WorkflowRef != nil {
+	if o != nil && !IsNil(o.WorkflowRef) {
 		return true
 	}
 
@@ -73,7 +76,7 @@ func (o *StartWorkflowExecutionRequest) SetWorkflowRef(v string) {
 
 // GetParentWorkflowExecutionRef returns the ParentWorkflowExecutionRef field value if set, zero value otherwise.
 func (o *StartWorkflowExecutionRequest) GetParentWorkflowExecutionRef() string {
-	if o == nil || o.ParentWorkflowExecutionRef == nil {
+	if o == nil || IsNil(o.ParentWorkflowExecutionRef) {
 		var ret string
 		return ret
 	}
@@ -83,7 +86,7 @@ func (o *StartWorkflowExecutionRequest) GetParentWorkflowExecutionRef() string {
 // GetParentWorkflowExecutionRefOk returns a tuple with the ParentWorkflowExecutionRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StartWorkflowExecutionRequest) GetParentWorkflowExecutionRefOk() (*string, bool) {
-	if o == nil || o.ParentWorkflowExecutionRef == nil {
+	if o == nil || IsNil(o.ParentWorkflowExecutionRef) {
 		return nil, false
 	}
 	return o.ParentWorkflowExecutionRef, true
@@ -91,7 +94,7 @@ func (o *StartWorkflowExecutionRequest) GetParentWorkflowExecutionRefOk() (*stri
 
 // HasParentWorkflowExecutionRef returns a boolean if a field has been set.
 func (o *StartWorkflowExecutionRequest) HasParentWorkflowExecutionRef() bool {
-	if o != nil && o.ParentWorkflowExecutionRef != nil {
+	if o != nil && !IsNil(o.ParentWorkflowExecutionRef) {
 		return true
 	}
 
@@ -105,7 +108,7 @@ func (o *StartWorkflowExecutionRequest) SetParentWorkflowExecutionRef(v string) 
 
 // GetContext returns the Context field value if set, zero value otherwise.
 func (o *StartWorkflowExecutionRequest) GetContext() string {
-	if o == nil || o.Context == nil {
+	if o == nil || IsNil(o.Context) {
 		var ret string
 		return ret
 	}
@@ -115,7 +118,7 @@ func (o *StartWorkflowExecutionRequest) GetContext() string {
 // GetContextOk returns a tuple with the Context field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StartWorkflowExecutionRequest) GetContextOk() (*string, bool) {
-	if o == nil || o.Context == nil {
+	if o == nil || IsNil(o.Context) {
 		return nil, false
 	}
 	return o.Context, true
@@ -123,7 +126,7 @@ func (o *StartWorkflowExecutionRequest) GetContextOk() (*string, bool) {
 
 // HasContext returns a boolean if a field has been set.
 func (o *StartWorkflowExecutionRequest) HasContext() bool {
-	if o != nil && o.Context != nil {
+	if o != nil && !IsNil(o.Context) {
 		return true
 	}
 
@@ -136,17 +139,25 @@ func (o *StartWorkflowExecutionRequest) SetContext(v string) {
 }
 
 func (o StartWorkflowExecutionRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.WorkflowRef != nil {
-		toSerialize["workflow_ref"] = o.WorkflowRef
-	}
-	if o.ParentWorkflowExecutionRef != nil {
-		toSerialize["parent_workflow_execution_ref"] = o.ParentWorkflowExecutionRef
-	}
-	if o.Context != nil {
-		toSerialize["context"] = o.Context
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o StartWorkflowExecutionRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.WorkflowRef) {
+		toSerialize["workflow_ref"] = o.WorkflowRef
+	}
+	if !IsNil(o.ParentWorkflowExecutionRef) {
+		toSerialize["parent_workflow_execution_ref"] = o.ParentWorkflowExecutionRef
+	}
+	if !IsNil(o.Context) {
+		toSerialize["context"] = o.Context
+	}
+	return toSerialize, nil
 }
 
 type NullableStartWorkflowExecutionRequest struct {

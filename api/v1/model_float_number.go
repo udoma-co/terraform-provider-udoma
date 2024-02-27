@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the FloatNumber type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &FloatNumber{}
+
 // FloatNumber struct for FloatNumber
 type FloatNumber struct {
 	// the integer value (the part before the decimal point)
@@ -41,7 +44,7 @@ func NewFloatNumberWithDefaults() *FloatNumber {
 
 // GetI returns the I field value if set, zero value otherwise.
 func (o *FloatNumber) GetI() int32 {
-	if o == nil || o.I == nil {
+	if o == nil || IsNil(o.I) {
 		var ret int32
 		return ret
 	}
@@ -51,7 +54,7 @@ func (o *FloatNumber) GetI() int32 {
 // GetIOk returns a tuple with the I field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FloatNumber) GetIOk() (*int32, bool) {
-	if o == nil || o.I == nil {
+	if o == nil || IsNil(o.I) {
 		return nil, false
 	}
 	return o.I, true
@@ -59,7 +62,7 @@ func (o *FloatNumber) GetIOk() (*int32, bool) {
 
 // HasI returns a boolean if a field has been set.
 func (o *FloatNumber) HasI() bool {
-	if o != nil && o.I != nil {
+	if o != nil && !IsNil(o.I) {
 		return true
 	}
 
@@ -73,7 +76,7 @@ func (o *FloatNumber) SetI(v int32) {
 
 // GetF returns the F field value if set, zero value otherwise.
 func (o *FloatNumber) GetF() int32 {
-	if o == nil || o.F == nil {
+	if o == nil || IsNil(o.F) {
 		var ret int32
 		return ret
 	}
@@ -83,7 +86,7 @@ func (o *FloatNumber) GetF() int32 {
 // GetFOk returns a tuple with the F field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FloatNumber) GetFOk() (*int32, bool) {
-	if o == nil || o.F == nil {
+	if o == nil || IsNil(o.F) {
 		return nil, false
 	}
 	return o.F, true
@@ -91,7 +94,7 @@ func (o *FloatNumber) GetFOk() (*int32, bool) {
 
 // HasF returns a boolean if a field has been set.
 func (o *FloatNumber) HasF() bool {
-	if o != nil && o.F != nil {
+	if o != nil && !IsNil(o.F) {
 		return true
 	}
 
@@ -104,14 +107,22 @@ func (o *FloatNumber) SetF(v int32) {
 }
 
 func (o FloatNumber) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.I != nil {
-		toSerialize["i"] = o.I
-	}
-	if o.F != nil {
-		toSerialize["f"] = o.F
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o FloatNumber) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.I) {
+		toSerialize["i"] = o.I
+	}
+	if !IsNil(o.F) {
+		toSerialize["f"] = o.F
+	}
+	return toSerialize, nil
 }
 
 type NullableFloatNumber struct {

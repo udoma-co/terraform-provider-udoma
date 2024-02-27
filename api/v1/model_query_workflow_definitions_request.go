@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the QueryWorkflowDefinitionsRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &QueryWorkflowDefinitionsRequest{}
+
 // QueryWorkflowDefinitionsRequest a request for querying workflow definitions
 type QueryWorkflowDefinitionsRequest struct {
 	Limit *int32 `json:"limit,omitempty"`
@@ -38,7 +41,7 @@ func NewQueryWorkflowDefinitionsRequestWithDefaults() *QueryWorkflowDefinitionsR
 
 // GetLimit returns the Limit field value if set, zero value otherwise.
 func (o *QueryWorkflowDefinitionsRequest) GetLimit() int32 {
-	if o == nil || o.Limit == nil {
+	if o == nil || IsNil(o.Limit) {
 		var ret int32
 		return ret
 	}
@@ -48,7 +51,7 @@ func (o *QueryWorkflowDefinitionsRequest) GetLimit() int32 {
 // GetLimitOk returns a tuple with the Limit field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryWorkflowDefinitionsRequest) GetLimitOk() (*int32, bool) {
-	if o == nil || o.Limit == nil {
+	if o == nil || IsNil(o.Limit) {
 		return nil, false
 	}
 	return o.Limit, true
@@ -56,7 +59,7 @@ func (o *QueryWorkflowDefinitionsRequest) GetLimitOk() (*int32, bool) {
 
 // HasLimit returns a boolean if a field has been set.
 func (o *QueryWorkflowDefinitionsRequest) HasLimit() bool {
-	if o != nil && o.Limit != nil {
+	if o != nil && !IsNil(o.Limit) {
 		return true
 	}
 
@@ -69,11 +72,19 @@ func (o *QueryWorkflowDefinitionsRequest) SetLimit(v int32) {
 }
 
 func (o QueryWorkflowDefinitionsRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Limit != nil {
-		toSerialize["limit"] = o.Limit
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o QueryWorkflowDefinitionsRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Limit) {
+		toSerialize["limit"] = o.Limit
+	}
+	return toSerialize, nil
 }
 
 type NullableQueryWorkflowDefinitionsRequest struct {

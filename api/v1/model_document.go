@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the Document type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Document{}
+
 // Document A single document uploaded in the document repository or for a specific property
 type Document struct {
 	// the unique ID of the document, generated upon upload
@@ -50,7 +53,7 @@ func NewDocumentWithDefaults() *Document {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *Document) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -60,7 +63,7 @@ func (o *Document) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Document) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -68,7 +71,7 @@ func (o *Document) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *Document) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -82,7 +85,7 @@ func (o *Document) SetId(v string) {
 
 // GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
 func (o *Document) GetCreatedAt() int64 {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		var ret int64
 		return ret
 	}
@@ -92,7 +95,7 @@ func (o *Document) GetCreatedAt() int64 {
 // GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Document) GetCreatedAtOk() (*int64, bool) {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
 	return o.CreatedAt, true
@@ -100,7 +103,7 @@ func (o *Document) GetCreatedAtOk() (*int64, bool) {
 
 // HasCreatedAt returns a boolean if a field has been set.
 func (o *Document) HasCreatedAt() bool {
-	if o != nil && o.CreatedAt != nil {
+	if o != nil && !IsNil(o.CreatedAt) {
 		return true
 	}
 
@@ -114,7 +117,7 @@ func (o *Document) SetCreatedAt(v int64) {
 
 // GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
 func (o *Document) GetUpdatedAt() int64 {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		var ret int64
 		return ret
 	}
@@ -124,7 +127,7 @@ func (o *Document) GetUpdatedAt() int64 {
 // GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Document) GetUpdatedAtOk() (*int64, bool) {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
 	return o.UpdatedAt, true
@@ -132,7 +135,7 @@ func (o *Document) GetUpdatedAtOk() (*int64, bool) {
 
 // HasUpdatedAt returns a boolean if a field has been set.
 func (o *Document) HasUpdatedAt() bool {
-	if o != nil && o.UpdatedAt != nil {
+	if o != nil && !IsNil(o.UpdatedAt) {
 		return true
 	}
 
@@ -146,7 +149,7 @@ func (o *Document) SetUpdatedAt(v int64) {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *Document) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -156,7 +159,7 @@ func (o *Document) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Document) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -164,7 +167,7 @@ func (o *Document) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *Document) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -178,7 +181,7 @@ func (o *Document) SetName(v string) {
 
 // GetPath returns the Path field value if set, zero value otherwise.
 func (o *Document) GetPath() string {
-	if o == nil || o.Path == nil {
+	if o == nil || IsNil(o.Path) {
 		var ret string
 		return ret
 	}
@@ -188,7 +191,7 @@ func (o *Document) GetPath() string {
 // GetPathOk returns a tuple with the Path field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Document) GetPathOk() (*string, bool) {
-	if o == nil || o.Path == nil {
+	if o == nil || IsNil(o.Path) {
 		return nil, false
 	}
 	return o.Path, true
@@ -196,7 +199,7 @@ func (o *Document) GetPathOk() (*string, bool) {
 
 // HasPath returns a boolean if a field has been set.
 func (o *Document) HasPath() bool {
-	if o != nil && o.Path != nil {
+	if o != nil && !IsNil(o.Path) {
 		return true
 	}
 
@@ -210,7 +213,7 @@ func (o *Document) SetPath(v string) {
 
 // GetPublic returns the Public field value if set, zero value otherwise.
 func (o *Document) GetPublic() bool {
-	if o == nil || o.Public == nil {
+	if o == nil || IsNil(o.Public) {
 		var ret bool
 		return ret
 	}
@@ -220,7 +223,7 @@ func (o *Document) GetPublic() bool {
 // GetPublicOk returns a tuple with the Public field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Document) GetPublicOk() (*bool, bool) {
-	if o == nil || o.Public == nil {
+	if o == nil || IsNil(o.Public) {
 		return nil, false
 	}
 	return o.Public, true
@@ -228,7 +231,7 @@ func (o *Document) GetPublicOk() (*bool, bool) {
 
 // HasPublic returns a boolean if a field has been set.
 func (o *Document) HasPublic() bool {
-	if o != nil && o.Public != nil {
+	if o != nil && !IsNil(o.Public) {
 		return true
 	}
 
@@ -242,7 +245,7 @@ func (o *Document) SetPublic(v bool) {
 
 // GetAttachment returns the Attachment field value if set, zero value otherwise.
 func (o *Document) GetAttachment() Attachment {
-	if o == nil || o.Attachment == nil {
+	if o == nil || IsNil(o.Attachment) {
 		var ret Attachment
 		return ret
 	}
@@ -252,7 +255,7 @@ func (o *Document) GetAttachment() Attachment {
 // GetAttachmentOk returns a tuple with the Attachment field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Document) GetAttachmentOk() (*Attachment, bool) {
-	if o == nil || o.Attachment == nil {
+	if o == nil || IsNil(o.Attachment) {
 		return nil, false
 	}
 	return o.Attachment, true
@@ -260,7 +263,7 @@ func (o *Document) GetAttachmentOk() (*Attachment, bool) {
 
 // HasAttachment returns a boolean if a field has been set.
 func (o *Document) HasAttachment() bool {
-	if o != nil && o.Attachment != nil {
+	if o != nil && !IsNil(o.Attachment) {
 		return true
 	}
 
@@ -273,29 +276,37 @@ func (o *Document) SetAttachment(v Attachment) {
 }
 
 func (o Document) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.CreatedAt != nil {
-		toSerialize["created_at"] = o.CreatedAt
-	}
-	if o.UpdatedAt != nil {
-		toSerialize["updated_at"] = o.UpdatedAt
-	}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.Path != nil {
-		toSerialize["path"] = o.Path
-	}
-	if o.Public != nil {
-		toSerialize["public"] = o.Public
-	}
-	if o.Attachment != nil {
-		toSerialize["attachment"] = o.Attachment
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Document) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.CreatedAt) {
+		toSerialize["created_at"] = o.CreatedAt
+	}
+	if !IsNil(o.UpdatedAt) {
+		toSerialize["updated_at"] = o.UpdatedAt
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Path) {
+		toSerialize["path"] = o.Path
+	}
+	if !IsNil(o.Public) {
+		toSerialize["public"] = o.Public
+	}
+	if !IsNil(o.Attachment) {
+		toSerialize["attachment"] = o.Attachment
+	}
+	return toSerialize, nil
 }
 
 type NullableDocument struct {

@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the QueryDocumentsRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &QueryDocumentsRequest{}
+
 // QueryDocumentsRequest Attributes needed for querying document repository entries
 type QueryDocumentsRequest struct {
 	// The ID of the entity for which the documents are uploaded
@@ -46,7 +49,7 @@ func NewQueryDocumentsRequestWithDefaults() *QueryDocumentsRequest {
 
 // GetRefId returns the RefId field value if set, zero value otherwise.
 func (o *QueryDocumentsRequest) GetRefId() string {
-	if o == nil || o.RefId == nil {
+	if o == nil || IsNil(o.RefId) {
 		var ret string
 		return ret
 	}
@@ -56,7 +59,7 @@ func (o *QueryDocumentsRequest) GetRefId() string {
 // GetRefIdOk returns a tuple with the RefId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryDocumentsRequest) GetRefIdOk() (*string, bool) {
-	if o == nil || o.RefId == nil {
+	if o == nil || IsNil(o.RefId) {
 		return nil, false
 	}
 	return o.RefId, true
@@ -64,7 +67,7 @@ func (o *QueryDocumentsRequest) GetRefIdOk() (*string, bool) {
 
 // HasRefId returns a boolean if a field has been set.
 func (o *QueryDocumentsRequest) HasRefId() bool {
-	if o != nil && o.RefId != nil {
+	if o != nil && !IsNil(o.RefId) {
 		return true
 	}
 
@@ -78,7 +81,7 @@ func (o *QueryDocumentsRequest) SetRefId(v string) {
 
 // GetRefType returns the RefType field value if set, zero value otherwise.
 func (o *QueryDocumentsRequest) GetRefType() DocumentRefTypeEnum {
-	if o == nil || o.RefType == nil {
+	if o == nil || IsNil(o.RefType) {
 		var ret DocumentRefTypeEnum
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *QueryDocumentsRequest) GetRefType() DocumentRefTypeEnum {
 // GetRefTypeOk returns a tuple with the RefType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryDocumentsRequest) GetRefTypeOk() (*DocumentRefTypeEnum, bool) {
-	if o == nil || o.RefType == nil {
+	if o == nil || IsNil(o.RefType) {
 		return nil, false
 	}
 	return o.RefType, true
@@ -96,7 +99,7 @@ func (o *QueryDocumentsRequest) GetRefTypeOk() (*DocumentRefTypeEnum, bool) {
 
 // HasRefType returns a boolean if a field has been set.
 func (o *QueryDocumentsRequest) HasRefType() bool {
-	if o != nil && o.RefType != nil {
+	if o != nil && !IsNil(o.RefType) {
 		return true
 	}
 
@@ -110,7 +113,7 @@ func (o *QueryDocumentsRequest) SetRefType(v DocumentRefTypeEnum) {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *QueryDocumentsRequest) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -120,7 +123,7 @@ func (o *QueryDocumentsRequest) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryDocumentsRequest) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -128,7 +131,7 @@ func (o *QueryDocumentsRequest) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *QueryDocumentsRequest) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -142,7 +145,7 @@ func (o *QueryDocumentsRequest) SetName(v string) {
 
 // GetPublic returns the Public field value if set, zero value otherwise.
 func (o *QueryDocumentsRequest) GetPublic() bool {
-	if o == nil || o.Public == nil {
+	if o == nil || IsNil(o.Public) {
 		var ret bool
 		return ret
 	}
@@ -152,7 +155,7 @@ func (o *QueryDocumentsRequest) GetPublic() bool {
 // GetPublicOk returns a tuple with the Public field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryDocumentsRequest) GetPublicOk() (*bool, bool) {
-	if o == nil || o.Public == nil {
+	if o == nil || IsNil(o.Public) {
 		return nil, false
 	}
 	return o.Public, true
@@ -160,7 +163,7 @@ func (o *QueryDocumentsRequest) GetPublicOk() (*bool, bool) {
 
 // HasPublic returns a boolean if a field has been set.
 func (o *QueryDocumentsRequest) HasPublic() bool {
-	if o != nil && o.Public != nil {
+	if o != nil && !IsNil(o.Public) {
 		return true
 	}
 
@@ -174,7 +177,7 @@ func (o *QueryDocumentsRequest) SetPublic(v bool) {
 
 // GetLimit returns the Limit field value if set, zero value otherwise.
 func (o *QueryDocumentsRequest) GetLimit() int32 {
-	if o == nil || o.Limit == nil {
+	if o == nil || IsNil(o.Limit) {
 		var ret int32
 		return ret
 	}
@@ -184,7 +187,7 @@ func (o *QueryDocumentsRequest) GetLimit() int32 {
 // GetLimitOk returns a tuple with the Limit field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryDocumentsRequest) GetLimitOk() (*int32, bool) {
-	if o == nil || o.Limit == nil {
+	if o == nil || IsNil(o.Limit) {
 		return nil, false
 	}
 	return o.Limit, true
@@ -192,7 +195,7 @@ func (o *QueryDocumentsRequest) GetLimitOk() (*int32, bool) {
 
 // HasLimit returns a boolean if a field has been set.
 func (o *QueryDocumentsRequest) HasLimit() bool {
-	if o != nil && o.Limit != nil {
+	if o != nil && !IsNil(o.Limit) {
 		return true
 	}
 
@@ -206,7 +209,7 @@ func (o *QueryDocumentsRequest) SetLimit(v int32) {
 
 // GetOffset returns the Offset field value if set, zero value otherwise.
 func (o *QueryDocumentsRequest) GetOffset() int32 {
-	if o == nil || o.Offset == nil {
+	if o == nil || IsNil(o.Offset) {
 		var ret int32
 		return ret
 	}
@@ -216,7 +219,7 @@ func (o *QueryDocumentsRequest) GetOffset() int32 {
 // GetOffsetOk returns a tuple with the Offset field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryDocumentsRequest) GetOffsetOk() (*int32, bool) {
-	if o == nil || o.Offset == nil {
+	if o == nil || IsNil(o.Offset) {
 		return nil, false
 	}
 	return o.Offset, true
@@ -224,7 +227,7 @@ func (o *QueryDocumentsRequest) GetOffsetOk() (*int32, bool) {
 
 // HasOffset returns a boolean if a field has been set.
 func (o *QueryDocumentsRequest) HasOffset() bool {
-	if o != nil && o.Offset != nil {
+	if o != nil && !IsNil(o.Offset) {
 		return true
 	}
 
@@ -237,26 +240,34 @@ func (o *QueryDocumentsRequest) SetOffset(v int32) {
 }
 
 func (o QueryDocumentsRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.RefId != nil {
-		toSerialize["ref_id"] = o.RefId
-	}
-	if o.RefType != nil {
-		toSerialize["ref_type"] = o.RefType
-	}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.Public != nil {
-		toSerialize["public"] = o.Public
-	}
-	if o.Limit != nil {
-		toSerialize["limit"] = o.Limit
-	}
-	if o.Offset != nil {
-		toSerialize["offset"] = o.Offset
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o QueryDocumentsRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.RefId) {
+		toSerialize["ref_id"] = o.RefId
+	}
+	if !IsNil(o.RefType) {
+		toSerialize["ref_type"] = o.RefType
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Public) {
+		toSerialize["public"] = o.Public
+	}
+	if !IsNil(o.Limit) {
+		toSerialize["limit"] = o.Limit
+	}
+	if !IsNil(o.Offset) {
+		toSerialize["offset"] = o.Offset
+	}
+	return toSerialize, nil
 }
 
 type NullableQueryDocumentsRequest struct {

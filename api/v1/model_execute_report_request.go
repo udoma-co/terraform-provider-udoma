@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ExecuteReportRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ExecuteReportRequest{}
+
 // ExecuteReportRequest The data required to execute a report
 type ExecuteReportRequest struct {
 	// The parameters used to execute the report as a data map
@@ -39,7 +42,7 @@ func NewExecuteReportRequestWithDefaults() *ExecuteReportRequest {
 
 // GetParameters returns the Parameters field value if set, zero value otherwise.
 func (o *ExecuteReportRequest) GetParameters() map[string]interface{} {
-	if o == nil || o.Parameters == nil {
+	if o == nil || IsNil(o.Parameters) {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -49,15 +52,15 @@ func (o *ExecuteReportRequest) GetParameters() map[string]interface{} {
 // GetParametersOk returns a tuple with the Parameters field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ExecuteReportRequest) GetParametersOk() (map[string]interface{}, bool) {
-	if o == nil || o.Parameters == nil {
-		return nil, false
+	if o == nil || IsNil(o.Parameters) {
+		return map[string]interface{}{}, false
 	}
 	return o.Parameters, true
 }
 
 // HasParameters returns a boolean if a field has been set.
 func (o *ExecuteReportRequest) HasParameters() bool {
-	if o != nil && o.Parameters != nil {
+	if o != nil && !IsNil(o.Parameters) {
 		return true
 	}
 
@@ -70,11 +73,19 @@ func (o *ExecuteReportRequest) SetParameters(v map[string]interface{}) {
 }
 
 func (o ExecuteReportRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Parameters != nil {
-		toSerialize["parameters"] = o.Parameters
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ExecuteReportRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Parameters) {
+		toSerialize["parameters"] = o.Parameters
+	}
+	return toSerialize, nil
 }
 
 type NullableExecuteReportRequest struct {

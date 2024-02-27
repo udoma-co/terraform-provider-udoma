@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the Address type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Address{}
+
 // Address Address is the physical address of a property, a person, or an organization
 type Address struct {
 	Line1    *string `json:"line1,omitempty"`
@@ -43,7 +46,7 @@ func NewAddressWithDefaults() *Address {
 
 // GetLine1 returns the Line1 field value if set, zero value otherwise.
 func (o *Address) GetLine1() string {
-	if o == nil || o.Line1 == nil {
+	if o == nil || IsNil(o.Line1) {
 		var ret string
 		return ret
 	}
@@ -53,7 +56,7 @@ func (o *Address) GetLine1() string {
 // GetLine1Ok returns a tuple with the Line1 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Address) GetLine1Ok() (*string, bool) {
-	if o == nil || o.Line1 == nil {
+	if o == nil || IsNil(o.Line1) {
 		return nil, false
 	}
 	return o.Line1, true
@@ -61,7 +64,7 @@ func (o *Address) GetLine1Ok() (*string, bool) {
 
 // HasLine1 returns a boolean if a field has been set.
 func (o *Address) HasLine1() bool {
-	if o != nil && o.Line1 != nil {
+	if o != nil && !IsNil(o.Line1) {
 		return true
 	}
 
@@ -75,7 +78,7 @@ func (o *Address) SetLine1(v string) {
 
 // GetLine2 returns the Line2 field value if set, zero value otherwise.
 func (o *Address) GetLine2() string {
-	if o == nil || o.Line2 == nil {
+	if o == nil || IsNil(o.Line2) {
 		var ret string
 		return ret
 	}
@@ -85,7 +88,7 @@ func (o *Address) GetLine2() string {
 // GetLine2Ok returns a tuple with the Line2 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Address) GetLine2Ok() (*string, bool) {
-	if o == nil || o.Line2 == nil {
+	if o == nil || IsNil(o.Line2) {
 		return nil, false
 	}
 	return o.Line2, true
@@ -93,7 +96,7 @@ func (o *Address) GetLine2Ok() (*string, bool) {
 
 // HasLine2 returns a boolean if a field has been set.
 func (o *Address) HasLine2() bool {
-	if o != nil && o.Line2 != nil {
+	if o != nil && !IsNil(o.Line2) {
 		return true
 	}
 
@@ -107,7 +110,7 @@ func (o *Address) SetLine2(v string) {
 
 // GetCity returns the City field value if set, zero value otherwise.
 func (o *Address) GetCity() string {
-	if o == nil || o.City == nil {
+	if o == nil || IsNil(o.City) {
 		var ret string
 		return ret
 	}
@@ -117,7 +120,7 @@ func (o *Address) GetCity() string {
 // GetCityOk returns a tuple with the City field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Address) GetCityOk() (*string, bool) {
-	if o == nil || o.City == nil {
+	if o == nil || IsNil(o.City) {
 		return nil, false
 	}
 	return o.City, true
@@ -125,7 +128,7 @@ func (o *Address) GetCityOk() (*string, bool) {
 
 // HasCity returns a boolean if a field has been set.
 func (o *Address) HasCity() bool {
-	if o != nil && o.City != nil {
+	if o != nil && !IsNil(o.City) {
 		return true
 	}
 
@@ -139,7 +142,7 @@ func (o *Address) SetCity(v string) {
 
 // GetPostcode returns the Postcode field value if set, zero value otherwise.
 func (o *Address) GetPostcode() string {
-	if o == nil || o.Postcode == nil {
+	if o == nil || IsNil(o.Postcode) {
 		var ret string
 		return ret
 	}
@@ -149,7 +152,7 @@ func (o *Address) GetPostcode() string {
 // GetPostcodeOk returns a tuple with the Postcode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Address) GetPostcodeOk() (*string, bool) {
-	if o == nil || o.Postcode == nil {
+	if o == nil || IsNil(o.Postcode) {
 		return nil, false
 	}
 	return o.Postcode, true
@@ -157,7 +160,7 @@ func (o *Address) GetPostcodeOk() (*string, bool) {
 
 // HasPostcode returns a boolean if a field has been set.
 func (o *Address) HasPostcode() bool {
-	if o != nil && o.Postcode != nil {
+	if o != nil && !IsNil(o.Postcode) {
 		return true
 	}
 
@@ -171,7 +174,7 @@ func (o *Address) SetPostcode(v string) {
 
 // GetProvince returns the Province field value if set, zero value otherwise.
 func (o *Address) GetProvince() string {
-	if o == nil || o.Province == nil {
+	if o == nil || IsNil(o.Province) {
 		var ret string
 		return ret
 	}
@@ -181,7 +184,7 @@ func (o *Address) GetProvince() string {
 // GetProvinceOk returns a tuple with the Province field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Address) GetProvinceOk() (*string, bool) {
-	if o == nil || o.Province == nil {
+	if o == nil || IsNil(o.Province) {
 		return nil, false
 	}
 	return o.Province, true
@@ -189,7 +192,7 @@ func (o *Address) GetProvinceOk() (*string, bool) {
 
 // HasProvince returns a boolean if a field has been set.
 func (o *Address) HasProvince() bool {
-	if o != nil && o.Province != nil {
+	if o != nil && !IsNil(o.Province) {
 		return true
 	}
 
@@ -203,7 +206,7 @@ func (o *Address) SetProvince(v string) {
 
 // GetCountry returns the Country field value if set, zero value otherwise.
 func (o *Address) GetCountry() string {
-	if o == nil || o.Country == nil {
+	if o == nil || IsNil(o.Country) {
 		var ret string
 		return ret
 	}
@@ -213,7 +216,7 @@ func (o *Address) GetCountry() string {
 // GetCountryOk returns a tuple with the Country field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Address) GetCountryOk() (*string, bool) {
-	if o == nil || o.Country == nil {
+	if o == nil || IsNil(o.Country) {
 		return nil, false
 	}
 	return o.Country, true
@@ -221,7 +224,7 @@ func (o *Address) GetCountryOk() (*string, bool) {
 
 // HasCountry returns a boolean if a field has been set.
 func (o *Address) HasCountry() bool {
-	if o != nil && o.Country != nil {
+	if o != nil && !IsNil(o.Country) {
 		return true
 	}
 
@@ -234,26 +237,34 @@ func (o *Address) SetCountry(v string) {
 }
 
 func (o Address) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Line1 != nil {
-		toSerialize["line1"] = o.Line1
-	}
-	if o.Line2 != nil {
-		toSerialize["line2"] = o.Line2
-	}
-	if o.City != nil {
-		toSerialize["city"] = o.City
-	}
-	if o.Postcode != nil {
-		toSerialize["postcode"] = o.Postcode
-	}
-	if o.Province != nil {
-		toSerialize["province"] = o.Province
-	}
-	if o.Country != nil {
-		toSerialize["country"] = o.Country
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Address) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Line1) {
+		toSerialize["line1"] = o.Line1
+	}
+	if !IsNil(o.Line2) {
+		toSerialize["line2"] = o.Line2
+	}
+	if !IsNil(o.City) {
+		toSerialize["city"] = o.City
+	}
+	if !IsNil(o.Postcode) {
+		toSerialize["postcode"] = o.Postcode
+	}
+	if !IsNil(o.Province) {
+		toSerialize["province"] = o.Province
+	}
+	if !IsNil(o.Country) {
+		toSerialize["country"] = o.Country
+	}
+	return toSerialize, nil
 }
 
 type NullableAddress struct {

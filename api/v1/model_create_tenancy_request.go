@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CreateTenancyRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CreateTenancyRequest{}
+
 // CreateTenancyRequest Request issued by a property manager to create a new tenancy for a property
 type CreateTenancyRequest struct {
 	// Indicates whether the tenancy is active. Active tenancies indicate the current contract between the tenants and the property manager. Per default, new tenancies are active. This just provides a way to add past tenancies.
@@ -51,7 +54,7 @@ func NewCreateTenancyRequestWithDefaults() *CreateTenancyRequest {
 
 // GetActive returns the Active field value if set, zero value otherwise.
 func (o *CreateTenancyRequest) GetActive() bool {
-	if o == nil || o.Active == nil {
+	if o == nil || IsNil(o.Active) {
 		var ret bool
 		return ret
 	}
@@ -61,7 +64,7 @@ func (o *CreateTenancyRequest) GetActive() bool {
 // GetActiveOk returns a tuple with the Active field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateTenancyRequest) GetActiveOk() (*bool, bool) {
-	if o == nil || o.Active == nil {
+	if o == nil || IsNil(o.Active) {
 		return nil, false
 	}
 	return o.Active, true
@@ -69,7 +72,7 @@ func (o *CreateTenancyRequest) GetActiveOk() (*bool, bool) {
 
 // HasActive returns a boolean if a field has been set.
 func (o *CreateTenancyRequest) HasActive() bool {
-	if o != nil && o.Active != nil {
+	if o != nil && !IsNil(o.Active) {
 		return true
 	}
 
@@ -83,7 +86,7 @@ func (o *CreateTenancyRequest) SetActive(v bool) {
 
 // GetStartDate returns the StartDate field value if set, zero value otherwise.
 func (o *CreateTenancyRequest) GetStartDate() int64 {
-	if o == nil || o.StartDate == nil {
+	if o == nil || IsNil(o.StartDate) {
 		var ret int64
 		return ret
 	}
@@ -93,7 +96,7 @@ func (o *CreateTenancyRequest) GetStartDate() int64 {
 // GetStartDateOk returns a tuple with the StartDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateTenancyRequest) GetStartDateOk() (*int64, bool) {
-	if o == nil || o.StartDate == nil {
+	if o == nil || IsNil(o.StartDate) {
 		return nil, false
 	}
 	return o.StartDate, true
@@ -101,7 +104,7 @@ func (o *CreateTenancyRequest) GetStartDateOk() (*int64, bool) {
 
 // HasStartDate returns a boolean if a field has been set.
 func (o *CreateTenancyRequest) HasStartDate() bool {
-	if o != nil && o.StartDate != nil {
+	if o != nil && !IsNil(o.StartDate) {
 		return true
 	}
 
@@ -115,7 +118,7 @@ func (o *CreateTenancyRequest) SetStartDate(v int64) {
 
 // GetEndDate returns the EndDate field value if set, zero value otherwise.
 func (o *CreateTenancyRequest) GetEndDate() int64 {
-	if o == nil || o.EndDate == nil {
+	if o == nil || IsNil(o.EndDate) {
 		var ret int64
 		return ret
 	}
@@ -125,7 +128,7 @@ func (o *CreateTenancyRequest) GetEndDate() int64 {
 // GetEndDateOk returns a tuple with the EndDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateTenancyRequest) GetEndDateOk() (*int64, bool) {
-	if o == nil || o.EndDate == nil {
+	if o == nil || IsNil(o.EndDate) {
 		return nil, false
 	}
 	return o.EndDate, true
@@ -133,7 +136,7 @@ func (o *CreateTenancyRequest) GetEndDateOk() (*int64, bool) {
 
 // HasEndDate returns a boolean if a field has been set.
 func (o *CreateTenancyRequest) HasEndDate() bool {
-	if o != nil && o.EndDate != nil {
+	if o != nil && !IsNil(o.EndDate) {
 		return true
 	}
 
@@ -147,7 +150,7 @@ func (o *CreateTenancyRequest) SetEndDate(v int64) {
 
 // GetContractType returns the ContractType field value if set, zero value otherwise.
 func (o *CreateTenancyRequest) GetContractType() TenancyContractTypeEnum {
-	if o == nil || o.ContractType == nil {
+	if o == nil || IsNil(o.ContractType) {
 		var ret TenancyContractTypeEnum
 		return ret
 	}
@@ -157,7 +160,7 @@ func (o *CreateTenancyRequest) GetContractType() TenancyContractTypeEnum {
 // GetContractTypeOk returns a tuple with the ContractType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateTenancyRequest) GetContractTypeOk() (*TenancyContractTypeEnum, bool) {
-	if o == nil || o.ContractType == nil {
+	if o == nil || IsNil(o.ContractType) {
 		return nil, false
 	}
 	return o.ContractType, true
@@ -165,7 +168,7 @@ func (o *CreateTenancyRequest) GetContractTypeOk() (*TenancyContractTypeEnum, bo
 
 // HasContractType returns a boolean if a field has been set.
 func (o *CreateTenancyRequest) HasContractType() bool {
-	if o != nil && o.ContractType != nil {
+	if o != nil && !IsNil(o.ContractType) {
 		return true
 	}
 
@@ -179,7 +182,7 @@ func (o *CreateTenancyRequest) SetContractType(v TenancyContractTypeEnum) {
 
 // GetRentInformation returns the RentInformation field value if set, zero value otherwise.
 func (o *CreateTenancyRequest) GetRentInformation() RentInformation {
-	if o == nil || o.RentInformation == nil {
+	if o == nil || IsNil(o.RentInformation) {
 		var ret RentInformation
 		return ret
 	}
@@ -189,7 +192,7 @@ func (o *CreateTenancyRequest) GetRentInformation() RentInformation {
 // GetRentInformationOk returns a tuple with the RentInformation field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateTenancyRequest) GetRentInformationOk() (*RentInformation, bool) {
-	if o == nil || o.RentInformation == nil {
+	if o == nil || IsNil(o.RentInformation) {
 		return nil, false
 	}
 	return o.RentInformation, true
@@ -197,7 +200,7 @@ func (o *CreateTenancyRequest) GetRentInformationOk() (*RentInformation, bool) {
 
 // HasRentInformation returns a boolean if a field has been set.
 func (o *CreateTenancyRequest) HasRentInformation() bool {
-	if o != nil && o.RentInformation != nil {
+	if o != nil && !IsNil(o.RentInformation) {
 		return true
 	}
 
@@ -211,7 +214,7 @@ func (o *CreateTenancyRequest) SetRentInformation(v RentInformation) {
 
 // GetTenants returns the Tenants field value if set, zero value otherwise.
 func (o *CreateTenancyRequest) GetTenants() []ContactData {
-	if o == nil || o.Tenants == nil {
+	if o == nil || IsNil(o.Tenants) {
 		var ret []ContactData
 		return ret
 	}
@@ -221,7 +224,7 @@ func (o *CreateTenancyRequest) GetTenants() []ContactData {
 // GetTenantsOk returns a tuple with the Tenants field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateTenancyRequest) GetTenantsOk() ([]ContactData, bool) {
-	if o == nil || o.Tenants == nil {
+	if o == nil || IsNil(o.Tenants) {
 		return nil, false
 	}
 	return o.Tenants, true
@@ -229,7 +232,7 @@ func (o *CreateTenancyRequest) GetTenantsOk() ([]ContactData, bool) {
 
 // HasTenants returns a boolean if a field has been set.
 func (o *CreateTenancyRequest) HasTenants() bool {
-	if o != nil && o.Tenants != nil {
+	if o != nil && !IsNil(o.Tenants) {
 		return true
 	}
 
@@ -243,7 +246,7 @@ func (o *CreateTenancyRequest) SetTenants(v []ContactData) {
 
 // GetEndPreviousTenancy returns the EndPreviousTenancy field value if set, zero value otherwise.
 func (o *CreateTenancyRequest) GetEndPreviousTenancy() bool {
-	if o == nil || o.EndPreviousTenancy == nil {
+	if o == nil || IsNil(o.EndPreviousTenancy) {
 		var ret bool
 		return ret
 	}
@@ -253,7 +256,7 @@ func (o *CreateTenancyRequest) GetEndPreviousTenancy() bool {
 // GetEndPreviousTenancyOk returns a tuple with the EndPreviousTenancy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateTenancyRequest) GetEndPreviousTenancyOk() (*bool, bool) {
-	if o == nil || o.EndPreviousTenancy == nil {
+	if o == nil || IsNil(o.EndPreviousTenancy) {
 		return nil, false
 	}
 	return o.EndPreviousTenancy, true
@@ -261,7 +264,7 @@ func (o *CreateTenancyRequest) GetEndPreviousTenancyOk() (*bool, bool) {
 
 // HasEndPreviousTenancy returns a boolean if a field has been set.
 func (o *CreateTenancyRequest) HasEndPreviousTenancy() bool {
-	if o != nil && o.EndPreviousTenancy != nil {
+	if o != nil && !IsNil(o.EndPreviousTenancy) {
 		return true
 	}
 
@@ -275,7 +278,7 @@ func (o *CreateTenancyRequest) SetEndPreviousTenancy(v bool) {
 
 // GetInviteTenants returns the InviteTenants field value if set, zero value otherwise.
 func (o *CreateTenancyRequest) GetInviteTenants() bool {
-	if o == nil || o.InviteTenants == nil {
+	if o == nil || IsNil(o.InviteTenants) {
 		var ret bool
 		return ret
 	}
@@ -285,7 +288,7 @@ func (o *CreateTenancyRequest) GetInviteTenants() bool {
 // GetInviteTenantsOk returns a tuple with the InviteTenants field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateTenancyRequest) GetInviteTenantsOk() (*bool, bool) {
-	if o == nil || o.InviteTenants == nil {
+	if o == nil || IsNil(o.InviteTenants) {
 		return nil, false
 	}
 	return o.InviteTenants, true
@@ -293,7 +296,7 @@ func (o *CreateTenancyRequest) GetInviteTenantsOk() (*bool, bool) {
 
 // HasInviteTenants returns a boolean if a field has been set.
 func (o *CreateTenancyRequest) HasInviteTenants() bool {
-	if o != nil && o.InviteTenants != nil {
+	if o != nil && !IsNil(o.InviteTenants) {
 		return true
 	}
 
@@ -306,32 +309,40 @@ func (o *CreateTenancyRequest) SetInviteTenants(v bool) {
 }
 
 func (o CreateTenancyRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Active != nil {
-		toSerialize["active"] = o.Active
-	}
-	if o.StartDate != nil {
-		toSerialize["start_date"] = o.StartDate
-	}
-	if o.EndDate != nil {
-		toSerialize["end_date"] = o.EndDate
-	}
-	if o.ContractType != nil {
-		toSerialize["contract_type"] = o.ContractType
-	}
-	if o.RentInformation != nil {
-		toSerialize["rent_information"] = o.RentInformation
-	}
-	if o.Tenants != nil {
-		toSerialize["tenants"] = o.Tenants
-	}
-	if o.EndPreviousTenancy != nil {
-		toSerialize["end_previous_tenancy"] = o.EndPreviousTenancy
-	}
-	if o.InviteTenants != nil {
-		toSerialize["invite_tenants"] = o.InviteTenants
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CreateTenancyRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Active) {
+		toSerialize["active"] = o.Active
+	}
+	if !IsNil(o.StartDate) {
+		toSerialize["start_date"] = o.StartDate
+	}
+	if !IsNil(o.EndDate) {
+		toSerialize["end_date"] = o.EndDate
+	}
+	if !IsNil(o.ContractType) {
+		toSerialize["contract_type"] = o.ContractType
+	}
+	if !IsNil(o.RentInformation) {
+		toSerialize["rent_information"] = o.RentInformation
+	}
+	if !IsNil(o.Tenants) {
+		toSerialize["tenants"] = o.Tenants
+	}
+	if !IsNil(o.EndPreviousTenancy) {
+		toSerialize["end_previous_tenancy"] = o.EndPreviousTenancy
+	}
+	if !IsNil(o.InviteTenants) {
+		toSerialize["invite_tenants"] = o.InviteTenants
+	}
+	return toSerialize, nil
 }
 
 type NullableCreateTenancyRequest struct {

@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CaseFeedbackEntry type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CaseFeedbackEntry{}
+
 // CaseFeedbackEntry Contains the feedback that was provided by a party when changing the status of a case.
 type CaseFeedbackEntry struct {
 	// The unique ID of the feedback entry
@@ -49,7 +52,7 @@ func NewCaseFeedbackEntryWithDefaults() *CaseFeedbackEntry {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *CaseFeedbackEntry) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -59,7 +62,7 @@ func (o *CaseFeedbackEntry) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseFeedbackEntry) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -67,7 +70,7 @@ func (o *CaseFeedbackEntry) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *CaseFeedbackEntry) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -81,7 +84,7 @@ func (o *CaseFeedbackEntry) SetId(v string) {
 
 // GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
 func (o *CaseFeedbackEntry) GetCreatedAt() int64 {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		var ret int64
 		return ret
 	}
@@ -91,7 +94,7 @@ func (o *CaseFeedbackEntry) GetCreatedAt() int64 {
 // GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseFeedbackEntry) GetCreatedAtOk() (*int64, bool) {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
 	return o.CreatedAt, true
@@ -99,7 +102,7 @@ func (o *CaseFeedbackEntry) GetCreatedAtOk() (*int64, bool) {
 
 // HasCreatedAt returns a boolean if a field has been set.
 func (o *CaseFeedbackEntry) HasCreatedAt() bool {
-	if o != nil && o.CreatedAt != nil {
+	if o != nil && !IsNil(o.CreatedAt) {
 		return true
 	}
 
@@ -113,7 +116,7 @@ func (o *CaseFeedbackEntry) SetCreatedAt(v int64) {
 
 // GetAuthorRef returns the AuthorRef field value if set, zero value otherwise.
 func (o *CaseFeedbackEntry) GetAuthorRef() UserReference {
-	if o == nil || o.AuthorRef == nil {
+	if o == nil || IsNil(o.AuthorRef) {
 		var ret UserReference
 		return ret
 	}
@@ -123,7 +126,7 @@ func (o *CaseFeedbackEntry) GetAuthorRef() UserReference {
 // GetAuthorRefOk returns a tuple with the AuthorRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseFeedbackEntry) GetAuthorRefOk() (*UserReference, bool) {
-	if o == nil || o.AuthorRef == nil {
+	if o == nil || IsNil(o.AuthorRef) {
 		return nil, false
 	}
 	return o.AuthorRef, true
@@ -131,7 +134,7 @@ func (o *CaseFeedbackEntry) GetAuthorRefOk() (*UserReference, bool) {
 
 // HasAuthorRef returns a boolean if a field has been set.
 func (o *CaseFeedbackEntry) HasAuthorRef() bool {
-	if o != nil && o.AuthorRef != nil {
+	if o != nil && !IsNil(o.AuthorRef) {
 		return true
 	}
 
@@ -145,7 +148,7 @@ func (o *CaseFeedbackEntry) SetAuthorRef(v UserReference) {
 
 // GetSourceStatus returns the SourceStatus field value if set, zero value otherwise.
 func (o *CaseFeedbackEntry) GetSourceStatus() CaseStatusEnum {
-	if o == nil || o.SourceStatus == nil {
+	if o == nil || IsNil(o.SourceStatus) {
 		var ret CaseStatusEnum
 		return ret
 	}
@@ -155,7 +158,7 @@ func (o *CaseFeedbackEntry) GetSourceStatus() CaseStatusEnum {
 // GetSourceStatusOk returns a tuple with the SourceStatus field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseFeedbackEntry) GetSourceStatusOk() (*CaseStatusEnum, bool) {
-	if o == nil || o.SourceStatus == nil {
+	if o == nil || IsNil(o.SourceStatus) {
 		return nil, false
 	}
 	return o.SourceStatus, true
@@ -163,7 +166,7 @@ func (o *CaseFeedbackEntry) GetSourceStatusOk() (*CaseStatusEnum, bool) {
 
 // HasSourceStatus returns a boolean if a field has been set.
 func (o *CaseFeedbackEntry) HasSourceStatus() bool {
-	if o != nil && o.SourceStatus != nil {
+	if o != nil && !IsNil(o.SourceStatus) {
 		return true
 	}
 
@@ -177,7 +180,7 @@ func (o *CaseFeedbackEntry) SetSourceStatus(v CaseStatusEnum) {
 
 // GetAction returns the Action field value if set, zero value otherwise.
 func (o *CaseFeedbackEntry) GetAction() CaseActionEnum {
-	if o == nil || o.Action == nil {
+	if o == nil || IsNil(o.Action) {
 		var ret CaseActionEnum
 		return ret
 	}
@@ -187,7 +190,7 @@ func (o *CaseFeedbackEntry) GetAction() CaseActionEnum {
 // GetActionOk returns a tuple with the Action field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseFeedbackEntry) GetActionOk() (*CaseActionEnum, bool) {
-	if o == nil || o.Action == nil {
+	if o == nil || IsNil(o.Action) {
 		return nil, false
 	}
 	return o.Action, true
@@ -195,7 +198,7 @@ func (o *CaseFeedbackEntry) GetActionOk() (*CaseActionEnum, bool) {
 
 // HasAction returns a boolean if a field has been set.
 func (o *CaseFeedbackEntry) HasAction() bool {
-	if o != nil && o.Action != nil {
+	if o != nil && !IsNil(o.Action) {
 		return true
 	}
 
@@ -209,7 +212,7 @@ func (o *CaseFeedbackEntry) SetAction(v CaseActionEnum) {
 
 // GetFeedbackId returns the FeedbackId field value if set, zero value otherwise.
 func (o *CaseFeedbackEntry) GetFeedbackId() string {
-	if o == nil || o.FeedbackId == nil {
+	if o == nil || IsNil(o.FeedbackId) {
 		var ret string
 		return ret
 	}
@@ -219,7 +222,7 @@ func (o *CaseFeedbackEntry) GetFeedbackId() string {
 // GetFeedbackIdOk returns a tuple with the FeedbackId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseFeedbackEntry) GetFeedbackIdOk() (*string, bool) {
-	if o == nil || o.FeedbackId == nil {
+	if o == nil || IsNil(o.FeedbackId) {
 		return nil, false
 	}
 	return o.FeedbackId, true
@@ -227,7 +230,7 @@ func (o *CaseFeedbackEntry) GetFeedbackIdOk() (*string, bool) {
 
 // HasFeedbackId returns a boolean if a field has been set.
 func (o *CaseFeedbackEntry) HasFeedbackId() bool {
-	if o != nil && o.FeedbackId != nil {
+	if o != nil && !IsNil(o.FeedbackId) {
 		return true
 	}
 
@@ -241,7 +244,7 @@ func (o *CaseFeedbackEntry) SetFeedbackId(v string) {
 
 // GetVisibility returns the Visibility field value if set, zero value otherwise.
 func (o *CaseFeedbackEntry) GetVisibility() []CaseParty {
-	if o == nil || o.Visibility == nil {
+	if o == nil || IsNil(o.Visibility) {
 		var ret []CaseParty
 		return ret
 	}
@@ -251,7 +254,7 @@ func (o *CaseFeedbackEntry) GetVisibility() []CaseParty {
 // GetVisibilityOk returns a tuple with the Visibility field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseFeedbackEntry) GetVisibilityOk() ([]CaseParty, bool) {
-	if o == nil || o.Visibility == nil {
+	if o == nil || IsNil(o.Visibility) {
 		return nil, false
 	}
 	return o.Visibility, true
@@ -259,7 +262,7 @@ func (o *CaseFeedbackEntry) GetVisibilityOk() ([]CaseParty, bool) {
 
 // HasVisibility returns a boolean if a field has been set.
 func (o *CaseFeedbackEntry) HasVisibility() bool {
-	if o != nil && o.Visibility != nil {
+	if o != nil && !IsNil(o.Visibility) {
 		return true
 	}
 
@@ -273,7 +276,7 @@ func (o *CaseFeedbackEntry) SetVisibility(v []CaseParty) {
 
 // GetFormData returns the FormData field value if set, zero value otherwise.
 func (o *CaseFeedbackEntry) GetFormData() map[string]interface{} {
-	if o == nil || o.FormData == nil {
+	if o == nil || IsNil(o.FormData) {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -283,15 +286,15 @@ func (o *CaseFeedbackEntry) GetFormData() map[string]interface{} {
 // GetFormDataOk returns a tuple with the FormData field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseFeedbackEntry) GetFormDataOk() (map[string]interface{}, bool) {
-	if o == nil || o.FormData == nil {
-		return nil, false
+	if o == nil || IsNil(o.FormData) {
+		return map[string]interface{}{}, false
 	}
 	return o.FormData, true
 }
 
 // HasFormData returns a boolean if a field has been set.
 func (o *CaseFeedbackEntry) HasFormData() bool {
-	if o != nil && o.FormData != nil {
+	if o != nil && !IsNil(o.FormData) {
 		return true
 	}
 
@@ -304,32 +307,40 @@ func (o *CaseFeedbackEntry) SetFormData(v map[string]interface{}) {
 }
 
 func (o CaseFeedbackEntry) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.CreatedAt != nil {
-		toSerialize["created_at"] = o.CreatedAt
-	}
-	if o.AuthorRef != nil {
-		toSerialize["author_ref"] = o.AuthorRef
-	}
-	if o.SourceStatus != nil {
-		toSerialize["source_status"] = o.SourceStatus
-	}
-	if o.Action != nil {
-		toSerialize["action"] = o.Action
-	}
-	if o.FeedbackId != nil {
-		toSerialize["feedback_id"] = o.FeedbackId
-	}
-	if o.Visibility != nil {
-		toSerialize["visibility"] = o.Visibility
-	}
-	if o.FormData != nil {
-		toSerialize["form_data"] = o.FormData
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CaseFeedbackEntry) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.CreatedAt) {
+		toSerialize["created_at"] = o.CreatedAt
+	}
+	if !IsNil(o.AuthorRef) {
+		toSerialize["author_ref"] = o.AuthorRef
+	}
+	if !IsNil(o.SourceStatus) {
+		toSerialize["source_status"] = o.SourceStatus
+	}
+	if !IsNil(o.Action) {
+		toSerialize["action"] = o.Action
+	}
+	if !IsNil(o.FeedbackId) {
+		toSerialize["feedback_id"] = o.FeedbackId
+	}
+	if !IsNil(o.Visibility) {
+		toSerialize["visibility"] = o.Visibility
+	}
+	if !IsNil(o.FormData) {
+		toSerialize["form_data"] = o.FormData
+	}
+	return toSerialize, nil
 }
 
 type NullableCaseFeedbackEntry struct {

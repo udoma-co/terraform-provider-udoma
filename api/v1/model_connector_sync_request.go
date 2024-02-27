@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ConnectorSyncRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ConnectorSyncRequest{}
+
 // ConnectorSyncRequest Used by connectors to push data to the backend. It contains a list of entities to be synchronised and the timestamp of the last update, as well as error logs in case the connector failed to sync data.
 type ConnectorSyncRequest struct {
 	ConnectorMeta *ConnectorMeta `json:"connector_meta,omitempty"`
@@ -42,7 +45,7 @@ func NewConnectorSyncRequestWithDefaults() *ConnectorSyncRequest {
 
 // GetConnectorMeta returns the ConnectorMeta field value if set, zero value otherwise.
 func (o *ConnectorSyncRequest) GetConnectorMeta() ConnectorMeta {
-	if o == nil || o.ConnectorMeta == nil {
+	if o == nil || IsNil(o.ConnectorMeta) {
 		var ret ConnectorMeta
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *ConnectorSyncRequest) GetConnectorMeta() ConnectorMeta {
 // GetConnectorMetaOk returns a tuple with the ConnectorMeta field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectorSyncRequest) GetConnectorMetaOk() (*ConnectorMeta, bool) {
-	if o == nil || o.ConnectorMeta == nil {
+	if o == nil || IsNil(o.ConnectorMeta) {
 		return nil, false
 	}
 	return o.ConnectorMeta, true
@@ -60,7 +63,7 @@ func (o *ConnectorSyncRequest) GetConnectorMetaOk() (*ConnectorMeta, bool) {
 
 // HasConnectorMeta returns a boolean if a field has been set.
 func (o *ConnectorSyncRequest) HasConnectorMeta() bool {
-	if o != nil && o.ConnectorMeta != nil {
+	if o != nil && !IsNil(o.ConnectorMeta) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *ConnectorSyncRequest) SetConnectorMeta(v ConnectorMeta) {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *ConnectorSyncRequest) GetData() []ConnectorSyncEntity {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret []ConnectorSyncEntity
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *ConnectorSyncRequest) GetData() []ConnectorSyncEntity {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectorSyncRequest) GetDataOk() ([]ConnectorSyncEntity, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -92,7 +95,7 @@ func (o *ConnectorSyncRequest) GetDataOk() ([]ConnectorSyncEntity, bool) {
 
 // HasData returns a boolean if a field has been set.
 func (o *ConnectorSyncRequest) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -106,7 +109,7 @@ func (o *ConnectorSyncRequest) SetData(v []ConnectorSyncEntity) {
 
 // GetLogs returns the Logs field value if set, zero value otherwise.
 func (o *ConnectorSyncRequest) GetLogs() []ConnectorSyncLog {
-	if o == nil || o.Logs == nil {
+	if o == nil || IsNil(o.Logs) {
 		var ret []ConnectorSyncLog
 		return ret
 	}
@@ -116,7 +119,7 @@ func (o *ConnectorSyncRequest) GetLogs() []ConnectorSyncLog {
 // GetLogsOk returns a tuple with the Logs field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectorSyncRequest) GetLogsOk() ([]ConnectorSyncLog, bool) {
-	if o == nil || o.Logs == nil {
+	if o == nil || IsNil(o.Logs) {
 		return nil, false
 	}
 	return o.Logs, true
@@ -124,7 +127,7 @@ func (o *ConnectorSyncRequest) GetLogsOk() ([]ConnectorSyncLog, bool) {
 
 // HasLogs returns a boolean if a field has been set.
 func (o *ConnectorSyncRequest) HasLogs() bool {
-	if o != nil && o.Logs != nil {
+	if o != nil && !IsNil(o.Logs) {
 		return true
 	}
 
@@ -137,17 +140,25 @@ func (o *ConnectorSyncRequest) SetLogs(v []ConnectorSyncLog) {
 }
 
 func (o ConnectorSyncRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.ConnectorMeta != nil {
-		toSerialize["connector_meta"] = o.ConnectorMeta
-	}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
-	}
-	if o.Logs != nil {
-		toSerialize["logs"] = o.Logs
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ConnectorSyncRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.ConnectorMeta) {
+		toSerialize["connector_meta"] = o.ConnectorMeta
+	}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	if !IsNil(o.Logs) {
+		toSerialize["logs"] = o.Logs
+	}
+	return toSerialize, nil
 }
 
 type NullableConnectorSyncRequest struct {

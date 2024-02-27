@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ExecuteWorkflowEntrypointRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ExecuteWorkflowEntrypointRequest{}
+
 // ExecuteWorkflowEntrypointRequest a request for starting a workflow execution via an entry point
 type ExecuteWorkflowEntrypointRequest struct {
 	// optional ID of the source object, for which this entrypoint was triggered
@@ -41,7 +44,7 @@ func NewExecuteWorkflowEntrypointRequestWithDefaults() *ExecuteWorkflowEntrypoin
 
 // GetSourceRef returns the SourceRef field value if set, zero value otherwise.
 func (o *ExecuteWorkflowEntrypointRequest) GetSourceRef() string {
-	if o == nil || o.SourceRef == nil {
+	if o == nil || IsNil(o.SourceRef) {
 		var ret string
 		return ret
 	}
@@ -51,7 +54,7 @@ func (o *ExecuteWorkflowEntrypointRequest) GetSourceRef() string {
 // GetSourceRefOk returns a tuple with the SourceRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ExecuteWorkflowEntrypointRequest) GetSourceRefOk() (*string, bool) {
-	if o == nil || o.SourceRef == nil {
+	if o == nil || IsNil(o.SourceRef) {
 		return nil, false
 	}
 	return o.SourceRef, true
@@ -59,7 +62,7 @@ func (o *ExecuteWorkflowEntrypointRequest) GetSourceRefOk() (*string, bool) {
 
 // HasSourceRef returns a boolean if a field has been set.
 func (o *ExecuteWorkflowEntrypointRequest) HasSourceRef() bool {
-	if o != nil && o.SourceRef != nil {
+	if o != nil && !IsNil(o.SourceRef) {
 		return true
 	}
 
@@ -73,7 +76,7 @@ func (o *ExecuteWorkflowEntrypointRequest) SetSourceRef(v string) {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *ExecuteWorkflowEntrypointRequest) GetData() map[string]interface{} {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -83,15 +86,15 @@ func (o *ExecuteWorkflowEntrypointRequest) GetData() map[string]interface{} {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ExecuteWorkflowEntrypointRequest) GetDataOk() (map[string]interface{}, bool) {
-	if o == nil || o.Data == nil {
-		return nil, false
+	if o == nil || IsNil(o.Data) {
+		return map[string]interface{}{}, false
 	}
 	return o.Data, true
 }
 
 // HasData returns a boolean if a field has been set.
 func (o *ExecuteWorkflowEntrypointRequest) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -104,14 +107,22 @@ func (o *ExecuteWorkflowEntrypointRequest) SetData(v map[string]interface{}) {
 }
 
 func (o ExecuteWorkflowEntrypointRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.SourceRef != nil {
-		toSerialize["source_ref"] = o.SourceRef
-	}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ExecuteWorkflowEntrypointRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.SourceRef) {
+		toSerialize["source_ref"] = o.SourceRef
+	}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	return toSerialize, nil
 }
 
 type NullableExecuteWorkflowEntrypointRequest struct {

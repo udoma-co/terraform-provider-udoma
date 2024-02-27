@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ConnectorPingRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ConnectorPingRequest{}
+
 // ConnectorPingRequest Used by connectors to ping the backend. The request only contains the  connector meta data.
 type ConnectorPingRequest struct {
 	ConnectorMeta *ConnectorMeta `json:"connector_meta,omitempty"`
@@ -38,7 +41,7 @@ func NewConnectorPingRequestWithDefaults() *ConnectorPingRequest {
 
 // GetConnectorMeta returns the ConnectorMeta field value if set, zero value otherwise.
 func (o *ConnectorPingRequest) GetConnectorMeta() ConnectorMeta {
-	if o == nil || o.ConnectorMeta == nil {
+	if o == nil || IsNil(o.ConnectorMeta) {
 		var ret ConnectorMeta
 		return ret
 	}
@@ -48,7 +51,7 @@ func (o *ConnectorPingRequest) GetConnectorMeta() ConnectorMeta {
 // GetConnectorMetaOk returns a tuple with the ConnectorMeta field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectorPingRequest) GetConnectorMetaOk() (*ConnectorMeta, bool) {
-	if o == nil || o.ConnectorMeta == nil {
+	if o == nil || IsNil(o.ConnectorMeta) {
 		return nil, false
 	}
 	return o.ConnectorMeta, true
@@ -56,7 +59,7 @@ func (o *ConnectorPingRequest) GetConnectorMetaOk() (*ConnectorMeta, bool) {
 
 // HasConnectorMeta returns a boolean if a field has been set.
 func (o *ConnectorPingRequest) HasConnectorMeta() bool {
-	if o != nil && o.ConnectorMeta != nil {
+	if o != nil && !IsNil(o.ConnectorMeta) {
 		return true
 	}
 
@@ -69,11 +72,19 @@ func (o *ConnectorPingRequest) SetConnectorMeta(v ConnectorMeta) {
 }
 
 func (o ConnectorPingRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.ConnectorMeta != nil {
-		toSerialize["connector_meta"] = o.ConnectorMeta
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ConnectorPingRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.ConnectorMeta) {
+		toSerialize["connector_meta"] = o.ConnectorMeta
+	}
+	return toSerialize, nil
 }
 
 type NullableConnectorPingRequest struct {

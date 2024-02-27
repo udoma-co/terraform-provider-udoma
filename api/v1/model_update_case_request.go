@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the UpdateCaseRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &UpdateCaseRequest{}
+
 // UpdateCaseRequest All attributes of a case that can be updated
 type UpdateCaseRequest struct {
 	// Reference to property
@@ -42,7 +45,7 @@ func NewUpdateCaseRequestWithDefaults() *UpdateCaseRequest {
 
 // GetPropertyRef returns the PropertyRef field value if set, zero value otherwise.
 func (o *UpdateCaseRequest) GetPropertyRef() string {
-	if o == nil || o.PropertyRef == nil {
+	if o == nil || IsNil(o.PropertyRef) {
 		var ret string
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *UpdateCaseRequest) GetPropertyRef() string {
 // GetPropertyRefOk returns a tuple with the PropertyRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateCaseRequest) GetPropertyRefOk() (*string, bool) {
-	if o == nil || o.PropertyRef == nil {
+	if o == nil || IsNil(o.PropertyRef) {
 		return nil, false
 	}
 	return o.PropertyRef, true
@@ -60,7 +63,7 @@ func (o *UpdateCaseRequest) GetPropertyRefOk() (*string, bool) {
 
 // HasPropertyRef returns a boolean if a field has been set.
 func (o *UpdateCaseRequest) HasPropertyRef() bool {
-	if o != nil && o.PropertyRef != nil {
+	if o != nil && !IsNil(o.PropertyRef) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *UpdateCaseRequest) SetPropertyRef(v string) {
 
 // GetPropertyAddress returns the PropertyAddress field value if set, zero value otherwise.
 func (o *UpdateCaseRequest) GetPropertyAddress() Address {
-	if o == nil || o.PropertyAddress == nil {
+	if o == nil || IsNil(o.PropertyAddress) {
 		var ret Address
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *UpdateCaseRequest) GetPropertyAddress() Address {
 // GetPropertyAddressOk returns a tuple with the PropertyAddress field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateCaseRequest) GetPropertyAddressOk() (*Address, bool) {
-	if o == nil || o.PropertyAddress == nil {
+	if o == nil || IsNil(o.PropertyAddress) {
 		return nil, false
 	}
 	return o.PropertyAddress, true
@@ -92,7 +95,7 @@ func (o *UpdateCaseRequest) GetPropertyAddressOk() (*Address, bool) {
 
 // HasPropertyAddress returns a boolean if a field has been set.
 func (o *UpdateCaseRequest) HasPropertyAddress() bool {
-	if o != nil && o.PropertyAddress != nil {
+	if o != nil && !IsNil(o.PropertyAddress) {
 		return true
 	}
 
@@ -106,7 +109,7 @@ func (o *UpdateCaseRequest) SetPropertyAddress(v Address) {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *UpdateCaseRequest) GetData() string {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret string
 		return ret
 	}
@@ -116,7 +119,7 @@ func (o *UpdateCaseRequest) GetData() string {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateCaseRequest) GetDataOk() (*string, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -124,7 +127,7 @@ func (o *UpdateCaseRequest) GetDataOk() (*string, bool) {
 
 // HasData returns a boolean if a field has been set.
 func (o *UpdateCaseRequest) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -137,17 +140,25 @@ func (o *UpdateCaseRequest) SetData(v string) {
 }
 
 func (o UpdateCaseRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.PropertyRef != nil {
-		toSerialize["property_ref"] = o.PropertyRef
-	}
-	if o.PropertyAddress != nil {
-		toSerialize["property_address"] = o.PropertyAddress
-	}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o UpdateCaseRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.PropertyRef) {
+		toSerialize["property_ref"] = o.PropertyRef
+	}
+	if !IsNil(o.PropertyAddress) {
+		toSerialize["property_address"] = o.PropertyAddress
+	}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	return toSerialize, nil
 }
 
 type NullableUpdateCaseRequest struct {

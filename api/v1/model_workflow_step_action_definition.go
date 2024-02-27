@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the WorkflowStepActionDefinition type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &WorkflowStepActionDefinition{}
+
 // WorkflowStepActionDefinition an action that can be performed on a workflow step
 type WorkflowStepActionDefinition struct {
 	// the ID of the action
@@ -65,7 +68,7 @@ func NewWorkflowStepActionDefinitionWithDefaults() *WorkflowStepActionDefinition
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *WorkflowStepActionDefinition) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -75,7 +78,7 @@ func (o *WorkflowStepActionDefinition) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepActionDefinition) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -83,7 +86,7 @@ func (o *WorkflowStepActionDefinition) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *WorkflowStepActionDefinition) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -97,7 +100,7 @@ func (o *WorkflowStepActionDefinition) SetId(v string) {
 
 // GetIcon returns the Icon field value if set, zero value otherwise.
 func (o *WorkflowStepActionDefinition) GetIcon() string {
-	if o == nil || o.Icon == nil {
+	if o == nil || IsNil(o.Icon) {
 		var ret string
 		return ret
 	}
@@ -107,7 +110,7 @@ func (o *WorkflowStepActionDefinition) GetIcon() string {
 // GetIconOk returns a tuple with the Icon field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepActionDefinition) GetIconOk() (*string, bool) {
-	if o == nil || o.Icon == nil {
+	if o == nil || IsNil(o.Icon) {
 		return nil, false
 	}
 	return o.Icon, true
@@ -115,7 +118,7 @@ func (o *WorkflowStepActionDefinition) GetIconOk() (*string, bool) {
 
 // HasIcon returns a boolean if a field has been set.
 func (o *WorkflowStepActionDefinition) HasIcon() bool {
-	if o != nil && o.Icon != nil {
+	if o != nil && !IsNil(o.Icon) {
 		return true
 	}
 
@@ -129,7 +132,7 @@ func (o *WorkflowStepActionDefinition) SetIcon(v string) {
 
 // GetLabel returns the Label field value if set, zero value otherwise.
 func (o *WorkflowStepActionDefinition) GetLabel() string {
-	if o == nil || o.Label == nil {
+	if o == nil || IsNil(o.Label) {
 		var ret string
 		return ret
 	}
@@ -139,7 +142,7 @@ func (o *WorkflowStepActionDefinition) GetLabel() string {
 // GetLabelOk returns a tuple with the Label field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepActionDefinition) GetLabelOk() (*string, bool) {
-	if o == nil || o.Label == nil {
+	if o == nil || IsNil(o.Label) {
 		return nil, false
 	}
 	return o.Label, true
@@ -147,7 +150,7 @@ func (o *WorkflowStepActionDefinition) GetLabelOk() (*string, bool) {
 
 // HasLabel returns a boolean if a field has been set.
 func (o *WorkflowStepActionDefinition) HasLabel() bool {
-	if o != nil && o.Label != nil {
+	if o != nil && !IsNil(o.Label) {
 		return true
 	}
 
@@ -161,7 +164,7 @@ func (o *WorkflowStepActionDefinition) SetLabel(v string) {
 
 // GetButtonModifier returns the ButtonModifier field value if set, zero value otherwise.
 func (o *WorkflowStepActionDefinition) GetButtonModifier() string {
-	if o == nil || o.ButtonModifier == nil {
+	if o == nil || IsNil(o.ButtonModifier) {
 		var ret string
 		return ret
 	}
@@ -171,7 +174,7 @@ func (o *WorkflowStepActionDefinition) GetButtonModifier() string {
 // GetButtonModifierOk returns a tuple with the ButtonModifier field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepActionDefinition) GetButtonModifierOk() (*string, bool) {
-	if o == nil || o.ButtonModifier == nil {
+	if o == nil || IsNil(o.ButtonModifier) {
 		return nil, false
 	}
 	return o.ButtonModifier, true
@@ -179,7 +182,7 @@ func (o *WorkflowStepActionDefinition) GetButtonModifierOk() (*string, bool) {
 
 // HasButtonModifier returns a boolean if a field has been set.
 func (o *WorkflowStepActionDefinition) HasButtonModifier() bool {
-	if o != nil && o.ButtonModifier != nil {
+	if o != nil && !IsNil(o.ButtonModifier) {
 		return true
 	}
 
@@ -193,7 +196,7 @@ func (o *WorkflowStepActionDefinition) SetButtonModifier(v string) {
 
 // GetUiFilter returns the UiFilter field value if set, zero value otherwise.
 func (o *WorkflowStepActionDefinition) GetUiFilter() string {
-	if o == nil || o.UiFilter == nil {
+	if o == nil || IsNil(o.UiFilter) {
 		var ret string
 		return ret
 	}
@@ -203,7 +206,7 @@ func (o *WorkflowStepActionDefinition) GetUiFilter() string {
 // GetUiFilterOk returns a tuple with the UiFilter field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepActionDefinition) GetUiFilterOk() (*string, bool) {
-	if o == nil || o.UiFilter == nil {
+	if o == nil || IsNil(o.UiFilter) {
 		return nil, false
 	}
 	return o.UiFilter, true
@@ -211,7 +214,7 @@ func (o *WorkflowStepActionDefinition) GetUiFilterOk() (*string, bool) {
 
 // HasUiFilter returns a boolean if a field has been set.
 func (o *WorkflowStepActionDefinition) HasUiFilter() bool {
-	if o != nil && o.UiFilter != nil {
+	if o != nil && !IsNil(o.UiFilter) {
 		return true
 	}
 
@@ -225,7 +228,7 @@ func (o *WorkflowStepActionDefinition) SetUiFilter(v string) {
 
 // GetParameters returns the Parameters field value if set, zero value otherwise.
 func (o *WorkflowStepActionDefinition) GetParameters() map[string]interface{} {
-	if o == nil || o.Parameters == nil {
+	if o == nil || IsNil(o.Parameters) {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -235,15 +238,15 @@ func (o *WorkflowStepActionDefinition) GetParameters() map[string]interface{} {
 // GetParametersOk returns a tuple with the Parameters field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepActionDefinition) GetParametersOk() (map[string]interface{}, bool) {
-	if o == nil || o.Parameters == nil {
-		return nil, false
+	if o == nil || IsNil(o.Parameters) {
+		return map[string]interface{}{}, false
 	}
 	return o.Parameters, true
 }
 
 // HasParameters returns a boolean if a field has been set.
 func (o *WorkflowStepActionDefinition) HasParameters() bool {
-	if o != nil && o.Parameters != nil {
+	if o != nil && !IsNil(o.Parameters) {
 		return true
 	}
 
@@ -257,7 +260,7 @@ func (o *WorkflowStepActionDefinition) SetParameters(v map[string]interface{}) {
 
 // GetDynamicParameters returns the DynamicParameters field value if set, zero value otherwise.
 func (o *WorkflowStepActionDefinition) GetDynamicParameters() map[string]string {
-	if o == nil || o.DynamicParameters == nil {
+	if o == nil || IsNil(o.DynamicParameters) {
 		var ret map[string]string
 		return ret
 	}
@@ -267,7 +270,7 @@ func (o *WorkflowStepActionDefinition) GetDynamicParameters() map[string]string 
 // GetDynamicParametersOk returns a tuple with the DynamicParameters field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepActionDefinition) GetDynamicParametersOk() (*map[string]string, bool) {
-	if o == nil || o.DynamicParameters == nil {
+	if o == nil || IsNil(o.DynamicParameters) {
 		return nil, false
 	}
 	return o.DynamicParameters, true
@@ -275,7 +278,7 @@ func (o *WorkflowStepActionDefinition) GetDynamicParametersOk() (*map[string]str
 
 // HasDynamicParameters returns a boolean if a field has been set.
 func (o *WorkflowStepActionDefinition) HasDynamicParameters() bool {
-	if o != nil && o.DynamicParameters != nil {
+	if o != nil && !IsNil(o.DynamicParameters) {
 		return true
 	}
 
@@ -289,7 +292,7 @@ func (o *WorkflowStepActionDefinition) SetDynamicParameters(v map[string]string)
 
 // GetCanBeExecutedExpression returns the CanBeExecutedExpression field value if set, zero value otherwise.
 func (o *WorkflowStepActionDefinition) GetCanBeExecutedExpression() string {
-	if o == nil || o.CanBeExecutedExpression == nil {
+	if o == nil || IsNil(o.CanBeExecutedExpression) {
 		var ret string
 		return ret
 	}
@@ -299,7 +302,7 @@ func (o *WorkflowStepActionDefinition) GetCanBeExecutedExpression() string {
 // GetCanBeExecutedExpressionOk returns a tuple with the CanBeExecutedExpression field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepActionDefinition) GetCanBeExecutedExpressionOk() (*string, bool) {
-	if o == nil || o.CanBeExecutedExpression == nil {
+	if o == nil || IsNil(o.CanBeExecutedExpression) {
 		return nil, false
 	}
 	return o.CanBeExecutedExpression, true
@@ -307,7 +310,7 @@ func (o *WorkflowStepActionDefinition) GetCanBeExecutedExpressionOk() (*string, 
 
 // HasCanBeExecutedExpression returns a boolean if a field has been set.
 func (o *WorkflowStepActionDefinition) HasCanBeExecutedExpression() bool {
-	if o != nil && o.CanBeExecutedExpression != nil {
+	if o != nil && !IsNil(o.CanBeExecutedExpression) {
 		return true
 	}
 
@@ -321,7 +324,7 @@ func (o *WorkflowStepActionDefinition) SetCanBeExecutedExpression(v string) {
 
 // GetNextStepId returns the NextStepId field value if set, zero value otherwise.
 func (o *WorkflowStepActionDefinition) GetNextStepId() string {
-	if o == nil || o.NextStepId == nil {
+	if o == nil || IsNil(o.NextStepId) {
 		var ret string
 		return ret
 	}
@@ -331,7 +334,7 @@ func (o *WorkflowStepActionDefinition) GetNextStepId() string {
 // GetNextStepIdOk returns a tuple with the NextStepId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepActionDefinition) GetNextStepIdOk() (*string, bool) {
-	if o == nil || o.NextStepId == nil {
+	if o == nil || IsNil(o.NextStepId) {
 		return nil, false
 	}
 	return o.NextStepId, true
@@ -339,7 +342,7 @@ func (o *WorkflowStepActionDefinition) GetNextStepIdOk() (*string, bool) {
 
 // HasNextStepId returns a boolean if a field has been set.
 func (o *WorkflowStepActionDefinition) HasNextStepId() bool {
-	if o != nil && o.NextStepId != nil {
+	if o != nil && !IsNil(o.NextStepId) {
 		return true
 	}
 
@@ -353,7 +356,7 @@ func (o *WorkflowStepActionDefinition) SetNextStepId(v string) {
 
 // GetExecBefore returns the ExecBefore field value if set, zero value otherwise.
 func (o *WorkflowStepActionDefinition) GetExecBefore() string {
-	if o == nil || o.ExecBefore == nil {
+	if o == nil || IsNil(o.ExecBefore) {
 		var ret string
 		return ret
 	}
@@ -363,7 +366,7 @@ func (o *WorkflowStepActionDefinition) GetExecBefore() string {
 // GetExecBeforeOk returns a tuple with the ExecBefore field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepActionDefinition) GetExecBeforeOk() (*string, bool) {
-	if o == nil || o.ExecBefore == nil {
+	if o == nil || IsNil(o.ExecBefore) {
 		return nil, false
 	}
 	return o.ExecBefore, true
@@ -371,7 +374,7 @@ func (o *WorkflowStepActionDefinition) GetExecBeforeOk() (*string, bool) {
 
 // HasExecBefore returns a boolean if a field has been set.
 func (o *WorkflowStepActionDefinition) HasExecBefore() bool {
-	if o != nil && o.ExecBefore != nil {
+	if o != nil && !IsNil(o.ExecBefore) {
 		return true
 	}
 
@@ -385,7 +388,7 @@ func (o *WorkflowStepActionDefinition) SetExecBefore(v string) {
 
 // GetExecAfter returns the ExecAfter field value if set, zero value otherwise.
 func (o *WorkflowStepActionDefinition) GetExecAfter() string {
-	if o == nil || o.ExecAfter == nil {
+	if o == nil || IsNil(o.ExecAfter) {
 		var ret string
 		return ret
 	}
@@ -395,7 +398,7 @@ func (o *WorkflowStepActionDefinition) GetExecAfter() string {
 // GetExecAfterOk returns a tuple with the ExecAfter field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepActionDefinition) GetExecAfterOk() (*string, bool) {
-	if o == nil || o.ExecAfter == nil {
+	if o == nil || IsNil(o.ExecAfter) {
 		return nil, false
 	}
 	return o.ExecAfter, true
@@ -403,7 +406,7 @@ func (o *WorkflowStepActionDefinition) GetExecAfterOk() (*string, bool) {
 
 // HasExecAfter returns a boolean if a field has been set.
 func (o *WorkflowStepActionDefinition) HasExecAfter() bool {
-	if o != nil && o.ExecAfter != nil {
+	if o != nil && !IsNil(o.ExecAfter) {
 		return true
 	}
 
@@ -417,7 +420,7 @@ func (o *WorkflowStepActionDefinition) SetExecAfter(v string) {
 
 // GetStartChildWorkflow returns the StartChildWorkflow field value if set, zero value otherwise.
 func (o *WorkflowStepActionDefinition) GetStartChildWorkflow() string {
-	if o == nil || o.StartChildWorkflow == nil {
+	if o == nil || IsNil(o.StartChildWorkflow) {
 		var ret string
 		return ret
 	}
@@ -427,7 +430,7 @@ func (o *WorkflowStepActionDefinition) GetStartChildWorkflow() string {
 // GetStartChildWorkflowOk returns a tuple with the StartChildWorkflow field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepActionDefinition) GetStartChildWorkflowOk() (*string, bool) {
-	if o == nil || o.StartChildWorkflow == nil {
+	if o == nil || IsNil(o.StartChildWorkflow) {
 		return nil, false
 	}
 	return o.StartChildWorkflow, true
@@ -435,7 +438,7 @@ func (o *WorkflowStepActionDefinition) GetStartChildWorkflowOk() (*string, bool)
 
 // HasStartChildWorkflow returns a boolean if a field has been set.
 func (o *WorkflowStepActionDefinition) HasStartChildWorkflow() bool {
-	if o != nil && o.StartChildWorkflow != nil {
+	if o != nil && !IsNil(o.StartChildWorkflow) {
 		return true
 	}
 
@@ -449,7 +452,7 @@ func (o *WorkflowStepActionDefinition) SetStartChildWorkflow(v string) {
 
 // GetChildExecutionIteratorExpression returns the ChildExecutionIteratorExpression field value if set, zero value otherwise.
 func (o *WorkflowStepActionDefinition) GetChildExecutionIteratorExpression() string {
-	if o == nil || o.ChildExecutionIteratorExpression == nil {
+	if o == nil || IsNil(o.ChildExecutionIteratorExpression) {
 		var ret string
 		return ret
 	}
@@ -459,7 +462,7 @@ func (o *WorkflowStepActionDefinition) GetChildExecutionIteratorExpression() str
 // GetChildExecutionIteratorExpressionOk returns a tuple with the ChildExecutionIteratorExpression field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepActionDefinition) GetChildExecutionIteratorExpressionOk() (*string, bool) {
-	if o == nil || o.ChildExecutionIteratorExpression == nil {
+	if o == nil || IsNil(o.ChildExecutionIteratorExpression) {
 		return nil, false
 	}
 	return o.ChildExecutionIteratorExpression, true
@@ -467,7 +470,7 @@ func (o *WorkflowStepActionDefinition) GetChildExecutionIteratorExpressionOk() (
 
 // HasChildExecutionIteratorExpression returns a boolean if a field has been set.
 func (o *WorkflowStepActionDefinition) HasChildExecutionIteratorExpression() bool {
-	if o != nil && o.ChildExecutionIteratorExpression != nil {
+	if o != nil && !IsNil(o.ChildExecutionIteratorExpression) {
 		return true
 	}
 
@@ -481,7 +484,7 @@ func (o *WorkflowStepActionDefinition) SetChildExecutionIteratorExpression(v str
 
 // GetChildExecutionContextExpression returns the ChildExecutionContextExpression field value if set, zero value otherwise.
 func (o *WorkflowStepActionDefinition) GetChildExecutionContextExpression() string {
-	if o == nil || o.ChildExecutionContextExpression == nil {
+	if o == nil || IsNil(o.ChildExecutionContextExpression) {
 		var ret string
 		return ret
 	}
@@ -491,7 +494,7 @@ func (o *WorkflowStepActionDefinition) GetChildExecutionContextExpression() stri
 // GetChildExecutionContextExpressionOk returns a tuple with the ChildExecutionContextExpression field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepActionDefinition) GetChildExecutionContextExpressionOk() (*string, bool) {
-	if o == nil || o.ChildExecutionContextExpression == nil {
+	if o == nil || IsNil(o.ChildExecutionContextExpression) {
 		return nil, false
 	}
 	return o.ChildExecutionContextExpression, true
@@ -499,7 +502,7 @@ func (o *WorkflowStepActionDefinition) GetChildExecutionContextExpressionOk() (*
 
 // HasChildExecutionContextExpression returns a boolean if a field has been set.
 func (o *WorkflowStepActionDefinition) HasChildExecutionContextExpression() bool {
-	if o != nil && o.ChildExecutionContextExpression != nil {
+	if o != nil && !IsNil(o.ChildExecutionContextExpression) {
 		return true
 	}
 
@@ -512,50 +515,58 @@ func (o *WorkflowStepActionDefinition) SetChildExecutionContextExpression(v stri
 }
 
 func (o WorkflowStepActionDefinition) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Icon != nil {
-		toSerialize["icon"] = o.Icon
-	}
-	if o.Label != nil {
-		toSerialize["label"] = o.Label
-	}
-	if o.ButtonModifier != nil {
-		toSerialize["button_modifier"] = o.ButtonModifier
-	}
-	if o.UiFilter != nil {
-		toSerialize["ui_filter"] = o.UiFilter
-	}
-	if o.Parameters != nil {
-		toSerialize["parameters"] = o.Parameters
-	}
-	if o.DynamicParameters != nil {
-		toSerialize["dynamic_parameters"] = o.DynamicParameters
-	}
-	if o.CanBeExecutedExpression != nil {
-		toSerialize["can_be_executed_expression"] = o.CanBeExecutedExpression
-	}
-	if o.NextStepId != nil {
-		toSerialize["next_step_id"] = o.NextStepId
-	}
-	if o.ExecBefore != nil {
-		toSerialize["exec_before"] = o.ExecBefore
-	}
-	if o.ExecAfter != nil {
-		toSerialize["exec_after"] = o.ExecAfter
-	}
-	if o.StartChildWorkflow != nil {
-		toSerialize["start_child_workflow"] = o.StartChildWorkflow
-	}
-	if o.ChildExecutionIteratorExpression != nil {
-		toSerialize["child_execution_iterator_expression"] = o.ChildExecutionIteratorExpression
-	}
-	if o.ChildExecutionContextExpression != nil {
-		toSerialize["child_execution_context_expression"] = o.ChildExecutionContextExpression
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o WorkflowStepActionDefinition) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Icon) {
+		toSerialize["icon"] = o.Icon
+	}
+	if !IsNil(o.Label) {
+		toSerialize["label"] = o.Label
+	}
+	if !IsNil(o.ButtonModifier) {
+		toSerialize["button_modifier"] = o.ButtonModifier
+	}
+	if !IsNil(o.UiFilter) {
+		toSerialize["ui_filter"] = o.UiFilter
+	}
+	if !IsNil(o.Parameters) {
+		toSerialize["parameters"] = o.Parameters
+	}
+	if !IsNil(o.DynamicParameters) {
+		toSerialize["dynamic_parameters"] = o.DynamicParameters
+	}
+	if !IsNil(o.CanBeExecutedExpression) {
+		toSerialize["can_be_executed_expression"] = o.CanBeExecutedExpression
+	}
+	if !IsNil(o.NextStepId) {
+		toSerialize["next_step_id"] = o.NextStepId
+	}
+	if !IsNil(o.ExecBefore) {
+		toSerialize["exec_before"] = o.ExecBefore
+	}
+	if !IsNil(o.ExecAfter) {
+		toSerialize["exec_after"] = o.ExecAfter
+	}
+	if !IsNil(o.StartChildWorkflow) {
+		toSerialize["start_child_workflow"] = o.StartChildWorkflow
+	}
+	if !IsNil(o.ChildExecutionIteratorExpression) {
+		toSerialize["child_execution_iterator_expression"] = o.ChildExecutionIteratorExpression
+	}
+	if !IsNil(o.ChildExecutionContextExpression) {
+		toSerialize["child_execution_context_expression"] = o.ChildExecutionContextExpression
+	}
+	return toSerialize, nil
 }
 
 type NullableWorkflowStepActionDefinition struct {

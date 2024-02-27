@@ -14,7 +14,7 @@ generate-client:
 		-v "${PWD}/api/v1/spec:/local/api:ro" \
 		-v "${PWD}/gen:/local/gen" \
 		-u "$(shell id -u):$(shell id -g)" \
-		registry.gitlab.com/zestlabs-io/ci/codegen/openapi:v0.1.2 generate-go-client \
+		openapitools/openapi-generator-cli:v7.3.0 generate -g go --additional-properties=enumClassPrefix=true \
 		-i /local/api/udoma-openapi.yml \
 		-o /local/gen \
 		--additional-properties=packageName=v1

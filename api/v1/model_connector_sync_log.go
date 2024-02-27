@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ConnectorSyncLog type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ConnectorSyncLog{}
+
 // ConnectorSyncLog Used by connectors to push error logs to the backend.
 type ConnectorSyncLog struct {
 	// timestamp of the error
@@ -42,7 +45,7 @@ func NewConnectorSyncLogWithDefaults() *ConnectorSyncLog {
 
 // GetTimestamp returns the Timestamp field value if set, zero value otherwise.
 func (o *ConnectorSyncLog) GetTimestamp() int64 {
-	if o == nil || o.Timestamp == nil {
+	if o == nil || IsNil(o.Timestamp) {
 		var ret int64
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *ConnectorSyncLog) GetTimestamp() int64 {
 // GetTimestampOk returns a tuple with the Timestamp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectorSyncLog) GetTimestampOk() (*int64, bool) {
-	if o == nil || o.Timestamp == nil {
+	if o == nil || IsNil(o.Timestamp) {
 		return nil, false
 	}
 	return o.Timestamp, true
@@ -60,7 +63,7 @@ func (o *ConnectorSyncLog) GetTimestampOk() (*int64, bool) {
 
 // HasTimestamp returns a boolean if a field has been set.
 func (o *ConnectorSyncLog) HasTimestamp() bool {
-	if o != nil && o.Timestamp != nil {
+	if o != nil && !IsNil(o.Timestamp) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *ConnectorSyncLog) SetTimestamp(v int64) {
 
 // GetSeverity returns the Severity field value if set, zero value otherwise.
 func (o *ConnectorSyncLog) GetSeverity() ConnectorLogLevelEnum {
-	if o == nil || o.Severity == nil {
+	if o == nil || IsNil(o.Severity) {
 		var ret ConnectorLogLevelEnum
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *ConnectorSyncLog) GetSeverity() ConnectorLogLevelEnum {
 // GetSeverityOk returns a tuple with the Severity field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectorSyncLog) GetSeverityOk() (*ConnectorLogLevelEnum, bool) {
-	if o == nil || o.Severity == nil {
+	if o == nil || IsNil(o.Severity) {
 		return nil, false
 	}
 	return o.Severity, true
@@ -92,7 +95,7 @@ func (o *ConnectorSyncLog) GetSeverityOk() (*ConnectorLogLevelEnum, bool) {
 
 // HasSeverity returns a boolean if a field has been set.
 func (o *ConnectorSyncLog) HasSeverity() bool {
-	if o != nil && o.Severity != nil {
+	if o != nil && !IsNil(o.Severity) {
 		return true
 	}
 
@@ -106,7 +109,7 @@ func (o *ConnectorSyncLog) SetSeverity(v ConnectorLogLevelEnum) {
 
 // GetMessage returns the Message field value if set, zero value otherwise.
 func (o *ConnectorSyncLog) GetMessage() string {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		var ret string
 		return ret
 	}
@@ -116,7 +119,7 @@ func (o *ConnectorSyncLog) GetMessage() string {
 // GetMessageOk returns a tuple with the Message field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectorSyncLog) GetMessageOk() (*string, bool) {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		return nil, false
 	}
 	return o.Message, true
@@ -124,7 +127,7 @@ func (o *ConnectorSyncLog) GetMessageOk() (*string, bool) {
 
 // HasMessage returns a boolean if a field has been set.
 func (o *ConnectorSyncLog) HasMessage() bool {
-	if o != nil && o.Message != nil {
+	if o != nil && !IsNil(o.Message) {
 		return true
 	}
 
@@ -137,17 +140,25 @@ func (o *ConnectorSyncLog) SetMessage(v string) {
 }
 
 func (o ConnectorSyncLog) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Timestamp != nil {
-		toSerialize["timestamp"] = o.Timestamp
-	}
-	if o.Severity != nil {
-		toSerialize["severity"] = o.Severity
-	}
-	if o.Message != nil {
-		toSerialize["message"] = o.Message
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ConnectorSyncLog) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Timestamp) {
+		toSerialize["timestamp"] = o.Timestamp
+	}
+	if !IsNil(o.Severity) {
+		toSerialize["severity"] = o.Severity
+	}
+	if !IsNil(o.Message) {
+		toSerialize["message"] = o.Message
+	}
+	return toSerialize, nil
 }
 
 type NullableConnectorSyncLog struct {

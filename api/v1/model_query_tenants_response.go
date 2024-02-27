@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the QueryTenantsResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &QueryTenantsResponse{}
+
 // QueryTenantsResponse Result of a tenants query
 type QueryTenantsResponse struct {
 	Limit   *int32   `json:"limit,omitempty"`
@@ -40,7 +43,7 @@ func NewQueryTenantsResponseWithDefaults() *QueryTenantsResponse {
 
 // GetLimit returns the Limit field value if set, zero value otherwise.
 func (o *QueryTenantsResponse) GetLimit() int32 {
-	if o == nil || o.Limit == nil {
+	if o == nil || IsNil(o.Limit) {
 		var ret int32
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *QueryTenantsResponse) GetLimit() int32 {
 // GetLimitOk returns a tuple with the Limit field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryTenantsResponse) GetLimitOk() (*int32, bool) {
-	if o == nil || o.Limit == nil {
+	if o == nil || IsNil(o.Limit) {
 		return nil, false
 	}
 	return o.Limit, true
@@ -58,7 +61,7 @@ func (o *QueryTenantsResponse) GetLimitOk() (*int32, bool) {
 
 // HasLimit returns a boolean if a field has been set.
 func (o *QueryTenantsResponse) HasLimit() bool {
-	if o != nil && o.Limit != nil {
+	if o != nil && !IsNil(o.Limit) {
 		return true
 	}
 
@@ -72,7 +75,7 @@ func (o *QueryTenantsResponse) SetLimit(v int32) {
 
 // GetOffset returns the Offset field value if set, zero value otherwise.
 func (o *QueryTenantsResponse) GetOffset() int32 {
-	if o == nil || o.Offset == nil {
+	if o == nil || IsNil(o.Offset) {
 		var ret int32
 		return ret
 	}
@@ -82,7 +85,7 @@ func (o *QueryTenantsResponse) GetOffset() int32 {
 // GetOffsetOk returns a tuple with the Offset field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryTenantsResponse) GetOffsetOk() (*int32, bool) {
-	if o == nil || o.Offset == nil {
+	if o == nil || IsNil(o.Offset) {
 		return nil, false
 	}
 	return o.Offset, true
@@ -90,7 +93,7 @@ func (o *QueryTenantsResponse) GetOffsetOk() (*int32, bool) {
 
 // HasOffset returns a boolean if a field has been set.
 func (o *QueryTenantsResponse) HasOffset() bool {
-	if o != nil && o.Offset != nil {
+	if o != nil && !IsNil(o.Offset) {
 		return true
 	}
 
@@ -104,7 +107,7 @@ func (o *QueryTenantsResponse) SetOffset(v int32) {
 
 // GetTenants returns the Tenants field value if set, zero value otherwise.
 func (o *QueryTenantsResponse) GetTenants() []Tenant {
-	if o == nil || o.Tenants == nil {
+	if o == nil || IsNil(o.Tenants) {
 		var ret []Tenant
 		return ret
 	}
@@ -114,7 +117,7 @@ func (o *QueryTenantsResponse) GetTenants() []Tenant {
 // GetTenantsOk returns a tuple with the Tenants field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryTenantsResponse) GetTenantsOk() ([]Tenant, bool) {
-	if o == nil || o.Tenants == nil {
+	if o == nil || IsNil(o.Tenants) {
 		return nil, false
 	}
 	return o.Tenants, true
@@ -122,7 +125,7 @@ func (o *QueryTenantsResponse) GetTenantsOk() ([]Tenant, bool) {
 
 // HasTenants returns a boolean if a field has been set.
 func (o *QueryTenantsResponse) HasTenants() bool {
-	if o != nil && o.Tenants != nil {
+	if o != nil && !IsNil(o.Tenants) {
 		return true
 	}
 
@@ -135,17 +138,25 @@ func (o *QueryTenantsResponse) SetTenants(v []Tenant) {
 }
 
 func (o QueryTenantsResponse) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Limit != nil {
-		toSerialize["limit"] = o.Limit
-	}
-	if o.Offset != nil {
-		toSerialize["offset"] = o.Offset
-	}
-	if o.Tenants != nil {
-		toSerialize["tenants"] = o.Tenants
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o QueryTenantsResponse) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Limit) {
+		toSerialize["limit"] = o.Limit
+	}
+	if !IsNil(o.Offset) {
+		toSerialize["offset"] = o.Offset
+	}
+	if !IsNil(o.Tenants) {
+		toSerialize["tenants"] = o.Tenants
+	}
+	return toSerialize, nil
 }
 
 type NullableQueryTenantsResponse struct {

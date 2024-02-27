@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the Meter type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Meter{}
+
 // Meter a meter installed in a property to measure some kind of utility amount
 type Meter struct {
 	Id *string `json:"id,omitempty"`
@@ -50,7 +53,7 @@ func NewMeterWithDefaults() *Meter {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *Meter) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -60,7 +63,7 @@ func (o *Meter) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Meter) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -68,7 +71,7 @@ func (o *Meter) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *Meter) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -82,7 +85,7 @@ func (o *Meter) SetId(v string) {
 
 // GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
 func (o *Meter) GetCreatedAt() int64 {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		var ret int64
 		return ret
 	}
@@ -92,7 +95,7 @@ func (o *Meter) GetCreatedAt() int64 {
 // GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Meter) GetCreatedAtOk() (*int64, bool) {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
 	return o.CreatedAt, true
@@ -100,7 +103,7 @@ func (o *Meter) GetCreatedAtOk() (*int64, bool) {
 
 // HasCreatedAt returns a boolean if a field has been set.
 func (o *Meter) HasCreatedAt() bool {
-	if o != nil && o.CreatedAt != nil {
+	if o != nil && !IsNil(o.CreatedAt) {
 		return true
 	}
 
@@ -114,7 +117,7 @@ func (o *Meter) SetCreatedAt(v int64) {
 
 // GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
 func (o *Meter) GetUpdatedAt() int64 {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		var ret int64
 		return ret
 	}
@@ -124,7 +127,7 @@ func (o *Meter) GetUpdatedAt() int64 {
 // GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Meter) GetUpdatedAtOk() (*int64, bool) {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
 	return o.UpdatedAt, true
@@ -132,7 +135,7 @@ func (o *Meter) GetUpdatedAtOk() (*int64, bool) {
 
 // HasUpdatedAt returns a boolean if a field has been set.
 func (o *Meter) HasUpdatedAt() bool {
-	if o != nil && o.UpdatedAt != nil {
+	if o != nil && !IsNil(o.UpdatedAt) {
 		return true
 	}
 
@@ -146,7 +149,7 @@ func (o *Meter) SetUpdatedAt(v int64) {
 
 // GetPropertyRef returns the PropertyRef field value if set, zero value otherwise.
 func (o *Meter) GetPropertyRef() string {
-	if o == nil || o.PropertyRef == nil {
+	if o == nil || IsNil(o.PropertyRef) {
 		var ret string
 		return ret
 	}
@@ -156,7 +159,7 @@ func (o *Meter) GetPropertyRef() string {
 // GetPropertyRefOk returns a tuple with the PropertyRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Meter) GetPropertyRefOk() (*string, bool) {
-	if o == nil || o.PropertyRef == nil {
+	if o == nil || IsNil(o.PropertyRef) {
 		return nil, false
 	}
 	return o.PropertyRef, true
@@ -164,7 +167,7 @@ func (o *Meter) GetPropertyRefOk() (*string, bool) {
 
 // HasPropertyRef returns a boolean if a field has been set.
 func (o *Meter) HasPropertyRef() bool {
-	if o != nil && o.PropertyRef != nil {
+	if o != nil && !IsNil(o.PropertyRef) {
 		return true
 	}
 
@@ -178,7 +181,7 @@ func (o *Meter) SetPropertyRef(v string) {
 
 // GetMeterType returns the MeterType field value if set, zero value otherwise.
 func (o *Meter) GetMeterType() MeterTypeEnum {
-	if o == nil || o.MeterType == nil {
+	if o == nil || IsNil(o.MeterType) {
 		var ret MeterTypeEnum
 		return ret
 	}
@@ -188,7 +191,7 @@ func (o *Meter) GetMeterType() MeterTypeEnum {
 // GetMeterTypeOk returns a tuple with the MeterType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Meter) GetMeterTypeOk() (*MeterTypeEnum, bool) {
-	if o == nil || o.MeterType == nil {
+	if o == nil || IsNil(o.MeterType) {
 		return nil, false
 	}
 	return o.MeterType, true
@@ -196,7 +199,7 @@ func (o *Meter) GetMeterTypeOk() (*MeterTypeEnum, bool) {
 
 // HasMeterType returns a boolean if a field has been set.
 func (o *Meter) HasMeterType() bool {
-	if o != nil && o.MeterType != nil {
+	if o != nil && !IsNil(o.MeterType) {
 		return true
 	}
 
@@ -210,7 +213,7 @@ func (o *Meter) SetMeterType(v MeterTypeEnum) {
 
 // GetUnit returns the Unit field value if set, zero value otherwise.
 func (o *Meter) GetUnit() string {
-	if o == nil || o.Unit == nil {
+	if o == nil || IsNil(o.Unit) {
 		var ret string
 		return ret
 	}
@@ -220,7 +223,7 @@ func (o *Meter) GetUnit() string {
 // GetUnitOk returns a tuple with the Unit field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Meter) GetUnitOk() (*string, bool) {
-	if o == nil || o.Unit == nil {
+	if o == nil || IsNil(o.Unit) {
 		return nil, false
 	}
 	return o.Unit, true
@@ -228,7 +231,7 @@ func (o *Meter) GetUnitOk() (*string, bool) {
 
 // HasUnit returns a boolean if a field has been set.
 func (o *Meter) HasUnit() bool {
-	if o != nil && o.Unit != nil {
+	if o != nil && !IsNil(o.Unit) {
 		return true
 	}
 
@@ -242,7 +245,7 @@ func (o *Meter) SetUnit(v string) {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *Meter) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -252,7 +255,7 @@ func (o *Meter) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Meter) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -260,7 +263,7 @@ func (o *Meter) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *Meter) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -274,7 +277,7 @@ func (o *Meter) SetName(v string) {
 
 // GetLocation returns the Location field value if set, zero value otherwise.
 func (o *Meter) GetLocation() string {
-	if o == nil || o.Location == nil {
+	if o == nil || IsNil(o.Location) {
 		var ret string
 		return ret
 	}
@@ -284,7 +287,7 @@ func (o *Meter) GetLocation() string {
 // GetLocationOk returns a tuple with the Location field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Meter) GetLocationOk() (*string, bool) {
-	if o == nil || o.Location == nil {
+	if o == nil || IsNil(o.Location) {
 		return nil, false
 	}
 	return o.Location, true
@@ -292,7 +295,7 @@ func (o *Meter) GetLocationOk() (*string, bool) {
 
 // HasLocation returns a boolean if a field has been set.
 func (o *Meter) HasLocation() bool {
-	if o != nil && o.Location != nil {
+	if o != nil && !IsNil(o.Location) {
 		return true
 	}
 
@@ -306,7 +309,7 @@ func (o *Meter) SetLocation(v string) {
 
 // GetSerialNumber returns the SerialNumber field value if set, zero value otherwise.
 func (o *Meter) GetSerialNumber() string {
-	if o == nil || o.SerialNumber == nil {
+	if o == nil || IsNil(o.SerialNumber) {
 		var ret string
 		return ret
 	}
@@ -316,7 +319,7 @@ func (o *Meter) GetSerialNumber() string {
 // GetSerialNumberOk returns a tuple with the SerialNumber field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Meter) GetSerialNumberOk() (*string, bool) {
-	if o == nil || o.SerialNumber == nil {
+	if o == nil || IsNil(o.SerialNumber) {
 		return nil, false
 	}
 	return o.SerialNumber, true
@@ -324,7 +327,7 @@ func (o *Meter) GetSerialNumberOk() (*string, bool) {
 
 // HasSerialNumber returns a boolean if a field has been set.
 func (o *Meter) HasSerialNumber() bool {
-	if o != nil && o.SerialNumber != nil {
+	if o != nil && !IsNil(o.SerialNumber) {
 		return true
 	}
 
@@ -338,7 +341,7 @@ func (o *Meter) SetSerialNumber(v string) {
 
 // GetCalibrationDate returns the CalibrationDate field value if set, zero value otherwise.
 func (o *Meter) GetCalibrationDate() int64 {
-	if o == nil || o.CalibrationDate == nil {
+	if o == nil || IsNil(o.CalibrationDate) {
 		var ret int64
 		return ret
 	}
@@ -348,7 +351,7 @@ func (o *Meter) GetCalibrationDate() int64 {
 // GetCalibrationDateOk returns a tuple with the CalibrationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Meter) GetCalibrationDateOk() (*int64, bool) {
-	if o == nil || o.CalibrationDate == nil {
+	if o == nil || IsNil(o.CalibrationDate) {
 		return nil, false
 	}
 	return o.CalibrationDate, true
@@ -356,7 +359,7 @@ func (o *Meter) GetCalibrationDateOk() (*int64, bool) {
 
 // HasCalibrationDate returns a boolean if a field has been set.
 func (o *Meter) HasCalibrationDate() bool {
-	if o != nil && o.CalibrationDate != nil {
+	if o != nil && !IsNil(o.CalibrationDate) {
 		return true
 	}
 
@@ -370,7 +373,7 @@ func (o *Meter) SetCalibrationDate(v int64) {
 
 // GetCalibrationValidity returns the CalibrationValidity field value if set, zero value otherwise.
 func (o *Meter) GetCalibrationValidity() int64 {
-	if o == nil || o.CalibrationValidity == nil {
+	if o == nil || IsNil(o.CalibrationValidity) {
 		var ret int64
 		return ret
 	}
@@ -380,7 +383,7 @@ func (o *Meter) GetCalibrationValidity() int64 {
 // GetCalibrationValidityOk returns a tuple with the CalibrationValidity field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Meter) GetCalibrationValidityOk() (*int64, bool) {
-	if o == nil || o.CalibrationValidity == nil {
+	if o == nil || IsNil(o.CalibrationValidity) {
 		return nil, false
 	}
 	return o.CalibrationValidity, true
@@ -388,7 +391,7 @@ func (o *Meter) GetCalibrationValidityOk() (*int64, bool) {
 
 // HasCalibrationValidity returns a boolean if a field has been set.
 func (o *Meter) HasCalibrationValidity() bool {
-	if o != nil && o.CalibrationValidity != nil {
+	if o != nil && !IsNil(o.CalibrationValidity) {
 		return true
 	}
 
@@ -401,41 +404,49 @@ func (o *Meter) SetCalibrationValidity(v int64) {
 }
 
 func (o Meter) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.CreatedAt != nil {
-		toSerialize["created_at"] = o.CreatedAt
-	}
-	if o.UpdatedAt != nil {
-		toSerialize["updated_at"] = o.UpdatedAt
-	}
-	if o.PropertyRef != nil {
-		toSerialize["property_ref"] = o.PropertyRef
-	}
-	if o.MeterType != nil {
-		toSerialize["meter_type"] = o.MeterType
-	}
-	if o.Unit != nil {
-		toSerialize["unit"] = o.Unit
-	}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.Location != nil {
-		toSerialize["location"] = o.Location
-	}
-	if o.SerialNumber != nil {
-		toSerialize["serial_number"] = o.SerialNumber
-	}
-	if o.CalibrationDate != nil {
-		toSerialize["calibration_date"] = o.CalibrationDate
-	}
-	if o.CalibrationValidity != nil {
-		toSerialize["calibration_validity"] = o.CalibrationValidity
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Meter) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.CreatedAt) {
+		toSerialize["created_at"] = o.CreatedAt
+	}
+	if !IsNil(o.UpdatedAt) {
+		toSerialize["updated_at"] = o.UpdatedAt
+	}
+	if !IsNil(o.PropertyRef) {
+		toSerialize["property_ref"] = o.PropertyRef
+	}
+	if !IsNil(o.MeterType) {
+		toSerialize["meter_type"] = o.MeterType
+	}
+	if !IsNil(o.Unit) {
+		toSerialize["unit"] = o.Unit
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Location) {
+		toSerialize["location"] = o.Location
+	}
+	if !IsNil(o.SerialNumber) {
+		toSerialize["serial_number"] = o.SerialNumber
+	}
+	if !IsNil(o.CalibrationDate) {
+		toSerialize["calibration_date"] = o.CalibrationDate
+	}
+	if !IsNil(o.CalibrationValidity) {
+		toSerialize["calibration_validity"] = o.CalibrationValidity
+	}
+	return toSerialize, nil
 }
 
 type NullableMeter struct {

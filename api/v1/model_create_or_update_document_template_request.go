@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CreateOrUpdateDocumentTemplateRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CreateOrUpdateDocumentTemplateRequest{}
+
 // CreateOrUpdateDocumentTemplateRequest Create or update a document template
 type CreateOrUpdateDocumentTemplateRequest struct {
 	// The name of the template
@@ -50,7 +53,7 @@ func NewCreateOrUpdateDocumentTemplateRequestWithDefaults() *CreateOrUpdateDocum
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *CreateOrUpdateDocumentTemplateRequest) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -60,7 +63,7 @@ func (o *CreateOrUpdateDocumentTemplateRequest) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateDocumentTemplateRequest) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -68,7 +71,7 @@ func (o *CreateOrUpdateDocumentTemplateRequest) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *CreateOrUpdateDocumentTemplateRequest) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -82,7 +85,7 @@ func (o *CreateOrUpdateDocumentTemplateRequest) SetName(v string) {
 
 // GetDescription returns the Description field value if set, zero value otherwise.
 func (o *CreateOrUpdateDocumentTemplateRequest) GetDescription() string {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		var ret string
 		return ret
 	}
@@ -92,7 +95,7 @@ func (o *CreateOrUpdateDocumentTemplateRequest) GetDescription() string {
 // GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateDocumentTemplateRequest) GetDescriptionOk() (*string, bool) {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		return nil, false
 	}
 	return o.Description, true
@@ -100,7 +103,7 @@ func (o *CreateOrUpdateDocumentTemplateRequest) GetDescriptionOk() (*string, boo
 
 // HasDescription returns a boolean if a field has been set.
 func (o *CreateOrUpdateDocumentTemplateRequest) HasDescription() bool {
-	if o != nil && o.Description != nil {
+	if o != nil && !IsNil(o.Description) {
 		return true
 	}
 
@@ -114,7 +117,7 @@ func (o *CreateOrUpdateDocumentTemplateRequest) SetDescription(v string) {
 
 // GetOptions returns the Options field value if set, zero value otherwise.
 func (o *CreateOrUpdateDocumentTemplateRequest) GetOptions() DocumentTemplateOptions {
-	if o == nil || o.Options == nil {
+	if o == nil || IsNil(o.Options) {
 		var ret DocumentTemplateOptions
 		return ret
 	}
@@ -124,7 +127,7 @@ func (o *CreateOrUpdateDocumentTemplateRequest) GetOptions() DocumentTemplateOpt
 // GetOptionsOk returns a tuple with the Options field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateDocumentTemplateRequest) GetOptionsOk() (*DocumentTemplateOptions, bool) {
-	if o == nil || o.Options == nil {
+	if o == nil || IsNil(o.Options) {
 		return nil, false
 	}
 	return o.Options, true
@@ -132,7 +135,7 @@ func (o *CreateOrUpdateDocumentTemplateRequest) GetOptionsOk() (*DocumentTemplat
 
 // HasOptions returns a boolean if a field has been set.
 func (o *CreateOrUpdateDocumentTemplateRequest) HasOptions() bool {
-	if o != nil && o.Options != nil {
+	if o != nil && !IsNil(o.Options) {
 		return true
 	}
 
@@ -146,7 +149,7 @@ func (o *CreateOrUpdateDocumentTemplateRequest) SetOptions(v DocumentTemplateOpt
 
 // GetNameExpression returns the NameExpression field value if set, zero value otherwise.
 func (o *CreateOrUpdateDocumentTemplateRequest) GetNameExpression() string {
-	if o == nil || o.NameExpression == nil {
+	if o == nil || IsNil(o.NameExpression) {
 		var ret string
 		return ret
 	}
@@ -156,7 +159,7 @@ func (o *CreateOrUpdateDocumentTemplateRequest) GetNameExpression() string {
 // GetNameExpressionOk returns a tuple with the NameExpression field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateDocumentTemplateRequest) GetNameExpressionOk() (*string, bool) {
-	if o == nil || o.NameExpression == nil {
+	if o == nil || IsNil(o.NameExpression) {
 		return nil, false
 	}
 	return o.NameExpression, true
@@ -164,7 +167,7 @@ func (o *CreateOrUpdateDocumentTemplateRequest) GetNameExpressionOk() (*string, 
 
 // HasNameExpression returns a boolean if a field has been set.
 func (o *CreateOrUpdateDocumentTemplateRequest) HasNameExpression() bool {
-	if o != nil && o.NameExpression != nil {
+	if o != nil && !IsNil(o.NameExpression) {
 		return true
 	}
 
@@ -178,7 +181,7 @@ func (o *CreateOrUpdateDocumentTemplateRequest) SetNameExpression(v string) {
 
 // GetContent returns the Content field value if set, zero value otherwise.
 func (o *CreateOrUpdateDocumentTemplateRequest) GetContent() string {
-	if o == nil || o.Content == nil {
+	if o == nil || IsNil(o.Content) {
 		var ret string
 		return ret
 	}
@@ -188,7 +191,7 @@ func (o *CreateOrUpdateDocumentTemplateRequest) GetContent() string {
 // GetContentOk returns a tuple with the Content field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateDocumentTemplateRequest) GetContentOk() (*string, bool) {
-	if o == nil || o.Content == nil {
+	if o == nil || IsNil(o.Content) {
 		return nil, false
 	}
 	return o.Content, true
@@ -196,7 +199,7 @@ func (o *CreateOrUpdateDocumentTemplateRequest) GetContentOk() (*string, bool) {
 
 // HasContent returns a boolean if a field has been set.
 func (o *CreateOrUpdateDocumentTemplateRequest) HasContent() bool {
-	if o != nil && o.Content != nil {
+	if o != nil && !IsNil(o.Content) {
 		return true
 	}
 
@@ -210,7 +213,7 @@ func (o *CreateOrUpdateDocumentTemplateRequest) SetContent(v string) {
 
 // GetInputs returns the Inputs field value if set, zero value otherwise.
 func (o *CreateOrUpdateDocumentTemplateRequest) GetInputs() CustomForm {
-	if o == nil || o.Inputs == nil {
+	if o == nil || IsNil(o.Inputs) {
 		var ret CustomForm
 		return ret
 	}
@@ -220,7 +223,7 @@ func (o *CreateOrUpdateDocumentTemplateRequest) GetInputs() CustomForm {
 // GetInputsOk returns a tuple with the Inputs field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateDocumentTemplateRequest) GetInputsOk() (*CustomForm, bool) {
-	if o == nil || o.Inputs == nil {
+	if o == nil || IsNil(o.Inputs) {
 		return nil, false
 	}
 	return o.Inputs, true
@@ -228,7 +231,7 @@ func (o *CreateOrUpdateDocumentTemplateRequest) GetInputsOk() (*CustomForm, bool
 
 // HasInputs returns a boolean if a field has been set.
 func (o *CreateOrUpdateDocumentTemplateRequest) HasInputs() bool {
-	if o != nil && o.Inputs != nil {
+	if o != nil && !IsNil(o.Inputs) {
 		return true
 	}
 
@@ -242,7 +245,7 @@ func (o *CreateOrUpdateDocumentTemplateRequest) SetInputs(v CustomForm) {
 
 // GetPlaceholders returns the Placeholders field value if set, zero value otherwise.
 func (o *CreateOrUpdateDocumentTemplateRequest) GetPlaceholders() []DocumentPlaceholder {
-	if o == nil || o.Placeholders == nil {
+	if o == nil || IsNil(o.Placeholders) {
 		var ret []DocumentPlaceholder
 		return ret
 	}
@@ -252,7 +255,7 @@ func (o *CreateOrUpdateDocumentTemplateRequest) GetPlaceholders() []DocumentPlac
 // GetPlaceholdersOk returns a tuple with the Placeholders field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateDocumentTemplateRequest) GetPlaceholdersOk() ([]DocumentPlaceholder, bool) {
-	if o == nil || o.Placeholders == nil {
+	if o == nil || IsNil(o.Placeholders) {
 		return nil, false
 	}
 	return o.Placeholders, true
@@ -260,7 +263,7 @@ func (o *CreateOrUpdateDocumentTemplateRequest) GetPlaceholdersOk() ([]DocumentP
 
 // HasPlaceholders returns a boolean if a field has been set.
 func (o *CreateOrUpdateDocumentTemplateRequest) HasPlaceholders() bool {
-	if o != nil && o.Placeholders != nil {
+	if o != nil && !IsNil(o.Placeholders) {
 		return true
 	}
 
@@ -274,7 +277,7 @@ func (o *CreateOrUpdateDocumentTemplateRequest) SetPlaceholders(v []DocumentPlac
 
 // GetSignatures returns the Signatures field value if set, zero value otherwise.
 func (o *CreateOrUpdateDocumentTemplateRequest) GetSignatures() DocumentTemplateSignatureConfguration {
-	if o == nil || o.Signatures == nil {
+	if o == nil || IsNil(o.Signatures) {
 		var ret DocumentTemplateSignatureConfguration
 		return ret
 	}
@@ -284,7 +287,7 @@ func (o *CreateOrUpdateDocumentTemplateRequest) GetSignatures() DocumentTemplate
 // GetSignaturesOk returns a tuple with the Signatures field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateDocumentTemplateRequest) GetSignaturesOk() (*DocumentTemplateSignatureConfguration, bool) {
-	if o == nil || o.Signatures == nil {
+	if o == nil || IsNil(o.Signatures) {
 		return nil, false
 	}
 	return o.Signatures, true
@@ -292,7 +295,7 @@ func (o *CreateOrUpdateDocumentTemplateRequest) GetSignaturesOk() (*DocumentTemp
 
 // HasSignatures returns a boolean if a field has been set.
 func (o *CreateOrUpdateDocumentTemplateRequest) HasSignatures() bool {
-	if o != nil && o.Signatures != nil {
+	if o != nil && !IsNil(o.Signatures) {
 		return true
 	}
 
@@ -305,32 +308,40 @@ func (o *CreateOrUpdateDocumentTemplateRequest) SetSignatures(v DocumentTemplate
 }
 
 func (o CreateOrUpdateDocumentTemplateRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.Description != nil {
-		toSerialize["description"] = o.Description
-	}
-	if o.Options != nil {
-		toSerialize["options"] = o.Options
-	}
-	if o.NameExpression != nil {
-		toSerialize["name_expression"] = o.NameExpression
-	}
-	if o.Content != nil {
-		toSerialize["content"] = o.Content
-	}
-	if o.Inputs != nil {
-		toSerialize["inputs"] = o.Inputs
-	}
-	if o.Placeholders != nil {
-		toSerialize["placeholders"] = o.Placeholders
-	}
-	if o.Signatures != nil {
-		toSerialize["signatures"] = o.Signatures
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CreateOrUpdateDocumentTemplateRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
+	}
+	if !IsNil(o.Options) {
+		toSerialize["options"] = o.Options
+	}
+	if !IsNil(o.NameExpression) {
+		toSerialize["name_expression"] = o.NameExpression
+	}
+	if !IsNil(o.Content) {
+		toSerialize["content"] = o.Content
+	}
+	if !IsNil(o.Inputs) {
+		toSerialize["inputs"] = o.Inputs
+	}
+	if !IsNil(o.Placeholders) {
+		toSerialize["placeholders"] = o.Placeholders
+	}
+	if !IsNil(o.Signatures) {
+		toSerialize["signatures"] = o.Signatures
+	}
+	return toSerialize, nil
 }
 
 type NullableCreateOrUpdateDocumentTemplateRequest struct {

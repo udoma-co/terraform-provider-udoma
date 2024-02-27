@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CaseParty type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CaseParty{}
+
 // CaseParty CaseParty indicates that the referenced account has access to the case.
 type CaseParty struct {
 	Role *UserTypeEnum `json:"role,omitempty"`
@@ -44,7 +47,7 @@ func NewCasePartyWithDefaults() *CaseParty {
 
 // GetRole returns the Role field value if set, zero value otherwise.
 func (o *CaseParty) GetRole() UserTypeEnum {
-	if o == nil || o.Role == nil {
+	if o == nil || IsNil(o.Role) {
 		var ret UserTypeEnum
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *CaseParty) GetRole() UserTypeEnum {
 // GetRoleOk returns a tuple with the Role field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseParty) GetRoleOk() (*UserTypeEnum, bool) {
-	if o == nil || o.Role == nil {
+	if o == nil || IsNil(o.Role) {
 		return nil, false
 	}
 	return o.Role, true
@@ -62,7 +65,7 @@ func (o *CaseParty) GetRoleOk() (*UserTypeEnum, bool) {
 
 // HasRole returns a boolean if a field has been set.
 func (o *CaseParty) HasRole() bool {
-	if o != nil && o.Role != nil {
+	if o != nil && !IsNil(o.Role) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *CaseParty) SetRole(v UserTypeEnum) {
 
 // GetRefType returns the RefType field value if set, zero value otherwise.
 func (o *CaseParty) GetRefType() string {
-	if o == nil || o.RefType == nil {
+	if o == nil || IsNil(o.RefType) {
 		var ret string
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *CaseParty) GetRefType() string {
 // GetRefTypeOk returns a tuple with the RefType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseParty) GetRefTypeOk() (*string, bool) {
-	if o == nil || o.RefType == nil {
+	if o == nil || IsNil(o.RefType) {
 		return nil, false
 	}
 	return o.RefType, true
@@ -94,7 +97,7 @@ func (o *CaseParty) GetRefTypeOk() (*string, bool) {
 
 // HasRefType returns a boolean if a field has been set.
 func (o *CaseParty) HasRefType() bool {
-	if o != nil && o.RefType != nil {
+	if o != nil && !IsNil(o.RefType) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *CaseParty) SetRefType(v string) {
 
 // GetRef returns the Ref field value if set, zero value otherwise.
 func (o *CaseParty) GetRef() string {
-	if o == nil || o.Ref == nil {
+	if o == nil || IsNil(o.Ref) {
 		var ret string
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *CaseParty) GetRef() string {
 // GetRefOk returns a tuple with the Ref field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseParty) GetRefOk() (*string, bool) {
-	if o == nil || o.Ref == nil {
+	if o == nil || IsNil(o.Ref) {
 		return nil, false
 	}
 	return o.Ref, true
@@ -126,7 +129,7 @@ func (o *CaseParty) GetRefOk() (*string, bool) {
 
 // HasRef returns a boolean if a field has been set.
 func (o *CaseParty) HasRef() bool {
-	if o != nil && o.Ref != nil {
+	if o != nil && !IsNil(o.Ref) {
 		return true
 	}
 
@@ -140,7 +143,7 @@ func (o *CaseParty) SetRef(v string) {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *CaseParty) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -150,7 +153,7 @@ func (o *CaseParty) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseParty) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -158,7 +161,7 @@ func (o *CaseParty) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *CaseParty) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -171,20 +174,28 @@ func (o *CaseParty) SetName(v string) {
 }
 
 func (o CaseParty) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Role != nil {
-		toSerialize["role"] = o.Role
-	}
-	if o.RefType != nil {
-		toSerialize["ref_type"] = o.RefType
-	}
-	if o.Ref != nil {
-		toSerialize["ref"] = o.Ref
-	}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CaseParty) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Role) {
+		toSerialize["role"] = o.Role
+	}
+	if !IsNil(o.RefType) {
+		toSerialize["ref_type"] = o.RefType
+	}
+	if !IsNil(o.Ref) {
+		toSerialize["ref"] = o.Ref
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	return toSerialize, nil
 }
 
 type NullableCaseParty struct {

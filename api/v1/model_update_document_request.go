@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the UpdateDocumentRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &UpdateDocumentRequest{}
+
 // UpdateDocumentRequest Attributes needed for creating or updating document repository entries
 type UpdateDocumentRequest struct {
 	// The name of the document entry
@@ -43,7 +46,7 @@ func NewUpdateDocumentRequestWithDefaults() *UpdateDocumentRequest {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *UpdateDocumentRequest) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -53,7 +56,7 @@ func (o *UpdateDocumentRequest) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateDocumentRequest) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -61,7 +64,7 @@ func (o *UpdateDocumentRequest) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *UpdateDocumentRequest) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -75,7 +78,7 @@ func (o *UpdateDocumentRequest) SetName(v string) {
 
 // GetPath returns the Path field value if set, zero value otherwise.
 func (o *UpdateDocumentRequest) GetPath() string {
-	if o == nil || o.Path == nil {
+	if o == nil || IsNil(o.Path) {
 		var ret string
 		return ret
 	}
@@ -85,7 +88,7 @@ func (o *UpdateDocumentRequest) GetPath() string {
 // GetPathOk returns a tuple with the Path field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateDocumentRequest) GetPathOk() (*string, bool) {
-	if o == nil || o.Path == nil {
+	if o == nil || IsNil(o.Path) {
 		return nil, false
 	}
 	return o.Path, true
@@ -93,7 +96,7 @@ func (o *UpdateDocumentRequest) GetPathOk() (*string, bool) {
 
 // HasPath returns a boolean if a field has been set.
 func (o *UpdateDocumentRequest) HasPath() bool {
-	if o != nil && o.Path != nil {
+	if o != nil && !IsNil(o.Path) {
 		return true
 	}
 
@@ -107,7 +110,7 @@ func (o *UpdateDocumentRequest) SetPath(v string) {
 
 // GetPublic returns the Public field value if set, zero value otherwise.
 func (o *UpdateDocumentRequest) GetPublic() bool {
-	if o == nil || o.Public == nil {
+	if o == nil || IsNil(o.Public) {
 		var ret bool
 		return ret
 	}
@@ -117,7 +120,7 @@ func (o *UpdateDocumentRequest) GetPublic() bool {
 // GetPublicOk returns a tuple with the Public field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateDocumentRequest) GetPublicOk() (*bool, bool) {
-	if o == nil || o.Public == nil {
+	if o == nil || IsNil(o.Public) {
 		return nil, false
 	}
 	return o.Public, true
@@ -125,7 +128,7 @@ func (o *UpdateDocumentRequest) GetPublicOk() (*bool, bool) {
 
 // HasPublic returns a boolean if a field has been set.
 func (o *UpdateDocumentRequest) HasPublic() bool {
-	if o != nil && o.Public != nil {
+	if o != nil && !IsNil(o.Public) {
 		return true
 	}
 
@@ -138,17 +141,25 @@ func (o *UpdateDocumentRequest) SetPublic(v bool) {
 }
 
 func (o UpdateDocumentRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.Path != nil {
-		toSerialize["path"] = o.Path
-	}
-	if o.Public != nil {
-		toSerialize["public"] = o.Public
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o UpdateDocumentRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Path) {
+		toSerialize["path"] = o.Path
+	}
+	if !IsNil(o.Public) {
+		toSerialize["public"] = o.Public
+	}
+	return toSerialize, nil
 }
 
 type NullableUpdateDocumentRequest struct {

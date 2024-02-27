@@ -11,8 +11,13 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the Property type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Property{}
 
 // Property Property holds the information about a single accommodation unit (Wohneinheit).
 type Property struct {
@@ -42,6 +47,8 @@ type Property struct {
 	Notes          []Note           `json:"notes,omitempty"`
 	Details        *PropertyDetails `json:"details,omitempty"`
 }
+
+type _Property Property
 
 // NewProperty instantiates a new Property object
 // This constructor will assign default values to properties that have it defined,
@@ -89,7 +96,7 @@ func (o *Property) SetId(v string) {
 
 // GetExternalId returns the ExternalId field value if set, zero value otherwise.
 func (o *Property) GetExternalId() string {
-	if o == nil || o.ExternalId == nil {
+	if o == nil || IsNil(o.ExternalId) {
 		var ret string
 		return ret
 	}
@@ -99,7 +106,7 @@ func (o *Property) GetExternalId() string {
 // GetExternalIdOk returns a tuple with the ExternalId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Property) GetExternalIdOk() (*string, bool) {
-	if o == nil || o.ExternalId == nil {
+	if o == nil || IsNil(o.ExternalId) {
 		return nil, false
 	}
 	return o.ExternalId, true
@@ -107,7 +114,7 @@ func (o *Property) GetExternalIdOk() (*string, bool) {
 
 // HasExternalId returns a boolean if a field has been set.
 func (o *Property) HasExternalId() bool {
-	if o != nil && o.ExternalId != nil {
+	if o != nil && !IsNil(o.ExternalId) {
 		return true
 	}
 
@@ -121,7 +128,7 @@ func (o *Property) SetExternalId(v string) {
 
 // GetExternalSource returns the ExternalSource field value if set, zero value otherwise.
 func (o *Property) GetExternalSource() string {
-	if o == nil || o.ExternalSource == nil {
+	if o == nil || IsNil(o.ExternalSource) {
 		var ret string
 		return ret
 	}
@@ -131,7 +138,7 @@ func (o *Property) GetExternalSource() string {
 // GetExternalSourceOk returns a tuple with the ExternalSource field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Property) GetExternalSourceOk() (*string, bool) {
-	if o == nil || o.ExternalSource == nil {
+	if o == nil || IsNil(o.ExternalSource) {
 		return nil, false
 	}
 	return o.ExternalSource, true
@@ -139,7 +146,7 @@ func (o *Property) GetExternalSourceOk() (*string, bool) {
 
 // HasExternalSource returns a boolean if a field has been set.
 func (o *Property) HasExternalSource() bool {
-	if o != nil && o.ExternalSource != nil {
+	if o != nil && !IsNil(o.ExternalSource) {
 		return true
 	}
 
@@ -153,7 +160,7 @@ func (o *Property) SetExternalSource(v string) {
 
 // GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
 func (o *Property) GetCreatedAt() int64 {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		var ret int64
 		return ret
 	}
@@ -163,7 +170,7 @@ func (o *Property) GetCreatedAt() int64 {
 // GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Property) GetCreatedAtOk() (*int64, bool) {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
 	return o.CreatedAt, true
@@ -171,7 +178,7 @@ func (o *Property) GetCreatedAtOk() (*int64, bool) {
 
 // HasCreatedAt returns a boolean if a field has been set.
 func (o *Property) HasCreatedAt() bool {
-	if o != nil && o.CreatedAt != nil {
+	if o != nil && !IsNil(o.CreatedAt) {
 		return true
 	}
 
@@ -185,7 +192,7 @@ func (o *Property) SetCreatedAt(v int64) {
 
 // GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
 func (o *Property) GetUpdatedAt() int64 {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		var ret int64
 		return ret
 	}
@@ -195,7 +202,7 @@ func (o *Property) GetUpdatedAt() int64 {
 // GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Property) GetUpdatedAtOk() (*int64, bool) {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
 	return o.UpdatedAt, true
@@ -203,7 +210,7 @@ func (o *Property) GetUpdatedAtOk() (*int64, bool) {
 
 // HasUpdatedAt returns a boolean if a field has been set.
 func (o *Property) HasUpdatedAt() bool {
-	if o != nil && o.UpdatedAt != nil {
+	if o != nil && !IsNil(o.UpdatedAt) {
 		return true
 	}
 
@@ -265,7 +272,7 @@ func (o *Property) SetType(v PropertyType) {
 
 // GetAddress returns the Address field value if set, zero value otherwise.
 func (o *Property) GetAddress() Address {
-	if o == nil || o.Address == nil {
+	if o == nil || IsNil(o.Address) {
 		var ret Address
 		return ret
 	}
@@ -275,7 +282,7 @@ func (o *Property) GetAddress() Address {
 // GetAddressOk returns a tuple with the Address field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Property) GetAddressOk() (*Address, bool) {
-	if o == nil || o.Address == nil {
+	if o == nil || IsNil(o.Address) {
 		return nil, false
 	}
 	return o.Address, true
@@ -283,7 +290,7 @@ func (o *Property) GetAddressOk() (*Address, bool) {
 
 // HasAddress returns a boolean if a field has been set.
 func (o *Property) HasAddress() bool {
-	if o != nil && o.Address != nil {
+	if o != nil && !IsNil(o.Address) {
 		return true
 	}
 
@@ -297,7 +304,7 @@ func (o *Property) SetAddress(v Address) {
 
 // GetOwnerRef returns the OwnerRef field value if set, zero value otherwise.
 func (o *Property) GetOwnerRef() string {
-	if o == nil || o.OwnerRef == nil {
+	if o == nil || IsNil(o.OwnerRef) {
 		var ret string
 		return ret
 	}
@@ -307,7 +314,7 @@ func (o *Property) GetOwnerRef() string {
 // GetOwnerRefOk returns a tuple with the OwnerRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Property) GetOwnerRefOk() (*string, bool) {
-	if o == nil || o.OwnerRef == nil {
+	if o == nil || IsNil(o.OwnerRef) {
 		return nil, false
 	}
 	return o.OwnerRef, true
@@ -315,7 +322,7 @@ func (o *Property) GetOwnerRefOk() (*string, bool) {
 
 // HasOwnerRef returns a boolean if a field has been set.
 func (o *Property) HasOwnerRef() bool {
-	if o != nil && o.OwnerRef != nil {
+	if o != nil && !IsNil(o.OwnerRef) {
 		return true
 	}
 
@@ -329,7 +336,7 @@ func (o *Property) SetOwnerRef(v string) {
 
 // GetParentRef returns the ParentRef field value if set, zero value otherwise.
 func (o *Property) GetParentRef() string {
-	if o == nil || o.ParentRef == nil {
+	if o == nil || IsNil(o.ParentRef) {
 		var ret string
 		return ret
 	}
@@ -339,7 +346,7 @@ func (o *Property) GetParentRef() string {
 // GetParentRefOk returns a tuple with the ParentRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Property) GetParentRefOk() (*string, bool) {
-	if o == nil || o.ParentRef == nil {
+	if o == nil || IsNil(o.ParentRef) {
 		return nil, false
 	}
 	return o.ParentRef, true
@@ -347,7 +354,7 @@ func (o *Property) GetParentRefOk() (*string, bool) {
 
 // HasParentRef returns a boolean if a field has been set.
 func (o *Property) HasParentRef() bool {
-	if o != nil && o.ParentRef != nil {
+	if o != nil && !IsNil(o.ParentRef) {
 		return true
 	}
 
@@ -361,7 +368,7 @@ func (o *Property) SetParentRef(v string) {
 
 // GetParentName returns the ParentName field value if set, zero value otherwise.
 func (o *Property) GetParentName() string {
-	if o == nil || o.ParentName == nil {
+	if o == nil || IsNil(o.ParentName) {
 		var ret string
 		return ret
 	}
@@ -371,7 +378,7 @@ func (o *Property) GetParentName() string {
 // GetParentNameOk returns a tuple with the ParentName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Property) GetParentNameOk() (*string, bool) {
-	if o == nil || o.ParentName == nil {
+	if o == nil || IsNil(o.ParentName) {
 		return nil, false
 	}
 	return o.ParentName, true
@@ -379,7 +386,7 @@ func (o *Property) GetParentNameOk() (*string, bool) {
 
 // HasParentName returns a boolean if a field has been set.
 func (o *Property) HasParentName() bool {
-	if o != nil && o.ParentName != nil {
+	if o != nil && !IsNil(o.ParentName) {
 		return true
 	}
 
@@ -393,7 +400,7 @@ func (o *Property) SetParentName(v string) {
 
 // GetParentAddress returns the ParentAddress field value if set, zero value otherwise.
 func (o *Property) GetParentAddress() Address {
-	if o == nil || o.ParentAddress == nil {
+	if o == nil || IsNil(o.ParentAddress) {
 		var ret Address
 		return ret
 	}
@@ -403,7 +410,7 @@ func (o *Property) GetParentAddress() Address {
 // GetParentAddressOk returns a tuple with the ParentAddress field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Property) GetParentAddressOk() (*Address, bool) {
-	if o == nil || o.ParentAddress == nil {
+	if o == nil || IsNil(o.ParentAddress) {
 		return nil, false
 	}
 	return o.ParentAddress, true
@@ -411,7 +418,7 @@ func (o *Property) GetParentAddressOk() (*Address, bool) {
 
 // HasParentAddress returns a boolean if a field has been set.
 func (o *Property) HasParentAddress() bool {
-	if o != nil && o.ParentAddress != nil {
+	if o != nil && !IsNil(o.ParentAddress) {
 		return true
 	}
 
@@ -425,7 +432,7 @@ func (o *Property) SetParentAddress(v Address) {
 
 // GetBankAccountRef returns the BankAccountRef field value if set, zero value otherwise.
 func (o *Property) GetBankAccountRef() string {
-	if o == nil || o.BankAccountRef == nil {
+	if o == nil || IsNil(o.BankAccountRef) {
 		var ret string
 		return ret
 	}
@@ -435,7 +442,7 @@ func (o *Property) GetBankAccountRef() string {
 // GetBankAccountRefOk returns a tuple with the BankAccountRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Property) GetBankAccountRefOk() (*string, bool) {
-	if o == nil || o.BankAccountRef == nil {
+	if o == nil || IsNil(o.BankAccountRef) {
 		return nil, false
 	}
 	return o.BankAccountRef, true
@@ -443,7 +450,7 @@ func (o *Property) GetBankAccountRefOk() (*string, bool) {
 
 // HasBankAccountRef returns a boolean if a field has been set.
 func (o *Property) HasBankAccountRef() bool {
-	if o != nil && o.BankAccountRef != nil {
+	if o != nil && !IsNil(o.BankAccountRef) {
 		return true
 	}
 
@@ -457,7 +464,7 @@ func (o *Property) SetBankAccountRef(v string) {
 
 // GetNotes returns the Notes field value if set, zero value otherwise.
 func (o *Property) GetNotes() []Note {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		var ret []Note
 		return ret
 	}
@@ -467,7 +474,7 @@ func (o *Property) GetNotes() []Note {
 // GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Property) GetNotesOk() ([]Note, bool) {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		return nil, false
 	}
 	return o.Notes, true
@@ -475,7 +482,7 @@ func (o *Property) GetNotesOk() ([]Note, bool) {
 
 // HasNotes returns a boolean if a field has been set.
 func (o *Property) HasNotes() bool {
-	if o != nil && o.Notes != nil {
+	if o != nil && !IsNil(o.Notes) {
 		return true
 	}
 
@@ -489,7 +496,7 @@ func (o *Property) SetNotes(v []Note) {
 
 // GetDetails returns the Details field value if set, zero value otherwise.
 func (o *Property) GetDetails() PropertyDetails {
-	if o == nil || o.Details == nil {
+	if o == nil || IsNil(o.Details) {
 		var ret PropertyDetails
 		return ret
 	}
@@ -499,7 +506,7 @@ func (o *Property) GetDetails() PropertyDetails {
 // GetDetailsOk returns a tuple with the Details field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Property) GetDetailsOk() (*PropertyDetails, bool) {
-	if o == nil || o.Details == nil {
+	if o == nil || IsNil(o.Details) {
 		return nil, false
 	}
 	return o.Details, true
@@ -507,7 +514,7 @@ func (o *Property) GetDetailsOk() (*PropertyDetails, bool) {
 
 // HasDetails returns a boolean if a field has been set.
 func (o *Property) HasDetails() bool {
-	if o != nil && o.Details != nil {
+	if o != nil && !IsNil(o.Details) {
 		return true
 	}
 
@@ -520,53 +527,94 @@ func (o *Property) SetDetails(v PropertyDetails) {
 }
 
 func (o Property) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["id"] = o.Id
-	}
-	if o.ExternalId != nil {
-		toSerialize["external_id"] = o.ExternalId
-	}
-	if o.ExternalSource != nil {
-		toSerialize["external_source"] = o.ExternalSource
-	}
-	if o.CreatedAt != nil {
-		toSerialize["created_at"] = o.CreatedAt
-	}
-	if o.UpdatedAt != nil {
-		toSerialize["updated_at"] = o.UpdatedAt
-	}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if true {
-		toSerialize["type"] = o.Type
-	}
-	if o.Address != nil {
-		toSerialize["address"] = o.Address
-	}
-	if o.OwnerRef != nil {
-		toSerialize["owner_ref"] = o.OwnerRef
-	}
-	if o.ParentRef != nil {
-		toSerialize["parent_ref"] = o.ParentRef
-	}
-	if o.ParentName != nil {
-		toSerialize["parent_name"] = o.ParentName
-	}
-	if o.ParentAddress != nil {
-		toSerialize["parent_address"] = o.ParentAddress
-	}
-	if o.BankAccountRef != nil {
-		toSerialize["bank_account_ref"] = o.BankAccountRef
-	}
-	if o.Notes != nil {
-		toSerialize["notes"] = o.Notes
-	}
-	if o.Details != nil {
-		toSerialize["details"] = o.Details
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Property) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["id"] = o.Id
+	if !IsNil(o.ExternalId) {
+		toSerialize["external_id"] = o.ExternalId
+	}
+	if !IsNil(o.ExternalSource) {
+		toSerialize["external_source"] = o.ExternalSource
+	}
+	if !IsNil(o.CreatedAt) {
+		toSerialize["created_at"] = o.CreatedAt
+	}
+	if !IsNil(o.UpdatedAt) {
+		toSerialize["updated_at"] = o.UpdatedAt
+	}
+	toSerialize["name"] = o.Name
+	toSerialize["type"] = o.Type
+	if !IsNil(o.Address) {
+		toSerialize["address"] = o.Address
+	}
+	if !IsNil(o.OwnerRef) {
+		toSerialize["owner_ref"] = o.OwnerRef
+	}
+	if !IsNil(o.ParentRef) {
+		toSerialize["parent_ref"] = o.ParentRef
+	}
+	if !IsNil(o.ParentName) {
+		toSerialize["parent_name"] = o.ParentName
+	}
+	if !IsNil(o.ParentAddress) {
+		toSerialize["parent_address"] = o.ParentAddress
+	}
+	if !IsNil(o.BankAccountRef) {
+		toSerialize["bank_account_ref"] = o.BankAccountRef
+	}
+	if !IsNil(o.Notes) {
+		toSerialize["notes"] = o.Notes
+	}
+	if !IsNil(o.Details) {
+		toSerialize["details"] = o.Details
+	}
+	return toSerialize, nil
+}
+
+func (o *Property) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"id",
+		"name",
+		"type",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varProperty := _Property{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varProperty)
+
+	if err != nil {
+		return err
+	}
+
+	*o = Property(varProperty)
+
+	return err
 }
 
 type NullableProperty struct {

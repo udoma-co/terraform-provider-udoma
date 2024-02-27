@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ConnectorCredentials type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ConnectorCredentials{}
+
 // ConnectorCredentials Connector credentials
 type ConnectorCredentials struct {
 	// api key of the connector
@@ -43,7 +46,7 @@ func NewConnectorCredentialsWithDefaults() *ConnectorCredentials {
 
 // GetApiKey returns the ApiKey field value if set, zero value otherwise.
 func (o *ConnectorCredentials) GetApiKey() string {
-	if o == nil || o.ApiKey == nil {
+	if o == nil || IsNil(o.ApiKey) {
 		var ret string
 		return ret
 	}
@@ -53,7 +56,7 @@ func (o *ConnectorCredentials) GetApiKey() string {
 // GetApiKeyOk returns a tuple with the ApiKey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectorCredentials) GetApiKeyOk() (*string, bool) {
-	if o == nil || o.ApiKey == nil {
+	if o == nil || IsNil(o.ApiKey) {
 		return nil, false
 	}
 	return o.ApiKey, true
@@ -61,7 +64,7 @@ func (o *ConnectorCredentials) GetApiKeyOk() (*string, bool) {
 
 // HasApiKey returns a boolean if a field has been set.
 func (o *ConnectorCredentials) HasApiKey() bool {
-	if o != nil && o.ApiKey != nil {
+	if o != nil && !IsNil(o.ApiKey) {
 		return true
 	}
 
@@ -75,7 +78,7 @@ func (o *ConnectorCredentials) SetApiKey(v string) {
 
 // GetApiSecret returns the ApiSecret field value if set, zero value otherwise.
 func (o *ConnectorCredentials) GetApiSecret() string {
-	if o == nil || o.ApiSecret == nil {
+	if o == nil || IsNil(o.ApiSecret) {
 		var ret string
 		return ret
 	}
@@ -85,7 +88,7 @@ func (o *ConnectorCredentials) GetApiSecret() string {
 // GetApiSecretOk returns a tuple with the ApiSecret field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectorCredentials) GetApiSecretOk() (*string, bool) {
-	if o == nil || o.ApiSecret == nil {
+	if o == nil || IsNil(o.ApiSecret) {
 		return nil, false
 	}
 	return o.ApiSecret, true
@@ -93,7 +96,7 @@ func (o *ConnectorCredentials) GetApiSecretOk() (*string, bool) {
 
 // HasApiSecret returns a boolean if a field has been set.
 func (o *ConnectorCredentials) HasApiSecret() bool {
-	if o != nil && o.ApiSecret != nil {
+	if o != nil && !IsNil(o.ApiSecret) {
 		return true
 	}
 
@@ -107,7 +110,7 @@ func (o *ConnectorCredentials) SetApiSecret(v string) {
 
 // GetLastAccess returns the LastAccess field value if set, zero value otherwise.
 func (o *ConnectorCredentials) GetLastAccess() int64 {
-	if o == nil || o.LastAccess == nil {
+	if o == nil || IsNil(o.LastAccess) {
 		var ret int64
 		return ret
 	}
@@ -117,7 +120,7 @@ func (o *ConnectorCredentials) GetLastAccess() int64 {
 // GetLastAccessOk returns a tuple with the LastAccess field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectorCredentials) GetLastAccessOk() (*int64, bool) {
-	if o == nil || o.LastAccess == nil {
+	if o == nil || IsNil(o.LastAccess) {
 		return nil, false
 	}
 	return o.LastAccess, true
@@ -125,7 +128,7 @@ func (o *ConnectorCredentials) GetLastAccessOk() (*int64, bool) {
 
 // HasLastAccess returns a boolean if a field has been set.
 func (o *ConnectorCredentials) HasLastAccess() bool {
-	if o != nil && o.LastAccess != nil {
+	if o != nil && !IsNil(o.LastAccess) {
 		return true
 	}
 
@@ -138,17 +141,25 @@ func (o *ConnectorCredentials) SetLastAccess(v int64) {
 }
 
 func (o ConnectorCredentials) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.ApiKey != nil {
-		toSerialize["api_key"] = o.ApiKey
-	}
-	if o.ApiSecret != nil {
-		toSerialize["api_secret"] = o.ApiSecret
-	}
-	if o.LastAccess != nil {
-		toSerialize["last_access"] = o.LastAccess
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ConnectorCredentials) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.ApiKey) {
+		toSerialize["api_key"] = o.ApiKey
+	}
+	if !IsNil(o.ApiSecret) {
+		toSerialize["api_secret"] = o.ApiSecret
+	}
+	if !IsNil(o.LastAccess) {
+		toSerialize["last_access"] = o.LastAccess
+	}
+	return toSerialize, nil
 }
 
 type NullableConnectorCredentials struct {

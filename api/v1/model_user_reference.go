@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the UserReference type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &UserReference{}
+
 // UserReference Contains information about a user referenced in other entities
 type UserReference struct {
 	// The ID of the user, can be undefined, if user is not registered, or was already deleted
@@ -41,7 +44,7 @@ func NewUserReferenceWithDefaults() *UserReference {
 
 // GetUserId returns the UserId field value if set, zero value otherwise.
 func (o *UserReference) GetUserId() string {
-	if o == nil || o.UserId == nil {
+	if o == nil || IsNil(o.UserId) {
 		var ret string
 		return ret
 	}
@@ -51,7 +54,7 @@ func (o *UserReference) GetUserId() string {
 // GetUserIdOk returns a tuple with the UserId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UserReference) GetUserIdOk() (*string, bool) {
-	if o == nil || o.UserId == nil {
+	if o == nil || IsNil(o.UserId) {
 		return nil, false
 	}
 	return o.UserId, true
@@ -59,7 +62,7 @@ func (o *UserReference) GetUserIdOk() (*string, bool) {
 
 // HasUserId returns a boolean if a field has been set.
 func (o *UserReference) HasUserId() bool {
-	if o != nil && o.UserId != nil {
+	if o != nil && !IsNil(o.UserId) {
 		return true
 	}
 
@@ -73,7 +76,7 @@ func (o *UserReference) SetUserId(v string) {
 
 // GetUserRole returns the UserRole field value if set, zero value otherwise.
 func (o *UserReference) GetUserRole() UserTypeEnum {
-	if o == nil || o.UserRole == nil {
+	if o == nil || IsNil(o.UserRole) {
 		var ret UserTypeEnum
 		return ret
 	}
@@ -83,7 +86,7 @@ func (o *UserReference) GetUserRole() UserTypeEnum {
 // GetUserRoleOk returns a tuple with the UserRole field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UserReference) GetUserRoleOk() (*UserTypeEnum, bool) {
-	if o == nil || o.UserRole == nil {
+	if o == nil || IsNil(o.UserRole) {
 		return nil, false
 	}
 	return o.UserRole, true
@@ -91,7 +94,7 @@ func (o *UserReference) GetUserRoleOk() (*UserTypeEnum, bool) {
 
 // HasUserRole returns a boolean if a field has been set.
 func (o *UserReference) HasUserRole() bool {
-	if o != nil && o.UserRole != nil {
+	if o != nil && !IsNil(o.UserRole) {
 		return true
 	}
 
@@ -105,7 +108,7 @@ func (o *UserReference) SetUserRole(v UserTypeEnum) {
 
 // GetContactData returns the ContactData field value if set, zero value otherwise.
 func (o *UserReference) GetContactData() ContactData {
-	if o == nil || o.ContactData == nil {
+	if o == nil || IsNil(o.ContactData) {
 		var ret ContactData
 		return ret
 	}
@@ -115,7 +118,7 @@ func (o *UserReference) GetContactData() ContactData {
 // GetContactDataOk returns a tuple with the ContactData field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UserReference) GetContactDataOk() (*ContactData, bool) {
-	if o == nil || o.ContactData == nil {
+	if o == nil || IsNil(o.ContactData) {
 		return nil, false
 	}
 	return o.ContactData, true
@@ -123,7 +126,7 @@ func (o *UserReference) GetContactDataOk() (*ContactData, bool) {
 
 // HasContactData returns a boolean if a field has been set.
 func (o *UserReference) HasContactData() bool {
-	if o != nil && o.ContactData != nil {
+	if o != nil && !IsNil(o.ContactData) {
 		return true
 	}
 
@@ -136,17 +139,25 @@ func (o *UserReference) SetContactData(v ContactData) {
 }
 
 func (o UserReference) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.UserId != nil {
-		toSerialize["user_id"] = o.UserId
-	}
-	if o.UserRole != nil {
-		toSerialize["user_role"] = o.UserRole
-	}
-	if o.ContactData != nil {
-		toSerialize["contact_data"] = o.ContactData
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o UserReference) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.UserId) {
+		toSerialize["user_id"] = o.UserId
+	}
+	if !IsNil(o.UserRole) {
+		toSerialize["user_role"] = o.UserRole
+	}
+	if !IsNil(o.ContactData) {
+		toSerialize["contact_data"] = o.ContactData
+	}
+	return toSerialize, nil
 }
 
 type NullableUserReference struct {

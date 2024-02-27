@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the QueryCaseReportingEndpointsResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &QueryCaseReportingEndpointsResponse{}
+
 // QueryCaseReportingEndpointsResponse struct for QueryCaseReportingEndpointsResponse
 type QueryCaseReportingEndpointsResponse struct {
 	Endpoints []CaseReportingEndpoint `json:"endpoints,omitempty"`
@@ -38,7 +41,7 @@ func NewQueryCaseReportingEndpointsResponseWithDefaults() *QueryCaseReportingEnd
 
 // GetEndpoints returns the Endpoints field value if set, zero value otherwise.
 func (o *QueryCaseReportingEndpointsResponse) GetEndpoints() []CaseReportingEndpoint {
-	if o == nil || o.Endpoints == nil {
+	if o == nil || IsNil(o.Endpoints) {
 		var ret []CaseReportingEndpoint
 		return ret
 	}
@@ -48,7 +51,7 @@ func (o *QueryCaseReportingEndpointsResponse) GetEndpoints() []CaseReportingEndp
 // GetEndpointsOk returns a tuple with the Endpoints field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryCaseReportingEndpointsResponse) GetEndpointsOk() ([]CaseReportingEndpoint, bool) {
-	if o == nil || o.Endpoints == nil {
+	if o == nil || IsNil(o.Endpoints) {
 		return nil, false
 	}
 	return o.Endpoints, true
@@ -56,7 +59,7 @@ func (o *QueryCaseReportingEndpointsResponse) GetEndpointsOk() ([]CaseReportingE
 
 // HasEndpoints returns a boolean if a field has been set.
 func (o *QueryCaseReportingEndpointsResponse) HasEndpoints() bool {
-	if o != nil && o.Endpoints != nil {
+	if o != nil && !IsNil(o.Endpoints) {
 		return true
 	}
 
@@ -69,11 +72,19 @@ func (o *QueryCaseReportingEndpointsResponse) SetEndpoints(v []CaseReportingEndp
 }
 
 func (o QueryCaseReportingEndpointsResponse) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Endpoints != nil {
-		toSerialize["endpoints"] = o.Endpoints
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o QueryCaseReportingEndpointsResponse) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Endpoints) {
+		toSerialize["endpoints"] = o.Endpoints
+	}
+	return toSerialize, nil
 }
 
 type NullableQueryCaseReportingEndpointsResponse struct {

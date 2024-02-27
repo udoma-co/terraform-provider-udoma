@@ -11,8 +11,13 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the UpdatePropertyRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &UpdatePropertyRequest{}
 
 // UpdatePropertyRequest A requests that holds all necessary information to update an already existing property.
 type UpdatePropertyRequest struct {
@@ -28,6 +33,8 @@ type UpdatePropertyRequest struct {
 	Address        *Address         `json:"address,omitempty"`
 	Details        *PropertyDetails `json:"details,omitempty"`
 }
+
+type _UpdatePropertyRequest UpdatePropertyRequest
 
 // NewUpdatePropertyRequest instantiates a new UpdatePropertyRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -98,7 +105,7 @@ func (o *UpdatePropertyRequest) SetType(v PropertyType) {
 
 // GetOwnerRef returns the OwnerRef field value if set, zero value otherwise.
 func (o *UpdatePropertyRequest) GetOwnerRef() string {
-	if o == nil || o.OwnerRef == nil {
+	if o == nil || IsNil(o.OwnerRef) {
 		var ret string
 		return ret
 	}
@@ -108,7 +115,7 @@ func (o *UpdatePropertyRequest) GetOwnerRef() string {
 // GetOwnerRefOk returns a tuple with the OwnerRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdatePropertyRequest) GetOwnerRefOk() (*string, bool) {
-	if o == nil || o.OwnerRef == nil {
+	if o == nil || IsNil(o.OwnerRef) {
 		return nil, false
 	}
 	return o.OwnerRef, true
@@ -116,7 +123,7 @@ func (o *UpdatePropertyRequest) GetOwnerRefOk() (*string, bool) {
 
 // HasOwnerRef returns a boolean if a field has been set.
 func (o *UpdatePropertyRequest) HasOwnerRef() bool {
-	if o != nil && o.OwnerRef != nil {
+	if o != nil && !IsNil(o.OwnerRef) {
 		return true
 	}
 
@@ -130,7 +137,7 @@ func (o *UpdatePropertyRequest) SetOwnerRef(v string) {
 
 // GetParentRef returns the ParentRef field value if set, zero value otherwise.
 func (o *UpdatePropertyRequest) GetParentRef() string {
-	if o == nil || o.ParentRef == nil {
+	if o == nil || IsNil(o.ParentRef) {
 		var ret string
 		return ret
 	}
@@ -140,7 +147,7 @@ func (o *UpdatePropertyRequest) GetParentRef() string {
 // GetParentRefOk returns a tuple with the ParentRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdatePropertyRequest) GetParentRefOk() (*string, bool) {
-	if o == nil || o.ParentRef == nil {
+	if o == nil || IsNil(o.ParentRef) {
 		return nil, false
 	}
 	return o.ParentRef, true
@@ -148,7 +155,7 @@ func (o *UpdatePropertyRequest) GetParentRefOk() (*string, bool) {
 
 // HasParentRef returns a boolean if a field has been set.
 func (o *UpdatePropertyRequest) HasParentRef() bool {
-	if o != nil && o.ParentRef != nil {
+	if o != nil && !IsNil(o.ParentRef) {
 		return true
 	}
 
@@ -162,7 +169,7 @@ func (o *UpdatePropertyRequest) SetParentRef(v string) {
 
 // GetBankAccountRef returns the BankAccountRef field value if set, zero value otherwise.
 func (o *UpdatePropertyRequest) GetBankAccountRef() string {
-	if o == nil || o.BankAccountRef == nil {
+	if o == nil || IsNil(o.BankAccountRef) {
 		var ret string
 		return ret
 	}
@@ -172,7 +179,7 @@ func (o *UpdatePropertyRequest) GetBankAccountRef() string {
 // GetBankAccountRefOk returns a tuple with the BankAccountRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdatePropertyRequest) GetBankAccountRefOk() (*string, bool) {
-	if o == nil || o.BankAccountRef == nil {
+	if o == nil || IsNil(o.BankAccountRef) {
 		return nil, false
 	}
 	return o.BankAccountRef, true
@@ -180,7 +187,7 @@ func (o *UpdatePropertyRequest) GetBankAccountRefOk() (*string, bool) {
 
 // HasBankAccountRef returns a boolean if a field has been set.
 func (o *UpdatePropertyRequest) HasBankAccountRef() bool {
-	if o != nil && o.BankAccountRef != nil {
+	if o != nil && !IsNil(o.BankAccountRef) {
 		return true
 	}
 
@@ -194,7 +201,7 @@ func (o *UpdatePropertyRequest) SetBankAccountRef(v string) {
 
 // GetAddress returns the Address field value if set, zero value otherwise.
 func (o *UpdatePropertyRequest) GetAddress() Address {
-	if o == nil || o.Address == nil {
+	if o == nil || IsNil(o.Address) {
 		var ret Address
 		return ret
 	}
@@ -204,7 +211,7 @@ func (o *UpdatePropertyRequest) GetAddress() Address {
 // GetAddressOk returns a tuple with the Address field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdatePropertyRequest) GetAddressOk() (*Address, bool) {
-	if o == nil || o.Address == nil {
+	if o == nil || IsNil(o.Address) {
 		return nil, false
 	}
 	return o.Address, true
@@ -212,7 +219,7 @@ func (o *UpdatePropertyRequest) GetAddressOk() (*Address, bool) {
 
 // HasAddress returns a boolean if a field has been set.
 func (o *UpdatePropertyRequest) HasAddress() bool {
-	if o != nil && o.Address != nil {
+	if o != nil && !IsNil(o.Address) {
 		return true
 	}
 
@@ -226,7 +233,7 @@ func (o *UpdatePropertyRequest) SetAddress(v Address) {
 
 // GetDetails returns the Details field value if set, zero value otherwise.
 func (o *UpdatePropertyRequest) GetDetails() PropertyDetails {
-	if o == nil || o.Details == nil {
+	if o == nil || IsNil(o.Details) {
 		var ret PropertyDetails
 		return ret
 	}
@@ -236,7 +243,7 @@ func (o *UpdatePropertyRequest) GetDetails() PropertyDetails {
 // GetDetailsOk returns a tuple with the Details field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdatePropertyRequest) GetDetailsOk() (*PropertyDetails, bool) {
-	if o == nil || o.Details == nil {
+	if o == nil || IsNil(o.Details) {
 		return nil, false
 	}
 	return o.Details, true
@@ -244,7 +251,7 @@ func (o *UpdatePropertyRequest) GetDetailsOk() (*PropertyDetails, bool) {
 
 // HasDetails returns a boolean if a field has been set.
 func (o *UpdatePropertyRequest) HasDetails() bool {
-	if o != nil && o.Details != nil {
+	if o != nil && !IsNil(o.Details) {
 		return true
 	}
 
@@ -257,29 +264,71 @@ func (o *UpdatePropertyRequest) SetDetails(v PropertyDetails) {
 }
 
 func (o UpdatePropertyRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if true {
-		toSerialize["type"] = o.Type
-	}
-	if o.OwnerRef != nil {
-		toSerialize["owner_ref"] = o.OwnerRef
-	}
-	if o.ParentRef != nil {
-		toSerialize["parent_ref"] = o.ParentRef
-	}
-	if o.BankAccountRef != nil {
-		toSerialize["bank_account_ref"] = o.BankAccountRef
-	}
-	if o.Address != nil {
-		toSerialize["address"] = o.Address
-	}
-	if o.Details != nil {
-		toSerialize["details"] = o.Details
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o UpdatePropertyRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["name"] = o.Name
+	toSerialize["type"] = o.Type
+	if !IsNil(o.OwnerRef) {
+		toSerialize["owner_ref"] = o.OwnerRef
+	}
+	if !IsNil(o.ParentRef) {
+		toSerialize["parent_ref"] = o.ParentRef
+	}
+	if !IsNil(o.BankAccountRef) {
+		toSerialize["bank_account_ref"] = o.BankAccountRef
+	}
+	if !IsNil(o.Address) {
+		toSerialize["address"] = o.Address
+	}
+	if !IsNil(o.Details) {
+		toSerialize["details"] = o.Details
+	}
+	return toSerialize, nil
+}
+
+func (o *UpdatePropertyRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"type",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varUpdatePropertyRequest := _UpdatePropertyRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varUpdatePropertyRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = UpdatePropertyRequest(varUpdatePropertyRequest)
+
+	return err
 }
 
 type NullableUpdatePropertyRequest struct {

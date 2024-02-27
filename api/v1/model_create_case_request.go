@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CreateCaseRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CreateCaseRequest{}
+
 // CreateCaseRequest All the information required for raising a new case
 type CreateCaseRequest struct {
 	// Reference to either property or building for which case is rased
@@ -45,7 +48,7 @@ func NewCreateCaseRequestWithDefaults() *CreateCaseRequest {
 
 // GetPropertyRef returns the PropertyRef field value if set, zero value otherwise.
 func (o *CreateCaseRequest) GetPropertyRef() string {
-	if o == nil || o.PropertyRef == nil {
+	if o == nil || IsNil(o.PropertyRef) {
 		var ret string
 		return ret
 	}
@@ -55,7 +58,7 @@ func (o *CreateCaseRequest) GetPropertyRef() string {
 // GetPropertyRefOk returns a tuple with the PropertyRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateCaseRequest) GetPropertyRefOk() (*string, bool) {
-	if o == nil || o.PropertyRef == nil {
+	if o == nil || IsNil(o.PropertyRef) {
 		return nil, false
 	}
 	return o.PropertyRef, true
@@ -63,7 +66,7 @@ func (o *CreateCaseRequest) GetPropertyRefOk() (*string, bool) {
 
 // HasPropertyRef returns a boolean if a field has been set.
 func (o *CreateCaseRequest) HasPropertyRef() bool {
-	if o != nil && o.PropertyRef != nil {
+	if o != nil && !IsNil(o.PropertyRef) {
 		return true
 	}
 
@@ -77,7 +80,7 @@ func (o *CreateCaseRequest) SetPropertyRef(v string) {
 
 // GetPropertyAddress returns the PropertyAddress field value if set, zero value otherwise.
 func (o *CreateCaseRequest) GetPropertyAddress() Address {
-	if o == nil || o.PropertyAddress == nil {
+	if o == nil || IsNil(o.PropertyAddress) {
 		var ret Address
 		return ret
 	}
@@ -87,7 +90,7 @@ func (o *CreateCaseRequest) GetPropertyAddress() Address {
 // GetPropertyAddressOk returns a tuple with the PropertyAddress field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateCaseRequest) GetPropertyAddressOk() (*Address, bool) {
-	if o == nil || o.PropertyAddress == nil {
+	if o == nil || IsNil(o.PropertyAddress) {
 		return nil, false
 	}
 	return o.PropertyAddress, true
@@ -95,7 +98,7 @@ func (o *CreateCaseRequest) GetPropertyAddressOk() (*Address, bool) {
 
 // HasPropertyAddress returns a boolean if a field has been set.
 func (o *CreateCaseRequest) HasPropertyAddress() bool {
-	if o != nil && o.PropertyAddress != nil {
+	if o != nil && !IsNil(o.PropertyAddress) {
 		return true
 	}
 
@@ -109,7 +112,7 @@ func (o *CreateCaseRequest) SetPropertyAddress(v Address) {
 
 // GetReporterInfo returns the ReporterInfo field value if set, zero value otherwise.
 func (o *CreateCaseRequest) GetReporterInfo() ContactData {
-	if o == nil || o.ReporterInfo == nil {
+	if o == nil || IsNil(o.ReporterInfo) {
 		var ret ContactData
 		return ret
 	}
@@ -119,7 +122,7 @@ func (o *CreateCaseRequest) GetReporterInfo() ContactData {
 // GetReporterInfoOk returns a tuple with the ReporterInfo field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateCaseRequest) GetReporterInfoOk() (*ContactData, bool) {
-	if o == nil || o.ReporterInfo == nil {
+	if o == nil || IsNil(o.ReporterInfo) {
 		return nil, false
 	}
 	return o.ReporterInfo, true
@@ -127,7 +130,7 @@ func (o *CreateCaseRequest) GetReporterInfoOk() (*ContactData, bool) {
 
 // HasReporterInfo returns a boolean if a field has been set.
 func (o *CreateCaseRequest) HasReporterInfo() bool {
-	if o != nil && o.ReporterInfo != nil {
+	if o != nil && !IsNil(o.ReporterInfo) {
 		return true
 	}
 
@@ -141,7 +144,7 @@ func (o *CreateCaseRequest) SetReporterInfo(v ContactData) {
 
 // GetTemplateRef returns the TemplateRef field value if set, zero value otherwise.
 func (o *CreateCaseRequest) GetTemplateRef() string {
-	if o == nil || o.TemplateRef == nil {
+	if o == nil || IsNil(o.TemplateRef) {
 		var ret string
 		return ret
 	}
@@ -151,7 +154,7 @@ func (o *CreateCaseRequest) GetTemplateRef() string {
 // GetTemplateRefOk returns a tuple with the TemplateRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateCaseRequest) GetTemplateRefOk() (*string, bool) {
-	if o == nil || o.TemplateRef == nil {
+	if o == nil || IsNil(o.TemplateRef) {
 		return nil, false
 	}
 	return o.TemplateRef, true
@@ -159,7 +162,7 @@ func (o *CreateCaseRequest) GetTemplateRefOk() (*string, bool) {
 
 // HasTemplateRef returns a boolean if a field has been set.
 func (o *CreateCaseRequest) HasTemplateRef() bool {
-	if o != nil && o.TemplateRef != nil {
+	if o != nil && !IsNil(o.TemplateRef) {
 		return true
 	}
 
@@ -173,7 +176,7 @@ func (o *CreateCaseRequest) SetTemplateRef(v string) {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *CreateCaseRequest) GetData() map[string]interface{} {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -183,15 +186,15 @@ func (o *CreateCaseRequest) GetData() map[string]interface{} {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateCaseRequest) GetDataOk() (map[string]interface{}, bool) {
-	if o == nil || o.Data == nil {
-		return nil, false
+	if o == nil || IsNil(o.Data) {
+		return map[string]interface{}{}, false
 	}
 	return o.Data, true
 }
 
 // HasData returns a boolean if a field has been set.
 func (o *CreateCaseRequest) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -204,23 +207,31 @@ func (o *CreateCaseRequest) SetData(v map[string]interface{}) {
 }
 
 func (o CreateCaseRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.PropertyRef != nil {
-		toSerialize["property_ref"] = o.PropertyRef
-	}
-	if o.PropertyAddress != nil {
-		toSerialize["property_address"] = o.PropertyAddress
-	}
-	if o.ReporterInfo != nil {
-		toSerialize["reporter_info"] = o.ReporterInfo
-	}
-	if o.TemplateRef != nil {
-		toSerialize["template_ref"] = o.TemplateRef
-	}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CreateCaseRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.PropertyRef) {
+		toSerialize["property_ref"] = o.PropertyRef
+	}
+	if !IsNil(o.PropertyAddress) {
+		toSerialize["property_address"] = o.PropertyAddress
+	}
+	if !IsNil(o.ReporterInfo) {
+		toSerialize["reporter_info"] = o.ReporterInfo
+	}
+	if !IsNil(o.TemplateRef) {
+		toSerialize["template_ref"] = o.TemplateRef
+	}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	return toSerialize, nil
 }
 
 type NullableCreateCaseRequest struct {

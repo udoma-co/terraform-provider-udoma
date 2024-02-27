@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the TenantChange type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &TenantChange{}
+
 // TenantChange A change to the tenants of a property. This is used to indicate that a tenant has moved out or moved in. To be able to know whe stayed in the property, we also provide the list of tenants that remained.
 type TenantChange struct {
 	Tenant *Tenant `json:"tenant,omitempty"`
@@ -41,7 +44,7 @@ func NewTenantChangeWithDefaults() *TenantChange {
 
 // GetTenant returns the Tenant field value if set, zero value otherwise.
 func (o *TenantChange) GetTenant() Tenant {
-	if o == nil || o.Tenant == nil {
+	if o == nil || IsNil(o.Tenant) {
 		var ret Tenant
 		return ret
 	}
@@ -51,7 +54,7 @@ func (o *TenantChange) GetTenant() Tenant {
 // GetTenantOk returns a tuple with the Tenant field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantChange) GetTenantOk() (*Tenant, bool) {
-	if o == nil || o.Tenant == nil {
+	if o == nil || IsNil(o.Tenant) {
 		return nil, false
 	}
 	return o.Tenant, true
@@ -59,7 +62,7 @@ func (o *TenantChange) GetTenantOk() (*Tenant, bool) {
 
 // HasTenant returns a boolean if a field has been set.
 func (o *TenantChange) HasTenant() bool {
-	if o != nil && o.Tenant != nil {
+	if o != nil && !IsNil(o.Tenant) {
 		return true
 	}
 
@@ -73,7 +76,7 @@ func (o *TenantChange) SetTenant(v Tenant) {
 
 // GetEntryIntoForce returns the EntryIntoForce field value if set, zero value otherwise.
 func (o *TenantChange) GetEntryIntoForce() int64 {
-	if o == nil || o.EntryIntoForce == nil {
+	if o == nil || IsNil(o.EntryIntoForce) {
 		var ret int64
 		return ret
 	}
@@ -83,7 +86,7 @@ func (o *TenantChange) GetEntryIntoForce() int64 {
 // GetEntryIntoForceOk returns a tuple with the EntryIntoForce field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantChange) GetEntryIntoForceOk() (*int64, bool) {
-	if o == nil || o.EntryIntoForce == nil {
+	if o == nil || IsNil(o.EntryIntoForce) {
 		return nil, false
 	}
 	return o.EntryIntoForce, true
@@ -91,7 +94,7 @@ func (o *TenantChange) GetEntryIntoForceOk() (*int64, bool) {
 
 // HasEntryIntoForce returns a boolean if a field has been set.
 func (o *TenantChange) HasEntryIntoForce() bool {
-	if o != nil && o.EntryIntoForce != nil {
+	if o != nil && !IsNil(o.EntryIntoForce) {
 		return true
 	}
 
@@ -105,7 +108,7 @@ func (o *TenantChange) SetEntryIntoForce(v int64) {
 
 // GetAction returns the Action field value if set, zero value otherwise.
 func (o *TenantChange) GetAction() TenantChangeActionEnum {
-	if o == nil || o.Action == nil {
+	if o == nil || IsNil(o.Action) {
 		var ret TenantChangeActionEnum
 		return ret
 	}
@@ -115,7 +118,7 @@ func (o *TenantChange) GetAction() TenantChangeActionEnum {
 // GetActionOk returns a tuple with the Action field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantChange) GetActionOk() (*TenantChangeActionEnum, bool) {
-	if o == nil || o.Action == nil {
+	if o == nil || IsNil(o.Action) {
 		return nil, false
 	}
 	return o.Action, true
@@ -123,7 +126,7 @@ func (o *TenantChange) GetActionOk() (*TenantChangeActionEnum, bool) {
 
 // HasAction returns a boolean if a field has been set.
 func (o *TenantChange) HasAction() bool {
-	if o != nil && o.Action != nil {
+	if o != nil && !IsNil(o.Action) {
 		return true
 	}
 
@@ -136,17 +139,25 @@ func (o *TenantChange) SetAction(v TenantChangeActionEnum) {
 }
 
 func (o TenantChange) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Tenant != nil {
-		toSerialize["tenant"] = o.Tenant
-	}
-	if o.EntryIntoForce != nil {
-		toSerialize["entry_into_force"] = o.EntryIntoForce
-	}
-	if o.Action != nil {
-		toSerialize["action"] = o.Action
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o TenantChange) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Tenant) {
+		toSerialize["tenant"] = o.Tenant
+	}
+	if !IsNil(o.EntryIntoForce) {
+		toSerialize["entry_into_force"] = o.EntryIntoForce
+	}
+	if !IsNil(o.Action) {
+		toSerialize["action"] = o.Action
+	}
+	return toSerialize, nil
 }
 
 type NullableTenantChange struct {

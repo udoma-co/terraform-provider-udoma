@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the TenancyUpdate type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &TenancyUpdate{}
+
 // TenancyUpdate A tenancy update is a change to a tenancy contract between one or more tenants and a property manager.
 type TenancyUpdate struct {
 	// generated unique ID
@@ -50,7 +53,7 @@ func NewTenancyUpdateWithDefaults() *TenancyUpdate {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *TenancyUpdate) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -60,7 +63,7 @@ func (o *TenancyUpdate) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenancyUpdate) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -68,7 +71,7 @@ func (o *TenancyUpdate) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *TenancyUpdate) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -82,7 +85,7 @@ func (o *TenancyUpdate) SetId(v string) {
 
 // GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
 func (o *TenancyUpdate) GetCreatedAt() int64 {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		var ret int64
 		return ret
 	}
@@ -92,7 +95,7 @@ func (o *TenancyUpdate) GetCreatedAt() int64 {
 // GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenancyUpdate) GetCreatedAtOk() (*int64, bool) {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
 	return o.CreatedAt, true
@@ -100,7 +103,7 @@ func (o *TenancyUpdate) GetCreatedAtOk() (*int64, bool) {
 
 // HasCreatedAt returns a boolean if a field has been set.
 func (o *TenancyUpdate) HasCreatedAt() bool {
-	if o != nil && o.CreatedAt != nil {
+	if o != nil && !IsNil(o.CreatedAt) {
 		return true
 	}
 
@@ -114,7 +117,7 @@ func (o *TenancyUpdate) SetCreatedAt(v int64) {
 
 // GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
 func (o *TenancyUpdate) GetUpdatedAt() int64 {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		var ret int64
 		return ret
 	}
@@ -124,7 +127,7 @@ func (o *TenancyUpdate) GetUpdatedAt() int64 {
 // GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenancyUpdate) GetUpdatedAtOk() (*int64, bool) {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
 	return o.UpdatedAt, true
@@ -132,7 +135,7 @@ func (o *TenancyUpdate) GetUpdatedAtOk() (*int64, bool) {
 
 // HasUpdatedAt returns a boolean if a field has been set.
 func (o *TenancyUpdate) HasUpdatedAt() bool {
-	if o != nil && o.UpdatedAt != nil {
+	if o != nil && !IsNil(o.UpdatedAt) {
 		return true
 	}
 
@@ -146,7 +149,7 @@ func (o *TenancyUpdate) SetUpdatedAt(v int64) {
 
 // GetTenancyId returns the TenancyId field value if set, zero value otherwise.
 func (o *TenancyUpdate) GetTenancyId() string {
-	if o == nil || o.TenancyId == nil {
+	if o == nil || IsNil(o.TenancyId) {
 		var ret string
 		return ret
 	}
@@ -156,7 +159,7 @@ func (o *TenancyUpdate) GetTenancyId() string {
 // GetTenancyIdOk returns a tuple with the TenancyId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenancyUpdate) GetTenancyIdOk() (*string, bool) {
-	if o == nil || o.TenancyId == nil {
+	if o == nil || IsNil(o.TenancyId) {
 		return nil, false
 	}
 	return o.TenancyId, true
@@ -164,7 +167,7 @@ func (o *TenancyUpdate) GetTenancyIdOk() (*string, bool) {
 
 // HasTenancyId returns a boolean if a field has been set.
 func (o *TenancyUpdate) HasTenancyId() bool {
-	if o != nil && o.TenancyId != nil {
+	if o != nil && !IsNil(o.TenancyId) {
 		return true
 	}
 
@@ -178,7 +181,7 @@ func (o *TenancyUpdate) SetTenancyId(v string) {
 
 // GetEntryIntoForce returns the EntryIntoForce field value if set, zero value otherwise.
 func (o *TenancyUpdate) GetEntryIntoForce() int64 {
-	if o == nil || o.EntryIntoForce == nil {
+	if o == nil || IsNil(o.EntryIntoForce) {
 		var ret int64
 		return ret
 	}
@@ -188,7 +191,7 @@ func (o *TenancyUpdate) GetEntryIntoForce() int64 {
 // GetEntryIntoForceOk returns a tuple with the EntryIntoForce field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenancyUpdate) GetEntryIntoForceOk() (*int64, bool) {
-	if o == nil || o.EntryIntoForce == nil {
+	if o == nil || IsNil(o.EntryIntoForce) {
 		return nil, false
 	}
 	return o.EntryIntoForce, true
@@ -196,7 +199,7 @@ func (o *TenancyUpdate) GetEntryIntoForceOk() (*int64, bool) {
 
 // HasEntryIntoForce returns a boolean if a field has been set.
 func (o *TenancyUpdate) HasEntryIntoForce() bool {
-	if o != nil && o.EntryIntoForce != nil {
+	if o != nil && !IsNil(o.EntryIntoForce) {
 		return true
 	}
 
@@ -210,7 +213,7 @@ func (o *TenancyUpdate) SetEntryIntoForce(v int64) {
 
 // GetNewRent returns the NewRent field value if set, zero value otherwise.
 func (o *TenancyUpdate) GetNewRent() RentData {
-	if o == nil || o.NewRent == nil {
+	if o == nil || IsNil(o.NewRent) {
 		var ret RentData
 		return ret
 	}
@@ -220,7 +223,7 @@ func (o *TenancyUpdate) GetNewRent() RentData {
 // GetNewRentOk returns a tuple with the NewRent field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenancyUpdate) GetNewRentOk() (*RentData, bool) {
-	if o == nil || o.NewRent == nil {
+	if o == nil || IsNil(o.NewRent) {
 		return nil, false
 	}
 	return o.NewRent, true
@@ -228,7 +231,7 @@ func (o *TenancyUpdate) GetNewRentOk() (*RentData, bool) {
 
 // HasNewRent returns a boolean if a field has been set.
 func (o *TenancyUpdate) HasNewRent() bool {
-	if o != nil && o.NewRent != nil {
+	if o != nil && !IsNil(o.NewRent) {
 		return true
 	}
 
@@ -242,7 +245,7 @@ func (o *TenancyUpdate) SetNewRent(v RentData) {
 
 // GetTenantChanges returns the TenantChanges field value if set, zero value otherwise.
 func (o *TenancyUpdate) GetTenantChanges() []TenantChange {
-	if o == nil || o.TenantChanges == nil {
+	if o == nil || IsNil(o.TenantChanges) {
 		var ret []TenantChange
 		return ret
 	}
@@ -252,7 +255,7 @@ func (o *TenancyUpdate) GetTenantChanges() []TenantChange {
 // GetTenantChangesOk returns a tuple with the TenantChanges field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenancyUpdate) GetTenantChangesOk() ([]TenantChange, bool) {
-	if o == nil || o.TenantChanges == nil {
+	if o == nil || IsNil(o.TenantChanges) {
 		return nil, false
 	}
 	return o.TenantChanges, true
@@ -260,7 +263,7 @@ func (o *TenancyUpdate) GetTenantChangesOk() ([]TenantChange, bool) {
 
 // HasTenantChanges returns a boolean if a field has been set.
 func (o *TenancyUpdate) HasTenantChanges() bool {
-	if o != nil && o.TenantChanges != nil {
+	if o != nil && !IsNil(o.TenantChanges) {
 		return true
 	}
 
@@ -273,29 +276,37 @@ func (o *TenancyUpdate) SetTenantChanges(v []TenantChange) {
 }
 
 func (o TenancyUpdate) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.CreatedAt != nil {
-		toSerialize["created_at"] = o.CreatedAt
-	}
-	if o.UpdatedAt != nil {
-		toSerialize["updated_at"] = o.UpdatedAt
-	}
-	if o.TenancyId != nil {
-		toSerialize["tenancy_id"] = o.TenancyId
-	}
-	if o.EntryIntoForce != nil {
-		toSerialize["entry_into_force"] = o.EntryIntoForce
-	}
-	if o.NewRent != nil {
-		toSerialize["new_rent"] = o.NewRent
-	}
-	if o.TenantChanges != nil {
-		toSerialize["tenant_changes"] = o.TenantChanges
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o TenancyUpdate) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.CreatedAt) {
+		toSerialize["created_at"] = o.CreatedAt
+	}
+	if !IsNil(o.UpdatedAt) {
+		toSerialize["updated_at"] = o.UpdatedAt
+	}
+	if !IsNil(o.TenancyId) {
+		toSerialize["tenancy_id"] = o.TenancyId
+	}
+	if !IsNil(o.EntryIntoForce) {
+		toSerialize["entry_into_force"] = o.EntryIntoForce
+	}
+	if !IsNil(o.NewRent) {
+		toSerialize["new_rent"] = o.NewRent
+	}
+	if !IsNil(o.TenantChanges) {
+		toSerialize["tenant_changes"] = o.TenantChanges
+	}
+	return toSerialize, nil
 }
 
 type NullableTenancyUpdate struct {

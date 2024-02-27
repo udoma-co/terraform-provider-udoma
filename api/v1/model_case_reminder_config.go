@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CaseReminderConfig type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CaseReminderConfig{}
+
 // CaseReminderConfig Defines the configuration for sending out reminders for a case.
 type CaseReminderConfig struct {
 	Status *CaseStatusEnum `json:"status,omitempty"`
@@ -40,7 +43,7 @@ func NewCaseReminderConfigWithDefaults() *CaseReminderConfig {
 
 // GetStatus returns the Status field value if set, zero value otherwise.
 func (o *CaseReminderConfig) GetStatus() CaseStatusEnum {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		var ret CaseStatusEnum
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *CaseReminderConfig) GetStatus() CaseStatusEnum {
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseReminderConfig) GetStatusOk() (*CaseStatusEnum, bool) {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
 	return o.Status, true
@@ -58,7 +61,7 @@ func (o *CaseReminderConfig) GetStatusOk() (*CaseStatusEnum, bool) {
 
 // HasStatus returns a boolean if a field has been set.
 func (o *CaseReminderConfig) HasStatus() bool {
-	if o != nil && o.Status != nil {
+	if o != nil && !IsNil(o.Status) {
 		return true
 	}
 
@@ -72,7 +75,7 @@ func (o *CaseReminderConfig) SetStatus(v CaseStatusEnum) {
 
 // GetSchedule returns the Schedule field value if set, zero value otherwise.
 func (o *CaseReminderConfig) GetSchedule() []int32 {
-	if o == nil || o.Schedule == nil {
+	if o == nil || IsNil(o.Schedule) {
 		var ret []int32
 		return ret
 	}
@@ -82,7 +85,7 @@ func (o *CaseReminderConfig) GetSchedule() []int32 {
 // GetScheduleOk returns a tuple with the Schedule field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseReminderConfig) GetScheduleOk() ([]int32, bool) {
-	if o == nil || o.Schedule == nil {
+	if o == nil || IsNil(o.Schedule) {
 		return nil, false
 	}
 	return o.Schedule, true
@@ -90,7 +93,7 @@ func (o *CaseReminderConfig) GetScheduleOk() ([]int32, bool) {
 
 // HasSchedule returns a boolean if a field has been set.
 func (o *CaseReminderConfig) HasSchedule() bool {
-	if o != nil && o.Schedule != nil {
+	if o != nil && !IsNil(o.Schedule) {
 		return true
 	}
 
@@ -103,14 +106,22 @@ func (o *CaseReminderConfig) SetSchedule(v []int32) {
 }
 
 func (o CaseReminderConfig) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Status != nil {
-		toSerialize["status"] = o.Status
-	}
-	if o.Schedule != nil {
-		toSerialize["schedule"] = o.Schedule
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CaseReminderConfig) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.Schedule) {
+		toSerialize["schedule"] = o.Schedule
+	}
+	return toSerialize, nil
 }
 
 type NullableCaseReminderConfig struct {

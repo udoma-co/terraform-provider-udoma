@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CaseReportingEndpointCategoryTemplatesInner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CaseReportingEndpointCategoryTemplatesInner{}
+
 // CaseReportingEndpointCategoryTemplatesInner struct for CaseReportingEndpointCategoryTemplatesInner
 type CaseReportingEndpointCategoryTemplatesInner struct {
 	// The ID of the Case Template
@@ -41,7 +44,7 @@ func NewCaseReportingEndpointCategoryTemplatesInnerWithDefaults() *CaseReporting
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *CaseReportingEndpointCategoryTemplatesInner) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -51,7 +54,7 @@ func (o *CaseReportingEndpointCategoryTemplatesInner) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseReportingEndpointCategoryTemplatesInner) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -59,7 +62,7 @@ func (o *CaseReportingEndpointCategoryTemplatesInner) GetIdOk() (*string, bool) 
 
 // HasId returns a boolean if a field has been set.
 func (o *CaseReportingEndpointCategoryTemplatesInner) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -73,7 +76,7 @@ func (o *CaseReportingEndpointCategoryTemplatesInner) SetId(v string) {
 
 // GetPriority returns the Priority field value if set, zero value otherwise.
 func (o *CaseReportingEndpointCategoryTemplatesInner) GetPriority() int32 {
-	if o == nil || o.Priority == nil {
+	if o == nil || IsNil(o.Priority) {
 		var ret int32
 		return ret
 	}
@@ -83,7 +86,7 @@ func (o *CaseReportingEndpointCategoryTemplatesInner) GetPriority() int32 {
 // GetPriorityOk returns a tuple with the Priority field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseReportingEndpointCategoryTemplatesInner) GetPriorityOk() (*int32, bool) {
-	if o == nil || o.Priority == nil {
+	if o == nil || IsNil(o.Priority) {
 		return nil, false
 	}
 	return o.Priority, true
@@ -91,7 +94,7 @@ func (o *CaseReportingEndpointCategoryTemplatesInner) GetPriorityOk() (*int32, b
 
 // HasPriority returns a boolean if a field has been set.
 func (o *CaseReportingEndpointCategoryTemplatesInner) HasPriority() bool {
-	if o != nil && o.Priority != nil {
+	if o != nil && !IsNil(o.Priority) {
 		return true
 	}
 
@@ -104,14 +107,22 @@ func (o *CaseReportingEndpointCategoryTemplatesInner) SetPriority(v int32) {
 }
 
 func (o CaseReportingEndpointCategoryTemplatesInner) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Priority != nil {
-		toSerialize["priority"] = o.Priority
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CaseReportingEndpointCategoryTemplatesInner) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Priority) {
+		toSerialize["priority"] = o.Priority
+	}
+	return toSerialize, nil
 }
 
 type NullableCaseReportingEndpointCategoryTemplatesInner struct {

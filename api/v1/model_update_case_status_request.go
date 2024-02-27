@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the UpdateCaseStatusRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &UpdateCaseStatusRequest{}
+
 // UpdateCaseStatusRequest All the information required for updating the status of a case
 type UpdateCaseStatusRequest struct {
 	Action   *CaseActionEnum `json:"action,omitempty"`
@@ -41,7 +44,7 @@ func NewUpdateCaseStatusRequestWithDefaults() *UpdateCaseStatusRequest {
 
 // GetAction returns the Action field value if set, zero value otherwise.
 func (o *UpdateCaseStatusRequest) GetAction() CaseActionEnum {
-	if o == nil || o.Action == nil {
+	if o == nil || IsNil(o.Action) {
 		var ret CaseActionEnum
 		return ret
 	}
@@ -51,7 +54,7 @@ func (o *UpdateCaseStatusRequest) GetAction() CaseActionEnum {
 // GetActionOk returns a tuple with the Action field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateCaseStatusRequest) GetActionOk() (*CaseActionEnum, bool) {
-	if o == nil || o.Action == nil {
+	if o == nil || IsNil(o.Action) {
 		return nil, false
 	}
 	return o.Action, true
@@ -59,7 +62,7 @@ func (o *UpdateCaseStatusRequest) GetActionOk() (*CaseActionEnum, bool) {
 
 // HasAction returns a boolean if a field has been set.
 func (o *UpdateCaseStatusRequest) HasAction() bool {
-	if o != nil && o.Action != nil {
+	if o != nil && !IsNil(o.Action) {
 		return true
 	}
 
@@ -73,7 +76,7 @@ func (o *UpdateCaseStatusRequest) SetAction(v CaseActionEnum) {
 
 // GetAssignee returns the Assignee field value if set, zero value otherwise.
 func (o *UpdateCaseStatusRequest) GetAssignee() CaseAssignee {
-	if o == nil || o.Assignee == nil {
+	if o == nil || IsNil(o.Assignee) {
 		var ret CaseAssignee
 		return ret
 	}
@@ -83,7 +86,7 @@ func (o *UpdateCaseStatusRequest) GetAssignee() CaseAssignee {
 // GetAssigneeOk returns a tuple with the Assignee field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateCaseStatusRequest) GetAssigneeOk() (*CaseAssignee, bool) {
-	if o == nil || o.Assignee == nil {
+	if o == nil || IsNil(o.Assignee) {
 		return nil, false
 	}
 	return o.Assignee, true
@@ -91,7 +94,7 @@ func (o *UpdateCaseStatusRequest) GetAssigneeOk() (*CaseAssignee, bool) {
 
 // HasAssignee returns a boolean if a field has been set.
 func (o *UpdateCaseStatusRequest) HasAssignee() bool {
-	if o != nil && o.Assignee != nil {
+	if o != nil && !IsNil(o.Assignee) {
 		return true
 	}
 
@@ -105,7 +108,7 @@ func (o *UpdateCaseStatusRequest) SetAssignee(v CaseAssignee) {
 
 // GetFeedback returns the Feedback field value if set, zero value otherwise.
 func (o *UpdateCaseStatusRequest) GetFeedback() []CaseFeedbackResponse {
-	if o == nil || o.Feedback == nil {
+	if o == nil || IsNil(o.Feedback) {
 		var ret []CaseFeedbackResponse
 		return ret
 	}
@@ -115,7 +118,7 @@ func (o *UpdateCaseStatusRequest) GetFeedback() []CaseFeedbackResponse {
 // GetFeedbackOk returns a tuple with the Feedback field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateCaseStatusRequest) GetFeedbackOk() ([]CaseFeedbackResponse, bool) {
-	if o == nil || o.Feedback == nil {
+	if o == nil || IsNil(o.Feedback) {
 		return nil, false
 	}
 	return o.Feedback, true
@@ -123,7 +126,7 @@ func (o *UpdateCaseStatusRequest) GetFeedbackOk() ([]CaseFeedbackResponse, bool)
 
 // HasFeedback returns a boolean if a field has been set.
 func (o *UpdateCaseStatusRequest) HasFeedback() bool {
-	if o != nil && o.Feedback != nil {
+	if o != nil && !IsNil(o.Feedback) {
 		return true
 	}
 
@@ -136,17 +139,25 @@ func (o *UpdateCaseStatusRequest) SetFeedback(v []CaseFeedbackResponse) {
 }
 
 func (o UpdateCaseStatusRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Action != nil {
-		toSerialize["action"] = o.Action
-	}
-	if o.Assignee != nil {
-		toSerialize["assignee"] = o.Assignee
-	}
-	if o.Feedback != nil {
-		toSerialize["feedback"] = o.Feedback
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o UpdateCaseStatusRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Action) {
+		toSerialize["action"] = o.Action
+	}
+	if !IsNil(o.Assignee) {
+		toSerialize["assignee"] = o.Assignee
+	}
+	if !IsNil(o.Feedback) {
+		toSerialize["feedback"] = o.Feedback
+	}
+	return toSerialize, nil
 }
 
 type NullableUpdateCaseStatusRequest struct {

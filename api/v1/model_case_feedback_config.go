@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CaseFeedbackConfig type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CaseFeedbackConfig{}
+
 // CaseFeedbackConfig struct for CaseFeedbackConfig
 type CaseFeedbackConfig struct {
 	// The ID of the feedback entry, used to map responses against the config
@@ -43,7 +46,7 @@ func NewCaseFeedbackConfigWithDefaults() *CaseFeedbackConfig {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *CaseFeedbackConfig) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -53,7 +56,7 @@ func (o *CaseFeedbackConfig) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseFeedbackConfig) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -61,7 +64,7 @@ func (o *CaseFeedbackConfig) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *CaseFeedbackConfig) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -75,7 +78,7 @@ func (o *CaseFeedbackConfig) SetId(v string) {
 
 // GetVisibility returns the Visibility field value if set, zero value otherwise.
 func (o *CaseFeedbackConfig) GetVisibility() []UserTypeEnum {
-	if o == nil || o.Visibility == nil {
+	if o == nil || IsNil(o.Visibility) {
 		var ret []UserTypeEnum
 		return ret
 	}
@@ -85,7 +88,7 @@ func (o *CaseFeedbackConfig) GetVisibility() []UserTypeEnum {
 // GetVisibilityOk returns a tuple with the Visibility field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseFeedbackConfig) GetVisibilityOk() ([]UserTypeEnum, bool) {
-	if o == nil || o.Visibility == nil {
+	if o == nil || IsNil(o.Visibility) {
 		return nil, false
 	}
 	return o.Visibility, true
@@ -93,7 +96,7 @@ func (o *CaseFeedbackConfig) GetVisibilityOk() ([]UserTypeEnum, bool) {
 
 // HasVisibility returns a boolean if a field has been set.
 func (o *CaseFeedbackConfig) HasVisibility() bool {
-	if o != nil && o.Visibility != nil {
+	if o != nil && !IsNil(o.Visibility) {
 		return true
 	}
 
@@ -107,7 +110,7 @@ func (o *CaseFeedbackConfig) SetVisibility(v []UserTypeEnum) {
 
 // GetMode returns the Mode field value if set, zero value otherwise.
 func (o *CaseFeedbackConfig) GetMode() CaseFeedbackModeEnum {
-	if o == nil || o.Mode == nil {
+	if o == nil || IsNil(o.Mode) {
 		var ret CaseFeedbackModeEnum
 		return ret
 	}
@@ -117,7 +120,7 @@ func (o *CaseFeedbackConfig) GetMode() CaseFeedbackModeEnum {
 // GetModeOk returns a tuple with the Mode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseFeedbackConfig) GetModeOk() (*CaseFeedbackModeEnum, bool) {
-	if o == nil || o.Mode == nil {
+	if o == nil || IsNil(o.Mode) {
 		return nil, false
 	}
 	return o.Mode, true
@@ -125,7 +128,7 @@ func (o *CaseFeedbackConfig) GetModeOk() (*CaseFeedbackModeEnum, bool) {
 
 // HasMode returns a boolean if a field has been set.
 func (o *CaseFeedbackConfig) HasMode() bool {
-	if o != nil && o.Mode != nil {
+	if o != nil && !IsNil(o.Mode) {
 		return true
 	}
 
@@ -139,7 +142,7 @@ func (o *CaseFeedbackConfig) SetMode(v CaseFeedbackModeEnum) {
 
 // GetForm returns the Form field value if set, zero value otherwise.
 func (o *CaseFeedbackConfig) GetForm() CustomForm {
-	if o == nil || o.Form == nil {
+	if o == nil || IsNil(o.Form) {
 		var ret CustomForm
 		return ret
 	}
@@ -149,7 +152,7 @@ func (o *CaseFeedbackConfig) GetForm() CustomForm {
 // GetFormOk returns a tuple with the Form field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseFeedbackConfig) GetFormOk() (*CustomForm, bool) {
-	if o == nil || o.Form == nil {
+	if o == nil || IsNil(o.Form) {
 		return nil, false
 	}
 	return o.Form, true
@@ -157,7 +160,7 @@ func (o *CaseFeedbackConfig) GetFormOk() (*CustomForm, bool) {
 
 // HasForm returns a boolean if a field has been set.
 func (o *CaseFeedbackConfig) HasForm() bool {
-	if o != nil && o.Form != nil {
+	if o != nil && !IsNil(o.Form) {
 		return true
 	}
 
@@ -170,20 +173,28 @@ func (o *CaseFeedbackConfig) SetForm(v CustomForm) {
 }
 
 func (o CaseFeedbackConfig) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Visibility != nil {
-		toSerialize["visibility"] = o.Visibility
-	}
-	if o.Mode != nil {
-		toSerialize["mode"] = o.Mode
-	}
-	if o.Form != nil {
-		toSerialize["form"] = o.Form
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CaseFeedbackConfig) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Visibility) {
+		toSerialize["visibility"] = o.Visibility
+	}
+	if !IsNil(o.Mode) {
+		toSerialize["mode"] = o.Mode
+	}
+	if !IsNil(o.Form) {
+		toSerialize["form"] = o.Form
+	}
+	return toSerialize, nil
 }
 
 type NullableCaseFeedbackConfig struct {

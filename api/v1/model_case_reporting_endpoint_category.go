@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CaseReportingEndpointCategory type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CaseReportingEndpointCategory{}
+
 // CaseReportingEndpointCategory struct for CaseReportingEndpointCategory
 type CaseReportingEndpointCategory struct {
 	// a map of values, where the key and values are strings
@@ -43,7 +46,7 @@ func NewCaseReportingEndpointCategoryWithDefaults() *CaseReportingEndpointCatego
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *CaseReportingEndpointCategory) GetName() map[string]string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret map[string]string
 		return ret
 	}
@@ -53,7 +56,7 @@ func (o *CaseReportingEndpointCategory) GetName() map[string]string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseReportingEndpointCategory) GetNameOk() (*map[string]string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -61,7 +64,7 @@ func (o *CaseReportingEndpointCategory) GetNameOk() (*map[string]string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *CaseReportingEndpointCategory) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -75,7 +78,7 @@ func (o *CaseReportingEndpointCategory) SetName(v map[string]string) {
 
 // GetPriority returns the Priority field value if set, zero value otherwise.
 func (o *CaseReportingEndpointCategory) GetPriority() int32 {
-	if o == nil || o.Priority == nil {
+	if o == nil || IsNil(o.Priority) {
 		var ret int32
 		return ret
 	}
@@ -85,7 +88,7 @@ func (o *CaseReportingEndpointCategory) GetPriority() int32 {
 // GetPriorityOk returns a tuple with the Priority field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseReportingEndpointCategory) GetPriorityOk() (*int32, bool) {
-	if o == nil || o.Priority == nil {
+	if o == nil || IsNil(o.Priority) {
 		return nil, false
 	}
 	return o.Priority, true
@@ -93,7 +96,7 @@ func (o *CaseReportingEndpointCategory) GetPriorityOk() (*int32, bool) {
 
 // HasPriority returns a boolean if a field has been set.
 func (o *CaseReportingEndpointCategory) HasPriority() bool {
-	if o != nil && o.Priority != nil {
+	if o != nil && !IsNil(o.Priority) {
 		return true
 	}
 
@@ -107,7 +110,7 @@ func (o *CaseReportingEndpointCategory) SetPriority(v int32) {
 
 // GetTemplates returns the Templates field value if set, zero value otherwise.
 func (o *CaseReportingEndpointCategory) GetTemplates() []CaseReportingEndpointCategoryTemplatesInner {
-	if o == nil || o.Templates == nil {
+	if o == nil || IsNil(o.Templates) {
 		var ret []CaseReportingEndpointCategoryTemplatesInner
 		return ret
 	}
@@ -117,7 +120,7 @@ func (o *CaseReportingEndpointCategory) GetTemplates() []CaseReportingEndpointCa
 // GetTemplatesOk returns a tuple with the Templates field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseReportingEndpointCategory) GetTemplatesOk() ([]CaseReportingEndpointCategoryTemplatesInner, bool) {
-	if o == nil || o.Templates == nil {
+	if o == nil || IsNil(o.Templates) {
 		return nil, false
 	}
 	return o.Templates, true
@@ -125,7 +128,7 @@ func (o *CaseReportingEndpointCategory) GetTemplatesOk() ([]CaseReportingEndpoin
 
 // HasTemplates returns a boolean if a field has been set.
 func (o *CaseReportingEndpointCategory) HasTemplates() bool {
-	if o != nil && o.Templates != nil {
+	if o != nil && !IsNil(o.Templates) {
 		return true
 	}
 
@@ -138,17 +141,25 @@ func (o *CaseReportingEndpointCategory) SetTemplates(v []CaseReportingEndpointCa
 }
 
 func (o CaseReportingEndpointCategory) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.Priority != nil {
-		toSerialize["priority"] = o.Priority
-	}
-	if o.Templates != nil {
-		toSerialize["templates"] = o.Templates
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CaseReportingEndpointCategory) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Priority) {
+		toSerialize["priority"] = o.Priority
+	}
+	if !IsNil(o.Templates) {
+		toSerialize["templates"] = o.Templates
+	}
+	return toSerialize, nil
 }
 
 type NullableCaseReportingEndpointCategory struct {

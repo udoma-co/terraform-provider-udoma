@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CompanyProfile type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CompanyProfile{}
+
 // CompanyProfile Details about a company (property management, or service provider)
 type CompanyProfile struct {
 	Name    *string  `json:"name,omitempty"`
@@ -45,7 +48,7 @@ func NewCompanyProfileWithDefaults() *CompanyProfile {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *CompanyProfile) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -55,7 +58,7 @@ func (o *CompanyProfile) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CompanyProfile) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -63,7 +66,7 @@ func (o *CompanyProfile) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *CompanyProfile) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -77,7 +80,7 @@ func (o *CompanyProfile) SetName(v string) {
 
 // GetAddress returns the Address field value if set, zero value otherwise.
 func (o *CompanyProfile) GetAddress() Address {
-	if o == nil || o.Address == nil {
+	if o == nil || IsNil(o.Address) {
 		var ret Address
 		return ret
 	}
@@ -87,7 +90,7 @@ func (o *CompanyProfile) GetAddress() Address {
 // GetAddressOk returns a tuple with the Address field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CompanyProfile) GetAddressOk() (*Address, bool) {
-	if o == nil || o.Address == nil {
+	if o == nil || IsNil(o.Address) {
 		return nil, false
 	}
 	return o.Address, true
@@ -95,7 +98,7 @@ func (o *CompanyProfile) GetAddressOk() (*Address, bool) {
 
 // HasAddress returns a boolean if a field has been set.
 func (o *CompanyProfile) HasAddress() bool {
-	if o != nil && o.Address != nil {
+	if o != nil && !IsNil(o.Address) {
 		return true
 	}
 
@@ -109,7 +112,7 @@ func (o *CompanyProfile) SetAddress(v Address) {
 
 // GetEmail returns the Email field value if set, zero value otherwise.
 func (o *CompanyProfile) GetEmail() string {
-	if o == nil || o.Email == nil {
+	if o == nil || IsNil(o.Email) {
 		var ret string
 		return ret
 	}
@@ -119,7 +122,7 @@ func (o *CompanyProfile) GetEmail() string {
 // GetEmailOk returns a tuple with the Email field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CompanyProfile) GetEmailOk() (*string, bool) {
-	if o == nil || o.Email == nil {
+	if o == nil || IsNil(o.Email) {
 		return nil, false
 	}
 	return o.Email, true
@@ -127,7 +130,7 @@ func (o *CompanyProfile) GetEmailOk() (*string, bool) {
 
 // HasEmail returns a boolean if a field has been set.
 func (o *CompanyProfile) HasEmail() bool {
-	if o != nil && o.Email != nil {
+	if o != nil && !IsNil(o.Email) {
 		return true
 	}
 
@@ -141,7 +144,7 @@ func (o *CompanyProfile) SetEmail(v string) {
 
 // GetPhoneNumber returns the PhoneNumber field value if set, zero value otherwise.
 func (o *CompanyProfile) GetPhoneNumber() string {
-	if o == nil || o.PhoneNumber == nil {
+	if o == nil || IsNil(o.PhoneNumber) {
 		var ret string
 		return ret
 	}
@@ -151,7 +154,7 @@ func (o *CompanyProfile) GetPhoneNumber() string {
 // GetPhoneNumberOk returns a tuple with the PhoneNumber field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CompanyProfile) GetPhoneNumberOk() (*string, bool) {
-	if o == nil || o.PhoneNumber == nil {
+	if o == nil || IsNil(o.PhoneNumber) {
 		return nil, false
 	}
 	return o.PhoneNumber, true
@@ -159,7 +162,7 @@ func (o *CompanyProfile) GetPhoneNumberOk() (*string, bool) {
 
 // HasPhoneNumber returns a boolean if a field has been set.
 func (o *CompanyProfile) HasPhoneNumber() bool {
-	if o != nil && o.PhoneNumber != nil {
+	if o != nil && !IsNil(o.PhoneNumber) {
 		return true
 	}
 
@@ -173,7 +176,7 @@ func (o *CompanyProfile) SetPhoneNumber(v string) {
 
 // GetWebsite returns the Website field value if set, zero value otherwise.
 func (o *CompanyProfile) GetWebsite() string {
-	if o == nil || o.Website == nil {
+	if o == nil || IsNil(o.Website) {
 		var ret string
 		return ret
 	}
@@ -183,7 +186,7 @@ func (o *CompanyProfile) GetWebsite() string {
 // GetWebsiteOk returns a tuple with the Website field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CompanyProfile) GetWebsiteOk() (*string, bool) {
-	if o == nil || o.Website == nil {
+	if o == nil || IsNil(o.Website) {
 		return nil, false
 	}
 	return o.Website, true
@@ -191,7 +194,7 @@ func (o *CompanyProfile) GetWebsiteOk() (*string, bool) {
 
 // HasWebsite returns a boolean if a field has been set.
 func (o *CompanyProfile) HasWebsite() bool {
-	if o != nil && o.Website != nil {
+	if o != nil && !IsNil(o.Website) {
 		return true
 	}
 
@@ -204,23 +207,31 @@ func (o *CompanyProfile) SetWebsite(v string) {
 }
 
 func (o CompanyProfile) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.Address != nil {
-		toSerialize["address"] = o.Address
-	}
-	if o.Email != nil {
-		toSerialize["email"] = o.Email
-	}
-	if o.PhoneNumber != nil {
-		toSerialize["phone_number"] = o.PhoneNumber
-	}
-	if o.Website != nil {
-		toSerialize["website"] = o.Website
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CompanyProfile) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Address) {
+		toSerialize["address"] = o.Address
+	}
+	if !IsNil(o.Email) {
+		toSerialize["email"] = o.Email
+	}
+	if !IsNil(o.PhoneNumber) {
+		toSerialize["phone_number"] = o.PhoneNumber
+	}
+	if !IsNil(o.Website) {
+		toSerialize["website"] = o.Website
+	}
+	return toSerialize, nil
 }
 
 type NullableCompanyProfile struct {

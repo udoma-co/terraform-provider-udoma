@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CustomIDGenerator type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CustomIDGenerator{}
+
 // CustomIDGenerator struct for CustomIDGenerator
 type CustomIDGenerator struct {
 	Id *string `json:"id,omitempty"`
@@ -48,7 +51,7 @@ func NewCustomIDGeneratorWithDefaults() *CustomIDGenerator {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *CustomIDGenerator) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -58,7 +61,7 @@ func (o *CustomIDGenerator) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CustomIDGenerator) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -66,7 +69,7 @@ func (o *CustomIDGenerator) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *CustomIDGenerator) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -80,7 +83,7 @@ func (o *CustomIDGenerator) SetId(v string) {
 
 // GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
 func (o *CustomIDGenerator) GetCreatedAt() int64 {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		var ret int64
 		return ret
 	}
@@ -90,7 +93,7 @@ func (o *CustomIDGenerator) GetCreatedAt() int64 {
 // GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CustomIDGenerator) GetCreatedAtOk() (*int64, bool) {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
 	return o.CreatedAt, true
@@ -98,7 +101,7 @@ func (o *CustomIDGenerator) GetCreatedAtOk() (*int64, bool) {
 
 // HasCreatedAt returns a boolean if a field has been set.
 func (o *CustomIDGenerator) HasCreatedAt() bool {
-	if o != nil && o.CreatedAt != nil {
+	if o != nil && !IsNil(o.CreatedAt) {
 		return true
 	}
 
@@ -112,7 +115,7 @@ func (o *CustomIDGenerator) SetCreatedAt(v int64) {
 
 // GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
 func (o *CustomIDGenerator) GetUpdatedAt() int64 {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		var ret int64
 		return ret
 	}
@@ -122,7 +125,7 @@ func (o *CustomIDGenerator) GetUpdatedAt() int64 {
 // GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CustomIDGenerator) GetUpdatedAtOk() (*int64, bool) {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
 	return o.UpdatedAt, true
@@ -130,7 +133,7 @@ func (o *CustomIDGenerator) GetUpdatedAtOk() (*int64, bool) {
 
 // HasUpdatedAt returns a boolean if a field has been set.
 func (o *CustomIDGenerator) HasUpdatedAt() bool {
-	if o != nil && o.UpdatedAt != nil {
+	if o != nil && !IsNil(o.UpdatedAt) {
 		return true
 	}
 
@@ -144,7 +147,7 @@ func (o *CustomIDGenerator) SetUpdatedAt(v int64) {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *CustomIDGenerator) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -154,7 +157,7 @@ func (o *CustomIDGenerator) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CustomIDGenerator) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -162,7 +165,7 @@ func (o *CustomIDGenerator) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *CustomIDGenerator) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -176,7 +179,7 @@ func (o *CustomIDGenerator) SetName(v string) {
 
 // GetGenerationScript returns the GenerationScript field value if set, zero value otherwise.
 func (o *CustomIDGenerator) GetGenerationScript() string {
-	if o == nil || o.GenerationScript == nil {
+	if o == nil || IsNil(o.GenerationScript) {
 		var ret string
 		return ret
 	}
@@ -186,7 +189,7 @@ func (o *CustomIDGenerator) GetGenerationScript() string {
 // GetGenerationScriptOk returns a tuple with the GenerationScript field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CustomIDGenerator) GetGenerationScriptOk() (*string, bool) {
-	if o == nil || o.GenerationScript == nil {
+	if o == nil || IsNil(o.GenerationScript) {
 		return nil, false
 	}
 	return o.GenerationScript, true
@@ -194,7 +197,7 @@ func (o *CustomIDGenerator) GetGenerationScriptOk() (*string, bool) {
 
 // HasGenerationScript returns a boolean if a field has been set.
 func (o *CustomIDGenerator) HasGenerationScript() bool {
-	if o != nil && o.GenerationScript != nil {
+	if o != nil && !IsNil(o.GenerationScript) {
 		return true
 	}
 
@@ -208,7 +211,7 @@ func (o *CustomIDGenerator) SetGenerationScript(v string) {
 
 // GetLastGeneratedId returns the LastGeneratedId field value if set, zero value otherwise.
 func (o *CustomIDGenerator) GetLastGeneratedId() string {
-	if o == nil || o.LastGeneratedId == nil {
+	if o == nil || IsNil(o.LastGeneratedId) {
 		var ret string
 		return ret
 	}
@@ -218,7 +221,7 @@ func (o *CustomIDGenerator) GetLastGeneratedId() string {
 // GetLastGeneratedIdOk returns a tuple with the LastGeneratedId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CustomIDGenerator) GetLastGeneratedIdOk() (*string, bool) {
-	if o == nil || o.LastGeneratedId == nil {
+	if o == nil || IsNil(o.LastGeneratedId) {
 		return nil, false
 	}
 	return o.LastGeneratedId, true
@@ -226,7 +229,7 @@ func (o *CustomIDGenerator) GetLastGeneratedIdOk() (*string, bool) {
 
 // HasLastGeneratedId returns a boolean if a field has been set.
 func (o *CustomIDGenerator) HasLastGeneratedId() bool {
-	if o != nil && o.LastGeneratedId != nil {
+	if o != nil && !IsNil(o.LastGeneratedId) {
 		return true
 	}
 
@@ -239,26 +242,34 @@ func (o *CustomIDGenerator) SetLastGeneratedId(v string) {
 }
 
 func (o CustomIDGenerator) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.CreatedAt != nil {
-		toSerialize["created_at"] = o.CreatedAt
-	}
-	if o.UpdatedAt != nil {
-		toSerialize["updated_at"] = o.UpdatedAt
-	}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.GenerationScript != nil {
-		toSerialize["generation_script"] = o.GenerationScript
-	}
-	if o.LastGeneratedId != nil {
-		toSerialize["last_generated_id"] = o.LastGeneratedId
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CustomIDGenerator) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.CreatedAt) {
+		toSerialize["created_at"] = o.CreatedAt
+	}
+	if !IsNil(o.UpdatedAt) {
+		toSerialize["updated_at"] = o.UpdatedAt
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.GenerationScript) {
+		toSerialize["generation_script"] = o.GenerationScript
+	}
+	if !IsNil(o.LastGeneratedId) {
+		toSerialize["last_generated_id"] = o.LastGeneratedId
+	}
+	return toSerialize, nil
 }
 
 type NullableCustomIDGenerator struct {

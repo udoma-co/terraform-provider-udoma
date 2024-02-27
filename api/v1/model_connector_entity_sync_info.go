@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ConnectorEntitySyncInfo type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ConnectorEntitySyncInfo{}
+
 // ConnectorEntitySyncInfo Used in connector configurations to indicate what data to be synchronised
 type ConnectorEntitySyncInfo struct {
 	Type *ConnectorEntityType `json:"type,omitempty"`
@@ -44,7 +47,7 @@ func NewConnectorEntitySyncInfoWithDefaults() *ConnectorEntitySyncInfo {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *ConnectorEntitySyncInfo) GetType() ConnectorEntityType {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret ConnectorEntityType
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *ConnectorEntitySyncInfo) GetType() ConnectorEntityType {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectorEntitySyncInfo) GetTypeOk() (*ConnectorEntityType, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -62,7 +65,7 @@ func (o *ConnectorEntitySyncInfo) GetTypeOk() (*ConnectorEntityType, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *ConnectorEntitySyncInfo) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *ConnectorEntitySyncInfo) SetType(v ConnectorEntityType) {
 
 // GetTotalCount returns the TotalCount field value if set, zero value otherwise.
 func (o *ConnectorEntitySyncInfo) GetTotalCount() int64 {
-	if o == nil || o.TotalCount == nil {
+	if o == nil || IsNil(o.TotalCount) {
 		var ret int64
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *ConnectorEntitySyncInfo) GetTotalCount() int64 {
 // GetTotalCountOk returns a tuple with the TotalCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectorEntitySyncInfo) GetTotalCountOk() (*int64, bool) {
-	if o == nil || o.TotalCount == nil {
+	if o == nil || IsNil(o.TotalCount) {
 		return nil, false
 	}
 	return o.TotalCount, true
@@ -94,7 +97,7 @@ func (o *ConnectorEntitySyncInfo) GetTotalCountOk() (*int64, bool) {
 
 // HasTotalCount returns a boolean if a field has been set.
 func (o *ConnectorEntitySyncInfo) HasTotalCount() bool {
-	if o != nil && o.TotalCount != nil {
+	if o != nil && !IsNil(o.TotalCount) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *ConnectorEntitySyncInfo) SetTotalCount(v int64) {
 
 // GetLastUpdate returns the LastUpdate field value if set, zero value otherwise.
 func (o *ConnectorEntitySyncInfo) GetLastUpdate() int64 {
-	if o == nil || o.LastUpdate == nil {
+	if o == nil || IsNil(o.LastUpdate) {
 		var ret int64
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *ConnectorEntitySyncInfo) GetLastUpdate() int64 {
 // GetLastUpdateOk returns a tuple with the LastUpdate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectorEntitySyncInfo) GetLastUpdateOk() (*int64, bool) {
-	if o == nil || o.LastUpdate == nil {
+	if o == nil || IsNil(o.LastUpdate) {
 		return nil, false
 	}
 	return o.LastUpdate, true
@@ -126,7 +129,7 @@ func (o *ConnectorEntitySyncInfo) GetLastUpdateOk() (*int64, bool) {
 
 // HasLastUpdate returns a boolean if a field has been set.
 func (o *ConnectorEntitySyncInfo) HasLastUpdate() bool {
-	if o != nil && o.LastUpdate != nil {
+	if o != nil && !IsNil(o.LastUpdate) {
 		return true
 	}
 
@@ -140,7 +143,7 @@ func (o *ConnectorEntitySyncInfo) SetLastUpdate(v int64) {
 
 // GetProgress returns the Progress field value if set, zero value otherwise.
 func (o *ConnectorEntitySyncInfo) GetProgress() string {
-	if o == nil || o.Progress == nil {
+	if o == nil || IsNil(o.Progress) {
 		var ret string
 		return ret
 	}
@@ -150,7 +153,7 @@ func (o *ConnectorEntitySyncInfo) GetProgress() string {
 // GetProgressOk returns a tuple with the Progress field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectorEntitySyncInfo) GetProgressOk() (*string, bool) {
-	if o == nil || o.Progress == nil {
+	if o == nil || IsNil(o.Progress) {
 		return nil, false
 	}
 	return o.Progress, true
@@ -158,7 +161,7 @@ func (o *ConnectorEntitySyncInfo) GetProgressOk() (*string, bool) {
 
 // HasProgress returns a boolean if a field has been set.
 func (o *ConnectorEntitySyncInfo) HasProgress() bool {
-	if o != nil && o.Progress != nil {
+	if o != nil && !IsNil(o.Progress) {
 		return true
 	}
 
@@ -171,20 +174,28 @@ func (o *ConnectorEntitySyncInfo) SetProgress(v string) {
 }
 
 func (o ConnectorEntitySyncInfo) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if o.TotalCount != nil {
-		toSerialize["total_count"] = o.TotalCount
-	}
-	if o.LastUpdate != nil {
-		toSerialize["last_update"] = o.LastUpdate
-	}
-	if o.Progress != nil {
-		toSerialize["progress"] = o.Progress
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ConnectorEntitySyncInfo) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.TotalCount) {
+		toSerialize["total_count"] = o.TotalCount
+	}
+	if !IsNil(o.LastUpdate) {
+		toSerialize["last_update"] = o.LastUpdate
+	}
+	if !IsNil(o.Progress) {
+		toSerialize["progress"] = o.Progress
+	}
+	return toSerialize, nil
 }
 
 type NullableConnectorEntitySyncInfo struct {

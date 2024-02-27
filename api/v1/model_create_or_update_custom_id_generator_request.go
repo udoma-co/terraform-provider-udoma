@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CreateOrUpdateCustomIDGeneratorRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CreateOrUpdateCustomIDGeneratorRequest{}
+
 // CreateOrUpdateCustomIDGeneratorRequest struct for CreateOrUpdateCustomIDGeneratorRequest
 type CreateOrUpdateCustomIDGeneratorRequest struct {
 	// The user friendly name of the ID generator.
@@ -43,7 +46,7 @@ func NewCreateOrUpdateCustomIDGeneratorRequestWithDefaults() *CreateOrUpdateCust
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *CreateOrUpdateCustomIDGeneratorRequest) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -53,7 +56,7 @@ func (o *CreateOrUpdateCustomIDGeneratorRequest) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateCustomIDGeneratorRequest) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -61,7 +64,7 @@ func (o *CreateOrUpdateCustomIDGeneratorRequest) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *CreateOrUpdateCustomIDGeneratorRequest) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -75,7 +78,7 @@ func (o *CreateOrUpdateCustomIDGeneratorRequest) SetName(v string) {
 
 // GetGenerationScript returns the GenerationScript field value if set, zero value otherwise.
 func (o *CreateOrUpdateCustomIDGeneratorRequest) GetGenerationScript() string {
-	if o == nil || o.GenerationScript == nil {
+	if o == nil || IsNil(o.GenerationScript) {
 		var ret string
 		return ret
 	}
@@ -85,7 +88,7 @@ func (o *CreateOrUpdateCustomIDGeneratorRequest) GetGenerationScript() string {
 // GetGenerationScriptOk returns a tuple with the GenerationScript field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateCustomIDGeneratorRequest) GetGenerationScriptOk() (*string, bool) {
-	if o == nil || o.GenerationScript == nil {
+	if o == nil || IsNil(o.GenerationScript) {
 		return nil, false
 	}
 	return o.GenerationScript, true
@@ -93,7 +96,7 @@ func (o *CreateOrUpdateCustomIDGeneratorRequest) GetGenerationScriptOk() (*strin
 
 // HasGenerationScript returns a boolean if a field has been set.
 func (o *CreateOrUpdateCustomIDGeneratorRequest) HasGenerationScript() bool {
-	if o != nil && o.GenerationScript != nil {
+	if o != nil && !IsNil(o.GenerationScript) {
 		return true
 	}
 
@@ -107,7 +110,7 @@ func (o *CreateOrUpdateCustomIDGeneratorRequest) SetGenerationScript(v string) {
 
 // GetLastGeneratedId returns the LastGeneratedId field value if set, zero value otherwise.
 func (o *CreateOrUpdateCustomIDGeneratorRequest) GetLastGeneratedId() string {
-	if o == nil || o.LastGeneratedId == nil {
+	if o == nil || IsNil(o.LastGeneratedId) {
 		var ret string
 		return ret
 	}
@@ -117,7 +120,7 @@ func (o *CreateOrUpdateCustomIDGeneratorRequest) GetLastGeneratedId() string {
 // GetLastGeneratedIdOk returns a tuple with the LastGeneratedId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateCustomIDGeneratorRequest) GetLastGeneratedIdOk() (*string, bool) {
-	if o == nil || o.LastGeneratedId == nil {
+	if o == nil || IsNil(o.LastGeneratedId) {
 		return nil, false
 	}
 	return o.LastGeneratedId, true
@@ -125,7 +128,7 @@ func (o *CreateOrUpdateCustomIDGeneratorRequest) GetLastGeneratedIdOk() (*string
 
 // HasLastGeneratedId returns a boolean if a field has been set.
 func (o *CreateOrUpdateCustomIDGeneratorRequest) HasLastGeneratedId() bool {
-	if o != nil && o.LastGeneratedId != nil {
+	if o != nil && !IsNil(o.LastGeneratedId) {
 		return true
 	}
 
@@ -138,17 +141,25 @@ func (o *CreateOrUpdateCustomIDGeneratorRequest) SetLastGeneratedId(v string) {
 }
 
 func (o CreateOrUpdateCustomIDGeneratorRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.GenerationScript != nil {
-		toSerialize["generation_script"] = o.GenerationScript
-	}
-	if o.LastGeneratedId != nil {
-		toSerialize["last_generated_id"] = o.LastGeneratedId
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CreateOrUpdateCustomIDGeneratorRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.GenerationScript) {
+		toSerialize["generation_script"] = o.GenerationScript
+	}
+	if !IsNil(o.LastGeneratedId) {
+		toSerialize["last_generated_id"] = o.LastGeneratedId
+	}
+	return toSerialize, nil
 }
 
 type NullableCreateOrUpdateCustomIDGeneratorRequest struct {
