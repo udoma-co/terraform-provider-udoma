@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CreateOrUpdateFAQEntryRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CreateOrUpdateFAQEntryRequest{}
+
 // CreateOrUpdateFAQEntryRequest struct for CreateOrUpdateFAQEntryRequest
 type CreateOrUpdateFAQEntryRequest struct {
 	// a map of values, where the key and values are strings
@@ -42,7 +45,7 @@ func NewCreateOrUpdateFAQEntryRequestWithDefaults() *CreateOrUpdateFAQEntryReque
 
 // GetQuestion returns the Question field value if set, zero value otherwise.
 func (o *CreateOrUpdateFAQEntryRequest) GetQuestion() map[string]string {
-	if o == nil || o.Question == nil {
+	if o == nil || IsNil(o.Question) {
 		var ret map[string]string
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *CreateOrUpdateFAQEntryRequest) GetQuestion() map[string]string {
 // GetQuestionOk returns a tuple with the Question field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateFAQEntryRequest) GetQuestionOk() (*map[string]string, bool) {
-	if o == nil || o.Question == nil {
+	if o == nil || IsNil(o.Question) {
 		return nil, false
 	}
 	return o.Question, true
@@ -60,7 +63,7 @@ func (o *CreateOrUpdateFAQEntryRequest) GetQuestionOk() (*map[string]string, boo
 
 // HasQuestion returns a boolean if a field has been set.
 func (o *CreateOrUpdateFAQEntryRequest) HasQuestion() bool {
-	if o != nil && o.Question != nil {
+	if o != nil && !IsNil(o.Question) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *CreateOrUpdateFAQEntryRequest) SetQuestion(v map[string]string) {
 
 // GetAnswer returns the Answer field value if set, zero value otherwise.
 func (o *CreateOrUpdateFAQEntryRequest) GetAnswer() map[string]string {
-	if o == nil || o.Answer == nil {
+	if o == nil || IsNil(o.Answer) {
 		var ret map[string]string
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *CreateOrUpdateFAQEntryRequest) GetAnswer() map[string]string {
 // GetAnswerOk returns a tuple with the Answer field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateFAQEntryRequest) GetAnswerOk() (*map[string]string, bool) {
-	if o == nil || o.Answer == nil {
+	if o == nil || IsNil(o.Answer) {
 		return nil, false
 	}
 	return o.Answer, true
@@ -92,7 +95,7 @@ func (o *CreateOrUpdateFAQEntryRequest) GetAnswerOk() (*map[string]string, bool)
 
 // HasAnswer returns a boolean if a field has been set.
 func (o *CreateOrUpdateFAQEntryRequest) HasAnswer() bool {
-	if o != nil && o.Answer != nil {
+	if o != nil && !IsNil(o.Answer) {
 		return true
 	}
 
@@ -106,7 +109,7 @@ func (o *CreateOrUpdateFAQEntryRequest) SetAnswer(v map[string]string) {
 
 // GetKeywords returns the Keywords field value if set, zero value otherwise.
 func (o *CreateOrUpdateFAQEntryRequest) GetKeywords() []string {
-	if o == nil || o.Keywords == nil {
+	if o == nil || IsNil(o.Keywords) {
 		var ret []string
 		return ret
 	}
@@ -116,7 +119,7 @@ func (o *CreateOrUpdateFAQEntryRequest) GetKeywords() []string {
 // GetKeywordsOk returns a tuple with the Keywords field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateFAQEntryRequest) GetKeywordsOk() ([]string, bool) {
-	if o == nil || o.Keywords == nil {
+	if o == nil || IsNil(o.Keywords) {
 		return nil, false
 	}
 	return o.Keywords, true
@@ -124,7 +127,7 @@ func (o *CreateOrUpdateFAQEntryRequest) GetKeywordsOk() ([]string, bool) {
 
 // HasKeywords returns a boolean if a field has been set.
 func (o *CreateOrUpdateFAQEntryRequest) HasKeywords() bool {
-	if o != nil && o.Keywords != nil {
+	if o != nil && !IsNil(o.Keywords) {
 		return true
 	}
 
@@ -137,17 +140,25 @@ func (o *CreateOrUpdateFAQEntryRequest) SetKeywords(v []string) {
 }
 
 func (o CreateOrUpdateFAQEntryRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Question != nil {
-		toSerialize["question"] = o.Question
-	}
-	if o.Answer != nil {
-		toSerialize["answer"] = o.Answer
-	}
-	if o.Keywords != nil {
-		toSerialize["keywords"] = o.Keywords
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CreateOrUpdateFAQEntryRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Question) {
+		toSerialize["question"] = o.Question
+	}
+	if !IsNil(o.Answer) {
+		toSerialize["answer"] = o.Answer
+	}
+	if !IsNil(o.Keywords) {
+		toSerialize["keywords"] = o.Keywords
+	}
+	return toSerialize, nil
 }
 
 type NullableCreateOrUpdateFAQEntryRequest struct {

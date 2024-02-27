@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the QueryPropertiesRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &QueryPropertiesRequest{}
+
 // QueryPropertiesRequest Request used to get a list of properties for the curent user
 type QueryPropertiesRequest struct {
 	// number of items to include in the result
@@ -47,7 +50,7 @@ func NewQueryPropertiesRequestWithDefaults() *QueryPropertiesRequest {
 
 // GetLimit returns the Limit field value if set, zero value otherwise.
 func (o *QueryPropertiesRequest) GetLimit() int64 {
-	if o == nil || o.Limit == nil {
+	if o == nil || IsNil(o.Limit) {
 		var ret int64
 		return ret
 	}
@@ -57,7 +60,7 @@ func (o *QueryPropertiesRequest) GetLimit() int64 {
 // GetLimitOk returns a tuple with the Limit field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryPropertiesRequest) GetLimitOk() (*int64, bool) {
-	if o == nil || o.Limit == nil {
+	if o == nil || IsNil(o.Limit) {
 		return nil, false
 	}
 	return o.Limit, true
@@ -65,7 +68,7 @@ func (o *QueryPropertiesRequest) GetLimitOk() (*int64, bool) {
 
 // HasLimit returns a boolean if a field has been set.
 func (o *QueryPropertiesRequest) HasLimit() bool {
-	if o != nil && o.Limit != nil {
+	if o != nil && !IsNil(o.Limit) {
 		return true
 	}
 
@@ -79,7 +82,7 @@ func (o *QueryPropertiesRequest) SetLimit(v int64) {
 
 // GetOffset returns the Offset field value if set, zero value otherwise.
 func (o *QueryPropertiesRequest) GetOffset() int64 {
-	if o == nil || o.Offset == nil {
+	if o == nil || IsNil(o.Offset) {
 		var ret int64
 		return ret
 	}
@@ -89,7 +92,7 @@ func (o *QueryPropertiesRequest) GetOffset() int64 {
 // GetOffsetOk returns a tuple with the Offset field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryPropertiesRequest) GetOffsetOk() (*int64, bool) {
-	if o == nil || o.Offset == nil {
+	if o == nil || IsNil(o.Offset) {
 		return nil, false
 	}
 	return o.Offset, true
@@ -97,7 +100,7 @@ func (o *QueryPropertiesRequest) GetOffsetOk() (*int64, bool) {
 
 // HasOffset returns a boolean if a field has been set.
 func (o *QueryPropertiesRequest) HasOffset() bool {
-	if o != nil && o.Offset != nil {
+	if o != nil && !IsNil(o.Offset) {
 		return true
 	}
 
@@ -111,7 +114,7 @@ func (o *QueryPropertiesRequest) SetOffset(v int64) {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *QueryPropertiesRequest) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -121,7 +124,7 @@ func (o *QueryPropertiesRequest) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryPropertiesRequest) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -129,7 +132,7 @@ func (o *QueryPropertiesRequest) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *QueryPropertiesRequest) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -143,7 +146,7 @@ func (o *QueryPropertiesRequest) SetName(v string) {
 
 // GetParentRef returns the ParentRef field value if set, zero value otherwise.
 func (o *QueryPropertiesRequest) GetParentRef() string {
-	if o == nil || o.ParentRef == nil {
+	if o == nil || IsNil(o.ParentRef) {
 		var ret string
 		return ret
 	}
@@ -153,7 +156,7 @@ func (o *QueryPropertiesRequest) GetParentRef() string {
 // GetParentRefOk returns a tuple with the ParentRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryPropertiesRequest) GetParentRefOk() (*string, bool) {
-	if o == nil || o.ParentRef == nil {
+	if o == nil || IsNil(o.ParentRef) {
 		return nil, false
 	}
 	return o.ParentRef, true
@@ -161,7 +164,7 @@ func (o *QueryPropertiesRequest) GetParentRefOk() (*string, bool) {
 
 // HasParentRef returns a boolean if a field has been set.
 func (o *QueryPropertiesRequest) HasParentRef() bool {
-	if o != nil && o.ParentRef != nil {
+	if o != nil && !IsNil(o.ParentRef) {
 		return true
 	}
 
@@ -175,7 +178,7 @@ func (o *QueryPropertiesRequest) SetParentRef(v string) {
 
 // GetOwnerRef returns the OwnerRef field value if set, zero value otherwise.
 func (o *QueryPropertiesRequest) GetOwnerRef() string {
-	if o == nil || o.OwnerRef == nil {
+	if o == nil || IsNil(o.OwnerRef) {
 		var ret string
 		return ret
 	}
@@ -185,7 +188,7 @@ func (o *QueryPropertiesRequest) GetOwnerRef() string {
 // GetOwnerRefOk returns a tuple with the OwnerRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryPropertiesRequest) GetOwnerRefOk() (*string, bool) {
-	if o == nil || o.OwnerRef == nil {
+	if o == nil || IsNil(o.OwnerRef) {
 		return nil, false
 	}
 	return o.OwnerRef, true
@@ -193,7 +196,7 @@ func (o *QueryPropertiesRequest) GetOwnerRefOk() (*string, bool) {
 
 // HasOwnerRef returns a boolean if a field has been set.
 func (o *QueryPropertiesRequest) HasOwnerRef() bool {
-	if o != nil && o.OwnerRef != nil {
+	if o != nil && !IsNil(o.OwnerRef) {
 		return true
 	}
 
@@ -206,23 +209,31 @@ func (o *QueryPropertiesRequest) SetOwnerRef(v string) {
 }
 
 func (o QueryPropertiesRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Limit != nil {
-		toSerialize["limit"] = o.Limit
-	}
-	if o.Offset != nil {
-		toSerialize["offset"] = o.Offset
-	}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.ParentRef != nil {
-		toSerialize["parent_ref"] = o.ParentRef
-	}
-	if o.OwnerRef != nil {
-		toSerialize["owner_ref"] = o.OwnerRef
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o QueryPropertiesRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Limit) {
+		toSerialize["limit"] = o.Limit
+	}
+	if !IsNil(o.Offset) {
+		toSerialize["offset"] = o.Offset
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.ParentRef) {
+		toSerialize["parent_ref"] = o.ParentRef
+	}
+	if !IsNil(o.OwnerRef) {
+		toSerialize["owner_ref"] = o.OwnerRef
+	}
+	return toSerialize, nil
 }
 
 type NullableQueryPropertiesRequest struct {

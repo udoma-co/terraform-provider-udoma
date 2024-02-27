@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the EditorJSDocument type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &EditorJSDocument{}
+
 // EditorJSDocument A document in EditorJS format
 type EditorJSDocument struct {
 	// JSON formatted data
@@ -39,7 +42,7 @@ func NewEditorJSDocumentWithDefaults() *EditorJSDocument {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *EditorJSDocument) GetData() string {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret string
 		return ret
 	}
@@ -49,7 +52,7 @@ func (o *EditorJSDocument) GetData() string {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EditorJSDocument) GetDataOk() (*string, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -57,7 +60,7 @@ func (o *EditorJSDocument) GetDataOk() (*string, bool) {
 
 // HasData returns a boolean if a field has been set.
 func (o *EditorJSDocument) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -70,11 +73,19 @@ func (o *EditorJSDocument) SetData(v string) {
 }
 
 func (o EditorJSDocument) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o EditorJSDocument) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	return toSerialize, nil
 }
 
 type NullableEditorJSDocument struct {

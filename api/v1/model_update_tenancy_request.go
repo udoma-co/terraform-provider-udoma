@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the UpdateTenancyRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &UpdateTenancyRequest{}
+
 // UpdateTenancyRequest Request issued by a property manager to update a tenancy for a property
 type UpdateTenancyRequest struct {
 	// Indicates whether the tenancy is active. Active tenancies indicate the current contract between the tenants and the property manager.
@@ -45,7 +48,7 @@ func NewUpdateTenancyRequestWithDefaults() *UpdateTenancyRequest {
 
 // GetActive returns the Active field value if set, zero value otherwise.
 func (o *UpdateTenancyRequest) GetActive() bool {
-	if o == nil || o.Active == nil {
+	if o == nil || IsNil(o.Active) {
 		var ret bool
 		return ret
 	}
@@ -55,7 +58,7 @@ func (o *UpdateTenancyRequest) GetActive() bool {
 // GetActiveOk returns a tuple with the Active field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateTenancyRequest) GetActiveOk() (*bool, bool) {
-	if o == nil || o.Active == nil {
+	if o == nil || IsNil(o.Active) {
 		return nil, false
 	}
 	return o.Active, true
@@ -63,7 +66,7 @@ func (o *UpdateTenancyRequest) GetActiveOk() (*bool, bool) {
 
 // HasActive returns a boolean if a field has been set.
 func (o *UpdateTenancyRequest) HasActive() bool {
-	if o != nil && o.Active != nil {
+	if o != nil && !IsNil(o.Active) {
 		return true
 	}
 
@@ -77,7 +80,7 @@ func (o *UpdateTenancyRequest) SetActive(v bool) {
 
 // GetStartDate returns the StartDate field value if set, zero value otherwise.
 func (o *UpdateTenancyRequest) GetStartDate() int64 {
-	if o == nil || o.StartDate == nil {
+	if o == nil || IsNil(o.StartDate) {
 		var ret int64
 		return ret
 	}
@@ -87,7 +90,7 @@ func (o *UpdateTenancyRequest) GetStartDate() int64 {
 // GetStartDateOk returns a tuple with the StartDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateTenancyRequest) GetStartDateOk() (*int64, bool) {
-	if o == nil || o.StartDate == nil {
+	if o == nil || IsNil(o.StartDate) {
 		return nil, false
 	}
 	return o.StartDate, true
@@ -95,7 +98,7 @@ func (o *UpdateTenancyRequest) GetStartDateOk() (*int64, bool) {
 
 // HasStartDate returns a boolean if a field has been set.
 func (o *UpdateTenancyRequest) HasStartDate() bool {
-	if o != nil && o.StartDate != nil {
+	if o != nil && !IsNil(o.StartDate) {
 		return true
 	}
 
@@ -109,7 +112,7 @@ func (o *UpdateTenancyRequest) SetStartDate(v int64) {
 
 // GetEndDate returns the EndDate field value if set, zero value otherwise.
 func (o *UpdateTenancyRequest) GetEndDate() int64 {
-	if o == nil || o.EndDate == nil {
+	if o == nil || IsNil(o.EndDate) {
 		var ret int64
 		return ret
 	}
@@ -119,7 +122,7 @@ func (o *UpdateTenancyRequest) GetEndDate() int64 {
 // GetEndDateOk returns a tuple with the EndDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateTenancyRequest) GetEndDateOk() (*int64, bool) {
-	if o == nil || o.EndDate == nil {
+	if o == nil || IsNil(o.EndDate) {
 		return nil, false
 	}
 	return o.EndDate, true
@@ -127,7 +130,7 @@ func (o *UpdateTenancyRequest) GetEndDateOk() (*int64, bool) {
 
 // HasEndDate returns a boolean if a field has been set.
 func (o *UpdateTenancyRequest) HasEndDate() bool {
-	if o != nil && o.EndDate != nil {
+	if o != nil && !IsNil(o.EndDate) {
 		return true
 	}
 
@@ -141,7 +144,7 @@ func (o *UpdateTenancyRequest) SetEndDate(v int64) {
 
 // GetContractType returns the ContractType field value if set, zero value otherwise.
 func (o *UpdateTenancyRequest) GetContractType() TenancyContractTypeEnum {
-	if o == nil || o.ContractType == nil {
+	if o == nil || IsNil(o.ContractType) {
 		var ret TenancyContractTypeEnum
 		return ret
 	}
@@ -151,7 +154,7 @@ func (o *UpdateTenancyRequest) GetContractType() TenancyContractTypeEnum {
 // GetContractTypeOk returns a tuple with the ContractType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateTenancyRequest) GetContractTypeOk() (*TenancyContractTypeEnum, bool) {
-	if o == nil || o.ContractType == nil {
+	if o == nil || IsNil(o.ContractType) {
 		return nil, false
 	}
 	return o.ContractType, true
@@ -159,7 +162,7 @@ func (o *UpdateTenancyRequest) GetContractTypeOk() (*TenancyContractTypeEnum, bo
 
 // HasContractType returns a boolean if a field has been set.
 func (o *UpdateTenancyRequest) HasContractType() bool {
-	if o != nil && o.ContractType != nil {
+	if o != nil && !IsNil(o.ContractType) {
 		return true
 	}
 
@@ -173,7 +176,7 @@ func (o *UpdateTenancyRequest) SetContractType(v TenancyContractTypeEnum) {
 
 // GetRentInformation returns the RentInformation field value if set, zero value otherwise.
 func (o *UpdateTenancyRequest) GetRentInformation() RentInformation {
-	if o == nil || o.RentInformation == nil {
+	if o == nil || IsNil(o.RentInformation) {
 		var ret RentInformation
 		return ret
 	}
@@ -183,7 +186,7 @@ func (o *UpdateTenancyRequest) GetRentInformation() RentInformation {
 // GetRentInformationOk returns a tuple with the RentInformation field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateTenancyRequest) GetRentInformationOk() (*RentInformation, bool) {
-	if o == nil || o.RentInformation == nil {
+	if o == nil || IsNil(o.RentInformation) {
 		return nil, false
 	}
 	return o.RentInformation, true
@@ -191,7 +194,7 @@ func (o *UpdateTenancyRequest) GetRentInformationOk() (*RentInformation, bool) {
 
 // HasRentInformation returns a boolean if a field has been set.
 func (o *UpdateTenancyRequest) HasRentInformation() bool {
-	if o != nil && o.RentInformation != nil {
+	if o != nil && !IsNil(o.RentInformation) {
 		return true
 	}
 
@@ -204,23 +207,31 @@ func (o *UpdateTenancyRequest) SetRentInformation(v RentInformation) {
 }
 
 func (o UpdateTenancyRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Active != nil {
-		toSerialize["active"] = o.Active
-	}
-	if o.StartDate != nil {
-		toSerialize["start_date"] = o.StartDate
-	}
-	if o.EndDate != nil {
-		toSerialize["end_date"] = o.EndDate
-	}
-	if o.ContractType != nil {
-		toSerialize["contract_type"] = o.ContractType
-	}
-	if o.RentInformation != nil {
-		toSerialize["rent_information"] = o.RentInformation
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o UpdateTenancyRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Active) {
+		toSerialize["active"] = o.Active
+	}
+	if !IsNil(o.StartDate) {
+		toSerialize["start_date"] = o.StartDate
+	}
+	if !IsNil(o.EndDate) {
+		toSerialize["end_date"] = o.EndDate
+	}
+	if !IsNil(o.ContractType) {
+		toSerialize["contract_type"] = o.ContractType
+	}
+	if !IsNil(o.RentInformation) {
+		toSerialize["rent_information"] = o.RentInformation
+	}
+	return toSerialize, nil
 }
 
 type NullableUpdateTenancyRequest struct {

@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the DocumentTemplate type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DocumentTemplate{}
+
 // DocumentTemplate A template for generating documents
 type DocumentTemplate struct {
 	// The unique ID of the template
@@ -52,7 +55,7 @@ func NewDocumentTemplateWithDefaults() *DocumentTemplate {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *DocumentTemplate) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -62,7 +65,7 @@ func (o *DocumentTemplate) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentTemplate) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -70,7 +73,7 @@ func (o *DocumentTemplate) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *DocumentTemplate) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -84,7 +87,7 @@ func (o *DocumentTemplate) SetId(v string) {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *DocumentTemplate) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -94,7 +97,7 @@ func (o *DocumentTemplate) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentTemplate) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -102,7 +105,7 @@ func (o *DocumentTemplate) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *DocumentTemplate) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -116,7 +119,7 @@ func (o *DocumentTemplate) SetName(v string) {
 
 // GetDescription returns the Description field value if set, zero value otherwise.
 func (o *DocumentTemplate) GetDescription() string {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		var ret string
 		return ret
 	}
@@ -126,7 +129,7 @@ func (o *DocumentTemplate) GetDescription() string {
 // GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentTemplate) GetDescriptionOk() (*string, bool) {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		return nil, false
 	}
 	return o.Description, true
@@ -134,7 +137,7 @@ func (o *DocumentTemplate) GetDescriptionOk() (*string, bool) {
 
 // HasDescription returns a boolean if a field has been set.
 func (o *DocumentTemplate) HasDescription() bool {
-	if o != nil && o.Description != nil {
+	if o != nil && !IsNil(o.Description) {
 		return true
 	}
 
@@ -148,7 +151,7 @@ func (o *DocumentTemplate) SetDescription(v string) {
 
 // GetOptions returns the Options field value if set, zero value otherwise.
 func (o *DocumentTemplate) GetOptions() DocumentTemplateOptions {
-	if o == nil || o.Options == nil {
+	if o == nil || IsNil(o.Options) {
 		var ret DocumentTemplateOptions
 		return ret
 	}
@@ -158,7 +161,7 @@ func (o *DocumentTemplate) GetOptions() DocumentTemplateOptions {
 // GetOptionsOk returns a tuple with the Options field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentTemplate) GetOptionsOk() (*DocumentTemplateOptions, bool) {
-	if o == nil || o.Options == nil {
+	if o == nil || IsNil(o.Options) {
 		return nil, false
 	}
 	return o.Options, true
@@ -166,7 +169,7 @@ func (o *DocumentTemplate) GetOptionsOk() (*DocumentTemplateOptions, bool) {
 
 // HasOptions returns a boolean if a field has been set.
 func (o *DocumentTemplate) HasOptions() bool {
-	if o != nil && o.Options != nil {
+	if o != nil && !IsNil(o.Options) {
 		return true
 	}
 
@@ -180,7 +183,7 @@ func (o *DocumentTemplate) SetOptions(v DocumentTemplateOptions) {
 
 // GetNameExpression returns the NameExpression field value if set, zero value otherwise.
 func (o *DocumentTemplate) GetNameExpression() string {
-	if o == nil || o.NameExpression == nil {
+	if o == nil || IsNil(o.NameExpression) {
 		var ret string
 		return ret
 	}
@@ -190,7 +193,7 @@ func (o *DocumentTemplate) GetNameExpression() string {
 // GetNameExpressionOk returns a tuple with the NameExpression field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentTemplate) GetNameExpressionOk() (*string, bool) {
-	if o == nil || o.NameExpression == nil {
+	if o == nil || IsNil(o.NameExpression) {
 		return nil, false
 	}
 	return o.NameExpression, true
@@ -198,7 +201,7 @@ func (o *DocumentTemplate) GetNameExpressionOk() (*string, bool) {
 
 // HasNameExpression returns a boolean if a field has been set.
 func (o *DocumentTemplate) HasNameExpression() bool {
-	if o != nil && o.NameExpression != nil {
+	if o != nil && !IsNil(o.NameExpression) {
 		return true
 	}
 
@@ -212,7 +215,7 @@ func (o *DocumentTemplate) SetNameExpression(v string) {
 
 // GetContent returns the Content field value if set, zero value otherwise.
 func (o *DocumentTemplate) GetContent() string {
-	if o == nil || o.Content == nil {
+	if o == nil || IsNil(o.Content) {
 		var ret string
 		return ret
 	}
@@ -222,7 +225,7 @@ func (o *DocumentTemplate) GetContent() string {
 // GetContentOk returns a tuple with the Content field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentTemplate) GetContentOk() (*string, bool) {
-	if o == nil || o.Content == nil {
+	if o == nil || IsNil(o.Content) {
 		return nil, false
 	}
 	return o.Content, true
@@ -230,7 +233,7 @@ func (o *DocumentTemplate) GetContentOk() (*string, bool) {
 
 // HasContent returns a boolean if a field has been set.
 func (o *DocumentTemplate) HasContent() bool {
-	if o != nil && o.Content != nil {
+	if o != nil && !IsNil(o.Content) {
 		return true
 	}
 
@@ -244,7 +247,7 @@ func (o *DocumentTemplate) SetContent(v string) {
 
 // GetInputs returns the Inputs field value if set, zero value otherwise.
 func (o *DocumentTemplate) GetInputs() CustomForm {
-	if o == nil || o.Inputs == nil {
+	if o == nil || IsNil(o.Inputs) {
 		var ret CustomForm
 		return ret
 	}
@@ -254,7 +257,7 @@ func (o *DocumentTemplate) GetInputs() CustomForm {
 // GetInputsOk returns a tuple with the Inputs field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentTemplate) GetInputsOk() (*CustomForm, bool) {
-	if o == nil || o.Inputs == nil {
+	if o == nil || IsNil(o.Inputs) {
 		return nil, false
 	}
 	return o.Inputs, true
@@ -262,7 +265,7 @@ func (o *DocumentTemplate) GetInputsOk() (*CustomForm, bool) {
 
 // HasInputs returns a boolean if a field has been set.
 func (o *DocumentTemplate) HasInputs() bool {
-	if o != nil && o.Inputs != nil {
+	if o != nil && !IsNil(o.Inputs) {
 		return true
 	}
 
@@ -276,7 +279,7 @@ func (o *DocumentTemplate) SetInputs(v CustomForm) {
 
 // GetPlaceholders returns the Placeholders field value if set, zero value otherwise.
 func (o *DocumentTemplate) GetPlaceholders() []DocumentPlaceholder {
-	if o == nil || o.Placeholders == nil {
+	if o == nil || IsNil(o.Placeholders) {
 		var ret []DocumentPlaceholder
 		return ret
 	}
@@ -286,7 +289,7 @@ func (o *DocumentTemplate) GetPlaceholders() []DocumentPlaceholder {
 // GetPlaceholdersOk returns a tuple with the Placeholders field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentTemplate) GetPlaceholdersOk() ([]DocumentPlaceholder, bool) {
-	if o == nil || o.Placeholders == nil {
+	if o == nil || IsNil(o.Placeholders) {
 		return nil, false
 	}
 	return o.Placeholders, true
@@ -294,7 +297,7 @@ func (o *DocumentTemplate) GetPlaceholdersOk() ([]DocumentPlaceholder, bool) {
 
 // HasPlaceholders returns a boolean if a field has been set.
 func (o *DocumentTemplate) HasPlaceholders() bool {
-	if o != nil && o.Placeholders != nil {
+	if o != nil && !IsNil(o.Placeholders) {
 		return true
 	}
 
@@ -308,7 +311,7 @@ func (o *DocumentTemplate) SetPlaceholders(v []DocumentPlaceholder) {
 
 // GetSignatures returns the Signatures field value if set, zero value otherwise.
 func (o *DocumentTemplate) GetSignatures() DocumentTemplateSignatureConfguration {
-	if o == nil || o.Signatures == nil {
+	if o == nil || IsNil(o.Signatures) {
 		var ret DocumentTemplateSignatureConfguration
 		return ret
 	}
@@ -318,7 +321,7 @@ func (o *DocumentTemplate) GetSignatures() DocumentTemplateSignatureConfguration
 // GetSignaturesOk returns a tuple with the Signatures field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentTemplate) GetSignaturesOk() (*DocumentTemplateSignatureConfguration, bool) {
-	if o == nil || o.Signatures == nil {
+	if o == nil || IsNil(o.Signatures) {
 		return nil, false
 	}
 	return o.Signatures, true
@@ -326,7 +329,7 @@ func (o *DocumentTemplate) GetSignaturesOk() (*DocumentTemplateSignatureConfgura
 
 // HasSignatures returns a boolean if a field has been set.
 func (o *DocumentTemplate) HasSignatures() bool {
-	if o != nil && o.Signatures != nil {
+	if o != nil && !IsNil(o.Signatures) {
 		return true
 	}
 
@@ -339,35 +342,43 @@ func (o *DocumentTemplate) SetSignatures(v DocumentTemplateSignatureConfguration
 }
 
 func (o DocumentTemplate) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.Description != nil {
-		toSerialize["description"] = o.Description
-	}
-	if o.Options != nil {
-		toSerialize["options"] = o.Options
-	}
-	if o.NameExpression != nil {
-		toSerialize["name_expression"] = o.NameExpression
-	}
-	if o.Content != nil {
-		toSerialize["content"] = o.Content
-	}
-	if o.Inputs != nil {
-		toSerialize["inputs"] = o.Inputs
-	}
-	if o.Placeholders != nil {
-		toSerialize["placeholders"] = o.Placeholders
-	}
-	if o.Signatures != nil {
-		toSerialize["signatures"] = o.Signatures
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DocumentTemplate) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
+	}
+	if !IsNil(o.Options) {
+		toSerialize["options"] = o.Options
+	}
+	if !IsNil(o.NameExpression) {
+		toSerialize["name_expression"] = o.NameExpression
+	}
+	if !IsNil(o.Content) {
+		toSerialize["content"] = o.Content
+	}
+	if !IsNil(o.Inputs) {
+		toSerialize["inputs"] = o.Inputs
+	}
+	if !IsNil(o.Placeholders) {
+		toSerialize["placeholders"] = o.Placeholders
+	}
+	if !IsNil(o.Signatures) {
+		toSerialize["signatures"] = o.Signatures
+	}
+	return toSerialize, nil
 }
 
 type NullableDocumentTemplate struct {

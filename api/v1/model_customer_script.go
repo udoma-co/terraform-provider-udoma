@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CustomerScript type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CustomerScript{}
+
 // CustomerScript struct for CustomerScript
 type CustomerScript struct {
 	Id *string `json:"id,omitempty"`
@@ -49,7 +52,7 @@ func NewCustomerScriptWithDefaults() *CustomerScript {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *CustomerScript) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -59,7 +62,7 @@ func (o *CustomerScript) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CustomerScript) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -67,7 +70,7 @@ func (o *CustomerScript) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *CustomerScript) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -81,7 +84,7 @@ func (o *CustomerScript) SetId(v string) {
 
 // GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
 func (o *CustomerScript) GetCreatedAt() int64 {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		var ret int64
 		return ret
 	}
@@ -91,7 +94,7 @@ func (o *CustomerScript) GetCreatedAt() int64 {
 // GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CustomerScript) GetCreatedAtOk() (*int64, bool) {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
 	return o.CreatedAt, true
@@ -99,7 +102,7 @@ func (o *CustomerScript) GetCreatedAtOk() (*int64, bool) {
 
 // HasCreatedAt returns a boolean if a field has been set.
 func (o *CustomerScript) HasCreatedAt() bool {
-	if o != nil && o.CreatedAt != nil {
+	if o != nil && !IsNil(o.CreatedAt) {
 		return true
 	}
 
@@ -113,7 +116,7 @@ func (o *CustomerScript) SetCreatedAt(v int64) {
 
 // GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
 func (o *CustomerScript) GetUpdatedAt() int64 {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		var ret int64
 		return ret
 	}
@@ -123,7 +126,7 @@ func (o *CustomerScript) GetUpdatedAt() int64 {
 // GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CustomerScript) GetUpdatedAtOk() (*int64, bool) {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
 	return o.UpdatedAt, true
@@ -131,7 +134,7 @@ func (o *CustomerScript) GetUpdatedAtOk() (*int64, bool) {
 
 // HasUpdatedAt returns a boolean if a field has been set.
 func (o *CustomerScript) HasUpdatedAt() bool {
-	if o != nil && o.UpdatedAt != nil {
+	if o != nil && !IsNil(o.UpdatedAt) {
 		return true
 	}
 
@@ -145,7 +148,7 @@ func (o *CustomerScript) SetUpdatedAt(v int64) {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *CustomerScript) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -155,7 +158,7 @@ func (o *CustomerScript) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CustomerScript) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -163,7 +166,7 @@ func (o *CustomerScript) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *CustomerScript) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -177,7 +180,7 @@ func (o *CustomerScript) SetName(v string) {
 
 // GetDescription returns the Description field value if set, zero value otherwise.
 func (o *CustomerScript) GetDescription() string {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		var ret string
 		return ret
 	}
@@ -187,7 +190,7 @@ func (o *CustomerScript) GetDescription() string {
 // GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CustomerScript) GetDescriptionOk() (*string, bool) {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		return nil, false
 	}
 	return o.Description, true
@@ -195,7 +198,7 @@ func (o *CustomerScript) GetDescriptionOk() (*string, bool) {
 
 // HasDescription returns a boolean if a field has been set.
 func (o *CustomerScript) HasDescription() bool {
-	if o != nil && o.Description != nil {
+	if o != nil && !IsNil(o.Description) {
 		return true
 	}
 
@@ -209,7 +212,7 @@ func (o *CustomerScript) SetDescription(v string) {
 
 // GetScope returns the Scope field value if set, zero value otherwise.
 func (o *CustomerScript) GetScope() CustomerScriptScope {
-	if o == nil || o.Scope == nil {
+	if o == nil || IsNil(o.Scope) {
 		var ret CustomerScriptScope
 		return ret
 	}
@@ -219,7 +222,7 @@ func (o *CustomerScript) GetScope() CustomerScriptScope {
 // GetScopeOk returns a tuple with the Scope field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CustomerScript) GetScopeOk() (*CustomerScriptScope, bool) {
-	if o == nil || o.Scope == nil {
+	if o == nil || IsNil(o.Scope) {
 		return nil, false
 	}
 	return o.Scope, true
@@ -227,7 +230,7 @@ func (o *CustomerScript) GetScopeOk() (*CustomerScriptScope, bool) {
 
 // HasScope returns a boolean if a field has been set.
 func (o *CustomerScript) HasScope() bool {
-	if o != nil && o.Scope != nil {
+	if o != nil && !IsNil(o.Scope) {
 		return true
 	}
 
@@ -241,7 +244,7 @@ func (o *CustomerScript) SetScope(v CustomerScriptScope) {
 
 // GetScript returns the Script field value if set, zero value otherwise.
 func (o *CustomerScript) GetScript() string {
-	if o == nil || o.Script == nil {
+	if o == nil || IsNil(o.Script) {
 		var ret string
 		return ret
 	}
@@ -251,7 +254,7 @@ func (o *CustomerScript) GetScript() string {
 // GetScriptOk returns a tuple with the Script field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CustomerScript) GetScriptOk() (*string, bool) {
-	if o == nil || o.Script == nil {
+	if o == nil || IsNil(o.Script) {
 		return nil, false
 	}
 	return o.Script, true
@@ -259,7 +262,7 @@ func (o *CustomerScript) GetScriptOk() (*string, bool) {
 
 // HasScript returns a boolean if a field has been set.
 func (o *CustomerScript) HasScript() bool {
-	if o != nil && o.Script != nil {
+	if o != nil && !IsNil(o.Script) {
 		return true
 	}
 
@@ -272,29 +275,37 @@ func (o *CustomerScript) SetScript(v string) {
 }
 
 func (o CustomerScript) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.CreatedAt != nil {
-		toSerialize["created_at"] = o.CreatedAt
-	}
-	if o.UpdatedAt != nil {
-		toSerialize["updated_at"] = o.UpdatedAt
-	}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.Description != nil {
-		toSerialize["description"] = o.Description
-	}
-	if o.Scope != nil {
-		toSerialize["scope"] = o.Scope
-	}
-	if o.Script != nil {
-		toSerialize["script"] = o.Script
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CustomerScript) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.CreatedAt) {
+		toSerialize["created_at"] = o.CreatedAt
+	}
+	if !IsNil(o.UpdatedAt) {
+		toSerialize["updated_at"] = o.UpdatedAt
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
+	}
+	if !IsNil(o.Scope) {
+		toSerialize["scope"] = o.Scope
+	}
+	if !IsNil(o.Script) {
+		toSerialize["script"] = o.Script
+	}
+	return toSerialize, nil
 }
 
 type NullableCustomerScript struct {

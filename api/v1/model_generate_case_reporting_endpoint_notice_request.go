@@ -14,10 +14,13 @@ import (
 	"encoding/json"
 )
 
+// checks if the GenerateCaseReportingEndpointNoticeRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &GenerateCaseReportingEndpointNoticeRequest{}
+
 // GenerateCaseReportingEndpointNoticeRequest struct for GenerateCaseReportingEndpointNoticeRequest
 type GenerateCaseReportingEndpointNoticeRequest struct {
 	// The language in which the PDF should be generated
-	Languages []string `json:"languages,omitempty"`
+	Language *string `json:"language,omitempty"`
 }
 
 // NewGenerateCaseReportingEndpointNoticeRequest instantiates a new GenerateCaseReportingEndpointNoticeRequest object
@@ -37,44 +40,52 @@ func NewGenerateCaseReportingEndpointNoticeRequestWithDefaults() *GenerateCaseRe
 	return &this
 }
 
-// GetLanguages returns the Languages field value if set, zero value otherwise.
-func (o *GenerateCaseReportingEndpointNoticeRequest) GetLanguages() []string {
-	if o == nil || o.Languages == nil {
-		var ret []string
+// GetLanguage returns the Language field value if set, zero value otherwise.
+func (o *GenerateCaseReportingEndpointNoticeRequest) GetLanguage() string {
+	if o == nil || IsNil(o.Language) {
+		var ret string
 		return ret
 	}
-	return o.Languages
+	return *o.Language
 }
 
-// GetLanguagesOk returns a tuple with the Languages field value if set, nil otherwise
+// GetLanguageOk returns a tuple with the Language field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GenerateCaseReportingEndpointNoticeRequest) GetLanguagesOk() ([]string, bool) {
-	if o == nil || o.Languages == nil {
+func (o *GenerateCaseReportingEndpointNoticeRequest) GetLanguageOk() (*string, bool) {
+	if o == nil || IsNil(o.Language) {
 		return nil, false
 	}
-	return o.Languages, true
+	return o.Language, true
 }
 
-// HasLanguages returns a boolean if a field has been set.
-func (o *GenerateCaseReportingEndpointNoticeRequest) HasLanguages() bool {
-	if o != nil && o.Languages != nil {
+// HasLanguage returns a boolean if a field has been set.
+func (o *GenerateCaseReportingEndpointNoticeRequest) HasLanguage() bool {
+	if o != nil && !IsNil(o.Language) {
 		return true
 	}
 
 	return false
 }
 
-// SetLanguages gets a reference to the given []string and assigns it to the Languages field.
-func (o *GenerateCaseReportingEndpointNoticeRequest) SetLanguages(v []string) {
-	o.Languages = v
+// SetLanguage gets a reference to the given string and assigns it to the Language field.
+func (o *GenerateCaseReportingEndpointNoticeRequest) SetLanguage(v string) {
+	o.Language = &v
 }
 
 func (o GenerateCaseReportingEndpointNoticeRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Languages != nil {
-		toSerialize["languages"] = o.Languages
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o GenerateCaseReportingEndpointNoticeRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Language) {
+		toSerialize["language"] = o.Language
+	}
+	return toSerialize, nil
 }
 
 type NullableGenerateCaseReportingEndpointNoticeRequest struct {

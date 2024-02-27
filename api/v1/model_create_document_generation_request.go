@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CreateDocumentGenerationRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CreateDocumentGenerationRequest{}
+
 // CreateDocumentGenerationRequest Start a new document generation based on the given template. This will also trigger the initialisation of the inputs, defined in the template and store the result in the new generation object.
 type CreateDocumentGenerationRequest struct {
 	// The template based on which a document shall be generated
@@ -41,7 +44,7 @@ func NewCreateDocumentGenerationRequestWithDefaults() *CreateDocumentGenerationR
 
 // GetTemplate returns the Template field value if set, zero value otherwise.
 func (o *CreateDocumentGenerationRequest) GetTemplate() string {
-	if o == nil || o.Template == nil {
+	if o == nil || IsNil(o.Template) {
 		var ret string
 		return ret
 	}
@@ -51,7 +54,7 @@ func (o *CreateDocumentGenerationRequest) GetTemplate() string {
 // GetTemplateOk returns a tuple with the Template field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateDocumentGenerationRequest) GetTemplateOk() (*string, bool) {
-	if o == nil || o.Template == nil {
+	if o == nil || IsNil(o.Template) {
 		return nil, false
 	}
 	return o.Template, true
@@ -59,7 +62,7 @@ func (o *CreateDocumentGenerationRequest) GetTemplateOk() (*string, bool) {
 
 // HasTemplate returns a boolean if a field has been set.
 func (o *CreateDocumentGenerationRequest) HasTemplate() bool {
-	if o != nil && o.Template != nil {
+	if o != nil && !IsNil(o.Template) {
 		return true
 	}
 
@@ -73,7 +76,7 @@ func (o *CreateDocumentGenerationRequest) SetTemplate(v string) {
 
 // GetInitData returns the InitData field value if set, zero value otherwise.
 func (o *CreateDocumentGenerationRequest) GetInitData() string {
-	if o == nil || o.InitData == nil {
+	if o == nil || IsNil(o.InitData) {
 		var ret string
 		return ret
 	}
@@ -83,7 +86,7 @@ func (o *CreateDocumentGenerationRequest) GetInitData() string {
 // GetInitDataOk returns a tuple with the InitData field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateDocumentGenerationRequest) GetInitDataOk() (*string, bool) {
-	if o == nil || o.InitData == nil {
+	if o == nil || IsNil(o.InitData) {
 		return nil, false
 	}
 	return o.InitData, true
@@ -91,7 +94,7 @@ func (o *CreateDocumentGenerationRequest) GetInitDataOk() (*string, bool) {
 
 // HasInitData returns a boolean if a field has been set.
 func (o *CreateDocumentGenerationRequest) HasInitData() bool {
-	if o != nil && o.InitData != nil {
+	if o != nil && !IsNil(o.InitData) {
 		return true
 	}
 
@@ -104,14 +107,22 @@ func (o *CreateDocumentGenerationRequest) SetInitData(v string) {
 }
 
 func (o CreateDocumentGenerationRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Template != nil {
-		toSerialize["template"] = o.Template
-	}
-	if o.InitData != nil {
-		toSerialize["init_data"] = o.InitData
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CreateDocumentGenerationRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Template) {
+		toSerialize["template"] = o.Template
+	}
+	if !IsNil(o.InitData) {
+		toSerialize["init_data"] = o.InitData
+	}
+	return toSerialize, nil
 }
 
 type NullableCreateDocumentGenerationRequest struct {

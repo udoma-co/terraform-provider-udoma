@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the PropertyHistoryEntry type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &PropertyHistoryEntry{}
+
 // PropertyHistoryEntry struct for PropertyHistoryEntry
 type PropertyHistoryEntry struct {
 	// unique ID of the entry
@@ -46,7 +49,7 @@ func NewPropertyHistoryEntryWithDefaults() *PropertyHistoryEntry {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *PropertyHistoryEntry) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -56,7 +59,7 @@ func (o *PropertyHistoryEntry) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PropertyHistoryEntry) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -64,7 +67,7 @@ func (o *PropertyHistoryEntry) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *PropertyHistoryEntry) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -78,7 +81,7 @@ func (o *PropertyHistoryEntry) SetId(v string) {
 
 // GetDate returns the Date field value if set, zero value otherwise.
 func (o *PropertyHistoryEntry) GetDate() string {
-	if o == nil || o.Date == nil {
+	if o == nil || IsNil(o.Date) {
 		var ret string
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *PropertyHistoryEntry) GetDate() string {
 // GetDateOk returns a tuple with the Date field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PropertyHistoryEntry) GetDateOk() (*string, bool) {
-	if o == nil || o.Date == nil {
+	if o == nil || IsNil(o.Date) {
 		return nil, false
 	}
 	return o.Date, true
@@ -96,7 +99,7 @@ func (o *PropertyHistoryEntry) GetDateOk() (*string, bool) {
 
 // HasDate returns a boolean if a field has been set.
 func (o *PropertyHistoryEntry) HasDate() bool {
-	if o != nil && o.Date != nil {
+	if o != nil && !IsNil(o.Date) {
 		return true
 	}
 
@@ -110,7 +113,7 @@ func (o *PropertyHistoryEntry) SetDate(v string) {
 
 // GetEventType returns the EventType field value if set, zero value otherwise.
 func (o *PropertyHistoryEntry) GetEventType() PropertyHistoryEventTypeEnum {
-	if o == nil || o.EventType == nil {
+	if o == nil || IsNil(o.EventType) {
 		var ret PropertyHistoryEventTypeEnum
 		return ret
 	}
@@ -120,7 +123,7 @@ func (o *PropertyHistoryEntry) GetEventType() PropertyHistoryEventTypeEnum {
 // GetEventTypeOk returns a tuple with the EventType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PropertyHistoryEntry) GetEventTypeOk() (*PropertyHistoryEventTypeEnum, bool) {
-	if o == nil || o.EventType == nil {
+	if o == nil || IsNil(o.EventType) {
 		return nil, false
 	}
 	return o.EventType, true
@@ -128,7 +131,7 @@ func (o *PropertyHistoryEntry) GetEventTypeOk() (*PropertyHistoryEventTypeEnum, 
 
 // HasEventType returns a boolean if a field has been set.
 func (o *PropertyHistoryEntry) HasEventType() bool {
-	if o != nil && o.EventType != nil {
+	if o != nil && !IsNil(o.EventType) {
 		return true
 	}
 
@@ -142,7 +145,7 @@ func (o *PropertyHistoryEntry) SetEventType(v PropertyHistoryEventTypeEnum) {
 
 // GetAutomatic returns the Automatic field value if set, zero value otherwise.
 func (o *PropertyHistoryEntry) GetAutomatic() bool {
-	if o == nil || o.Automatic == nil {
+	if o == nil || IsNil(o.Automatic) {
 		var ret bool
 		return ret
 	}
@@ -152,7 +155,7 @@ func (o *PropertyHistoryEntry) GetAutomatic() bool {
 // GetAutomaticOk returns a tuple with the Automatic field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PropertyHistoryEntry) GetAutomaticOk() (*bool, bool) {
-	if o == nil || o.Automatic == nil {
+	if o == nil || IsNil(o.Automatic) {
 		return nil, false
 	}
 	return o.Automatic, true
@@ -160,7 +163,7 @@ func (o *PropertyHistoryEntry) GetAutomaticOk() (*bool, bool) {
 
 // HasAutomatic returns a boolean if a field has been set.
 func (o *PropertyHistoryEntry) HasAutomatic() bool {
-	if o != nil && o.Automatic != nil {
+	if o != nil && !IsNil(o.Automatic) {
 		return true
 	}
 
@@ -174,7 +177,7 @@ func (o *PropertyHistoryEntry) SetAutomatic(v bool) {
 
 // GetComment returns the Comment field value if set, zero value otherwise.
 func (o *PropertyHistoryEntry) GetComment() string {
-	if o == nil || o.Comment == nil {
+	if o == nil || IsNil(o.Comment) {
 		var ret string
 		return ret
 	}
@@ -184,7 +187,7 @@ func (o *PropertyHistoryEntry) GetComment() string {
 // GetCommentOk returns a tuple with the Comment field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PropertyHistoryEntry) GetCommentOk() (*string, bool) {
-	if o == nil || o.Comment == nil {
+	if o == nil || IsNil(o.Comment) {
 		return nil, false
 	}
 	return o.Comment, true
@@ -192,7 +195,7 @@ func (o *PropertyHistoryEntry) GetCommentOk() (*string, bool) {
 
 // HasComment returns a boolean if a field has been set.
 func (o *PropertyHistoryEntry) HasComment() bool {
-	if o != nil && o.Comment != nil {
+	if o != nil && !IsNil(o.Comment) {
 		return true
 	}
 
@@ -205,23 +208,31 @@ func (o *PropertyHistoryEntry) SetComment(v string) {
 }
 
 func (o PropertyHistoryEntry) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Date != nil {
-		toSerialize["date"] = o.Date
-	}
-	if o.EventType != nil {
-		toSerialize["eventType"] = o.EventType
-	}
-	if o.Automatic != nil {
-		toSerialize["automatic"] = o.Automatic
-	}
-	if o.Comment != nil {
-		toSerialize["comment"] = o.Comment
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o PropertyHistoryEntry) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Date) {
+		toSerialize["date"] = o.Date
+	}
+	if !IsNil(o.EventType) {
+		toSerialize["eventType"] = o.EventType
+	}
+	if !IsNil(o.Automatic) {
+		toSerialize["automatic"] = o.Automatic
+	}
+	if !IsNil(o.Comment) {
+		toSerialize["comment"] = o.Comment
+	}
+	return toSerialize, nil
 }
 
 type NullablePropertyHistoryEntry struct {

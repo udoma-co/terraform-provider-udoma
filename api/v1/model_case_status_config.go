@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CaseStatusConfig type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CaseStatusConfig{}
+
 // CaseStatusConfig Contains the configuration for the status of a case. This is used to  determine which status changes are allowed.
 type CaseStatusConfig struct {
 	Action *CaseActionEnum `json:"action,omitempty"`
@@ -46,7 +49,7 @@ func NewCaseStatusConfigWithDefaults() *CaseStatusConfig {
 
 // GetAction returns the Action field value if set, zero value otherwise.
 func (o *CaseStatusConfig) GetAction() CaseActionEnum {
-	if o == nil || o.Action == nil {
+	if o == nil || IsNil(o.Action) {
 		var ret CaseActionEnum
 		return ret
 	}
@@ -56,7 +59,7 @@ func (o *CaseStatusConfig) GetAction() CaseActionEnum {
 // GetActionOk returns a tuple with the Action field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseStatusConfig) GetActionOk() (*CaseActionEnum, bool) {
-	if o == nil || o.Action == nil {
+	if o == nil || IsNil(o.Action) {
 		return nil, false
 	}
 	return o.Action, true
@@ -64,7 +67,7 @@ func (o *CaseStatusConfig) GetActionOk() (*CaseActionEnum, bool) {
 
 // HasAction returns a boolean if a field has been set.
 func (o *CaseStatusConfig) HasAction() bool {
-	if o != nil && o.Action != nil {
+	if o != nil && !IsNil(o.Action) {
 		return true
 	}
 
@@ -78,7 +81,7 @@ func (o *CaseStatusConfig) SetAction(v CaseActionEnum) {
 
 // GetSourceStatus returns the SourceStatus field value if set, zero value otherwise.
 func (o *CaseStatusConfig) GetSourceStatus() []CaseStatusEnum {
-	if o == nil || o.SourceStatus == nil {
+	if o == nil || IsNil(o.SourceStatus) {
 		var ret []CaseStatusEnum
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *CaseStatusConfig) GetSourceStatus() []CaseStatusEnum {
 // GetSourceStatusOk returns a tuple with the SourceStatus field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseStatusConfig) GetSourceStatusOk() ([]CaseStatusEnum, bool) {
-	if o == nil || o.SourceStatus == nil {
+	if o == nil || IsNil(o.SourceStatus) {
 		return nil, false
 	}
 	return o.SourceStatus, true
@@ -96,7 +99,7 @@ func (o *CaseStatusConfig) GetSourceStatusOk() ([]CaseStatusEnum, bool) {
 
 // HasSourceStatus returns a boolean if a field has been set.
 func (o *CaseStatusConfig) HasSourceStatus() bool {
-	if o != nil && o.SourceStatus != nil {
+	if o != nil && !IsNil(o.SourceStatus) {
 		return true
 	}
 
@@ -110,7 +113,7 @@ func (o *CaseStatusConfig) SetSourceStatus(v []CaseStatusEnum) {
 
 // GetParties returns the Parties field value if set, zero value otherwise.
 func (o *CaseStatusConfig) GetParties() []UserTypeEnum {
-	if o == nil || o.Parties == nil {
+	if o == nil || IsNil(o.Parties) {
 		var ret []UserTypeEnum
 		return ret
 	}
@@ -120,7 +123,7 @@ func (o *CaseStatusConfig) GetParties() []UserTypeEnum {
 // GetPartiesOk returns a tuple with the Parties field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseStatusConfig) GetPartiesOk() ([]UserTypeEnum, bool) {
-	if o == nil || o.Parties == nil {
+	if o == nil || IsNil(o.Parties) {
 		return nil, false
 	}
 	return o.Parties, true
@@ -128,7 +131,7 @@ func (o *CaseStatusConfig) GetPartiesOk() ([]UserTypeEnum, bool) {
 
 // HasParties returns a boolean if a field has been set.
 func (o *CaseStatusConfig) HasParties() bool {
-	if o != nil && o.Parties != nil {
+	if o != nil && !IsNil(o.Parties) {
 		return true
 	}
 
@@ -142,7 +145,7 @@ func (o *CaseStatusConfig) SetParties(v []UserTypeEnum) {
 
 // GetFeedback returns the Feedback field value if set, zero value otherwise.
 func (o *CaseStatusConfig) GetFeedback() []CaseFeedbackConfig {
-	if o == nil || o.Feedback == nil {
+	if o == nil || IsNil(o.Feedback) {
 		var ret []CaseFeedbackConfig
 		return ret
 	}
@@ -152,7 +155,7 @@ func (o *CaseStatusConfig) GetFeedback() []CaseFeedbackConfig {
 // GetFeedbackOk returns a tuple with the Feedback field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseStatusConfig) GetFeedbackOk() ([]CaseFeedbackConfig, bool) {
-	if o == nil || o.Feedback == nil {
+	if o == nil || IsNil(o.Feedback) {
 		return nil, false
 	}
 	return o.Feedback, true
@@ -160,7 +163,7 @@ func (o *CaseStatusConfig) GetFeedbackOk() ([]CaseFeedbackConfig, bool) {
 
 // HasFeedback returns a boolean if a field has been set.
 func (o *CaseStatusConfig) HasFeedback() bool {
-	if o != nil && o.Feedback != nil {
+	if o != nil && !IsNil(o.Feedback) {
 		return true
 	}
 
@@ -174,7 +177,7 @@ func (o *CaseStatusConfig) SetFeedback(v []CaseFeedbackConfig) {
 
 // GetNotify returns the Notify field value if set, zero value otherwise.
 func (o *CaseStatusConfig) GetNotify() []UserTypeEnum {
-	if o == nil || o.Notify == nil {
+	if o == nil || IsNil(o.Notify) {
 		var ret []UserTypeEnum
 		return ret
 	}
@@ -184,7 +187,7 @@ func (o *CaseStatusConfig) GetNotify() []UserTypeEnum {
 // GetNotifyOk returns a tuple with the Notify field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseStatusConfig) GetNotifyOk() ([]UserTypeEnum, bool) {
-	if o == nil || o.Notify == nil {
+	if o == nil || IsNil(o.Notify) {
 		return nil, false
 	}
 	return o.Notify, true
@@ -192,7 +195,7 @@ func (o *CaseStatusConfig) GetNotifyOk() ([]UserTypeEnum, bool) {
 
 // HasNotify returns a boolean if a field has been set.
 func (o *CaseStatusConfig) HasNotify() bool {
-	if o != nil && o.Notify != nil {
+	if o != nil && !IsNil(o.Notify) {
 		return true
 	}
 
@@ -205,23 +208,31 @@ func (o *CaseStatusConfig) SetNotify(v []UserTypeEnum) {
 }
 
 func (o CaseStatusConfig) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Action != nil {
-		toSerialize["action"] = o.Action
-	}
-	if o.SourceStatus != nil {
-		toSerialize["source_status"] = o.SourceStatus
-	}
-	if o.Parties != nil {
-		toSerialize["parties"] = o.Parties
-	}
-	if o.Feedback != nil {
-		toSerialize["feedback"] = o.Feedback
-	}
-	if o.Notify != nil {
-		toSerialize["notify"] = o.Notify
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CaseStatusConfig) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Action) {
+		toSerialize["action"] = o.Action
+	}
+	if !IsNil(o.SourceStatus) {
+		toSerialize["source_status"] = o.SourceStatus
+	}
+	if !IsNil(o.Parties) {
+		toSerialize["parties"] = o.Parties
+	}
+	if !IsNil(o.Feedback) {
+		toSerialize["feedback"] = o.Feedback
+	}
+	if !IsNil(o.Notify) {
+		toSerialize["notify"] = o.Notify
+	}
+	return toSerialize, nil
 }
 
 type NullableCaseStatusConfig struct {

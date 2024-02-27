@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the QueryWorkflowExecutionsResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &QueryWorkflowExecutionsResponse{}
+
 // QueryWorkflowExecutionsResponse a response for querying workflow executions
 type QueryWorkflowExecutionsResponse struct {
 	WorkflowExecutions []WorkflowExecution `json:"workflow_executions,omitempty"`
@@ -38,7 +41,7 @@ func NewQueryWorkflowExecutionsResponseWithDefaults() *QueryWorkflowExecutionsRe
 
 // GetWorkflowExecutions returns the WorkflowExecutions field value if set, zero value otherwise.
 func (o *QueryWorkflowExecutionsResponse) GetWorkflowExecutions() []WorkflowExecution {
-	if o == nil || o.WorkflowExecutions == nil {
+	if o == nil || IsNil(o.WorkflowExecutions) {
 		var ret []WorkflowExecution
 		return ret
 	}
@@ -48,7 +51,7 @@ func (o *QueryWorkflowExecutionsResponse) GetWorkflowExecutions() []WorkflowExec
 // GetWorkflowExecutionsOk returns a tuple with the WorkflowExecutions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryWorkflowExecutionsResponse) GetWorkflowExecutionsOk() ([]WorkflowExecution, bool) {
-	if o == nil || o.WorkflowExecutions == nil {
+	if o == nil || IsNil(o.WorkflowExecutions) {
 		return nil, false
 	}
 	return o.WorkflowExecutions, true
@@ -56,7 +59,7 @@ func (o *QueryWorkflowExecutionsResponse) GetWorkflowExecutionsOk() ([]WorkflowE
 
 // HasWorkflowExecutions returns a boolean if a field has been set.
 func (o *QueryWorkflowExecutionsResponse) HasWorkflowExecutions() bool {
-	if o != nil && o.WorkflowExecutions != nil {
+	if o != nil && !IsNil(o.WorkflowExecutions) {
 		return true
 	}
 
@@ -69,11 +72,19 @@ func (o *QueryWorkflowExecutionsResponse) SetWorkflowExecutions(v []WorkflowExec
 }
 
 func (o QueryWorkflowExecutionsResponse) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.WorkflowExecutions != nil {
-		toSerialize["workflow_executions"] = o.WorkflowExecutions
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o QueryWorkflowExecutionsResponse) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.WorkflowExecutions) {
+		toSerialize["workflow_executions"] = o.WorkflowExecutions
+	}
+	return toSerialize, nil
 }
 
 type NullableQueryWorkflowExecutionsResponse struct {

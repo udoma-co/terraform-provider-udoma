@@ -11,8 +11,13 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the Note type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Note{}
 
 // Note A note is a free text annotation to a property or a tenant.
 type Note struct {
@@ -27,6 +32,8 @@ type Note struct {
 	// the contents of the note
 	Text string `json:"text"`
 }
+
+type _Note Note
 
 // NewNote instantiates a new Note object
 // This constructor will assign default values to properties that have it defined,
@@ -98,7 +105,7 @@ func (o *Note) SetCreated(v int64) {
 
 // GetRef returns the Ref field value if set, zero value otherwise.
 func (o *Note) GetRef() string {
-	if o == nil || o.Ref == nil {
+	if o == nil || IsNil(o.Ref) {
 		var ret string
 		return ret
 	}
@@ -108,7 +115,7 @@ func (o *Note) GetRef() string {
 // GetRefOk returns a tuple with the Ref field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Note) GetRefOk() (*string, bool) {
-	if o == nil || o.Ref == nil {
+	if o == nil || IsNil(o.Ref) {
 		return nil, false
 	}
 	return o.Ref, true
@@ -116,7 +123,7 @@ func (o *Note) GetRefOk() (*string, bool) {
 
 // HasRef returns a boolean if a field has been set.
 func (o *Note) HasRef() bool {
-	if o != nil && o.Ref != nil {
+	if o != nil && !IsNil(o.Ref) {
 		return true
 	}
 
@@ -130,7 +137,7 @@ func (o *Note) SetRef(v string) {
 
 // GetAuthor returns the Author field value if set, zero value otherwise.
 func (o *Note) GetAuthor() string {
-	if o == nil || o.Author == nil {
+	if o == nil || IsNil(o.Author) {
 		var ret string
 		return ret
 	}
@@ -140,7 +147,7 @@ func (o *Note) GetAuthor() string {
 // GetAuthorOk returns a tuple with the Author field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Note) GetAuthorOk() (*string, bool) {
-	if o == nil || o.Author == nil {
+	if o == nil || IsNil(o.Author) {
 		return nil, false
 	}
 	return o.Author, true
@@ -148,7 +155,7 @@ func (o *Note) GetAuthorOk() (*string, bool) {
 
 // HasAuthor returns a boolean if a field has been set.
 func (o *Note) HasAuthor() bool {
-	if o != nil && o.Author != nil {
+	if o != nil && !IsNil(o.Author) {
 		return true
 	}
 
@@ -185,23 +192,64 @@ func (o *Note) SetText(v string) {
 }
 
 func (o Note) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["id"] = o.Id
-	}
-	if true {
-		toSerialize["created"] = o.Created
-	}
-	if o.Ref != nil {
-		toSerialize["ref"] = o.Ref
-	}
-	if o.Author != nil {
-		toSerialize["author"] = o.Author
-	}
-	if true {
-		toSerialize["text"] = o.Text
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Note) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["id"] = o.Id
+	toSerialize["created"] = o.Created
+	if !IsNil(o.Ref) {
+		toSerialize["ref"] = o.Ref
+	}
+	if !IsNil(o.Author) {
+		toSerialize["author"] = o.Author
+	}
+	toSerialize["text"] = o.Text
+	return toSerialize, nil
+}
+
+func (o *Note) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"id",
+		"created",
+		"text",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varNote := _Note{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varNote)
+
+	if err != nil {
+		return err
+	}
+
+	*o = Note(varNote)
+
+	return err
 }
 
 type NullableNote struct {

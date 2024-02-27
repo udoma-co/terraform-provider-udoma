@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the QueryBankAccountsResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &QueryBankAccountsResponse{}
+
 // QueryBankAccountsResponse Result of a bank account query
 type QueryBankAccountsResponse struct {
 	Limit        *int32        `json:"limit,omitempty"`
@@ -41,7 +44,7 @@ func NewQueryBankAccountsResponseWithDefaults() *QueryBankAccountsResponse {
 
 // GetLimit returns the Limit field value if set, zero value otherwise.
 func (o *QueryBankAccountsResponse) GetLimit() int32 {
-	if o == nil || o.Limit == nil {
+	if o == nil || IsNil(o.Limit) {
 		var ret int32
 		return ret
 	}
@@ -51,7 +54,7 @@ func (o *QueryBankAccountsResponse) GetLimit() int32 {
 // GetLimitOk returns a tuple with the Limit field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryBankAccountsResponse) GetLimitOk() (*int32, bool) {
-	if o == nil || o.Limit == nil {
+	if o == nil || IsNil(o.Limit) {
 		return nil, false
 	}
 	return o.Limit, true
@@ -59,7 +62,7 @@ func (o *QueryBankAccountsResponse) GetLimitOk() (*int32, bool) {
 
 // HasLimit returns a boolean if a field has been set.
 func (o *QueryBankAccountsResponse) HasLimit() bool {
-	if o != nil && o.Limit != nil {
+	if o != nil && !IsNil(o.Limit) {
 		return true
 	}
 
@@ -73,7 +76,7 @@ func (o *QueryBankAccountsResponse) SetLimit(v int32) {
 
 // GetOffset returns the Offset field value if set, zero value otherwise.
 func (o *QueryBankAccountsResponse) GetOffset() int32 {
-	if o == nil || o.Offset == nil {
+	if o == nil || IsNil(o.Offset) {
 		var ret int32
 		return ret
 	}
@@ -83,7 +86,7 @@ func (o *QueryBankAccountsResponse) GetOffset() int32 {
 // GetOffsetOk returns a tuple with the Offset field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryBankAccountsResponse) GetOffsetOk() (*int32, bool) {
-	if o == nil || o.Offset == nil {
+	if o == nil || IsNil(o.Offset) {
 		return nil, false
 	}
 	return o.Offset, true
@@ -91,7 +94,7 @@ func (o *QueryBankAccountsResponse) GetOffsetOk() (*int32, bool) {
 
 // HasOffset returns a boolean if a field has been set.
 func (o *QueryBankAccountsResponse) HasOffset() bool {
-	if o != nil && o.Offset != nil {
+	if o != nil && !IsNil(o.Offset) {
 		return true
 	}
 
@@ -105,7 +108,7 @@ func (o *QueryBankAccountsResponse) SetOffset(v int32) {
 
 // GetTotal returns the Total field value if set, zero value otherwise.
 func (o *QueryBankAccountsResponse) GetTotal() int32 {
-	if o == nil || o.Total == nil {
+	if o == nil || IsNil(o.Total) {
 		var ret int32
 		return ret
 	}
@@ -115,7 +118,7 @@ func (o *QueryBankAccountsResponse) GetTotal() int32 {
 // GetTotalOk returns a tuple with the Total field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryBankAccountsResponse) GetTotalOk() (*int32, bool) {
-	if o == nil || o.Total == nil {
+	if o == nil || IsNil(o.Total) {
 		return nil, false
 	}
 	return o.Total, true
@@ -123,7 +126,7 @@ func (o *QueryBankAccountsResponse) GetTotalOk() (*int32, bool) {
 
 // HasTotal returns a boolean if a field has been set.
 func (o *QueryBankAccountsResponse) HasTotal() bool {
-	if o != nil && o.Total != nil {
+	if o != nil && !IsNil(o.Total) {
 		return true
 	}
 
@@ -137,7 +140,7 @@ func (o *QueryBankAccountsResponse) SetTotal(v int32) {
 
 // GetBankAccounts returns the BankAccounts field value if set, zero value otherwise.
 func (o *QueryBankAccountsResponse) GetBankAccounts() []BankAccount {
-	if o == nil || o.BankAccounts == nil {
+	if o == nil || IsNil(o.BankAccounts) {
 		var ret []BankAccount
 		return ret
 	}
@@ -147,7 +150,7 @@ func (o *QueryBankAccountsResponse) GetBankAccounts() []BankAccount {
 // GetBankAccountsOk returns a tuple with the BankAccounts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryBankAccountsResponse) GetBankAccountsOk() ([]BankAccount, bool) {
-	if o == nil || o.BankAccounts == nil {
+	if o == nil || IsNil(o.BankAccounts) {
 		return nil, false
 	}
 	return o.BankAccounts, true
@@ -155,7 +158,7 @@ func (o *QueryBankAccountsResponse) GetBankAccountsOk() ([]BankAccount, bool) {
 
 // HasBankAccounts returns a boolean if a field has been set.
 func (o *QueryBankAccountsResponse) HasBankAccounts() bool {
-	if o != nil && o.BankAccounts != nil {
+	if o != nil && !IsNil(o.BankAccounts) {
 		return true
 	}
 
@@ -168,20 +171,28 @@ func (o *QueryBankAccountsResponse) SetBankAccounts(v []BankAccount) {
 }
 
 func (o QueryBankAccountsResponse) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Limit != nil {
-		toSerialize["limit"] = o.Limit
-	}
-	if o.Offset != nil {
-		toSerialize["offset"] = o.Offset
-	}
-	if o.Total != nil {
-		toSerialize["total"] = o.Total
-	}
-	if o.BankAccounts != nil {
-		toSerialize["bank_accounts"] = o.BankAccounts
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o QueryBankAccountsResponse) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Limit) {
+		toSerialize["limit"] = o.Limit
+	}
+	if !IsNil(o.Offset) {
+		toSerialize["offset"] = o.Offset
+	}
+	if !IsNil(o.Total) {
+		toSerialize["total"] = o.Total
+	}
+	if !IsNil(o.BankAccounts) {
+		toSerialize["bank_accounts"] = o.BankAccounts
+	}
+	return toSerialize, nil
 }
 
 type NullableQueryBankAccountsResponse struct {

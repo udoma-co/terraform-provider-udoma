@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the UpdateTenancyUpdateRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &UpdateTenancyUpdateRequest{}
+
 // UpdateTenancyUpdateRequest Request issued by a property manager to update an existing update for a tenancy
 type UpdateTenancyUpdateRequest struct {
 	// The date when the update will enter into force
@@ -42,7 +45,7 @@ func NewUpdateTenancyUpdateRequestWithDefaults() *UpdateTenancyUpdateRequest {
 
 // GetEntryIntoForce returns the EntryIntoForce field value if set, zero value otherwise.
 func (o *UpdateTenancyUpdateRequest) GetEntryIntoForce() int64 {
-	if o == nil || o.EntryIntoForce == nil {
+	if o == nil || IsNil(o.EntryIntoForce) {
 		var ret int64
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *UpdateTenancyUpdateRequest) GetEntryIntoForce() int64 {
 // GetEntryIntoForceOk returns a tuple with the EntryIntoForce field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateTenancyUpdateRequest) GetEntryIntoForceOk() (*int64, bool) {
-	if o == nil || o.EntryIntoForce == nil {
+	if o == nil || IsNil(o.EntryIntoForce) {
 		return nil, false
 	}
 	return o.EntryIntoForce, true
@@ -60,7 +63,7 @@ func (o *UpdateTenancyUpdateRequest) GetEntryIntoForceOk() (*int64, bool) {
 
 // HasEntryIntoForce returns a boolean if a field has been set.
 func (o *UpdateTenancyUpdateRequest) HasEntryIntoForce() bool {
-	if o != nil && o.EntryIntoForce != nil {
+	if o != nil && !IsNil(o.EntryIntoForce) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *UpdateTenancyUpdateRequest) SetEntryIntoForce(v int64) {
 
 // GetNewRent returns the NewRent field value if set, zero value otherwise.
 func (o *UpdateTenancyUpdateRequest) GetNewRent() RentData {
-	if o == nil || o.NewRent == nil {
+	if o == nil || IsNil(o.NewRent) {
 		var ret RentData
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *UpdateTenancyUpdateRequest) GetNewRent() RentData {
 // GetNewRentOk returns a tuple with the NewRent field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateTenancyUpdateRequest) GetNewRentOk() (*RentData, bool) {
-	if o == nil || o.NewRent == nil {
+	if o == nil || IsNil(o.NewRent) {
 		return nil, false
 	}
 	return o.NewRent, true
@@ -92,7 +95,7 @@ func (o *UpdateTenancyUpdateRequest) GetNewRentOk() (*RentData, bool) {
 
 // HasNewRent returns a boolean if a field has been set.
 func (o *UpdateTenancyUpdateRequest) HasNewRent() bool {
-	if o != nil && o.NewRent != nil {
+	if o != nil && !IsNil(o.NewRent) {
 		return true
 	}
 
@@ -106,7 +109,7 @@ func (o *UpdateTenancyUpdateRequest) SetNewRent(v RentData) {
 
 // GetTenantChanges returns the TenantChanges field value if set, zero value otherwise.
 func (o *UpdateTenancyUpdateRequest) GetTenantChanges() []TenantChangeRequest {
-	if o == nil || o.TenantChanges == nil {
+	if o == nil || IsNil(o.TenantChanges) {
 		var ret []TenantChangeRequest
 		return ret
 	}
@@ -116,7 +119,7 @@ func (o *UpdateTenancyUpdateRequest) GetTenantChanges() []TenantChangeRequest {
 // GetTenantChangesOk returns a tuple with the TenantChanges field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateTenancyUpdateRequest) GetTenantChangesOk() ([]TenantChangeRequest, bool) {
-	if o == nil || o.TenantChanges == nil {
+	if o == nil || IsNil(o.TenantChanges) {
 		return nil, false
 	}
 	return o.TenantChanges, true
@@ -124,7 +127,7 @@ func (o *UpdateTenancyUpdateRequest) GetTenantChangesOk() ([]TenantChangeRequest
 
 // HasTenantChanges returns a boolean if a field has been set.
 func (o *UpdateTenancyUpdateRequest) HasTenantChanges() bool {
-	if o != nil && o.TenantChanges != nil {
+	if o != nil && !IsNil(o.TenantChanges) {
 		return true
 	}
 
@@ -137,17 +140,25 @@ func (o *UpdateTenancyUpdateRequest) SetTenantChanges(v []TenantChangeRequest) {
 }
 
 func (o UpdateTenancyUpdateRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.EntryIntoForce != nil {
-		toSerialize["entry_into_force"] = o.EntryIntoForce
-	}
-	if o.NewRent != nil {
-		toSerialize["new_rent"] = o.NewRent
-	}
-	if o.TenantChanges != nil {
-		toSerialize["tenant_changes"] = o.TenantChanges
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o UpdateTenancyUpdateRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.EntryIntoForce) {
+		toSerialize["entry_into_force"] = o.EntryIntoForce
+	}
+	if !IsNil(o.NewRent) {
+		toSerialize["new_rent"] = o.NewRent
+	}
+	if !IsNil(o.TenantChanges) {
+		toSerialize["tenant_changes"] = o.TenantChanges
+	}
+	return toSerialize, nil
 }
 
 type NullableUpdateTenancyUpdateRequest struct {

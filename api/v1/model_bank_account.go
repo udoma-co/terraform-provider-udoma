@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the BankAccount type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &BankAccount{}
+
 // BankAccount Detailed information about a bank account
 type BankAccount struct {
 	// The ID of the bank account (auto-generated)
@@ -57,7 +60,7 @@ func NewBankAccountWithDefaults() *BankAccount {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *BankAccount) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -67,7 +70,7 @@ func (o *BankAccount) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BankAccount) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -75,7 +78,7 @@ func (o *BankAccount) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *BankAccount) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -89,7 +92,7 @@ func (o *BankAccount) SetId(v string) {
 
 // GetExternalId returns the ExternalId field value if set, zero value otherwise.
 func (o *BankAccount) GetExternalId() string {
-	if o == nil || o.ExternalId == nil {
+	if o == nil || IsNil(o.ExternalId) {
 		var ret string
 		return ret
 	}
@@ -99,7 +102,7 @@ func (o *BankAccount) GetExternalId() string {
 // GetExternalIdOk returns a tuple with the ExternalId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BankAccount) GetExternalIdOk() (*string, bool) {
-	if o == nil || o.ExternalId == nil {
+	if o == nil || IsNil(o.ExternalId) {
 		return nil, false
 	}
 	return o.ExternalId, true
@@ -107,7 +110,7 @@ func (o *BankAccount) GetExternalIdOk() (*string, bool) {
 
 // HasExternalId returns a boolean if a field has been set.
 func (o *BankAccount) HasExternalId() bool {
-	if o != nil && o.ExternalId != nil {
+	if o != nil && !IsNil(o.ExternalId) {
 		return true
 	}
 
@@ -121,7 +124,7 @@ func (o *BankAccount) SetExternalId(v string) {
 
 // GetExternalSource returns the ExternalSource field value if set, zero value otherwise.
 func (o *BankAccount) GetExternalSource() string {
-	if o == nil || o.ExternalSource == nil {
+	if o == nil || IsNil(o.ExternalSource) {
 		var ret string
 		return ret
 	}
@@ -131,7 +134,7 @@ func (o *BankAccount) GetExternalSource() string {
 // GetExternalSourceOk returns a tuple with the ExternalSource field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BankAccount) GetExternalSourceOk() (*string, bool) {
-	if o == nil || o.ExternalSource == nil {
+	if o == nil || IsNil(o.ExternalSource) {
 		return nil, false
 	}
 	return o.ExternalSource, true
@@ -139,7 +142,7 @@ func (o *BankAccount) GetExternalSourceOk() (*string, bool) {
 
 // HasExternalSource returns a boolean if a field has been set.
 func (o *BankAccount) HasExternalSource() bool {
-	if o != nil && o.ExternalSource != nil {
+	if o != nil && !IsNil(o.ExternalSource) {
 		return true
 	}
 
@@ -153,7 +156,7 @@ func (o *BankAccount) SetExternalSource(v string) {
 
 // GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
 func (o *BankAccount) GetCreatedAt() int64 {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		var ret int64
 		return ret
 	}
@@ -163,7 +166,7 @@ func (o *BankAccount) GetCreatedAt() int64 {
 // GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BankAccount) GetCreatedAtOk() (*int64, bool) {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
 	return o.CreatedAt, true
@@ -171,7 +174,7 @@ func (o *BankAccount) GetCreatedAtOk() (*int64, bool) {
 
 // HasCreatedAt returns a boolean if a field has been set.
 func (o *BankAccount) HasCreatedAt() bool {
-	if o != nil && o.CreatedAt != nil {
+	if o != nil && !IsNil(o.CreatedAt) {
 		return true
 	}
 
@@ -185,7 +188,7 @@ func (o *BankAccount) SetCreatedAt(v int64) {
 
 // GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
 func (o *BankAccount) GetUpdatedAt() int64 {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		var ret int64
 		return ret
 	}
@@ -195,7 +198,7 @@ func (o *BankAccount) GetUpdatedAt() int64 {
 // GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BankAccount) GetUpdatedAtOk() (*int64, bool) {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
 	return o.UpdatedAt, true
@@ -203,7 +206,7 @@ func (o *BankAccount) GetUpdatedAtOk() (*int64, bool) {
 
 // HasUpdatedAt returns a boolean if a field has been set.
 func (o *BankAccount) HasUpdatedAt() bool {
-	if o != nil && o.UpdatedAt != nil {
+	if o != nil && !IsNil(o.UpdatedAt) {
 		return true
 	}
 
@@ -217,7 +220,7 @@ func (o *BankAccount) SetUpdatedAt(v int64) {
 
 // GetAccountHolder returns the AccountHolder field value if set, zero value otherwise.
 func (o *BankAccount) GetAccountHolder() string {
-	if o == nil || o.AccountHolder == nil {
+	if o == nil || IsNil(o.AccountHolder) {
 		var ret string
 		return ret
 	}
@@ -227,7 +230,7 @@ func (o *BankAccount) GetAccountHolder() string {
 // GetAccountHolderOk returns a tuple with the AccountHolder field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BankAccount) GetAccountHolderOk() (*string, bool) {
-	if o == nil || o.AccountHolder == nil {
+	if o == nil || IsNil(o.AccountHolder) {
 		return nil, false
 	}
 	return o.AccountHolder, true
@@ -235,7 +238,7 @@ func (o *BankAccount) GetAccountHolderOk() (*string, bool) {
 
 // HasAccountHolder returns a boolean if a field has been set.
 func (o *BankAccount) HasAccountHolder() bool {
-	if o != nil && o.AccountHolder != nil {
+	if o != nil && !IsNil(o.AccountHolder) {
 		return true
 	}
 
@@ -249,7 +252,7 @@ func (o *BankAccount) SetAccountHolder(v string) {
 
 // GetIban returns the Iban field value if set, zero value otherwise.
 func (o *BankAccount) GetIban() string {
-	if o == nil || o.Iban == nil {
+	if o == nil || IsNil(o.Iban) {
 		var ret string
 		return ret
 	}
@@ -259,7 +262,7 @@ func (o *BankAccount) GetIban() string {
 // GetIbanOk returns a tuple with the Iban field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BankAccount) GetIbanOk() (*string, bool) {
-	if o == nil || o.Iban == nil {
+	if o == nil || IsNil(o.Iban) {
 		return nil, false
 	}
 	return o.Iban, true
@@ -267,7 +270,7 @@ func (o *BankAccount) GetIbanOk() (*string, bool) {
 
 // HasIban returns a boolean if a field has been set.
 func (o *BankAccount) HasIban() bool {
-	if o != nil && o.Iban != nil {
+	if o != nil && !IsNil(o.Iban) {
 		return true
 	}
 
@@ -281,7 +284,7 @@ func (o *BankAccount) SetIban(v string) {
 
 // GetBic returns the Bic field value if set, zero value otherwise.
 func (o *BankAccount) GetBic() string {
-	if o == nil || o.Bic == nil {
+	if o == nil || IsNil(o.Bic) {
 		var ret string
 		return ret
 	}
@@ -291,7 +294,7 @@ func (o *BankAccount) GetBic() string {
 // GetBicOk returns a tuple with the Bic field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BankAccount) GetBicOk() (*string, bool) {
-	if o == nil || o.Bic == nil {
+	if o == nil || IsNil(o.Bic) {
 		return nil, false
 	}
 	return o.Bic, true
@@ -299,7 +302,7 @@ func (o *BankAccount) GetBicOk() (*string, bool) {
 
 // HasBic returns a boolean if a field has been set.
 func (o *BankAccount) HasBic() bool {
-	if o != nil && o.Bic != nil {
+	if o != nil && !IsNil(o.Bic) {
 		return true
 	}
 
@@ -313,7 +316,7 @@ func (o *BankAccount) SetBic(v string) {
 
 // GetBankName returns the BankName field value if set, zero value otherwise.
 func (o *BankAccount) GetBankName() string {
-	if o == nil || o.BankName == nil {
+	if o == nil || IsNil(o.BankName) {
 		var ret string
 		return ret
 	}
@@ -323,7 +326,7 @@ func (o *BankAccount) GetBankName() string {
 // GetBankNameOk returns a tuple with the BankName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BankAccount) GetBankNameOk() (*string, bool) {
-	if o == nil || o.BankName == nil {
+	if o == nil || IsNil(o.BankName) {
 		return nil, false
 	}
 	return o.BankName, true
@@ -331,7 +334,7 @@ func (o *BankAccount) GetBankNameOk() (*string, bool) {
 
 // HasBankName returns a boolean if a field has been set.
 func (o *BankAccount) HasBankName() bool {
-	if o != nil && o.BankName != nil {
+	if o != nil && !IsNil(o.BankName) {
 		return true
 	}
 
@@ -345,7 +348,7 @@ func (o *BankAccount) SetBankName(v string) {
 
 // GetDescription returns the Description field value if set, zero value otherwise.
 func (o *BankAccount) GetDescription() string {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		var ret string
 		return ret
 	}
@@ -355,7 +358,7 @@ func (o *BankAccount) GetDescription() string {
 // GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BankAccount) GetDescriptionOk() (*string, bool) {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		return nil, false
 	}
 	return o.Description, true
@@ -363,7 +366,7 @@ func (o *BankAccount) GetDescriptionOk() (*string, bool) {
 
 // HasDescription returns a boolean if a field has been set.
 func (o *BankAccount) HasDescription() bool {
-	if o != nil && o.Description != nil {
+	if o != nil && !IsNil(o.Description) {
 		return true
 	}
 
@@ -376,38 +379,46 @@ func (o *BankAccount) SetDescription(v string) {
 }
 
 func (o BankAccount) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.ExternalId != nil {
-		toSerialize["external_id"] = o.ExternalId
-	}
-	if o.ExternalSource != nil {
-		toSerialize["external_source"] = o.ExternalSource
-	}
-	if o.CreatedAt != nil {
-		toSerialize["created_at"] = o.CreatedAt
-	}
-	if o.UpdatedAt != nil {
-		toSerialize["updated_at"] = o.UpdatedAt
-	}
-	if o.AccountHolder != nil {
-		toSerialize["account_holder"] = o.AccountHolder
-	}
-	if o.Iban != nil {
-		toSerialize["iban"] = o.Iban
-	}
-	if o.Bic != nil {
-		toSerialize["bic"] = o.Bic
-	}
-	if o.BankName != nil {
-		toSerialize["bank_name"] = o.BankName
-	}
-	if o.Description != nil {
-		toSerialize["description"] = o.Description
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o BankAccount) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.ExternalId) {
+		toSerialize["external_id"] = o.ExternalId
+	}
+	if !IsNil(o.ExternalSource) {
+		toSerialize["external_source"] = o.ExternalSource
+	}
+	if !IsNil(o.CreatedAt) {
+		toSerialize["created_at"] = o.CreatedAt
+	}
+	if !IsNil(o.UpdatedAt) {
+		toSerialize["updated_at"] = o.UpdatedAt
+	}
+	if !IsNil(o.AccountHolder) {
+		toSerialize["account_holder"] = o.AccountHolder
+	}
+	if !IsNil(o.Iban) {
+		toSerialize["iban"] = o.Iban
+	}
+	if !IsNil(o.Bic) {
+		toSerialize["bic"] = o.Bic
+	}
+	if !IsNil(o.BankName) {
+		toSerialize["bank_name"] = o.BankName
+	}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
+	}
+	return toSerialize, nil
 }
 
 type NullableBankAccount struct {

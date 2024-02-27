@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the GetSummaryRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &GetSummaryRequest{}
+
 // GetSummaryRequest Request used to get a summary of the account
 type GetSummaryRequest struct {
 	// If true, the total number of properties will be returned
@@ -49,7 +52,7 @@ func NewGetSummaryRequestWithDefaults() *GetSummaryRequest {
 
 // GetTotalProperties returns the TotalProperties field value if set, zero value otherwise.
 func (o *GetSummaryRequest) GetTotalProperties() bool {
-	if o == nil || o.TotalProperties == nil {
+	if o == nil || IsNil(o.TotalProperties) {
 		var ret bool
 		return ret
 	}
@@ -59,7 +62,7 @@ func (o *GetSummaryRequest) GetTotalProperties() bool {
 // GetTotalPropertiesOk returns a tuple with the TotalProperties field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetSummaryRequest) GetTotalPropertiesOk() (*bool, bool) {
-	if o == nil || o.TotalProperties == nil {
+	if o == nil || IsNil(o.TotalProperties) {
 		return nil, false
 	}
 	return o.TotalProperties, true
@@ -67,7 +70,7 @@ func (o *GetSummaryRequest) GetTotalPropertiesOk() (*bool, bool) {
 
 // HasTotalProperties returns a boolean if a field has been set.
 func (o *GetSummaryRequest) HasTotalProperties() bool {
-	if o != nil && o.TotalProperties != nil {
+	if o != nil && !IsNil(o.TotalProperties) {
 		return true
 	}
 
@@ -81,7 +84,7 @@ func (o *GetSummaryRequest) SetTotalProperties(v bool) {
 
 // GetTotalTenants returns the TotalTenants field value if set, zero value otherwise.
 func (o *GetSummaryRequest) GetTotalTenants() bool {
-	if o == nil || o.TotalTenants == nil {
+	if o == nil || IsNil(o.TotalTenants) {
 		var ret bool
 		return ret
 	}
@@ -91,7 +94,7 @@ func (o *GetSummaryRequest) GetTotalTenants() bool {
 // GetTotalTenantsOk returns a tuple with the TotalTenants field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetSummaryRequest) GetTotalTenantsOk() (*bool, bool) {
-	if o == nil || o.TotalTenants == nil {
+	if o == nil || IsNil(o.TotalTenants) {
 		return nil, false
 	}
 	return o.TotalTenants, true
@@ -99,7 +102,7 @@ func (o *GetSummaryRequest) GetTotalTenantsOk() (*bool, bool) {
 
 // HasTotalTenants returns a boolean if a field has been set.
 func (o *GetSummaryRequest) HasTotalTenants() bool {
-	if o != nil && o.TotalTenants != nil {
+	if o != nil && !IsNil(o.TotalTenants) {
 		return true
 	}
 
@@ -113,7 +116,7 @@ func (o *GetSummaryRequest) SetTotalTenants(v bool) {
 
 // GetTotalTenancies returns the TotalTenancies field value if set, zero value otherwise.
 func (o *GetSummaryRequest) GetTotalTenancies() bool {
-	if o == nil || o.TotalTenancies == nil {
+	if o == nil || IsNil(o.TotalTenancies) {
 		var ret bool
 		return ret
 	}
@@ -123,7 +126,7 @@ func (o *GetSummaryRequest) GetTotalTenancies() bool {
 // GetTotalTenanciesOk returns a tuple with the TotalTenancies field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetSummaryRequest) GetTotalTenanciesOk() (*bool, bool) {
-	if o == nil || o.TotalTenancies == nil {
+	if o == nil || IsNil(o.TotalTenancies) {
 		return nil, false
 	}
 	return o.TotalTenancies, true
@@ -131,7 +134,7 @@ func (o *GetSummaryRequest) GetTotalTenanciesOk() (*bool, bool) {
 
 // HasTotalTenancies returns a boolean if a field has been set.
 func (o *GetSummaryRequest) HasTotalTenancies() bool {
-	if o != nil && o.TotalTenancies != nil {
+	if o != nil && !IsNil(o.TotalTenancies) {
 		return true
 	}
 
@@ -145,7 +148,7 @@ func (o *GetSummaryRequest) SetTotalTenancies(v bool) {
 
 // GetTotalCases returns the TotalCases field value if set, zero value otherwise.
 func (o *GetSummaryRequest) GetTotalCases() bool {
-	if o == nil || o.TotalCases == nil {
+	if o == nil || IsNil(o.TotalCases) {
 		var ret bool
 		return ret
 	}
@@ -155,7 +158,7 @@ func (o *GetSummaryRequest) GetTotalCases() bool {
 // GetTotalCasesOk returns a tuple with the TotalCases field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetSummaryRequest) GetTotalCasesOk() (*bool, bool) {
-	if o == nil || o.TotalCases == nil {
+	if o == nil || IsNil(o.TotalCases) {
 		return nil, false
 	}
 	return o.TotalCases, true
@@ -163,7 +166,7 @@ func (o *GetSummaryRequest) GetTotalCasesOk() (*bool, bool) {
 
 // HasTotalCases returns a boolean if a field has been set.
 func (o *GetSummaryRequest) HasTotalCases() bool {
-	if o != nil && o.TotalCases != nil {
+	if o != nil && !IsNil(o.TotalCases) {
 		return true
 	}
 
@@ -177,7 +180,7 @@ func (o *GetSummaryRequest) SetTotalCases(v bool) {
 
 // GetTotalServiceProviders returns the TotalServiceProviders field value if set, zero value otherwise.
 func (o *GetSummaryRequest) GetTotalServiceProviders() bool {
-	if o == nil || o.TotalServiceProviders == nil {
+	if o == nil || IsNil(o.TotalServiceProviders) {
 		var ret bool
 		return ret
 	}
@@ -187,7 +190,7 @@ func (o *GetSummaryRequest) GetTotalServiceProviders() bool {
 // GetTotalServiceProvidersOk returns a tuple with the TotalServiceProviders field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetSummaryRequest) GetTotalServiceProvidersOk() (*bool, bool) {
-	if o == nil || o.TotalServiceProviders == nil {
+	if o == nil || IsNil(o.TotalServiceProviders) {
 		return nil, false
 	}
 	return o.TotalServiceProviders, true
@@ -195,7 +198,7 @@ func (o *GetSummaryRequest) GetTotalServiceProvidersOk() (*bool, bool) {
 
 // HasTotalServiceProviders returns a boolean if a field has been set.
 func (o *GetSummaryRequest) HasTotalServiceProviders() bool {
-	if o != nil && o.TotalServiceProviders != nil {
+	if o != nil && !IsNil(o.TotalServiceProviders) {
 		return true
 	}
 
@@ -209,7 +212,7 @@ func (o *GetSummaryRequest) SetTotalServiceProviders(v bool) {
 
 // GetActiveDocumentGenerationFlows returns the ActiveDocumentGenerationFlows field value if set, zero value otherwise.
 func (o *GetSummaryRequest) GetActiveDocumentGenerationFlows() bool {
-	if o == nil || o.ActiveDocumentGenerationFlows == nil {
+	if o == nil || IsNil(o.ActiveDocumentGenerationFlows) {
 		var ret bool
 		return ret
 	}
@@ -219,7 +222,7 @@ func (o *GetSummaryRequest) GetActiveDocumentGenerationFlows() bool {
 // GetActiveDocumentGenerationFlowsOk returns a tuple with the ActiveDocumentGenerationFlows field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetSummaryRequest) GetActiveDocumentGenerationFlowsOk() (*bool, bool) {
-	if o == nil || o.ActiveDocumentGenerationFlows == nil {
+	if o == nil || IsNil(o.ActiveDocumentGenerationFlows) {
 		return nil, false
 	}
 	return o.ActiveDocumentGenerationFlows, true
@@ -227,7 +230,7 @@ func (o *GetSummaryRequest) GetActiveDocumentGenerationFlowsOk() (*bool, bool) {
 
 // HasActiveDocumentGenerationFlows returns a boolean if a field has been set.
 func (o *GetSummaryRequest) HasActiveDocumentGenerationFlows() bool {
-	if o != nil && o.ActiveDocumentGenerationFlows != nil {
+	if o != nil && !IsNil(o.ActiveDocumentGenerationFlows) {
 		return true
 	}
 
@@ -240,26 +243,34 @@ func (o *GetSummaryRequest) SetActiveDocumentGenerationFlows(v bool) {
 }
 
 func (o GetSummaryRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.TotalProperties != nil {
-		toSerialize["total_properties"] = o.TotalProperties
-	}
-	if o.TotalTenants != nil {
-		toSerialize["total_tenants"] = o.TotalTenants
-	}
-	if o.TotalTenancies != nil {
-		toSerialize["total_tenancies"] = o.TotalTenancies
-	}
-	if o.TotalCases != nil {
-		toSerialize["total_cases"] = o.TotalCases
-	}
-	if o.TotalServiceProviders != nil {
-		toSerialize["total_service_providers"] = o.TotalServiceProviders
-	}
-	if o.ActiveDocumentGenerationFlows != nil {
-		toSerialize["active_document_generation_flows"] = o.ActiveDocumentGenerationFlows
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o GetSummaryRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.TotalProperties) {
+		toSerialize["total_properties"] = o.TotalProperties
+	}
+	if !IsNil(o.TotalTenants) {
+		toSerialize["total_tenants"] = o.TotalTenants
+	}
+	if !IsNil(o.TotalTenancies) {
+		toSerialize["total_tenancies"] = o.TotalTenancies
+	}
+	if !IsNil(o.TotalCases) {
+		toSerialize["total_cases"] = o.TotalCases
+	}
+	if !IsNil(o.TotalServiceProviders) {
+		toSerialize["total_service_providers"] = o.TotalServiceProviders
+	}
+	if !IsNil(o.ActiveDocumentGenerationFlows) {
+		toSerialize["active_document_generation_flows"] = o.ActiveDocumentGenerationFlows
+	}
+	return toSerialize, nil
 }
 
 type NullableGetSummaryRequest struct {

@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the FormInput type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &FormInput{}
+
 // FormInput a custom input that is used in dynamic forms to collect data from the user
 type FormInput struct {
 	// the ID of the input field, used to identify it and later access the data
@@ -60,7 +63,7 @@ func NewFormInputWithDefaults() *FormInput {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *FormInput) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -70,7 +73,7 @@ func (o *FormInput) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FormInput) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -78,7 +81,7 @@ func (o *FormInput) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *FormInput) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -92,7 +95,7 @@ func (o *FormInput) SetId(v string) {
 
 // GetLabel returns the Label field value if set, zero value otherwise.
 func (o *FormInput) GetLabel() map[string]string {
-	if o == nil || o.Label == nil {
+	if o == nil || IsNil(o.Label) {
 		var ret map[string]string
 		return ret
 	}
@@ -102,7 +105,7 @@ func (o *FormInput) GetLabel() map[string]string {
 // GetLabelOk returns a tuple with the Label field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FormInput) GetLabelOk() (*map[string]string, bool) {
-	if o == nil || o.Label == nil {
+	if o == nil || IsNil(o.Label) {
 		return nil, false
 	}
 	return o.Label, true
@@ -110,7 +113,7 @@ func (o *FormInput) GetLabelOk() (*map[string]string, bool) {
 
 // HasLabel returns a boolean if a field has been set.
 func (o *FormInput) HasLabel() bool {
-	if o != nil && o.Label != nil {
+	if o != nil && !IsNil(o.Label) {
 		return true
 	}
 
@@ -124,7 +127,7 @@ func (o *FormInput) SetLabel(v map[string]string) {
 
 // GetViewLabel returns the ViewLabel field value if set, zero value otherwise.
 func (o *FormInput) GetViewLabel() map[string]string {
-	if o == nil || o.ViewLabel == nil {
+	if o == nil || IsNil(o.ViewLabel) {
 		var ret map[string]string
 		return ret
 	}
@@ -134,7 +137,7 @@ func (o *FormInput) GetViewLabel() map[string]string {
 // GetViewLabelOk returns a tuple with the ViewLabel field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FormInput) GetViewLabelOk() (*map[string]string, bool) {
-	if o == nil || o.ViewLabel == nil {
+	if o == nil || IsNil(o.ViewLabel) {
 		return nil, false
 	}
 	return o.ViewLabel, true
@@ -142,7 +145,7 @@ func (o *FormInput) GetViewLabelOk() (*map[string]string, bool) {
 
 // HasViewLabel returns a boolean if a field has been set.
 func (o *FormInput) HasViewLabel() bool {
-	if o != nil && o.ViewLabel != nil {
+	if o != nil && !IsNil(o.ViewLabel) {
 		return true
 	}
 
@@ -156,7 +159,7 @@ func (o *FormInput) SetViewLabel(v map[string]string) {
 
 // GetPlaceholder returns the Placeholder field value if set, zero value otherwise.
 func (o *FormInput) GetPlaceholder() map[string]string {
-	if o == nil || o.Placeholder == nil {
+	if o == nil || IsNil(o.Placeholder) {
 		var ret map[string]string
 		return ret
 	}
@@ -166,7 +169,7 @@ func (o *FormInput) GetPlaceholder() map[string]string {
 // GetPlaceholderOk returns a tuple with the Placeholder field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FormInput) GetPlaceholderOk() (*map[string]string, bool) {
-	if o == nil || o.Placeholder == nil {
+	if o == nil || IsNil(o.Placeholder) {
 		return nil, false
 	}
 	return o.Placeholder, true
@@ -174,7 +177,7 @@ func (o *FormInput) GetPlaceholderOk() (*map[string]string, bool) {
 
 // HasPlaceholder returns a boolean if a field has been set.
 func (o *FormInput) HasPlaceholder() bool {
-	if o != nil && o.Placeholder != nil {
+	if o != nil && !IsNil(o.Placeholder) {
 		return true
 	}
 
@@ -188,7 +191,7 @@ func (o *FormInput) SetPlaceholder(v map[string]string) {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *FormInput) GetType() FormInputType {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret FormInputType
 		return ret
 	}
@@ -198,7 +201,7 @@ func (o *FormInput) GetType() FormInputType {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FormInput) GetTypeOk() (*FormInputType, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -206,7 +209,7 @@ func (o *FormInput) GetTypeOk() (*FormInputType, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *FormInput) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -220,7 +223,7 @@ func (o *FormInput) SetType(v FormInputType) {
 
 // GetDefaultValue returns the DefaultValue field value if set, zero value otherwise.
 func (o *FormInput) GetDefaultValue() string {
-	if o == nil || o.DefaultValue == nil {
+	if o == nil || IsNil(o.DefaultValue) {
 		var ret string
 		return ret
 	}
@@ -230,7 +233,7 @@ func (o *FormInput) GetDefaultValue() string {
 // GetDefaultValueOk returns a tuple with the DefaultValue field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FormInput) GetDefaultValueOk() (*string, bool) {
-	if o == nil || o.DefaultValue == nil {
+	if o == nil || IsNil(o.DefaultValue) {
 		return nil, false
 	}
 	return o.DefaultValue, true
@@ -238,7 +241,7 @@ func (o *FormInput) GetDefaultValueOk() (*string, bool) {
 
 // HasDefaultValue returns a boolean if a field has been set.
 func (o *FormInput) HasDefaultValue() bool {
-	if o != nil && o.DefaultValue != nil {
+	if o != nil && !IsNil(o.DefaultValue) {
 		return true
 	}
 
@@ -252,7 +255,7 @@ func (o *FormInput) SetDefaultValue(v string) {
 
 // GetRequired returns the Required field value if set, zero value otherwise.
 func (o *FormInput) GetRequired() bool {
-	if o == nil || o.Required == nil {
+	if o == nil || IsNil(o.Required) {
 		var ret bool
 		return ret
 	}
@@ -262,7 +265,7 @@ func (o *FormInput) GetRequired() bool {
 // GetRequiredOk returns a tuple with the Required field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FormInput) GetRequiredOk() (*bool, bool) {
-	if o == nil || o.Required == nil {
+	if o == nil || IsNil(o.Required) {
 		return nil, false
 	}
 	return o.Required, true
@@ -270,7 +273,7 @@ func (o *FormInput) GetRequiredOk() (*bool, bool) {
 
 // HasRequired returns a boolean if a field has been set.
 func (o *FormInput) HasRequired() bool {
-	if o != nil && o.Required != nil {
+	if o != nil && !IsNil(o.Required) {
 		return true
 	}
 
@@ -284,7 +287,7 @@ func (o *FormInput) SetRequired(v bool) {
 
 // GetEphemeral returns the Ephemeral field value if set, zero value otherwise.
 func (o *FormInput) GetEphemeral() bool {
-	if o == nil || o.Ephemeral == nil {
+	if o == nil || IsNil(o.Ephemeral) {
 		var ret bool
 		return ret
 	}
@@ -294,7 +297,7 @@ func (o *FormInput) GetEphemeral() bool {
 // GetEphemeralOk returns a tuple with the Ephemeral field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FormInput) GetEphemeralOk() (*bool, bool) {
-	if o == nil || o.Ephemeral == nil {
+	if o == nil || IsNil(o.Ephemeral) {
 		return nil, false
 	}
 	return o.Ephemeral, true
@@ -302,7 +305,7 @@ func (o *FormInput) GetEphemeralOk() (*bool, bool) {
 
 // HasEphemeral returns a boolean if a field has been set.
 func (o *FormInput) HasEphemeral() bool {
-	if o != nil && o.Ephemeral != nil {
+	if o != nil && !IsNil(o.Ephemeral) {
 		return true
 	}
 
@@ -316,7 +319,7 @@ func (o *FormInput) SetEphemeral(v bool) {
 
 // GetPropagateChanges returns the PropagateChanges field value if set, zero value otherwise.
 func (o *FormInput) GetPropagateChanges() bool {
-	if o == nil || o.PropagateChanges == nil {
+	if o == nil || IsNil(o.PropagateChanges) {
 		var ret bool
 		return ret
 	}
@@ -326,7 +329,7 @@ func (o *FormInput) GetPropagateChanges() bool {
 // GetPropagateChangesOk returns a tuple with the PropagateChanges field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FormInput) GetPropagateChangesOk() (*bool, bool) {
-	if o == nil || o.PropagateChanges == nil {
+	if o == nil || IsNil(o.PropagateChanges) {
 		return nil, false
 	}
 	return o.PropagateChanges, true
@@ -334,7 +337,7 @@ func (o *FormInput) GetPropagateChangesOk() (*bool, bool) {
 
 // HasPropagateChanges returns a boolean if a field has been set.
 func (o *FormInput) HasPropagateChanges() bool {
-	if o != nil && o.PropagateChanges != nil {
+	if o != nil && !IsNil(o.PropagateChanges) {
 		return true
 	}
 
@@ -348,7 +351,7 @@ func (o *FormInput) SetPropagateChanges(v bool) {
 
 // GetTarget returns the Target field value if set, zero value otherwise.
 func (o *FormInput) GetTarget() string {
-	if o == nil || o.Target == nil {
+	if o == nil || IsNil(o.Target) {
 		var ret string
 		return ret
 	}
@@ -358,7 +361,7 @@ func (o *FormInput) GetTarget() string {
 // GetTargetOk returns a tuple with the Target field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FormInput) GetTargetOk() (*string, bool) {
-	if o == nil || o.Target == nil {
+	if o == nil || IsNil(o.Target) {
 		return nil, false
 	}
 	return o.Target, true
@@ -366,7 +369,7 @@ func (o *FormInput) GetTargetOk() (*string, bool) {
 
 // HasTarget returns a boolean if a field has been set.
 func (o *FormInput) HasTarget() bool {
-	if o != nil && o.Target != nil {
+	if o != nil && !IsNil(o.Target) {
 		return true
 	}
 
@@ -380,7 +383,7 @@ func (o *FormInput) SetTarget(v string) {
 
 // GetAttributes returns the Attributes field value if set, zero value otherwise.
 func (o *FormInput) GetAttributes() map[string]string {
-	if o == nil || o.Attributes == nil {
+	if o == nil || IsNil(o.Attributes) {
 		var ret map[string]string
 		return ret
 	}
@@ -390,7 +393,7 @@ func (o *FormInput) GetAttributes() map[string]string {
 // GetAttributesOk returns a tuple with the Attributes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FormInput) GetAttributesOk() (*map[string]string, bool) {
-	if o == nil || o.Attributes == nil {
+	if o == nil || IsNil(o.Attributes) {
 		return nil, false
 	}
 	return o.Attributes, true
@@ -398,7 +401,7 @@ func (o *FormInput) GetAttributesOk() (*map[string]string, bool) {
 
 // HasAttributes returns a boolean if a field has been set.
 func (o *FormInput) HasAttributes() bool {
-	if o != nil && o.Attributes != nil {
+	if o != nil && !IsNil(o.Attributes) {
 		return true
 	}
 
@@ -412,7 +415,7 @@ func (o *FormInput) SetAttributes(v map[string]string) {
 
 // GetItems returns the Items field value if set, zero value otherwise.
 func (o *FormInput) GetItems() []string {
-	if o == nil || o.Items == nil {
+	if o == nil || IsNil(o.Items) {
 		var ret []string
 		return ret
 	}
@@ -422,7 +425,7 @@ func (o *FormInput) GetItems() []string {
 // GetItemsOk returns a tuple with the Items field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FormInput) GetItemsOk() ([]string, bool) {
-	if o == nil || o.Items == nil {
+	if o == nil || IsNil(o.Items) {
 		return nil, false
 	}
 	return o.Items, true
@@ -430,7 +433,7 @@ func (o *FormInput) GetItemsOk() ([]string, bool) {
 
 // HasItems returns a boolean if a field has been set.
 func (o *FormInput) HasItems() bool {
-	if o != nil && o.Items != nil {
+	if o != nil && !IsNil(o.Items) {
 		return true
 	}
 
@@ -443,44 +446,52 @@ func (o *FormInput) SetItems(v []string) {
 }
 
 func (o FormInput) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Label != nil {
-		toSerialize["label"] = o.Label
-	}
-	if o.ViewLabel != nil {
-		toSerialize["view_label"] = o.ViewLabel
-	}
-	if o.Placeholder != nil {
-		toSerialize["placeholder"] = o.Placeholder
-	}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if o.DefaultValue != nil {
-		toSerialize["default_value"] = o.DefaultValue
-	}
-	if o.Required != nil {
-		toSerialize["required"] = o.Required
-	}
-	if o.Ephemeral != nil {
-		toSerialize["ephemeral"] = o.Ephemeral
-	}
-	if o.PropagateChanges != nil {
-		toSerialize["propagate_changes"] = o.PropagateChanges
-	}
-	if o.Target != nil {
-		toSerialize["target"] = o.Target
-	}
-	if o.Attributes != nil {
-		toSerialize["attributes"] = o.Attributes
-	}
-	if o.Items != nil {
-		toSerialize["items"] = o.Items
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o FormInput) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Label) {
+		toSerialize["label"] = o.Label
+	}
+	if !IsNil(o.ViewLabel) {
+		toSerialize["view_label"] = o.ViewLabel
+	}
+	if !IsNil(o.Placeholder) {
+		toSerialize["placeholder"] = o.Placeholder
+	}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.DefaultValue) {
+		toSerialize["default_value"] = o.DefaultValue
+	}
+	if !IsNil(o.Required) {
+		toSerialize["required"] = o.Required
+	}
+	if !IsNil(o.Ephemeral) {
+		toSerialize["ephemeral"] = o.Ephemeral
+	}
+	if !IsNil(o.PropagateChanges) {
+		toSerialize["propagate_changes"] = o.PropagateChanges
+	}
+	if !IsNil(o.Target) {
+		toSerialize["target"] = o.Target
+	}
+	if !IsNil(o.Attributes) {
+		toSerialize["attributes"] = o.Attributes
+	}
+	if !IsNil(o.Items) {
+		toSerialize["items"] = o.Items
+	}
+	return toSerialize, nil
 }
 
 type NullableFormInput struct {

@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the DocumentPlaceholder type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DocumentPlaceholder{}
+
 // DocumentPlaceholder A placeholder definition for a template
 type DocumentPlaceholder struct {
 	// The placeholder token itself
@@ -49,7 +52,7 @@ func NewDocumentPlaceholderWithDefaults() *DocumentPlaceholder {
 
 // GetToken returns the Token field value if set, zero value otherwise.
 func (o *DocumentPlaceholder) GetToken() string {
-	if o == nil || o.Token == nil {
+	if o == nil || IsNil(o.Token) {
 		var ret string
 		return ret
 	}
@@ -59,7 +62,7 @@ func (o *DocumentPlaceholder) GetToken() string {
 // GetTokenOk returns a tuple with the Token field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentPlaceholder) GetTokenOk() (*string, bool) {
-	if o == nil || o.Token == nil {
+	if o == nil || IsNil(o.Token) {
 		return nil, false
 	}
 	return o.Token, true
@@ -67,7 +70,7 @@ func (o *DocumentPlaceholder) GetTokenOk() (*string, bool) {
 
 // HasToken returns a boolean if a field has been set.
 func (o *DocumentPlaceholder) HasToken() bool {
-	if o != nil && o.Token != nil {
+	if o != nil && !IsNil(o.Token) {
 		return true
 	}
 
@@ -81,7 +84,7 @@ func (o *DocumentPlaceholder) SetToken(v string) {
 
 // GetValue returns the Value field value if set, zero value otherwise.
 func (o *DocumentPlaceholder) GetValue() string {
-	if o == nil || o.Value == nil {
+	if o == nil || IsNil(o.Value) {
 		var ret string
 		return ret
 	}
@@ -91,7 +94,7 @@ func (o *DocumentPlaceholder) GetValue() string {
 // GetValueOk returns a tuple with the Value field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentPlaceholder) GetValueOk() (*string, bool) {
-	if o == nil || o.Value == nil {
+	if o == nil || IsNil(o.Value) {
 		return nil, false
 	}
 	return o.Value, true
@@ -99,7 +102,7 @@ func (o *DocumentPlaceholder) GetValueOk() (*string, bool) {
 
 // HasValue returns a boolean if a field has been set.
 func (o *DocumentPlaceholder) HasValue() bool {
-	if o != nil && o.Value != nil {
+	if o != nil && !IsNil(o.Value) {
 		return true
 	}
 
@@ -113,7 +116,7 @@ func (o *DocumentPlaceholder) SetValue(v string) {
 
 // GetValueExpression returns the ValueExpression field value if set, zero value otherwise.
 func (o *DocumentPlaceholder) GetValueExpression() string {
-	if o == nil || o.ValueExpression == nil {
+	if o == nil || IsNil(o.ValueExpression) {
 		var ret string
 		return ret
 	}
@@ -123,7 +126,7 @@ func (o *DocumentPlaceholder) GetValueExpression() string {
 // GetValueExpressionOk returns a tuple with the ValueExpression field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentPlaceholder) GetValueExpressionOk() (*string, bool) {
-	if o == nil || o.ValueExpression == nil {
+	if o == nil || IsNil(o.ValueExpression) {
 		return nil, false
 	}
 	return o.ValueExpression, true
@@ -131,7 +134,7 @@ func (o *DocumentPlaceholder) GetValueExpressionOk() (*string, bool) {
 
 // HasValueExpression returns a boolean if a field has been set.
 func (o *DocumentPlaceholder) HasValueExpression() bool {
-	if o != nil && o.ValueExpression != nil {
+	if o != nil && !IsNil(o.ValueExpression) {
 		return true
 	}
 
@@ -145,7 +148,7 @@ func (o *DocumentPlaceholder) SetValueExpression(v string) {
 
 // GetRepeated returns the Repeated field value if set, zero value otherwise.
 func (o *DocumentPlaceholder) GetRepeated() bool {
-	if o == nil || o.Repeated == nil {
+	if o == nil || IsNil(o.Repeated) {
 		var ret bool
 		return ret
 	}
@@ -155,7 +158,7 @@ func (o *DocumentPlaceholder) GetRepeated() bool {
 // GetRepeatedOk returns a tuple with the Repeated field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentPlaceholder) GetRepeatedOk() (*bool, bool) {
-	if o == nil || o.Repeated == nil {
+	if o == nil || IsNil(o.Repeated) {
 		return nil, false
 	}
 	return o.Repeated, true
@@ -163,7 +166,7 @@ func (o *DocumentPlaceholder) GetRepeatedOk() (*bool, bool) {
 
 // HasRepeated returns a boolean if a field has been set.
 func (o *DocumentPlaceholder) HasRepeated() bool {
-	if o != nil && o.Repeated != nil {
+	if o != nil && !IsNil(o.Repeated) {
 		return true
 	}
 
@@ -177,7 +180,7 @@ func (o *DocumentPlaceholder) SetRepeated(v bool) {
 
 // GetRepeatTokensExpression returns the RepeatTokensExpression field value if set, zero value otherwise.
 func (o *DocumentPlaceholder) GetRepeatTokensExpression() string {
-	if o == nil || o.RepeatTokensExpression == nil {
+	if o == nil || IsNil(o.RepeatTokensExpression) {
 		var ret string
 		return ret
 	}
@@ -187,7 +190,7 @@ func (o *DocumentPlaceholder) GetRepeatTokensExpression() string {
 // GetRepeatTokensExpressionOk returns a tuple with the RepeatTokensExpression field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentPlaceholder) GetRepeatTokensExpressionOk() (*string, bool) {
-	if o == nil || o.RepeatTokensExpression == nil {
+	if o == nil || IsNil(o.RepeatTokensExpression) {
 		return nil, false
 	}
 	return o.RepeatTokensExpression, true
@@ -195,7 +198,7 @@ func (o *DocumentPlaceholder) GetRepeatTokensExpressionOk() (*string, bool) {
 
 // HasRepeatTokensExpression returns a boolean if a field has been set.
 func (o *DocumentPlaceholder) HasRepeatTokensExpression() bool {
-	if o != nil && o.RepeatTokensExpression != nil {
+	if o != nil && !IsNil(o.RepeatTokensExpression) {
 		return true
 	}
 
@@ -209,7 +212,7 @@ func (o *DocumentPlaceholder) SetRepeatTokensExpression(v string) {
 
 // GetRepeatValuesExpression returns the RepeatValuesExpression field value if set, zero value otherwise.
 func (o *DocumentPlaceholder) GetRepeatValuesExpression() string {
-	if o == nil || o.RepeatValuesExpression == nil {
+	if o == nil || IsNil(o.RepeatValuesExpression) {
 		var ret string
 		return ret
 	}
@@ -219,7 +222,7 @@ func (o *DocumentPlaceholder) GetRepeatValuesExpression() string {
 // GetRepeatValuesExpressionOk returns a tuple with the RepeatValuesExpression field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentPlaceholder) GetRepeatValuesExpressionOk() (*string, bool) {
-	if o == nil || o.RepeatValuesExpression == nil {
+	if o == nil || IsNil(o.RepeatValuesExpression) {
 		return nil, false
 	}
 	return o.RepeatValuesExpression, true
@@ -227,7 +230,7 @@ func (o *DocumentPlaceholder) GetRepeatValuesExpressionOk() (*string, bool) {
 
 // HasRepeatValuesExpression returns a boolean if a field has been set.
 func (o *DocumentPlaceholder) HasRepeatValuesExpression() bool {
-	if o != nil && o.RepeatValuesExpression != nil {
+	if o != nil && !IsNil(o.RepeatValuesExpression) {
 		return true
 	}
 
@@ -240,26 +243,34 @@ func (o *DocumentPlaceholder) SetRepeatValuesExpression(v string) {
 }
 
 func (o DocumentPlaceholder) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Token != nil {
-		toSerialize["token"] = o.Token
-	}
-	if o.Value != nil {
-		toSerialize["value"] = o.Value
-	}
-	if o.ValueExpression != nil {
-		toSerialize["value_expression"] = o.ValueExpression
-	}
-	if o.Repeated != nil {
-		toSerialize["repeated"] = o.Repeated
-	}
-	if o.RepeatTokensExpression != nil {
-		toSerialize["repeat_tokens_expression"] = o.RepeatTokensExpression
-	}
-	if o.RepeatValuesExpression != nil {
-		toSerialize["repeat_values_expression"] = o.RepeatValuesExpression
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DocumentPlaceholder) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Token) {
+		toSerialize["token"] = o.Token
+	}
+	if !IsNil(o.Value) {
+		toSerialize["value"] = o.Value
+	}
+	if !IsNil(o.ValueExpression) {
+		toSerialize["value_expression"] = o.ValueExpression
+	}
+	if !IsNil(o.Repeated) {
+		toSerialize["repeated"] = o.Repeated
+	}
+	if !IsNil(o.RepeatTokensExpression) {
+		toSerialize["repeat_tokens_expression"] = o.RepeatTokensExpression
+	}
+	if !IsNil(o.RepeatValuesExpression) {
+		toSerialize["repeat_values_expression"] = o.RepeatValuesExpression
+	}
+	return toSerialize, nil
 }
 
 type NullableDocumentPlaceholder struct {

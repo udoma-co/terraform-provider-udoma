@@ -11,8 +11,13 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the CreateCaseCommentRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CreateCaseCommentRequest{}
 
 // CreateCaseCommentRequest Request that will create a new comment for a case
 type CreateCaseCommentRequest struct {
@@ -22,6 +27,8 @@ type CreateCaseCommentRequest struct {
 	// List of paries that should have access to the comment
 	Visibility []CaseParty `json:"visibility,omitempty"`
 }
+
+type _CreateCaseCommentRequest CreateCaseCommentRequest
 
 // NewCreateCaseCommentRequest instantiates a new CreateCaseCommentRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -67,7 +74,7 @@ func (o *CreateCaseCommentRequest) SetContent(v string) {
 
 // GetAttachments returns the Attachments field value if set, zero value otherwise.
 func (o *CreateCaseCommentRequest) GetAttachments() []Attachment {
-	if o == nil || o.Attachments == nil {
+	if o == nil || IsNil(o.Attachments) {
 		var ret []Attachment
 		return ret
 	}
@@ -77,7 +84,7 @@ func (o *CreateCaseCommentRequest) GetAttachments() []Attachment {
 // GetAttachmentsOk returns a tuple with the Attachments field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateCaseCommentRequest) GetAttachmentsOk() ([]Attachment, bool) {
-	if o == nil || o.Attachments == nil {
+	if o == nil || IsNil(o.Attachments) {
 		return nil, false
 	}
 	return o.Attachments, true
@@ -85,7 +92,7 @@ func (o *CreateCaseCommentRequest) GetAttachmentsOk() ([]Attachment, bool) {
 
 // HasAttachments returns a boolean if a field has been set.
 func (o *CreateCaseCommentRequest) HasAttachments() bool {
-	if o != nil && o.Attachments != nil {
+	if o != nil && !IsNil(o.Attachments) {
 		return true
 	}
 
@@ -99,7 +106,7 @@ func (o *CreateCaseCommentRequest) SetAttachments(v []Attachment) {
 
 // GetVisibility returns the Visibility field value if set, zero value otherwise.
 func (o *CreateCaseCommentRequest) GetVisibility() []CaseParty {
-	if o == nil || o.Visibility == nil {
+	if o == nil || IsNil(o.Visibility) {
 		var ret []CaseParty
 		return ret
 	}
@@ -109,7 +116,7 @@ func (o *CreateCaseCommentRequest) GetVisibility() []CaseParty {
 // GetVisibilityOk returns a tuple with the Visibility field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateCaseCommentRequest) GetVisibilityOk() ([]CaseParty, bool) {
-	if o == nil || o.Visibility == nil {
+	if o == nil || IsNil(o.Visibility) {
 		return nil, false
 	}
 	return o.Visibility, true
@@ -117,7 +124,7 @@ func (o *CreateCaseCommentRequest) GetVisibilityOk() ([]CaseParty, bool) {
 
 // HasVisibility returns a boolean if a field has been set.
 func (o *CreateCaseCommentRequest) HasVisibility() bool {
-	if o != nil && o.Visibility != nil {
+	if o != nil && !IsNil(o.Visibility) {
 		return true
 	}
 
@@ -130,17 +137,60 @@ func (o *CreateCaseCommentRequest) SetVisibility(v []CaseParty) {
 }
 
 func (o CreateCaseCommentRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["content"] = o.Content
-	}
-	if o.Attachments != nil {
-		toSerialize["attachments"] = o.Attachments
-	}
-	if o.Visibility != nil {
-		toSerialize["visibility"] = o.Visibility
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CreateCaseCommentRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["content"] = o.Content
+	if !IsNil(o.Attachments) {
+		toSerialize["attachments"] = o.Attachments
+	}
+	if !IsNil(o.Visibility) {
+		toSerialize["visibility"] = o.Visibility
+	}
+	return toSerialize, nil
+}
+
+func (o *CreateCaseCommentRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"content",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCreateCaseCommentRequest := _CreateCaseCommentRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCreateCaseCommentRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CreateCaseCommentRequest(varCreateCaseCommentRequest)
+
+	return err
 }
 
 type NullableCreateCaseCommentRequest struct {

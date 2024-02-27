@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the WorkflowTrigger type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &WorkflowTrigger{}
+
 // WorkflowTrigger information for the trigger of a workflow execution
 type WorkflowTrigger struct {
 	// the ID of the workflow execution
@@ -46,7 +49,7 @@ func NewWorkflowTriggerWithDefaults() *WorkflowTrigger {
 
 // GetExecutionRef returns the ExecutionRef field value if set, zero value otherwise.
 func (o *WorkflowTrigger) GetExecutionRef() string {
-	if o == nil || o.ExecutionRef == nil {
+	if o == nil || IsNil(o.ExecutionRef) {
 		var ret string
 		return ret
 	}
@@ -56,7 +59,7 @@ func (o *WorkflowTrigger) GetExecutionRef() string {
 // GetExecutionRefOk returns a tuple with the ExecutionRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowTrigger) GetExecutionRefOk() (*string, bool) {
-	if o == nil || o.ExecutionRef == nil {
+	if o == nil || IsNil(o.ExecutionRef) {
 		return nil, false
 	}
 	return o.ExecutionRef, true
@@ -64,7 +67,7 @@ func (o *WorkflowTrigger) GetExecutionRefOk() (*string, bool) {
 
 // HasExecutionRef returns a boolean if a field has been set.
 func (o *WorkflowTrigger) HasExecutionRef() bool {
-	if o != nil && o.ExecutionRef != nil {
+	if o != nil && !IsNil(o.ExecutionRef) {
 		return true
 	}
 
@@ -78,7 +81,7 @@ func (o *WorkflowTrigger) SetExecutionRef(v string) {
 
 // GetEntrypointType returns the EntrypointType field value if set, zero value otherwise.
 func (o *WorkflowTrigger) GetEntrypointType() WorkflowEntrypointLocation {
-	if o == nil || o.EntrypointType == nil {
+	if o == nil || IsNil(o.EntrypointType) {
 		var ret WorkflowEntrypointLocation
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *WorkflowTrigger) GetEntrypointType() WorkflowEntrypointLocation {
 // GetEntrypointTypeOk returns a tuple with the EntrypointType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowTrigger) GetEntrypointTypeOk() (*WorkflowEntrypointLocation, bool) {
-	if o == nil || o.EntrypointType == nil {
+	if o == nil || IsNil(o.EntrypointType) {
 		return nil, false
 	}
 	return o.EntrypointType, true
@@ -96,7 +99,7 @@ func (o *WorkflowTrigger) GetEntrypointTypeOk() (*WorkflowEntrypointLocation, bo
 
 // HasEntrypointType returns a boolean if a field has been set.
 func (o *WorkflowTrigger) HasEntrypointType() bool {
-	if o != nil && o.EntrypointType != nil {
+	if o != nil && !IsNil(o.EntrypointType) {
 		return true
 	}
 
@@ -110,7 +113,7 @@ func (o *WorkflowTrigger) SetEntrypointType(v WorkflowEntrypointLocation) {
 
 // GetSourceRef returns the SourceRef field value if set, zero value otherwise.
 func (o *WorkflowTrigger) GetSourceRef() string {
-	if o == nil || o.SourceRef == nil {
+	if o == nil || IsNil(o.SourceRef) {
 		var ret string
 		return ret
 	}
@@ -120,7 +123,7 @@ func (o *WorkflowTrigger) GetSourceRef() string {
 // GetSourceRefOk returns a tuple with the SourceRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowTrigger) GetSourceRefOk() (*string, bool) {
-	if o == nil || o.SourceRef == nil {
+	if o == nil || IsNil(o.SourceRef) {
 		return nil, false
 	}
 	return o.SourceRef, true
@@ -128,7 +131,7 @@ func (o *WorkflowTrigger) GetSourceRefOk() (*string, bool) {
 
 // HasSourceRef returns a boolean if a field has been set.
 func (o *WorkflowTrigger) HasSourceRef() bool {
-	if o != nil && o.SourceRef != nil {
+	if o != nil && !IsNil(o.SourceRef) {
 		return true
 	}
 
@@ -142,7 +145,7 @@ func (o *WorkflowTrigger) SetSourceRef(v string) {
 
 // GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
 func (o *WorkflowTrigger) GetCreatedAt() int64 {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		var ret int64
 		return ret
 	}
@@ -152,7 +155,7 @@ func (o *WorkflowTrigger) GetCreatedAt() int64 {
 // GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowTrigger) GetCreatedAtOk() (*int64, bool) {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
 	return o.CreatedAt, true
@@ -160,7 +163,7 @@ func (o *WorkflowTrigger) GetCreatedAtOk() (*int64, bool) {
 
 // HasCreatedAt returns a boolean if a field has been set.
 func (o *WorkflowTrigger) HasCreatedAt() bool {
-	if o != nil && o.CreatedAt != nil {
+	if o != nil && !IsNil(o.CreatedAt) {
 		return true
 	}
 
@@ -174,7 +177,7 @@ func (o *WorkflowTrigger) SetCreatedAt(v int64) {
 
 // GetLabel returns the Label field value if set, zero value otherwise.
 func (o *WorkflowTrigger) GetLabel() string {
-	if o == nil || o.Label == nil {
+	if o == nil || IsNil(o.Label) {
 		var ret string
 		return ret
 	}
@@ -184,7 +187,7 @@ func (o *WorkflowTrigger) GetLabel() string {
 // GetLabelOk returns a tuple with the Label field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowTrigger) GetLabelOk() (*string, bool) {
-	if o == nil || o.Label == nil {
+	if o == nil || IsNil(o.Label) {
 		return nil, false
 	}
 	return o.Label, true
@@ -192,7 +195,7 @@ func (o *WorkflowTrigger) GetLabelOk() (*string, bool) {
 
 // HasLabel returns a boolean if a field has been set.
 func (o *WorkflowTrigger) HasLabel() bool {
-	if o != nil && o.Label != nil {
+	if o != nil && !IsNil(o.Label) {
 		return true
 	}
 
@@ -205,23 +208,31 @@ func (o *WorkflowTrigger) SetLabel(v string) {
 }
 
 func (o WorkflowTrigger) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.ExecutionRef != nil {
-		toSerialize["execution_ref"] = o.ExecutionRef
-	}
-	if o.EntrypointType != nil {
-		toSerialize["entrypoint_type"] = o.EntrypointType
-	}
-	if o.SourceRef != nil {
-		toSerialize["source_ref"] = o.SourceRef
-	}
-	if o.CreatedAt != nil {
-		toSerialize["created_at"] = o.CreatedAt
-	}
-	if o.Label != nil {
-		toSerialize["label"] = o.Label
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o WorkflowTrigger) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.ExecutionRef) {
+		toSerialize["execution_ref"] = o.ExecutionRef
+	}
+	if !IsNil(o.EntrypointType) {
+		toSerialize["entrypoint_type"] = o.EntrypointType
+	}
+	if !IsNil(o.SourceRef) {
+		toSerialize["source_ref"] = o.SourceRef
+	}
+	if !IsNil(o.CreatedAt) {
+		toSerialize["created_at"] = o.CreatedAt
+	}
+	if !IsNil(o.Label) {
+		toSerialize["label"] = o.Label
+	}
+	return toSerialize, nil
 }
 
 type NullableWorkflowTrigger struct {

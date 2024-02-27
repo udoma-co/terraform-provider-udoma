@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the FeedbackRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &FeedbackRequest{}
+
 // FeedbackRequest struct for FeedbackRequest
 type FeedbackRequest struct {
 	Type *FeedbackType `json:"type,omitempty"`
@@ -42,7 +45,7 @@ func NewFeedbackRequestWithDefaults() *FeedbackRequest {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *FeedbackRequest) GetType() FeedbackType {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret FeedbackType
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *FeedbackRequest) GetType() FeedbackType {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FeedbackRequest) GetTypeOk() (*FeedbackType, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -60,7 +63,7 @@ func (o *FeedbackRequest) GetTypeOk() (*FeedbackType, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *FeedbackRequest) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *FeedbackRequest) SetType(v FeedbackType) {
 
 // GetRating returns the Rating field value if set, zero value otherwise.
 func (o *FeedbackRequest) GetRating() float32 {
-	if o == nil || o.Rating == nil {
+	if o == nil || IsNil(o.Rating) {
 		var ret float32
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *FeedbackRequest) GetRating() float32 {
 // GetRatingOk returns a tuple with the Rating field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FeedbackRequest) GetRatingOk() (*float32, bool) {
-	if o == nil || o.Rating == nil {
+	if o == nil || IsNil(o.Rating) {
 		return nil, false
 	}
 	return o.Rating, true
@@ -92,7 +95,7 @@ func (o *FeedbackRequest) GetRatingOk() (*float32, bool) {
 
 // HasRating returns a boolean if a field has been set.
 func (o *FeedbackRequest) HasRating() bool {
-	if o != nil && o.Rating != nil {
+	if o != nil && !IsNil(o.Rating) {
 		return true
 	}
 
@@ -106,7 +109,7 @@ func (o *FeedbackRequest) SetRating(v float32) {
 
 // GetContent returns the Content field value if set, zero value otherwise.
 func (o *FeedbackRequest) GetContent() string {
-	if o == nil || o.Content == nil {
+	if o == nil || IsNil(o.Content) {
 		var ret string
 		return ret
 	}
@@ -116,7 +119,7 @@ func (o *FeedbackRequest) GetContent() string {
 // GetContentOk returns a tuple with the Content field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FeedbackRequest) GetContentOk() (*string, bool) {
-	if o == nil || o.Content == nil {
+	if o == nil || IsNil(o.Content) {
 		return nil, false
 	}
 	return o.Content, true
@@ -124,7 +127,7 @@ func (o *FeedbackRequest) GetContentOk() (*string, bool) {
 
 // HasContent returns a boolean if a field has been set.
 func (o *FeedbackRequest) HasContent() bool {
-	if o != nil && o.Content != nil {
+	if o != nil && !IsNil(o.Content) {
 		return true
 	}
 
@@ -137,17 +140,25 @@ func (o *FeedbackRequest) SetContent(v string) {
 }
 
 func (o FeedbackRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if o.Rating != nil {
-		toSerialize["rating"] = o.Rating
-	}
-	if o.Content != nil {
-		toSerialize["content"] = o.Content
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o FeedbackRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.Rating) {
+		toSerialize["rating"] = o.Rating
+	}
+	if !IsNil(o.Content) {
+		toSerialize["content"] = o.Content
+	}
+	return toSerialize, nil
 }
 
 type NullableFeedbackRequest struct {

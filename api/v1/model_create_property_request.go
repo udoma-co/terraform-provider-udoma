@@ -11,8 +11,13 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the CreatePropertyRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CreatePropertyRequest{}
 
 // CreatePropertyRequest A requests that holds all necessary information to create a property.
 type CreatePropertyRequest struct {
@@ -26,6 +31,8 @@ type CreatePropertyRequest struct {
 	Address   *Address         `json:"address,omitempty"`
 	Details   *PropertyDetails `json:"details,omitempty"`
 }
+
+type _CreatePropertyRequest CreatePropertyRequest
 
 // NewCreatePropertyRequest instantiates a new CreatePropertyRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -96,7 +103,7 @@ func (o *CreatePropertyRequest) SetType(v PropertyType) {
 
 // GetOwnerRef returns the OwnerRef field value if set, zero value otherwise.
 func (o *CreatePropertyRequest) GetOwnerRef() string {
-	if o == nil || o.OwnerRef == nil {
+	if o == nil || IsNil(o.OwnerRef) {
 		var ret string
 		return ret
 	}
@@ -106,7 +113,7 @@ func (o *CreatePropertyRequest) GetOwnerRef() string {
 // GetOwnerRefOk returns a tuple with the OwnerRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreatePropertyRequest) GetOwnerRefOk() (*string, bool) {
-	if o == nil || o.OwnerRef == nil {
+	if o == nil || IsNil(o.OwnerRef) {
 		return nil, false
 	}
 	return o.OwnerRef, true
@@ -114,7 +121,7 @@ func (o *CreatePropertyRequest) GetOwnerRefOk() (*string, bool) {
 
 // HasOwnerRef returns a boolean if a field has been set.
 func (o *CreatePropertyRequest) HasOwnerRef() bool {
-	if o != nil && o.OwnerRef != nil {
+	if o != nil && !IsNil(o.OwnerRef) {
 		return true
 	}
 
@@ -128,7 +135,7 @@ func (o *CreatePropertyRequest) SetOwnerRef(v string) {
 
 // GetParentRef returns the ParentRef field value if set, zero value otherwise.
 func (o *CreatePropertyRequest) GetParentRef() string {
-	if o == nil || o.ParentRef == nil {
+	if o == nil || IsNil(o.ParentRef) {
 		var ret string
 		return ret
 	}
@@ -138,7 +145,7 @@ func (o *CreatePropertyRequest) GetParentRef() string {
 // GetParentRefOk returns a tuple with the ParentRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreatePropertyRequest) GetParentRefOk() (*string, bool) {
-	if o == nil || o.ParentRef == nil {
+	if o == nil || IsNil(o.ParentRef) {
 		return nil, false
 	}
 	return o.ParentRef, true
@@ -146,7 +153,7 @@ func (o *CreatePropertyRequest) GetParentRefOk() (*string, bool) {
 
 // HasParentRef returns a boolean if a field has been set.
 func (o *CreatePropertyRequest) HasParentRef() bool {
-	if o != nil && o.ParentRef != nil {
+	if o != nil && !IsNil(o.ParentRef) {
 		return true
 	}
 
@@ -160,7 +167,7 @@ func (o *CreatePropertyRequest) SetParentRef(v string) {
 
 // GetAddress returns the Address field value if set, zero value otherwise.
 func (o *CreatePropertyRequest) GetAddress() Address {
-	if o == nil || o.Address == nil {
+	if o == nil || IsNil(o.Address) {
 		var ret Address
 		return ret
 	}
@@ -170,7 +177,7 @@ func (o *CreatePropertyRequest) GetAddress() Address {
 // GetAddressOk returns a tuple with the Address field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreatePropertyRequest) GetAddressOk() (*Address, bool) {
-	if o == nil || o.Address == nil {
+	if o == nil || IsNil(o.Address) {
 		return nil, false
 	}
 	return o.Address, true
@@ -178,7 +185,7 @@ func (o *CreatePropertyRequest) GetAddressOk() (*Address, bool) {
 
 // HasAddress returns a boolean if a field has been set.
 func (o *CreatePropertyRequest) HasAddress() bool {
-	if o != nil && o.Address != nil {
+	if o != nil && !IsNil(o.Address) {
 		return true
 	}
 
@@ -192,7 +199,7 @@ func (o *CreatePropertyRequest) SetAddress(v Address) {
 
 // GetDetails returns the Details field value if set, zero value otherwise.
 func (o *CreatePropertyRequest) GetDetails() PropertyDetails {
-	if o == nil || o.Details == nil {
+	if o == nil || IsNil(o.Details) {
 		var ret PropertyDetails
 		return ret
 	}
@@ -202,7 +209,7 @@ func (o *CreatePropertyRequest) GetDetails() PropertyDetails {
 // GetDetailsOk returns a tuple with the Details field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreatePropertyRequest) GetDetailsOk() (*PropertyDetails, bool) {
-	if o == nil || o.Details == nil {
+	if o == nil || IsNil(o.Details) {
 		return nil, false
 	}
 	return o.Details, true
@@ -210,7 +217,7 @@ func (o *CreatePropertyRequest) GetDetailsOk() (*PropertyDetails, bool) {
 
 // HasDetails returns a boolean if a field has been set.
 func (o *CreatePropertyRequest) HasDetails() bool {
-	if o != nil && o.Details != nil {
+	if o != nil && !IsNil(o.Details) {
 		return true
 	}
 
@@ -223,26 +230,68 @@ func (o *CreatePropertyRequest) SetDetails(v PropertyDetails) {
 }
 
 func (o CreatePropertyRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if true {
-		toSerialize["type"] = o.Type
-	}
-	if o.OwnerRef != nil {
-		toSerialize["owner_ref"] = o.OwnerRef
-	}
-	if o.ParentRef != nil {
-		toSerialize["parent_ref"] = o.ParentRef
-	}
-	if o.Address != nil {
-		toSerialize["address"] = o.Address
-	}
-	if o.Details != nil {
-		toSerialize["details"] = o.Details
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CreatePropertyRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["name"] = o.Name
+	toSerialize["type"] = o.Type
+	if !IsNil(o.OwnerRef) {
+		toSerialize["owner_ref"] = o.OwnerRef
+	}
+	if !IsNil(o.ParentRef) {
+		toSerialize["parent_ref"] = o.ParentRef
+	}
+	if !IsNil(o.Address) {
+		toSerialize["address"] = o.Address
+	}
+	if !IsNil(o.Details) {
+		toSerialize["details"] = o.Details
+	}
+	return toSerialize, nil
+}
+
+func (o *CreatePropertyRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"type",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCreatePropertyRequest := _CreatePropertyRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCreatePropertyRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CreatePropertyRequest(varCreatePropertyRequest)
+
+	return err
 }
 
 type NullableCreatePropertyRequest struct {

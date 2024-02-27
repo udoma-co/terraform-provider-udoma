@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the UpdateCompanyProfileRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &UpdateCompanyProfileRequest{}
+
 // UpdateCompanyProfileRequest Request used to update the company profile details
 type UpdateCompanyProfileRequest struct {
 	Name    *string  `json:"name,omitempty"`
@@ -45,7 +48,7 @@ func NewUpdateCompanyProfileRequestWithDefaults() *UpdateCompanyProfileRequest {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *UpdateCompanyProfileRequest) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -55,7 +58,7 @@ func (o *UpdateCompanyProfileRequest) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateCompanyProfileRequest) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -63,7 +66,7 @@ func (o *UpdateCompanyProfileRequest) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *UpdateCompanyProfileRequest) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -77,7 +80,7 @@ func (o *UpdateCompanyProfileRequest) SetName(v string) {
 
 // GetAddress returns the Address field value if set, zero value otherwise.
 func (o *UpdateCompanyProfileRequest) GetAddress() Address {
-	if o == nil || o.Address == nil {
+	if o == nil || IsNil(o.Address) {
 		var ret Address
 		return ret
 	}
@@ -87,7 +90,7 @@ func (o *UpdateCompanyProfileRequest) GetAddress() Address {
 // GetAddressOk returns a tuple with the Address field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateCompanyProfileRequest) GetAddressOk() (*Address, bool) {
-	if o == nil || o.Address == nil {
+	if o == nil || IsNil(o.Address) {
 		return nil, false
 	}
 	return o.Address, true
@@ -95,7 +98,7 @@ func (o *UpdateCompanyProfileRequest) GetAddressOk() (*Address, bool) {
 
 // HasAddress returns a boolean if a field has been set.
 func (o *UpdateCompanyProfileRequest) HasAddress() bool {
-	if o != nil && o.Address != nil {
+	if o != nil && !IsNil(o.Address) {
 		return true
 	}
 
@@ -109,7 +112,7 @@ func (o *UpdateCompanyProfileRequest) SetAddress(v Address) {
 
 // GetEmail returns the Email field value if set, zero value otherwise.
 func (o *UpdateCompanyProfileRequest) GetEmail() string {
-	if o == nil || o.Email == nil {
+	if o == nil || IsNil(o.Email) {
 		var ret string
 		return ret
 	}
@@ -119,7 +122,7 @@ func (o *UpdateCompanyProfileRequest) GetEmail() string {
 // GetEmailOk returns a tuple with the Email field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateCompanyProfileRequest) GetEmailOk() (*string, bool) {
-	if o == nil || o.Email == nil {
+	if o == nil || IsNil(o.Email) {
 		return nil, false
 	}
 	return o.Email, true
@@ -127,7 +130,7 @@ func (o *UpdateCompanyProfileRequest) GetEmailOk() (*string, bool) {
 
 // HasEmail returns a boolean if a field has been set.
 func (o *UpdateCompanyProfileRequest) HasEmail() bool {
-	if o != nil && o.Email != nil {
+	if o != nil && !IsNil(o.Email) {
 		return true
 	}
 
@@ -141,7 +144,7 @@ func (o *UpdateCompanyProfileRequest) SetEmail(v string) {
 
 // GetPhoneNumber returns the PhoneNumber field value if set, zero value otherwise.
 func (o *UpdateCompanyProfileRequest) GetPhoneNumber() string {
-	if o == nil || o.PhoneNumber == nil {
+	if o == nil || IsNil(o.PhoneNumber) {
 		var ret string
 		return ret
 	}
@@ -151,7 +154,7 @@ func (o *UpdateCompanyProfileRequest) GetPhoneNumber() string {
 // GetPhoneNumberOk returns a tuple with the PhoneNumber field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateCompanyProfileRequest) GetPhoneNumberOk() (*string, bool) {
-	if o == nil || o.PhoneNumber == nil {
+	if o == nil || IsNil(o.PhoneNumber) {
 		return nil, false
 	}
 	return o.PhoneNumber, true
@@ -159,7 +162,7 @@ func (o *UpdateCompanyProfileRequest) GetPhoneNumberOk() (*string, bool) {
 
 // HasPhoneNumber returns a boolean if a field has been set.
 func (o *UpdateCompanyProfileRequest) HasPhoneNumber() bool {
-	if o != nil && o.PhoneNumber != nil {
+	if o != nil && !IsNil(o.PhoneNumber) {
 		return true
 	}
 
@@ -173,7 +176,7 @@ func (o *UpdateCompanyProfileRequest) SetPhoneNumber(v string) {
 
 // GetWebsite returns the Website field value if set, zero value otherwise.
 func (o *UpdateCompanyProfileRequest) GetWebsite() string {
-	if o == nil || o.Website == nil {
+	if o == nil || IsNil(o.Website) {
 		var ret string
 		return ret
 	}
@@ -183,7 +186,7 @@ func (o *UpdateCompanyProfileRequest) GetWebsite() string {
 // GetWebsiteOk returns a tuple with the Website field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateCompanyProfileRequest) GetWebsiteOk() (*string, bool) {
-	if o == nil || o.Website == nil {
+	if o == nil || IsNil(o.Website) {
 		return nil, false
 	}
 	return o.Website, true
@@ -191,7 +194,7 @@ func (o *UpdateCompanyProfileRequest) GetWebsiteOk() (*string, bool) {
 
 // HasWebsite returns a boolean if a field has been set.
 func (o *UpdateCompanyProfileRequest) HasWebsite() bool {
-	if o != nil && o.Website != nil {
+	if o != nil && !IsNil(o.Website) {
 		return true
 	}
 
@@ -204,23 +207,31 @@ func (o *UpdateCompanyProfileRequest) SetWebsite(v string) {
 }
 
 func (o UpdateCompanyProfileRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.Address != nil {
-		toSerialize["address"] = o.Address
-	}
-	if o.Email != nil {
-		toSerialize["email"] = o.Email
-	}
-	if o.PhoneNumber != nil {
-		toSerialize["phone_number"] = o.PhoneNumber
-	}
-	if o.Website != nil {
-		toSerialize["website"] = o.Website
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o UpdateCompanyProfileRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Address) {
+		toSerialize["address"] = o.Address
+	}
+	if !IsNil(o.Email) {
+		toSerialize["email"] = o.Email
+	}
+	if !IsNil(o.PhoneNumber) {
+		toSerialize["phone_number"] = o.PhoneNumber
+	}
+	if !IsNil(o.Website) {
+		toSerialize["website"] = o.Website
+	}
+	return toSerialize, nil
 }
 
 type NullableUpdateCompanyProfileRequest struct {

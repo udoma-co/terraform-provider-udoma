@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CreateOrUpdateCaseTemplateRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CreateOrUpdateCaseTemplateRequest{}
+
 // CreateOrUpdateCaseTemplateRequest struct for CreateOrUpdateCaseTemplateRequest
 type CreateOrUpdateCaseTemplateRequest struct {
 	// The name of the case template
@@ -51,7 +54,7 @@ func NewCreateOrUpdateCaseTemplateRequestWithDefaults() *CreateOrUpdateCaseTempl
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *CreateOrUpdateCaseTemplateRequest) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -61,7 +64,7 @@ func (o *CreateOrUpdateCaseTemplateRequest) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateCaseTemplateRequest) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -69,7 +72,7 @@ func (o *CreateOrUpdateCaseTemplateRequest) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *CreateOrUpdateCaseTemplateRequest) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -83,7 +86,7 @@ func (o *CreateOrUpdateCaseTemplateRequest) SetName(v string) {
 
 // GetNameExpression returns the NameExpression field value if set, zero value otherwise.
 func (o *CreateOrUpdateCaseTemplateRequest) GetNameExpression() string {
-	if o == nil || o.NameExpression == nil {
+	if o == nil || IsNil(o.NameExpression) {
 		var ret string
 		return ret
 	}
@@ -93,7 +96,7 @@ func (o *CreateOrUpdateCaseTemplateRequest) GetNameExpression() string {
 // GetNameExpressionOk returns a tuple with the NameExpression field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateCaseTemplateRequest) GetNameExpressionOk() (*string, bool) {
-	if o == nil || o.NameExpression == nil {
+	if o == nil || IsNil(o.NameExpression) {
 		return nil, false
 	}
 	return o.NameExpression, true
@@ -101,7 +104,7 @@ func (o *CreateOrUpdateCaseTemplateRequest) GetNameExpressionOk() (*string, bool
 
 // HasNameExpression returns a boolean if a field has been set.
 func (o *CreateOrUpdateCaseTemplateRequest) HasNameExpression() bool {
-	if o != nil && o.NameExpression != nil {
+	if o != nil && !IsNil(o.NameExpression) {
 		return true
 	}
 
@@ -115,7 +118,7 @@ func (o *CreateOrUpdateCaseTemplateRequest) SetNameExpression(v string) {
 
 // GetLabel returns the Label field value if set, zero value otherwise.
 func (o *CreateOrUpdateCaseTemplateRequest) GetLabel() map[string]string {
-	if o == nil || o.Label == nil {
+	if o == nil || IsNil(o.Label) {
 		var ret map[string]string
 		return ret
 	}
@@ -125,7 +128,7 @@ func (o *CreateOrUpdateCaseTemplateRequest) GetLabel() map[string]string {
 // GetLabelOk returns a tuple with the Label field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateCaseTemplateRequest) GetLabelOk() (*map[string]string, bool) {
-	if o == nil || o.Label == nil {
+	if o == nil || IsNil(o.Label) {
 		return nil, false
 	}
 	return o.Label, true
@@ -133,7 +136,7 @@ func (o *CreateOrUpdateCaseTemplateRequest) GetLabelOk() (*map[string]string, bo
 
 // HasLabel returns a boolean if a field has been set.
 func (o *CreateOrUpdateCaseTemplateRequest) HasLabel() bool {
-	if o != nil && o.Label != nil {
+	if o != nil && !IsNil(o.Label) {
 		return true
 	}
 
@@ -147,7 +150,7 @@ func (o *CreateOrUpdateCaseTemplateRequest) SetLabel(v map[string]string) {
 
 // GetDescription returns the Description field value if set, zero value otherwise.
 func (o *CreateOrUpdateCaseTemplateRequest) GetDescription() map[string]string {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		var ret map[string]string
 		return ret
 	}
@@ -157,7 +160,7 @@ func (o *CreateOrUpdateCaseTemplateRequest) GetDescription() map[string]string {
 // GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateCaseTemplateRequest) GetDescriptionOk() (*map[string]string, bool) {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		return nil, false
 	}
 	return o.Description, true
@@ -165,7 +168,7 @@ func (o *CreateOrUpdateCaseTemplateRequest) GetDescriptionOk() (*map[string]stri
 
 // HasDescription returns a boolean if a field has been set.
 func (o *CreateOrUpdateCaseTemplateRequest) HasDescription() bool {
-	if o != nil && o.Description != nil {
+	if o != nil && !IsNil(o.Description) {
 		return true
 	}
 
@@ -179,7 +182,7 @@ func (o *CreateOrUpdateCaseTemplateRequest) SetDescription(v map[string]string) 
 
 // GetInfoText returns the InfoText field value if set, zero value otherwise.
 func (o *CreateOrUpdateCaseTemplateRequest) GetInfoText() map[string]string {
-	if o == nil || o.InfoText == nil {
+	if o == nil || IsNil(o.InfoText) {
 		var ret map[string]string
 		return ret
 	}
@@ -189,7 +192,7 @@ func (o *CreateOrUpdateCaseTemplateRequest) GetInfoText() map[string]string {
 // GetInfoTextOk returns a tuple with the InfoText field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateCaseTemplateRequest) GetInfoTextOk() (*map[string]string, bool) {
-	if o == nil || o.InfoText == nil {
+	if o == nil || IsNil(o.InfoText) {
 		return nil, false
 	}
 	return o.InfoText, true
@@ -197,7 +200,7 @@ func (o *CreateOrUpdateCaseTemplateRequest) GetInfoTextOk() (*map[string]string,
 
 // HasInfoText returns a boolean if a field has been set.
 func (o *CreateOrUpdateCaseTemplateRequest) HasInfoText() bool {
-	if o != nil && o.InfoText != nil {
+	if o != nil && !IsNil(o.InfoText) {
 		return true
 	}
 
@@ -211,7 +214,7 @@ func (o *CreateOrUpdateCaseTemplateRequest) SetInfoText(v map[string]string) {
 
 // GetIcon returns the Icon field value if set, zero value otherwise.
 func (o *CreateOrUpdateCaseTemplateRequest) GetIcon() string {
-	if o == nil || o.Icon == nil {
+	if o == nil || IsNil(o.Icon) {
 		var ret string
 		return ret
 	}
@@ -221,7 +224,7 @@ func (o *CreateOrUpdateCaseTemplateRequest) GetIcon() string {
 // GetIconOk returns a tuple with the Icon field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateCaseTemplateRequest) GetIconOk() (*string, bool) {
-	if o == nil || o.Icon == nil {
+	if o == nil || IsNil(o.Icon) {
 		return nil, false
 	}
 	return o.Icon, true
@@ -229,7 +232,7 @@ func (o *CreateOrUpdateCaseTemplateRequest) GetIconOk() (*string, bool) {
 
 // HasIcon returns a boolean if a field has been set.
 func (o *CreateOrUpdateCaseTemplateRequest) HasIcon() bool {
-	if o != nil && o.Icon != nil {
+	if o != nil && !IsNil(o.Icon) {
 		return true
 	}
 
@@ -243,7 +246,7 @@ func (o *CreateOrUpdateCaseTemplateRequest) SetIcon(v string) {
 
 // GetCustomInputs returns the CustomInputs field value if set, zero value otherwise.
 func (o *CreateOrUpdateCaseTemplateRequest) GetCustomInputs() CustomForm {
-	if o == nil || o.CustomInputs == nil {
+	if o == nil || IsNil(o.CustomInputs) {
 		var ret CustomForm
 		return ret
 	}
@@ -253,7 +256,7 @@ func (o *CreateOrUpdateCaseTemplateRequest) GetCustomInputs() CustomForm {
 // GetCustomInputsOk returns a tuple with the CustomInputs field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateCaseTemplateRequest) GetCustomInputsOk() (*CustomForm, bool) {
-	if o == nil || o.CustomInputs == nil {
+	if o == nil || IsNil(o.CustomInputs) {
 		return nil, false
 	}
 	return o.CustomInputs, true
@@ -261,7 +264,7 @@ func (o *CreateOrUpdateCaseTemplateRequest) GetCustomInputsOk() (*CustomForm, bo
 
 // HasCustomInputs returns a boolean if a field has been set.
 func (o *CreateOrUpdateCaseTemplateRequest) HasCustomInputs() bool {
-	if o != nil && o.CustomInputs != nil {
+	if o != nil && !IsNil(o.CustomInputs) {
 		return true
 	}
 
@@ -275,7 +278,7 @@ func (o *CreateOrUpdateCaseTemplateRequest) SetCustomInputs(v CustomForm) {
 
 // GetConfig returns the Config field value if set, zero value otherwise.
 func (o *CreateOrUpdateCaseTemplateRequest) GetConfig() CaseConfig {
-	if o == nil || o.Config == nil {
+	if o == nil || IsNil(o.Config) {
 		var ret CaseConfig
 		return ret
 	}
@@ -285,7 +288,7 @@ func (o *CreateOrUpdateCaseTemplateRequest) GetConfig() CaseConfig {
 // GetConfigOk returns a tuple with the Config field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateCaseTemplateRequest) GetConfigOk() (*CaseConfig, bool) {
-	if o == nil || o.Config == nil {
+	if o == nil || IsNil(o.Config) {
 		return nil, false
 	}
 	return o.Config, true
@@ -293,7 +296,7 @@ func (o *CreateOrUpdateCaseTemplateRequest) GetConfigOk() (*CaseConfig, bool) {
 
 // HasConfig returns a boolean if a field has been set.
 func (o *CreateOrUpdateCaseTemplateRequest) HasConfig() bool {
-	if o != nil && o.Config != nil {
+	if o != nil && !IsNil(o.Config) {
 		return true
 	}
 
@@ -306,32 +309,40 @@ func (o *CreateOrUpdateCaseTemplateRequest) SetConfig(v CaseConfig) {
 }
 
 func (o CreateOrUpdateCaseTemplateRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.NameExpression != nil {
-		toSerialize["name_expression"] = o.NameExpression
-	}
-	if o.Label != nil {
-		toSerialize["label"] = o.Label
-	}
-	if o.Description != nil {
-		toSerialize["description"] = o.Description
-	}
-	if o.InfoText != nil {
-		toSerialize["info_text"] = o.InfoText
-	}
-	if o.Icon != nil {
-		toSerialize["icon"] = o.Icon
-	}
-	if o.CustomInputs != nil {
-		toSerialize["custom_inputs"] = o.CustomInputs
-	}
-	if o.Config != nil {
-		toSerialize["config"] = o.Config
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CreateOrUpdateCaseTemplateRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.NameExpression) {
+		toSerialize["name_expression"] = o.NameExpression
+	}
+	if !IsNil(o.Label) {
+		toSerialize["label"] = o.Label
+	}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
+	}
+	if !IsNil(o.InfoText) {
+		toSerialize["info_text"] = o.InfoText
+	}
+	if !IsNil(o.Icon) {
+		toSerialize["icon"] = o.Icon
+	}
+	if !IsNil(o.CustomInputs) {
+		toSerialize["custom_inputs"] = o.CustomInputs
+	}
+	if !IsNil(o.Config) {
+		toSerialize["config"] = o.Config
+	}
+	return toSerialize, nil
 }
 
 type NullableCreateOrUpdateCaseTemplateRequest struct {

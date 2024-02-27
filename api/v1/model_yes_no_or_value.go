@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the YesNoOrValue type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &YesNoOrValue{}
+
 // YesNoOrValue struct for YesNoOrValue
 type YesNoOrValue struct {
 	// true or false value
@@ -43,7 +46,7 @@ func NewYesNoOrValueWithDefaults() *YesNoOrValue {
 
 // GetV returns the V field value if set, zero value otherwise.
 func (o *YesNoOrValue) GetV() bool {
-	if o == nil || o.V == nil {
+	if o == nil || IsNil(o.V) {
 		var ret bool
 		return ret
 	}
@@ -53,7 +56,7 @@ func (o *YesNoOrValue) GetV() bool {
 // GetVOk returns a tuple with the V field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *YesNoOrValue) GetVOk() (*bool, bool) {
-	if o == nil || o.V == nil {
+	if o == nil || IsNil(o.V) {
 		return nil, false
 	}
 	return o.V, true
@@ -61,7 +64,7 @@ func (o *YesNoOrValue) GetVOk() (*bool, bool) {
 
 // HasV returns a boolean if a field has been set.
 func (o *YesNoOrValue) HasV() bool {
-	if o != nil && o.V != nil {
+	if o != nil && !IsNil(o.V) {
 		return true
 	}
 
@@ -75,7 +78,7 @@ func (o *YesNoOrValue) SetV(v bool) {
 
 // GetS returns the S field value if set, zero value otherwise.
 func (o *YesNoOrValue) GetS() string {
-	if o == nil || o.S == nil {
+	if o == nil || IsNil(o.S) {
 		var ret string
 		return ret
 	}
@@ -85,7 +88,7 @@ func (o *YesNoOrValue) GetS() string {
 // GetSOk returns a tuple with the S field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *YesNoOrValue) GetSOk() (*string, bool) {
-	if o == nil || o.S == nil {
+	if o == nil || IsNil(o.S) {
 		return nil, false
 	}
 	return o.S, true
@@ -93,7 +96,7 @@ func (o *YesNoOrValue) GetSOk() (*string, bool) {
 
 // HasS returns a boolean if a field has been set.
 func (o *YesNoOrValue) HasS() bool {
-	if o != nil && o.S != nil {
+	if o != nil && !IsNil(o.S) {
 		return true
 	}
 
@@ -107,7 +110,7 @@ func (o *YesNoOrValue) SetS(v string) {
 
 // GetN returns the N field value if set, zero value otherwise.
 func (o *YesNoOrValue) GetN() float32 {
-	if o == nil || o.N == nil {
+	if o == nil || IsNil(o.N) {
 		var ret float32
 		return ret
 	}
@@ -117,7 +120,7 @@ func (o *YesNoOrValue) GetN() float32 {
 // GetNOk returns a tuple with the N field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *YesNoOrValue) GetNOk() (*float32, bool) {
-	if o == nil || o.N == nil {
+	if o == nil || IsNil(o.N) {
 		return nil, false
 	}
 	return o.N, true
@@ -125,7 +128,7 @@ func (o *YesNoOrValue) GetNOk() (*float32, bool) {
 
 // HasN returns a boolean if a field has been set.
 func (o *YesNoOrValue) HasN() bool {
-	if o != nil && o.N != nil {
+	if o != nil && !IsNil(o.N) {
 		return true
 	}
 
@@ -138,17 +141,25 @@ func (o *YesNoOrValue) SetN(v float32) {
 }
 
 func (o YesNoOrValue) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.V != nil {
-		toSerialize["v"] = o.V
-	}
-	if o.S != nil {
-		toSerialize["s"] = o.S
-	}
-	if o.N != nil {
-		toSerialize["n"] = o.N
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o YesNoOrValue) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.V) {
+		toSerialize["v"] = o.V
+	}
+	if !IsNil(o.S) {
+		toSerialize["s"] = o.S
+	}
+	if !IsNil(o.N) {
+		toSerialize["n"] = o.N
+	}
+	return toSerialize, nil
 }
 
 type NullableYesNoOrValue struct {

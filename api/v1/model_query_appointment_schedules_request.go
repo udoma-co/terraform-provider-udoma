@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the QueryAppointmentSchedulesRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &QueryAppointmentSchedulesRequest{}
+
 // QueryAppointmentSchedulesRequest struct for QueryAppointmentSchedulesRequest
 type QueryAppointmentSchedulesRequest struct {
 	// The timestamp of the beginning of the time range
@@ -41,7 +44,7 @@ func NewQueryAppointmentSchedulesRequestWithDefaults() *QueryAppointmentSchedule
 
 // GetStartTime returns the StartTime field value if set, zero value otherwise.
 func (o *QueryAppointmentSchedulesRequest) GetStartTime() int64 {
-	if o == nil || o.StartTime == nil {
+	if o == nil || IsNil(o.StartTime) {
 		var ret int64
 		return ret
 	}
@@ -51,7 +54,7 @@ func (o *QueryAppointmentSchedulesRequest) GetStartTime() int64 {
 // GetStartTimeOk returns a tuple with the StartTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryAppointmentSchedulesRequest) GetStartTimeOk() (*int64, bool) {
-	if o == nil || o.StartTime == nil {
+	if o == nil || IsNil(o.StartTime) {
 		return nil, false
 	}
 	return o.StartTime, true
@@ -59,7 +62,7 @@ func (o *QueryAppointmentSchedulesRequest) GetStartTimeOk() (*int64, bool) {
 
 // HasStartTime returns a boolean if a field has been set.
 func (o *QueryAppointmentSchedulesRequest) HasStartTime() bool {
-	if o != nil && o.StartTime != nil {
+	if o != nil && !IsNil(o.StartTime) {
 		return true
 	}
 
@@ -73,7 +76,7 @@ func (o *QueryAppointmentSchedulesRequest) SetStartTime(v int64) {
 
 // GetLimit returns the Limit field value if set, zero value otherwise.
 func (o *QueryAppointmentSchedulesRequest) GetLimit() int32 {
-	if o == nil || o.Limit == nil {
+	if o == nil || IsNil(o.Limit) {
 		var ret int32
 		return ret
 	}
@@ -83,7 +86,7 @@ func (o *QueryAppointmentSchedulesRequest) GetLimit() int32 {
 // GetLimitOk returns a tuple with the Limit field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryAppointmentSchedulesRequest) GetLimitOk() (*int32, bool) {
-	if o == nil || o.Limit == nil {
+	if o == nil || IsNil(o.Limit) {
 		return nil, false
 	}
 	return o.Limit, true
@@ -91,7 +94,7 @@ func (o *QueryAppointmentSchedulesRequest) GetLimitOk() (*int32, bool) {
 
 // HasLimit returns a boolean if a field has been set.
 func (o *QueryAppointmentSchedulesRequest) HasLimit() bool {
-	if o != nil && o.Limit != nil {
+	if o != nil && !IsNil(o.Limit) {
 		return true
 	}
 
@@ -105,7 +108,7 @@ func (o *QueryAppointmentSchedulesRequest) SetLimit(v int32) {
 
 // GetOffset returns the Offset field value if set, zero value otherwise.
 func (o *QueryAppointmentSchedulesRequest) GetOffset() int32 {
-	if o == nil || o.Offset == nil {
+	if o == nil || IsNil(o.Offset) {
 		var ret int32
 		return ret
 	}
@@ -115,7 +118,7 @@ func (o *QueryAppointmentSchedulesRequest) GetOffset() int32 {
 // GetOffsetOk returns a tuple with the Offset field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryAppointmentSchedulesRequest) GetOffsetOk() (*int32, bool) {
-	if o == nil || o.Offset == nil {
+	if o == nil || IsNil(o.Offset) {
 		return nil, false
 	}
 	return o.Offset, true
@@ -123,7 +126,7 @@ func (o *QueryAppointmentSchedulesRequest) GetOffsetOk() (*int32, bool) {
 
 // HasOffset returns a boolean if a field has been set.
 func (o *QueryAppointmentSchedulesRequest) HasOffset() bool {
-	if o != nil && o.Offset != nil {
+	if o != nil && !IsNil(o.Offset) {
 		return true
 	}
 
@@ -136,17 +139,25 @@ func (o *QueryAppointmentSchedulesRequest) SetOffset(v int32) {
 }
 
 func (o QueryAppointmentSchedulesRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.StartTime != nil {
-		toSerialize["start_time"] = o.StartTime
-	}
-	if o.Limit != nil {
-		toSerialize["limit"] = o.Limit
-	}
-	if o.Offset != nil {
-		toSerialize["offset"] = o.Offset
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o QueryAppointmentSchedulesRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.StartTime) {
+		toSerialize["start_time"] = o.StartTime
+	}
+	if !IsNil(o.Limit) {
+		toSerialize["limit"] = o.Limit
+	}
+	if !IsNil(o.Offset) {
+		toSerialize["offset"] = o.Offset
+	}
+	return toSerialize, nil
 }
 
 type NullableQueryAppointmentSchedulesRequest struct {

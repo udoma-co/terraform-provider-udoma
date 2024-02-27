@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the RespondToInvitationRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &RespondToInvitationRequest{}
+
 // RespondToInvitationRequest Respond to an invitation from a property manager, by either accepting or rejecting it.
 type RespondToInvitationRequest struct {
 	Action *InvitationResponseAction `json:"action,omitempty"`
@@ -38,7 +41,7 @@ func NewRespondToInvitationRequestWithDefaults() *RespondToInvitationRequest {
 
 // GetAction returns the Action field value if set, zero value otherwise.
 func (o *RespondToInvitationRequest) GetAction() InvitationResponseAction {
-	if o == nil || o.Action == nil {
+	if o == nil || IsNil(o.Action) {
 		var ret InvitationResponseAction
 		return ret
 	}
@@ -48,7 +51,7 @@ func (o *RespondToInvitationRequest) GetAction() InvitationResponseAction {
 // GetActionOk returns a tuple with the Action field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RespondToInvitationRequest) GetActionOk() (*InvitationResponseAction, bool) {
-	if o == nil || o.Action == nil {
+	if o == nil || IsNil(o.Action) {
 		return nil, false
 	}
 	return o.Action, true
@@ -56,7 +59,7 @@ func (o *RespondToInvitationRequest) GetActionOk() (*InvitationResponseAction, b
 
 // HasAction returns a boolean if a field has been set.
 func (o *RespondToInvitationRequest) HasAction() bool {
-	if o != nil && o.Action != nil {
+	if o != nil && !IsNil(o.Action) {
 		return true
 	}
 
@@ -69,11 +72,19 @@ func (o *RespondToInvitationRequest) SetAction(v InvitationResponseAction) {
 }
 
 func (o RespondToInvitationRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Action != nil {
-		toSerialize["action"] = o.Action
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o RespondToInvitationRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Action) {
+		toSerialize["action"] = o.Action
+	}
+	return toSerialize, nil
 }
 
 type NullableRespondToInvitationRequest struct {

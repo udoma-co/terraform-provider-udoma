@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the UserPreferences type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &UserPreferences{}
+
 // UserPreferences Notification preferences for individual users
 type UserPreferences struct {
 	// Notify when a new case has been raised for the account. For property  managers or service providers, this will be triggered when a new case is raised for their company/any of the properties the company manages. For tenants it is triggered, when a case is raised for the property  they live in.
@@ -41,7 +44,7 @@ func NewUserPreferencesWithDefaults() *UserPreferences {
 
 // GetNotifyOnNewCase returns the NotifyOnNewCase field value if set, zero value otherwise.
 func (o *UserPreferences) GetNotifyOnNewCase() []NotificationType {
-	if o == nil || o.NotifyOnNewCase == nil {
+	if o == nil || IsNil(o.NotifyOnNewCase) {
 		var ret []NotificationType
 		return ret
 	}
@@ -51,7 +54,7 @@ func (o *UserPreferences) GetNotifyOnNewCase() []NotificationType {
 // GetNotifyOnNewCaseOk returns a tuple with the NotifyOnNewCase field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UserPreferences) GetNotifyOnNewCaseOk() ([]NotificationType, bool) {
-	if o == nil || o.NotifyOnNewCase == nil {
+	if o == nil || IsNil(o.NotifyOnNewCase) {
 		return nil, false
 	}
 	return o.NotifyOnNewCase, true
@@ -59,7 +62,7 @@ func (o *UserPreferences) GetNotifyOnNewCaseOk() ([]NotificationType, bool) {
 
 // HasNotifyOnNewCase returns a boolean if a field has been set.
 func (o *UserPreferences) HasNotifyOnNewCase() bool {
-	if o != nil && o.NotifyOnNewCase != nil {
+	if o != nil && !IsNil(o.NotifyOnNewCase) {
 		return true
 	}
 
@@ -73,7 +76,7 @@ func (o *UserPreferences) SetNotifyOnNewCase(v []NotificationType) {
 
 // GetNotifyOnCaseUpdate returns the NotifyOnCaseUpdate field value if set, zero value otherwise.
 func (o *UserPreferences) GetNotifyOnCaseUpdate() []NotificationType {
-	if o == nil || o.NotifyOnCaseUpdate == nil {
+	if o == nil || IsNil(o.NotifyOnCaseUpdate) {
 		var ret []NotificationType
 		return ret
 	}
@@ -83,7 +86,7 @@ func (o *UserPreferences) GetNotifyOnCaseUpdate() []NotificationType {
 // GetNotifyOnCaseUpdateOk returns a tuple with the NotifyOnCaseUpdate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UserPreferences) GetNotifyOnCaseUpdateOk() ([]NotificationType, bool) {
-	if o == nil || o.NotifyOnCaseUpdate == nil {
+	if o == nil || IsNil(o.NotifyOnCaseUpdate) {
 		return nil, false
 	}
 	return o.NotifyOnCaseUpdate, true
@@ -91,7 +94,7 @@ func (o *UserPreferences) GetNotifyOnCaseUpdateOk() ([]NotificationType, bool) {
 
 // HasNotifyOnCaseUpdate returns a boolean if a field has been set.
 func (o *UserPreferences) HasNotifyOnCaseUpdate() bool {
-	if o != nil && o.NotifyOnCaseUpdate != nil {
+	if o != nil && !IsNil(o.NotifyOnCaseUpdate) {
 		return true
 	}
 
@@ -104,14 +107,22 @@ func (o *UserPreferences) SetNotifyOnCaseUpdate(v []NotificationType) {
 }
 
 func (o UserPreferences) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.NotifyOnNewCase != nil {
-		toSerialize["notify_on_new_case"] = o.NotifyOnNewCase
-	}
-	if o.NotifyOnCaseUpdate != nil {
-		toSerialize["notify_on_case_update"] = o.NotifyOnCaseUpdate
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o UserPreferences) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.NotifyOnNewCase) {
+		toSerialize["notify_on_new_case"] = o.NotifyOnNewCase
+	}
+	if !IsNil(o.NotifyOnCaseUpdate) {
+		toSerialize["notify_on_case_update"] = o.NotifyOnCaseUpdate
+	}
+	return toSerialize, nil
 }
 
 type NullableUserPreferences struct {

@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the DocumentTemplateSignerDefinition type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DocumentTemplateSignerDefinition{}
+
 // DocumentTemplateSignerDefinition Indicates where to get data to generate info of a signer
 type DocumentTemplateSignerDefinition struct {
 	ContactData *ContactData `json:"contact_data,omitempty"`
@@ -42,7 +45,7 @@ func NewDocumentTemplateSignerDefinitionWithDefaults() *DocumentTemplateSignerDe
 
 // GetContactData returns the ContactData field value if set, zero value otherwise.
 func (o *DocumentTemplateSignerDefinition) GetContactData() ContactData {
-	if o == nil || o.ContactData == nil {
+	if o == nil || IsNil(o.ContactData) {
 		var ret ContactData
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *DocumentTemplateSignerDefinition) GetContactData() ContactData {
 // GetContactDataOk returns a tuple with the ContactData field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentTemplateSignerDefinition) GetContactDataOk() (*ContactData, bool) {
-	if o == nil || o.ContactData == nil {
+	if o == nil || IsNil(o.ContactData) {
 		return nil, false
 	}
 	return o.ContactData, true
@@ -60,7 +63,7 @@ func (o *DocumentTemplateSignerDefinition) GetContactDataOk() (*ContactData, boo
 
 // HasContactData returns a boolean if a field has been set.
 func (o *DocumentTemplateSignerDefinition) HasContactData() bool {
-	if o != nil && o.ContactData != nil {
+	if o != nil && !IsNil(o.ContactData) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *DocumentTemplateSignerDefinition) SetContactData(v ContactData) {
 
 // GetContactDataExpression returns the ContactDataExpression field value if set, zero value otherwise.
 func (o *DocumentTemplateSignerDefinition) GetContactDataExpression() string {
-	if o == nil || o.ContactDataExpression == nil {
+	if o == nil || IsNil(o.ContactDataExpression) {
 		var ret string
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *DocumentTemplateSignerDefinition) GetContactDataExpression() string {
 // GetContactDataExpressionOk returns a tuple with the ContactDataExpression field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentTemplateSignerDefinition) GetContactDataExpressionOk() (*string, bool) {
-	if o == nil || o.ContactDataExpression == nil {
+	if o == nil || IsNil(o.ContactDataExpression) {
 		return nil, false
 	}
 	return o.ContactDataExpression, true
@@ -92,7 +95,7 @@ func (o *DocumentTemplateSignerDefinition) GetContactDataExpressionOk() (*string
 
 // HasContactDataExpression returns a boolean if a field has been set.
 func (o *DocumentTemplateSignerDefinition) HasContactDataExpression() bool {
-	if o != nil && o.ContactDataExpression != nil {
+	if o != nil && !IsNil(o.ContactDataExpression) {
 		return true
 	}
 
@@ -106,7 +109,7 @@ func (o *DocumentTemplateSignerDefinition) SetContactDataExpression(v string) {
 
 // GetRepeated returns the Repeated field value if set, zero value otherwise.
 func (o *DocumentTemplateSignerDefinition) GetRepeated() bool {
-	if o == nil || o.Repeated == nil {
+	if o == nil || IsNil(o.Repeated) {
 		var ret bool
 		return ret
 	}
@@ -116,7 +119,7 @@ func (o *DocumentTemplateSignerDefinition) GetRepeated() bool {
 // GetRepeatedOk returns a tuple with the Repeated field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentTemplateSignerDefinition) GetRepeatedOk() (*bool, bool) {
-	if o == nil || o.Repeated == nil {
+	if o == nil || IsNil(o.Repeated) {
 		return nil, false
 	}
 	return o.Repeated, true
@@ -124,7 +127,7 @@ func (o *DocumentTemplateSignerDefinition) GetRepeatedOk() (*bool, bool) {
 
 // HasRepeated returns a boolean if a field has been set.
 func (o *DocumentTemplateSignerDefinition) HasRepeated() bool {
-	if o != nil && o.Repeated != nil {
+	if o != nil && !IsNil(o.Repeated) {
 		return true
 	}
 
@@ -137,17 +140,25 @@ func (o *DocumentTemplateSignerDefinition) SetRepeated(v bool) {
 }
 
 func (o DocumentTemplateSignerDefinition) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.ContactData != nil {
-		toSerialize["contact_data"] = o.ContactData
-	}
-	if o.ContactDataExpression != nil {
-		toSerialize["contact_data_expression"] = o.ContactDataExpression
-	}
-	if o.Repeated != nil {
-		toSerialize["repeated"] = o.Repeated
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DocumentTemplateSignerDefinition) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.ContactData) {
+		toSerialize["contact_data"] = o.ContactData
+	}
+	if !IsNil(o.ContactDataExpression) {
+		toSerialize["contact_data_expression"] = o.ContactDataExpression
+	}
+	if !IsNil(o.Repeated) {
+		toSerialize["repeated"] = o.Repeated
+	}
+	return toSerialize, nil
 }
 
 type NullableDocumentTemplateSignerDefinition struct {

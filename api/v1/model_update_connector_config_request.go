@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the UpdateConnectorConfigRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &UpdateConnectorConfigRequest{}
+
 // UpdateConnectorConfigRequest Request used to update a connector config
 type UpdateConnectorConfigRequest struct {
 	// short description of the connector
@@ -48,7 +51,7 @@ func NewUpdateConnectorConfigRequestWithDefaults() *UpdateConnectorConfigRequest
 
 // GetDescription returns the Description field value if set, zero value otherwise.
 func (o *UpdateConnectorConfigRequest) GetDescription() string {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		var ret string
 		return ret
 	}
@@ -58,7 +61,7 @@ func (o *UpdateConnectorConfigRequest) GetDescription() string {
 // GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateConnectorConfigRequest) GetDescriptionOk() (*string, bool) {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		return nil, false
 	}
 	return o.Description, true
@@ -66,7 +69,7 @@ func (o *UpdateConnectorConfigRequest) GetDescriptionOk() (*string, bool) {
 
 // HasDescription returns a boolean if a field has been set.
 func (o *UpdateConnectorConfigRequest) HasDescription() bool {
-	if o != nil && o.Description != nil {
+	if o != nil && !IsNil(o.Description) {
 		return true
 	}
 
@@ -80,7 +83,7 @@ func (o *UpdateConnectorConfigRequest) SetDescription(v string) {
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *UpdateConnectorConfigRequest) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
@@ -90,7 +93,7 @@ func (o *UpdateConnectorConfigRequest) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateConnectorConfigRequest) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
 	return o.Enabled, true
@@ -98,7 +101,7 @@ func (o *UpdateConnectorConfigRequest) GetEnabledOk() (*bool, bool) {
 
 // HasEnabled returns a boolean if a field has been set.
 func (o *UpdateConnectorConfigRequest) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
@@ -112,7 +115,7 @@ func (o *UpdateConnectorConfigRequest) SetEnabled(v bool) {
 
 // GetSyncTimes returns the SyncTimes field value if set, zero value otherwise.
 func (o *UpdateConnectorConfigRequest) GetSyncTimes() string {
-	if o == nil || o.SyncTimes == nil {
+	if o == nil || IsNil(o.SyncTimes) {
 		var ret string
 		return ret
 	}
@@ -122,7 +125,7 @@ func (o *UpdateConnectorConfigRequest) GetSyncTimes() string {
 // GetSyncTimesOk returns a tuple with the SyncTimes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateConnectorConfigRequest) GetSyncTimesOk() (*string, bool) {
-	if o == nil || o.SyncTimes == nil {
+	if o == nil || IsNil(o.SyncTimes) {
 		return nil, false
 	}
 	return o.SyncTimes, true
@@ -130,7 +133,7 @@ func (o *UpdateConnectorConfigRequest) GetSyncTimesOk() (*string, bool) {
 
 // HasSyncTimes returns a boolean if a field has been set.
 func (o *UpdateConnectorConfigRequest) HasSyncTimes() bool {
-	if o != nil && o.SyncTimes != nil {
+	if o != nil && !IsNil(o.SyncTimes) {
 		return true
 	}
 
@@ -144,7 +147,7 @@ func (o *UpdateConnectorConfigRequest) SetSyncTimes(v string) {
 
 // GetPingTimes returns the PingTimes field value if set, zero value otherwise.
 func (o *UpdateConnectorConfigRequest) GetPingTimes() string {
-	if o == nil || o.PingTimes == nil {
+	if o == nil || IsNil(o.PingTimes) {
 		var ret string
 		return ret
 	}
@@ -154,7 +157,7 @@ func (o *UpdateConnectorConfigRequest) GetPingTimes() string {
 // GetPingTimesOk returns a tuple with the PingTimes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateConnectorConfigRequest) GetPingTimesOk() (*string, bool) {
-	if o == nil || o.PingTimes == nil {
+	if o == nil || IsNil(o.PingTimes) {
 		return nil, false
 	}
 	return o.PingTimes, true
@@ -162,7 +165,7 @@ func (o *UpdateConnectorConfigRequest) GetPingTimesOk() (*string, bool) {
 
 // HasPingTimes returns a boolean if a field has been set.
 func (o *UpdateConnectorConfigRequest) HasPingTimes() bool {
-	if o != nil && o.PingTimes != nil {
+	if o != nil && !IsNil(o.PingTimes) {
 		return true
 	}
 
@@ -176,7 +179,7 @@ func (o *UpdateConnectorConfigRequest) SetPingTimes(v string) {
 
 // GetEntities returns the Entities field value if set, zero value otherwise.
 func (o *UpdateConnectorConfigRequest) GetEntities() []string {
-	if o == nil || o.Entities == nil {
+	if o == nil || IsNil(o.Entities) {
 		var ret []string
 		return ret
 	}
@@ -186,7 +189,7 @@ func (o *UpdateConnectorConfigRequest) GetEntities() []string {
 // GetEntitiesOk returns a tuple with the Entities field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateConnectorConfigRequest) GetEntitiesOk() ([]string, bool) {
-	if o == nil || o.Entities == nil {
+	if o == nil || IsNil(o.Entities) {
 		return nil, false
 	}
 	return o.Entities, true
@@ -194,7 +197,7 @@ func (o *UpdateConnectorConfigRequest) GetEntitiesOk() ([]string, bool) {
 
 // HasEntities returns a boolean if a field has been set.
 func (o *UpdateConnectorConfigRequest) HasEntities() bool {
-	if o != nil && o.Entities != nil {
+	if o != nil && !IsNil(o.Entities) {
 		return true
 	}
 
@@ -208,7 +211,7 @@ func (o *UpdateConnectorConfigRequest) SetEntities(v []string) {
 
 // GetLogLevel returns the LogLevel field value if set, zero value otherwise.
 func (o *UpdateConnectorConfigRequest) GetLogLevel() ConnectorLogLevelEnum {
-	if o == nil || o.LogLevel == nil {
+	if o == nil || IsNil(o.LogLevel) {
 		var ret ConnectorLogLevelEnum
 		return ret
 	}
@@ -218,7 +221,7 @@ func (o *UpdateConnectorConfigRequest) GetLogLevel() ConnectorLogLevelEnum {
 // GetLogLevelOk returns a tuple with the LogLevel field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateConnectorConfigRequest) GetLogLevelOk() (*ConnectorLogLevelEnum, bool) {
-	if o == nil || o.LogLevel == nil {
+	if o == nil || IsNil(o.LogLevel) {
 		return nil, false
 	}
 	return o.LogLevel, true
@@ -226,7 +229,7 @@ func (o *UpdateConnectorConfigRequest) GetLogLevelOk() (*ConnectorLogLevelEnum, 
 
 // HasLogLevel returns a boolean if a field has been set.
 func (o *UpdateConnectorConfigRequest) HasLogLevel() bool {
-	if o != nil && o.LogLevel != nil {
+	if o != nil && !IsNil(o.LogLevel) {
 		return true
 	}
 
@@ -239,26 +242,34 @@ func (o *UpdateConnectorConfigRequest) SetLogLevel(v ConnectorLogLevelEnum) {
 }
 
 func (o UpdateConnectorConfigRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Description != nil {
-		toSerialize["description"] = o.Description
-	}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
-	}
-	if o.SyncTimes != nil {
-		toSerialize["sync_times"] = o.SyncTimes
-	}
-	if o.PingTimes != nil {
-		toSerialize["ping_times"] = o.PingTimes
-	}
-	if o.Entities != nil {
-		toSerialize["entities"] = o.Entities
-	}
-	if o.LogLevel != nil {
-		toSerialize["log_level"] = o.LogLevel
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o UpdateConnectorConfigRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
+	}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.SyncTimes) {
+		toSerialize["sync_times"] = o.SyncTimes
+	}
+	if !IsNil(o.PingTimes) {
+		toSerialize["ping_times"] = o.PingTimes
+	}
+	if !IsNil(o.Entities) {
+		toSerialize["entities"] = o.Entities
+	}
+	if !IsNil(o.LogLevel) {
+		toSerialize["log_level"] = o.LogLevel
+	}
+	return toSerialize, nil
 }
 
 type NullableUpdateConnectorConfigRequest struct {

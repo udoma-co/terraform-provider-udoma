@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ConnectorMeta type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ConnectorMeta{}
+
 // ConnectorMeta struct for ConnectorMeta
 type ConnectorMeta struct {
 	// id of the connector
@@ -41,7 +44,7 @@ func NewConnectorMetaWithDefaults() *ConnectorMeta {
 
 // GetConnectorId returns the ConnectorId field value if set, zero value otherwise.
 func (o *ConnectorMeta) GetConnectorId() string {
-	if o == nil || o.ConnectorId == nil {
+	if o == nil || IsNil(o.ConnectorId) {
 		var ret string
 		return ret
 	}
@@ -51,7 +54,7 @@ func (o *ConnectorMeta) GetConnectorId() string {
 // GetConnectorIdOk returns a tuple with the ConnectorId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectorMeta) GetConnectorIdOk() (*string, bool) {
-	if o == nil || o.ConnectorId == nil {
+	if o == nil || IsNil(o.ConnectorId) {
 		return nil, false
 	}
 	return o.ConnectorId, true
@@ -59,7 +62,7 @@ func (o *ConnectorMeta) GetConnectorIdOk() (*string, bool) {
 
 // HasConnectorId returns a boolean if a field has been set.
 func (o *ConnectorMeta) HasConnectorId() bool {
-	if o != nil && o.ConnectorId != nil {
+	if o != nil && !IsNil(o.ConnectorId) {
 		return true
 	}
 
@@ -73,7 +76,7 @@ func (o *ConnectorMeta) SetConnectorId(v string) {
 
 // GetVersion returns the Version field value if set, zero value otherwise.
 func (o *ConnectorMeta) GetVersion() string {
-	if o == nil || o.Version == nil {
+	if o == nil || IsNil(o.Version) {
 		var ret string
 		return ret
 	}
@@ -83,7 +86,7 @@ func (o *ConnectorMeta) GetVersion() string {
 // GetVersionOk returns a tuple with the Version field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectorMeta) GetVersionOk() (*string, bool) {
-	if o == nil || o.Version == nil {
+	if o == nil || IsNil(o.Version) {
 		return nil, false
 	}
 	return o.Version, true
@@ -91,7 +94,7 @@ func (o *ConnectorMeta) GetVersionOk() (*string, bool) {
 
 // HasVersion returns a boolean if a field has been set.
 func (o *ConnectorMeta) HasVersion() bool {
-	if o != nil && o.Version != nil {
+	if o != nil && !IsNil(o.Version) {
 		return true
 	}
 
@@ -104,14 +107,22 @@ func (o *ConnectorMeta) SetVersion(v string) {
 }
 
 func (o ConnectorMeta) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.ConnectorId != nil {
-		toSerialize["connector_id"] = o.ConnectorId
-	}
-	if o.Version != nil {
-		toSerialize["version"] = o.Version
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ConnectorMeta) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.ConnectorId) {
+		toSerialize["connector_id"] = o.ConnectorId
+	}
+	if !IsNil(o.Version) {
+		toSerialize["version"] = o.Version
+	}
+	return toSerialize, nil
 }
 
 type NullableConnectorMeta struct {

@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the WorkflowStepDefinition type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &WorkflowStepDefinition{}
+
 // WorkflowStepDefinition the definition of a single step within a workflow
 type WorkflowStepDefinition struct {
 	// the ID of the step, unique within the workflow
@@ -55,7 +58,7 @@ func NewWorkflowStepDefinitionWithDefaults() *WorkflowStepDefinition {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *WorkflowStepDefinition) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -65,7 +68,7 @@ func (o *WorkflowStepDefinition) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepDefinition) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -73,7 +76,7 @@ func (o *WorkflowStepDefinition) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *WorkflowStepDefinition) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -87,7 +90,7 @@ func (o *WorkflowStepDefinition) SetId(v string) {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *WorkflowStepDefinition) GetType() string {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret string
 		return ret
 	}
@@ -97,7 +100,7 @@ func (o *WorkflowStepDefinition) GetType() string {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepDefinition) GetTypeOk() (*string, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -105,7 +108,7 @@ func (o *WorkflowStepDefinition) GetTypeOk() (*string, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *WorkflowStepDefinition) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -119,7 +122,7 @@ func (o *WorkflowStepDefinition) SetType(v string) {
 
 // GetIcon returns the Icon field value if set, zero value otherwise.
 func (o *WorkflowStepDefinition) GetIcon() string {
-	if o == nil || o.Icon == nil {
+	if o == nil || IsNil(o.Icon) {
 		var ret string
 		return ret
 	}
@@ -129,7 +132,7 @@ func (o *WorkflowStepDefinition) GetIcon() string {
 // GetIconOk returns a tuple with the Icon field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepDefinition) GetIconOk() (*string, bool) {
-	if o == nil || o.Icon == nil {
+	if o == nil || IsNil(o.Icon) {
 		return nil, false
 	}
 	return o.Icon, true
@@ -137,7 +140,7 @@ func (o *WorkflowStepDefinition) GetIconOk() (*string, bool) {
 
 // HasIcon returns a boolean if a field has been set.
 func (o *WorkflowStepDefinition) HasIcon() bool {
-	if o != nil && o.Icon != nil {
+	if o != nil && !IsNil(o.Icon) {
 		return true
 	}
 
@@ -151,7 +154,7 @@ func (o *WorkflowStepDefinition) SetIcon(v string) {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *WorkflowStepDefinition) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -161,7 +164,7 @@ func (o *WorkflowStepDefinition) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepDefinition) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -169,7 +172,7 @@ func (o *WorkflowStepDefinition) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *WorkflowStepDefinition) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -183,7 +186,7 @@ func (o *WorkflowStepDefinition) SetName(v string) {
 
 // GetGroupName returns the GroupName field value if set, zero value otherwise.
 func (o *WorkflowStepDefinition) GetGroupName() string {
-	if o == nil || o.GroupName == nil {
+	if o == nil || IsNil(o.GroupName) {
 		var ret string
 		return ret
 	}
@@ -193,7 +196,7 @@ func (o *WorkflowStepDefinition) GetGroupName() string {
 // GetGroupNameOk returns a tuple with the GroupName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepDefinition) GetGroupNameOk() (*string, bool) {
-	if o == nil || o.GroupName == nil {
+	if o == nil || IsNil(o.GroupName) {
 		return nil, false
 	}
 	return o.GroupName, true
@@ -201,7 +204,7 @@ func (o *WorkflowStepDefinition) GetGroupNameOk() (*string, bool) {
 
 // HasGroupName returns a boolean if a field has been set.
 func (o *WorkflowStepDefinition) HasGroupName() bool {
-	if o != nil && o.GroupName != nil {
+	if o != nil && !IsNil(o.GroupName) {
 		return true
 	}
 
@@ -215,7 +218,7 @@ func (o *WorkflowStepDefinition) SetGroupName(v string) {
 
 // GetParameters returns the Parameters field value if set, zero value otherwise.
 func (o *WorkflowStepDefinition) GetParameters() map[string]interface{} {
-	if o == nil || o.Parameters == nil {
+	if o == nil || IsNil(o.Parameters) {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -225,15 +228,15 @@ func (o *WorkflowStepDefinition) GetParameters() map[string]interface{} {
 // GetParametersOk returns a tuple with the Parameters field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepDefinition) GetParametersOk() (map[string]interface{}, bool) {
-	if o == nil || o.Parameters == nil {
-		return nil, false
+	if o == nil || IsNil(o.Parameters) {
+		return map[string]interface{}{}, false
 	}
 	return o.Parameters, true
 }
 
 // HasParameters returns a boolean if a field has been set.
 func (o *WorkflowStepDefinition) HasParameters() bool {
-	if o != nil && o.Parameters != nil {
+	if o != nil && !IsNil(o.Parameters) {
 		return true
 	}
 
@@ -247,7 +250,7 @@ func (o *WorkflowStepDefinition) SetParameters(v map[string]interface{}) {
 
 // GetDynamicParameters returns the DynamicParameters field value if set, zero value otherwise.
 func (o *WorkflowStepDefinition) GetDynamicParameters() map[string]string {
-	if o == nil || o.DynamicParameters == nil {
+	if o == nil || IsNil(o.DynamicParameters) {
 		var ret map[string]string
 		return ret
 	}
@@ -257,7 +260,7 @@ func (o *WorkflowStepDefinition) GetDynamicParameters() map[string]string {
 // GetDynamicParametersOk returns a tuple with the DynamicParameters field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepDefinition) GetDynamicParametersOk() (*map[string]string, bool) {
-	if o == nil || o.DynamicParameters == nil {
+	if o == nil || IsNil(o.DynamicParameters) {
 		return nil, false
 	}
 	return o.DynamicParameters, true
@@ -265,7 +268,7 @@ func (o *WorkflowStepDefinition) GetDynamicParametersOk() (*map[string]string, b
 
 // HasDynamicParameters returns a boolean if a field has been set.
 func (o *WorkflowStepDefinition) HasDynamicParameters() bool {
-	if o != nil && o.DynamicParameters != nil {
+	if o != nil && !IsNil(o.DynamicParameters) {
 		return true
 	}
 
@@ -279,7 +282,7 @@ func (o *WorkflowStepDefinition) SetDynamicParameters(v map[string]string) {
 
 // GetPrerunAction returns the PrerunAction field value if set, zero value otherwise.
 func (o *WorkflowStepDefinition) GetPrerunAction() WorkflowStepActionDefinition {
-	if o == nil || o.PrerunAction == nil {
+	if o == nil || IsNil(o.PrerunAction) {
 		var ret WorkflowStepActionDefinition
 		return ret
 	}
@@ -289,7 +292,7 @@ func (o *WorkflowStepDefinition) GetPrerunAction() WorkflowStepActionDefinition 
 // GetPrerunActionOk returns a tuple with the PrerunAction field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepDefinition) GetPrerunActionOk() (*WorkflowStepActionDefinition, bool) {
-	if o == nil || o.PrerunAction == nil {
+	if o == nil || IsNil(o.PrerunAction) {
 		return nil, false
 	}
 	return o.PrerunAction, true
@@ -297,7 +300,7 @@ func (o *WorkflowStepDefinition) GetPrerunActionOk() (*WorkflowStepActionDefinit
 
 // HasPrerunAction returns a boolean if a field has been set.
 func (o *WorkflowStepDefinition) HasPrerunAction() bool {
-	if o != nil && o.PrerunAction != nil {
+	if o != nil && !IsNil(o.PrerunAction) {
 		return true
 	}
 
@@ -311,7 +314,7 @@ func (o *WorkflowStepDefinition) SetPrerunAction(v WorkflowStepActionDefinition)
 
 // GetCanBeExecutedExpression returns the CanBeExecutedExpression field value if set, zero value otherwise.
 func (o *WorkflowStepDefinition) GetCanBeExecutedExpression() string {
-	if o == nil || o.CanBeExecutedExpression == nil {
+	if o == nil || IsNil(o.CanBeExecutedExpression) {
 		var ret string
 		return ret
 	}
@@ -321,7 +324,7 @@ func (o *WorkflowStepDefinition) GetCanBeExecutedExpression() string {
 // GetCanBeExecutedExpressionOk returns a tuple with the CanBeExecutedExpression field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepDefinition) GetCanBeExecutedExpressionOk() (*string, bool) {
-	if o == nil || o.CanBeExecutedExpression == nil {
+	if o == nil || IsNil(o.CanBeExecutedExpression) {
 		return nil, false
 	}
 	return o.CanBeExecutedExpression, true
@@ -329,7 +332,7 @@ func (o *WorkflowStepDefinition) GetCanBeExecutedExpressionOk() (*string, bool) 
 
 // HasCanBeExecutedExpression returns a boolean if a field has been set.
 func (o *WorkflowStepDefinition) HasCanBeExecutedExpression() bool {
-	if o != nil && o.CanBeExecutedExpression != nil {
+	if o != nil && !IsNil(o.CanBeExecutedExpression) {
 		return true
 	}
 
@@ -343,7 +346,7 @@ func (o *WorkflowStepDefinition) SetCanBeExecutedExpression(v string) {
 
 // GetActions returns the Actions field value if set, zero value otherwise.
 func (o *WorkflowStepDefinition) GetActions() []WorkflowStepActionDefinition {
-	if o == nil || o.Actions == nil {
+	if o == nil || IsNil(o.Actions) {
 		var ret []WorkflowStepActionDefinition
 		return ret
 	}
@@ -353,7 +356,7 @@ func (o *WorkflowStepDefinition) GetActions() []WorkflowStepActionDefinition {
 // GetActionsOk returns a tuple with the Actions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepDefinition) GetActionsOk() ([]WorkflowStepActionDefinition, bool) {
-	if o == nil || o.Actions == nil {
+	if o == nil || IsNil(o.Actions) {
 		return nil, false
 	}
 	return o.Actions, true
@@ -361,7 +364,7 @@ func (o *WorkflowStepDefinition) GetActionsOk() ([]WorkflowStepActionDefinition,
 
 // HasActions returns a boolean if a field has been set.
 func (o *WorkflowStepDefinition) HasActions() bool {
-	if o != nil && o.Actions != nil {
+	if o != nil && !IsNil(o.Actions) {
 		return true
 	}
 
@@ -374,38 +377,46 @@ func (o *WorkflowStepDefinition) SetActions(v []WorkflowStepActionDefinition) {
 }
 
 func (o WorkflowStepDefinition) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if o.Icon != nil {
-		toSerialize["icon"] = o.Icon
-	}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.GroupName != nil {
-		toSerialize["group_name"] = o.GroupName
-	}
-	if o.Parameters != nil {
-		toSerialize["parameters"] = o.Parameters
-	}
-	if o.DynamicParameters != nil {
-		toSerialize["dynamic_parameters"] = o.DynamicParameters
-	}
-	if o.PrerunAction != nil {
-		toSerialize["prerun_action"] = o.PrerunAction
-	}
-	if o.CanBeExecutedExpression != nil {
-		toSerialize["can_be_executed_expression"] = o.CanBeExecutedExpression
-	}
-	if o.Actions != nil {
-		toSerialize["actions"] = o.Actions
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o WorkflowStepDefinition) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.Icon) {
+		toSerialize["icon"] = o.Icon
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.GroupName) {
+		toSerialize["group_name"] = o.GroupName
+	}
+	if !IsNil(o.Parameters) {
+		toSerialize["parameters"] = o.Parameters
+	}
+	if !IsNil(o.DynamicParameters) {
+		toSerialize["dynamic_parameters"] = o.DynamicParameters
+	}
+	if !IsNil(o.PrerunAction) {
+		toSerialize["prerun_action"] = o.PrerunAction
+	}
+	if !IsNil(o.CanBeExecutedExpression) {
+		toSerialize["can_be_executed_expression"] = o.CanBeExecutedExpression
+	}
+	if !IsNil(o.Actions) {
+		toSerialize["actions"] = o.Actions
+	}
+	return toSerialize, nil
 }
 
 type NullableWorkflowStepDefinition struct {

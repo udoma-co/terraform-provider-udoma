@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CreateInvitationRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CreateInvitationRequest{}
+
 // CreateInvitationRequest Request issued by a property manager to invite an existing tenant to the platform
 type CreateInvitationRequest struct {
 	// The ID of the tenant who should be invited
@@ -41,7 +44,7 @@ func NewCreateInvitationRequestWithDefaults() *CreateInvitationRequest {
 
 // GetTenantId returns the TenantId field value if set, zero value otherwise.
 func (o *CreateInvitationRequest) GetTenantId() string {
-	if o == nil || o.TenantId == nil {
+	if o == nil || IsNil(o.TenantId) {
 		var ret string
 		return ret
 	}
@@ -51,7 +54,7 @@ func (o *CreateInvitationRequest) GetTenantId() string {
 // GetTenantIdOk returns a tuple with the TenantId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateInvitationRequest) GetTenantIdOk() (*string, bool) {
-	if o == nil || o.TenantId == nil {
+	if o == nil || IsNil(o.TenantId) {
 		return nil, false
 	}
 	return o.TenantId, true
@@ -59,7 +62,7 @@ func (o *CreateInvitationRequest) GetTenantIdOk() (*string, bool) {
 
 // HasTenantId returns a boolean if a field has been set.
 func (o *CreateInvitationRequest) HasTenantId() bool {
-	if o != nil && o.TenantId != nil {
+	if o != nil && !IsNil(o.TenantId) {
 		return true
 	}
 
@@ -73,7 +76,7 @@ func (o *CreateInvitationRequest) SetTenantId(v string) {
 
 // GetPropertyRef returns the PropertyRef field value if set, zero value otherwise.
 func (o *CreateInvitationRequest) GetPropertyRef() string {
-	if o == nil || o.PropertyRef == nil {
+	if o == nil || IsNil(o.PropertyRef) {
 		var ret string
 		return ret
 	}
@@ -83,7 +86,7 @@ func (o *CreateInvitationRequest) GetPropertyRef() string {
 // GetPropertyRefOk returns a tuple with the PropertyRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateInvitationRequest) GetPropertyRefOk() (*string, bool) {
-	if o == nil || o.PropertyRef == nil {
+	if o == nil || IsNil(o.PropertyRef) {
 		return nil, false
 	}
 	return o.PropertyRef, true
@@ -91,7 +94,7 @@ func (o *CreateInvitationRequest) GetPropertyRefOk() (*string, bool) {
 
 // HasPropertyRef returns a boolean if a field has been set.
 func (o *CreateInvitationRequest) HasPropertyRef() bool {
-	if o != nil && o.PropertyRef != nil {
+	if o != nil && !IsNil(o.PropertyRef) {
 		return true
 	}
 
@@ -104,14 +107,22 @@ func (o *CreateInvitationRequest) SetPropertyRef(v string) {
 }
 
 func (o CreateInvitationRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.TenantId != nil {
-		toSerialize["tenant_id"] = o.TenantId
-	}
-	if o.PropertyRef != nil {
-		toSerialize["property_ref"] = o.PropertyRef
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CreateInvitationRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.TenantId) {
+		toSerialize["tenant_id"] = o.TenantId
+	}
+	if !IsNil(o.PropertyRef) {
+		toSerialize["property_ref"] = o.PropertyRef
+	}
+	return toSerialize, nil
 }
 
 type NullableCreateInvitationRequest struct {

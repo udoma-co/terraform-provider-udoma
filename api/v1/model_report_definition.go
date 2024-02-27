@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ReportDefinition type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ReportDefinition{}
+
 // ReportDefinition struct for ReportDefinition
 type ReportDefinition struct {
 	Id *string `json:"id,omitempty"`
@@ -48,7 +51,7 @@ func NewReportDefinitionWithDefaults() *ReportDefinition {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *ReportDefinition) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -58,7 +61,7 @@ func (o *ReportDefinition) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReportDefinition) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -66,7 +69,7 @@ func (o *ReportDefinition) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *ReportDefinition) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -80,7 +83,7 @@ func (o *ReportDefinition) SetId(v string) {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *ReportDefinition) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -90,7 +93,7 @@ func (o *ReportDefinition) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReportDefinition) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -98,7 +101,7 @@ func (o *ReportDefinition) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *ReportDefinition) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -112,7 +115,7 @@ func (o *ReportDefinition) SetName(v string) {
 
 // GetDescription returns the Description field value if set, zero value otherwise.
 func (o *ReportDefinition) GetDescription() string {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		var ret string
 		return ret
 	}
@@ -122,7 +125,7 @@ func (o *ReportDefinition) GetDescription() string {
 // GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReportDefinition) GetDescriptionOk() (*string, bool) {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		return nil, false
 	}
 	return o.Description, true
@@ -130,7 +133,7 @@ func (o *ReportDefinition) GetDescriptionOk() (*string, bool) {
 
 // HasDescription returns a boolean if a field has been set.
 func (o *ReportDefinition) HasDescription() bool {
-	if o != nil && o.Description != nil {
+	if o != nil && !IsNil(o.Description) {
 		return true
 	}
 
@@ -144,7 +147,7 @@ func (o *ReportDefinition) SetDescription(v string) {
 
 // GetResultSchema returns the ResultSchema field value if set, zero value otherwise.
 func (o *ReportDefinition) GetResultSchema() ReportResultSchema {
-	if o == nil || o.ResultSchema == nil {
+	if o == nil || IsNil(o.ResultSchema) {
 		var ret ReportResultSchema
 		return ret
 	}
@@ -154,7 +157,7 @@ func (o *ReportDefinition) GetResultSchema() ReportResultSchema {
 // GetResultSchemaOk returns a tuple with the ResultSchema field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReportDefinition) GetResultSchemaOk() (*ReportResultSchema, bool) {
-	if o == nil || o.ResultSchema == nil {
+	if o == nil || IsNil(o.ResultSchema) {
 		return nil, false
 	}
 	return o.ResultSchema, true
@@ -162,7 +165,7 @@ func (o *ReportDefinition) GetResultSchemaOk() (*ReportResultSchema, bool) {
 
 // HasResultSchema returns a boolean if a field has been set.
 func (o *ReportDefinition) HasResultSchema() bool {
-	if o != nil && o.ResultSchema != nil {
+	if o != nil && !IsNil(o.ResultSchema) {
 		return true
 	}
 
@@ -176,7 +179,7 @@ func (o *ReportDefinition) SetResultSchema(v ReportResultSchema) {
 
 // GetResultMapper returns the ResultMapper field value if set, zero value otherwise.
 func (o *ReportDefinition) GetResultMapper() string {
-	if o == nil || o.ResultMapper == nil {
+	if o == nil || IsNil(o.ResultMapper) {
 		var ret string
 		return ret
 	}
@@ -186,7 +189,7 @@ func (o *ReportDefinition) GetResultMapper() string {
 // GetResultMapperOk returns a tuple with the ResultMapper field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReportDefinition) GetResultMapperOk() (*string, bool) {
-	if o == nil || o.ResultMapper == nil {
+	if o == nil || IsNil(o.ResultMapper) {
 		return nil, false
 	}
 	return o.ResultMapper, true
@@ -194,7 +197,7 @@ func (o *ReportDefinition) GetResultMapperOk() (*string, bool) {
 
 // HasResultMapper returns a boolean if a field has been set.
 func (o *ReportDefinition) HasResultMapper() bool {
-	if o != nil && o.ResultMapper != nil {
+	if o != nil && !IsNil(o.ResultMapper) {
 		return true
 	}
 
@@ -208,7 +211,7 @@ func (o *ReportDefinition) SetResultMapper(v string) {
 
 // GetParameters returns the Parameters field value if set, zero value otherwise.
 func (o *ReportDefinition) GetParameters() CustomForm {
-	if o == nil || o.Parameters == nil {
+	if o == nil || IsNil(o.Parameters) {
 		var ret CustomForm
 		return ret
 	}
@@ -218,7 +221,7 @@ func (o *ReportDefinition) GetParameters() CustomForm {
 // GetParametersOk returns a tuple with the Parameters field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReportDefinition) GetParametersOk() (*CustomForm, bool) {
-	if o == nil || o.Parameters == nil {
+	if o == nil || IsNil(o.Parameters) {
 		return nil, false
 	}
 	return o.Parameters, true
@@ -226,7 +229,7 @@ func (o *ReportDefinition) GetParametersOk() (*CustomForm, bool) {
 
 // HasParameters returns a boolean if a field has been set.
 func (o *ReportDefinition) HasParameters() bool {
-	if o != nil && o.Parameters != nil {
+	if o != nil && !IsNil(o.Parameters) {
 		return true
 	}
 
@@ -240,7 +243,7 @@ func (o *ReportDefinition) SetParameters(v CustomForm) {
 
 // GetScript returns the Script field value if set, zero value otherwise.
 func (o *ReportDefinition) GetScript() string {
-	if o == nil || o.Script == nil {
+	if o == nil || IsNil(o.Script) {
 		var ret string
 		return ret
 	}
@@ -250,7 +253,7 @@ func (o *ReportDefinition) GetScript() string {
 // GetScriptOk returns a tuple with the Script field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReportDefinition) GetScriptOk() (*string, bool) {
-	if o == nil || o.Script == nil {
+	if o == nil || IsNil(o.Script) {
 		return nil, false
 	}
 	return o.Script, true
@@ -258,7 +261,7 @@ func (o *ReportDefinition) GetScriptOk() (*string, bool) {
 
 // HasScript returns a boolean if a field has been set.
 func (o *ReportDefinition) HasScript() bool {
-	if o != nil && o.Script != nil {
+	if o != nil && !IsNil(o.Script) {
 		return true
 	}
 
@@ -271,29 +274,37 @@ func (o *ReportDefinition) SetScript(v string) {
 }
 
 func (o ReportDefinition) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.Description != nil {
-		toSerialize["description"] = o.Description
-	}
-	if o.ResultSchema != nil {
-		toSerialize["result_schema"] = o.ResultSchema
-	}
-	if o.ResultMapper != nil {
-		toSerialize["result_mapper"] = o.ResultMapper
-	}
-	if o.Parameters != nil {
-		toSerialize["parameters"] = o.Parameters
-	}
-	if o.Script != nil {
-		toSerialize["script"] = o.Script
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ReportDefinition) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
+	}
+	if !IsNil(o.ResultSchema) {
+		toSerialize["result_schema"] = o.ResultSchema
+	}
+	if !IsNil(o.ResultMapper) {
+		toSerialize["result_mapper"] = o.ResultMapper
+	}
+	if !IsNil(o.Parameters) {
+		toSerialize["parameters"] = o.Parameters
+	}
+	if !IsNil(o.Script) {
+		toSerialize["script"] = o.Script
+	}
+	return toSerialize, nil
 }
 
 type NullableReportDefinition struct {

@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the FormGroup type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &FormGroup{}
+
 // FormGroup a group of inputs that will be displayed together in the UI
 type FormGroup struct {
 	// the ID of the group
@@ -56,7 +59,7 @@ func NewFormGroupWithDefaults() *FormGroup {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *FormGroup) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -66,7 +69,7 @@ func (o *FormGroup) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FormGroup) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -74,7 +77,7 @@ func (o *FormGroup) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *FormGroup) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -88,7 +91,7 @@ func (o *FormGroup) SetId(v string) {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *FormGroup) GetType() FormGroupType {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret FormGroupType
 		return ret
 	}
@@ -98,7 +101,7 @@ func (o *FormGroup) GetType() FormGroupType {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FormGroup) GetTypeOk() (*FormGroupType, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -106,7 +109,7 @@ func (o *FormGroup) GetTypeOk() (*FormGroupType, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *FormGroup) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -120,7 +123,7 @@ func (o *FormGroup) SetType(v FormGroupType) {
 
 // GetLabel returns the Label field value if set, zero value otherwise.
 func (o *FormGroup) GetLabel() map[string]string {
-	if o == nil || o.Label == nil {
+	if o == nil || IsNil(o.Label) {
 		var ret map[string]string
 		return ret
 	}
@@ -130,7 +133,7 @@ func (o *FormGroup) GetLabel() map[string]string {
 // GetLabelOk returns a tuple with the Label field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FormGroup) GetLabelOk() (*map[string]string, bool) {
-	if o == nil || o.Label == nil {
+	if o == nil || IsNil(o.Label) {
 		return nil, false
 	}
 	return o.Label, true
@@ -138,7 +141,7 @@ func (o *FormGroup) GetLabelOk() (*map[string]string, bool) {
 
 // HasLabel returns a boolean if a field has been set.
 func (o *FormGroup) HasLabel() bool {
-	if o != nil && o.Label != nil {
+	if o != nil && !IsNil(o.Label) {
 		return true
 	}
 
@@ -152,7 +155,7 @@ func (o *FormGroup) SetLabel(v map[string]string) {
 
 // GetInfo returns the Info field value if set, zero value otherwise.
 func (o *FormGroup) GetInfo() map[string]string {
-	if o == nil || o.Info == nil {
+	if o == nil || IsNil(o.Info) {
 		var ret map[string]string
 		return ret
 	}
@@ -162,7 +165,7 @@ func (o *FormGroup) GetInfo() map[string]string {
 // GetInfoOk returns a tuple with the Info field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FormGroup) GetInfoOk() (*map[string]string, bool) {
-	if o == nil || o.Info == nil {
+	if o == nil || IsNil(o.Info) {
 		return nil, false
 	}
 	return o.Info, true
@@ -170,7 +173,7 @@ func (o *FormGroup) GetInfoOk() (*map[string]string, bool) {
 
 // HasInfo returns a boolean if a field has been set.
 func (o *FormGroup) HasInfo() bool {
-	if o != nil && o.Info != nil {
+	if o != nil && !IsNil(o.Info) {
 		return true
 	}
 
@@ -184,7 +187,7 @@ func (o *FormGroup) SetInfo(v map[string]string) {
 
 // GetItems returns the Items field value if set, zero value otherwise.
 func (o *FormGroup) GetItems() []FormItem {
-	if o == nil || o.Items == nil {
+	if o == nil || IsNil(o.Items) {
 		var ret []FormItem
 		return ret
 	}
@@ -194,7 +197,7 @@ func (o *FormGroup) GetItems() []FormItem {
 // GetItemsOk returns a tuple with the Items field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FormGroup) GetItemsOk() ([]FormItem, bool) {
-	if o == nil || o.Items == nil {
+	if o == nil || IsNil(o.Items) {
 		return nil, false
 	}
 	return o.Items, true
@@ -202,7 +205,7 @@ func (o *FormGroup) GetItemsOk() ([]FormItem, bool) {
 
 // HasItems returns a boolean if a field has been set.
 func (o *FormGroup) HasItems() bool {
-	if o != nil && o.Items != nil {
+	if o != nil && !IsNil(o.Items) {
 		return true
 	}
 
@@ -216,7 +219,7 @@ func (o *FormGroup) SetItems(v []FormItem) {
 
 // GetTarget returns the Target field value if set, zero value otherwise.
 func (o *FormGroup) GetTarget() string {
-	if o == nil || o.Target == nil {
+	if o == nil || IsNil(o.Target) {
 		var ret string
 		return ret
 	}
@@ -226,7 +229,7 @@ func (o *FormGroup) GetTarget() string {
 // GetTargetOk returns a tuple with the Target field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FormGroup) GetTargetOk() (*string, bool) {
-	if o == nil || o.Target == nil {
+	if o == nil || IsNil(o.Target) {
 		return nil, false
 	}
 	return o.Target, true
@@ -234,7 +237,7 @@ func (o *FormGroup) GetTargetOk() (*string, bool) {
 
 // HasTarget returns a boolean if a field has been set.
 func (o *FormGroup) HasTarget() bool {
-	if o != nil && o.Target != nil {
+	if o != nil && !IsNil(o.Target) {
 		return true
 	}
 
@@ -248,7 +251,7 @@ func (o *FormGroup) SetTarget(v string) {
 
 // GetTopDivider returns the TopDivider field value if set, zero value otherwise.
 func (o *FormGroup) GetTopDivider() bool {
-	if o == nil || o.TopDivider == nil {
+	if o == nil || IsNil(o.TopDivider) {
 		var ret bool
 		return ret
 	}
@@ -258,7 +261,7 @@ func (o *FormGroup) GetTopDivider() bool {
 // GetTopDividerOk returns a tuple with the TopDivider field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FormGroup) GetTopDividerOk() (*bool, bool) {
-	if o == nil || o.TopDivider == nil {
+	if o == nil || IsNil(o.TopDivider) {
 		return nil, false
 	}
 	return o.TopDivider, true
@@ -266,7 +269,7 @@ func (o *FormGroup) GetTopDividerOk() (*bool, bool) {
 
 // HasTopDivider returns a boolean if a field has been set.
 func (o *FormGroup) HasTopDivider() bool {
-	if o != nil && o.TopDivider != nil {
+	if o != nil && !IsNil(o.TopDivider) {
 		return true
 	}
 
@@ -280,7 +283,7 @@ func (o *FormGroup) SetTopDivider(v bool) {
 
 // GetBottomDivider returns the BottomDivider field value if set, zero value otherwise.
 func (o *FormGroup) GetBottomDivider() bool {
-	if o == nil || o.BottomDivider == nil {
+	if o == nil || IsNil(o.BottomDivider) {
 		var ret bool
 		return ret
 	}
@@ -290,7 +293,7 @@ func (o *FormGroup) GetBottomDivider() bool {
 // GetBottomDividerOk returns a tuple with the BottomDivider field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FormGroup) GetBottomDividerOk() (*bool, bool) {
-	if o == nil || o.BottomDivider == nil {
+	if o == nil || IsNil(o.BottomDivider) {
 		return nil, false
 	}
 	return o.BottomDivider, true
@@ -298,7 +301,7 @@ func (o *FormGroup) GetBottomDividerOk() (*bool, bool) {
 
 // HasBottomDivider returns a boolean if a field has been set.
 func (o *FormGroup) HasBottomDivider() bool {
-	if o != nil && o.BottomDivider != nil {
+	if o != nil && !IsNil(o.BottomDivider) {
 		return true
 	}
 
@@ -312,7 +315,7 @@ func (o *FormGroup) SetBottomDivider(v bool) {
 
 // GetUseItemGroup returns the UseItemGroup field value if set, zero value otherwise.
 func (o *FormGroup) GetUseItemGroup() bool {
-	if o == nil || o.UseItemGroup == nil {
+	if o == nil || IsNil(o.UseItemGroup) {
 		var ret bool
 		return ret
 	}
@@ -322,7 +325,7 @@ func (o *FormGroup) GetUseItemGroup() bool {
 // GetUseItemGroupOk returns a tuple with the UseItemGroup field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FormGroup) GetUseItemGroupOk() (*bool, bool) {
-	if o == nil || o.UseItemGroup == nil {
+	if o == nil || IsNil(o.UseItemGroup) {
 		return nil, false
 	}
 	return o.UseItemGroup, true
@@ -330,7 +333,7 @@ func (o *FormGroup) GetUseItemGroupOk() (*bool, bool) {
 
 // HasUseItemGroup returns a boolean if a field has been set.
 func (o *FormGroup) HasUseItemGroup() bool {
-	if o != nil && o.UseItemGroup != nil {
+	if o != nil && !IsNil(o.UseItemGroup) {
 		return true
 	}
 
@@ -344,7 +347,7 @@ func (o *FormGroup) SetUseItemGroup(v bool) {
 
 // GetMinSize returns the MinSize field value if set, zero value otherwise.
 func (o *FormGroup) GetMinSize() int32 {
-	if o == nil || o.MinSize == nil {
+	if o == nil || IsNil(o.MinSize) {
 		var ret int32
 		return ret
 	}
@@ -354,7 +357,7 @@ func (o *FormGroup) GetMinSize() int32 {
 // GetMinSizeOk returns a tuple with the MinSize field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FormGroup) GetMinSizeOk() (*int32, bool) {
-	if o == nil || o.MinSize == nil {
+	if o == nil || IsNil(o.MinSize) {
 		return nil, false
 	}
 	return o.MinSize, true
@@ -362,7 +365,7 @@ func (o *FormGroup) GetMinSizeOk() (*int32, bool) {
 
 // HasMinSize returns a boolean if a field has been set.
 func (o *FormGroup) HasMinSize() bool {
-	if o != nil && o.MinSize != nil {
+	if o != nil && !IsNil(o.MinSize) {
 		return true
 	}
 
@@ -375,38 +378,46 @@ func (o *FormGroup) SetMinSize(v int32) {
 }
 
 func (o FormGroup) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if o.Label != nil {
-		toSerialize["label"] = o.Label
-	}
-	if o.Info != nil {
-		toSerialize["info"] = o.Info
-	}
-	if o.Items != nil {
-		toSerialize["items"] = o.Items
-	}
-	if o.Target != nil {
-		toSerialize["target"] = o.Target
-	}
-	if o.TopDivider != nil {
-		toSerialize["top_divider"] = o.TopDivider
-	}
-	if o.BottomDivider != nil {
-		toSerialize["bottom_divider"] = o.BottomDivider
-	}
-	if o.UseItemGroup != nil {
-		toSerialize["use_item_group"] = o.UseItemGroup
-	}
-	if o.MinSize != nil {
-		toSerialize["min_size"] = o.MinSize
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o FormGroup) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.Label) {
+		toSerialize["label"] = o.Label
+	}
+	if !IsNil(o.Info) {
+		toSerialize["info"] = o.Info
+	}
+	if !IsNil(o.Items) {
+		toSerialize["items"] = o.Items
+	}
+	if !IsNil(o.Target) {
+		toSerialize["target"] = o.Target
+	}
+	if !IsNil(o.TopDivider) {
+		toSerialize["top_divider"] = o.TopDivider
+	}
+	if !IsNil(o.BottomDivider) {
+		toSerialize["bottom_divider"] = o.BottomDivider
+	}
+	if !IsNil(o.UseItemGroup) {
+		toSerialize["use_item_group"] = o.UseItemGroup
+	}
+	if !IsNil(o.MinSize) {
+		toSerialize["min_size"] = o.MinSize
+	}
+	return toSerialize, nil
 }
 
 type NullableFormGroup struct {

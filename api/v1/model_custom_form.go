@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CustomForm type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CustomForm{}
+
 // CustomForm a custom form that is used to collect data from the user
 type CustomForm struct {
 	// the layout of the form, which groups and inputs will be displayed
@@ -45,7 +48,7 @@ func NewCustomFormWithDefaults() *CustomForm {
 
 // GetLayout returns the Layout field value if set, zero value otherwise.
 func (o *CustomForm) GetLayout() []FormItem {
-	if o == nil || o.Layout == nil {
+	if o == nil || IsNil(o.Layout) {
 		var ret []FormItem
 		return ret
 	}
@@ -55,7 +58,7 @@ func (o *CustomForm) GetLayout() []FormItem {
 // GetLayoutOk returns a tuple with the Layout field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CustomForm) GetLayoutOk() ([]FormItem, bool) {
-	if o == nil || o.Layout == nil {
+	if o == nil || IsNil(o.Layout) {
 		return nil, false
 	}
 	return o.Layout, true
@@ -63,7 +66,7 @@ func (o *CustomForm) GetLayoutOk() ([]FormItem, bool) {
 
 // HasLayout returns a boolean if a field has been set.
 func (o *CustomForm) HasLayout() bool {
-	if o != nil && o.Layout != nil {
+	if o != nil && !IsNil(o.Layout) {
 		return true
 	}
 
@@ -77,7 +80,7 @@ func (o *CustomForm) SetLayout(v []FormItem) {
 
 // GetGroups returns the Groups field value if set, zero value otherwise.
 func (o *CustomForm) GetGroups() []FormGroup {
-	if o == nil || o.Groups == nil {
+	if o == nil || IsNil(o.Groups) {
 		var ret []FormGroup
 		return ret
 	}
@@ -87,7 +90,7 @@ func (o *CustomForm) GetGroups() []FormGroup {
 // GetGroupsOk returns a tuple with the Groups field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CustomForm) GetGroupsOk() ([]FormGroup, bool) {
-	if o == nil || o.Groups == nil {
+	if o == nil || IsNil(o.Groups) {
 		return nil, false
 	}
 	return o.Groups, true
@@ -95,7 +98,7 @@ func (o *CustomForm) GetGroupsOk() ([]FormGroup, bool) {
 
 // HasGroups returns a boolean if a field has been set.
 func (o *CustomForm) HasGroups() bool {
-	if o != nil && o.Groups != nil {
+	if o != nil && !IsNil(o.Groups) {
 		return true
 	}
 
@@ -109,7 +112,7 @@ func (o *CustomForm) SetGroups(v []FormGroup) {
 
 // GetInputs returns the Inputs field value if set, zero value otherwise.
 func (o *CustomForm) GetInputs() []FormInput {
-	if o == nil || o.Inputs == nil {
+	if o == nil || IsNil(o.Inputs) {
 		var ret []FormInput
 		return ret
 	}
@@ -119,7 +122,7 @@ func (o *CustomForm) GetInputs() []FormInput {
 // GetInputsOk returns a tuple with the Inputs field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CustomForm) GetInputsOk() ([]FormInput, bool) {
-	if o == nil || o.Inputs == nil {
+	if o == nil || IsNil(o.Inputs) {
 		return nil, false
 	}
 	return o.Inputs, true
@@ -127,7 +130,7 @@ func (o *CustomForm) GetInputsOk() ([]FormInput, bool) {
 
 // HasInputs returns a boolean if a field has been set.
 func (o *CustomForm) HasInputs() bool {
-	if o != nil && o.Inputs != nil {
+	if o != nil && !IsNil(o.Inputs) {
 		return true
 	}
 
@@ -141,7 +144,7 @@ func (o *CustomForm) SetInputs(v []FormInput) {
 
 // GetValidations returns the Validations field value if set, zero value otherwise.
 func (o *CustomForm) GetValidations() []FormValidation {
-	if o == nil || o.Validations == nil {
+	if o == nil || IsNil(o.Validations) {
 		var ret []FormValidation
 		return ret
 	}
@@ -151,7 +154,7 @@ func (o *CustomForm) GetValidations() []FormValidation {
 // GetValidationsOk returns a tuple with the Validations field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CustomForm) GetValidationsOk() ([]FormValidation, bool) {
-	if o == nil || o.Validations == nil {
+	if o == nil || IsNil(o.Validations) {
 		return nil, false
 	}
 	return o.Validations, true
@@ -159,7 +162,7 @@ func (o *CustomForm) GetValidationsOk() ([]FormValidation, bool) {
 
 // HasValidations returns a boolean if a field has been set.
 func (o *CustomForm) HasValidations() bool {
-	if o != nil && o.Validations != nil {
+	if o != nil && !IsNil(o.Validations) {
 		return true
 	}
 
@@ -172,20 +175,28 @@ func (o *CustomForm) SetValidations(v []FormValidation) {
 }
 
 func (o CustomForm) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Layout != nil {
-		toSerialize["layout"] = o.Layout
-	}
-	if o.Groups != nil {
-		toSerialize["groups"] = o.Groups
-	}
-	if o.Inputs != nil {
-		toSerialize["inputs"] = o.Inputs
-	}
-	if o.Validations != nil {
-		toSerialize["validations"] = o.Validations
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CustomForm) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Layout) {
+		toSerialize["layout"] = o.Layout
+	}
+	if !IsNil(o.Groups) {
+		toSerialize["groups"] = o.Groups
+	}
+	if !IsNil(o.Inputs) {
+		toSerialize["inputs"] = o.Inputs
+	}
+	if !IsNil(o.Validations) {
+		toSerialize["validations"] = o.Validations
+	}
+	return toSerialize, nil
 }
 
 type NullableCustomForm struct {

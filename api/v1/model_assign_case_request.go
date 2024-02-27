@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AssignCaseRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AssignCaseRequest{}
+
 // AssignCaseRequest input used to send out case information to service provider
 type AssignCaseRequest struct {
 	ContactRef *string `json:"contact_ref,omitempty"`
@@ -44,7 +47,7 @@ func NewAssignCaseRequestWithDefaults() *AssignCaseRequest {
 
 // GetContactRef returns the ContactRef field value if set, zero value otherwise.
 func (o *AssignCaseRequest) GetContactRef() string {
-	if o == nil || o.ContactRef == nil {
+	if o == nil || IsNil(o.ContactRef) {
 		var ret string
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *AssignCaseRequest) GetContactRef() string {
 // GetContactRefOk returns a tuple with the ContactRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AssignCaseRequest) GetContactRefOk() (*string, bool) {
-	if o == nil || o.ContactRef == nil {
+	if o == nil || IsNil(o.ContactRef) {
 		return nil, false
 	}
 	return o.ContactRef, true
@@ -62,7 +65,7 @@ func (o *AssignCaseRequest) GetContactRefOk() (*string, bool) {
 
 // HasContactRef returns a boolean if a field has been set.
 func (o *AssignCaseRequest) HasContactRef() bool {
-	if o != nil && o.ContactRef != nil {
+	if o != nil && !IsNil(o.ContactRef) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *AssignCaseRequest) SetContactRef(v string) {
 
 // GetLanguage returns the Language field value if set, zero value otherwise.
 func (o *AssignCaseRequest) GetLanguage() string {
-	if o == nil || o.Language == nil {
+	if o == nil || IsNil(o.Language) {
 		var ret string
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *AssignCaseRequest) GetLanguage() string {
 // GetLanguageOk returns a tuple with the Language field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AssignCaseRequest) GetLanguageOk() (*string, bool) {
-	if o == nil || o.Language == nil {
+	if o == nil || IsNil(o.Language) {
 		return nil, false
 	}
 	return o.Language, true
@@ -94,7 +97,7 @@ func (o *AssignCaseRequest) GetLanguageOk() (*string, bool) {
 
 // HasLanguage returns a boolean if a field has been set.
 func (o *AssignCaseRequest) HasLanguage() bool {
-	if o != nil && o.Language != nil {
+	if o != nil && !IsNil(o.Language) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *AssignCaseRequest) SetLanguage(v string) {
 
 // GetMessage returns the Message field value if set, zero value otherwise.
 func (o *AssignCaseRequest) GetMessage() string {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		var ret string
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *AssignCaseRequest) GetMessage() string {
 // GetMessageOk returns a tuple with the Message field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AssignCaseRequest) GetMessageOk() (*string, bool) {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		return nil, false
 	}
 	return o.Message, true
@@ -126,7 +129,7 @@ func (o *AssignCaseRequest) GetMessageOk() (*string, bool) {
 
 // HasMessage returns a boolean if a field has been set.
 func (o *AssignCaseRequest) HasMessage() bool {
-	if o != nil && o.Message != nil {
+	if o != nil && !IsNil(o.Message) {
 		return true
 	}
 
@@ -140,7 +143,7 @@ func (o *AssignCaseRequest) SetMessage(v string) {
 
 // GetPrivateMessage returns the PrivateMessage field value if set, zero value otherwise.
 func (o *AssignCaseRequest) GetPrivateMessage() bool {
-	if o == nil || o.PrivateMessage == nil {
+	if o == nil || IsNil(o.PrivateMessage) {
 		var ret bool
 		return ret
 	}
@@ -150,7 +153,7 @@ func (o *AssignCaseRequest) GetPrivateMessage() bool {
 // GetPrivateMessageOk returns a tuple with the PrivateMessage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AssignCaseRequest) GetPrivateMessageOk() (*bool, bool) {
-	if o == nil || o.PrivateMessage == nil {
+	if o == nil || IsNil(o.PrivateMessage) {
 		return nil, false
 	}
 	return o.PrivateMessage, true
@@ -158,7 +161,7 @@ func (o *AssignCaseRequest) GetPrivateMessageOk() (*bool, bool) {
 
 // HasPrivateMessage returns a boolean if a field has been set.
 func (o *AssignCaseRequest) HasPrivateMessage() bool {
-	if o != nil && o.PrivateMessage != nil {
+	if o != nil && !IsNil(o.PrivateMessage) {
 		return true
 	}
 
@@ -172,7 +175,7 @@ func (o *AssignCaseRequest) SetPrivateMessage(v bool) {
 
 // GetAttachmentRefs returns the AttachmentRefs field value if set, zero value otherwise.
 func (o *AssignCaseRequest) GetAttachmentRefs() []string {
-	if o == nil || o.AttachmentRefs == nil {
+	if o == nil || IsNil(o.AttachmentRefs) {
 		var ret []string
 		return ret
 	}
@@ -182,7 +185,7 @@ func (o *AssignCaseRequest) GetAttachmentRefs() []string {
 // GetAttachmentRefsOk returns a tuple with the AttachmentRefs field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AssignCaseRequest) GetAttachmentRefsOk() ([]string, bool) {
-	if o == nil || o.AttachmentRefs == nil {
+	if o == nil || IsNil(o.AttachmentRefs) {
 		return nil, false
 	}
 	return o.AttachmentRefs, true
@@ -190,7 +193,7 @@ func (o *AssignCaseRequest) GetAttachmentRefsOk() ([]string, bool) {
 
 // HasAttachmentRefs returns a boolean if a field has been set.
 func (o *AssignCaseRequest) HasAttachmentRefs() bool {
-	if o != nil && o.AttachmentRefs != nil {
+	if o != nil && !IsNil(o.AttachmentRefs) {
 		return true
 	}
 
@@ -203,23 +206,31 @@ func (o *AssignCaseRequest) SetAttachmentRefs(v []string) {
 }
 
 func (o AssignCaseRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.ContactRef != nil {
-		toSerialize["contact_ref"] = o.ContactRef
-	}
-	if o.Language != nil {
-		toSerialize["language"] = o.Language
-	}
-	if o.Message != nil {
-		toSerialize["message"] = o.Message
-	}
-	if o.PrivateMessage != nil {
-		toSerialize["private_message"] = o.PrivateMessage
-	}
-	if o.AttachmentRefs != nil {
-		toSerialize["attachment_refs"] = o.AttachmentRefs
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AssignCaseRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.ContactRef) {
+		toSerialize["contact_ref"] = o.ContactRef
+	}
+	if !IsNil(o.Language) {
+		toSerialize["language"] = o.Language
+	}
+	if !IsNil(o.Message) {
+		toSerialize["message"] = o.Message
+	}
+	if !IsNil(o.PrivateMessage) {
+		toSerialize["private_message"] = o.PrivateMessage
+	}
+	if !IsNil(o.AttachmentRefs) {
+		toSerialize["attachment_refs"] = o.AttachmentRefs
+	}
+	return toSerialize, nil
 }
 
 type NullableAssignCaseRequest struct {

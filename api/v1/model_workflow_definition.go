@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the WorkflowDefinition type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &WorkflowDefinition{}
+
 // WorkflowDefinition a workflow that can guide the user through a process
 type WorkflowDefinition struct {
 	Id *string `json:"id,omitempty"`
@@ -62,7 +65,7 @@ func NewWorkflowDefinitionWithDefaults() *WorkflowDefinition {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *WorkflowDefinition) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -72,7 +75,7 @@ func (o *WorkflowDefinition) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowDefinition) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -80,7 +83,7 @@ func (o *WorkflowDefinition) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *WorkflowDefinition) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -94,7 +97,7 @@ func (o *WorkflowDefinition) SetId(v string) {
 
 // GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
 func (o *WorkflowDefinition) GetCreatedAt() int64 {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		var ret int64
 		return ret
 	}
@@ -104,7 +107,7 @@ func (o *WorkflowDefinition) GetCreatedAt() int64 {
 // GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowDefinition) GetCreatedAtOk() (*int64, bool) {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
 	return o.CreatedAt, true
@@ -112,7 +115,7 @@ func (o *WorkflowDefinition) GetCreatedAtOk() (*int64, bool) {
 
 // HasCreatedAt returns a boolean if a field has been set.
 func (o *WorkflowDefinition) HasCreatedAt() bool {
-	if o != nil && o.CreatedAt != nil {
+	if o != nil && !IsNil(o.CreatedAt) {
 		return true
 	}
 
@@ -126,7 +129,7 @@ func (o *WorkflowDefinition) SetCreatedAt(v int64) {
 
 // GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
 func (o *WorkflowDefinition) GetUpdatedAt() int64 {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		var ret int64
 		return ret
 	}
@@ -136,7 +139,7 @@ func (o *WorkflowDefinition) GetUpdatedAt() int64 {
 // GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowDefinition) GetUpdatedAtOk() (*int64, bool) {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
 	return o.UpdatedAt, true
@@ -144,7 +147,7 @@ func (o *WorkflowDefinition) GetUpdatedAtOk() (*int64, bool) {
 
 // HasUpdatedAt returns a boolean if a field has been set.
 func (o *WorkflowDefinition) HasUpdatedAt() bool {
-	if o != nil && o.UpdatedAt != nil {
+	if o != nil && !IsNil(o.UpdatedAt) {
 		return true
 	}
 
@@ -158,7 +161,7 @@ func (o *WorkflowDefinition) SetUpdatedAt(v int64) {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *WorkflowDefinition) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -168,7 +171,7 @@ func (o *WorkflowDefinition) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowDefinition) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -176,7 +179,7 @@ func (o *WorkflowDefinition) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *WorkflowDefinition) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -190,7 +193,7 @@ func (o *WorkflowDefinition) SetName(v string) {
 
 // GetDescription returns the Description field value if set, zero value otherwise.
 func (o *WorkflowDefinition) GetDescription() string {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		var ret string
 		return ret
 	}
@@ -200,7 +203,7 @@ func (o *WorkflowDefinition) GetDescription() string {
 // GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowDefinition) GetDescriptionOk() (*string, bool) {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		return nil, false
 	}
 	return o.Description, true
@@ -208,7 +211,7 @@ func (o *WorkflowDefinition) GetDescriptionOk() (*string, bool) {
 
 // HasDescription returns a boolean if a field has been set.
 func (o *WorkflowDefinition) HasDescription() bool {
-	if o != nil && o.Description != nil {
+	if o != nil && !IsNil(o.Description) {
 		return true
 	}
 
@@ -222,7 +225,7 @@ func (o *WorkflowDefinition) SetDescription(v string) {
 
 // GetIcon returns the Icon field value if set, zero value otherwise.
 func (o *WorkflowDefinition) GetIcon() string {
-	if o == nil || o.Icon == nil {
+	if o == nil || IsNil(o.Icon) {
 		var ret string
 		return ret
 	}
@@ -232,7 +235,7 @@ func (o *WorkflowDefinition) GetIcon() string {
 // GetIconOk returns a tuple with the Icon field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowDefinition) GetIconOk() (*string, bool) {
-	if o == nil || o.Icon == nil {
+	if o == nil || IsNil(o.Icon) {
 		return nil, false
 	}
 	return o.Icon, true
@@ -240,7 +243,7 @@ func (o *WorkflowDefinition) GetIconOk() (*string, bool) {
 
 // HasIcon returns a boolean if a field has been set.
 func (o *WorkflowDefinition) HasIcon() bool {
-	if o != nil && o.Icon != nil {
+	if o != nil && !IsNil(o.Icon) {
 		return true
 	}
 
@@ -254,7 +257,7 @@ func (o *WorkflowDefinition) SetIcon(v string) {
 
 // GetNameExpression returns the NameExpression field value if set, zero value otherwise.
 func (o *WorkflowDefinition) GetNameExpression() string {
-	if o == nil || o.NameExpression == nil {
+	if o == nil || IsNil(o.NameExpression) {
 		var ret string
 		return ret
 	}
@@ -264,7 +267,7 @@ func (o *WorkflowDefinition) GetNameExpression() string {
 // GetNameExpressionOk returns a tuple with the NameExpression field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowDefinition) GetNameExpressionOk() (*string, bool) {
-	if o == nil || o.NameExpression == nil {
+	if o == nil || IsNil(o.NameExpression) {
 		return nil, false
 	}
 	return o.NameExpression, true
@@ -272,7 +275,7 @@ func (o *WorkflowDefinition) GetNameExpressionOk() (*string, bool) {
 
 // HasNameExpression returns a boolean if a field has been set.
 func (o *WorkflowDefinition) HasNameExpression() bool {
-	if o != nil && o.NameExpression != nil {
+	if o != nil && !IsNil(o.NameExpression) {
 		return true
 	}
 
@@ -286,7 +289,7 @@ func (o *WorkflowDefinition) SetNameExpression(v string) {
 
 // GetEnvVars returns the EnvVars field value if set, zero value otherwise.
 func (o *WorkflowDefinition) GetEnvVars() map[string]string {
-	if o == nil || o.EnvVars == nil {
+	if o == nil || IsNil(o.EnvVars) {
 		var ret map[string]string
 		return ret
 	}
@@ -296,7 +299,7 @@ func (o *WorkflowDefinition) GetEnvVars() map[string]string {
 // GetEnvVarsOk returns a tuple with the EnvVars field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowDefinition) GetEnvVarsOk() (*map[string]string, bool) {
-	if o == nil || o.EnvVars == nil {
+	if o == nil || IsNil(o.EnvVars) {
 		return nil, false
 	}
 	return o.EnvVars, true
@@ -304,7 +307,7 @@ func (o *WorkflowDefinition) GetEnvVarsOk() (*map[string]string, bool) {
 
 // HasEnvVars returns a boolean if a field has been set.
 func (o *WorkflowDefinition) HasEnvVars() bool {
-	if o != nil && o.EnvVars != nil {
+	if o != nil && !IsNil(o.EnvVars) {
 		return true
 	}
 
@@ -318,7 +321,7 @@ func (o *WorkflowDefinition) SetEnvVars(v map[string]string) {
 
 // GetBillingGate returns the BillingGate field value if set, zero value otherwise.
 func (o *WorkflowDefinition) GetBillingGate() string {
-	if o == nil || o.BillingGate == nil {
+	if o == nil || IsNil(o.BillingGate) {
 		var ret string
 		return ret
 	}
@@ -328,7 +331,7 @@ func (o *WorkflowDefinition) GetBillingGate() string {
 // GetBillingGateOk returns a tuple with the BillingGate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowDefinition) GetBillingGateOk() (*string, bool) {
-	if o == nil || o.BillingGate == nil {
+	if o == nil || IsNil(o.BillingGate) {
 		return nil, false
 	}
 	return o.BillingGate, true
@@ -336,7 +339,7 @@ func (o *WorkflowDefinition) GetBillingGateOk() (*string, bool) {
 
 // HasBillingGate returns a boolean if a field has been set.
 func (o *WorkflowDefinition) HasBillingGate() bool {
-	if o != nil && o.BillingGate != nil {
+	if o != nil && !IsNil(o.BillingGate) {
 		return true
 	}
 
@@ -350,7 +353,7 @@ func (o *WorkflowDefinition) SetBillingGate(v string) {
 
 // GetBillingId returns the BillingId field value if set, zero value otherwise.
 func (o *WorkflowDefinition) GetBillingId() string {
-	if o == nil || o.BillingId == nil {
+	if o == nil || IsNil(o.BillingId) {
 		var ret string
 		return ret
 	}
@@ -360,7 +363,7 @@ func (o *WorkflowDefinition) GetBillingId() string {
 // GetBillingIdOk returns a tuple with the BillingId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowDefinition) GetBillingIdOk() (*string, bool) {
-	if o == nil || o.BillingId == nil {
+	if o == nil || IsNil(o.BillingId) {
 		return nil, false
 	}
 	return o.BillingId, true
@@ -368,7 +371,7 @@ func (o *WorkflowDefinition) GetBillingIdOk() (*string, bool) {
 
 // HasBillingId returns a boolean if a field has been set.
 func (o *WorkflowDefinition) HasBillingId() bool {
-	if o != nil && o.BillingId != nil {
+	if o != nil && !IsNil(o.BillingId) {
 		return true
 	}
 
@@ -382,7 +385,7 @@ func (o *WorkflowDefinition) SetBillingId(v string) {
 
 // GetBillingExpression returns the BillingExpression field value if set, zero value otherwise.
 func (o *WorkflowDefinition) GetBillingExpression() string {
-	if o == nil || o.BillingExpression == nil {
+	if o == nil || IsNil(o.BillingExpression) {
 		var ret string
 		return ret
 	}
@@ -392,7 +395,7 @@ func (o *WorkflowDefinition) GetBillingExpression() string {
 // GetBillingExpressionOk returns a tuple with the BillingExpression field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowDefinition) GetBillingExpressionOk() (*string, bool) {
-	if o == nil || o.BillingExpression == nil {
+	if o == nil || IsNil(o.BillingExpression) {
 		return nil, false
 	}
 	return o.BillingExpression, true
@@ -400,7 +403,7 @@ func (o *WorkflowDefinition) GetBillingExpressionOk() (*string, bool) {
 
 // HasBillingExpression returns a boolean if a field has been set.
 func (o *WorkflowDefinition) HasBillingExpression() bool {
-	if o != nil && o.BillingExpression != nil {
+	if o != nil && !IsNil(o.BillingExpression) {
 		return true
 	}
 
@@ -414,7 +417,7 @@ func (o *WorkflowDefinition) SetBillingExpression(v string) {
 
 // GetReleased returns the Released field value if set, zero value otherwise.
 func (o *WorkflowDefinition) GetReleased() bool {
-	if o == nil || o.Released == nil {
+	if o == nil || IsNil(o.Released) {
 		var ret bool
 		return ret
 	}
@@ -424,7 +427,7 @@ func (o *WorkflowDefinition) GetReleased() bool {
 // GetReleasedOk returns a tuple with the Released field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowDefinition) GetReleasedOk() (*bool, bool) {
-	if o == nil || o.Released == nil {
+	if o == nil || IsNil(o.Released) {
 		return nil, false
 	}
 	return o.Released, true
@@ -432,7 +435,7 @@ func (o *WorkflowDefinition) GetReleasedOk() (*bool, bool) {
 
 // HasReleased returns a boolean if a field has been set.
 func (o *WorkflowDefinition) HasReleased() bool {
-	if o != nil && o.Released != nil {
+	if o != nil && !IsNil(o.Released) {
 		return true
 	}
 
@@ -446,7 +449,7 @@ func (o *WorkflowDefinition) SetReleased(v bool) {
 
 // GetInitStep returns the InitStep field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *WorkflowDefinition) GetInitStep() WorkflowStepDefinition {
-	if o == nil || o.InitStep.Get() == nil {
+	if o == nil || IsNil(o.InitStep.Get()) {
 		var ret WorkflowStepDefinition
 		return ret
 	}
@@ -489,7 +492,7 @@ func (o *WorkflowDefinition) UnsetInitStep() {
 
 // GetFirstStepId returns the FirstStepId field value if set, zero value otherwise.
 func (o *WorkflowDefinition) GetFirstStepId() string {
-	if o == nil || o.FirstStepId == nil {
+	if o == nil || IsNil(o.FirstStepId) {
 		var ret string
 		return ret
 	}
@@ -499,7 +502,7 @@ func (o *WorkflowDefinition) GetFirstStepId() string {
 // GetFirstStepIdOk returns a tuple with the FirstStepId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowDefinition) GetFirstStepIdOk() (*string, bool) {
-	if o == nil || o.FirstStepId == nil {
+	if o == nil || IsNil(o.FirstStepId) {
 		return nil, false
 	}
 	return o.FirstStepId, true
@@ -507,7 +510,7 @@ func (o *WorkflowDefinition) GetFirstStepIdOk() (*string, bool) {
 
 // HasFirstStepId returns a boolean if a field has been set.
 func (o *WorkflowDefinition) HasFirstStepId() bool {
-	if o != nil && o.FirstStepId != nil {
+	if o != nil && !IsNil(o.FirstStepId) {
 		return true
 	}
 
@@ -521,7 +524,7 @@ func (o *WorkflowDefinition) SetFirstStepId(v string) {
 
 // GetSteps returns the Steps field value if set, zero value otherwise.
 func (o *WorkflowDefinition) GetSteps() []WorkflowStepDefinition {
-	if o == nil || o.Steps == nil {
+	if o == nil || IsNil(o.Steps) {
 		var ret []WorkflowStepDefinition
 		return ret
 	}
@@ -531,7 +534,7 @@ func (o *WorkflowDefinition) GetSteps() []WorkflowStepDefinition {
 // GetStepsOk returns a tuple with the Steps field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowDefinition) GetStepsOk() ([]WorkflowStepDefinition, bool) {
-	if o == nil || o.Steps == nil {
+	if o == nil || IsNil(o.Steps) {
 		return nil, false
 	}
 	return o.Steps, true
@@ -539,7 +542,7 @@ func (o *WorkflowDefinition) GetStepsOk() ([]WorkflowStepDefinition, bool) {
 
 // HasSteps returns a boolean if a field has been set.
 func (o *WorkflowDefinition) HasSteps() bool {
-	if o != nil && o.Steps != nil {
+	if o != nil && !IsNil(o.Steps) {
 		return true
 	}
 
@@ -552,53 +555,61 @@ func (o *WorkflowDefinition) SetSteps(v []WorkflowStepDefinition) {
 }
 
 func (o WorkflowDefinition) MarshalJSON() ([]byte, error) {
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o WorkflowDefinition) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
+	if !IsNil(o.Id) {
 		toSerialize["id"] = o.Id
 	}
-	if o.CreatedAt != nil {
+	if !IsNil(o.CreatedAt) {
 		toSerialize["created_at"] = o.CreatedAt
 	}
-	if o.UpdatedAt != nil {
+	if !IsNil(o.UpdatedAt) {
 		toSerialize["updated_at"] = o.UpdatedAt
 	}
-	if o.Name != nil {
+	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
 	}
-	if o.Description != nil {
+	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
 	}
-	if o.Icon != nil {
+	if !IsNil(o.Icon) {
 		toSerialize["icon"] = o.Icon
 	}
-	if o.NameExpression != nil {
+	if !IsNil(o.NameExpression) {
 		toSerialize["name_expression"] = o.NameExpression
 	}
-	if o.EnvVars != nil {
+	if !IsNil(o.EnvVars) {
 		toSerialize["env_vars"] = o.EnvVars
 	}
-	if o.BillingGate != nil {
+	if !IsNil(o.BillingGate) {
 		toSerialize["billing_gate"] = o.BillingGate
 	}
-	if o.BillingId != nil {
+	if !IsNil(o.BillingId) {
 		toSerialize["billing_id"] = o.BillingId
 	}
-	if o.BillingExpression != nil {
+	if !IsNil(o.BillingExpression) {
 		toSerialize["billing_expression"] = o.BillingExpression
 	}
-	if o.Released != nil {
+	if !IsNil(o.Released) {
 		toSerialize["released"] = o.Released
 	}
 	if o.InitStep.IsSet() {
 		toSerialize["init_step"] = o.InitStep.Get()
 	}
-	if o.FirstStepId != nil {
+	if !IsNil(o.FirstStepId) {
 		toSerialize["first_step_id"] = o.FirstStepId
 	}
-	if o.Steps != nil {
+	if !IsNil(o.Steps) {
 		toSerialize["steps"] = o.Steps
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableWorkflowDefinition struct {

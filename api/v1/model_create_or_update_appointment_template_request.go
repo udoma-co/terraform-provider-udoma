@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CreateOrUpdateAppointmentTemplateRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CreateOrUpdateAppointmentTemplateRequest{}
+
 // CreateOrUpdateAppointmentTemplateRequest struct for CreateOrUpdateAppointmentTemplateRequest
 type CreateOrUpdateAppointmentTemplateRequest struct {
 	// The name of the appointment template
@@ -46,7 +49,7 @@ func NewCreateOrUpdateAppointmentTemplateRequestWithDefaults() *CreateOrUpdateAp
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *CreateOrUpdateAppointmentTemplateRequest) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -56,7 +59,7 @@ func (o *CreateOrUpdateAppointmentTemplateRequest) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateAppointmentTemplateRequest) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -64,7 +67,7 @@ func (o *CreateOrUpdateAppointmentTemplateRequest) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *CreateOrUpdateAppointmentTemplateRequest) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -78,7 +81,7 @@ func (o *CreateOrUpdateAppointmentTemplateRequest) SetName(v string) {
 
 // GetNameExpression returns the NameExpression field value if set, zero value otherwise.
 func (o *CreateOrUpdateAppointmentTemplateRequest) GetNameExpression() string {
-	if o == nil || o.NameExpression == nil {
+	if o == nil || IsNil(o.NameExpression) {
 		var ret string
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *CreateOrUpdateAppointmentTemplateRequest) GetNameExpression() string {
 // GetNameExpressionOk returns a tuple with the NameExpression field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateAppointmentTemplateRequest) GetNameExpressionOk() (*string, bool) {
-	if o == nil || o.NameExpression == nil {
+	if o == nil || IsNil(o.NameExpression) {
 		return nil, false
 	}
 	return o.NameExpression, true
@@ -96,7 +99,7 @@ func (o *CreateOrUpdateAppointmentTemplateRequest) GetNameExpressionOk() (*strin
 
 // HasNameExpression returns a boolean if a field has been set.
 func (o *CreateOrUpdateAppointmentTemplateRequest) HasNameExpression() bool {
-	if o != nil && o.NameExpression != nil {
+	if o != nil && !IsNil(o.NameExpression) {
 		return true
 	}
 
@@ -110,7 +113,7 @@ func (o *CreateOrUpdateAppointmentTemplateRequest) SetNameExpression(v string) {
 
 // GetDescription returns the Description field value if set, zero value otherwise.
 func (o *CreateOrUpdateAppointmentTemplateRequest) GetDescription() string {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		var ret string
 		return ret
 	}
@@ -120,7 +123,7 @@ func (o *CreateOrUpdateAppointmentTemplateRequest) GetDescription() string {
 // GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateAppointmentTemplateRequest) GetDescriptionOk() (*string, bool) {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		return nil, false
 	}
 	return o.Description, true
@@ -128,7 +131,7 @@ func (o *CreateOrUpdateAppointmentTemplateRequest) GetDescriptionOk() (*string, 
 
 // HasDescription returns a boolean if a field has been set.
 func (o *CreateOrUpdateAppointmentTemplateRequest) HasDescription() bool {
-	if o != nil && o.Description != nil {
+	if o != nil && !IsNil(o.Description) {
 		return true
 	}
 
@@ -142,7 +145,7 @@ func (o *CreateOrUpdateAppointmentTemplateRequest) SetDescription(v string) {
 
 // GetScheduleBefore returns the ScheduleBefore field value if set, zero value otherwise.
 func (o *CreateOrUpdateAppointmentTemplateRequest) GetScheduleBefore() int32 {
-	if o == nil || o.ScheduleBefore == nil {
+	if o == nil || IsNil(o.ScheduleBefore) {
 		var ret int32
 		return ret
 	}
@@ -152,7 +155,7 @@ func (o *CreateOrUpdateAppointmentTemplateRequest) GetScheduleBefore() int32 {
 // GetScheduleBeforeOk returns a tuple with the ScheduleBefore field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateAppointmentTemplateRequest) GetScheduleBeforeOk() (*int32, bool) {
-	if o == nil || o.ScheduleBefore == nil {
+	if o == nil || IsNil(o.ScheduleBefore) {
 		return nil, false
 	}
 	return o.ScheduleBefore, true
@@ -160,7 +163,7 @@ func (o *CreateOrUpdateAppointmentTemplateRequest) GetScheduleBeforeOk() (*int32
 
 // HasScheduleBefore returns a boolean if a field has been set.
 func (o *CreateOrUpdateAppointmentTemplateRequest) HasScheduleBefore() bool {
-	if o != nil && o.ScheduleBefore != nil {
+	if o != nil && !IsNil(o.ScheduleBefore) {
 		return true
 	}
 
@@ -174,7 +177,7 @@ func (o *CreateOrUpdateAppointmentTemplateRequest) SetScheduleBefore(v int32) {
 
 // GetForm returns the Form field value if set, zero value otherwise.
 func (o *CreateOrUpdateAppointmentTemplateRequest) GetForm() CustomForm {
-	if o == nil || o.Form == nil {
+	if o == nil || IsNil(o.Form) {
 		var ret CustomForm
 		return ret
 	}
@@ -184,7 +187,7 @@ func (o *CreateOrUpdateAppointmentTemplateRequest) GetForm() CustomForm {
 // GetFormOk returns a tuple with the Form field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateAppointmentTemplateRequest) GetFormOk() (*CustomForm, bool) {
-	if o == nil || o.Form == nil {
+	if o == nil || IsNil(o.Form) {
 		return nil, false
 	}
 	return o.Form, true
@@ -192,7 +195,7 @@ func (o *CreateOrUpdateAppointmentTemplateRequest) GetFormOk() (*CustomForm, boo
 
 // HasForm returns a boolean if a field has been set.
 func (o *CreateOrUpdateAppointmentTemplateRequest) HasForm() bool {
-	if o != nil && o.Form != nil {
+	if o != nil && !IsNil(o.Form) {
 		return true
 	}
 
@@ -205,23 +208,31 @@ func (o *CreateOrUpdateAppointmentTemplateRequest) SetForm(v CustomForm) {
 }
 
 func (o CreateOrUpdateAppointmentTemplateRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.NameExpression != nil {
-		toSerialize["name_expression"] = o.NameExpression
-	}
-	if o.Description != nil {
-		toSerialize["description"] = o.Description
-	}
-	if o.ScheduleBefore != nil {
-		toSerialize["schedule_before"] = o.ScheduleBefore
-	}
-	if o.Form != nil {
-		toSerialize["form"] = o.Form
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CreateOrUpdateAppointmentTemplateRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.NameExpression) {
+		toSerialize["name_expression"] = o.NameExpression
+	}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
+	}
+	if !IsNil(o.ScheduleBefore) {
+		toSerialize["schedule_before"] = o.ScheduleBefore
+	}
+	if !IsNil(o.Form) {
+		toSerialize["form"] = o.Form
+	}
+	return toSerialize, nil
 }
 
 type NullableCreateOrUpdateAppointmentTemplateRequest struct {

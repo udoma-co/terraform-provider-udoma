@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the QueryCasesRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &QueryCasesRequest{}
+
 // QueryCasesRequest Request used to get cases by a user
 type QueryCasesRequest struct {
 	// if true, only archived cases will be returned
@@ -39,7 +42,7 @@ func NewQueryCasesRequestWithDefaults() *QueryCasesRequest {
 
 // GetArchived returns the Archived field value if set, zero value otherwise.
 func (o *QueryCasesRequest) GetArchived() bool {
-	if o == nil || o.Archived == nil {
+	if o == nil || IsNil(o.Archived) {
 		var ret bool
 		return ret
 	}
@@ -49,7 +52,7 @@ func (o *QueryCasesRequest) GetArchived() bool {
 // GetArchivedOk returns a tuple with the Archived field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryCasesRequest) GetArchivedOk() (*bool, bool) {
-	if o == nil || o.Archived == nil {
+	if o == nil || IsNil(o.Archived) {
 		return nil, false
 	}
 	return o.Archived, true
@@ -57,7 +60,7 @@ func (o *QueryCasesRequest) GetArchivedOk() (*bool, bool) {
 
 // HasArchived returns a boolean if a field has been set.
 func (o *QueryCasesRequest) HasArchived() bool {
-	if o != nil && o.Archived != nil {
+	if o != nil && !IsNil(o.Archived) {
 		return true
 	}
 
@@ -70,11 +73,19 @@ func (o *QueryCasesRequest) SetArchived(v bool) {
 }
 
 func (o QueryCasesRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Archived != nil {
-		toSerialize["archived"] = o.Archived
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o QueryCasesRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Archived) {
+		toSerialize["archived"] = o.Archived
+	}
+	return toSerialize, nil
 }
 
 type NullableQueryCasesRequest struct {

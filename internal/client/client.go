@@ -89,7 +89,7 @@ func (c *UdomaClient) RoundTrip(r *http.Request) (res *http.Response, e error) {
 	return http.DefaultTransport.RoundTrip(r)
 }
 
-func (c *UdomaClient) GetApi() *api.DefaultApiService {
+func (c *UdomaClient) GetApi() *api.DefaultAPIService {
 
 	cfg := api.NewConfiguration()
 	cfg.Host = c.host
@@ -101,5 +101,5 @@ func (c *UdomaClient) GetApi() *api.DefaultApiService {
 
 	client := api.NewAPIClient(cfg)
 
-	return client.DefaultApi
+	return client.DefaultAPI
 }

@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the QueryServiceProvidersRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &QueryServiceProvidersRequest{}
+
 // QueryServiceProvidersRequest Search criteria for querying service providers
 type QueryServiceProvidersRequest struct {
 	Connected *QueryBooleanParameter `json:"connected,omitempty"`
@@ -38,7 +41,7 @@ func NewQueryServiceProvidersRequestWithDefaults() *QueryServiceProvidersRequest
 
 // GetConnected returns the Connected field value if set, zero value otherwise.
 func (o *QueryServiceProvidersRequest) GetConnected() QueryBooleanParameter {
-	if o == nil || o.Connected == nil {
+	if o == nil || IsNil(o.Connected) {
 		var ret QueryBooleanParameter
 		return ret
 	}
@@ -48,7 +51,7 @@ func (o *QueryServiceProvidersRequest) GetConnected() QueryBooleanParameter {
 // GetConnectedOk returns a tuple with the Connected field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryServiceProvidersRequest) GetConnectedOk() (*QueryBooleanParameter, bool) {
-	if o == nil || o.Connected == nil {
+	if o == nil || IsNil(o.Connected) {
 		return nil, false
 	}
 	return o.Connected, true
@@ -56,7 +59,7 @@ func (o *QueryServiceProvidersRequest) GetConnectedOk() (*QueryBooleanParameter,
 
 // HasConnected returns a boolean if a field has been set.
 func (o *QueryServiceProvidersRequest) HasConnected() bool {
-	if o != nil && o.Connected != nil {
+	if o != nil && !IsNil(o.Connected) {
 		return true
 	}
 
@@ -69,11 +72,19 @@ func (o *QueryServiceProvidersRequest) SetConnected(v QueryBooleanParameter) {
 }
 
 func (o QueryServiceProvidersRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Connected != nil {
-		toSerialize["connected"] = o.Connected
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o QueryServiceProvidersRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Connected) {
+		toSerialize["connected"] = o.Connected
+	}
+	return toSerialize, nil
 }
 
 type NullableQueryServiceProvidersRequest struct {

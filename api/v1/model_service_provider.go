@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ServiceProvider type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ServiceProvider{}
+
 // ServiceProvider ServiceProvider is used by PMs to manage the list of service providers the work with in the respective category and subcategory
 type ServiceProvider struct {
 	// the unique ID of this entry
@@ -63,7 +66,7 @@ func NewServiceProviderWithDefaults() *ServiceProvider {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *ServiceProvider) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -73,7 +76,7 @@ func (o *ServiceProvider) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceProvider) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -81,7 +84,7 @@ func (o *ServiceProvider) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *ServiceProvider) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -95,7 +98,7 @@ func (o *ServiceProvider) SetId(v string) {
 
 // GetExternalId returns the ExternalId field value if set, zero value otherwise.
 func (o *ServiceProvider) GetExternalId() string {
-	if o == nil || o.ExternalId == nil {
+	if o == nil || IsNil(o.ExternalId) {
 		var ret string
 		return ret
 	}
@@ -105,7 +108,7 @@ func (o *ServiceProvider) GetExternalId() string {
 // GetExternalIdOk returns a tuple with the ExternalId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceProvider) GetExternalIdOk() (*string, bool) {
-	if o == nil || o.ExternalId == nil {
+	if o == nil || IsNil(o.ExternalId) {
 		return nil, false
 	}
 	return o.ExternalId, true
@@ -113,7 +116,7 @@ func (o *ServiceProvider) GetExternalIdOk() (*string, bool) {
 
 // HasExternalId returns a boolean if a field has been set.
 func (o *ServiceProvider) HasExternalId() bool {
-	if o != nil && o.ExternalId != nil {
+	if o != nil && !IsNil(o.ExternalId) {
 		return true
 	}
 
@@ -127,7 +130,7 @@ func (o *ServiceProvider) SetExternalId(v string) {
 
 // GetExternalSource returns the ExternalSource field value if set, zero value otherwise.
 func (o *ServiceProvider) GetExternalSource() string {
-	if o == nil || o.ExternalSource == nil {
+	if o == nil || IsNil(o.ExternalSource) {
 		var ret string
 		return ret
 	}
@@ -137,7 +140,7 @@ func (o *ServiceProvider) GetExternalSource() string {
 // GetExternalSourceOk returns a tuple with the ExternalSource field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceProvider) GetExternalSourceOk() (*string, bool) {
-	if o == nil || o.ExternalSource == nil {
+	if o == nil || IsNil(o.ExternalSource) {
 		return nil, false
 	}
 	return o.ExternalSource, true
@@ -145,7 +148,7 @@ func (o *ServiceProvider) GetExternalSourceOk() (*string, bool) {
 
 // HasExternalSource returns a boolean if a field has been set.
 func (o *ServiceProvider) HasExternalSource() bool {
-	if o != nil && o.ExternalSource != nil {
+	if o != nil && !IsNil(o.ExternalSource) {
 		return true
 	}
 
@@ -159,7 +162,7 @@ func (o *ServiceProvider) SetExternalSource(v string) {
 
 // GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
 func (o *ServiceProvider) GetCreatedAt() int64 {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		var ret int64
 		return ret
 	}
@@ -169,7 +172,7 @@ func (o *ServiceProvider) GetCreatedAt() int64 {
 // GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceProvider) GetCreatedAtOk() (*int64, bool) {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
 	return o.CreatedAt, true
@@ -177,7 +180,7 @@ func (o *ServiceProvider) GetCreatedAtOk() (*int64, bool) {
 
 // HasCreatedAt returns a boolean if a field has been set.
 func (o *ServiceProvider) HasCreatedAt() bool {
-	if o != nil && o.CreatedAt != nil {
+	if o != nil && !IsNil(o.CreatedAt) {
 		return true
 	}
 
@@ -191,7 +194,7 @@ func (o *ServiceProvider) SetCreatedAt(v int64) {
 
 // GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
 func (o *ServiceProvider) GetUpdatedAt() int64 {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		var ret int64
 		return ret
 	}
@@ -201,7 +204,7 @@ func (o *ServiceProvider) GetUpdatedAt() int64 {
 // GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceProvider) GetUpdatedAtOk() (*int64, bool) {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
 	return o.UpdatedAt, true
@@ -209,7 +212,7 @@ func (o *ServiceProvider) GetUpdatedAtOk() (*int64, bool) {
 
 // HasUpdatedAt returns a boolean if a field has been set.
 func (o *ServiceProvider) HasUpdatedAt() bool {
-	if o != nil && o.UpdatedAt != nil {
+	if o != nil && !IsNil(o.UpdatedAt) {
 		return true
 	}
 
@@ -223,7 +226,7 @@ func (o *ServiceProvider) SetUpdatedAt(v int64) {
 
 // GetTitle returns the Title field value if set, zero value otherwise.
 func (o *ServiceProvider) GetTitle() string {
-	if o == nil || o.Title == nil {
+	if o == nil || IsNil(o.Title) {
 		var ret string
 		return ret
 	}
@@ -233,7 +236,7 @@ func (o *ServiceProvider) GetTitle() string {
 // GetTitleOk returns a tuple with the Title field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceProvider) GetTitleOk() (*string, bool) {
-	if o == nil || o.Title == nil {
+	if o == nil || IsNil(o.Title) {
 		return nil, false
 	}
 	return o.Title, true
@@ -241,7 +244,7 @@ func (o *ServiceProvider) GetTitleOk() (*string, bool) {
 
 // HasTitle returns a boolean if a field has been set.
 func (o *ServiceProvider) HasTitle() bool {
-	if o != nil && o.Title != nil {
+	if o != nil && !IsNil(o.Title) {
 		return true
 	}
 
@@ -255,7 +258,7 @@ func (o *ServiceProvider) SetTitle(v string) {
 
 // GetFirstName returns the FirstName field value if set, zero value otherwise.
 func (o *ServiceProvider) GetFirstName() string {
-	if o == nil || o.FirstName == nil {
+	if o == nil || IsNil(o.FirstName) {
 		var ret string
 		return ret
 	}
@@ -265,7 +268,7 @@ func (o *ServiceProvider) GetFirstName() string {
 // GetFirstNameOk returns a tuple with the FirstName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceProvider) GetFirstNameOk() (*string, bool) {
-	if o == nil || o.FirstName == nil {
+	if o == nil || IsNil(o.FirstName) {
 		return nil, false
 	}
 	return o.FirstName, true
@@ -273,7 +276,7 @@ func (o *ServiceProvider) GetFirstNameOk() (*string, bool) {
 
 // HasFirstName returns a boolean if a field has been set.
 func (o *ServiceProvider) HasFirstName() bool {
-	if o != nil && o.FirstName != nil {
+	if o != nil && !IsNil(o.FirstName) {
 		return true
 	}
 
@@ -287,7 +290,7 @@ func (o *ServiceProvider) SetFirstName(v string) {
 
 // GetLastName returns the LastName field value if set, zero value otherwise.
 func (o *ServiceProvider) GetLastName() string {
-	if o == nil || o.LastName == nil {
+	if o == nil || IsNil(o.LastName) {
 		var ret string
 		return ret
 	}
@@ -297,7 +300,7 @@ func (o *ServiceProvider) GetLastName() string {
 // GetLastNameOk returns a tuple with the LastName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceProvider) GetLastNameOk() (*string, bool) {
-	if o == nil || o.LastName == nil {
+	if o == nil || IsNil(o.LastName) {
 		return nil, false
 	}
 	return o.LastName, true
@@ -305,7 +308,7 @@ func (o *ServiceProvider) GetLastNameOk() (*string, bool) {
 
 // HasLastName returns a boolean if a field has been set.
 func (o *ServiceProvider) HasLastName() bool {
-	if o != nil && o.LastName != nil {
+	if o != nil && !IsNil(o.LastName) {
 		return true
 	}
 
@@ -319,7 +322,7 @@ func (o *ServiceProvider) SetLastName(v string) {
 
 // GetCompany returns the Company field value if set, zero value otherwise.
 func (o *ServiceProvider) GetCompany() string {
-	if o == nil || o.Company == nil {
+	if o == nil || IsNil(o.Company) {
 		var ret string
 		return ret
 	}
@@ -329,7 +332,7 @@ func (o *ServiceProvider) GetCompany() string {
 // GetCompanyOk returns a tuple with the Company field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceProvider) GetCompanyOk() (*string, bool) {
-	if o == nil || o.Company == nil {
+	if o == nil || IsNil(o.Company) {
 		return nil, false
 	}
 	return o.Company, true
@@ -337,7 +340,7 @@ func (o *ServiceProvider) GetCompanyOk() (*string, bool) {
 
 // HasCompany returns a boolean if a field has been set.
 func (o *ServiceProvider) HasCompany() bool {
-	if o != nil && o.Company != nil {
+	if o != nil && !IsNil(o.Company) {
 		return true
 	}
 
@@ -351,7 +354,7 @@ func (o *ServiceProvider) SetCompany(v string) {
 
 // GetEmail returns the Email field value if set, zero value otherwise.
 func (o *ServiceProvider) GetEmail() string {
-	if o == nil || o.Email == nil {
+	if o == nil || IsNil(o.Email) {
 		var ret string
 		return ret
 	}
@@ -361,7 +364,7 @@ func (o *ServiceProvider) GetEmail() string {
 // GetEmailOk returns a tuple with the Email field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceProvider) GetEmailOk() (*string, bool) {
-	if o == nil || o.Email == nil {
+	if o == nil || IsNil(o.Email) {
 		return nil, false
 	}
 	return o.Email, true
@@ -369,7 +372,7 @@ func (o *ServiceProvider) GetEmailOk() (*string, bool) {
 
 // HasEmail returns a boolean if a field has been set.
 func (o *ServiceProvider) HasEmail() bool {
-	if o != nil && o.Email != nil {
+	if o != nil && !IsNil(o.Email) {
 		return true
 	}
 
@@ -383,7 +386,7 @@ func (o *ServiceProvider) SetEmail(v string) {
 
 // GetPhoneNumber returns the PhoneNumber field value if set, zero value otherwise.
 func (o *ServiceProvider) GetPhoneNumber() string {
-	if o == nil || o.PhoneNumber == nil {
+	if o == nil || IsNil(o.PhoneNumber) {
 		var ret string
 		return ret
 	}
@@ -393,7 +396,7 @@ func (o *ServiceProvider) GetPhoneNumber() string {
 // GetPhoneNumberOk returns a tuple with the PhoneNumber field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceProvider) GetPhoneNumberOk() (*string, bool) {
-	if o == nil || o.PhoneNumber == nil {
+	if o == nil || IsNil(o.PhoneNumber) {
 		return nil, false
 	}
 	return o.PhoneNumber, true
@@ -401,7 +404,7 @@ func (o *ServiceProvider) GetPhoneNumberOk() (*string, bool) {
 
 // HasPhoneNumber returns a boolean if a field has been set.
 func (o *ServiceProvider) HasPhoneNumber() bool {
-	if o != nil && o.PhoneNumber != nil {
+	if o != nil && !IsNil(o.PhoneNumber) {
 		return true
 	}
 
@@ -415,7 +418,7 @@ func (o *ServiceProvider) SetPhoneNumber(v string) {
 
 // GetCategory returns the Category field value if set, zero value otherwise.
 func (o *ServiceProvider) GetCategory() ServiceCategoryEnum {
-	if o == nil || o.Category == nil {
+	if o == nil || IsNil(o.Category) {
 		var ret ServiceCategoryEnum
 		return ret
 	}
@@ -425,7 +428,7 @@ func (o *ServiceProvider) GetCategory() ServiceCategoryEnum {
 // GetCategoryOk returns a tuple with the Category field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceProvider) GetCategoryOk() (*ServiceCategoryEnum, bool) {
-	if o == nil || o.Category == nil {
+	if o == nil || IsNil(o.Category) {
 		return nil, false
 	}
 	return o.Category, true
@@ -433,7 +436,7 @@ func (o *ServiceProvider) GetCategoryOk() (*ServiceCategoryEnum, bool) {
 
 // HasCategory returns a boolean if a field has been set.
 func (o *ServiceProvider) HasCategory() bool {
-	if o != nil && o.Category != nil {
+	if o != nil && !IsNil(o.Category) {
 		return true
 	}
 
@@ -447,7 +450,7 @@ func (o *ServiceProvider) SetCategory(v ServiceCategoryEnum) {
 
 // GetConnected returns the Connected field value if set, zero value otherwise.
 func (o *ServiceProvider) GetConnected() bool {
-	if o == nil || o.Connected == nil {
+	if o == nil || IsNil(o.Connected) {
 		var ret bool
 		return ret
 	}
@@ -457,7 +460,7 @@ func (o *ServiceProvider) GetConnected() bool {
 // GetConnectedOk returns a tuple with the Connected field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceProvider) GetConnectedOk() (*bool, bool) {
-	if o == nil || o.Connected == nil {
+	if o == nil || IsNil(o.Connected) {
 		return nil, false
 	}
 	return o.Connected, true
@@ -465,7 +468,7 @@ func (o *ServiceProvider) GetConnectedOk() (*bool, bool) {
 
 // HasConnected returns a boolean if a field has been set.
 func (o *ServiceProvider) HasConnected() bool {
-	if o != nil && o.Connected != nil {
+	if o != nil && !IsNil(o.Connected) {
 		return true
 	}
 
@@ -479,7 +482,7 @@ func (o *ServiceProvider) SetConnected(v bool) {
 
 // GetAddress returns the Address field value if set, zero value otherwise.
 func (o *ServiceProvider) GetAddress() Address {
-	if o == nil || o.Address == nil {
+	if o == nil || IsNil(o.Address) {
 		var ret Address
 		return ret
 	}
@@ -489,7 +492,7 @@ func (o *ServiceProvider) GetAddress() Address {
 // GetAddressOk returns a tuple with the Address field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceProvider) GetAddressOk() (*Address, bool) {
-	if o == nil || o.Address == nil {
+	if o == nil || IsNil(o.Address) {
 		return nil, false
 	}
 	return o.Address, true
@@ -497,7 +500,7 @@ func (o *ServiceProvider) GetAddressOk() (*Address, bool) {
 
 // HasAddress returns a boolean if a field has been set.
 func (o *ServiceProvider) HasAddress() bool {
-	if o != nil && o.Address != nil {
+	if o != nil && !IsNil(o.Address) {
 		return true
 	}
 
@@ -510,50 +513,58 @@ func (o *ServiceProvider) SetAddress(v Address) {
 }
 
 func (o ServiceProvider) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.ExternalId != nil {
-		toSerialize["external_id"] = o.ExternalId
-	}
-	if o.ExternalSource != nil {
-		toSerialize["external_source"] = o.ExternalSource
-	}
-	if o.CreatedAt != nil {
-		toSerialize["created_at"] = o.CreatedAt
-	}
-	if o.UpdatedAt != nil {
-		toSerialize["updated_at"] = o.UpdatedAt
-	}
-	if o.Title != nil {
-		toSerialize["title"] = o.Title
-	}
-	if o.FirstName != nil {
-		toSerialize["first_name"] = o.FirstName
-	}
-	if o.LastName != nil {
-		toSerialize["last_name"] = o.LastName
-	}
-	if o.Company != nil {
-		toSerialize["company"] = o.Company
-	}
-	if o.Email != nil {
-		toSerialize["email"] = o.Email
-	}
-	if o.PhoneNumber != nil {
-		toSerialize["phone_number"] = o.PhoneNumber
-	}
-	if o.Category != nil {
-		toSerialize["category"] = o.Category
-	}
-	if o.Connected != nil {
-		toSerialize["connected"] = o.Connected
-	}
-	if o.Address != nil {
-		toSerialize["address"] = o.Address
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ServiceProvider) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.ExternalId) {
+		toSerialize["external_id"] = o.ExternalId
+	}
+	if !IsNil(o.ExternalSource) {
+		toSerialize["external_source"] = o.ExternalSource
+	}
+	if !IsNil(o.CreatedAt) {
+		toSerialize["created_at"] = o.CreatedAt
+	}
+	if !IsNil(o.UpdatedAt) {
+		toSerialize["updated_at"] = o.UpdatedAt
+	}
+	if !IsNil(o.Title) {
+		toSerialize["title"] = o.Title
+	}
+	if !IsNil(o.FirstName) {
+		toSerialize["first_name"] = o.FirstName
+	}
+	if !IsNil(o.LastName) {
+		toSerialize["last_name"] = o.LastName
+	}
+	if !IsNil(o.Company) {
+		toSerialize["company"] = o.Company
+	}
+	if !IsNil(o.Email) {
+		toSerialize["email"] = o.Email
+	}
+	if !IsNil(o.PhoneNumber) {
+		toSerialize["phone_number"] = o.PhoneNumber
+	}
+	if !IsNil(o.Category) {
+		toSerialize["category"] = o.Category
+	}
+	if !IsNil(o.Connected) {
+		toSerialize["connected"] = o.Connected
+	}
+	if !IsNil(o.Address) {
+		toSerialize["address"] = o.Address
+	}
+	return toSerialize, nil
 }
 
 type NullableServiceProvider struct {

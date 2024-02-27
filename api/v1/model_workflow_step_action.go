@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the WorkflowStepAction type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &WorkflowStepAction{}
+
 // WorkflowStepAction an action that can be performed on a workflow execution step. This is derived from the step action definition, however, dynamic data is computed and populated by the backend, before the result is being sent to the client.
 type WorkflowStepAction struct {
 	// the ID of the action
@@ -49,7 +52,7 @@ func NewWorkflowStepActionWithDefaults() *WorkflowStepAction {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *WorkflowStepAction) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -59,7 +62,7 @@ func (o *WorkflowStepAction) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepAction) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -67,7 +70,7 @@ func (o *WorkflowStepAction) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *WorkflowStepAction) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -81,7 +84,7 @@ func (o *WorkflowStepAction) SetId(v string) {
 
 // GetIcon returns the Icon field value if set, zero value otherwise.
 func (o *WorkflowStepAction) GetIcon() string {
-	if o == nil || o.Icon == nil {
+	if o == nil || IsNil(o.Icon) {
 		var ret string
 		return ret
 	}
@@ -91,7 +94,7 @@ func (o *WorkflowStepAction) GetIcon() string {
 // GetIconOk returns a tuple with the Icon field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepAction) GetIconOk() (*string, bool) {
-	if o == nil || o.Icon == nil {
+	if o == nil || IsNil(o.Icon) {
 		return nil, false
 	}
 	return o.Icon, true
@@ -99,7 +102,7 @@ func (o *WorkflowStepAction) GetIconOk() (*string, bool) {
 
 // HasIcon returns a boolean if a field has been set.
 func (o *WorkflowStepAction) HasIcon() bool {
-	if o != nil && o.Icon != nil {
+	if o != nil && !IsNil(o.Icon) {
 		return true
 	}
 
@@ -113,7 +116,7 @@ func (o *WorkflowStepAction) SetIcon(v string) {
 
 // GetLabel returns the Label field value if set, zero value otherwise.
 func (o *WorkflowStepAction) GetLabel() string {
-	if o == nil || o.Label == nil {
+	if o == nil || IsNil(o.Label) {
 		var ret string
 		return ret
 	}
@@ -123,7 +126,7 @@ func (o *WorkflowStepAction) GetLabel() string {
 // GetLabelOk returns a tuple with the Label field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepAction) GetLabelOk() (*string, bool) {
-	if o == nil || o.Label == nil {
+	if o == nil || IsNil(o.Label) {
 		return nil, false
 	}
 	return o.Label, true
@@ -131,7 +134,7 @@ func (o *WorkflowStepAction) GetLabelOk() (*string, bool) {
 
 // HasLabel returns a boolean if a field has been set.
 func (o *WorkflowStepAction) HasLabel() bool {
-	if o != nil && o.Label != nil {
+	if o != nil && !IsNil(o.Label) {
 		return true
 	}
 
@@ -145,7 +148,7 @@ func (o *WorkflowStepAction) SetLabel(v string) {
 
 // GetButtonModifier returns the ButtonModifier field value if set, zero value otherwise.
 func (o *WorkflowStepAction) GetButtonModifier() string {
-	if o == nil || o.ButtonModifier == nil {
+	if o == nil || IsNil(o.ButtonModifier) {
 		var ret string
 		return ret
 	}
@@ -155,7 +158,7 @@ func (o *WorkflowStepAction) GetButtonModifier() string {
 // GetButtonModifierOk returns a tuple with the ButtonModifier field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepAction) GetButtonModifierOk() (*string, bool) {
-	if o == nil || o.ButtonModifier == nil {
+	if o == nil || IsNil(o.ButtonModifier) {
 		return nil, false
 	}
 	return o.ButtonModifier, true
@@ -163,7 +166,7 @@ func (o *WorkflowStepAction) GetButtonModifierOk() (*string, bool) {
 
 // HasButtonModifier returns a boolean if a field has been set.
 func (o *WorkflowStepAction) HasButtonModifier() bool {
-	if o != nil && o.ButtonModifier != nil {
+	if o != nil && !IsNil(o.ButtonModifier) {
 		return true
 	}
 
@@ -177,7 +180,7 @@ func (o *WorkflowStepAction) SetButtonModifier(v string) {
 
 // GetUiFilter returns the UiFilter field value if set, zero value otherwise.
 func (o *WorkflowStepAction) GetUiFilter() string {
-	if o == nil || o.UiFilter == nil {
+	if o == nil || IsNil(o.UiFilter) {
 		var ret string
 		return ret
 	}
@@ -187,7 +190,7 @@ func (o *WorkflowStepAction) GetUiFilter() string {
 // GetUiFilterOk returns a tuple with the UiFilter field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepAction) GetUiFilterOk() (*string, bool) {
-	if o == nil || o.UiFilter == nil {
+	if o == nil || IsNil(o.UiFilter) {
 		return nil, false
 	}
 	return o.UiFilter, true
@@ -195,7 +198,7 @@ func (o *WorkflowStepAction) GetUiFilterOk() (*string, bool) {
 
 // HasUiFilter returns a boolean if a field has been set.
 func (o *WorkflowStepAction) HasUiFilter() bool {
-	if o != nil && o.UiFilter != nil {
+	if o != nil && !IsNil(o.UiFilter) {
 		return true
 	}
 
@@ -209,7 +212,7 @@ func (o *WorkflowStepAction) SetUiFilter(v string) {
 
 // GetNextStepId returns the NextStepId field value if set, zero value otherwise.
 func (o *WorkflowStepAction) GetNextStepId() string {
-	if o == nil || o.NextStepId == nil {
+	if o == nil || IsNil(o.NextStepId) {
 		var ret string
 		return ret
 	}
@@ -219,7 +222,7 @@ func (o *WorkflowStepAction) GetNextStepId() string {
 // GetNextStepIdOk returns a tuple with the NextStepId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepAction) GetNextStepIdOk() (*string, bool) {
-	if o == nil || o.NextStepId == nil {
+	if o == nil || IsNil(o.NextStepId) {
 		return nil, false
 	}
 	return o.NextStepId, true
@@ -227,7 +230,7 @@ func (o *WorkflowStepAction) GetNextStepIdOk() (*string, bool) {
 
 // HasNextStepId returns a boolean if a field has been set.
 func (o *WorkflowStepAction) HasNextStepId() bool {
-	if o != nil && o.NextStepId != nil {
+	if o != nil && !IsNil(o.NextStepId) {
 		return true
 	}
 
@@ -240,26 +243,34 @@ func (o *WorkflowStepAction) SetNextStepId(v string) {
 }
 
 func (o WorkflowStepAction) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Icon != nil {
-		toSerialize["icon"] = o.Icon
-	}
-	if o.Label != nil {
-		toSerialize["label"] = o.Label
-	}
-	if o.ButtonModifier != nil {
-		toSerialize["button_modifier"] = o.ButtonModifier
-	}
-	if o.UiFilter != nil {
-		toSerialize["ui_filter"] = o.UiFilter
-	}
-	if o.NextStepId != nil {
-		toSerialize["next_step_id"] = o.NextStepId
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o WorkflowStepAction) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Icon) {
+		toSerialize["icon"] = o.Icon
+	}
+	if !IsNil(o.Label) {
+		toSerialize["label"] = o.Label
+	}
+	if !IsNil(o.ButtonModifier) {
+		toSerialize["button_modifier"] = o.ButtonModifier
+	}
+	if !IsNil(o.UiFilter) {
+		toSerialize["ui_filter"] = o.UiFilter
+	}
+	if !IsNil(o.NextStepId) {
+		toSerialize["next_step_id"] = o.NextStepId
+	}
+	return toSerialize, nil
 }
 
 type NullableWorkflowStepAction struct {

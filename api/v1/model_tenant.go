@@ -11,8 +11,13 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the Tenant type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Tenant{}
 
 // Tenant A person or company, renting a particular property.
 type Tenant struct {
@@ -41,6 +46,8 @@ type Tenant struct {
 	// a list of notes regarding that tenant. Can only be seen by the manager, not the tenante.
 	Notes []Note `json:"notes,omitempty"`
 }
+
+type _Tenant Tenant
 
 // NewTenant instantiates a new Tenant object
 // This constructor will assign default values to properties that have it defined,
@@ -91,7 +98,7 @@ func (o *Tenant) SetId(v string) {
 
 // GetExternalId returns the ExternalId field value if set, zero value otherwise.
 func (o *Tenant) GetExternalId() string {
-	if o == nil || o.ExternalId == nil {
+	if o == nil || IsNil(o.ExternalId) {
 		var ret string
 		return ret
 	}
@@ -101,7 +108,7 @@ func (o *Tenant) GetExternalId() string {
 // GetExternalIdOk returns a tuple with the ExternalId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Tenant) GetExternalIdOk() (*string, bool) {
-	if o == nil || o.ExternalId == nil {
+	if o == nil || IsNil(o.ExternalId) {
 		return nil, false
 	}
 	return o.ExternalId, true
@@ -109,7 +116,7 @@ func (o *Tenant) GetExternalIdOk() (*string, bool) {
 
 // HasExternalId returns a boolean if a field has been set.
 func (o *Tenant) HasExternalId() bool {
-	if o != nil && o.ExternalId != nil {
+	if o != nil && !IsNil(o.ExternalId) {
 		return true
 	}
 
@@ -123,7 +130,7 @@ func (o *Tenant) SetExternalId(v string) {
 
 // GetExternalSource returns the ExternalSource field value if set, zero value otherwise.
 func (o *Tenant) GetExternalSource() string {
-	if o == nil || o.ExternalSource == nil {
+	if o == nil || IsNil(o.ExternalSource) {
 		var ret string
 		return ret
 	}
@@ -133,7 +140,7 @@ func (o *Tenant) GetExternalSource() string {
 // GetExternalSourceOk returns a tuple with the ExternalSource field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Tenant) GetExternalSourceOk() (*string, bool) {
-	if o == nil || o.ExternalSource == nil {
+	if o == nil || IsNil(o.ExternalSource) {
 		return nil, false
 	}
 	return o.ExternalSource, true
@@ -141,7 +148,7 @@ func (o *Tenant) GetExternalSourceOk() (*string, bool) {
 
 // HasExternalSource returns a boolean if a field has been set.
 func (o *Tenant) HasExternalSource() bool {
-	if o != nil && o.ExternalSource != nil {
+	if o != nil && !IsNil(o.ExternalSource) {
 		return true
 	}
 
@@ -155,7 +162,7 @@ func (o *Tenant) SetExternalSource(v string) {
 
 // GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
 func (o *Tenant) GetCreatedAt() int64 {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		var ret int64
 		return ret
 	}
@@ -165,7 +172,7 @@ func (o *Tenant) GetCreatedAt() int64 {
 // GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Tenant) GetCreatedAtOk() (*int64, bool) {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
 	return o.CreatedAt, true
@@ -173,7 +180,7 @@ func (o *Tenant) GetCreatedAtOk() (*int64, bool) {
 
 // HasCreatedAt returns a boolean if a field has been set.
 func (o *Tenant) HasCreatedAt() bool {
-	if o != nil && o.CreatedAt != nil {
+	if o != nil && !IsNil(o.CreatedAt) {
 		return true
 	}
 
@@ -187,7 +194,7 @@ func (o *Tenant) SetCreatedAt(v int64) {
 
 // GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
 func (o *Tenant) GetUpdatedAt() int64 {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		var ret int64
 		return ret
 	}
@@ -197,7 +204,7 @@ func (o *Tenant) GetUpdatedAt() int64 {
 // GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Tenant) GetUpdatedAtOk() (*int64, bool) {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
 	return o.UpdatedAt, true
@@ -205,7 +212,7 @@ func (o *Tenant) GetUpdatedAtOk() (*int64, bool) {
 
 // HasUpdatedAt returns a boolean if a field has been set.
 func (o *Tenant) HasUpdatedAt() bool {
-	if o != nil && o.UpdatedAt != nil {
+	if o != nil && !IsNil(o.UpdatedAt) {
 		return true
 	}
 
@@ -291,7 +298,7 @@ func (o *Tenant) SetLastName(v string) {
 
 // GetCompany returns the Company field value if set, zero value otherwise.
 func (o *Tenant) GetCompany() string {
-	if o == nil || o.Company == nil {
+	if o == nil || IsNil(o.Company) {
 		var ret string
 		return ret
 	}
@@ -301,7 +308,7 @@ func (o *Tenant) GetCompany() string {
 // GetCompanyOk returns a tuple with the Company field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Tenant) GetCompanyOk() (*string, bool) {
-	if o == nil || o.Company == nil {
+	if o == nil || IsNil(o.Company) {
 		return nil, false
 	}
 	return o.Company, true
@@ -309,7 +316,7 @@ func (o *Tenant) GetCompanyOk() (*string, bool) {
 
 // HasCompany returns a boolean if a field has been set.
 func (o *Tenant) HasCompany() bool {
-	if o != nil && o.Company != nil {
+	if o != nil && !IsNil(o.Company) {
 		return true
 	}
 
@@ -371,7 +378,7 @@ func (o *Tenant) SetPhoneNumber(v string) {
 
 // GetNotes returns the Notes field value if set, zero value otherwise.
 func (o *Tenant) GetNotes() []Note {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		var ret []Note
 		return ret
 	}
@@ -381,7 +388,7 @@ func (o *Tenant) GetNotes() []Note {
 // GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Tenant) GetNotesOk() ([]Note, bool) {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		return nil, false
 	}
 	return o.Notes, true
@@ -389,7 +396,7 @@ func (o *Tenant) GetNotesOk() ([]Note, bool) {
 
 // HasNotes returns a boolean if a field has been set.
 func (o *Tenant) HasNotes() bool {
-	if o != nil && o.Notes != nil {
+	if o != nil && !IsNil(o.Notes) {
 		return true
 	}
 
@@ -402,44 +409,82 @@ func (o *Tenant) SetNotes(v []Note) {
 }
 
 func (o Tenant) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["id"] = o.Id
-	}
-	if o.ExternalId != nil {
-		toSerialize["external_id"] = o.ExternalId
-	}
-	if o.ExternalSource != nil {
-		toSerialize["external_source"] = o.ExternalSource
-	}
-	if o.CreatedAt != nil {
-		toSerialize["created_at"] = o.CreatedAt
-	}
-	if o.UpdatedAt != nil {
-		toSerialize["updated_at"] = o.UpdatedAt
-	}
-	if true {
-		toSerialize["title"] = o.Title
-	}
-	if true {
-		toSerialize["first_name"] = o.FirstName
-	}
-	if true {
-		toSerialize["last_name"] = o.LastName
-	}
-	if o.Company != nil {
-		toSerialize["company"] = o.Company
-	}
-	if true {
-		toSerialize["email"] = o.Email
-	}
-	if true {
-		toSerialize["phone_number"] = o.PhoneNumber
-	}
-	if o.Notes != nil {
-		toSerialize["notes"] = o.Notes
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Tenant) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["id"] = o.Id
+	if !IsNil(o.ExternalId) {
+		toSerialize["external_id"] = o.ExternalId
+	}
+	if !IsNil(o.ExternalSource) {
+		toSerialize["external_source"] = o.ExternalSource
+	}
+	if !IsNil(o.CreatedAt) {
+		toSerialize["created_at"] = o.CreatedAt
+	}
+	if !IsNil(o.UpdatedAt) {
+		toSerialize["updated_at"] = o.UpdatedAt
+	}
+	toSerialize["title"] = o.Title
+	toSerialize["first_name"] = o.FirstName
+	toSerialize["last_name"] = o.LastName
+	if !IsNil(o.Company) {
+		toSerialize["company"] = o.Company
+	}
+	toSerialize["email"] = o.Email
+	toSerialize["phone_number"] = o.PhoneNumber
+	if !IsNil(o.Notes) {
+		toSerialize["notes"] = o.Notes
+	}
+	return toSerialize, nil
+}
+
+func (o *Tenant) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"id",
+		"title",
+		"first_name",
+		"last_name",
+		"email",
+		"phone_number",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varTenant := _Tenant{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varTenant)
+
+	if err != nil {
+		return err
+	}
+
+	*o = Tenant(varTenant)
+
+	return err
 }
 
 type NullableTenant struct {

@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CreateOrUpdatePropertyContact type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CreateOrUpdatePropertyContact{}
+
 // CreateOrUpdatePropertyContact Request used for creating a new contact for a property.
 type CreateOrUpdatePropertyContact struct {
 	// human-friendly label, describing the relationship and context of the contact
@@ -43,7 +46,7 @@ func NewCreateOrUpdatePropertyContactWithDefaults() *CreateOrUpdatePropertyConta
 
 // GetLabel returns the Label field value if set, zero value otherwise.
 func (o *CreateOrUpdatePropertyContact) GetLabel() string {
-	if o == nil || o.Label == nil {
+	if o == nil || IsNil(o.Label) {
 		var ret string
 		return ret
 	}
@@ -53,7 +56,7 @@ func (o *CreateOrUpdatePropertyContact) GetLabel() string {
 // GetLabelOk returns a tuple with the Label field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdatePropertyContact) GetLabelOk() (*string, bool) {
-	if o == nil || o.Label == nil {
+	if o == nil || IsNil(o.Label) {
 		return nil, false
 	}
 	return o.Label, true
@@ -61,7 +64,7 @@ func (o *CreateOrUpdatePropertyContact) GetLabelOk() (*string, bool) {
 
 // HasLabel returns a boolean if a field has been set.
 func (o *CreateOrUpdatePropertyContact) HasLabel() bool {
-	if o != nil && o.Label != nil {
+	if o != nil && !IsNil(o.Label) {
 		return true
 	}
 
@@ -75,7 +78,7 @@ func (o *CreateOrUpdatePropertyContact) SetLabel(v string) {
 
 // GetPublic returns the Public field value if set, zero value otherwise.
 func (o *CreateOrUpdatePropertyContact) GetPublic() bool {
-	if o == nil || o.Public == nil {
+	if o == nil || IsNil(o.Public) {
 		var ret bool
 		return ret
 	}
@@ -85,7 +88,7 @@ func (o *CreateOrUpdatePropertyContact) GetPublic() bool {
 // GetPublicOk returns a tuple with the Public field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdatePropertyContact) GetPublicOk() (*bool, bool) {
-	if o == nil || o.Public == nil {
+	if o == nil || IsNil(o.Public) {
 		return nil, false
 	}
 	return o.Public, true
@@ -93,7 +96,7 @@ func (o *CreateOrUpdatePropertyContact) GetPublicOk() (*bool, bool) {
 
 // HasPublic returns a boolean if a field has been set.
 func (o *CreateOrUpdatePropertyContact) HasPublic() bool {
-	if o != nil && o.Public != nil {
+	if o != nil && !IsNil(o.Public) {
 		return true
 	}
 
@@ -107,7 +110,7 @@ func (o *CreateOrUpdatePropertyContact) SetPublic(v bool) {
 
 // GetContact returns the Contact field value if set, zero value otherwise.
 func (o *CreateOrUpdatePropertyContact) GetContact() string {
-	if o == nil || o.Contact == nil {
+	if o == nil || IsNil(o.Contact) {
 		var ret string
 		return ret
 	}
@@ -117,7 +120,7 @@ func (o *CreateOrUpdatePropertyContact) GetContact() string {
 // GetContactOk returns a tuple with the Contact field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdatePropertyContact) GetContactOk() (*string, bool) {
-	if o == nil || o.Contact == nil {
+	if o == nil || IsNil(o.Contact) {
 		return nil, false
 	}
 	return o.Contact, true
@@ -125,7 +128,7 @@ func (o *CreateOrUpdatePropertyContact) GetContactOk() (*string, bool) {
 
 // HasContact returns a boolean if a field has been set.
 func (o *CreateOrUpdatePropertyContact) HasContact() bool {
-	if o != nil && o.Contact != nil {
+	if o != nil && !IsNil(o.Contact) {
 		return true
 	}
 
@@ -138,17 +141,25 @@ func (o *CreateOrUpdatePropertyContact) SetContact(v string) {
 }
 
 func (o CreateOrUpdatePropertyContact) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Label != nil {
-		toSerialize["label"] = o.Label
-	}
-	if o.Public != nil {
-		toSerialize["public"] = o.Public
-	}
-	if o.Contact != nil {
-		toSerialize["contact"] = o.Contact
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CreateOrUpdatePropertyContact) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Label) {
+		toSerialize["label"] = o.Label
+	}
+	if !IsNil(o.Public) {
+		toSerialize["public"] = o.Public
+	}
+	if !IsNil(o.Contact) {
+		toSerialize["contact"] = o.Contact
+	}
+	return toSerialize, nil
 }
 
 type NullableCreateOrUpdatePropertyContact struct {

@@ -11,8 +11,13 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the AppointmentWindow type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppointmentWindow{}
 
 // AppointmentWindow struct for AppointmentWindow
 type AppointmentWindow struct {
@@ -25,6 +30,8 @@ type AppointmentWindow struct {
 	// List of slots that are available or booked
 	Slots []AppointmentSlot `json:"slots,omitempty"`
 }
+
+type _AppointmentWindow AppointmentWindow
 
 // NewAppointmentWindow instantiates a new AppointmentWindow object
 // This constructor will assign default values to properties that have it defined,
@@ -47,7 +54,7 @@ func NewAppointmentWindowWithDefaults() *AppointmentWindow {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *AppointmentWindow) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -57,7 +64,7 @@ func (o *AppointmentWindow) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppointmentWindow) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -65,7 +72,7 @@ func (o *AppointmentWindow) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *AppointmentWindow) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -127,7 +134,7 @@ func (o *AppointmentWindow) SetEndTime(v int64) {
 
 // GetSlots returns the Slots field value if set, zero value otherwise.
 func (o *AppointmentWindow) GetSlots() []AppointmentSlot {
-	if o == nil || o.Slots == nil {
+	if o == nil || IsNil(o.Slots) {
 		var ret []AppointmentSlot
 		return ret
 	}
@@ -137,7 +144,7 @@ func (o *AppointmentWindow) GetSlots() []AppointmentSlot {
 // GetSlotsOk returns a tuple with the Slots field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppointmentWindow) GetSlotsOk() ([]AppointmentSlot, bool) {
-	if o == nil || o.Slots == nil {
+	if o == nil || IsNil(o.Slots) {
 		return nil, false
 	}
 	return o.Slots, true
@@ -145,7 +152,7 @@ func (o *AppointmentWindow) GetSlotsOk() ([]AppointmentSlot, bool) {
 
 // HasSlots returns a boolean if a field has been set.
 func (o *AppointmentWindow) HasSlots() bool {
-	if o != nil && o.Slots != nil {
+	if o != nil && !IsNil(o.Slots) {
 		return true
 	}
 
@@ -158,20 +165,62 @@ func (o *AppointmentWindow) SetSlots(v []AppointmentSlot) {
 }
 
 func (o AppointmentWindow) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if true {
-		toSerialize["start_time"] = o.StartTime
-	}
-	if true {
-		toSerialize["end_time"] = o.EndTime
-	}
-	if o.Slots != nil {
-		toSerialize["slots"] = o.Slots
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppointmentWindow) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	toSerialize["start_time"] = o.StartTime
+	toSerialize["end_time"] = o.EndTime
+	if !IsNil(o.Slots) {
+		toSerialize["slots"] = o.Slots
+	}
+	return toSerialize, nil
+}
+
+func (o *AppointmentWindow) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"start_time",
+		"end_time",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varAppointmentWindow := _AppointmentWindow{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varAppointmentWindow)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AppointmentWindow(varAppointmentWindow)
+
+	return err
 }
 
 type NullableAppointmentWindow struct {

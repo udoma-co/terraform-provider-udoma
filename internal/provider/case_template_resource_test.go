@@ -108,12 +108,10 @@ func resourceDefinitionCaseTemplate(name, nameExpression string) string {
 		}
 		EOF
 
-		config = <<EOF
-		{
-			"base_config": "SIMPLE",
-			"extend_default_status_config": true
+		config = {
+			base_config = "SIMPLE",
+			extend_default_status_config = true
 		}
-		EOF
 	}
 	`
 }

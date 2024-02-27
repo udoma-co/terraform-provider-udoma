@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CaseAssignee type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CaseAssignee{}
+
 // CaseAssignee Indicates who is currently assigned to work on the case.
 type CaseAssignee struct {
 	// Set in case the assignee has an account within the plattform
@@ -41,7 +44,7 @@ func NewCaseAssigneeWithDefaults() *CaseAssignee {
 
 // GetAccountRef returns the AccountRef field value if set, zero value otherwise.
 func (o *CaseAssignee) GetAccountRef() int64 {
-	if o == nil || o.AccountRef == nil {
+	if o == nil || IsNil(o.AccountRef) {
 		var ret int64
 		return ret
 	}
@@ -51,7 +54,7 @@ func (o *CaseAssignee) GetAccountRef() int64 {
 // GetAccountRefOk returns a tuple with the AccountRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseAssignee) GetAccountRefOk() (*int64, bool) {
-	if o == nil || o.AccountRef == nil {
+	if o == nil || IsNil(o.AccountRef) {
 		return nil, false
 	}
 	return o.AccountRef, true
@@ -59,7 +62,7 @@ func (o *CaseAssignee) GetAccountRefOk() (*int64, bool) {
 
 // HasAccountRef returns a boolean if a field has been set.
 func (o *CaseAssignee) HasAccountRef() bool {
-	if o != nil && o.AccountRef != nil {
+	if o != nil && !IsNil(o.AccountRef) {
 		return true
 	}
 
@@ -73,7 +76,7 @@ func (o *CaseAssignee) SetAccountRef(v int64) {
 
 // GetContactRef returns the ContactRef field value if set, zero value otherwise.
 func (o *CaseAssignee) GetContactRef() string {
-	if o == nil || o.ContactRef == nil {
+	if o == nil || IsNil(o.ContactRef) {
 		var ret string
 		return ret
 	}
@@ -83,7 +86,7 @@ func (o *CaseAssignee) GetContactRef() string {
 // GetContactRefOk returns a tuple with the ContactRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseAssignee) GetContactRefOk() (*string, bool) {
-	if o == nil || o.ContactRef == nil {
+	if o == nil || IsNil(o.ContactRef) {
 		return nil, false
 	}
 	return o.ContactRef, true
@@ -91,7 +94,7 @@ func (o *CaseAssignee) GetContactRefOk() (*string, bool) {
 
 // HasContactRef returns a boolean if a field has been set.
 func (o *CaseAssignee) HasContactRef() bool {
-	if o != nil && o.ContactRef != nil {
+	if o != nil && !IsNil(o.ContactRef) {
 		return true
 	}
 
@@ -104,14 +107,22 @@ func (o *CaseAssignee) SetContactRef(v string) {
 }
 
 func (o CaseAssignee) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.AccountRef != nil {
-		toSerialize["account_ref"] = o.AccountRef
-	}
-	if o.ContactRef != nil {
-		toSerialize["contact_ref"] = o.ContactRef
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CaseAssignee) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.AccountRef) {
+		toSerialize["account_ref"] = o.AccountRef
+	}
+	if !IsNil(o.ContactRef) {
+		toSerialize["contact_ref"] = o.ContactRef
+	}
+	return toSerialize, nil
 }
 
 type NullableCaseAssignee struct {

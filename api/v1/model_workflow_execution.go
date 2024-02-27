@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the WorkflowExecution type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &WorkflowExecution{}
+
 // WorkflowExecution contains all information of the execution of a single workflow
 type WorkflowExecution struct {
 	// the unique ID generated when the workflow execution was started
@@ -61,7 +64,7 @@ func NewWorkflowExecutionWithDefaults() *WorkflowExecution {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *WorkflowExecution) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -71,7 +74,7 @@ func (o *WorkflowExecution) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecution) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -79,7 +82,7 @@ func (o *WorkflowExecution) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *WorkflowExecution) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -93,7 +96,7 @@ func (o *WorkflowExecution) SetId(v string) {
 
 // GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
 func (o *WorkflowExecution) GetCreatedAt() int64 {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		var ret int64
 		return ret
 	}
@@ -103,7 +106,7 @@ func (o *WorkflowExecution) GetCreatedAt() int64 {
 // GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecution) GetCreatedAtOk() (*int64, bool) {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
 	return o.CreatedAt, true
@@ -111,7 +114,7 @@ func (o *WorkflowExecution) GetCreatedAtOk() (*int64, bool) {
 
 // HasCreatedAt returns a boolean if a field has been set.
 func (o *WorkflowExecution) HasCreatedAt() bool {
-	if o != nil && o.CreatedAt != nil {
+	if o != nil && !IsNil(o.CreatedAt) {
 		return true
 	}
 
@@ -125,7 +128,7 @@ func (o *WorkflowExecution) SetCreatedAt(v int64) {
 
 // GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
 func (o *WorkflowExecution) GetUpdatedAt() int64 {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		var ret int64
 		return ret
 	}
@@ -135,7 +138,7 @@ func (o *WorkflowExecution) GetUpdatedAt() int64 {
 // GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecution) GetUpdatedAtOk() (*int64, bool) {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
 	return o.UpdatedAt, true
@@ -143,7 +146,7 @@ func (o *WorkflowExecution) GetUpdatedAtOk() (*int64, bool) {
 
 // HasUpdatedAt returns a boolean if a field has been set.
 func (o *WorkflowExecution) HasUpdatedAt() bool {
-	if o != nil && o.UpdatedAt != nil {
+	if o != nil && !IsNil(o.UpdatedAt) {
 		return true
 	}
 
@@ -157,7 +160,7 @@ func (o *WorkflowExecution) SetUpdatedAt(v int64) {
 
 // GetDefinitionRef returns the DefinitionRef field value if set, zero value otherwise.
 func (o *WorkflowExecution) GetDefinitionRef() string {
-	if o == nil || o.DefinitionRef == nil {
+	if o == nil || IsNil(o.DefinitionRef) {
 		var ret string
 		return ret
 	}
@@ -167,7 +170,7 @@ func (o *WorkflowExecution) GetDefinitionRef() string {
 // GetDefinitionRefOk returns a tuple with the DefinitionRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecution) GetDefinitionRefOk() (*string, bool) {
-	if o == nil || o.DefinitionRef == nil {
+	if o == nil || IsNil(o.DefinitionRef) {
 		return nil, false
 	}
 	return o.DefinitionRef, true
@@ -175,7 +178,7 @@ func (o *WorkflowExecution) GetDefinitionRefOk() (*string, bool) {
 
 // HasDefinitionRef returns a boolean if a field has been set.
 func (o *WorkflowExecution) HasDefinitionRef() bool {
-	if o != nil && o.DefinitionRef != nil {
+	if o != nil && !IsNil(o.DefinitionRef) {
 		return true
 	}
 
@@ -189,7 +192,7 @@ func (o *WorkflowExecution) SetDefinitionRef(v string) {
 
 // GetParentRef returns the ParentRef field value if set, zero value otherwise.
 func (o *WorkflowExecution) GetParentRef() string {
-	if o == nil || o.ParentRef == nil {
+	if o == nil || IsNil(o.ParentRef) {
 		var ret string
 		return ret
 	}
@@ -199,7 +202,7 @@ func (o *WorkflowExecution) GetParentRef() string {
 // GetParentRefOk returns a tuple with the ParentRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecution) GetParentRefOk() (*string, bool) {
-	if o == nil || o.ParentRef == nil {
+	if o == nil || IsNil(o.ParentRef) {
 		return nil, false
 	}
 	return o.ParentRef, true
@@ -207,7 +210,7 @@ func (o *WorkflowExecution) GetParentRefOk() (*string, bool) {
 
 // HasParentRef returns a boolean if a field has been set.
 func (o *WorkflowExecution) HasParentRef() bool {
-	if o != nil && o.ParentRef != nil {
+	if o != nil && !IsNil(o.ParentRef) {
 		return true
 	}
 
@@ -221,7 +224,7 @@ func (o *WorkflowExecution) SetParentRef(v string) {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *WorkflowExecution) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -231,7 +234,7 @@ func (o *WorkflowExecution) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecution) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -239,7 +242,7 @@ func (o *WorkflowExecution) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *WorkflowExecution) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -253,7 +256,7 @@ func (o *WorkflowExecution) SetName(v string) {
 
 // GetStatus returns the Status field value if set, zero value otherwise.
 func (o *WorkflowExecution) GetStatus() WorkflowExecutionStatus {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		var ret WorkflowExecutionStatus
 		return ret
 	}
@@ -263,7 +266,7 @@ func (o *WorkflowExecution) GetStatus() WorkflowExecutionStatus {
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecution) GetStatusOk() (*WorkflowExecutionStatus, bool) {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
 	return o.Status, true
@@ -271,7 +274,7 @@ func (o *WorkflowExecution) GetStatusOk() (*WorkflowExecutionStatus, bool) {
 
 // HasStatus returns a boolean if a field has been set.
 func (o *WorkflowExecution) HasStatus() bool {
-	if o != nil && o.Status != nil {
+	if o != nil && !IsNil(o.Status) {
 		return true
 	}
 
@@ -285,7 +288,7 @@ func (o *WorkflowExecution) SetStatus(v WorkflowExecutionStatus) {
 
 // GetArchived returns the Archived field value if set, zero value otherwise.
 func (o *WorkflowExecution) GetArchived() bool {
-	if o == nil || o.Archived == nil {
+	if o == nil || IsNil(o.Archived) {
 		var ret bool
 		return ret
 	}
@@ -295,7 +298,7 @@ func (o *WorkflowExecution) GetArchived() bool {
 // GetArchivedOk returns a tuple with the Archived field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecution) GetArchivedOk() (*bool, bool) {
-	if o == nil || o.Archived == nil {
+	if o == nil || IsNil(o.Archived) {
 		return nil, false
 	}
 	return o.Archived, true
@@ -303,7 +306,7 @@ func (o *WorkflowExecution) GetArchivedOk() (*bool, bool) {
 
 // HasArchived returns a boolean if a field has been set.
 func (o *WorkflowExecution) HasArchived() bool {
-	if o != nil && o.Archived != nil {
+	if o != nil && !IsNil(o.Archived) {
 		return true
 	}
 
@@ -317,7 +320,7 @@ func (o *WorkflowExecution) SetArchived(v bool) {
 
 // GetCurrentStep returns the CurrentStep field value if set, zero value otherwise.
 func (o *WorkflowExecution) GetCurrentStep() string {
-	if o == nil || o.CurrentStep == nil {
+	if o == nil || IsNil(o.CurrentStep) {
 		var ret string
 		return ret
 	}
@@ -327,7 +330,7 @@ func (o *WorkflowExecution) GetCurrentStep() string {
 // GetCurrentStepOk returns a tuple with the CurrentStep field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecution) GetCurrentStepOk() (*string, bool) {
-	if o == nil || o.CurrentStep == nil {
+	if o == nil || IsNil(o.CurrentStep) {
 		return nil, false
 	}
 	return o.CurrentStep, true
@@ -335,7 +338,7 @@ func (o *WorkflowExecution) GetCurrentStepOk() (*string, bool) {
 
 // HasCurrentStep returns a boolean if a field has been set.
 func (o *WorkflowExecution) HasCurrentStep() bool {
-	if o != nil && o.CurrentStep != nil {
+	if o != nil && !IsNil(o.CurrentStep) {
 		return true
 	}
 
@@ -349,7 +352,7 @@ func (o *WorkflowExecution) SetCurrentStep(v string) {
 
 // GetCurrentStepName returns the CurrentStepName field value if set, zero value otherwise.
 func (o *WorkflowExecution) GetCurrentStepName() string {
-	if o == nil || o.CurrentStepName == nil {
+	if o == nil || IsNil(o.CurrentStepName) {
 		var ret string
 		return ret
 	}
@@ -359,7 +362,7 @@ func (o *WorkflowExecution) GetCurrentStepName() string {
 // GetCurrentStepNameOk returns a tuple with the CurrentStepName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecution) GetCurrentStepNameOk() (*string, bool) {
-	if o == nil || o.CurrentStepName == nil {
+	if o == nil || IsNil(o.CurrentStepName) {
 		return nil, false
 	}
 	return o.CurrentStepName, true
@@ -367,7 +370,7 @@ func (o *WorkflowExecution) GetCurrentStepNameOk() (*string, bool) {
 
 // HasCurrentStepName returns a boolean if a field has been set.
 func (o *WorkflowExecution) HasCurrentStepName() bool {
-	if o != nil && o.CurrentStepName != nil {
+	if o != nil && !IsNil(o.CurrentStepName) {
 		return true
 	}
 
@@ -381,7 +384,7 @@ func (o *WorkflowExecution) SetCurrentStepName(v string) {
 
 // GetContext returns the Context field value if set, zero value otherwise.
 func (o *WorkflowExecution) GetContext() string {
-	if o == nil || o.Context == nil {
+	if o == nil || IsNil(o.Context) {
 		var ret string
 		return ret
 	}
@@ -391,7 +394,7 @@ func (o *WorkflowExecution) GetContext() string {
 // GetContextOk returns a tuple with the Context field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecution) GetContextOk() (*string, bool) {
-	if o == nil || o.Context == nil {
+	if o == nil || IsNil(o.Context) {
 		return nil, false
 	}
 	return o.Context, true
@@ -399,7 +402,7 @@ func (o *WorkflowExecution) GetContextOk() (*string, bool) {
 
 // HasContext returns a boolean if a field has been set.
 func (o *WorkflowExecution) HasContext() bool {
-	if o != nil && o.Context != nil {
+	if o != nil && !IsNil(o.Context) {
 		return true
 	}
 
@@ -413,7 +416,7 @@ func (o *WorkflowExecution) SetContext(v string) {
 
 // GetSteps returns the Steps field value if set, zero value otherwise.
 func (o *WorkflowExecution) GetSteps() []WorkflowExecutionStep {
-	if o == nil || o.Steps == nil {
+	if o == nil || IsNil(o.Steps) {
 		var ret []WorkflowExecutionStep
 		return ret
 	}
@@ -423,7 +426,7 @@ func (o *WorkflowExecution) GetSteps() []WorkflowExecutionStep {
 // GetStepsOk returns a tuple with the Steps field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecution) GetStepsOk() ([]WorkflowExecutionStep, bool) {
-	if o == nil || o.Steps == nil {
+	if o == nil || IsNil(o.Steps) {
 		return nil, false
 	}
 	return o.Steps, true
@@ -431,7 +434,7 @@ func (o *WorkflowExecution) GetStepsOk() ([]WorkflowExecutionStep, bool) {
 
 // HasSteps returns a boolean if a field has been set.
 func (o *WorkflowExecution) HasSteps() bool {
-	if o != nil && o.Steps != nil {
+	if o != nil && !IsNil(o.Steps) {
 		return true
 	}
 
@@ -445,7 +448,7 @@ func (o *WorkflowExecution) SetSteps(v []WorkflowExecutionStep) {
 
 // GetStepHistory returns the StepHistory field value if set, zero value otherwise.
 func (o *WorkflowExecution) GetStepHistory() []WorkflowExecutionStepResult {
-	if o == nil || o.StepHistory == nil {
+	if o == nil || IsNil(o.StepHistory) {
 		var ret []WorkflowExecutionStepResult
 		return ret
 	}
@@ -455,7 +458,7 @@ func (o *WorkflowExecution) GetStepHistory() []WorkflowExecutionStepResult {
 // GetStepHistoryOk returns a tuple with the StepHistory field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecution) GetStepHistoryOk() ([]WorkflowExecutionStepResult, bool) {
-	if o == nil || o.StepHistory == nil {
+	if o == nil || IsNil(o.StepHistory) {
 		return nil, false
 	}
 	return o.StepHistory, true
@@ -463,7 +466,7 @@ func (o *WorkflowExecution) GetStepHistoryOk() ([]WorkflowExecutionStepResult, b
 
 // HasStepHistory returns a boolean if a field has been set.
 func (o *WorkflowExecution) HasStepHistory() bool {
-	if o != nil && o.StepHistory != nil {
+	if o != nil && !IsNil(o.StepHistory) {
 		return true
 	}
 
@@ -476,47 +479,55 @@ func (o *WorkflowExecution) SetStepHistory(v []WorkflowExecutionStepResult) {
 }
 
 func (o WorkflowExecution) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.CreatedAt != nil {
-		toSerialize["created_at"] = o.CreatedAt
-	}
-	if o.UpdatedAt != nil {
-		toSerialize["updated_at"] = o.UpdatedAt
-	}
-	if o.DefinitionRef != nil {
-		toSerialize["definition_ref"] = o.DefinitionRef
-	}
-	if o.ParentRef != nil {
-		toSerialize["parent_ref"] = o.ParentRef
-	}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.Status != nil {
-		toSerialize["status"] = o.Status
-	}
-	if o.Archived != nil {
-		toSerialize["archived"] = o.Archived
-	}
-	if o.CurrentStep != nil {
-		toSerialize["current_step"] = o.CurrentStep
-	}
-	if o.CurrentStepName != nil {
-		toSerialize["current_step_name"] = o.CurrentStepName
-	}
-	if o.Context != nil {
-		toSerialize["context"] = o.Context
-	}
-	if o.Steps != nil {
-		toSerialize["steps"] = o.Steps
-	}
-	if o.StepHistory != nil {
-		toSerialize["step_history"] = o.StepHistory
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o WorkflowExecution) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.CreatedAt) {
+		toSerialize["created_at"] = o.CreatedAt
+	}
+	if !IsNil(o.UpdatedAt) {
+		toSerialize["updated_at"] = o.UpdatedAt
+	}
+	if !IsNil(o.DefinitionRef) {
+		toSerialize["definition_ref"] = o.DefinitionRef
+	}
+	if !IsNil(o.ParentRef) {
+		toSerialize["parent_ref"] = o.ParentRef
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.Archived) {
+		toSerialize["archived"] = o.Archived
+	}
+	if !IsNil(o.CurrentStep) {
+		toSerialize["current_step"] = o.CurrentStep
+	}
+	if !IsNil(o.CurrentStepName) {
+		toSerialize["current_step_name"] = o.CurrentStepName
+	}
+	if !IsNil(o.Context) {
+		toSerialize["context"] = o.Context
+	}
+	if !IsNil(o.Steps) {
+		toSerialize["steps"] = o.Steps
+	}
+	if !IsNil(o.StepHistory) {
+		toSerialize["step_history"] = o.StepHistory
+	}
+	return toSerialize, nil
 }
 
 type NullableWorkflowExecution struct {

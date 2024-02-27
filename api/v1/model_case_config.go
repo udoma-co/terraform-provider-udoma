@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CaseConfig type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CaseConfig{}
+
 // CaseConfig Defines custom behaviour of a case, based on the case template that was  used to create it.
 type CaseConfig struct {
 	BaseConfig *BaseCaseConfig `json:"base_config,omitempty"`
@@ -46,7 +49,7 @@ func NewCaseConfigWithDefaults() *CaseConfig {
 
 // GetBaseConfig returns the BaseConfig field value if set, zero value otherwise.
 func (o *CaseConfig) GetBaseConfig() BaseCaseConfig {
-	if o == nil || o.BaseConfig == nil {
+	if o == nil || IsNil(o.BaseConfig) {
 		var ret BaseCaseConfig
 		return ret
 	}
@@ -56,7 +59,7 @@ func (o *CaseConfig) GetBaseConfig() BaseCaseConfig {
 // GetBaseConfigOk returns a tuple with the BaseConfig field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseConfig) GetBaseConfigOk() (*BaseCaseConfig, bool) {
-	if o == nil || o.BaseConfig == nil {
+	if o == nil || IsNil(o.BaseConfig) {
 		return nil, false
 	}
 	return o.BaseConfig, true
@@ -64,7 +67,7 @@ func (o *CaseConfig) GetBaseConfigOk() (*BaseCaseConfig, bool) {
 
 // HasBaseConfig returns a boolean if a field has been set.
 func (o *CaseConfig) HasBaseConfig() bool {
-	if o != nil && o.BaseConfig != nil {
+	if o != nil && !IsNil(o.BaseConfig) {
 		return true
 	}
 
@@ -78,7 +81,7 @@ func (o *CaseConfig) SetBaseConfig(v BaseCaseConfig) {
 
 // GetExtendDefaultStatusConfig returns the ExtendDefaultStatusConfig field value if set, zero value otherwise.
 func (o *CaseConfig) GetExtendDefaultStatusConfig() bool {
-	if o == nil || o.ExtendDefaultStatusConfig == nil {
+	if o == nil || IsNil(o.ExtendDefaultStatusConfig) {
 		var ret bool
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *CaseConfig) GetExtendDefaultStatusConfig() bool {
 // GetExtendDefaultStatusConfigOk returns a tuple with the ExtendDefaultStatusConfig field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseConfig) GetExtendDefaultStatusConfigOk() (*bool, bool) {
-	if o == nil || o.ExtendDefaultStatusConfig == nil {
+	if o == nil || IsNil(o.ExtendDefaultStatusConfig) {
 		return nil, false
 	}
 	return o.ExtendDefaultStatusConfig, true
@@ -96,7 +99,7 @@ func (o *CaseConfig) GetExtendDefaultStatusConfigOk() (*bool, bool) {
 
 // HasExtendDefaultStatusConfig returns a boolean if a field has been set.
 func (o *CaseConfig) HasExtendDefaultStatusConfig() bool {
-	if o != nil && o.ExtendDefaultStatusConfig != nil {
+	if o != nil && !IsNil(o.ExtendDefaultStatusConfig) {
 		return true
 	}
 
@@ -110,7 +113,7 @@ func (o *CaseConfig) SetExtendDefaultStatusConfig(v bool) {
 
 // GetStatusConfig returns the StatusConfig field value if set, zero value otherwise.
 func (o *CaseConfig) GetStatusConfig() []CaseStatusConfig {
-	if o == nil || o.StatusConfig == nil {
+	if o == nil || IsNil(o.StatusConfig) {
 		var ret []CaseStatusConfig
 		return ret
 	}
@@ -120,7 +123,7 @@ func (o *CaseConfig) GetStatusConfig() []CaseStatusConfig {
 // GetStatusConfigOk returns a tuple with the StatusConfig field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseConfig) GetStatusConfigOk() ([]CaseStatusConfig, bool) {
-	if o == nil || o.StatusConfig == nil {
+	if o == nil || IsNil(o.StatusConfig) {
 		return nil, false
 	}
 	return o.StatusConfig, true
@@ -128,7 +131,7 @@ func (o *CaseConfig) GetStatusConfigOk() ([]CaseStatusConfig, bool) {
 
 // HasStatusConfig returns a boolean if a field has been set.
 func (o *CaseConfig) HasStatusConfig() bool {
-	if o != nil && o.StatusConfig != nil {
+	if o != nil && !IsNil(o.StatusConfig) {
 		return true
 	}
 
@@ -142,7 +145,7 @@ func (o *CaseConfig) SetStatusConfig(v []CaseStatusConfig) {
 
 // GetReminders returns the Reminders field value if set, zero value otherwise.
 func (o *CaseConfig) GetReminders() []CaseReminderConfig {
-	if o == nil || o.Reminders == nil {
+	if o == nil || IsNil(o.Reminders) {
 		var ret []CaseReminderConfig
 		return ret
 	}
@@ -152,7 +155,7 @@ func (o *CaseConfig) GetReminders() []CaseReminderConfig {
 // GetRemindersOk returns a tuple with the Reminders field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseConfig) GetRemindersOk() ([]CaseReminderConfig, bool) {
-	if o == nil || o.Reminders == nil {
+	if o == nil || IsNil(o.Reminders) {
 		return nil, false
 	}
 	return o.Reminders, true
@@ -160,7 +163,7 @@ func (o *CaseConfig) GetRemindersOk() ([]CaseReminderConfig, bool) {
 
 // HasReminders returns a boolean if a field has been set.
 func (o *CaseConfig) HasReminders() bool {
-	if o != nil && o.Reminders != nil {
+	if o != nil && !IsNil(o.Reminders) {
 		return true
 	}
 
@@ -174,7 +177,7 @@ func (o *CaseConfig) SetReminders(v []CaseReminderConfig) {
 
 // GetAutomaticActions returns the AutomaticActions field value if set, zero value otherwise.
 func (o *CaseConfig) GetAutomaticActions() []CaseAutomaticActionConfig {
-	if o == nil || o.AutomaticActions == nil {
+	if o == nil || IsNil(o.AutomaticActions) {
 		var ret []CaseAutomaticActionConfig
 		return ret
 	}
@@ -184,7 +187,7 @@ func (o *CaseConfig) GetAutomaticActions() []CaseAutomaticActionConfig {
 // GetAutomaticActionsOk returns a tuple with the AutomaticActions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseConfig) GetAutomaticActionsOk() ([]CaseAutomaticActionConfig, bool) {
-	if o == nil || o.AutomaticActions == nil {
+	if o == nil || IsNil(o.AutomaticActions) {
 		return nil, false
 	}
 	return o.AutomaticActions, true
@@ -192,7 +195,7 @@ func (o *CaseConfig) GetAutomaticActionsOk() ([]CaseAutomaticActionConfig, bool)
 
 // HasAutomaticActions returns a boolean if a field has been set.
 func (o *CaseConfig) HasAutomaticActions() bool {
-	if o != nil && o.AutomaticActions != nil {
+	if o != nil && !IsNil(o.AutomaticActions) {
 		return true
 	}
 
@@ -205,23 +208,31 @@ func (o *CaseConfig) SetAutomaticActions(v []CaseAutomaticActionConfig) {
 }
 
 func (o CaseConfig) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.BaseConfig != nil {
-		toSerialize["base_config"] = o.BaseConfig
-	}
-	if o.ExtendDefaultStatusConfig != nil {
-		toSerialize["extend_default_status_config"] = o.ExtendDefaultStatusConfig
-	}
-	if o.StatusConfig != nil {
-		toSerialize["status_config"] = o.StatusConfig
-	}
-	if o.Reminders != nil {
-		toSerialize["reminders"] = o.Reminders
-	}
-	if o.AutomaticActions != nil {
-		toSerialize["automatic_actions"] = o.AutomaticActions
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CaseConfig) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.BaseConfig) {
+		toSerialize["base_config"] = o.BaseConfig
+	}
+	if !IsNil(o.ExtendDefaultStatusConfig) {
+		toSerialize["extend_default_status_config"] = o.ExtendDefaultStatusConfig
+	}
+	if !IsNil(o.StatusConfig) {
+		toSerialize["status_config"] = o.StatusConfig
+	}
+	if !IsNil(o.Reminders) {
+		toSerialize["reminders"] = o.Reminders
+	}
+	if !IsNil(o.AutomaticActions) {
+		toSerialize["automatic_actions"] = o.AutomaticActions
+	}
+	return toSerialize, nil
 }
 
 type NullableCaseConfig struct {

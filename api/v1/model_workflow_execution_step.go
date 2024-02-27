@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the WorkflowExecutionStep type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &WorkflowExecutionStep{}
+
 // WorkflowExecutionStep a single step within a workflow execution. This is derived from the step definition, however, dynamic data is computed and populated by the backend, before the result is  being sent to the client.
 type WorkflowExecutionStep struct {
 	// the ID of the step, unique within the workflow
@@ -54,7 +57,7 @@ func NewWorkflowExecutionStepWithDefaults() *WorkflowExecutionStep {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *WorkflowExecutionStep) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -64,7 +67,7 @@ func (o *WorkflowExecutionStep) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecutionStep) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -72,7 +75,7 @@ func (o *WorkflowExecutionStep) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *WorkflowExecutionStep) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -86,7 +89,7 @@ func (o *WorkflowExecutionStep) SetId(v string) {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *WorkflowExecutionStep) GetType() string {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret string
 		return ret
 	}
@@ -96,7 +99,7 @@ func (o *WorkflowExecutionStep) GetType() string {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecutionStep) GetTypeOk() (*string, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -104,7 +107,7 @@ func (o *WorkflowExecutionStep) GetTypeOk() (*string, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *WorkflowExecutionStep) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -118,7 +121,7 @@ func (o *WorkflowExecutionStep) SetType(v string) {
 
 // GetIcon returns the Icon field value if set, zero value otherwise.
 func (o *WorkflowExecutionStep) GetIcon() string {
-	if o == nil || o.Icon == nil {
+	if o == nil || IsNil(o.Icon) {
 		var ret string
 		return ret
 	}
@@ -128,7 +131,7 @@ func (o *WorkflowExecutionStep) GetIcon() string {
 // GetIconOk returns a tuple with the Icon field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecutionStep) GetIconOk() (*string, bool) {
-	if o == nil || o.Icon == nil {
+	if o == nil || IsNil(o.Icon) {
 		return nil, false
 	}
 	return o.Icon, true
@@ -136,7 +139,7 @@ func (o *WorkflowExecutionStep) GetIconOk() (*string, bool) {
 
 // HasIcon returns a boolean if a field has been set.
 func (o *WorkflowExecutionStep) HasIcon() bool {
-	if o != nil && o.Icon != nil {
+	if o != nil && !IsNil(o.Icon) {
 		return true
 	}
 
@@ -150,7 +153,7 @@ func (o *WorkflowExecutionStep) SetIcon(v string) {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *WorkflowExecutionStep) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -160,7 +163,7 @@ func (o *WorkflowExecutionStep) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecutionStep) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -168,7 +171,7 @@ func (o *WorkflowExecutionStep) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *WorkflowExecutionStep) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -182,7 +185,7 @@ func (o *WorkflowExecutionStep) SetName(v string) {
 
 // GetParameters returns the Parameters field value if set, zero value otherwise.
 func (o *WorkflowExecutionStep) GetParameters() map[string]interface{} {
-	if o == nil || o.Parameters == nil {
+	if o == nil || IsNil(o.Parameters) {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -192,15 +195,15 @@ func (o *WorkflowExecutionStep) GetParameters() map[string]interface{} {
 // GetParametersOk returns a tuple with the Parameters field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecutionStep) GetParametersOk() (map[string]interface{}, bool) {
-	if o == nil || o.Parameters == nil {
-		return nil, false
+	if o == nil || IsNil(o.Parameters) {
+		return map[string]interface{}{}, false
 	}
 	return o.Parameters, true
 }
 
 // HasParameters returns a boolean if a field has been set.
 func (o *WorkflowExecutionStep) HasParameters() bool {
-	if o != nil && o.Parameters != nil {
+	if o != nil && !IsNil(o.Parameters) {
 		return true
 	}
 
@@ -214,7 +217,7 @@ func (o *WorkflowExecutionStep) SetParameters(v map[string]interface{}) {
 
 // GetGroupName returns the GroupName field value if set, zero value otherwise.
 func (o *WorkflowExecutionStep) GetGroupName() string {
-	if o == nil || o.GroupName == nil {
+	if o == nil || IsNil(o.GroupName) {
 		var ret string
 		return ret
 	}
@@ -224,7 +227,7 @@ func (o *WorkflowExecutionStep) GetGroupName() string {
 // GetGroupNameOk returns a tuple with the GroupName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecutionStep) GetGroupNameOk() (*string, bool) {
-	if o == nil || o.GroupName == nil {
+	if o == nil || IsNil(o.GroupName) {
 		return nil, false
 	}
 	return o.GroupName, true
@@ -232,7 +235,7 @@ func (o *WorkflowExecutionStep) GetGroupNameOk() (*string, bool) {
 
 // HasGroupName returns a boolean if a field has been set.
 func (o *WorkflowExecutionStep) HasGroupName() bool {
-	if o != nil && o.GroupName != nil {
+	if o != nil && !IsNil(o.GroupName) {
 		return true
 	}
 
@@ -246,7 +249,7 @@ func (o *WorkflowExecutionStep) SetGroupName(v string) {
 
 // GetActions returns the Actions field value if set, zero value otherwise.
 func (o *WorkflowExecutionStep) GetActions() []WorkflowStepAction {
-	if o == nil || o.Actions == nil {
+	if o == nil || IsNil(o.Actions) {
 		var ret []WorkflowStepAction
 		return ret
 	}
@@ -256,7 +259,7 @@ func (o *WorkflowExecutionStep) GetActions() []WorkflowStepAction {
 // GetActionsOk returns a tuple with the Actions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecutionStep) GetActionsOk() ([]WorkflowStepAction, bool) {
-	if o == nil || o.Actions == nil {
+	if o == nil || IsNil(o.Actions) {
 		return nil, false
 	}
 	return o.Actions, true
@@ -264,7 +267,7 @@ func (o *WorkflowExecutionStep) GetActionsOk() ([]WorkflowStepAction, bool) {
 
 // HasActions returns a boolean if a field has been set.
 func (o *WorkflowExecutionStep) HasActions() bool {
-	if o != nil && o.Actions != nil {
+	if o != nil && !IsNil(o.Actions) {
 		return true
 	}
 
@@ -278,7 +281,7 @@ func (o *WorkflowExecutionStep) SetActions(v []WorkflowStepAction) {
 
 // GetIsCompleted returns the IsCompleted field value if set, zero value otherwise.
 func (o *WorkflowExecutionStep) GetIsCompleted() bool {
-	if o == nil || o.IsCompleted == nil {
+	if o == nil || IsNil(o.IsCompleted) {
 		var ret bool
 		return ret
 	}
@@ -288,7 +291,7 @@ func (o *WorkflowExecutionStep) GetIsCompleted() bool {
 // GetIsCompletedOk returns a tuple with the IsCompleted field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecutionStep) GetIsCompletedOk() (*bool, bool) {
-	if o == nil || o.IsCompleted == nil {
+	if o == nil || IsNil(o.IsCompleted) {
 		return nil, false
 	}
 	return o.IsCompleted, true
@@ -296,7 +299,7 @@ func (o *WorkflowExecutionStep) GetIsCompletedOk() (*bool, bool) {
 
 // HasIsCompleted returns a boolean if a field has been set.
 func (o *WorkflowExecutionStep) HasIsCompleted() bool {
-	if o != nil && o.IsCompleted != nil {
+	if o != nil && !IsNil(o.IsCompleted) {
 		return true
 	}
 
@@ -310,7 +313,7 @@ func (o *WorkflowExecutionStep) SetIsCompleted(v bool) {
 
 // GetCanBeExecuted returns the CanBeExecuted field value if set, zero value otherwise.
 func (o *WorkflowExecutionStep) GetCanBeExecuted() bool {
-	if o == nil || o.CanBeExecuted == nil {
+	if o == nil || IsNil(o.CanBeExecuted) {
 		var ret bool
 		return ret
 	}
@@ -320,7 +323,7 @@ func (o *WorkflowExecutionStep) GetCanBeExecuted() bool {
 // GetCanBeExecutedOk returns a tuple with the CanBeExecuted field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecutionStep) GetCanBeExecutedOk() (*bool, bool) {
-	if o == nil || o.CanBeExecuted == nil {
+	if o == nil || IsNil(o.CanBeExecuted) {
 		return nil, false
 	}
 	return o.CanBeExecuted, true
@@ -328,7 +331,7 @@ func (o *WorkflowExecutionStep) GetCanBeExecutedOk() (*bool, bool) {
 
 // HasCanBeExecuted returns a boolean if a field has been set.
 func (o *WorkflowExecutionStep) HasCanBeExecuted() bool {
-	if o != nil && o.CanBeExecuted != nil {
+	if o != nil && !IsNil(o.CanBeExecuted) {
 		return true
 	}
 
@@ -341,35 +344,43 @@ func (o *WorkflowExecutionStep) SetCanBeExecuted(v bool) {
 }
 
 func (o WorkflowExecutionStep) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if o.Icon != nil {
-		toSerialize["icon"] = o.Icon
-	}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.Parameters != nil {
-		toSerialize["parameters"] = o.Parameters
-	}
-	if o.GroupName != nil {
-		toSerialize["group_name"] = o.GroupName
-	}
-	if o.Actions != nil {
-		toSerialize["actions"] = o.Actions
-	}
-	if o.IsCompleted != nil {
-		toSerialize["is_completed"] = o.IsCompleted
-	}
-	if o.CanBeExecuted != nil {
-		toSerialize["can_be_executed"] = o.CanBeExecuted
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o WorkflowExecutionStep) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.Icon) {
+		toSerialize["icon"] = o.Icon
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Parameters) {
+		toSerialize["parameters"] = o.Parameters
+	}
+	if !IsNil(o.GroupName) {
+		toSerialize["group_name"] = o.GroupName
+	}
+	if !IsNil(o.Actions) {
+		toSerialize["actions"] = o.Actions
+	}
+	if !IsNil(o.IsCompleted) {
+		toSerialize["is_completed"] = o.IsCompleted
+	}
+	if !IsNil(o.CanBeExecuted) {
+		toSerialize["can_be_executed"] = o.CanBeExecuted
+	}
+	return toSerialize, nil
 }
 
 type NullableWorkflowExecutionStep struct {

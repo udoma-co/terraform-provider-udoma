@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the WorkflowExecutionStepResult type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &WorkflowExecutionStepResult{}
+
 // WorkflowExecutionStepResult this holds the result of the execution of a single workflow step
 type WorkflowExecutionStepResult struct {
 	StepRef *string `json:"step_ref,omitempty"`
@@ -44,7 +47,7 @@ func NewWorkflowExecutionStepResultWithDefaults() *WorkflowExecutionStepResult {
 
 // GetStepRef returns the StepRef field value if set, zero value otherwise.
 func (o *WorkflowExecutionStepResult) GetStepRef() string {
-	if o == nil || o.StepRef == nil {
+	if o == nil || IsNil(o.StepRef) {
 		var ret string
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *WorkflowExecutionStepResult) GetStepRef() string {
 // GetStepRefOk returns a tuple with the StepRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecutionStepResult) GetStepRefOk() (*string, bool) {
-	if o == nil || o.StepRef == nil {
+	if o == nil || IsNil(o.StepRef) {
 		return nil, false
 	}
 	return o.StepRef, true
@@ -62,7 +65,7 @@ func (o *WorkflowExecutionStepResult) GetStepRefOk() (*string, bool) {
 
 // HasStepRef returns a boolean if a field has been set.
 func (o *WorkflowExecutionStepResult) HasStepRef() bool {
-	if o != nil && o.StepRef != nil {
+	if o != nil && !IsNil(o.StepRef) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *WorkflowExecutionStepResult) SetStepRef(v string) {
 
 // GetAction returns the Action field value if set, zero value otherwise.
 func (o *WorkflowExecutionStepResult) GetAction() string {
-	if o == nil || o.Action == nil {
+	if o == nil || IsNil(o.Action) {
 		var ret string
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *WorkflowExecutionStepResult) GetAction() string {
 // GetActionOk returns a tuple with the Action field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecutionStepResult) GetActionOk() (*string, bool) {
-	if o == nil || o.Action == nil {
+	if o == nil || IsNil(o.Action) {
 		return nil, false
 	}
 	return o.Action, true
@@ -94,7 +97,7 @@ func (o *WorkflowExecutionStepResult) GetActionOk() (*string, bool) {
 
 // HasAction returns a boolean if a field has been set.
 func (o *WorkflowExecutionStepResult) HasAction() bool {
-	if o != nil && o.Action != nil {
+	if o != nil && !IsNil(o.Action) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *WorkflowExecutionStepResult) SetAction(v string) {
 
 // GetExecutedAt returns the ExecutedAt field value if set, zero value otherwise.
 func (o *WorkflowExecutionStepResult) GetExecutedAt() int64 {
-	if o == nil || o.ExecutedAt == nil {
+	if o == nil || IsNil(o.ExecutedAt) {
 		var ret int64
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *WorkflowExecutionStepResult) GetExecutedAt() int64 {
 // GetExecutedAtOk returns a tuple with the ExecutedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecutionStepResult) GetExecutedAtOk() (*int64, bool) {
-	if o == nil || o.ExecutedAt == nil {
+	if o == nil || IsNil(o.ExecutedAt) {
 		return nil, false
 	}
 	return o.ExecutedAt, true
@@ -126,7 +129,7 @@ func (o *WorkflowExecutionStepResult) GetExecutedAtOk() (*int64, bool) {
 
 // HasExecutedAt returns a boolean if a field has been set.
 func (o *WorkflowExecutionStepResult) HasExecutedAt() bool {
-	if o != nil && o.ExecutedAt != nil {
+	if o != nil && !IsNil(o.ExecutedAt) {
 		return true
 	}
 
@@ -140,7 +143,7 @@ func (o *WorkflowExecutionStepResult) SetExecutedAt(v int64) {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *WorkflowExecutionStepResult) GetData() string {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret string
 		return ret
 	}
@@ -150,7 +153,7 @@ func (o *WorkflowExecutionStepResult) GetData() string {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecutionStepResult) GetDataOk() (*string, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -158,7 +161,7 @@ func (o *WorkflowExecutionStepResult) GetDataOk() (*string, bool) {
 
 // HasData returns a boolean if a field has been set.
 func (o *WorkflowExecutionStepResult) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -171,20 +174,28 @@ func (o *WorkflowExecutionStepResult) SetData(v string) {
 }
 
 func (o WorkflowExecutionStepResult) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.StepRef != nil {
-		toSerialize["step_ref"] = o.StepRef
-	}
-	if o.Action != nil {
-		toSerialize["action"] = o.Action
-	}
-	if o.ExecutedAt != nil {
-		toSerialize["executed_at"] = o.ExecutedAt
-	}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o WorkflowExecutionStepResult) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.StepRef) {
+		toSerialize["step_ref"] = o.StepRef
+	}
+	if !IsNil(o.Action) {
+		toSerialize["action"] = o.Action
+	}
+	if !IsNil(o.ExecutedAt) {
+		toSerialize["executed_at"] = o.ExecutedAt
+	}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	return toSerialize, nil
 }
 
 type NullableWorkflowExecutionStepResult struct {

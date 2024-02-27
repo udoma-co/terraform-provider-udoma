@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the PropertyContact type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &PropertyContact{}
+
 // PropertyContact A contact that is linked to a property. Can either be made  available to tenants, or just used as internal reference.
 type PropertyContact struct {
 	// unique ID of this contact
@@ -46,7 +49,7 @@ func NewPropertyContactWithDefaults() *PropertyContact {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *PropertyContact) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -56,7 +59,7 @@ func (o *PropertyContact) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PropertyContact) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -64,7 +67,7 @@ func (o *PropertyContact) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *PropertyContact) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -78,7 +81,7 @@ func (o *PropertyContact) SetId(v string) {
 
 // GetLabel returns the Label field value if set, zero value otherwise.
 func (o *PropertyContact) GetLabel() string {
-	if o == nil || o.Label == nil {
+	if o == nil || IsNil(o.Label) {
 		var ret string
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *PropertyContact) GetLabel() string {
 // GetLabelOk returns a tuple with the Label field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PropertyContact) GetLabelOk() (*string, bool) {
-	if o == nil || o.Label == nil {
+	if o == nil || IsNil(o.Label) {
 		return nil, false
 	}
 	return o.Label, true
@@ -96,7 +99,7 @@ func (o *PropertyContact) GetLabelOk() (*string, bool) {
 
 // HasLabel returns a boolean if a field has been set.
 func (o *PropertyContact) HasLabel() bool {
-	if o != nil && o.Label != nil {
+	if o != nil && !IsNil(o.Label) {
 		return true
 	}
 
@@ -110,7 +113,7 @@ func (o *PropertyContact) SetLabel(v string) {
 
 // GetPublic returns the Public field value if set, zero value otherwise.
 func (o *PropertyContact) GetPublic() bool {
-	if o == nil || o.Public == nil {
+	if o == nil || IsNil(o.Public) {
 		var ret bool
 		return ret
 	}
@@ -120,7 +123,7 @@ func (o *PropertyContact) GetPublic() bool {
 // GetPublicOk returns a tuple with the Public field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PropertyContact) GetPublicOk() (*bool, bool) {
-	if o == nil || o.Public == nil {
+	if o == nil || IsNil(o.Public) {
 		return nil, false
 	}
 	return o.Public, true
@@ -128,7 +131,7 @@ func (o *PropertyContact) GetPublicOk() (*bool, bool) {
 
 // HasPublic returns a boolean if a field has been set.
 func (o *PropertyContact) HasPublic() bool {
-	if o != nil && o.Public != nil {
+	if o != nil && !IsNil(o.Public) {
 		return true
 	}
 
@@ -142,7 +145,7 @@ func (o *PropertyContact) SetPublic(v bool) {
 
 // GetContact returns the Contact field value if set, zero value otherwise.
 func (o *PropertyContact) GetContact() ServiceProvider {
-	if o == nil || o.Contact == nil {
+	if o == nil || IsNil(o.Contact) {
 		var ret ServiceProvider
 		return ret
 	}
@@ -152,7 +155,7 @@ func (o *PropertyContact) GetContact() ServiceProvider {
 // GetContactOk returns a tuple with the Contact field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PropertyContact) GetContactOk() (*ServiceProvider, bool) {
-	if o == nil || o.Contact == nil {
+	if o == nil || IsNil(o.Contact) {
 		return nil, false
 	}
 	return o.Contact, true
@@ -160,7 +163,7 @@ func (o *PropertyContact) GetContactOk() (*ServiceProvider, bool) {
 
 // HasContact returns a boolean if a field has been set.
 func (o *PropertyContact) HasContact() bool {
-	if o != nil && o.Contact != nil {
+	if o != nil && !IsNil(o.Contact) {
 		return true
 	}
 
@@ -174,7 +177,7 @@ func (o *PropertyContact) SetContact(v ServiceProvider) {
 
 // GetPropertyRef returns the PropertyRef field value if set, zero value otherwise.
 func (o *PropertyContact) GetPropertyRef() string {
-	if o == nil || o.PropertyRef == nil {
+	if o == nil || IsNil(o.PropertyRef) {
 		var ret string
 		return ret
 	}
@@ -184,7 +187,7 @@ func (o *PropertyContact) GetPropertyRef() string {
 // GetPropertyRefOk returns a tuple with the PropertyRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PropertyContact) GetPropertyRefOk() (*string, bool) {
-	if o == nil || o.PropertyRef == nil {
+	if o == nil || IsNil(o.PropertyRef) {
 		return nil, false
 	}
 	return o.PropertyRef, true
@@ -192,7 +195,7 @@ func (o *PropertyContact) GetPropertyRefOk() (*string, bool) {
 
 // HasPropertyRef returns a boolean if a field has been set.
 func (o *PropertyContact) HasPropertyRef() bool {
-	if o != nil && o.PropertyRef != nil {
+	if o != nil && !IsNil(o.PropertyRef) {
 		return true
 	}
 
@@ -205,23 +208,31 @@ func (o *PropertyContact) SetPropertyRef(v string) {
 }
 
 func (o PropertyContact) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Label != nil {
-		toSerialize["label"] = o.Label
-	}
-	if o.Public != nil {
-		toSerialize["public"] = o.Public
-	}
-	if o.Contact != nil {
-		toSerialize["contact"] = o.Contact
-	}
-	if o.PropertyRef != nil {
-		toSerialize["property_ref"] = o.PropertyRef
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o PropertyContact) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Label) {
+		toSerialize["label"] = o.Label
+	}
+	if !IsNil(o.Public) {
+		toSerialize["public"] = o.Public
+	}
+	if !IsNil(o.Contact) {
+		toSerialize["contact"] = o.Contact
+	}
+	if !IsNil(o.PropertyRef) {
+		toSerialize["property_ref"] = o.PropertyRef
+	}
+	return toSerialize, nil
 }
 
 type NullablePropertyContact struct {

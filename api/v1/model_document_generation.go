@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the DocumentGeneration type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DocumentGeneration{}
+
 // DocumentGeneration The status and content of a document generation
 type DocumentGeneration struct {
 	// The unique ID of the document generation
@@ -59,7 +62,7 @@ func NewDocumentGenerationWithDefaults() *DocumentGeneration {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *DocumentGeneration) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -69,7 +72,7 @@ func (o *DocumentGeneration) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentGeneration) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -77,7 +80,7 @@ func (o *DocumentGeneration) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *DocumentGeneration) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -91,7 +94,7 @@ func (o *DocumentGeneration) SetId(v string) {
 
 // GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
 func (o *DocumentGeneration) GetCreatedAt() int64 {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		var ret int64
 		return ret
 	}
@@ -101,7 +104,7 @@ func (o *DocumentGeneration) GetCreatedAt() int64 {
 // GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentGeneration) GetCreatedAtOk() (*int64, bool) {
-	if o == nil || o.CreatedAt == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
 	return o.CreatedAt, true
@@ -109,7 +112,7 @@ func (o *DocumentGeneration) GetCreatedAtOk() (*int64, bool) {
 
 // HasCreatedAt returns a boolean if a field has been set.
 func (o *DocumentGeneration) HasCreatedAt() bool {
-	if o != nil && o.CreatedAt != nil {
+	if o != nil && !IsNil(o.CreatedAt) {
 		return true
 	}
 
@@ -123,7 +126,7 @@ func (o *DocumentGeneration) SetCreatedAt(v int64) {
 
 // GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
 func (o *DocumentGeneration) GetUpdatedAt() int64 {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		var ret int64
 		return ret
 	}
@@ -133,7 +136,7 @@ func (o *DocumentGeneration) GetUpdatedAt() int64 {
 // GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentGeneration) GetUpdatedAtOk() (*int64, bool) {
-	if o == nil || o.UpdatedAt == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
 	return o.UpdatedAt, true
@@ -141,7 +144,7 @@ func (o *DocumentGeneration) GetUpdatedAtOk() (*int64, bool) {
 
 // HasUpdatedAt returns a boolean if a field has been set.
 func (o *DocumentGeneration) HasUpdatedAt() bool {
-	if o != nil && o.UpdatedAt != nil {
+	if o != nil && !IsNil(o.UpdatedAt) {
 		return true
 	}
 
@@ -155,7 +158,7 @@ func (o *DocumentGeneration) SetUpdatedAt(v int64) {
 
 // GetArchived returns the Archived field value if set, zero value otherwise.
 func (o *DocumentGeneration) GetArchived() bool {
-	if o == nil || o.Archived == nil {
+	if o == nil || IsNil(o.Archived) {
 		var ret bool
 		return ret
 	}
@@ -165,7 +168,7 @@ func (o *DocumentGeneration) GetArchived() bool {
 // GetArchivedOk returns a tuple with the Archived field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentGeneration) GetArchivedOk() (*bool, bool) {
-	if o == nil || o.Archived == nil {
+	if o == nil || IsNil(o.Archived) {
 		return nil, false
 	}
 	return o.Archived, true
@@ -173,7 +176,7 @@ func (o *DocumentGeneration) GetArchivedOk() (*bool, bool) {
 
 // HasArchived returns a boolean if a field has been set.
 func (o *DocumentGeneration) HasArchived() bool {
-	if o != nil && o.Archived != nil {
+	if o != nil && !IsNil(o.Archived) {
 		return true
 	}
 
@@ -187,7 +190,7 @@ func (o *DocumentGeneration) SetArchived(v bool) {
 
 // GetTemplate returns the Template field value if set, zero value otherwise.
 func (o *DocumentGeneration) GetTemplate() string {
-	if o == nil || o.Template == nil {
+	if o == nil || IsNil(o.Template) {
 		var ret string
 		return ret
 	}
@@ -197,7 +200,7 @@ func (o *DocumentGeneration) GetTemplate() string {
 // GetTemplateOk returns a tuple with the Template field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentGeneration) GetTemplateOk() (*string, bool) {
-	if o == nil || o.Template == nil {
+	if o == nil || IsNil(o.Template) {
 		return nil, false
 	}
 	return o.Template, true
@@ -205,7 +208,7 @@ func (o *DocumentGeneration) GetTemplateOk() (*string, bool) {
 
 // HasTemplate returns a boolean if a field has been set.
 func (o *DocumentGeneration) HasTemplate() bool {
-	if o != nil && o.Template != nil {
+	if o != nil && !IsNil(o.Template) {
 		return true
 	}
 
@@ -219,7 +222,7 @@ func (o *DocumentGeneration) SetTemplate(v string) {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *DocumentGeneration) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -229,7 +232,7 @@ func (o *DocumentGeneration) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentGeneration) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -237,7 +240,7 @@ func (o *DocumentGeneration) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *DocumentGeneration) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -251,7 +254,7 @@ func (o *DocumentGeneration) SetName(v string) {
 
 // GetInputData returns the InputData field value if set, zero value otherwise.
 func (o *DocumentGeneration) GetInputData() string {
-	if o == nil || o.InputData == nil {
+	if o == nil || IsNil(o.InputData) {
 		var ret string
 		return ret
 	}
@@ -261,7 +264,7 @@ func (o *DocumentGeneration) GetInputData() string {
 // GetInputDataOk returns a tuple with the InputData field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentGeneration) GetInputDataOk() (*string, bool) {
-	if o == nil || o.InputData == nil {
+	if o == nil || IsNil(o.InputData) {
 		return nil, false
 	}
 	return o.InputData, true
@@ -269,7 +272,7 @@ func (o *DocumentGeneration) GetInputDataOk() (*string, bool) {
 
 // HasInputData returns a boolean if a field has been set.
 func (o *DocumentGeneration) HasInputData() bool {
-	if o != nil && o.InputData != nil {
+	if o != nil && !IsNil(o.InputData) {
 		return true
 	}
 
@@ -283,7 +286,7 @@ func (o *DocumentGeneration) SetInputData(v string) {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *DocumentGeneration) GetData() string {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret string
 		return ret
 	}
@@ -293,7 +296,7 @@ func (o *DocumentGeneration) GetData() string {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentGeneration) GetDataOk() (*string, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -301,7 +304,7 @@ func (o *DocumentGeneration) GetDataOk() (*string, bool) {
 
 // HasData returns a boolean if a field has been set.
 func (o *DocumentGeneration) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -315,7 +318,7 @@ func (o *DocumentGeneration) SetData(v string) {
 
 // GetPdfUrl returns the PdfUrl field value if set, zero value otherwise.
 func (o *DocumentGeneration) GetPdfUrl() string {
-	if o == nil || o.PdfUrl == nil {
+	if o == nil || IsNil(o.PdfUrl) {
 		var ret string
 		return ret
 	}
@@ -325,7 +328,7 @@ func (o *DocumentGeneration) GetPdfUrl() string {
 // GetPdfUrlOk returns a tuple with the PdfUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentGeneration) GetPdfUrlOk() (*string, bool) {
-	if o == nil || o.PdfUrl == nil {
+	if o == nil || IsNil(o.PdfUrl) {
 		return nil, false
 	}
 	return o.PdfUrl, true
@@ -333,7 +336,7 @@ func (o *DocumentGeneration) GetPdfUrlOk() (*string, bool) {
 
 // HasPdfUrl returns a boolean if a field has been set.
 func (o *DocumentGeneration) HasPdfUrl() bool {
-	if o != nil && o.PdfUrl != nil {
+	if o != nil && !IsNil(o.PdfUrl) {
 		return true
 	}
 
@@ -347,7 +350,7 @@ func (o *DocumentGeneration) SetPdfUrl(v string) {
 
 // GetPdfGenerationDate returns the PdfGenerationDate field value if set, zero value otherwise.
 func (o *DocumentGeneration) GetPdfGenerationDate() int64 {
-	if o == nil || o.PdfGenerationDate == nil {
+	if o == nil || IsNil(o.PdfGenerationDate) {
 		var ret int64
 		return ret
 	}
@@ -357,7 +360,7 @@ func (o *DocumentGeneration) GetPdfGenerationDate() int64 {
 // GetPdfGenerationDateOk returns a tuple with the PdfGenerationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentGeneration) GetPdfGenerationDateOk() (*int64, bool) {
-	if o == nil || o.PdfGenerationDate == nil {
+	if o == nil || IsNil(o.PdfGenerationDate) {
 		return nil, false
 	}
 	return o.PdfGenerationDate, true
@@ -365,7 +368,7 @@ func (o *DocumentGeneration) GetPdfGenerationDateOk() (*int64, bool) {
 
 // HasPdfGenerationDate returns a boolean if a field has been set.
 func (o *DocumentGeneration) HasPdfGenerationDate() bool {
-	if o != nil && o.PdfGenerationDate != nil {
+	if o != nil && !IsNil(o.PdfGenerationDate) {
 		return true
 	}
 
@@ -379,7 +382,7 @@ func (o *DocumentGeneration) SetPdfGenerationDate(v int64) {
 
 // GetEsignatureTriggered returns the EsignatureTriggered field value if set, zero value otherwise.
 func (o *DocumentGeneration) GetEsignatureTriggered() bool {
-	if o == nil || o.EsignatureTriggered == nil {
+	if o == nil || IsNil(o.EsignatureTriggered) {
 		var ret bool
 		return ret
 	}
@@ -389,7 +392,7 @@ func (o *DocumentGeneration) GetEsignatureTriggered() bool {
 // GetEsignatureTriggeredOk returns a tuple with the EsignatureTriggered field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentGeneration) GetEsignatureTriggeredOk() (*bool, bool) {
-	if o == nil || o.EsignatureTriggered == nil {
+	if o == nil || IsNil(o.EsignatureTriggered) {
 		return nil, false
 	}
 	return o.EsignatureTriggered, true
@@ -397,7 +400,7 @@ func (o *DocumentGeneration) GetEsignatureTriggeredOk() (*bool, bool) {
 
 // HasEsignatureTriggered returns a boolean if a field has been set.
 func (o *DocumentGeneration) HasEsignatureTriggered() bool {
-	if o != nil && o.EsignatureTriggered != nil {
+	if o != nil && !IsNil(o.EsignatureTriggered) {
 		return true
 	}
 
@@ -410,41 +413,49 @@ func (o *DocumentGeneration) SetEsignatureTriggered(v bool) {
 }
 
 func (o DocumentGeneration) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.CreatedAt != nil {
-		toSerialize["created_at"] = o.CreatedAt
-	}
-	if o.UpdatedAt != nil {
-		toSerialize["updated_at"] = o.UpdatedAt
-	}
-	if o.Archived != nil {
-		toSerialize["archived"] = o.Archived
-	}
-	if o.Template != nil {
-		toSerialize["template"] = o.Template
-	}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.InputData != nil {
-		toSerialize["input_data"] = o.InputData
-	}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
-	}
-	if o.PdfUrl != nil {
-		toSerialize["pdf_url"] = o.PdfUrl
-	}
-	if o.PdfGenerationDate != nil {
-		toSerialize["pdf_generation_date"] = o.PdfGenerationDate
-	}
-	if o.EsignatureTriggered != nil {
-		toSerialize["esignature_triggered"] = o.EsignatureTriggered
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DocumentGeneration) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.CreatedAt) {
+		toSerialize["created_at"] = o.CreatedAt
+	}
+	if !IsNil(o.UpdatedAt) {
+		toSerialize["updated_at"] = o.UpdatedAt
+	}
+	if !IsNil(o.Archived) {
+		toSerialize["archived"] = o.Archived
+	}
+	if !IsNil(o.Template) {
+		toSerialize["template"] = o.Template
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.InputData) {
+		toSerialize["input_data"] = o.InputData
+	}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	if !IsNil(o.PdfUrl) {
+		toSerialize["pdf_url"] = o.PdfUrl
+	}
+	if !IsNil(o.PdfGenerationDate) {
+		toSerialize["pdf_generation_date"] = o.PdfGenerationDate
+	}
+	if !IsNil(o.EsignatureTriggered) {
+		toSerialize["esignature_triggered"] = o.EsignatureTriggered
+	}
+	return toSerialize, nil
 }
 
 type NullableDocumentGeneration struct {

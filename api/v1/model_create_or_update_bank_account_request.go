@@ -11,8 +11,13 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the CreateOrUpdateBankAccountRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CreateOrUpdateBankAccountRequest{}
 
 // CreateOrUpdateBankAccountRequest The data required to create a new bank account
 type CreateOrUpdateBankAccountRequest struct {
@@ -27,6 +32,8 @@ type CreateOrUpdateBankAccountRequest struct {
 	// A user friendly label, used to identify the account (optional)
 	Description *string `json:"description,omitempty"`
 }
+
+type _CreateOrUpdateBankAccountRequest CreateOrUpdateBankAccountRequest
 
 // NewCreateOrUpdateBankAccountRequest instantiates a new CreateOrUpdateBankAccountRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -97,7 +104,7 @@ func (o *CreateOrUpdateBankAccountRequest) SetIban(v string) {
 
 // GetBic returns the Bic field value if set, zero value otherwise.
 func (o *CreateOrUpdateBankAccountRequest) GetBic() string {
-	if o == nil || o.Bic == nil {
+	if o == nil || IsNil(o.Bic) {
 		var ret string
 		return ret
 	}
@@ -107,7 +114,7 @@ func (o *CreateOrUpdateBankAccountRequest) GetBic() string {
 // GetBicOk returns a tuple with the Bic field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateBankAccountRequest) GetBicOk() (*string, bool) {
-	if o == nil || o.Bic == nil {
+	if o == nil || IsNil(o.Bic) {
 		return nil, false
 	}
 	return o.Bic, true
@@ -115,7 +122,7 @@ func (o *CreateOrUpdateBankAccountRequest) GetBicOk() (*string, bool) {
 
 // HasBic returns a boolean if a field has been set.
 func (o *CreateOrUpdateBankAccountRequest) HasBic() bool {
-	if o != nil && o.Bic != nil {
+	if o != nil && !IsNil(o.Bic) {
 		return true
 	}
 
@@ -129,7 +136,7 @@ func (o *CreateOrUpdateBankAccountRequest) SetBic(v string) {
 
 // GetBankName returns the BankName field value if set, zero value otherwise.
 func (o *CreateOrUpdateBankAccountRequest) GetBankName() string {
-	if o == nil || o.BankName == nil {
+	if o == nil || IsNil(o.BankName) {
 		var ret string
 		return ret
 	}
@@ -139,7 +146,7 @@ func (o *CreateOrUpdateBankAccountRequest) GetBankName() string {
 // GetBankNameOk returns a tuple with the BankName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateBankAccountRequest) GetBankNameOk() (*string, bool) {
-	if o == nil || o.BankName == nil {
+	if o == nil || IsNil(o.BankName) {
 		return nil, false
 	}
 	return o.BankName, true
@@ -147,7 +154,7 @@ func (o *CreateOrUpdateBankAccountRequest) GetBankNameOk() (*string, bool) {
 
 // HasBankName returns a boolean if a field has been set.
 func (o *CreateOrUpdateBankAccountRequest) HasBankName() bool {
-	if o != nil && o.BankName != nil {
+	if o != nil && !IsNil(o.BankName) {
 		return true
 	}
 
@@ -161,7 +168,7 @@ func (o *CreateOrUpdateBankAccountRequest) SetBankName(v string) {
 
 // GetDescription returns the Description field value if set, zero value otherwise.
 func (o *CreateOrUpdateBankAccountRequest) GetDescription() string {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		var ret string
 		return ret
 	}
@@ -171,7 +178,7 @@ func (o *CreateOrUpdateBankAccountRequest) GetDescription() string {
 // GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateBankAccountRequest) GetDescriptionOk() (*string, bool) {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		return nil, false
 	}
 	return o.Description, true
@@ -179,7 +186,7 @@ func (o *CreateOrUpdateBankAccountRequest) GetDescriptionOk() (*string, bool) {
 
 // HasDescription returns a boolean if a field has been set.
 func (o *CreateOrUpdateBankAccountRequest) HasDescription() bool {
-	if o != nil && o.Description != nil {
+	if o != nil && !IsNil(o.Description) {
 		return true
 	}
 
@@ -192,23 +199,65 @@ func (o *CreateOrUpdateBankAccountRequest) SetDescription(v string) {
 }
 
 func (o CreateOrUpdateBankAccountRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["account_holder"] = o.AccountHolder
-	}
-	if true {
-		toSerialize["iban"] = o.Iban
-	}
-	if o.Bic != nil {
-		toSerialize["bic"] = o.Bic
-	}
-	if o.BankName != nil {
-		toSerialize["bank_name"] = o.BankName
-	}
-	if o.Description != nil {
-		toSerialize["description"] = o.Description
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CreateOrUpdateBankAccountRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["account_holder"] = o.AccountHolder
+	toSerialize["iban"] = o.Iban
+	if !IsNil(o.Bic) {
+		toSerialize["bic"] = o.Bic
+	}
+	if !IsNil(o.BankName) {
+		toSerialize["bank_name"] = o.BankName
+	}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
+	}
+	return toSerialize, nil
+}
+
+func (o *CreateOrUpdateBankAccountRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"account_holder",
+		"iban",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCreateOrUpdateBankAccountRequest := _CreateOrUpdateBankAccountRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCreateOrUpdateBankAccountRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CreateOrUpdateBankAccountRequest(varCreateOrUpdateBankAccountRequest)
+
+	return err
 }
 
 type NullableCreateOrUpdateBankAccountRequest struct {

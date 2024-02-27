@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the RentInformation type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &RentInformation{}
+
 // RentInformation the rent information for a property
 type RentInformation struct {
 	MonthlyRent *RentData `json:"monthly_rent,omitempty"`
@@ -45,7 +48,7 @@ func NewRentInformationWithDefaults() *RentInformation {
 
 // GetMonthlyRent returns the MonthlyRent field value if set, zero value otherwise.
 func (o *RentInformation) GetMonthlyRent() RentData {
-	if o == nil || o.MonthlyRent == nil {
+	if o == nil || IsNil(o.MonthlyRent) {
 		var ret RentData
 		return ret
 	}
@@ -55,7 +58,7 @@ func (o *RentInformation) GetMonthlyRent() RentData {
 // GetMonthlyRentOk returns a tuple with the MonthlyRent field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RentInformation) GetMonthlyRentOk() (*RentData, bool) {
-	if o == nil || o.MonthlyRent == nil {
+	if o == nil || IsNil(o.MonthlyRent) {
 		return nil, false
 	}
 	return o.MonthlyRent, true
@@ -63,7 +66,7 @@ func (o *RentInformation) GetMonthlyRentOk() (*RentData, bool) {
 
 // HasMonthlyRent returns a boolean if a field has been set.
 func (o *RentInformation) HasMonthlyRent() bool {
-	if o != nil && o.MonthlyRent != nil {
+	if o != nil && !IsNil(o.MonthlyRent) {
 		return true
 	}
 
@@ -77,7 +80,7 @@ func (o *RentInformation) SetMonthlyRent(v RentData) {
 
 // GetDeposit returns the Deposit field value if set, zero value otherwise.
 func (o *RentInformation) GetDeposit() float64 {
-	if o == nil || o.Deposit == nil {
+	if o == nil || IsNil(o.Deposit) {
 		var ret float64
 		return ret
 	}
@@ -87,7 +90,7 @@ func (o *RentInformation) GetDeposit() float64 {
 // GetDepositOk returns a tuple with the Deposit field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RentInformation) GetDepositOk() (*float64, bool) {
-	if o == nil || o.Deposit == nil {
+	if o == nil || IsNil(o.Deposit) {
 		return nil, false
 	}
 	return o.Deposit, true
@@ -95,7 +98,7 @@ func (o *RentInformation) GetDepositOk() (*float64, bool) {
 
 // HasDeposit returns a boolean if a field has been set.
 func (o *RentInformation) HasDeposit() bool {
-	if o != nil && o.Deposit != nil {
+	if o != nil && !IsNil(o.Deposit) {
 		return true
 	}
 
@@ -109,7 +112,7 @@ func (o *RentInformation) SetDeposit(v float64) {
 
 // GetRentType returns the RentType field value if set, zero value otherwise.
 func (o *RentInformation) GetRentType() RentTypeEnum {
-	if o == nil || o.RentType == nil {
+	if o == nil || IsNil(o.RentType) {
 		var ret RentTypeEnum
 		return ret
 	}
@@ -119,7 +122,7 @@ func (o *RentInformation) GetRentType() RentTypeEnum {
 // GetRentTypeOk returns a tuple with the RentType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RentInformation) GetRentTypeOk() (*RentTypeEnum, bool) {
-	if o == nil || o.RentType == nil {
+	if o == nil || IsNil(o.RentType) {
 		return nil, false
 	}
 	return o.RentType, true
@@ -127,7 +130,7 @@ func (o *RentInformation) GetRentTypeOk() (*RentTypeEnum, bool) {
 
 // HasRentType returns a boolean if a field has been set.
 func (o *RentInformation) HasRentType() bool {
-	if o != nil && o.RentType != nil {
+	if o != nil && !IsNil(o.RentType) {
 		return true
 	}
 
@@ -141,7 +144,7 @@ func (o *RentInformation) SetRentType(v RentTypeEnum) {
 
 // GetIndexMonth returns the IndexMonth field value if set, zero value otherwise.
 func (o *RentInformation) GetIndexMonth() int64 {
-	if o == nil || o.IndexMonth == nil {
+	if o == nil || IsNil(o.IndexMonth) {
 		var ret int64
 		return ret
 	}
@@ -151,7 +154,7 @@ func (o *RentInformation) GetIndexMonth() int64 {
 // GetIndexMonthOk returns a tuple with the IndexMonth field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RentInformation) GetIndexMonthOk() (*int64, bool) {
-	if o == nil || o.IndexMonth == nil {
+	if o == nil || IsNil(o.IndexMonth) {
 		return nil, false
 	}
 	return o.IndexMonth, true
@@ -159,7 +162,7 @@ func (o *RentInformation) GetIndexMonthOk() (*int64, bool) {
 
 // HasIndexMonth returns a boolean if a field has been set.
 func (o *RentInformation) HasIndexMonth() bool {
-	if o != nil && o.IndexMonth != nil {
+	if o != nil && !IsNil(o.IndexMonth) {
 		return true
 	}
 
@@ -173,7 +176,7 @@ func (o *RentInformation) SetIndexMonth(v int64) {
 
 // GetIndexPoints returns the IndexPoints field value if set, zero value otherwise.
 func (o *RentInformation) GetIndexPoints() float64 {
-	if o == nil || o.IndexPoints == nil {
+	if o == nil || IsNil(o.IndexPoints) {
 		var ret float64
 		return ret
 	}
@@ -183,7 +186,7 @@ func (o *RentInformation) GetIndexPoints() float64 {
 // GetIndexPointsOk returns a tuple with the IndexPoints field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RentInformation) GetIndexPointsOk() (*float64, bool) {
-	if o == nil || o.IndexPoints == nil {
+	if o == nil || IsNil(o.IndexPoints) {
 		return nil, false
 	}
 	return o.IndexPoints, true
@@ -191,7 +194,7 @@ func (o *RentInformation) GetIndexPointsOk() (*float64, bool) {
 
 // HasIndexPoints returns a boolean if a field has been set.
 func (o *RentInformation) HasIndexPoints() bool {
-	if o != nil && o.IndexPoints != nil {
+	if o != nil && !IsNil(o.IndexPoints) {
 		return true
 	}
 
@@ -204,23 +207,31 @@ func (o *RentInformation) SetIndexPoints(v float64) {
 }
 
 func (o RentInformation) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.MonthlyRent != nil {
-		toSerialize["monthly_rent"] = o.MonthlyRent
-	}
-	if o.Deposit != nil {
-		toSerialize["deposit"] = o.Deposit
-	}
-	if o.RentType != nil {
-		toSerialize["rent_type"] = o.RentType
-	}
-	if o.IndexMonth != nil {
-		toSerialize["index_month"] = o.IndexMonth
-	}
-	if o.IndexPoints != nil {
-		toSerialize["index_points"] = o.IndexPoints
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o RentInformation) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.MonthlyRent) {
+		toSerialize["monthly_rent"] = o.MonthlyRent
+	}
+	if !IsNil(o.Deposit) {
+		toSerialize["deposit"] = o.Deposit
+	}
+	if !IsNil(o.RentType) {
+		toSerialize["rent_type"] = o.RentType
+	}
+	if !IsNil(o.IndexMonth) {
+		toSerialize["index_month"] = o.IndexMonth
+	}
+	if !IsNil(o.IndexPoints) {
+		toSerialize["index_points"] = o.IndexPoints
+	}
+	return toSerialize, nil
 }
 
 type NullableRentInformation struct {

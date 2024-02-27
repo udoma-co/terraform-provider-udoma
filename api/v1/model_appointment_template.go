@@ -11,8 +11,13 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the AppointmentTemplate type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppointmentTemplate{}
 
 // AppointmentTemplate struct for AppointmentTemplate
 type AppointmentTemplate struct {
@@ -28,6 +33,8 @@ type AppointmentTemplate struct {
 	ScheduleBefore *int32     `json:"schedule_before,omitempty"`
 	Form           CustomForm `json:"form"`
 }
+
+type _AppointmentTemplate AppointmentTemplate
 
 // NewAppointmentTemplate instantiates a new AppointmentTemplate object
 // This constructor will assign default values to properties that have it defined,
@@ -124,7 +131,7 @@ func (o *AppointmentTemplate) SetNameExpression(v string) {
 
 // GetDescription returns the Description field value if set, zero value otherwise.
 func (o *AppointmentTemplate) GetDescription() string {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		var ret string
 		return ret
 	}
@@ -134,7 +141,7 @@ func (o *AppointmentTemplate) GetDescription() string {
 // GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppointmentTemplate) GetDescriptionOk() (*string, bool) {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		return nil, false
 	}
 	return o.Description, true
@@ -142,7 +149,7 @@ func (o *AppointmentTemplate) GetDescriptionOk() (*string, bool) {
 
 // HasDescription returns a boolean if a field has been set.
 func (o *AppointmentTemplate) HasDescription() bool {
-	if o != nil && o.Description != nil {
+	if o != nil && !IsNil(o.Description) {
 		return true
 	}
 
@@ -156,7 +163,7 @@ func (o *AppointmentTemplate) SetDescription(v string) {
 
 // GetScheduleBefore returns the ScheduleBefore field value if set, zero value otherwise.
 func (o *AppointmentTemplate) GetScheduleBefore() int32 {
-	if o == nil || o.ScheduleBefore == nil {
+	if o == nil || IsNil(o.ScheduleBefore) {
 		var ret int32
 		return ret
 	}
@@ -166,7 +173,7 @@ func (o *AppointmentTemplate) GetScheduleBefore() int32 {
 // GetScheduleBeforeOk returns a tuple with the ScheduleBefore field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppointmentTemplate) GetScheduleBeforeOk() (*int32, bool) {
-	if o == nil || o.ScheduleBefore == nil {
+	if o == nil || IsNil(o.ScheduleBefore) {
 		return nil, false
 	}
 	return o.ScheduleBefore, true
@@ -174,7 +181,7 @@ func (o *AppointmentTemplate) GetScheduleBeforeOk() (*int32, bool) {
 
 // HasScheduleBefore returns a boolean if a field has been set.
 func (o *AppointmentTemplate) HasScheduleBefore() bool {
-	if o != nil && o.ScheduleBefore != nil {
+	if o != nil && !IsNil(o.ScheduleBefore) {
 		return true
 	}
 
@@ -211,26 +218,66 @@ func (o *AppointmentTemplate) SetForm(v CustomForm) {
 }
 
 func (o AppointmentTemplate) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["id"] = o.Id
-	}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if true {
-		toSerialize["name_expression"] = o.NameExpression
-	}
-	if o.Description != nil {
-		toSerialize["description"] = o.Description
-	}
-	if o.ScheduleBefore != nil {
-		toSerialize["schedule_before"] = o.ScheduleBefore
-	}
-	if true {
-		toSerialize["form"] = o.Form
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppointmentTemplate) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["id"] = o.Id
+	toSerialize["name"] = o.Name
+	toSerialize["name_expression"] = o.NameExpression
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
+	}
+	if !IsNil(o.ScheduleBefore) {
+		toSerialize["schedule_before"] = o.ScheduleBefore
+	}
+	toSerialize["form"] = o.Form
+	return toSerialize, nil
+}
+
+func (o *AppointmentTemplate) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"id",
+		"name",
+		"name_expression",
+		"form",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varAppointmentTemplate := _AppointmentTemplate{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varAppointmentTemplate)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AppointmentTemplate(varAppointmentTemplate)
+
+	return err
 }
 
 type NullableAppointmentTemplate struct {

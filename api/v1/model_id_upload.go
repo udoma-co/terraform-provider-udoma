@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the IDUpload type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &IDUpload{}
+
 // IDUpload an ID document uploaded by the user, consisting of a photo from the front and back of the ID
 type IDUpload struct {
 	Front *Attachment `json:"front,omitempty"`
@@ -39,7 +42,7 @@ func NewIDUploadWithDefaults() *IDUpload {
 
 // GetFront returns the Front field value if set, zero value otherwise.
 func (o *IDUpload) GetFront() Attachment {
-	if o == nil || o.Front == nil {
+	if o == nil || IsNil(o.Front) {
 		var ret Attachment
 		return ret
 	}
@@ -49,7 +52,7 @@ func (o *IDUpload) GetFront() Attachment {
 // GetFrontOk returns a tuple with the Front field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IDUpload) GetFrontOk() (*Attachment, bool) {
-	if o == nil || o.Front == nil {
+	if o == nil || IsNil(o.Front) {
 		return nil, false
 	}
 	return o.Front, true
@@ -57,7 +60,7 @@ func (o *IDUpload) GetFrontOk() (*Attachment, bool) {
 
 // HasFront returns a boolean if a field has been set.
 func (o *IDUpload) HasFront() bool {
-	if o != nil && o.Front != nil {
+	if o != nil && !IsNil(o.Front) {
 		return true
 	}
 
@@ -71,7 +74,7 @@ func (o *IDUpload) SetFront(v Attachment) {
 
 // GetBack returns the Back field value if set, zero value otherwise.
 func (o *IDUpload) GetBack() Attachment {
-	if o == nil || o.Back == nil {
+	if o == nil || IsNil(o.Back) {
 		var ret Attachment
 		return ret
 	}
@@ -81,7 +84,7 @@ func (o *IDUpload) GetBack() Attachment {
 // GetBackOk returns a tuple with the Back field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IDUpload) GetBackOk() (*Attachment, bool) {
-	if o == nil || o.Back == nil {
+	if o == nil || IsNil(o.Back) {
 		return nil, false
 	}
 	return o.Back, true
@@ -89,7 +92,7 @@ func (o *IDUpload) GetBackOk() (*Attachment, bool) {
 
 // HasBack returns a boolean if a field has been set.
 func (o *IDUpload) HasBack() bool {
-	if o != nil && o.Back != nil {
+	if o != nil && !IsNil(o.Back) {
 		return true
 	}
 
@@ -102,14 +105,22 @@ func (o *IDUpload) SetBack(v Attachment) {
 }
 
 func (o IDUpload) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Front != nil {
-		toSerialize["front"] = o.Front
-	}
-	if o.Back != nil {
-		toSerialize["back"] = o.Back
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o IDUpload) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Front) {
+		toSerialize["front"] = o.Front
+	}
+	if !IsNil(o.Back) {
+		toSerialize["back"] = o.Back
+	}
+	return toSerialize, nil
 }
 
 type NullableIDUpload struct {

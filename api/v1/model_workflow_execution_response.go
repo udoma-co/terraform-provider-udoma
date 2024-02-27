@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the WorkflowExecutionResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &WorkflowExecutionResponse{}
+
 // WorkflowExecutionResponse a response for starting or executing a step in a workflow execution
 type WorkflowExecutionResponse struct {
 	Success *bool `json:"success,omitempty"`
@@ -43,7 +46,7 @@ func NewWorkflowExecutionResponseWithDefaults() *WorkflowExecutionResponse {
 
 // GetSuccess returns the Success field value if set, zero value otherwise.
 func (o *WorkflowExecutionResponse) GetSuccess() bool {
-	if o == nil || o.Success == nil {
+	if o == nil || IsNil(o.Success) {
 		var ret bool
 		return ret
 	}
@@ -53,7 +56,7 @@ func (o *WorkflowExecutionResponse) GetSuccess() bool {
 // GetSuccessOk returns a tuple with the Success field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecutionResponse) GetSuccessOk() (*bool, bool) {
-	if o == nil || o.Success == nil {
+	if o == nil || IsNil(o.Success) {
 		return nil, false
 	}
 	return o.Success, true
@@ -61,7 +64,7 @@ func (o *WorkflowExecutionResponse) GetSuccessOk() (*bool, bool) {
 
 // HasSuccess returns a boolean if a field has been set.
 func (o *WorkflowExecutionResponse) HasSuccess() bool {
-	if o != nil && o.Success != nil {
+	if o != nil && !IsNil(o.Success) {
 		return true
 	}
 
@@ -75,7 +78,7 @@ func (o *WorkflowExecutionResponse) SetSuccess(v bool) {
 
 // GetResult returns the Result field value if set, zero value otherwise.
 func (o *WorkflowExecutionResponse) GetResult() string {
-	if o == nil || o.Result == nil {
+	if o == nil || IsNil(o.Result) {
 		var ret string
 		return ret
 	}
@@ -85,7 +88,7 @@ func (o *WorkflowExecutionResponse) GetResult() string {
 // GetResultOk returns a tuple with the Result field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecutionResponse) GetResultOk() (*string, bool) {
-	if o == nil || o.Result == nil {
+	if o == nil || IsNil(o.Result) {
 		return nil, false
 	}
 	return o.Result, true
@@ -93,7 +96,7 @@ func (o *WorkflowExecutionResponse) GetResultOk() (*string, bool) {
 
 // HasResult returns a boolean if a field has been set.
 func (o *WorkflowExecutionResponse) HasResult() bool {
-	if o != nil && o.Result != nil {
+	if o != nil && !IsNil(o.Result) {
 		return true
 	}
 
@@ -107,7 +110,7 @@ func (o *WorkflowExecutionResponse) SetResult(v string) {
 
 // GetNextStep returns the NextStep field value if set, zero value otherwise.
 func (o *WorkflowExecutionResponse) GetNextStep() string {
-	if o == nil || o.NextStep == nil {
+	if o == nil || IsNil(o.NextStep) {
 		var ret string
 		return ret
 	}
@@ -117,7 +120,7 @@ func (o *WorkflowExecutionResponse) GetNextStep() string {
 // GetNextStepOk returns a tuple with the NextStep field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecutionResponse) GetNextStepOk() (*string, bool) {
-	if o == nil || o.NextStep == nil {
+	if o == nil || IsNil(o.NextStep) {
 		return nil, false
 	}
 	return o.NextStep, true
@@ -125,7 +128,7 @@ func (o *WorkflowExecutionResponse) GetNextStepOk() (*string, bool) {
 
 // HasNextStep returns a boolean if a field has been set.
 func (o *WorkflowExecutionResponse) HasNextStep() bool {
-	if o != nil && o.NextStep != nil {
+	if o != nil && !IsNil(o.NextStep) {
 		return true
 	}
 
@@ -139,7 +142,7 @@ func (o *WorkflowExecutionResponse) SetNextStep(v string) {
 
 // GetWorkflowExecution returns the WorkflowExecution field value if set, zero value otherwise.
 func (o *WorkflowExecutionResponse) GetWorkflowExecution() WorkflowExecution {
-	if o == nil || o.WorkflowExecution == nil {
+	if o == nil || IsNil(o.WorkflowExecution) {
 		var ret WorkflowExecution
 		return ret
 	}
@@ -149,7 +152,7 @@ func (o *WorkflowExecutionResponse) GetWorkflowExecution() WorkflowExecution {
 // GetWorkflowExecutionOk returns a tuple with the WorkflowExecution field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecutionResponse) GetWorkflowExecutionOk() (*WorkflowExecution, bool) {
-	if o == nil || o.WorkflowExecution == nil {
+	if o == nil || IsNil(o.WorkflowExecution) {
 		return nil, false
 	}
 	return o.WorkflowExecution, true
@@ -157,7 +160,7 @@ func (o *WorkflowExecutionResponse) GetWorkflowExecutionOk() (*WorkflowExecution
 
 // HasWorkflowExecution returns a boolean if a field has been set.
 func (o *WorkflowExecutionResponse) HasWorkflowExecution() bool {
-	if o != nil && o.WorkflowExecution != nil {
+	if o != nil && !IsNil(o.WorkflowExecution) {
 		return true
 	}
 
@@ -170,20 +173,28 @@ func (o *WorkflowExecutionResponse) SetWorkflowExecution(v WorkflowExecution) {
 }
 
 func (o WorkflowExecutionResponse) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Success != nil {
-		toSerialize["success"] = o.Success
-	}
-	if o.Result != nil {
-		toSerialize["result"] = o.Result
-	}
-	if o.NextStep != nil {
-		toSerialize["next_step"] = o.NextStep
-	}
-	if o.WorkflowExecution != nil {
-		toSerialize["workflow_execution"] = o.WorkflowExecution
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o WorkflowExecutionResponse) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Success) {
+		toSerialize["success"] = o.Success
+	}
+	if !IsNil(o.Result) {
+		toSerialize["result"] = o.Result
+	}
+	if !IsNil(o.NextStep) {
+		toSerialize["next_step"] = o.NextStep
+	}
+	if !IsNil(o.WorkflowExecution) {
+		toSerialize["workflow_execution"] = o.WorkflowExecution
+	}
+	return toSerialize, nil
 }
 
 type NullableWorkflowExecutionResponse struct {

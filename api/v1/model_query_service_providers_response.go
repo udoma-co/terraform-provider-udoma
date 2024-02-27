@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the QueryServiceProvidersResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &QueryServiceProvidersResponse{}
+
 // QueryServiceProvidersResponse Response to a query for service providers
 type QueryServiceProvidersResponse struct {
 	// list of service providers
@@ -39,7 +42,7 @@ func NewQueryServiceProvidersResponseWithDefaults() *QueryServiceProvidersRespon
 
 // GetServiceProviders returns the ServiceProviders field value if set, zero value otherwise.
 func (o *QueryServiceProvidersResponse) GetServiceProviders() []ServiceProvider {
-	if o == nil || o.ServiceProviders == nil {
+	if o == nil || IsNil(o.ServiceProviders) {
 		var ret []ServiceProvider
 		return ret
 	}
@@ -49,7 +52,7 @@ func (o *QueryServiceProvidersResponse) GetServiceProviders() []ServiceProvider 
 // GetServiceProvidersOk returns a tuple with the ServiceProviders field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *QueryServiceProvidersResponse) GetServiceProvidersOk() ([]ServiceProvider, bool) {
-	if o == nil || o.ServiceProviders == nil {
+	if o == nil || IsNil(o.ServiceProviders) {
 		return nil, false
 	}
 	return o.ServiceProviders, true
@@ -57,7 +60,7 @@ func (o *QueryServiceProvidersResponse) GetServiceProvidersOk() ([]ServiceProvid
 
 // HasServiceProviders returns a boolean if a field has been set.
 func (o *QueryServiceProvidersResponse) HasServiceProviders() bool {
-	if o != nil && o.ServiceProviders != nil {
+	if o != nil && !IsNil(o.ServiceProviders) {
 		return true
 	}
 
@@ -70,11 +73,19 @@ func (o *QueryServiceProvidersResponse) SetServiceProviders(v []ServiceProvider)
 }
 
 func (o QueryServiceProvidersResponse) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.ServiceProviders != nil {
-		toSerialize["service_providers"] = o.ServiceProviders
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o QueryServiceProvidersResponse) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.ServiceProviders) {
+		toSerialize["service_providers"] = o.ServiceProviders
+	}
+	return toSerialize, nil
 }
 
 type NullableQueryServiceProvidersResponse struct {

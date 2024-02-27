@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the DocumentTemplateSignatureConfguration type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DocumentTemplateSignatureConfguration{}
+
 // DocumentTemplateSignatureConfguration The configuration for electronic signatures
 type DocumentTemplateSignatureConfguration struct {
 	// The list of signers of the document
@@ -45,7 +48,7 @@ func NewDocumentTemplateSignatureConfgurationWithDefaults() *DocumentTemplateSig
 
 // GetSigners returns the Signers field value if set, zero value otherwise.
 func (o *DocumentTemplateSignatureConfguration) GetSigners() []DocumentTemplateSignerDefinition {
-	if o == nil || o.Signers == nil {
+	if o == nil || IsNil(o.Signers) {
 		var ret []DocumentTemplateSignerDefinition
 		return ret
 	}
@@ -55,7 +58,7 @@ func (o *DocumentTemplateSignatureConfguration) GetSigners() []DocumentTemplateS
 // GetSignersOk returns a tuple with the Signers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentTemplateSignatureConfguration) GetSignersOk() ([]DocumentTemplateSignerDefinition, bool) {
-	if o == nil || o.Signers == nil {
+	if o == nil || IsNil(o.Signers) {
 		return nil, false
 	}
 	return o.Signers, true
@@ -63,7 +66,7 @@ func (o *DocumentTemplateSignatureConfguration) GetSignersOk() ([]DocumentTempla
 
 // HasSigners returns a boolean if a field has been set.
 func (o *DocumentTemplateSignatureConfguration) HasSigners() bool {
-	if o != nil && o.Signers != nil {
+	if o != nil && !IsNil(o.Signers) {
 		return true
 	}
 
@@ -77,7 +80,7 @@ func (o *DocumentTemplateSignatureConfguration) SetSigners(v []DocumentTemplateS
 
 // GetEsignaturesEnabled returns the EsignaturesEnabled field value if set, zero value otherwise.
 func (o *DocumentTemplateSignatureConfguration) GetEsignaturesEnabled() bool {
-	if o == nil || o.EsignaturesEnabled == nil {
+	if o == nil || IsNil(o.EsignaturesEnabled) {
 		var ret bool
 		return ret
 	}
@@ -87,7 +90,7 @@ func (o *DocumentTemplateSignatureConfguration) GetEsignaturesEnabled() bool {
 // GetEsignaturesEnabledOk returns a tuple with the EsignaturesEnabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentTemplateSignatureConfguration) GetEsignaturesEnabledOk() (*bool, bool) {
-	if o == nil || o.EsignaturesEnabled == nil {
+	if o == nil || IsNil(o.EsignaturesEnabled) {
 		return nil, false
 	}
 	return o.EsignaturesEnabled, true
@@ -95,7 +98,7 @@ func (o *DocumentTemplateSignatureConfguration) GetEsignaturesEnabledOk() (*bool
 
 // HasEsignaturesEnabled returns a boolean if a field has been set.
 func (o *DocumentTemplateSignatureConfguration) HasEsignaturesEnabled() bool {
-	if o != nil && o.EsignaturesEnabled != nil {
+	if o != nil && !IsNil(o.EsignaturesEnabled) {
 		return true
 	}
 
@@ -109,7 +112,7 @@ func (o *DocumentTemplateSignatureConfguration) SetEsignaturesEnabled(v bool) {
 
 // GetExpirationDays returns the ExpirationDays field value if set, zero value otherwise.
 func (o *DocumentTemplateSignatureConfguration) GetExpirationDays() int32 {
-	if o == nil || o.ExpirationDays == nil {
+	if o == nil || IsNil(o.ExpirationDays) {
 		var ret int32
 		return ret
 	}
@@ -119,7 +122,7 @@ func (o *DocumentTemplateSignatureConfguration) GetExpirationDays() int32 {
 // GetExpirationDaysOk returns a tuple with the ExpirationDays field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentTemplateSignatureConfguration) GetExpirationDaysOk() (*int32, bool) {
-	if o == nil || o.ExpirationDays == nil {
+	if o == nil || IsNil(o.ExpirationDays) {
 		return nil, false
 	}
 	return o.ExpirationDays, true
@@ -127,7 +130,7 @@ func (o *DocumentTemplateSignatureConfguration) GetExpirationDaysOk() (*int32, b
 
 // HasExpirationDays returns a boolean if a field has been set.
 func (o *DocumentTemplateSignatureConfguration) HasExpirationDays() bool {
-	if o != nil && o.ExpirationDays != nil {
+	if o != nil && !IsNil(o.ExpirationDays) {
 		return true
 	}
 
@@ -141,7 +144,7 @@ func (o *DocumentTemplateSignatureConfguration) SetExpirationDays(v int32) {
 
 // GetCustomMessage returns the CustomMessage field value if set, zero value otherwise.
 func (o *DocumentTemplateSignatureConfguration) GetCustomMessage() string {
-	if o == nil || o.CustomMessage == nil {
+	if o == nil || IsNil(o.CustomMessage) {
 		var ret string
 		return ret
 	}
@@ -151,7 +154,7 @@ func (o *DocumentTemplateSignatureConfguration) GetCustomMessage() string {
 // GetCustomMessageOk returns a tuple with the CustomMessage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentTemplateSignatureConfguration) GetCustomMessageOk() (*string, bool) {
-	if o == nil || o.CustomMessage == nil {
+	if o == nil || IsNil(o.CustomMessage) {
 		return nil, false
 	}
 	return o.CustomMessage, true
@@ -159,7 +162,7 @@ func (o *DocumentTemplateSignatureConfguration) GetCustomMessageOk() (*string, b
 
 // HasCustomMessage returns a boolean if a field has been set.
 func (o *DocumentTemplateSignatureConfguration) HasCustomMessage() bool {
-	if o != nil && o.CustomMessage != nil {
+	if o != nil && !IsNil(o.CustomMessage) {
 		return true
 	}
 
@@ -172,20 +175,28 @@ func (o *DocumentTemplateSignatureConfguration) SetCustomMessage(v string) {
 }
 
 func (o DocumentTemplateSignatureConfguration) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Signers != nil {
-		toSerialize["signers"] = o.Signers
-	}
-	if o.EsignaturesEnabled != nil {
-		toSerialize["esignatures_enabled"] = o.EsignaturesEnabled
-	}
-	if o.ExpirationDays != nil {
-		toSerialize["expiration_days"] = o.ExpirationDays
-	}
-	if o.CustomMessage != nil {
-		toSerialize["custom_message"] = o.CustomMessage
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DocumentTemplateSignatureConfguration) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Signers) {
+		toSerialize["signers"] = o.Signers
+	}
+	if !IsNil(o.EsignaturesEnabled) {
+		toSerialize["esignatures_enabled"] = o.EsignaturesEnabled
+	}
+	if !IsNil(o.ExpirationDays) {
+		toSerialize["expiration_days"] = o.ExpirationDays
+	}
+	if !IsNil(o.CustomMessage) {
+		toSerialize["custom_message"] = o.CustomMessage
+	}
+	return toSerialize, nil
 }
 
 type NullableDocumentTemplateSignatureConfguration struct {

@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ConnectorCustomSyncEntityTenancy type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ConnectorCustomSyncEntityTenancy{}
+
 // ConnectorCustomSyncEntityTenancy Used by connectors to push tenancy data to the backend.
 type ConnectorCustomSyncEntityTenancy struct {
 	Tenancy *Tenancy `json:"tenancy,omitempty"`
@@ -40,7 +43,7 @@ func NewConnectorCustomSyncEntityTenancyWithDefaults() *ConnectorCustomSyncEntit
 
 // GetTenancy returns the Tenancy field value if set, zero value otherwise.
 func (o *ConnectorCustomSyncEntityTenancy) GetTenancy() Tenancy {
-	if o == nil || o.Tenancy == nil {
+	if o == nil || IsNil(o.Tenancy) {
 		var ret Tenancy
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *ConnectorCustomSyncEntityTenancy) GetTenancy() Tenancy {
 // GetTenancyOk returns a tuple with the Tenancy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectorCustomSyncEntityTenancy) GetTenancyOk() (*Tenancy, bool) {
-	if o == nil || o.Tenancy == nil {
+	if o == nil || IsNil(o.Tenancy) {
 		return nil, false
 	}
 	return o.Tenancy, true
@@ -58,7 +61,7 @@ func (o *ConnectorCustomSyncEntityTenancy) GetTenancyOk() (*Tenancy, bool) {
 
 // HasTenancy returns a boolean if a field has been set.
 func (o *ConnectorCustomSyncEntityTenancy) HasTenancy() bool {
-	if o != nil && o.Tenancy != nil {
+	if o != nil && !IsNil(o.Tenancy) {
 		return true
 	}
 
@@ -72,7 +75,7 @@ func (o *ConnectorCustomSyncEntityTenancy) SetTenancy(v Tenancy) {
 
 // GetUpdates returns the Updates field value if set, zero value otherwise.
 func (o *ConnectorCustomSyncEntityTenancy) GetUpdates() []TenancyUpdate {
-	if o == nil || o.Updates == nil {
+	if o == nil || IsNil(o.Updates) {
 		var ret []TenancyUpdate
 		return ret
 	}
@@ -82,7 +85,7 @@ func (o *ConnectorCustomSyncEntityTenancy) GetUpdates() []TenancyUpdate {
 // GetUpdatesOk returns a tuple with the Updates field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectorCustomSyncEntityTenancy) GetUpdatesOk() ([]TenancyUpdate, bool) {
-	if o == nil || o.Updates == nil {
+	if o == nil || IsNil(o.Updates) {
 		return nil, false
 	}
 	return o.Updates, true
@@ -90,7 +93,7 @@ func (o *ConnectorCustomSyncEntityTenancy) GetUpdatesOk() ([]TenancyUpdate, bool
 
 // HasUpdates returns a boolean if a field has been set.
 func (o *ConnectorCustomSyncEntityTenancy) HasUpdates() bool {
-	if o != nil && o.Updates != nil {
+	if o != nil && !IsNil(o.Updates) {
 		return true
 	}
 
@@ -103,14 +106,22 @@ func (o *ConnectorCustomSyncEntityTenancy) SetUpdates(v []TenancyUpdate) {
 }
 
 func (o ConnectorCustomSyncEntityTenancy) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Tenancy != nil {
-		toSerialize["tenancy"] = o.Tenancy
-	}
-	if o.Updates != nil {
-		toSerialize["updates"] = o.Updates
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ConnectorCustomSyncEntityTenancy) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Tenancy) {
+		toSerialize["tenancy"] = o.Tenancy
+	}
+	if !IsNil(o.Updates) {
+		toSerialize["updates"] = o.Updates
+	}
+	return toSerialize, nil
 }
 
 type NullableConnectorCustomSyncEntityTenancy struct {

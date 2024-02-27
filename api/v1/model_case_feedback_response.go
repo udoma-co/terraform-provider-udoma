@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CaseFeedbackResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CaseFeedbackResponse{}
+
 // CaseFeedbackResponse Contains the feedback that was provided by a party when changing the status of a case.
 type CaseFeedbackResponse struct {
 	// The feedback ID that can be found in the case config
@@ -45,7 +48,7 @@ func NewCaseFeedbackResponseWithDefaults() *CaseFeedbackResponse {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *CaseFeedbackResponse) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -55,7 +58,7 @@ func (o *CaseFeedbackResponse) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseFeedbackResponse) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -63,7 +66,7 @@ func (o *CaseFeedbackResponse) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *CaseFeedbackResponse) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -77,7 +80,7 @@ func (o *CaseFeedbackResponse) SetId(v string) {
 
 // GetFormData returns the FormData field value if set, zero value otherwise.
 func (o *CaseFeedbackResponse) GetFormData() map[string]interface{} {
-	if o == nil || o.FormData == nil {
+	if o == nil || IsNil(o.FormData) {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -87,15 +90,15 @@ func (o *CaseFeedbackResponse) GetFormData() map[string]interface{} {
 // GetFormDataOk returns a tuple with the FormData field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseFeedbackResponse) GetFormDataOk() (map[string]interface{}, bool) {
-	if o == nil || o.FormData == nil {
-		return nil, false
+	if o == nil || IsNil(o.FormData) {
+		return map[string]interface{}{}, false
 	}
 	return o.FormData, true
 }
 
 // HasFormData returns a boolean if a field has been set.
 func (o *CaseFeedbackResponse) HasFormData() bool {
-	if o != nil && o.FormData != nil {
+	if o != nil && !IsNil(o.FormData) {
 		return true
 	}
 
@@ -109,7 +112,7 @@ func (o *CaseFeedbackResponse) SetFormData(v map[string]interface{}) {
 
 // GetComment returns the Comment field value if set, zero value otherwise.
 func (o *CaseFeedbackResponse) GetComment() string {
-	if o == nil || o.Comment == nil {
+	if o == nil || IsNil(o.Comment) {
 		var ret string
 		return ret
 	}
@@ -119,7 +122,7 @@ func (o *CaseFeedbackResponse) GetComment() string {
 // GetCommentOk returns a tuple with the Comment field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseFeedbackResponse) GetCommentOk() (*string, bool) {
-	if o == nil || o.Comment == nil {
+	if o == nil || IsNil(o.Comment) {
 		return nil, false
 	}
 	return o.Comment, true
@@ -127,7 +130,7 @@ func (o *CaseFeedbackResponse) GetCommentOk() (*string, bool) {
 
 // HasComment returns a boolean if a field has been set.
 func (o *CaseFeedbackResponse) HasComment() bool {
-	if o != nil && o.Comment != nil {
+	if o != nil && !IsNil(o.Comment) {
 		return true
 	}
 
@@ -141,7 +144,7 @@ func (o *CaseFeedbackResponse) SetComment(v string) {
 
 // GetAttachmentRefs returns the AttachmentRefs field value if set, zero value otherwise.
 func (o *CaseFeedbackResponse) GetAttachmentRefs() []string {
-	if o == nil || o.AttachmentRefs == nil {
+	if o == nil || IsNil(o.AttachmentRefs) {
 		var ret []string
 		return ret
 	}
@@ -151,7 +154,7 @@ func (o *CaseFeedbackResponse) GetAttachmentRefs() []string {
 // GetAttachmentRefsOk returns a tuple with the AttachmentRefs field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaseFeedbackResponse) GetAttachmentRefsOk() ([]string, bool) {
-	if o == nil || o.AttachmentRefs == nil {
+	if o == nil || IsNil(o.AttachmentRefs) {
 		return nil, false
 	}
 	return o.AttachmentRefs, true
@@ -159,7 +162,7 @@ func (o *CaseFeedbackResponse) GetAttachmentRefsOk() ([]string, bool) {
 
 // HasAttachmentRefs returns a boolean if a field has been set.
 func (o *CaseFeedbackResponse) HasAttachmentRefs() bool {
-	if o != nil && o.AttachmentRefs != nil {
+	if o != nil && !IsNil(o.AttachmentRefs) {
 		return true
 	}
 
@@ -172,20 +175,28 @@ func (o *CaseFeedbackResponse) SetAttachmentRefs(v []string) {
 }
 
 func (o CaseFeedbackResponse) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.FormData != nil {
-		toSerialize["form_data"] = o.FormData
-	}
-	if o.Comment != nil {
-		toSerialize["comment"] = o.Comment
-	}
-	if o.AttachmentRefs != nil {
-		toSerialize["attachment_refs"] = o.AttachmentRefs
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CaseFeedbackResponse) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.FormData) {
+		toSerialize["form_data"] = o.FormData
+	}
+	if !IsNil(o.Comment) {
+		toSerialize["comment"] = o.Comment
+	}
+	if !IsNil(o.AttachmentRefs) {
+		toSerialize["attachment_refs"] = o.AttachmentRefs
+	}
+	return toSerialize, nil
 }
 
 type NullableCaseFeedbackResponse struct {

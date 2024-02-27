@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the Invitation type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Invitation{}
+
 // Invitation struct for Invitation
 type Invitation struct {
 	// The unique ID of the invitation
@@ -47,7 +50,7 @@ func NewInvitationWithDefaults() *Invitation {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *Invitation) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -57,7 +60,7 @@ func (o *Invitation) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Invitation) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -65,7 +68,7 @@ func (o *Invitation) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *Invitation) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -79,7 +82,7 @@ func (o *Invitation) SetId(v string) {
 
 // GetCreated returns the Created field value if set, zero value otherwise.
 func (o *Invitation) GetCreated() int64 {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		var ret int64
 		return ret
 	}
@@ -89,7 +92,7 @@ func (o *Invitation) GetCreated() int64 {
 // GetCreatedOk returns a tuple with the Created field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Invitation) GetCreatedOk() (*int64, bool) {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		return nil, false
 	}
 	return o.Created, true
@@ -97,7 +100,7 @@ func (o *Invitation) GetCreatedOk() (*int64, bool) {
 
 // HasCreated returns a boolean if a field has been set.
 func (o *Invitation) HasCreated() bool {
-	if o != nil && o.Created != nil {
+	if o != nil && !IsNil(o.Created) {
 		return true
 	}
 
@@ -111,7 +114,7 @@ func (o *Invitation) SetCreated(v int64) {
 
 // GetProcessed returns the Processed field value if set, zero value otherwise.
 func (o *Invitation) GetProcessed() int64 {
-	if o == nil || o.Processed == nil {
+	if o == nil || IsNil(o.Processed) {
 		var ret int64
 		return ret
 	}
@@ -121,7 +124,7 @@ func (o *Invitation) GetProcessed() int64 {
 // GetProcessedOk returns a tuple with the Processed field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Invitation) GetProcessedOk() (*int64, bool) {
-	if o == nil || o.Processed == nil {
+	if o == nil || IsNil(o.Processed) {
 		return nil, false
 	}
 	return o.Processed, true
@@ -129,7 +132,7 @@ func (o *Invitation) GetProcessedOk() (*int64, bool) {
 
 // HasProcessed returns a boolean if a field has been set.
 func (o *Invitation) HasProcessed() bool {
-	if o != nil && o.Processed != nil {
+	if o != nil && !IsNil(o.Processed) {
 		return true
 	}
 
@@ -143,7 +146,7 @@ func (o *Invitation) SetProcessed(v int64) {
 
 // GetUserEmail returns the UserEmail field value if set, zero value otherwise.
 func (o *Invitation) GetUserEmail() string {
-	if o == nil || o.UserEmail == nil {
+	if o == nil || IsNil(o.UserEmail) {
 		var ret string
 		return ret
 	}
@@ -153,7 +156,7 @@ func (o *Invitation) GetUserEmail() string {
 // GetUserEmailOk returns a tuple with the UserEmail field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Invitation) GetUserEmailOk() (*string, bool) {
-	if o == nil || o.UserEmail == nil {
+	if o == nil || IsNil(o.UserEmail) {
 		return nil, false
 	}
 	return o.UserEmail, true
@@ -161,7 +164,7 @@ func (o *Invitation) GetUserEmailOk() (*string, bool) {
 
 // HasUserEmail returns a boolean if a field has been set.
 func (o *Invitation) HasUserEmail() bool {
-	if o != nil && o.UserEmail != nil {
+	if o != nil && !IsNil(o.UserEmail) {
 		return true
 	}
 
@@ -175,7 +178,7 @@ func (o *Invitation) SetUserEmail(v string) {
 
 // GetStatus returns the Status field value if set, zero value otherwise.
 func (o *Invitation) GetStatus() InvitationStatus {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		var ret InvitationStatus
 		return ret
 	}
@@ -185,7 +188,7 @@ func (o *Invitation) GetStatus() InvitationStatus {
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Invitation) GetStatusOk() (*InvitationStatus, bool) {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
 	return o.Status, true
@@ -193,7 +196,7 @@ func (o *Invitation) GetStatusOk() (*InvitationStatus, bool) {
 
 // HasStatus returns a boolean if a field has been set.
 func (o *Invitation) HasStatus() bool {
-	if o != nil && o.Status != nil {
+	if o != nil && !IsNil(o.Status) {
 		return true
 	}
 
@@ -207,7 +210,7 @@ func (o *Invitation) SetStatus(v InvitationStatus) {
 
 // GetProperty returns the Property field value if set, zero value otherwise.
 func (o *Invitation) GetProperty() Property {
-	if o == nil || o.Property == nil {
+	if o == nil || IsNil(o.Property) {
 		var ret Property
 		return ret
 	}
@@ -217,7 +220,7 @@ func (o *Invitation) GetProperty() Property {
 // GetPropertyOk returns a tuple with the Property field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Invitation) GetPropertyOk() (*Property, bool) {
-	if o == nil || o.Property == nil {
+	if o == nil || IsNil(o.Property) {
 		return nil, false
 	}
 	return o.Property, true
@@ -225,7 +228,7 @@ func (o *Invitation) GetPropertyOk() (*Property, bool) {
 
 // HasProperty returns a boolean if a field has been set.
 func (o *Invitation) HasProperty() bool {
-	if o != nil && o.Property != nil {
+	if o != nil && !IsNil(o.Property) {
 		return true
 	}
 
@@ -238,26 +241,34 @@ func (o *Invitation) SetProperty(v Property) {
 }
 
 func (o Invitation) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Created != nil {
-		toSerialize["created"] = o.Created
-	}
-	if o.Processed != nil {
-		toSerialize["processed"] = o.Processed
-	}
-	if o.UserEmail != nil {
-		toSerialize["user_email"] = o.UserEmail
-	}
-	if o.Status != nil {
-		toSerialize["status"] = o.Status
-	}
-	if o.Property != nil {
-		toSerialize["property"] = o.Property
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Invitation) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Created) {
+		toSerialize["created"] = o.Created
+	}
+	if !IsNil(o.Processed) {
+		toSerialize["processed"] = o.Processed
+	}
+	if !IsNil(o.UserEmail) {
+		toSerialize["user_email"] = o.UserEmail
+	}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.Property) {
+		toSerialize["property"] = o.Property
+	}
+	return toSerialize, nil
 }
 
 type NullableInvitation struct {

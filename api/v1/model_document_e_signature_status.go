@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the DocumentESignatureStatus type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DocumentESignatureStatus{}
+
 // DocumentESignatureStatus The status of a document eSignature request
 type DocumentESignatureStatus struct {
 	// The unique ID of the document signing request
@@ -51,7 +54,7 @@ func NewDocumentESignatureStatusWithDefaults() *DocumentESignatureStatus {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *DocumentESignatureStatus) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -61,7 +64,7 @@ func (o *DocumentESignatureStatus) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentESignatureStatus) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -69,7 +72,7 @@ func (o *DocumentESignatureStatus) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *DocumentESignatureStatus) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -83,7 +86,7 @@ func (o *DocumentESignatureStatus) SetId(v string) {
 
 // GetCreationTime returns the CreationTime field value if set, zero value otherwise.
 func (o *DocumentESignatureStatus) GetCreationTime() int64 {
-	if o == nil || o.CreationTime == nil {
+	if o == nil || IsNil(o.CreationTime) {
 		var ret int64
 		return ret
 	}
@@ -93,7 +96,7 @@ func (o *DocumentESignatureStatus) GetCreationTime() int64 {
 // GetCreationTimeOk returns a tuple with the CreationTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentESignatureStatus) GetCreationTimeOk() (*int64, bool) {
-	if o == nil || o.CreationTime == nil {
+	if o == nil || IsNil(o.CreationTime) {
 		return nil, false
 	}
 	return o.CreationTime, true
@@ -101,7 +104,7 @@ func (o *DocumentESignatureStatus) GetCreationTimeOk() (*int64, bool) {
 
 // HasCreationTime returns a boolean if a field has been set.
 func (o *DocumentESignatureStatus) HasCreationTime() bool {
-	if o != nil && o.CreationTime != nil {
+	if o != nil && !IsNil(o.CreationTime) {
 		return true
 	}
 
@@ -115,7 +118,7 @@ func (o *DocumentESignatureStatus) SetCreationTime(v int64) {
 
 // GetExpirationTime returns the ExpirationTime field value if set, zero value otherwise.
 func (o *DocumentESignatureStatus) GetExpirationTime() int64 {
-	if o == nil || o.ExpirationTime == nil {
+	if o == nil || IsNil(o.ExpirationTime) {
 		var ret int64
 		return ret
 	}
@@ -125,7 +128,7 @@ func (o *DocumentESignatureStatus) GetExpirationTime() int64 {
 // GetExpirationTimeOk returns a tuple with the ExpirationTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentESignatureStatus) GetExpirationTimeOk() (*int64, bool) {
-	if o == nil || o.ExpirationTime == nil {
+	if o == nil || IsNil(o.ExpirationTime) {
 		return nil, false
 	}
 	return o.ExpirationTime, true
@@ -133,7 +136,7 @@ func (o *DocumentESignatureStatus) GetExpirationTimeOk() (*int64, bool) {
 
 // HasExpirationTime returns a boolean if a field has been set.
 func (o *DocumentESignatureStatus) HasExpirationTime() bool {
-	if o != nil && o.ExpirationTime != nil {
+	if o != nil && !IsNil(o.ExpirationTime) {
 		return true
 	}
 
@@ -147,7 +150,7 @@ func (o *DocumentESignatureStatus) SetExpirationTime(v int64) {
 
 // GetStatus returns the Status field value if set, zero value otherwise.
 func (o *DocumentESignatureStatus) GetStatus() string {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		var ret string
 		return ret
 	}
@@ -157,7 +160,7 @@ func (o *DocumentESignatureStatus) GetStatus() string {
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentESignatureStatus) GetStatusOk() (*string, bool) {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
 	return o.Status, true
@@ -165,7 +168,7 @@ func (o *DocumentESignatureStatus) GetStatusOk() (*string, bool) {
 
 // HasStatus returns a boolean if a field has been set.
 func (o *DocumentESignatureStatus) HasStatus() bool {
-	if o != nil && o.Status != nil {
+	if o != nil && !IsNil(o.Status) {
 		return true
 	}
 
@@ -179,7 +182,7 @@ func (o *DocumentESignatureStatus) SetStatus(v string) {
 
 // GetSigners returns the Signers field value if set, zero value otherwise.
 func (o *DocumentESignatureStatus) GetSigners() []DocumentSigner {
-	if o == nil || o.Signers == nil {
+	if o == nil || IsNil(o.Signers) {
 		var ret []DocumentSigner
 		return ret
 	}
@@ -189,7 +192,7 @@ func (o *DocumentESignatureStatus) GetSigners() []DocumentSigner {
 // GetSignersOk returns a tuple with the Signers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentESignatureStatus) GetSignersOk() ([]DocumentSigner, bool) {
-	if o == nil || o.Signers == nil {
+	if o == nil || IsNil(o.Signers) {
 		return nil, false
 	}
 	return o.Signers, true
@@ -197,7 +200,7 @@ func (o *DocumentESignatureStatus) GetSignersOk() ([]DocumentSigner, bool) {
 
 // HasSigners returns a boolean if a field has been set.
 func (o *DocumentESignatureStatus) HasSigners() bool {
-	if o != nil && o.Signers != nil {
+	if o != nil && !IsNil(o.Signers) {
 		return true
 	}
 
@@ -211,7 +214,7 @@ func (o *DocumentESignatureStatus) SetSigners(v []DocumentSigner) {
 
 // GetSignedDocRef returns the SignedDocRef field value if set, zero value otherwise.
 func (o *DocumentESignatureStatus) GetSignedDocRef() string {
-	if o == nil || o.SignedDocRef == nil {
+	if o == nil || IsNil(o.SignedDocRef) {
 		var ret string
 		return ret
 	}
@@ -221,7 +224,7 @@ func (o *DocumentESignatureStatus) GetSignedDocRef() string {
 // GetSignedDocRefOk returns a tuple with the SignedDocRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentESignatureStatus) GetSignedDocRefOk() (*string, bool) {
-	if o == nil || o.SignedDocRef == nil {
+	if o == nil || IsNil(o.SignedDocRef) {
 		return nil, false
 	}
 	return o.SignedDocRef, true
@@ -229,7 +232,7 @@ func (o *DocumentESignatureStatus) GetSignedDocRefOk() (*string, bool) {
 
 // HasSignedDocRef returns a boolean if a field has been set.
 func (o *DocumentESignatureStatus) HasSignedDocRef() bool {
-	if o != nil && o.SignedDocRef != nil {
+	if o != nil && !IsNil(o.SignedDocRef) {
 		return true
 	}
 
@@ -243,7 +246,7 @@ func (o *DocumentESignatureStatus) SetSignedDocRef(v string) {
 
 // GetSignedDocAuditRef returns the SignedDocAuditRef field value if set, zero value otherwise.
 func (o *DocumentESignatureStatus) GetSignedDocAuditRef() string {
-	if o == nil || o.SignedDocAuditRef == nil {
+	if o == nil || IsNil(o.SignedDocAuditRef) {
 		var ret string
 		return ret
 	}
@@ -253,7 +256,7 @@ func (o *DocumentESignatureStatus) GetSignedDocAuditRef() string {
 // GetSignedDocAuditRefOk returns a tuple with the SignedDocAuditRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentESignatureStatus) GetSignedDocAuditRefOk() (*string, bool) {
-	if o == nil || o.SignedDocAuditRef == nil {
+	if o == nil || IsNil(o.SignedDocAuditRef) {
 		return nil, false
 	}
 	return o.SignedDocAuditRef, true
@@ -261,7 +264,7 @@ func (o *DocumentESignatureStatus) GetSignedDocAuditRefOk() (*string, bool) {
 
 // HasSignedDocAuditRef returns a boolean if a field has been set.
 func (o *DocumentESignatureStatus) HasSignedDocAuditRef() bool {
-	if o != nil && o.SignedDocAuditRef != nil {
+	if o != nil && !IsNil(o.SignedDocAuditRef) {
 		return true
 	}
 
@@ -274,29 +277,37 @@ func (o *DocumentESignatureStatus) SetSignedDocAuditRef(v string) {
 }
 
 func (o DocumentESignatureStatus) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.CreationTime != nil {
-		toSerialize["creation_time"] = o.CreationTime
-	}
-	if o.ExpirationTime != nil {
-		toSerialize["expiration_time"] = o.ExpirationTime
-	}
-	if o.Status != nil {
-		toSerialize["status"] = o.Status
-	}
-	if o.Signers != nil {
-		toSerialize["signers"] = o.Signers
-	}
-	if o.SignedDocRef != nil {
-		toSerialize["signed_doc_ref"] = o.SignedDocRef
-	}
-	if o.SignedDocAuditRef != nil {
-		toSerialize["signed_doc_audit_ref"] = o.SignedDocAuditRef
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DocumentESignatureStatus) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.CreationTime) {
+		toSerialize["creation_time"] = o.CreationTime
+	}
+	if !IsNil(o.ExpirationTime) {
+		toSerialize["expiration_time"] = o.ExpirationTime
+	}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.Signers) {
+		toSerialize["signers"] = o.Signers
+	}
+	if !IsNil(o.SignedDocRef) {
+		toSerialize["signed_doc_ref"] = o.SignedDocRef
+	}
+	if !IsNil(o.SignedDocAuditRef) {
+		toSerialize["signed_doc_audit_ref"] = o.SignedDocAuditRef
+	}
+	return toSerialize, nil
 }
 
 type NullableDocumentESignatureStatus struct {

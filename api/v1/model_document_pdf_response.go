@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the DocumentPDFResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DocumentPDFResponse{}
+
 // DocumentPDFResponse link to generated document
 type DocumentPDFResponse struct {
 	// The URL of the generated document
@@ -39,7 +42,7 @@ func NewDocumentPDFResponseWithDefaults() *DocumentPDFResponse {
 
 // GetDocumentUrl returns the DocumentUrl field value if set, zero value otherwise.
 func (o *DocumentPDFResponse) GetDocumentUrl() string {
-	if o == nil || o.DocumentUrl == nil {
+	if o == nil || IsNil(o.DocumentUrl) {
 		var ret string
 		return ret
 	}
@@ -49,7 +52,7 @@ func (o *DocumentPDFResponse) GetDocumentUrl() string {
 // GetDocumentUrlOk returns a tuple with the DocumentUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentPDFResponse) GetDocumentUrlOk() (*string, bool) {
-	if o == nil || o.DocumentUrl == nil {
+	if o == nil || IsNil(o.DocumentUrl) {
 		return nil, false
 	}
 	return o.DocumentUrl, true
@@ -57,7 +60,7 @@ func (o *DocumentPDFResponse) GetDocumentUrlOk() (*string, bool) {
 
 // HasDocumentUrl returns a boolean if a field has been set.
 func (o *DocumentPDFResponse) HasDocumentUrl() bool {
-	if o != nil && o.DocumentUrl != nil {
+	if o != nil && !IsNil(o.DocumentUrl) {
 		return true
 	}
 
@@ -70,11 +73,19 @@ func (o *DocumentPDFResponse) SetDocumentUrl(v string) {
 }
 
 func (o DocumentPDFResponse) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.DocumentUrl != nil {
-		toSerialize["document_url"] = o.DocumentUrl
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DocumentPDFResponse) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.DocumentUrl) {
+		toSerialize["document_url"] = o.DocumentUrl
+	}
+	return toSerialize, nil
 }
 
 type NullableDocumentPDFResponse struct {

@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CreateOrUpdateMeterReadingRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CreateOrUpdateMeterReadingRequest{}
+
 // CreateOrUpdateMeterReadingRequest All the information required for tracking a meter reading
 type CreateOrUpdateMeterReadingRequest struct {
 	Date          *int64       `json:"date,omitempty"`
@@ -40,7 +43,7 @@ func NewCreateOrUpdateMeterReadingRequestWithDefaults() *CreateOrUpdateMeterRead
 
 // GetDate returns the Date field value if set, zero value otherwise.
 func (o *CreateOrUpdateMeterReadingRequest) GetDate() int64 {
-	if o == nil || o.Date == nil {
+	if o == nil || IsNil(o.Date) {
 		var ret int64
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *CreateOrUpdateMeterReadingRequest) GetDate() int64 {
 // GetDateOk returns a tuple with the Date field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateMeterReadingRequest) GetDateOk() (*int64, bool) {
-	if o == nil || o.Date == nil {
+	if o == nil || IsNil(o.Date) {
 		return nil, false
 	}
 	return o.Date, true
@@ -58,7 +61,7 @@ func (o *CreateOrUpdateMeterReadingRequest) GetDateOk() (*int64, bool) {
 
 // HasDate returns a boolean if a field has been set.
 func (o *CreateOrUpdateMeterReadingRequest) HasDate() bool {
-	if o != nil && o.Date != nil {
+	if o != nil && !IsNil(o.Date) {
 		return true
 	}
 
@@ -72,7 +75,7 @@ func (o *CreateOrUpdateMeterReadingRequest) SetDate(v int64) {
 
 // GetValue returns the Value field value if set, zero value otherwise.
 func (o *CreateOrUpdateMeterReadingRequest) GetValue() FloatNumber {
-	if o == nil || o.Value == nil {
+	if o == nil || IsNil(o.Value) {
 		var ret FloatNumber
 		return ret
 	}
@@ -82,7 +85,7 @@ func (o *CreateOrUpdateMeterReadingRequest) GetValue() FloatNumber {
 // GetValueOk returns a tuple with the Value field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateMeterReadingRequest) GetValueOk() (*FloatNumber, bool) {
-	if o == nil || o.Value == nil {
+	if o == nil || IsNil(o.Value) {
 		return nil, false
 	}
 	return o.Value, true
@@ -90,7 +93,7 @@ func (o *CreateOrUpdateMeterReadingRequest) GetValueOk() (*FloatNumber, bool) {
 
 // HasValue returns a boolean if a field has been set.
 func (o *CreateOrUpdateMeterReadingRequest) HasValue() bool {
-	if o != nil && o.Value != nil {
+	if o != nil && !IsNil(o.Value) {
 		return true
 	}
 
@@ -104,7 +107,7 @@ func (o *CreateOrUpdateMeterReadingRequest) SetValue(v FloatNumber) {
 
 // GetAttachmentRef returns the AttachmentRef field value if set, zero value otherwise.
 func (o *CreateOrUpdateMeterReadingRequest) GetAttachmentRef() string {
-	if o == nil || o.AttachmentRef == nil {
+	if o == nil || IsNil(o.AttachmentRef) {
 		var ret string
 		return ret
 	}
@@ -114,7 +117,7 @@ func (o *CreateOrUpdateMeterReadingRequest) GetAttachmentRef() string {
 // GetAttachmentRefOk returns a tuple with the AttachmentRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateMeterReadingRequest) GetAttachmentRefOk() (*string, bool) {
-	if o == nil || o.AttachmentRef == nil {
+	if o == nil || IsNil(o.AttachmentRef) {
 		return nil, false
 	}
 	return o.AttachmentRef, true
@@ -122,7 +125,7 @@ func (o *CreateOrUpdateMeterReadingRequest) GetAttachmentRefOk() (*string, bool)
 
 // HasAttachmentRef returns a boolean if a field has been set.
 func (o *CreateOrUpdateMeterReadingRequest) HasAttachmentRef() bool {
-	if o != nil && o.AttachmentRef != nil {
+	if o != nil && !IsNil(o.AttachmentRef) {
 		return true
 	}
 
@@ -135,17 +138,25 @@ func (o *CreateOrUpdateMeterReadingRequest) SetAttachmentRef(v string) {
 }
 
 func (o CreateOrUpdateMeterReadingRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Date != nil {
-		toSerialize["date"] = o.Date
-	}
-	if o.Value != nil {
-		toSerialize["value"] = o.Value
-	}
-	if o.AttachmentRef != nil {
-		toSerialize["attachment_ref"] = o.AttachmentRef
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CreateOrUpdateMeterReadingRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Date) {
+		toSerialize["date"] = o.Date
+	}
+	if !IsNil(o.Value) {
+		toSerialize["value"] = o.Value
+	}
+	if !IsNil(o.AttachmentRef) {
+		toSerialize["attachment_ref"] = o.AttachmentRef
+	}
+	return toSerialize, nil
 }
 
 type NullableCreateOrUpdateMeterReadingRequest struct {

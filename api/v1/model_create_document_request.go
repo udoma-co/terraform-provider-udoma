@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CreateDocumentRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CreateDocumentRequest{}
+
 // CreateDocumentRequest Attributes needed for creating a document uploaded in the system
 type CreateDocumentRequest struct {
 	RefType *DocumentRefTypeEnum `json:"ref_type,omitempty"`
@@ -48,7 +51,7 @@ func NewCreateDocumentRequestWithDefaults() *CreateDocumentRequest {
 
 // GetRefType returns the RefType field value if set, zero value otherwise.
 func (o *CreateDocumentRequest) GetRefType() DocumentRefTypeEnum {
-	if o == nil || o.RefType == nil {
+	if o == nil || IsNil(o.RefType) {
 		var ret DocumentRefTypeEnum
 		return ret
 	}
@@ -58,7 +61,7 @@ func (o *CreateDocumentRequest) GetRefType() DocumentRefTypeEnum {
 // GetRefTypeOk returns a tuple with the RefType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateDocumentRequest) GetRefTypeOk() (*DocumentRefTypeEnum, bool) {
-	if o == nil || o.RefType == nil {
+	if o == nil || IsNil(o.RefType) {
 		return nil, false
 	}
 	return o.RefType, true
@@ -66,7 +69,7 @@ func (o *CreateDocumentRequest) GetRefTypeOk() (*DocumentRefTypeEnum, bool) {
 
 // HasRefType returns a boolean if a field has been set.
 func (o *CreateDocumentRequest) HasRefType() bool {
-	if o != nil && o.RefType != nil {
+	if o != nil && !IsNil(o.RefType) {
 		return true
 	}
 
@@ -80,7 +83,7 @@ func (o *CreateDocumentRequest) SetRefType(v DocumentRefTypeEnum) {
 
 // GetRefId returns the RefId field value if set, zero value otherwise.
 func (o *CreateDocumentRequest) GetRefId() string {
-	if o == nil || o.RefId == nil {
+	if o == nil || IsNil(o.RefId) {
 		var ret string
 		return ret
 	}
@@ -90,7 +93,7 @@ func (o *CreateDocumentRequest) GetRefId() string {
 // GetRefIdOk returns a tuple with the RefId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateDocumentRequest) GetRefIdOk() (*string, bool) {
-	if o == nil || o.RefId == nil {
+	if o == nil || IsNil(o.RefId) {
 		return nil, false
 	}
 	return o.RefId, true
@@ -98,7 +101,7 @@ func (o *CreateDocumentRequest) GetRefIdOk() (*string, bool) {
 
 // HasRefId returns a boolean if a field has been set.
 func (o *CreateDocumentRequest) HasRefId() bool {
-	if o != nil && o.RefId != nil {
+	if o != nil && !IsNil(o.RefId) {
 		return true
 	}
 
@@ -112,7 +115,7 @@ func (o *CreateDocumentRequest) SetRefId(v string) {
 
 // GetAttachmentRef returns the AttachmentRef field value if set, zero value otherwise.
 func (o *CreateDocumentRequest) GetAttachmentRef() string {
-	if o == nil || o.AttachmentRef == nil {
+	if o == nil || IsNil(o.AttachmentRef) {
 		var ret string
 		return ret
 	}
@@ -122,7 +125,7 @@ func (o *CreateDocumentRequest) GetAttachmentRef() string {
 // GetAttachmentRefOk returns a tuple with the AttachmentRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateDocumentRequest) GetAttachmentRefOk() (*string, bool) {
-	if o == nil || o.AttachmentRef == nil {
+	if o == nil || IsNil(o.AttachmentRef) {
 		return nil, false
 	}
 	return o.AttachmentRef, true
@@ -130,7 +133,7 @@ func (o *CreateDocumentRequest) GetAttachmentRefOk() (*string, bool) {
 
 // HasAttachmentRef returns a boolean if a field has been set.
 func (o *CreateDocumentRequest) HasAttachmentRef() bool {
-	if o != nil && o.AttachmentRef != nil {
+	if o != nil && !IsNil(o.AttachmentRef) {
 		return true
 	}
 
@@ -144,7 +147,7 @@ func (o *CreateDocumentRequest) SetAttachmentRef(v string) {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *CreateDocumentRequest) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -154,7 +157,7 @@ func (o *CreateDocumentRequest) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateDocumentRequest) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -162,7 +165,7 @@ func (o *CreateDocumentRequest) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *CreateDocumentRequest) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -176,7 +179,7 @@ func (o *CreateDocumentRequest) SetName(v string) {
 
 // GetPath returns the Path field value if set, zero value otherwise.
 func (o *CreateDocumentRequest) GetPath() string {
-	if o == nil || o.Path == nil {
+	if o == nil || IsNil(o.Path) {
 		var ret string
 		return ret
 	}
@@ -186,7 +189,7 @@ func (o *CreateDocumentRequest) GetPath() string {
 // GetPathOk returns a tuple with the Path field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateDocumentRequest) GetPathOk() (*string, bool) {
-	if o == nil || o.Path == nil {
+	if o == nil || IsNil(o.Path) {
 		return nil, false
 	}
 	return o.Path, true
@@ -194,7 +197,7 @@ func (o *CreateDocumentRequest) GetPathOk() (*string, bool) {
 
 // HasPath returns a boolean if a field has been set.
 func (o *CreateDocumentRequest) HasPath() bool {
-	if o != nil && o.Path != nil {
+	if o != nil && !IsNil(o.Path) {
 		return true
 	}
 
@@ -208,7 +211,7 @@ func (o *CreateDocumentRequest) SetPath(v string) {
 
 // GetPublic returns the Public field value if set, zero value otherwise.
 func (o *CreateDocumentRequest) GetPublic() bool {
-	if o == nil || o.Public == nil {
+	if o == nil || IsNil(o.Public) {
 		var ret bool
 		return ret
 	}
@@ -218,7 +221,7 @@ func (o *CreateDocumentRequest) GetPublic() bool {
 // GetPublicOk returns a tuple with the Public field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateDocumentRequest) GetPublicOk() (*bool, bool) {
-	if o == nil || o.Public == nil {
+	if o == nil || IsNil(o.Public) {
 		return nil, false
 	}
 	return o.Public, true
@@ -226,7 +229,7 @@ func (o *CreateDocumentRequest) GetPublicOk() (*bool, bool) {
 
 // HasPublic returns a boolean if a field has been set.
 func (o *CreateDocumentRequest) HasPublic() bool {
-	if o != nil && o.Public != nil {
+	if o != nil && !IsNil(o.Public) {
 		return true
 	}
 
@@ -239,26 +242,34 @@ func (o *CreateDocumentRequest) SetPublic(v bool) {
 }
 
 func (o CreateDocumentRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.RefType != nil {
-		toSerialize["ref_type"] = o.RefType
-	}
-	if o.RefId != nil {
-		toSerialize["ref_id"] = o.RefId
-	}
-	if o.AttachmentRef != nil {
-		toSerialize["attachment_ref"] = o.AttachmentRef
-	}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.Path != nil {
-		toSerialize["path"] = o.Path
-	}
-	if o.Public != nil {
-		toSerialize["public"] = o.Public
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CreateDocumentRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.RefType) {
+		toSerialize["ref_type"] = o.RefType
+	}
+	if !IsNil(o.RefId) {
+		toSerialize["ref_id"] = o.RefId
+	}
+	if !IsNil(o.AttachmentRef) {
+		toSerialize["attachment_ref"] = o.AttachmentRef
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Path) {
+		toSerialize["path"] = o.Path
+	}
+	if !IsNil(o.Public) {
+		toSerialize["public"] = o.Public
+	}
+	return toSerialize, nil
 }
 
 type NullableCreateDocumentRequest struct {
