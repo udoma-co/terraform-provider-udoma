@@ -1,6 +1,8 @@
 package provider
 
 import (
+	"fmt"
+
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -43,7 +45,7 @@ func getApiErrorMessage(err error) string {
 
 	apiErr, ok := err.(*api.GenericOpenAPIError)
 	if ok {
-		return string(apiErr.Body())
+		return fmt.Sprintf("%s: %s", err.Error(), string(apiErr.Body()))
 	}
 
 	return err.Error()

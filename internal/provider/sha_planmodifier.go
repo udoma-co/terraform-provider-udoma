@@ -16,12 +16,12 @@ type SHA256Modifier struct {
 }
 
 // Description implements planmodifier.String.
-func (_ SHA256Modifier) Description(context.Context) string {
+func (SHA256Modifier) Description(context.Context) string {
 	return "This is a SHA256 modifier, that would keep the SHA256 element updated based on file path."
 }
 
 // MarkdownDescription implements planmodifier.String.
-func (_ SHA256Modifier) MarkdownDescription(context.Context) string {
+func (SHA256Modifier) MarkdownDescription(context.Context) string {
 	return "This is a SHA256 modifier, that would keep the SHA256 element updated based on file path."
 }
 
