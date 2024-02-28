@@ -194,7 +194,7 @@ func (r *Attachment) Delete(ctx context.Context, req resource.DeleteRequest, res
 	}
 
 	httpResp, err := r.client.GetApi().DeleteAttachment(ctx, state.ID.ValueString()).Execute()
-	if err != nil && (httpResp == nil || (httpResp != nil && httpResp.StatusCode != 404)) {
+	if err != nil && (httpResp == nil || httpResp.StatusCode != 404) {
 		resp.Diagnostics.AddError(
 			"Error Deleting Attachment",
 			getApiErrorMessage(err),
