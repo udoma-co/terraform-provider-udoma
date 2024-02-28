@@ -16180,6 +16180,9 @@ components:
       - bank_account
       - yes_no_or_value
       - service_provider_ref
+      - reporter
+      - property
+      - case_party
       type: string
     FormValidation:
       description: a custom validation that is used to validate data provided by the
