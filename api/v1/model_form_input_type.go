@@ -34,6 +34,9 @@ const (
 	FORMINPUTTYPE_BANK_ACCOUNT         FormInputType = "bank_account"
 	FORMINPUTTYPE_YES_NO_OR_VALUE      FormInputType = "yes_no_or_value"
 	FORMINPUTTYPE_SERVICE_PROVIDER_REF FormInputType = "service_provider_ref"
+	FORMINPUTTYPE_REPORTER             FormInputType = "reporter"
+	FORMINPUTTYPE_PROPERTY             FormInputType = "property"
+	FORMINPUTTYPE_CASE_PARTY           FormInputType = "case_party"
 )
 
 // All allowed values of FormInputType enum
@@ -52,6 +55,9 @@ var AllowedFormInputTypeEnumValues = []FormInputType{
 	"bank_account",
 	"yes_no_or_value",
 	"service_provider_ref",
+	"reporter",
+	"property",
+	"case_party",
 }
 
 func (v *FormInputType) UnmarshalJSON(src []byte) error {
