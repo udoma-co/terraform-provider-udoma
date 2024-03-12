@@ -273,8 +273,8 @@ func (model *BankAccountModel) fromAPI(bankAccount *api.BankAccount) error {
 	}
 
 	model.ID = types.StringValue(sdp(bankAccount.Id))
-	model.ExternalID = types.StringValue(sdp(bankAccount.ExternalId))
-	model.ExternalSource = types.StringValue(sdp(bankAccount.ExternalSource))
+	model.ExternalID = types.StringPointerValue(bankAccount.ExternalId)
+	model.ExternalSource = types.StringPointerValue(bankAccount.ExternalSource)
 	model.AccountHolder = types.StringValue(sdp(bankAccount.AccountHolder))
 	model.Iban = types.StringValue(sdp(bankAccount.Iban))
 	model.Bic = types.StringValue(sdp(bankAccount.Bic))
