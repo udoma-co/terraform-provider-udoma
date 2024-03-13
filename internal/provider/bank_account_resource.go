@@ -57,11 +57,11 @@ func (faq *BankAccount) Schema(ctx context.Context, req resource.SchemaRequest, 
 				},
 			},
 			"external_id": schema.StringAttribute{
-				Optional:    true,
+				Computed:    true,
 				Description: "Optional external ID, in case acount was created via backend integration",
 			},
 			"external_source": schema.StringAttribute{
-				Optional:    true,
+				Computed:    true,
 				Description: "Optional external source, in case acount was created via backend integration",
 			},
 			"created_at": schema.Int64Attribute{
@@ -228,7 +228,7 @@ func (bank_account *BankAccount) Update(ctx context.Context, req resource.Update
 	// update the tf struct with the new values
 	if err := plan.fromAPI(newBankAccount); err != nil {
 		resp.Diagnostics.AddError(
-			"Error Updating FAQ Entry",
+			"Error Updating Bank Account Entry",
 			"Could not process API response, unexpected error: "+err.Error(),
 		)
 		return
@@ -273,8 +273,8 @@ func (model *BankAccountModel) fromAPI(bankAccount *api.BankAccount) error {
 	}
 
 	model.ID = types.StringValue(sdp(bankAccount.Id))
-	model.ExternalID = types.StringPointerValue(bankAccount.ExternalId)
-	model.ExternalSource = types.StringPointerValue(bankAccount.ExternalSource)
+	model.ExternalID = types.StringValue(sdp(bankAccount.ExternalId))
+	model.ExternalSource = types.StringValue(sdp(bankAccount.ExternalSource))
 	model.AccountHolder = types.StringValue(sdp(bankAccount.AccountHolder))
 	model.Iban = types.StringValue(sdp(bankAccount.Iban))
 	model.Bic = types.StringValue(sdp(bankAccount.Bic))
