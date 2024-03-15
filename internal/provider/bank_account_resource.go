@@ -15,8 +15,8 @@ import (
 )
 
 var (
-	_ resource.ResourceWithConfigure   = &FAQ{}
-	_ resource.ResourceWithImportState = &FAQ{}
+	_ resource.ResourceWithConfigure   = &BankAccount{}
+	_ resource.ResourceWithImportState = &BankAccount{}
 )
 
 func NewBankAccount() resource.Resource {
@@ -57,11 +57,11 @@ func (faq *BankAccount) Schema(ctx context.Context, req resource.SchemaRequest, 
 				},
 			},
 			"external_id": schema.StringAttribute{
-				Computed:    true,
+				Optional:    true,
 				Description: "Optional external ID, in case acount was created via backend integration",
 			},
 			"external_source": schema.StringAttribute{
-				Computed:    true,
+				Optional:    true,
 				Description: "Optional external source, in case acount was created via backend integration",
 			},
 			"created_at": schema.Int64Attribute{
@@ -207,28 +207,28 @@ func (bank_account *BankAccount) Update(ctx context.Context, req resource.Update
 		return
 	}
 
-	createReq, err := plan.toAPIRequest()
+	updateReq, err := plan.toAPIRequest()
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Error Updating Bank Account Entry",
+			"Error Updating Bank Account",
 			"Could not create API request, unexpected error: "+err.Error(),
 		)
 		return
 	}
 
-	newBankAccount, _, err := bank_account.client.GetApi().UpdateBankAccount(ctx, plan.ID.ValueString()).CreateOrUpdateBankAccountRequest(createReq).Execute()
+	updatedBankAccount, _, err := bank_account.client.GetApi().UpdateBankAccount(ctx, plan.ID.ValueString()).CreateOrUpdateBankAccountRequest(updateReq).Execute()
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Error Updating Bank Account Entry",
+			"Error Updating Bank Account",
 			"Could not update entity in Udoma, unexpected error: "+getApiErrorMessage(err),
 		)
 		return
 	}
 
 	// update the tf struct with the new values
-	if err := plan.fromAPI(newBankAccount); err != nil {
+	if err := plan.fromAPI(updatedBankAccount); err != nil {
 		resp.Diagnostics.AddError(
-			"Error Updating Bank Account Entry",
+			"Error Updating Bank Account",
 			"Could not process API response, unexpected error: "+err.Error(),
 		)
 		return
