@@ -9,25 +9,32 @@ import (
 	api "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
 )
 
-func sdp(in *string) string {
-	if in == nil {
-		return ""
+// omittableBooleanValue returns a new value for a boolean field that can be
+// omitted. That is, if the new value is nil and the old value is false, the
+// returned value is false. Otherwise, the returned value is the new value.
+// This is useful for fields that are optional and default to false, i.e.
+// during planing they will have a value of false, but after apply the API
+// might omit the field if it is false.
+func omittableBooleanValue(newValue *bool, oldValue basetypes.BoolValue) basetypes.BoolValue {
+	if newValue == nil && !oldValue.IsNull() && !oldValue.ValueBool() {
+		// omitted false value
+		return types.BoolValue(false)
 	}
-	return *in
+	return types.BoolPointerValue(newValue)
 }
 
-func bdp(in *bool) bool {
-	if in == nil {
-		return false
+// omittableStringValue returns a new value for a string field that can be
+// omitted. That is, if the new value is nil and the old value is "", the
+// returned value is "". Otherwise, the returned value is the new value.
+// This is useful for fields that are optional and default to "", i.e.
+// during planing they will have a value of "", but after apply the API
+// might omit the field if it is "".
+func omittableStringValue(newValue *string, oldValue basetypes.StringValue) basetypes.StringValue {
+	if newValue == nil && !oldValue.IsNull() && oldValue.ValueString() == "" {
+		// omitted empty value
+		return types.StringValue("")
 	}
-	return *in
-}
-
-func idp(in *int64) int64 {
-	if in == nil {
-		return 0
-	}
-	return *in
+	return types.StringPointerValue(newValue)
 }
 
 func idp32(in *int32) int32 {

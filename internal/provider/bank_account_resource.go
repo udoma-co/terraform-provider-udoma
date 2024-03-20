@@ -57,12 +57,12 @@ func (faq *BankAccount) Schema(ctx context.Context, req resource.SchemaRequest, 
 				},
 			},
 			"external_id": schema.StringAttribute{
-				Optional:    true,
-				Description: "Optional external ID, in case acount was created via backend integration",
+				Computed:    true,
+				Description: "Optional external ID, in case account was created via backend integration",
 			},
 			"external_source": schema.StringAttribute{
-				Optional:    true,
-				Description: "Optional external source, in case acount was created via backend integration",
+				Computed:    true,
+				Description: "Optional external source, in case account was created via backend integration",
 			},
 			"created_at": schema.Int64Attribute{
 				Computed:    true,
@@ -272,16 +272,16 @@ func (model *BankAccountModel) fromAPI(bankAccount *api.BankAccount) error {
 		return fmt.Errorf("bank account is nil")
 	}
 
-	model.ID = types.StringValue(sdp(bankAccount.Id))
-	model.ExternalID = types.StringValue(sdp(bankAccount.ExternalId))
-	model.ExternalSource = types.StringValue(sdp(bankAccount.ExternalSource))
-	model.AccountHolder = types.StringValue(sdp(bankAccount.AccountHolder))
-	model.Iban = types.StringValue(sdp(bankAccount.Iban))
-	model.Bic = types.StringValue(sdp(bankAccount.Bic))
-	model.BankName = types.StringValue(sdp(bankAccount.BankName))
-	model.Description = types.StringValue(sdp(bankAccount.Description))
-	model.CreatedAt = types.Int64Value(idp(bankAccount.CreatedAt))
-	model.UpdatedAt = types.Int64Value(idp(bankAccount.UpdatedAt))
+	model.ID = types.StringPointerValue(bankAccount.Id)
+	model.ExternalID = types.StringPointerValue(bankAccount.ExternalId)
+	model.ExternalSource = types.StringPointerValue(bankAccount.ExternalSource)
+	model.AccountHolder = types.StringPointerValue(bankAccount.AccountHolder)
+	model.Iban = types.StringPointerValue(bankAccount.Iban)
+	model.Bic = omittableStringValue(bankAccount.Bic, model.Bic)
+	model.BankName = omittableStringValue(bankAccount.BankName, model.BankName)
+	model.Description = omittableStringValue(bankAccount.Description, model.Description)
+	model.CreatedAt = types.Int64PointerValue(bankAccount.CreatedAt)
+	model.UpdatedAt = types.Int64PointerValue(bankAccount.UpdatedAt)
 
 	return nil
 }

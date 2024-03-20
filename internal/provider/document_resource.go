@@ -196,7 +196,7 @@ func (d *Document) Delete(ctx context.Context, req resource.DeleteRequest, resp 
 	}
 
 	httpResp, err := d.client.GetApi().DeleteDocument(ctx, model.ID.ValueString()).Execute()
-	if err != nil && (httpResp == nil || (httpResp != nil && httpResp.StatusCode != 404)) {
+	if err != nil && (httpResp == nil || httpResp.StatusCode != 404) {
 		resp.Diagnostics.AddError(
 			"Error Deleting document",
 			getApiErrorMessage(err),
@@ -235,13 +235,11 @@ func (m *DocumentModel) toUpdateAPIRequest() *v1.UpdateDocumentRequest {
 }
 
 func (m *DocumentModel) fromAPIResponse(document *v1.Document) {
-	m.ID = types.StringValue(sdp(document.Id))
-	m.CreatedAt = types.Int64Value(idp(document.CreatedAt))
-	m.UpdatedAt = types.Int64Value(idp(document.UpdatedAt))
-	m.Name = types.StringValue(sdp(document.Name))
-	if document.Path != nil {
-		m.Path = types.StringValue(*document.Path)
-	}
-	m.Public = types.BoolValue(bdp(document.Public))
-	m.Attachment = types.StringValue(sdp(document.Attachment.Id))
+	m.ID = types.StringPointerValue(document.Id)
+	m.CreatedAt = types.Int64PointerValue(document.CreatedAt)
+	m.UpdatedAt = types.Int64PointerValue(document.UpdatedAt)
+	m.Name = types.StringPointerValue(document.Name)
+	m.Path = omittableStringValue(document.Path, m.Path)
+	m.Public = omittableBooleanValue(document.Public, m.Public)
+	m.Attachment = types.StringPointerValue(document.Attachment.Id)
 }

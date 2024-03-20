@@ -19,9 +19,6 @@ Resource represents a defintion of a workflow
 
 - `first_step_id` (String) The ID of the first step of the workflow
 - `name` (String) The name of the workflow definition, shown in the admin page
-- `name_expression` (String) An optional JS expression to be used to compute the name of 
-				the workflow execution. If not set, the name of the definition will be used
-				for new executions
 
 ### Optional
 
@@ -29,6 +26,9 @@ Resource represents a defintion of a workflow
 - `env_vars` (Map of String) A map of environment variables to be set for the workflow execution
 - `icon` (String) The icon to be displayed on the manual workflow execution page
 - `init_step` (String) Optional JSON serialised initial step definition
+- `name_expression` (String) An optional JS expression to be used to compute the name of 
+				the workflow execution. If not set, the name of the definition will be used
+				for new executions
 - `steps` (String) The JSON serialised step definitions
 
 ### Read-Only

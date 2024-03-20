@@ -97,7 +97,7 @@ func (r *workflowDefinition) Schema(ctx context.Context, req resource.SchemaRequ
 				Description: "The icon to be displayed on the manual workflow execution page",
 			},
 			"name_expression": schema.StringAttribute{
-				Required: true,
+				Optional: true,
 				Description: `An optional JS expression to be used to compute the name of 
 				the workflow execution. If not set, the name of the definition will be used
 				for new executions`,
@@ -311,14 +311,14 @@ func (model *workflowDefinitionModel) fromAPI(workflowDefinition *api.WorkflowDe
 		return fmt.Errorf("workflow definition is nil")
 	}
 
-	model.ID = types.StringValue(sdp(workflowDefinition.Id))
-	model.CreatedAt = types.Int64Value(idp(workflowDefinition.CreatedAt))
-	model.UpdatedAt = types.Int64Value(idp(workflowDefinition.UpdatedAt))
-	model.Name = types.StringValue(sdp(workflowDefinition.Name))
-	model.Description = types.StringValue(sdp(workflowDefinition.Description))
-	model.Icon = types.StringValue(sdp(workflowDefinition.Icon))
-	model.NameExpression = types.StringValue(sdp(workflowDefinition.NameExpression))
-	model.FirstStepID = types.StringValue(sdp(workflowDefinition.FirstStepId))
+	model.ID = types.StringPointerValue(workflowDefinition.Id)
+	model.CreatedAt = types.Int64PointerValue(workflowDefinition.CreatedAt)
+	model.UpdatedAt = types.Int64PointerValue(workflowDefinition.UpdatedAt)
+	model.Name = types.StringPointerValue(workflowDefinition.Name)
+	model.Description = omittableStringValue(workflowDefinition.Description, model.Description)
+	model.Icon = omittableStringValue(workflowDefinition.Icon, model.Icon)
+	model.NameExpression = omittableStringValue(workflowDefinition.NameExpression, model.NameExpression)
+	model.FirstStepID = types.StringPointerValue(workflowDefinition.FirstStepId)
 
 	if workflowDefinition.EnvVars != nil {
 		in := stringMapToValueMap(*workflowDefinition.EnvVars)

@@ -16,16 +16,6 @@ type CaseConfigModel struct {
 	AutomaticActions          []CaseAutomaticActionConfigModel `tfsdk:"automatic_actions"`
 }
 
-func NewCaseConfigModelNull() *CaseConfigModel {
-	return &CaseConfigModel{
-		BaseConfig:                basetypes.NewStringValue(""),
-		ExtendDefaultStatusConfig: basetypes.NewBoolValue(false),
-		StatusConfig:              []CaseStatusConfigModel{},
-		Reminders:                 []CaseReminderConfigModel{},
-		AutomaticActions:          []CaseAutomaticActionConfigModel{},
-	}
-}
-
 func CaseConfigModelNestedSchema() map[string]schema.Attribute {
 	return map[string]schema.Attribute{
 		"base_config": schema.StringAttribute{
@@ -88,22 +78,26 @@ func (cfg *CaseConfigModel) toApiRequest() *v1.CaseConfig {
 	}
 }
 
-func (cfg *CaseConfigModel) fromApiResponse(resp *v1.CaseConfig) (diags diag.Diagnostics) {
+func (cfg *CaseConfigModel) fromApiResponse(resp *v1.CaseConfig) bool {
 
+	isEmpty := true
 	if !isEmptyEnum(resp.BaseConfig) {
 		cfg.BaseConfig = types.StringValue(string(*resp.BaseConfig))
+		isEmpty = false
 	} else {
 		cfg.BaseConfig = basetypes.NewStringNull()
 	}
 
 	if !isEmptyBool(resp.ExtendDefaultStatusConfig) {
 		cfg.ExtendDefaultStatusConfig = types.BoolValue(*resp.ExtendDefaultStatusConfig)
+		isEmpty = false
 	} else {
 		cfg.ExtendDefaultStatusConfig = basetypes.NewBoolNull()
 	}
 
 	if len(resp.StatusConfig) != 0 {
 		cfg.StatusConfig = make([]CaseStatusConfigModel, len(resp.StatusConfig))
+		isEmpty = false
 		for i := range resp.StatusConfig {
 			cfg.StatusConfig[i].fromApiResponse(&resp.StatusConfig[i])
 		}
@@ -113,6 +107,7 @@ func (cfg *CaseConfigModel) fromApiResponse(resp *v1.CaseConfig) (diags diag.Dia
 
 	if len(resp.Reminders) != 0 {
 		cfg.Reminders = make([]CaseReminderConfigModel, len(resp.Reminders))
+		isEmpty = false
 		for i := range resp.Reminders {
 			cfg.Reminders[i].fromApiResponse(&resp.Reminders[i])
 		}
@@ -122,14 +117,16 @@ func (cfg *CaseConfigModel) fromApiResponse(resp *v1.CaseConfig) (diags diag.Dia
 
 	if len(resp.AutomaticActions) != 0 {
 		cfg.AutomaticActions = make([]CaseAutomaticActionConfigModel, len(resp.AutomaticActions))
+		isEmpty = false
 		for i := range resp.AutomaticActions {
 			cfg.AutomaticActions[i].fromApiResponse(&resp.AutomaticActions[i])
 		}
 	} else {
 		cfg.AutomaticActions = nil
 	}
+	isEmpty = true
 
-	return
+	return isEmpty
 }
 
 // ##################################     CaseStatusConfig 	 		##################################
@@ -140,16 +137,6 @@ type CaseStatusConfigModel struct {
 	Parties      types.List                `tfsdk:"parties"`
 	Feedback     []CaseFeedbackConfigModel `tfsdk:"feedback"`
 	Notify       types.List                `tfsdk:"notify"`
-}
-
-func NewCaseStatusConfigModelNull() CaseStatusConfigModel {
-	return CaseStatusConfigModel{
-		Action:       basetypes.NewStringNull(),
-		SourceStatus: basetypes.NewListNull(types.StringType),
-		Parties:      basetypes.NewListNull(types.StringType),
-		Feedback:     []CaseFeedbackConfigModel{},
-		Notify:       basetypes.NewListNull(types.StringType),
-	}
 }
 
 func caseStatusConfigModelNestedSchema() schema.NestedAttributeObject {
@@ -264,15 +251,6 @@ type CaseFeedbackConfigModel struct {
 	Form       *CustomFormModel `tfsdk:"form"`
 }
 
-func NewCaseFeedbackConfigModelNull() CaseFeedbackConfigModel {
-	return CaseFeedbackConfigModel{
-		ID:         basetypes.NewStringNull(),
-		Visibility: basetypes.NewListNull(types.StringType),
-		Mode:       basetypes.NewStringNull(),
-		Form:       nil,
-	}
-}
-
 func caseFeedbackConfigModelNestedSchema() schema.NestedAttributeObject {
 	return schema.NestedAttributeObject{
 		Attributes: map[string]schema.Attribute{
@@ -362,13 +340,6 @@ type CaseReminderConfigModel struct {
 	Schedule types.List   `tfsdk:"schedule"`
 }
 
-func NewCaseReminderConfigModelNull() CaseReminderConfigModel {
-	return CaseReminderConfigModel{
-		Status:   basetypes.NewStringNull(),
-		Schedule: basetypes.NewListNull(types.Int64Type),
-	}
-}
-
 func caseReminderConfigModelNestedSchema() schema.NestedAttributeObject {
 	return schema.NestedAttributeObject{
 		Attributes: map[string]schema.Attribute{
@@ -429,14 +400,6 @@ type CaseAutomaticActionConfigModel struct {
 	Status   types.String `tfsdk:"status"`
 	Schedule types.Int64  `tfsdk:"schedule"`
 	Action   types.String `tfsdk:"action"`
-}
-
-func NewCaseAutomaticActionConfigNull() CaseAutomaticActionConfigModel {
-	return CaseAutomaticActionConfigModel{
-		Status:   basetypes.NewStringNull(),
-		Schedule: basetypes.NewInt64Null(),
-		Action:   basetypes.NewStringNull(),
-	}
 }
 
 func caseAutomaticStatusChangeConfigModelNestedSchema() schema.NestedAttributeObject {

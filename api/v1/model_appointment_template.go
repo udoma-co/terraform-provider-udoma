@@ -26,7 +26,7 @@ type AppointmentTemplate struct {
 	// The name of the appointment template
 	Name string `json:"name"`
 	// The expression that is used to generate the name of the appointment from the data that the user has entered when booking the appointment
-	NameExpression string `json:"name_expression"`
+	NameExpression *string `json:"name_expression,omitempty"`
 	// The description of the appointment template
 	Description *string `json:"description,omitempty"`
 	// Constrain the minimum amount of time between the scheduling and the beginning of the appointment in minutes. Set this to 10 and people won't be able to schedule an appointment that's in less than 10 minutes.
@@ -40,11 +40,10 @@ type _AppointmentTemplate AppointmentTemplate
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppointmentTemplate(id string, name string, nameExpression string, form CustomForm) *AppointmentTemplate {
+func NewAppointmentTemplate(id string, name string, form CustomForm) *AppointmentTemplate {
 	this := AppointmentTemplate{}
 	this.Id = id
 	this.Name = name
-	this.NameExpression = nameExpression
 	this.Form = form
 	return &this
 }
@@ -105,28 +104,36 @@ func (o *AppointmentTemplate) SetName(v string) {
 	o.Name = v
 }
 
-// GetNameExpression returns the NameExpression field value
+// GetNameExpression returns the NameExpression field value if set, zero value otherwise.
 func (o *AppointmentTemplate) GetNameExpression() string {
-	if o == nil {
+	if o == nil || IsNil(o.NameExpression) {
 		var ret string
 		return ret
 	}
-
-	return o.NameExpression
+	return *o.NameExpression
 }
 
-// GetNameExpressionOk returns a tuple with the NameExpression field value
+// GetNameExpressionOk returns a tuple with the NameExpression field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppointmentTemplate) GetNameExpressionOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.NameExpression) {
 		return nil, false
 	}
-	return &o.NameExpression, true
+	return o.NameExpression, true
 }
 
-// SetNameExpression sets field value
+// HasNameExpression returns a boolean if a field has been set.
+func (o *AppointmentTemplate) HasNameExpression() bool {
+	if o != nil && !IsNil(o.NameExpression) {
+		return true
+	}
+
+	return false
+}
+
+// SetNameExpression gets a reference to the given string and assigns it to the NameExpression field.
 func (o *AppointmentTemplate) SetNameExpression(v string) {
-	o.NameExpression = v
+	o.NameExpression = &v
 }
 
 // GetDescription returns the Description field value if set, zero value otherwise.
@@ -229,7 +236,9 @@ func (o AppointmentTemplate) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["id"] = o.Id
 	toSerialize["name"] = o.Name
-	toSerialize["name_expression"] = o.NameExpression
+	if !IsNil(o.NameExpression) {
+		toSerialize["name_expression"] = o.NameExpression
+	}
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
 	}
@@ -247,7 +256,6 @@ func (o *AppointmentTemplate) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"id",
 		"name",
-		"name_expression",
 		"form",
 	}
 

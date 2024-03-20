@@ -57,11 +57,11 @@ func (r *AppointmentTemplate) Schema(ctx context.Context, req resource.SchemaReq
 				Description: "The name of the appointment template.",
 			},
 			"name_expression": schema.StringAttribute{
-				Required:    true,
-				Description: "The name expression of the appointment template.",
+				Optional:    true,
+				Description: "Optional JS expression used to generate the name of appointments.",
 			},
 			"description": schema.StringAttribute{
-				Required:    true,
+				Optional:    true,
 				Description: "The description of the appointment template.",
 			},
 			"inputs": schema.SingleNestedAttribute{
@@ -220,8 +220,8 @@ func (template *AppointmentTemplateModel) toApiRequest() *v1.CreateOrUpdateAppoi
 func (template *AppointmentTemplateModel) fromApiResponse(resp *v1.AppointmentTemplate) (diags diag.Diagnostics) {
 	template.ID = types.StringValue(resp.Id)
 	template.Name = types.StringValue(resp.Name)
-	template.NameExpression = types.StringValue(resp.NameExpression)
-	template.Description = types.StringValue(sdp(resp.Description))
+	template.NameExpression = omittableStringValue(resp.NameExpression, template.NameExpression)
+	template.Description = omittableStringValue(resp.Description, template.Description)
 
 	if template.Inputs == nil {
 		template.Inputs = &CustomFormModel{}

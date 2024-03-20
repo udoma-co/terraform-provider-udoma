@@ -62,9 +62,9 @@ func (r *AppointmentSchedule) Schema(ctx context.Context, req resource.SchemaReq
 				Description: "The name of the appointment schedule",
 			},
 			"description": schema.MapAttribute{
-				ElementType: types.StringType,
 				Required:    true,
 				Description: "Description of the appointment schedule in all different languages",
+				ElementType: types.StringType,
 			},
 			"template_ref": schema.StringAttribute{
 				Required:    true,
@@ -247,8 +247,8 @@ func (app *AppointmentScheduleModel) fromApiResponse(resp *v1.AppointmentSchedul
 		return
 	}
 
-	app.ID = types.StringValue(sdp(resp.Id))
-	app.Name = types.StringValue(sdp(resp.Name))
+	app.ID = types.StringPointerValue(resp.Id)
+	app.Name = types.StringPointerValue(resp.Name)
 
 	mappedDescription := make(map[string]attr.Value)
 	for key, value := range *resp.Description {
@@ -263,7 +263,7 @@ func (app *AppointmentScheduleModel) fromApiResponse(resp *v1.AppointmentSchedul
 	app.TemplateRef = types.StringValue(resp.Template.Id)
 	app.SlotDuration = types.Int64Value(int64(idp32(resp.SlotDuration)))
 	app.GapDuration = types.Int64Value(int64(idp32(resp.GapDuration)))
-	app.Color = types.StringValue(sdp(resp.Color))
+	app.Color = types.StringPointerValue(resp.Color)
 
 	return
 }

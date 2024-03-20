@@ -80,6 +80,7 @@ func (r *customIDGenerator) Schema(ctx context.Context, req resource.SchemaReque
 			},
 			"last_generated_id": schema.StringAttribute{
 				Optional:    true,
+				Computed:    true,
 				Description: "The last generated ID",
 			},
 		},
@@ -265,15 +266,12 @@ func (model *customIDGeneratorModel) fromAPI(generator *api.CustomIDGenerator) e
 		return fmt.Errorf("custom ID generator is nil")
 	}
 
-	model.ID = types.StringValue(sdp(generator.Id))
-	model.CreatedAt = types.Int64Value(idp(generator.CreatedAt))
-	model.UpdatedAt = types.Int64Value(idp(generator.UpdatedAt))
-	model.Name = types.StringValue(sdp(generator.Name))
-	model.GenerationScript = types.StringValue(sdp(generator.GenerationScript))
-	if !model.LastGeneratedID.IsUnknown() && !model.LastGeneratedID.IsNull() {
-		// don't set the value if it was not provided upfront
-		model.LastGeneratedID = types.StringValue(sdp(generator.LastGeneratedId))
-	}
+	model.ID = types.StringPointerValue(generator.Id)
+	model.CreatedAt = types.Int64PointerValue(generator.CreatedAt)
+	model.UpdatedAt = types.Int64PointerValue(generator.UpdatedAt)
+	model.Name = types.StringPointerValue(generator.Name)
+	model.GenerationScript = types.StringPointerValue(generator.GenerationScript)
+	model.LastGeneratedID = omittableStringValue(generator.LastGeneratedId, model.LastGeneratedID)
 
 	return nil
 }

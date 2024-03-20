@@ -35,20 +35,11 @@ func TestAccBankAccountResource(t *testing.T) {
 			{
 				Config: `
 				resource udoma_bank_account "test" {
-
-					external_id = ""
-
-					external_source = ""
-			
 					account_holder = "updated_test_account"
-
-					iban = "DE29100100100987654321"
-
-					bic = "TESTDETTXXX"
-		
-					bank_name = "updated_test_bank"
-			
-					description = "updated_test_description"
+					iban 					 = "DE29100100100987654321"
+					bic 					 = "TESTDETTXXX"
+					bank_name 		 = "updated_test_bank"
+					description 	 = "updated_test_description"
 				}
 				`,
 
@@ -68,20 +59,11 @@ func TestAccBankAccountResource(t *testing.T) {
 func resourceDefinitionBankAccount() string {
 	return `
 	resource udoma_bank_account "test" {
-
-		external_id = ""
-
-		external_source = ""
-
 		account_holder = "test_account"
-		
-		iban = "DE29100100100987654321"
-
-		bic = "TESTDETTXXX"
-
-		bank_name = "test_bank"
-
-		description = "test_description"
+		iban 					 = "DE29100100100987654321"
+		bic 					 = "TESTDETTXXX"
+		bank_name 		 = "test_bank"
+		description 	 = "test_description"
 	}
 	`
 }
