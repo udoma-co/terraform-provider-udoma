@@ -207,6 +207,7 @@ func (p *UdomaProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewWorkflowDefinition,
 		NewWorkflowEntrypoint,
 		NewFAQ,
+		NewBankAccount,
 	}
 }
 

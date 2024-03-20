@@ -263,16 +263,16 @@ func (model *customerScriptModel) fromAPI(script *api.CustomerScript) error {
 		return fmt.Errorf("customer script is nil")
 	}
 
-	model.ID = types.StringValue(sdp(script.Id))
-	model.CreatedAt = types.Int64Value(idp(script.CreatedAt))
-	model.UpdatedAt = types.Int64Value(idp(script.UpdatedAt))
-	model.Name = types.StringValue(sdp(script.Name))
-	model.Description = types.StringValue(sdp(script.Description))
+	model.ID = types.StringPointerValue(script.Id)
+	model.CreatedAt = types.Int64PointerValue(script.CreatedAt)
+	model.UpdatedAt = types.Int64PointerValue(script.UpdatedAt)
+	model.Name = types.StringPointerValue(script.Name)
+	model.Description = types.StringPointerValue(script.Description)
 	if script.Scope != nil {
 		scope := *script.Scope
 		model.Scope = types.StringValue(string(scope))
 	}
-	model.Script = types.StringValue(sdp(script.Script))
+	model.Script = types.StringPointerValue(script.Script)
 
 	return nil
 }

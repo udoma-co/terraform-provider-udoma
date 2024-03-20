@@ -14,7 +14,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 	api "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
-	v1 "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
 	"gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/internal/client"
 )
 
@@ -319,12 +318,12 @@ func (model *CaseReportingEndpointModel) fromAPI(endpoint *api.CaseReportingEndp
 		return
 	}
 
-	model.ID = types.StringValue(sdp(endpoint.Code))
-	model.Code = types.StringValue(sdp(endpoint.Code))
-	model.CreatedAt = types.Int64Value(idp(endpoint.CreatedAt))
-	model.UpdatedAt = types.Int64Value(idp(endpoint.UpdatedAt))
-	model.Name = types.StringValue(sdp(endpoint.Name))
-	model.Active = types.BoolValue(bdp(endpoint.Active))
+	model.ID = types.StringPointerValue(endpoint.Code)
+	model.Code = types.StringPointerValue(endpoint.Code)
+	model.CreatedAt = types.Int64PointerValue(endpoint.CreatedAt)
+	model.UpdatedAt = types.Int64PointerValue(endpoint.UpdatedAt)
+	model.Name = types.StringPointerValue(endpoint.Name)
+	model.Active = omittableBooleanValue(endpoint.Active, model.Active)
 	model.CaseCategories = make([]CaseReportingEndpointCategoryModel, len(endpoint.CaseCategories))
 
 	for i := range endpoint.CaseCategories {
@@ -339,7 +338,7 @@ func (model *CaseReportingEndpointModel) fromAPI(endpoint *api.CaseReportingEndp
 	return
 }
 
-func (model *CaseReportingEndpointCategoryModel) fromAPIResponse(category *v1.CaseReportingEndpointCategory) (diags diag.Diagnostics) {
+func (model *CaseReportingEndpointCategoryModel) fromAPIResponse(category *api.CaseReportingEndpointCategory) (diags diag.Diagnostics) {
 	if category == nil {
 		diags.AddError(
 			"category is nil",
@@ -368,7 +367,7 @@ func (model *CaseReportingEndpointCategoryModel) fromAPIResponse(category *v1.Ca
 	return
 }
 
-func (model *CaseReportingEndpointTemplateModel) fromAPIResponse(template *v1.CaseReportingEndpointCategoryTemplatesInner) (diags diag.Diagnostics) {
+func (model *CaseReportingEndpointTemplateModel) fromAPIResponse(template *api.CaseReportingEndpointCategoryTemplatesInner) (diags diag.Diagnostics) {
 	if template == nil {
 		diags.AddError(
 			"template is nil",
@@ -377,18 +376,18 @@ func (model *CaseReportingEndpointTemplateModel) fromAPIResponse(template *v1.Ca
 		return
 	}
 
-	model.ID = types.StringValue(sdp(template.Id))
+	model.ID = types.StringPointerValue(template.Id)
 	model.Priority = types.Int64Value(int64(idp32(template.Priority)))
 
 	return
 }
 
-func (model *CaseReportingEndpointCategoryModel) toAPIRequest() v1.CaseReportingEndpointCategory {
+func (model *CaseReportingEndpointCategoryModel) toAPIRequest() api.CaseReportingEndpointCategory {
 
-	category := v1.CaseReportingEndpointCategory{
+	category := api.CaseReportingEndpointCategory{
 		Name:      modelMapToStringMap(model.Name),
 		Priority:  i64ToI32Ptr(model.Priority.ValueInt64()),
-		Templates: make([]v1.CaseReportingEndpointCategoryTemplatesInner, len(model.Templates)),
+		Templates: make([]api.CaseReportingEndpointCategoryTemplatesInner, len(model.Templates)),
 	}
 
 	for i := range model.Templates {
@@ -398,8 +397,8 @@ func (model *CaseReportingEndpointCategoryModel) toAPIRequest() v1.CaseReporting
 	return category
 }
 
-func (model *CaseReportingEndpointTemplateModel) toAPIRequest() v1.CaseReportingEndpointCategoryTemplatesInner {
-	return v1.CaseReportingEndpointCategoryTemplatesInner{
+func (model *CaseReportingEndpointTemplateModel) toAPIRequest() api.CaseReportingEndpointCategoryTemplatesInner {
+	return api.CaseReportingEndpointCategoryTemplatesInner{
 		Id:       model.ID.ValueStringPointer(),
 		Priority: i64ToI32Ptr(model.Priority.ValueInt64()),
 	}

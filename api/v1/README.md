@@ -156,6 +156,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GenerateESignatureRequest**](docs/DefaultAPI.md#generateesignaturerequest) | **Get** /document-generation/documents/{docId}/esignature/request | Generate an eSignature request for a document, based on template signature config
 *DefaultAPI* | [**GetAccountSummary**](docs/DefaultAPI.md#getaccountsummary) | **Post** /summary | Get overview of data in the system for current account
 *DefaultAPI* | [**GetAppointment**](docs/DefaultAPI.md#getappointment) | **Get** /calendar/appointments/entry/{entryId} | Get the appointment by ID
+*DefaultAPI* | [**GetAppointmentInIcalFormat**](docs/DefaultAPI.md#getappointmentinicalformat) | **Get** /calendar/appointments/entry/{entryId}/ical | Get appointment in ical format
 *DefaultAPI* | [**GetAppointmentSchedule**](docs/DefaultAPI.md#getappointmentschedule) | **Get** /calendar/appointments/schedule/{scheduleId} | Get the appointment schedule by ID
 *DefaultAPI* | [**GetAppointmentTemplate**](docs/DefaultAPI.md#getappointmenttemplate) | **Get** /calendar/appointments/template/{templateId} | Get the appointment template by ID
 *DefaultAPI* | [**GetAttachment**](docs/DefaultAPI.md#getattachment) | **Get** /attachment/{attachmentId} | Get a file attachment
@@ -179,6 +180,8 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetDocumentTemplate**](docs/DefaultAPI.md#getdocumenttemplate) | **Get** /document-generation/template/{templateId} | Get a document template
 *DefaultAPI* | [**GetDocumentTemplates**](docs/DefaultAPI.md#getdocumenttemplates) | **Get** /document-generation/templates | Get all available document templates
 *DefaultAPI* | [**GetESignatureStatusForDocument**](docs/DefaultAPI.md#getesignaturestatusfordocument) | **Get** /document-generation/documents/{docId}/esignature | Get the singing status for the document
+*DefaultAPI* | [**GetExternalUser**](docs/DefaultAPI.md#getexternaluser) | **Get** /external-users/{userID} | Get information about external user
+*DefaultAPI* | [**GetExternalUserCasesCount**](docs/DefaultAPI.md#getexternalusercasescount) | **Get** /external-users/{userID}/cases/count | Get the number of cases the the given user has opened
 *DefaultAPI* | [**GetFAQEntries**](docs/DefaultAPI.md#getfaqentries) | **Get** /faqs/entries | Get all available FAQ entries
 *DefaultAPI* | [**GetFAQEntry**](docs/DefaultAPI.md#getfaqentry) | **Get** /faqs/entry/{entryId} | Get a FAQ entry
 *DefaultAPI* | [**GetInvitations**](docs/DefaultAPI.md#getinvitations) | **Get** /invitations | List tenancy invitations
@@ -232,8 +235,11 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryCases**](docs/DefaultAPI.md#querycases) | **Post** /cases | Query cases for the current user
 *DefaultAPI* | [**QueryDocumentGenerations**](docs/DefaultAPI.md#querydocumentgenerations) | **Post** /document-generation/documents | Request a list of document generations
 *DefaultAPI* | [**QueryDocuments**](docs/DefaultAPI.md#querydocuments) | **Post** /document-repository/entries | Query all document for a certain ref type
+*DefaultAPI* | [**QueryExternalUserCases**](docs/DefaultAPI.md#queryexternalusercases) | **Get** /external-users/{userID}/cases | Get the cases the the given user has opened
+*DefaultAPI* | [**QueryExternalUsers**](docs/DefaultAPI.md#queryexternalusers) | **Get** /external-users | Get a list of external users who reported to the current manager
 *DefaultAPI* | [**QueryProperties**](docs/DefaultAPI.md#queryproperties) | **Post** /properties | Query properties
 *DefaultAPI* | [**QueryPropertyOwners**](docs/DefaultAPI.md#querypropertyowners) | **Post** /owners | Query property owners
+*DefaultAPI* | [**QueryServiceProviderCases**](docs/DefaultAPI.md#queryserviceprovidercases) | **Get** /service-provider/{serviceProviderId}/cases | Get the cases the the given service provider has access to
 *DefaultAPI* | [**QueryServiceProviders**](docs/DefaultAPI.md#queryserviceproviders) | **Post** /service-providers | Query all service providers for certain criteria
 *DefaultAPI* | [**QueryTenants**](docs/DefaultAPI.md#querytenants) | **Post** /tenants | Query all tenants
 *DefaultAPI* | [**QueryWorkflowDefinitions**](docs/DefaultAPI.md#queryworkflowdefinitions) | **Post** /workflows/definitions | Query all workflow definitions
@@ -388,6 +394,7 @@ Class | Method | HTTP request | Description
  - [FormItemType](docs/FormItemType.md)
  - [FormValidation](docs/FormValidation.md)
  - [GenerateCaseReportingEndpointNoticeRequest](docs/GenerateCaseReportingEndpointNoticeRequest.md)
+ - [GetExternalUserCasesCountResponse](docs/GetExternalUserCasesCountResponse.md)
  - [GetSummaryRequest](docs/GetSummaryRequest.md)
  - [GetSummaryResponse](docs/GetSummaryResponse.md)
  - [IDUpload](docs/IDUpload.md)
@@ -427,11 +434,14 @@ Class | Method | HTTP request | Description
  - [QueryDocumentGenerationsRequest](docs/QueryDocumentGenerationsRequest.md)
  - [QueryDocumentGenerationsResponse](docs/QueryDocumentGenerationsResponse.md)
  - [QueryDocumentsRequest](docs/QueryDocumentsRequest.md)
+ - [QueryExternalUserCasesResponse](docs/QueryExternalUserCasesResponse.md)
+ - [QueryExternalUsersResponse](docs/QueryExternalUsersResponse.md)
  - [QueryPropertiesRequest](docs/QueryPropertiesRequest.md)
  - [QueryPropertiesResponse](docs/QueryPropertiesResponse.md)
  - [QueryPropertyOwnersRequest](docs/QueryPropertyOwnersRequest.md)
  - [QueryPropertyOwnersResponse](docs/QueryPropertyOwnersResponse.md)
  - [QueryReportExecutionsRequest](docs/QueryReportExecutionsRequest.md)
+ - [QueryServiceProviderCasesResponse](docs/QueryServiceProviderCasesResponse.md)
  - [QueryServiceProvidersRequest](docs/QueryServiceProvidersRequest.md)
  - [QueryServiceProvidersResponse](docs/QueryServiceProvidersResponse.md)
  - [QueryTenantsRequest](docs/QueryTenantsRequest.md)

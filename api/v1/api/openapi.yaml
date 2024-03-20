@@ -615,6 +615,32 @@ paths:
           content: {}
           description: Internal server error
       summary: Update appointment
+  /calendar/appointments/entry/{entryId}/ical:
+    get:
+      operationId: getAppointmentInIcalFormat
+      parameters:
+      - description: ID of the appointment
+        explode: false
+        in: path
+        name: entryId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            text/calendar:
+              schema:
+                type: string
+          description: Successful operation
+        "404":
+          content: {}
+          description: Requested entity not found
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Get appointment in ical format
   /calendar/appointments/window/{windowId}:
     get:
       operationId: queryAppointments
@@ -2540,6 +2566,116 @@ paths:
           content: {}
           description: Internal server error
       summary: Update an already existing document
+  /external-users:
+    get:
+      operationId: queryExternalUsers
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryExternalUsersResponse'
+          description: Successful operation
+        "403":
+          content: {}
+          description: Access denied
+        "404":
+          content: {}
+          description: Requested entity not found
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Get a list of external users who reported to the current manager
+  /external-users/{userID}:
+    get:
+      operationId: getExternalUser
+      parameters:
+      - description: ID of the external user
+        explode: false
+        in: path
+        name: userID
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserReference'
+          description: Successful operation
+        "400":
+          content: {}
+          description: Invalid input provided
+        "403":
+          content: {}
+          description: Access denied
+        "404":
+          content: {}
+          description: Requested entity not found
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Get information about external user
+  /external-users/{userID}/cases:
+    get:
+      operationId: queryExternalUserCases
+      parameters:
+      - description: ID of the external user
+        explode: false
+        in: path
+        name: userID
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryExternalUserCasesResponse'
+          description: Successful operation
+        "400":
+          content: {}
+          description: Invalid input provided
+        "403":
+          content: {}
+          description: Access denied
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Get the cases the the given user has opened
+  /external-users/{userID}/cases/count:
+    get:
+      operationId: getExternalUserCasesCount
+      parameters:
+      - description: ID of the external user
+        explode: false
+        in: path
+        name: userID
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetExternalUserCasesCountResponse'
+          description: Successful operation
+        "400":
+          content: {}
+          description: Invalid input provided
+        "403":
+          content: {}
+          description: Access denied
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Get the number of cases the the given user has opened
   /faqs/entries:
     get:
       operationId: getFAQEntries
@@ -4810,6 +4946,35 @@ paths:
           content: {}
           description: Internal server error
       summary: Update the attributes of the service provider
+  /service-provider/{serviceProviderId}/cases:
+    get:
+      operationId: queryServiceProviderCases
+      parameters:
+      - description: ID of the required service provider
+        explode: false
+        in: path
+        name: serviceProviderId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryServiceProviderCasesResponse'
+          description: Successful operation
+        "400":
+          content: {}
+          description: Invalid input provided
+        "403":
+          content: {}
+          description: Access denied
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Get the cases the the given service provider has access to
   /summary:
     post:
       operationId: getAccountSummary
@@ -6365,7 +6530,6 @@ components:
       - form
       - id
       - name
-      - name_expression
       type: object
     QueryAppointmentTemplatesRequest:
       example:
@@ -11332,6 +11496,674 @@ components:
           description: "Indicator, controlling whether tenants can see the document"
           type: boolean
       type: object
+    QueryExternalUsersResponse:
+      example:
+        users:
+        - user_role: null
+          user_id: user_id
+          contact_data:
+            address:
+              line1: 1 ZestLabs Blvd
+              line2: CSS District
+              city: Mannheim
+              postcode: 680001
+              province: Baden-Wuerttemberg
+              country: Germany
+            last_name: last_name
+            company: company
+            phone_number: phone_number
+            id: id
+            title: title
+            first_name: first_name
+            email: email
+        - user_role: null
+          user_id: user_id
+          contact_data:
+            address:
+              line1: 1 ZestLabs Blvd
+              line2: CSS District
+              city: Mannheim
+              postcode: 680001
+              province: Baden-Wuerttemberg
+              country: Germany
+            last_name: last_name
+            company: company
+            phone_number: phone_number
+            id: id
+            title: title
+            first_name: first_name
+            email: email
+      properties:
+        users:
+          items:
+            $ref: '#/components/schemas/UserReference'
+          type: array
+      type: object
+    UserReference:
+      description: Contains information about a user referenced in other entities
+      example:
+        user_role: null
+        user_id: user_id
+        contact_data:
+          address:
+            line1: 1 ZestLabs Blvd
+            line2: CSS District
+            city: Mannheim
+            postcode: 680001
+            province: Baden-Wuerttemberg
+            country: Germany
+          last_name: last_name
+          company: company
+          phone_number: phone_number
+          id: id
+          title: title
+          first_name: first_name
+          email: email
+      properties:
+        user_id:
+          description: "The ID of the user, can be undefined, if user is not registered,\
+            \ or was already deleted"
+          type: string
+        user_role:
+          $ref: '#/components/schemas/UserTypeEnum'
+        contact_data:
+          $ref: '#/components/schemas/ContactData'
+      type: object
+    UserTypeEnum:
+      enum:
+      - ANY
+      - TENANT
+      - MANAGER
+      - SERVICE_PROVIDER
+      - AUTOMATION
+      type: string
+    ContactData:
+      description: a common set of attributes used to identify a person or a company
+      example:
+        address:
+          line1: 1 ZestLabs Blvd
+          line2: CSS District
+          city: Mannheim
+          postcode: 680001
+          province: Baden-Wuerttemberg
+          country: Germany
+        last_name: last_name
+        company: company
+        phone_number: phone_number
+        id: id
+        title: title
+        first_name: first_name
+        email: email
+      properties:
+        id:
+          description: "optional ID referencing another existing entity (e.g. Tenant,\
+            \ Owner, etc.)"
+          type: string
+        title:
+          description: "the title of the party (e.g. Mr, Mrs, Company, etc.)"
+          type: string
+        first_name:
+          description: |
+            First name(s) of the contact. In case of a company, this is the first name of the contact person within the company.
+          type: string
+        last_name:
+          description: |
+            Last name of the contact. In case of a company, this is the last name of the contact person within the company.
+          type: string
+        company:
+          description: |
+            Name of the company. Only used in case contact is a company, otherwise this  field should be left empty.
+          type: string
+        email:
+          description: optional email of the party
+          type: string
+        phone_number:
+          description: optional phone number of the party
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+      type: object
+    Address:
+      description: "Address is the physical address of a property, a person, or an\
+        \ organization"
+      example:
+        line1: 1 ZestLabs Blvd
+        line2: CSS District
+        city: Mannheim
+        postcode: 680001
+        province: Baden-Wuerttemberg
+        country: Germany
+      properties:
+        line1:
+          type: string
+        line2:
+          type: string
+        city:
+          type: string
+        postcode:
+          type: string
+        province:
+          type: string
+        country:
+          type: string
+      type: object
+    QueryExternalUserCasesResponse:
+      example:
+        cases:
+        - template: template
+          comments:
+          - deleted: true
+            attachments:
+            - ref: ref
+              thumbnail: thumbnail
+              created: 0
+              file_type: file_type
+              file_name: file_name
+              id: id
+              file_sha256: file_sha256
+              file_size: 6
+              url: url
+            - ref: ref
+              thumbnail: thumbnail
+              created: 0
+              file_type: file_type
+              file_name: file_name
+              id: id
+              file_sha256: file_sha256
+              file_size: 6
+              url: url
+            updated_at: 2
+            visibility:
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            author_ref:
+              user_role: null
+              user_id: user_id
+              contact_data:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+            created_at: 5
+            id: id
+            content: content
+          - deleted: true
+            attachments:
+            - ref: ref
+              thumbnail: thumbnail
+              created: 0
+              file_type: file_type
+              file_name: file_name
+              id: id
+              file_sha256: file_sha256
+              file_size: 6
+              url: url
+            - ref: ref
+              thumbnail: thumbnail
+              created: 0
+              file_type: file_type
+              file_name: file_name
+              id: id
+              file_sha256: file_sha256
+              file_size: 6
+              url: url
+            updated_at: 2
+            visibility:
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            author_ref:
+              user_role: null
+              user_id: user_id
+              contact_data:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+            created_at: 5
+            id: id
+            content: content
+          data:
+            key: ""
+          status_history:
+          - author_ref:
+              user_role: null
+              user_id: user_id
+              contact_data:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+            action: null
+            id: id
+            assignee:
+              contact_ref: contact_ref
+              account_ref: 5
+            timestamp: 1
+            status: null
+          - author_ref:
+              user_role: null
+              user_id: user_id
+              contact_data:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+            action: null
+            id: id
+            assignee:
+              contact_ref: contact_ref
+              account_ref: 5
+            timestamp: 1
+            status: null
+          created_at: 0
+          feedback:
+          - form_data:
+              key: ""
+            visibility:
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            author_ref:
+              user_role: null
+              user_id: user_id
+              contact_data:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+            created_at: 7
+            action: null
+            feedback_id: feedback_id
+            id: id
+            source_status: null
+          - form_data:
+              key: ""
+            visibility:
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            author_ref:
+              user_role: null
+              user_id: user_id
+              contact_data:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+            created_at: 7
+            action: null
+            feedback_id: feedback_id
+            id: id
+            source_status: null
+          archived: true
+          property_address:
+            line1: 1 ZestLabs Blvd
+            line2: CSS District
+            city: Mannheim
+            postcode: 680001
+            province: Baden-Wuerttemberg
+            country: Germany
+          updated_at: 6
+          property_ref: property_ref
+          name: name
+          parties:
+          - ref: ref
+            role: null
+            name: name
+            ref_type: ref_type
+          - ref: ref
+            role: null
+            name: name
+            ref_type: ref_type
+          id: id
+          assignee: assignee
+          status: null
+        - template: template
+          comments:
+          - deleted: true
+            attachments:
+            - ref: ref
+              thumbnail: thumbnail
+              created: 0
+              file_type: file_type
+              file_name: file_name
+              id: id
+              file_sha256: file_sha256
+              file_size: 6
+              url: url
+            - ref: ref
+              thumbnail: thumbnail
+              created: 0
+              file_type: file_type
+              file_name: file_name
+              id: id
+              file_sha256: file_sha256
+              file_size: 6
+              url: url
+            updated_at: 2
+            visibility:
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            author_ref:
+              user_role: null
+              user_id: user_id
+              contact_data:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+            created_at: 5
+            id: id
+            content: content
+          - deleted: true
+            attachments:
+            - ref: ref
+              thumbnail: thumbnail
+              created: 0
+              file_type: file_type
+              file_name: file_name
+              id: id
+              file_sha256: file_sha256
+              file_size: 6
+              url: url
+            - ref: ref
+              thumbnail: thumbnail
+              created: 0
+              file_type: file_type
+              file_name: file_name
+              id: id
+              file_sha256: file_sha256
+              file_size: 6
+              url: url
+            updated_at: 2
+            visibility:
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            author_ref:
+              user_role: null
+              user_id: user_id
+              contact_data:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+            created_at: 5
+            id: id
+            content: content
+          data:
+            key: ""
+          status_history:
+          - author_ref:
+              user_role: null
+              user_id: user_id
+              contact_data:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+            action: null
+            id: id
+            assignee:
+              contact_ref: contact_ref
+              account_ref: 5
+            timestamp: 1
+            status: null
+          - author_ref:
+              user_role: null
+              user_id: user_id
+              contact_data:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+            action: null
+            id: id
+            assignee:
+              contact_ref: contact_ref
+              account_ref: 5
+            timestamp: 1
+            status: null
+          created_at: 0
+          feedback:
+          - form_data:
+              key: ""
+            visibility:
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            author_ref:
+              user_role: null
+              user_id: user_id
+              contact_data:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+            created_at: 7
+            action: null
+            feedback_id: feedback_id
+            id: id
+            source_status: null
+          - form_data:
+              key: ""
+            visibility:
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            author_ref:
+              user_role: null
+              user_id: user_id
+              contact_data:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+            created_at: 7
+            action: null
+            feedback_id: feedback_id
+            id: id
+            source_status: null
+          archived: true
+          property_address:
+            line1: 1 ZestLabs Blvd
+            line2: CSS District
+            city: Mannheim
+            postcode: 680001
+            province: Baden-Wuerttemberg
+            country: Germany
+          updated_at: 6
+          property_ref: property_ref
+          name: name
+          parties:
+          - ref: ref
+            role: null
+            name: name
+            ref_type: ref_type
+          - ref: ref
+            role: null
+            name: name
+            ref_type: ref_type
+          id: id
+          assignee: assignee
+          status: null
+      properties:
+        cases:
+          items:
+            $ref: '#/components/schemas/Case'
+          type: array
+      type: object
+    GetExternalUserCasesCountResponse:
+      example:
+        numberOfCases: 0
+      properties:
+        numberOfCases:
+          format: int64
+          type: integer
+      type: object
     FAQEntry:
       example:
         question:
@@ -13618,6 +14450,515 @@ components:
           description: list of service providers
           items:
             $ref: '#/components/schemas/ServiceProvider'
+          type: array
+      type: object
+    QueryServiceProviderCasesResponse:
+      example:
+        cases:
+        - template: template
+          comments:
+          - deleted: true
+            attachments:
+            - ref: ref
+              thumbnail: thumbnail
+              created: 0
+              file_type: file_type
+              file_name: file_name
+              id: id
+              file_sha256: file_sha256
+              file_size: 6
+              url: url
+            - ref: ref
+              thumbnail: thumbnail
+              created: 0
+              file_type: file_type
+              file_name: file_name
+              id: id
+              file_sha256: file_sha256
+              file_size: 6
+              url: url
+            updated_at: 2
+            visibility:
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            author_ref:
+              user_role: null
+              user_id: user_id
+              contact_data:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+            created_at: 5
+            id: id
+            content: content
+          - deleted: true
+            attachments:
+            - ref: ref
+              thumbnail: thumbnail
+              created: 0
+              file_type: file_type
+              file_name: file_name
+              id: id
+              file_sha256: file_sha256
+              file_size: 6
+              url: url
+            - ref: ref
+              thumbnail: thumbnail
+              created: 0
+              file_type: file_type
+              file_name: file_name
+              id: id
+              file_sha256: file_sha256
+              file_size: 6
+              url: url
+            updated_at: 2
+            visibility:
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            author_ref:
+              user_role: null
+              user_id: user_id
+              contact_data:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+            created_at: 5
+            id: id
+            content: content
+          data:
+            key: ""
+          status_history:
+          - author_ref:
+              user_role: null
+              user_id: user_id
+              contact_data:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+            action: null
+            id: id
+            assignee:
+              contact_ref: contact_ref
+              account_ref: 5
+            timestamp: 1
+            status: null
+          - author_ref:
+              user_role: null
+              user_id: user_id
+              contact_data:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+            action: null
+            id: id
+            assignee:
+              contact_ref: contact_ref
+              account_ref: 5
+            timestamp: 1
+            status: null
+          created_at: 0
+          feedback:
+          - form_data:
+              key: ""
+            visibility:
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            author_ref:
+              user_role: null
+              user_id: user_id
+              contact_data:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+            created_at: 7
+            action: null
+            feedback_id: feedback_id
+            id: id
+            source_status: null
+          - form_data:
+              key: ""
+            visibility:
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            author_ref:
+              user_role: null
+              user_id: user_id
+              contact_data:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+            created_at: 7
+            action: null
+            feedback_id: feedback_id
+            id: id
+            source_status: null
+          archived: true
+          property_address:
+            line1: 1 ZestLabs Blvd
+            line2: CSS District
+            city: Mannheim
+            postcode: 680001
+            province: Baden-Wuerttemberg
+            country: Germany
+          updated_at: 6
+          property_ref: property_ref
+          name: name
+          parties:
+          - ref: ref
+            role: null
+            name: name
+            ref_type: ref_type
+          - ref: ref
+            role: null
+            name: name
+            ref_type: ref_type
+          id: id
+          assignee: assignee
+          status: null
+        - template: template
+          comments:
+          - deleted: true
+            attachments:
+            - ref: ref
+              thumbnail: thumbnail
+              created: 0
+              file_type: file_type
+              file_name: file_name
+              id: id
+              file_sha256: file_sha256
+              file_size: 6
+              url: url
+            - ref: ref
+              thumbnail: thumbnail
+              created: 0
+              file_type: file_type
+              file_name: file_name
+              id: id
+              file_sha256: file_sha256
+              file_size: 6
+              url: url
+            updated_at: 2
+            visibility:
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            author_ref:
+              user_role: null
+              user_id: user_id
+              contact_data:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+            created_at: 5
+            id: id
+            content: content
+          - deleted: true
+            attachments:
+            - ref: ref
+              thumbnail: thumbnail
+              created: 0
+              file_type: file_type
+              file_name: file_name
+              id: id
+              file_sha256: file_sha256
+              file_size: 6
+              url: url
+            - ref: ref
+              thumbnail: thumbnail
+              created: 0
+              file_type: file_type
+              file_name: file_name
+              id: id
+              file_sha256: file_sha256
+              file_size: 6
+              url: url
+            updated_at: 2
+            visibility:
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            author_ref:
+              user_role: null
+              user_id: user_id
+              contact_data:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+            created_at: 5
+            id: id
+            content: content
+          data:
+            key: ""
+          status_history:
+          - author_ref:
+              user_role: null
+              user_id: user_id
+              contact_data:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+            action: null
+            id: id
+            assignee:
+              contact_ref: contact_ref
+              account_ref: 5
+            timestamp: 1
+            status: null
+          - author_ref:
+              user_role: null
+              user_id: user_id
+              contact_data:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+            action: null
+            id: id
+            assignee:
+              contact_ref: contact_ref
+              account_ref: 5
+            timestamp: 1
+            status: null
+          created_at: 0
+          feedback:
+          - form_data:
+              key: ""
+            visibility:
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            author_ref:
+              user_role: null
+              user_id: user_id
+              contact_data:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+            created_at: 7
+            action: null
+            feedback_id: feedback_id
+            id: id
+            source_status: null
+          - form_data:
+              key: ""
+            visibility:
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            author_ref:
+              user_role: null
+              user_id: user_id
+              contact_data:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+            created_at: 7
+            action: null
+            feedback_id: feedback_id
+            id: id
+            source_status: null
+          archived: true
+          property_address:
+            line1: 1 ZestLabs Blvd
+            line2: CSS District
+            city: Mannheim
+            postcode: 680001
+            province: Baden-Wuerttemberg
+            country: Germany
+          updated_at: 6
+          property_ref: property_ref
+          name: name
+          parties:
+          - ref: ref
+            role: null
+            name: name
+            ref_type: ref_type
+          - ref: ref
+            role: null
+            name: name
+            ref_type: ref_type
+          id: id
+          assignee: assignee
+          status: null
+      properties:
+        cases:
+          items:
+            $ref: '#/components/schemas/Case'
           type: array
       type: object
     GetSummaryRequest:
@@ -16215,114 +17556,6 @@ components:
       additionalProperties:
         type: string
       description: "a map of values, where the key and values are strings"
-      type: object
-    ContactData:
-      description: a common set of attributes used to identify a person or a company
-      example:
-        address:
-          line1: 1 ZestLabs Blvd
-          line2: CSS District
-          city: Mannheim
-          postcode: 680001
-          province: Baden-Wuerttemberg
-          country: Germany
-        last_name: last_name
-        company: company
-        phone_number: phone_number
-        id: id
-        title: title
-        first_name: first_name
-        email: email
-      properties:
-        id:
-          description: "optional ID referencing another existing entity (e.g. Tenant,\
-            \ Owner, etc.)"
-          type: string
-        title:
-          description: "the title of the party (e.g. Mr, Mrs, Company, etc.)"
-          type: string
-        first_name:
-          description: |
-            First name(s) of the contact. In case of a company, this is the first name of the contact person within the company.
-          type: string
-        last_name:
-          description: |
-            Last name of the contact. In case of a company, this is the last name of the contact person within the company.
-          type: string
-        company:
-          description: |
-            Name of the company. Only used in case contact is a company, otherwise this  field should be left empty.
-          type: string
-        email:
-          description: optional email of the party
-          type: string
-        phone_number:
-          description: optional phone number of the party
-          type: string
-        address:
-          $ref: '#/components/schemas/Address'
-      type: object
-    Address:
-      description: "Address is the physical address of a property, a person, or an\
-        \ organization"
-      example:
-        line1: 1 ZestLabs Blvd
-        line2: CSS District
-        city: Mannheim
-        postcode: 680001
-        province: Baden-Wuerttemberg
-        country: Germany
-      properties:
-        line1:
-          type: string
-        line2:
-          type: string
-        city:
-          type: string
-        postcode:
-          type: string
-        province:
-          type: string
-        country:
-          type: string
-      type: object
-    UserTypeEnum:
-      enum:
-      - ANY
-      - TENANT
-      - MANAGER
-      - SERVICE_PROVIDER
-      - AUTOMATION
-      type: string
-    UserReference:
-      description: Contains information about a user referenced in other entities
-      example:
-        user_role: null
-        user_id: user_id
-        contact_data:
-          address:
-            line1: 1 ZestLabs Blvd
-            line2: CSS District
-            city: Mannheim
-            postcode: 680001
-            province: Baden-Wuerttemberg
-            country: Germany
-          last_name: last_name
-          company: company
-          phone_number: phone_number
-          id: id
-          title: title
-          first_name: first_name
-          email: email
-      properties:
-        user_id:
-          description: "The ID of the user, can be undefined, if user is not registered,\
-            \ or was already deleted"
-          type: string
-        user_role:
-          $ref: '#/components/schemas/UserTypeEnum'
-        contact_data:
-          $ref: '#/components/schemas/ContactData'
       type: object
     FloatNumber:
       example:

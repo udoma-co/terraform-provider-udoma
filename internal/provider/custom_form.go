@@ -340,7 +340,7 @@ func (item *CustomFormItemModel) toApiRequest() *v1.FormItem {
 
 func (item *CustomFormItemModel) fromApiResponse(resp *v1.FormItem) {
 
-	item.RefID = types.StringValue(sdp(resp.RefId))
+	item.RefID = types.StringPointerValue(resp.RefId)
 	if resp.RefType != nil {
 		item.RefType = types.StringValue(string(*resp.RefType))
 	} else {
@@ -530,9 +530,9 @@ func (validation *CustomFormValidationModel) fromApiResponse(resp *v1.FormValida
 		}
 	}
 
-	validation.ID = types.StringValue(sdp(resp.Id))
-	validation.Expression = types.StringValue(sdp(resp.Expression))
-	validation.Target = types.StringValue(sdp(resp.Target))
+	validation.ID = types.StringPointerValue(resp.Id)
+	validation.Expression = types.StringPointerValue(resp.Expression)
+	validation.Target = types.StringPointerValue(resp.Target)
 	validation.Message, diags = types.MapValue(types.StringType, message)
 
 	return

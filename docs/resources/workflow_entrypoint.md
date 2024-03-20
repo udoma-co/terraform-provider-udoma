@@ -17,18 +17,18 @@ Resource represents an entrypoint to a workflow
 
 ### Required
 
-- `init_script` (String) Optional JS script to be executed before the workflow is started
-- `skip_init_step` (Boolean) Whether the init step should be skipped or not
 - `workflow_definition_ref` (String) The ID of the workflow definition
 
 ### Optional
 
 - `app_location` (String) The location in the webapp where the workflow can be strated from
 - `icon` (String) Optional icon to be displayed on the button that will start the workflow execution
+- `init_script` (String) Optional JS script to be executed before the workflow is started
 - `label` (Map of String) The label to be displayed on the button starting the workflow execution
 - `location_filter` (String) Optional filter that can be used to limit where the entrypoint is shown, e.g.
         for cases this can be the case template, for reports this can be the report 
         definition, etc.
+- `skip_init_step` (Boolean) Whether the init step should be skipped or not
 
 ### Read-Only
 

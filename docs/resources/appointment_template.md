@@ -17,10 +17,13 @@ description: |-
 
 ### Required
 
-- `description` (String) The description of the appointment template.
 - `inputs` (Attributes) A custom form to collect data with (see [below for nested schema](#nestedatt--inputs))
 - `name` (String) The name of the appointment template.
-- `name_expression` (String) The name expression of the appointment template.
+
+### Optional
+
+- `description` (String) The description of the appointment template.
+- `name_expression` (String) Optional JS expression used to generate the name of appointments.
 
 ### Read-Only
 

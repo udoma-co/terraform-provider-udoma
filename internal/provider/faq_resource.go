@@ -245,7 +245,7 @@ func (model *FAQModel) fromAPI(faq *api.FAQEntry) error {
 		return fmt.Errorf("faq entry is nil")
 	}
 
-	model.ID = types.StringValue(sdp(faq.Id))
+	model.ID = types.StringPointerValue(faq.Id)
 
 	if faq.Question != nil {
 		in := stringMapToValueMap(*faq.Question)
@@ -255,6 +255,7 @@ func (model *FAQModel) fromAPI(faq *api.FAQEntry) error {
 		}
 		model.Question = modelValue
 	}
+
 	if faq.Answer != nil {
 		in := stringMapToValueMap(*faq.Answer)
 		modelValue, diags := types.MapValue(types.StringType, in)
@@ -264,9 +265,15 @@ func (model *FAQModel) fromAPI(faq *api.FAQEntry) error {
 		model.Answer = modelValue
 	}
 
-	model.Keywords = make([]types.String, len(faq.Keywords))
-	for i := range faq.Keywords {
-		model.Keywords[i] = types.StringValue(faq.Keywords[i])
+	if len(faq.Keywords) > 0 {
+		model.Keywords = make([]types.String, len(faq.Keywords))
+		for i := range faq.Keywords {
+			model.Keywords[i] = types.StringValue(faq.Keywords[i])
+		}
+	} else {
+		if model.Keywords != nil {
+			model.Keywords = make([]types.String, 0)
+		}
 	}
 
 	return nil

@@ -19,22 +19,22 @@ import (
 
 // Ensure provider defined types fully satisfy framework interfaces.
 var (
-	_ resource.Resource                = &caseTemplate{}
-	_ resource.ResourceWithConfigure   = &caseTemplate{}
-	_ resource.ResourceWithImportState = &caseTemplate{}
+	_ resource.Resource                = &CaseTemplate{}
+	_ resource.ResourceWithConfigure   = &CaseTemplate{}
+	_ resource.ResourceWithImportState = &CaseTemplate{}
 )
 
 func NewCaseTemplate() resource.Resource {
-	return &caseTemplate{}
+	return &CaseTemplate{}
 }
 
-// caseTemplate defines the resource implementation.
-type caseTemplate struct {
+// CaseTemplate defines the resource implementation.
+type CaseTemplate struct {
 	client *client.UdomaClient
 }
 
-// caseTemplateModel describes the resource data model.
-type caseTemplateModel struct {
+// CaseTemplateModel describes the resource data model.
+type CaseTemplateModel struct {
 	ID             types.String       `tfsdk:"id"`
 	LastUpdated    types.String       `tfsdk:"last_updated"`
 	CreatedAt      types.Int64        `tfsdk:"created_at"`
@@ -49,11 +49,11 @@ type caseTemplateModel struct {
 	Config         *CaseConfigModel   `tfsdk:"config"`
 }
 
-func (r *caseTemplate) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+func (r *CaseTemplate) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 	resp.TypeName = req.ProviderTypeName + "_case_template"
 }
 
-func (r *caseTemplate) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+func (r *CaseTemplate) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 
 		MarkdownDescription: "Resource represents a template for raising cases",
@@ -119,7 +119,7 @@ func (r *caseTemplate) Schema(ctx context.Context, req resource.SchemaRequest, r
 	}
 }
 
-func (r *caseTemplate) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
+func (r *CaseTemplate) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
 	// Prevent panic if the provider has not been configured.
 	if req.ProviderData == nil {
 		return
@@ -139,10 +139,10 @@ func (r *caseTemplate) Configure(ctx context.Context, req resource.ConfigureRequ
 	r.client = cl
 }
 
-func (r *caseTemplate) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+func (r *CaseTemplate) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 
 	// Retrieve values from plan
-	var plan caseTemplateModel
+	var plan CaseTemplateModel
 	diags := req.Plan.Get(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
@@ -186,10 +186,10 @@ func (r *caseTemplate) Create(ctx context.Context, req resource.CreateRequest, r
 	}
 }
 
-func (r *caseTemplate) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+func (r *CaseTemplate) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
 
 	// Retrieve values from state
-	var state caseTemplateModel
+	var state CaseTemplateModel
 	diags := req.State.Get(ctx, &state)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
@@ -225,10 +225,10 @@ func (r *caseTemplate) Read(ctx context.Context, req resource.ReadRequest, resp 
 	}
 }
 
-func (r *caseTemplate) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+func (r *CaseTemplate) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 
 	// Retrieve values from plan
-	var plan caseTemplateModel
+	var plan CaseTemplateModel
 	diags := req.Plan.Get(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
@@ -274,10 +274,10 @@ func (r *caseTemplate) Update(ctx context.Context, req resource.UpdateRequest, r
 	}
 }
 
-func (r *caseTemplate) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+func (r *CaseTemplate) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
 
 	// Retrieve values from state
-	var state caseTemplateModel
+	var state CaseTemplateModel
 	diags := req.State.Get(ctx, &state)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
@@ -294,22 +294,22 @@ func (r *caseTemplate) Delete(ctx context.Context, req resource.DeleteRequest, r
 	}
 }
 
-func (r *caseTemplate) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+func (r *CaseTemplate) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	// Retrieve import ID and save to id attribute
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
 
-func (model *caseTemplateModel) fromAPI(template *api.CaseTemplate) error {
+func (model *CaseTemplateModel) fromAPI(template *api.CaseTemplate) error {
 
 	if template == nil {
 		return fmt.Errorf("case template is nil")
 	}
 
-	model.ID = types.StringValue(sdp(template.Id))
-	model.CreatedAt = types.Int64Value(idp(template.CreatedAt))
-	model.UpdatedAt = types.Int64Value(idp(template.UpdatedAt))
-	model.Name = types.StringValue(sdp(template.Name))
-	model.NameExpression = types.StringValue(sdp(template.NameExpression))
+	model.ID = types.StringPointerValue(template.Id)
+	model.CreatedAt = types.Int64PointerValue(template.CreatedAt)
+	model.UpdatedAt = types.Int64PointerValue(template.UpdatedAt)
+	model.Name = types.StringPointerValue(template.Name)
+	model.NameExpression = omittableStringValue(template.NameExpression, model.NameExpression)
 	if template.Label != nil {
 		in := stringMapToValueMap(*template.Label)
 		modelValue, diags := types.MapValue(types.StringType, in)
@@ -334,7 +334,7 @@ func (model *caseTemplateModel) fromAPI(template *api.CaseTemplate) error {
 		}
 		model.InfoText = modelValue
 	}
-	model.Icon = types.StringValue(sdp(template.Icon))
+	model.Icon = omittableStringValue(template.Icon, model.Icon)
 
 	if template.CustomInputs != nil {
 		customInputs, err := json.Marshal(template.CustomInputs)
@@ -344,16 +344,18 @@ func (model *caseTemplateModel) fromAPI(template *api.CaseTemplate) error {
 		model.CustomInputs = tf.NewJsonObjectValue(string(customInputs))
 	}
 
-	if model.Config == nil {
-		model.Config = &CaseConfigModel{}
+	cfg := &CaseConfigModel{}
+	isEmpty := cfg.fromApiResponse(template.Config)
+
+	// handle default {} return from API
+	if !isEmpty {
+		model.Config = cfg
 	}
-	// XXX
-	_ = model.Config.fromApiResponse(template.Config)
 
 	return nil
 }
 
-func (model *caseTemplateModel) toAPIRequest() (api.CreateOrUpdateCaseTemplateRequest, error) {
+func (model *CaseTemplateModel) toAPIRequest() (api.CreateOrUpdateCaseTemplateRequest, error) {
 
 	template := api.CreateOrUpdateCaseTemplateRequest{
 		Name:           model.Name.ValueStringPointer(),
@@ -379,10 +381,9 @@ func (model *caseTemplateModel) toAPIRequest() (api.CreateOrUpdateCaseTemplateRe
 		model.CustomInputs = tf.NewJsonObjectValue(string(customInputs))
 	}
 
-	if model.Config == nil {
-		model.Config = NewCaseConfigModelNull()
+	if model.Config != nil {
+		template.Config = model.Config.toApiRequest()
 	}
-	template.Config = model.Config.toApiRequest()
 
 	return template, nil
 }

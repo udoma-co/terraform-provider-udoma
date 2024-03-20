@@ -101,11 +101,11 @@ func (r *workflowEntrypoint) Schema(ctx context.Context, req resource.SchemaRequ
 				ElementType: types.StringType,
 			},
 			"init_script": schema.StringAttribute{
-				Required:    true,
+				Optional:    true,
 				Description: "Optional JS script to be executed before the workflow is started",
 			},
 			"skip_init_step": schema.BoolAttribute{
-				Required:    true,
+				Optional:    true,
 				Description: "Whether the init step should be skipped or not",
 			},
 		},
@@ -284,26 +284,17 @@ func (model *workflowEntrypointModel) fromAPI(workflowEntrypoint *api.WorkflowEn
 		return fmt.Errorf("workflow entrypoint is nil")
 	}
 
-	model.ID = types.StringValue(sdp(workflowEntrypoint.Id))
-	model.CreatedAt = types.Int64Value(idp(workflowEntrypoint.CreatedAt))
-	model.UpdatedAt = types.Int64Value(idp(workflowEntrypoint.UpdatedAt))
-	model.WorkflowDefinitionRef = types.StringValue(sdp(workflowEntrypoint.WorkflowDefinitionRef))
+	model.ID = types.StringPointerValue(workflowEntrypoint.Id)
+	model.CreatedAt = types.Int64PointerValue(workflowEntrypoint.CreatedAt)
+	model.UpdatedAt = types.Int64PointerValue(workflowEntrypoint.UpdatedAt)
+	model.WorkflowDefinitionRef = types.StringPointerValue(workflowEntrypoint.WorkflowDefinitionRef)
 	if workflowEntrypoint.AppLocation != nil {
 		location := *workflowEntrypoint.AppLocation
 		model.AppLocation = types.StringValue(string(location))
 	}
 
-	if workflowEntrypoint.LocationFilter == nil {
-		model.LocationFilter = types.StringNull()
-	} else {
-		model.LocationFilter = types.StringValue(sdp(workflowEntrypoint.LocationFilter))
-	}
-
-	if workflowEntrypoint.Icon == nil {
-		model.Icon = types.StringNull()
-	} else {
-		model.Icon = types.StringValue(sdp(workflowEntrypoint.Icon))
-	}
+	model.LocationFilter = omittableStringValue(workflowEntrypoint.LocationFilter, model.LocationFilter)
+	model.Icon = omittableStringValue(workflowEntrypoint.Icon, model.Icon)
 
 	if workflowEntrypoint.Label != nil {
 		in := stringMapToValueMap(*workflowEntrypoint.Label)
@@ -313,11 +304,13 @@ func (model *workflowEntrypointModel) fromAPI(workflowEntrypoint *api.WorkflowEn
 		}
 		model.Label = modelValue
 	} else {
-		model.Label = types.MapNull(types.StringType)
+		if !model.Label.IsNull() {
+			model.Label = types.MapNull(types.StringType)
+		}
 	}
 
-	model.InitScript = types.StringValue(sdp(workflowEntrypoint.InitScript))
-	model.SkipInitStep = types.BoolValue(bdp(workflowEntrypoint.SkipInitStep))
+	model.InitScript = omittableStringValue(workflowEntrypoint.InitScript, model.InitScript)
+	model.SkipInitStep = omittableBooleanValue(workflowEntrypoint.SkipInitStep, model.SkipInitStep)
 
 	return nil
 }
