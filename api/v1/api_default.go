@@ -1298,29 +1298,29 @@ func (a *DefaultAPIService) CreateCaseTemplateExecute(r ApiCreateCaseTemplateReq
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiCreateConnectorConfigurationRequest struct {
-	ctx                          context.Context
-	ApiService                   *DefaultAPIService
-	createConnectorConfigRequest *CreateConnectorConfigRequest
+type ApiCreateConnectorConfigRequest struct {
+	ctx                                  context.Context
+	ApiService                           *DefaultAPIService
+	createOrUpdateConnectorConfigRequest *CreateOrUpdateConnectorConfigRequest
 }
 
-func (r ApiCreateConnectorConfigurationRequest) CreateConnectorConfigRequest(createConnectorConfigRequest CreateConnectorConfigRequest) ApiCreateConnectorConfigurationRequest {
-	r.createConnectorConfigRequest = &createConnectorConfigRequest
+func (r ApiCreateConnectorConfigRequest) CreateOrUpdateConnectorConfigRequest(createOrUpdateConnectorConfigRequest CreateOrUpdateConnectorConfigRequest) ApiCreateConnectorConfigRequest {
+	r.createOrUpdateConnectorConfigRequest = &createOrUpdateConnectorConfigRequest
 	return r
 }
 
-func (r ApiCreateConnectorConfigurationRequest) Execute() (*ConnectorConfig, *http.Response, error) {
-	return r.ApiService.CreateConnectorConfigurationExecute(r)
+func (r ApiCreateConnectorConfigRequest) Execute() (*ConnectorConfig, *http.Response, error) {
+	return r.ApiService.CreateConnectorConfigExecute(r)
 }
 
 /*
-CreateConnectorConfiguration Create a new connector configuration
+CreateConnectorConfig Create a new connector configuration
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiCreateConnectorConfigurationRequest
+	@return ApiCreateConnectorConfigRequest
 */
-func (a *DefaultAPIService) CreateConnectorConfiguration(ctx context.Context) ApiCreateConnectorConfigurationRequest {
-	return ApiCreateConnectorConfigurationRequest{
+func (a *DefaultAPIService) CreateConnectorConfig(ctx context.Context) ApiCreateConnectorConfigRequest {
+	return ApiCreateConnectorConfigRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -1329,7 +1329,7 @@ func (a *DefaultAPIService) CreateConnectorConfiguration(ctx context.Context) Ap
 // Execute executes the request
 //
 //	@return ConnectorConfig
-func (a *DefaultAPIService) CreateConnectorConfigurationExecute(r ApiCreateConnectorConfigurationRequest) (*ConnectorConfig, *http.Response, error) {
+func (a *DefaultAPIService) CreateConnectorConfigExecute(r ApiCreateConnectorConfigRequest) (*ConnectorConfig, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -1337,7 +1337,7 @@ func (a *DefaultAPIService) CreateConnectorConfigurationExecute(r ApiCreateConne
 		localVarReturnValue *ConnectorConfig
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateConnectorConfiguration")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateConnectorConfig")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1347,8 +1347,8 @@ func (a *DefaultAPIService) CreateConnectorConfigurationExecute(r ApiCreateConne
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.createConnectorConfigRequest == nil {
-		return localVarReturnValue, nil, reportError("createConnectorConfigRequest is required and must be specified")
+	if r.createOrUpdateConnectorConfigRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdateConnectorConfigRequest is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -1369,7 +1369,7 @@ func (a *DefaultAPIService) CreateConnectorConfigurationExecute(r ApiCreateConne
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.createConnectorConfigRequest
+	localVarPostBody = r.createOrUpdateConnectorConfigRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1481,6 +1481,115 @@ func (a *DefaultAPIService) CreateConnectorCredentialsExecute(r ApiCreateConnect
 	}
 	// body params
 	localVarPostBody = r.createConnectorCredentialsRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiCreateConnectorQueryRequest struct {
+	ctx                                 context.Context
+	ApiService                          *DefaultAPIService
+	createOrUpdateConnectorQueryRequest *CreateOrUpdateConnectorQueryRequest
+}
+
+func (r ApiCreateConnectorQueryRequest) CreateOrUpdateConnectorQueryRequest(createOrUpdateConnectorQueryRequest CreateOrUpdateConnectorQueryRequest) ApiCreateConnectorQueryRequest {
+	r.createOrUpdateConnectorQueryRequest = &createOrUpdateConnectorQueryRequest
+	return r
+}
+
+func (r ApiCreateConnectorQueryRequest) Execute() (*ConnectorQuery, *http.Response, error) {
+	return r.ApiService.CreateConnectorQueryExecute(r)
+}
+
+/*
+CreateConnectorQuery Create a new connector query
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiCreateConnectorQueryRequest
+*/
+func (a *DefaultAPIService) CreateConnectorQuery(ctx context.Context) ApiCreateConnectorQueryRequest {
+	return ApiCreateConnectorQueryRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return ConnectorQuery
+func (a *DefaultAPIService) CreateConnectorQueryExecute(r ApiCreateConnectorQueryRequest) (*ConnectorQuery, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ConnectorQuery
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateConnectorQuery")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/connector/query"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createOrUpdateConnectorQueryRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdateConnectorQueryRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrUpdateConnectorQueryRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -4572,25 +4681,25 @@ func (a *DefaultAPIService) DeleteCaseTemplateExecute(r ApiDeleteCaseTemplateReq
 	return localVarHTTPResponse, nil
 }
 
-type ApiDeleteConnectorConfigurationRequest struct {
+type ApiDeleteConnectorConfigRequest struct {
 	ctx         context.Context
 	ApiService  *DefaultAPIService
 	connectorID string
 }
 
-func (r ApiDeleteConnectorConfigurationRequest) Execute() (*http.Response, error) {
-	return r.ApiService.DeleteConnectorConfigurationExecute(r)
+func (r ApiDeleteConnectorConfigRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteConnectorConfigExecute(r)
 }
 
 /*
-DeleteConnectorConfiguration Delete the connector configuration
+DeleteConnectorConfig Delete the connector configuration
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param connectorID ID of the connector
-	@return ApiDeleteConnectorConfigurationRequest
+	@return ApiDeleteConnectorConfigRequest
 */
-func (a *DefaultAPIService) DeleteConnectorConfiguration(ctx context.Context, connectorID string) ApiDeleteConnectorConfigurationRequest {
-	return ApiDeleteConnectorConfigurationRequest{
+func (a *DefaultAPIService) DeleteConnectorConfig(ctx context.Context, connectorID string) ApiDeleteConnectorConfigRequest {
+	return ApiDeleteConnectorConfigRequest{
 		ApiService:  a,
 		ctx:         ctx,
 		connectorID: connectorID,
@@ -4598,14 +4707,14 @@ func (a *DefaultAPIService) DeleteConnectorConfiguration(ctx context.Context, co
 }
 
 // Execute executes the request
-func (a *DefaultAPIService) DeleteConnectorConfigurationExecute(r ApiDeleteConnectorConfigurationRequest) (*http.Response, error) {
+func (a *DefaultAPIService) DeleteConnectorConfigExecute(r ApiDeleteConnectorConfigRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteConnectorConfiguration")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteConnectorConfig")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -4752,50 +4861,46 @@ func (a *DefaultAPIService) DeleteConnectorCredentialsExecute(r ApiDeleteConnect
 	return localVarHTTPResponse, nil
 }
 
-type ApiDeleteConnectorEntitiesRequest struct {
-	ctx         context.Context
-	ApiService  *DefaultAPIService
-	connectorID string
-	entity      string
+type ApiDeleteConnectorQueryRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	queryID    string
 }
 
-func (r ApiDeleteConnectorEntitiesRequest) Execute() (*http.Response, error) {
-	return r.ApiService.DeleteConnectorEntitiesExecute(r)
+func (r ApiDeleteConnectorQueryRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteConnectorQueryExecute(r)
 }
 
 /*
-DeleteConnectorEntities Delete all entities synchronised via the connector
+DeleteConnectorQuery Delete the query
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param connectorID ID of the connector
-	@param entity The entity to get the status for
-	@return ApiDeleteConnectorEntitiesRequest
+	@param queryID ID of the query
+	@return ApiDeleteConnectorQueryRequest
 */
-func (a *DefaultAPIService) DeleteConnectorEntities(ctx context.Context, connectorID string, entity string) ApiDeleteConnectorEntitiesRequest {
-	return ApiDeleteConnectorEntitiesRequest{
-		ApiService:  a,
-		ctx:         ctx,
-		connectorID: connectorID,
-		entity:      entity,
+func (a *DefaultAPIService) DeleteConnectorQuery(ctx context.Context, queryID string) ApiDeleteConnectorQueryRequest {
+	return ApiDeleteConnectorQueryRequest{
+		ApiService: a,
+		ctx:        ctx,
+		queryID:    queryID,
 	}
 }
 
 // Execute executes the request
-func (a *DefaultAPIService) DeleteConnectorEntitiesExecute(r ApiDeleteConnectorEntitiesRequest) (*http.Response, error) {
+func (a *DefaultAPIService) DeleteConnectorQueryExecute(r ApiDeleteConnectorQueryRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteConnectorEntities")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteConnectorQuery")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/connector/{connectorID}/status/{entity}"
-	localVarPath = strings.Replace(localVarPath, "{"+"connectorID"+"}", url.PathEscape(parameterValueToString(r.connectorID, "connectorID")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"entity"+"}", url.PathEscape(parameterValueToString(r.entity, "entity")), -1)
+	localVarPath := localBasePath + "/connector/{queryID}/query"
+	localVarPath = strings.Replace(localVarPath, "{"+"queryID"+"}", url.PathEscape(parameterValueToString(r.queryID, "queryID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -6601,7 +6706,7 @@ func (r ApiDeleteTenantRequest) Execute() (*http.Response, error) {
 /*
 DeleteTenant Remove tenant from property
 
-Delete a tenant, removing it from the property they were assigned to. If the  tenant is a registered user, their account will remain active, however, they  will not be able to access that property any longer.
+Delete a tenant, removing it from the property they were assigned to. If the tenant is a registered user, their account will remain active, however, they will not be able to access that property any longer.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param tenantId ID of the tenant to get
@@ -9154,25 +9259,25 @@ func (a *DefaultAPIService) GetCompanyProfileExecute(r ApiGetCompanyProfileReque
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiGetConnectorConfigurationRequest struct {
+type ApiGetConnectorConfigRequest struct {
 	ctx         context.Context
 	ApiService  *DefaultAPIService
 	connectorID string
 }
 
-func (r ApiGetConnectorConfigurationRequest) Execute() (*ConnectorConfig, *http.Response, error) {
-	return r.ApiService.GetConnectorConfigurationExecute(r)
+func (r ApiGetConnectorConfigRequest) Execute() (*ConnectorConfig, *http.Response, error) {
+	return r.ApiService.GetConnectorConfigExecute(r)
 }
 
 /*
-GetConnectorConfiguration Get the connector configuration for the current account
+GetConnectorConfig Get the connector configuration for the current account
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param connectorID ID of the connector
-	@return ApiGetConnectorConfigurationRequest
+	@return ApiGetConnectorConfigRequest
 */
-func (a *DefaultAPIService) GetConnectorConfiguration(ctx context.Context, connectorID string) ApiGetConnectorConfigurationRequest {
-	return ApiGetConnectorConfigurationRequest{
+func (a *DefaultAPIService) GetConnectorConfig(ctx context.Context, connectorID string) ApiGetConnectorConfigRequest {
+	return ApiGetConnectorConfigRequest{
 		ApiService:  a,
 		ctx:         ctx,
 		connectorID: connectorID,
@@ -9182,7 +9287,7 @@ func (a *DefaultAPIService) GetConnectorConfiguration(ctx context.Context, conne
 // Execute executes the request
 //
 //	@return ConnectorConfig
-func (a *DefaultAPIService) GetConnectorConfigurationExecute(r ApiGetConnectorConfigurationRequest) (*ConnectorConfig, *http.Response, error) {
+func (a *DefaultAPIService) GetConnectorConfigExecute(r ApiGetConnectorConfigRequest) (*ConnectorConfig, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -9190,7 +9295,7 @@ func (a *DefaultAPIService) GetConnectorConfigurationExecute(r ApiGetConnectorCo
 		localVarReturnValue *ConnectorConfig
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetConnectorConfiguration")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetConnectorConfig")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -9256,23 +9361,23 @@ func (a *DefaultAPIService) GetConnectorConfigurationExecute(r ApiGetConnectorCo
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiGetConnectorConfigurationsRequest struct {
+type ApiGetConnectorConfigsRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
 }
 
-func (r ApiGetConnectorConfigurationsRequest) Execute() ([]ConnectorConfig, *http.Response, error) {
-	return r.ApiService.GetConnectorConfigurationsExecute(r)
+func (r ApiGetConnectorConfigsRequest) Execute() ([]ConnectorConfig, *http.Response, error) {
+	return r.ApiService.GetConnectorConfigsExecute(r)
 }
 
 /*
-GetConnectorConfigurations Get the connector configurations for the current account
+GetConnectorConfigs Get the connector configurations for the current account
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiGetConnectorConfigurationsRequest
+	@return ApiGetConnectorConfigsRequest
 */
-func (a *DefaultAPIService) GetConnectorConfigurations(ctx context.Context) ApiGetConnectorConfigurationsRequest {
-	return ApiGetConnectorConfigurationsRequest{
+func (a *DefaultAPIService) GetConnectorConfigs(ctx context.Context) ApiGetConnectorConfigsRequest {
+	return ApiGetConnectorConfigsRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -9281,7 +9386,7 @@ func (a *DefaultAPIService) GetConnectorConfigurations(ctx context.Context) ApiG
 // Execute executes the request
 //
 //	@return []ConnectorConfig
-func (a *DefaultAPIService) GetConnectorConfigurationsExecute(r ApiGetConnectorConfigurationsRequest) ([]ConnectorConfig, *http.Response, error) {
+func (a *DefaultAPIService) GetConnectorConfigsExecute(r ApiGetConnectorConfigsRequest) ([]ConnectorConfig, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -9289,7 +9394,7 @@ func (a *DefaultAPIService) GetConnectorConfigurationsExecute(r ApiGetConnectorC
 		localVarReturnValue []ConnectorConfig
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetConnectorConfigurations")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetConnectorConfigs")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -9452,25 +9557,25 @@ func (a *DefaultAPIService) GetConnectorCredentialsExecute(r ApiGetConnectorCred
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiGetConnectorStatusRequest struct {
+type ApiGetConnectorQueriesRequest struct {
 	ctx         context.Context
 	ApiService  *DefaultAPIService
 	connectorID string
 }
 
-func (r ApiGetConnectorStatusRequest) Execute() (*ConnectorStatus, *http.Response, error) {
-	return r.ApiService.GetConnectorStatusExecute(r)
+func (r ApiGetConnectorQueriesRequest) Execute() ([]ConnectorQuery, *http.Response, error) {
+	return r.ApiService.GetConnectorQueriesExecute(r)
 }
 
 /*
-GetConnectorStatus Get the connector status for the current account
+GetConnectorQueries Get the queries that belong to the config.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param connectorID ID of the connector
-	@return ApiGetConnectorStatusRequest
+	@return ApiGetConnectorQueriesRequest
 */
-func (a *DefaultAPIService) GetConnectorStatus(ctx context.Context, connectorID string) ApiGetConnectorStatusRequest {
-	return ApiGetConnectorStatusRequest{
+func (a *DefaultAPIService) GetConnectorQueries(ctx context.Context, connectorID string) ApiGetConnectorQueriesRequest {
+	return ApiGetConnectorQueriesRequest{
 		ApiService:  a,
 		ctx:         ctx,
 		connectorID: connectorID,
@@ -9479,22 +9584,124 @@ func (a *DefaultAPIService) GetConnectorStatus(ctx context.Context, connectorID 
 
 // Execute executes the request
 //
-//	@return ConnectorStatus
-func (a *DefaultAPIService) GetConnectorStatusExecute(r ApiGetConnectorStatusRequest) (*ConnectorStatus, *http.Response, error) {
+//	@return []ConnectorQuery
+func (a *DefaultAPIService) GetConnectorQueriesExecute(r ApiGetConnectorQueriesRequest) ([]ConnectorQuery, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *ConnectorStatus
+		localVarReturnValue []ConnectorQuery
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetConnectorStatus")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetConnectorQueries")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/connector/{connectorID}/status"
+	localVarPath := localBasePath + "/connector/config/{connectorID}/queries"
 	localVarPath = strings.Replace(localVarPath, "{"+"connectorID"+"}", url.PathEscape(parameterValueToString(r.connectorID, "connectorID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetConnectorQueryRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	queryID    string
+}
+
+func (r ApiGetConnectorQueryRequest) Execute() (*ConnectorQuery, *http.Response, error) {
+	return r.ApiService.GetConnectorQueryExecute(r)
+}
+
+/*
+GetConnectorQuery Get the query for the current account
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param queryID ID of the query
+	@return ApiGetConnectorQueryRequest
+*/
+func (a *DefaultAPIService) GetConnectorQuery(ctx context.Context, queryID string) ApiGetConnectorQueryRequest {
+	return ApiGetConnectorQueryRequest{
+		ApiService: a,
+		ctx:        ctx,
+		queryID:    queryID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return ConnectorQuery
+func (a *DefaultAPIService) GetConnectorQueryExecute(r ApiGetConnectorQueryRequest) (*ConnectorQuery, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ConnectorQuery
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetConnectorQuery")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/connector/{queryID}/query"
+	localVarPath = strings.Replace(localVarPath, "{"+"queryID"+"}", url.PathEscape(parameterValueToString(r.queryID, "queryID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -12234,7 +12441,7 @@ func (r ApiGetPropertyHistoryRequest) Execute() (*PropertyHistory, *http.Respons
 /*
 GetPropertyHistory Get property history
 
-Get a list of all events that were captured for the related property
+# Get a list of all events that were captured for the related property
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param propId ID of the property
@@ -12755,7 +12962,7 @@ func (r ApiGetReportDefinitionsRequest) Execute() ([]ReportDefinition, *http.Res
 /*
 GetReportDefinitions Method for GetReportDefinitions
 
-Get a list of all report definitions that are available for the account
+# Get a list of all report definitions that are available for the account
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiGetReportDefinitionsRequest
@@ -15011,115 +15218,6 @@ func (a *DefaultAPIService) InviteTenantExecute(r ApiInviteTenantRequest) (*Invi
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiPingConnectorRequest struct {
-	ctx                  context.Context
-	ApiService           *DefaultAPIService
-	connectorPingRequest *ConnectorPingRequest
-}
-
-func (r ApiPingConnectorRequest) ConnectorPingRequest(connectorPingRequest ConnectorPingRequest) ApiPingConnectorRequest {
-	r.connectorPingRequest = &connectorPingRequest
-	return r
-}
-
-func (r ApiPingConnectorRequest) Execute() (*PingResponse, *http.Response, error) {
-	return r.ApiService.PingConnectorExecute(r)
-}
-
-/*
-PingConnector Ping the connector
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiPingConnectorRequest
-*/
-func (a *DefaultAPIService) PingConnector(ctx context.Context) ApiPingConnectorRequest {
-	return ApiPingConnectorRequest{
-		ApiService: a,
-		ctx:        ctx,
-	}
-}
-
-// Execute executes the request
-//
-//	@return PingResponse
-func (a *DefaultAPIService) PingConnectorExecute(r ApiPingConnectorRequest) (*PingResponse, *http.Response, error) {
-	var (
-		localVarHTTPMethod  = http.MethodPost
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *PingResponse
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.PingConnector")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/connector/ping"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.connectorPingRequest == nil {
-		return localVarReturnValue, nil, reportError("connectorPingRequest is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.connectorPingRequest
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
 type ApiQueryAppointmentSchedulesRequest struct {
 	ctx                              context.Context
 	ApiService                       *DefaultAPIService
@@ -16427,7 +16525,7 @@ func (r ApiQueryPropertiesRequest) Execute() (*QueryPropertiesResponse, *http.Re
 /*
 QueryProperties Query properties
 
-Get all properties that are registured under the user's organization
+# Get all properties that are registured under the user's organization
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiQueryPropertiesRequest
@@ -17285,100 +17383,6 @@ func (a *DefaultAPIService) RequestESignaturesForDocumentExecute(r ApiRequestESi
 	}
 
 	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiResetConnectorEntitySyncStatusRequest struct {
-	ctx         context.Context
-	ApiService  *DefaultAPIService
-	connectorID string
-	entity      string
-}
-
-func (r ApiResetConnectorEntitySyncStatusRequest) Execute() (*http.Response, error) {
-	return r.ApiService.ResetConnectorEntitySyncStatusExecute(r)
-}
-
-/*
-ResetConnectorEntitySyncStatus Reset the synchronisation status for the given entity
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param connectorID ID of the connector
-	@param entity The entity to get the status for
-	@return ApiResetConnectorEntitySyncStatusRequest
-*/
-func (a *DefaultAPIService) ResetConnectorEntitySyncStatus(ctx context.Context, connectorID string, entity string) ApiResetConnectorEntitySyncStatusRequest {
-	return ApiResetConnectorEntitySyncStatusRequest{
-		ApiService:  a,
-		ctx:         ctx,
-		connectorID: connectorID,
-		entity:      entity,
-	}
-}
-
-// Execute executes the request
-func (a *DefaultAPIService) ResetConnectorEntitySyncStatusExecute(r ApiResetConnectorEntitySyncStatusRequest) (*http.Response, error) {
-	var (
-		localVarHTTPMethod = http.MethodPost
-		localVarPostBody   interface{}
-		formFiles          []formFile
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ResetConnectorEntitySyncStatus")
-	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/connector/{connectorID}/status/{entity}"
-	localVarPath = strings.Replace(localVarPath, "{"+"connectorID"+"}", url.PathEscape(parameterValueToString(r.connectorID, "connectorID")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"entity"+"}", url.PathEscape(parameterValueToString(r.entity, "entity")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarHTTPResponse, newErr
-	}
-
-	return localVarHTTPResponse, nil
 }
 
 type ApiRespondToInvitationRequest struct {
@@ -18819,31 +18823,31 @@ func (a *DefaultAPIService) UpdateCompanyProfileExecute(r ApiUpdateCompanyProfil
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiUpdateConnectorConfigurationRequest struct {
-	ctx                          context.Context
-	ApiService                   *DefaultAPIService
-	connectorID                  string
-	updateConnectorConfigRequest *UpdateConnectorConfigRequest
+type ApiUpdateConnectorConfigRequest struct {
+	ctx                                  context.Context
+	ApiService                           *DefaultAPIService
+	connectorID                          string
+	createOrUpdateConnectorConfigRequest *CreateOrUpdateConnectorConfigRequest
 }
 
-func (r ApiUpdateConnectorConfigurationRequest) UpdateConnectorConfigRequest(updateConnectorConfigRequest UpdateConnectorConfigRequest) ApiUpdateConnectorConfigurationRequest {
-	r.updateConnectorConfigRequest = &updateConnectorConfigRequest
+func (r ApiUpdateConnectorConfigRequest) CreateOrUpdateConnectorConfigRequest(createOrUpdateConnectorConfigRequest CreateOrUpdateConnectorConfigRequest) ApiUpdateConnectorConfigRequest {
+	r.createOrUpdateConnectorConfigRequest = &createOrUpdateConnectorConfigRequest
 	return r
 }
 
-func (r ApiUpdateConnectorConfigurationRequest) Execute() (*ConnectorConfig, *http.Response, error) {
-	return r.ApiService.UpdateConnectorConfigurationExecute(r)
+func (r ApiUpdateConnectorConfigRequest) Execute() (*ConnectorConfig, *http.Response, error) {
+	return r.ApiService.UpdateConnectorConfigExecute(r)
 }
 
 /*
-UpdateConnectorConfiguration Update the connector configuration
+UpdateConnectorConfig Update the connector configuration
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param connectorID ID of the connector
-	@return ApiUpdateConnectorConfigurationRequest
+	@return ApiUpdateConnectorConfigRequest
 */
-func (a *DefaultAPIService) UpdateConnectorConfiguration(ctx context.Context, connectorID string) ApiUpdateConnectorConfigurationRequest {
-	return ApiUpdateConnectorConfigurationRequest{
+func (a *DefaultAPIService) UpdateConnectorConfig(ctx context.Context, connectorID string) ApiUpdateConnectorConfigRequest {
+	return ApiUpdateConnectorConfigRequest{
 		ApiService:  a,
 		ctx:         ctx,
 		connectorID: connectorID,
@@ -18853,7 +18857,7 @@ func (a *DefaultAPIService) UpdateConnectorConfiguration(ctx context.Context, co
 // Execute executes the request
 //
 //	@return ConnectorConfig
-func (a *DefaultAPIService) UpdateConnectorConfigurationExecute(r ApiUpdateConnectorConfigurationRequest) (*ConnectorConfig, *http.Response, error) {
+func (a *DefaultAPIService) UpdateConnectorConfigExecute(r ApiUpdateConnectorConfigRequest) (*ConnectorConfig, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -18861,7 +18865,7 @@ func (a *DefaultAPIService) UpdateConnectorConfigurationExecute(r ApiUpdateConne
 		localVarReturnValue *ConnectorConfig
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdateConnectorConfiguration")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdateConnectorConfig")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -18872,8 +18876,8 @@ func (a *DefaultAPIService) UpdateConnectorConfigurationExecute(r ApiUpdateConne
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.updateConnectorConfigRequest == nil {
-		return localVarReturnValue, nil, reportError("updateConnectorConfigRequest is required and must be specified")
+	if r.createOrUpdateConnectorConfigRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdateConnectorConfigRequest is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -18894,7 +18898,120 @@ func (a *DefaultAPIService) UpdateConnectorConfigurationExecute(r ApiUpdateConne
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.updateConnectorConfigRequest
+	localVarPostBody = r.createOrUpdateConnectorConfigRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdateConnectorQueryRequest struct {
+	ctx                                 context.Context
+	ApiService                          *DefaultAPIService
+	queryID                             string
+	createOrUpdateConnectorQueryRequest *CreateOrUpdateConnectorQueryRequest
+}
+
+func (r ApiUpdateConnectorQueryRequest) CreateOrUpdateConnectorQueryRequest(createOrUpdateConnectorQueryRequest CreateOrUpdateConnectorQueryRequest) ApiUpdateConnectorQueryRequest {
+	r.createOrUpdateConnectorQueryRequest = &createOrUpdateConnectorQueryRequest
+	return r
+}
+
+func (r ApiUpdateConnectorQueryRequest) Execute() (*ConnectorQuery, *http.Response, error) {
+	return r.ApiService.UpdateConnectorQueryExecute(r)
+}
+
+/*
+UpdateConnectorQuery Update the connector Query
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param queryID ID of the query
+	@return ApiUpdateConnectorQueryRequest
+*/
+func (a *DefaultAPIService) UpdateConnectorQuery(ctx context.Context, queryID string) ApiUpdateConnectorQueryRequest {
+	return ApiUpdateConnectorQueryRequest{
+		ApiService: a,
+		ctx:        ctx,
+		queryID:    queryID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return ConnectorQuery
+func (a *DefaultAPIService) UpdateConnectorQueryExecute(r ApiUpdateConnectorQueryRequest) (*ConnectorQuery, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ConnectorQuery
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdateConnectorQuery")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/connector/{queryID}/query"
+	localVarPath = strings.Replace(localVarPath, "{"+"queryID"+"}", url.PathEscape(parameterValueToString(r.queryID, "queryID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createOrUpdateConnectorQueryRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdateConnectorQueryRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrUpdateConnectorQueryRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -20558,7 +20675,7 @@ func (r ApiUpdateServiceProviderRequest) Execute() (*Case, *http.Response, error
 }
 
 /*
-UpdateServiceProvider Update the attributes of the service provider
+UpdateServiceProvider Update the attributes of the service provide
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param serviceProviderId ID of the required service provider

@@ -678,7 +678,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CreateCaseRequest'
-        description: Case that needs to be created by the user for the organization
+        description: |
+          Case that needs to be created by the user for the organization
         required: true
       responses:
         "200":
@@ -884,8 +885,8 @@ paths:
           content:
             application/json:
               example:
-                content: "Thanks for the case, we will contact the electrician to\
-                  \ have a look"
+                content: |
+                  Thanks for the case, we will contact the electrician to have a look
               schema:
                 $ref: '#/components/schemas/CaseComment'
           description: Successfully created comment
@@ -1280,7 +1281,8 @@ paths:
         "500":
           content: {}
           description: Internal server error
-      summary: Generates and returns a QR code of the URL of the case reporting endpoint
+      summary: |
+        Generates and returns a QR code of the URL of the case reporting endpoint
   /cases/template:
     post:
       operationId: createCaseTemplate
@@ -1432,54 +1434,6 @@ paths:
           content: {}
           description: Internal server error
       summary: Update case template
-  /connector/configs:
-    get:
-      operationId: getConnectorConfigurations
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/ConnectorConfig'
-                type: array
-          description: Successful operation
-        "403":
-          content: {}
-          description: Access denied
-        "404":
-          content: {}
-          description: Requested entity not found
-        "500":
-          content: {}
-          description: Internal server error
-      summary: Get the connector configurations for the current account
-  /connector/config:
-    post:
-      operationId: createConnectorConfiguration
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateConnectorConfigRequest'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ConnectorConfig'
-          description: Successful operation
-        "403":
-          content: {}
-          description: Access denied
-        "404":
-          content: {}
-          description: Requested entity not found
-        "500":
-          content: {}
-          description: Internal server error
-      summary: Create a new connector configuration
   /connector/credentials:
     get:
       operationId: getConnectorCredentials
@@ -1554,9 +1508,57 @@ paths:
           content: {}
           description: Internal server error
       summary: Delete the connector credentials for the current account
+  /connector/configs:
+    get:
+      operationId: getConnectorConfigs
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ConnectorConfig'
+                type: array
+          description: Successful operation
+        "403":
+          content: {}
+          description: Access denied
+        "404":
+          content: {}
+          description: Requested entity not found
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Get the connector configurations for the current account
+  /connector/config:
+    post:
+      operationId: createConnectorConfig
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrUpdateConnectorConfigRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectorConfig'
+          description: Successful operation
+        "403":
+          content: {}
+          description: Access denied
+        "404":
+          content: {}
+          description: Requested entity not found
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Create a new connector configuration
   /connector/{connectorID}/config:
     delete:
-      operationId: deleteConnectorConfiguration
+      operationId: deleteConnectorConfig
       parameters:
       - description: ID of the connector
         explode: false
@@ -1578,7 +1580,7 @@ paths:
           description: Internal server error
       summary: Delete the connector configuration
     get:
-      operationId: getConnectorConfiguration
+      operationId: getConnectorConfig
       parameters:
       - description: ID of the connector
         explode: false
@@ -1606,7 +1608,7 @@ paths:
           description: Internal server error
       summary: Get the connector configuration for the current account
     post:
-      operationId: updateConnectorConfiguration
+      operationId: updateConnectorConfig
       parameters:
       - description: ID of the connector
         explode: false
@@ -1620,7 +1622,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateConnectorConfigRequest'
+              $ref: '#/components/schemas/CreateOrUpdateConnectorConfigRequest'
         required: true
       responses:
         "200":
@@ -1636,9 +1638,9 @@ paths:
           content: {}
           description: Internal server error
       summary: Update the connector configuration
-  /connector/{connectorID}/status:
+  /connector/config/{connectorID}/queries:
     get:
-      operationId: getConnectorStatus
+      operationId: getConnectorQueries
       parameters:
       - description: ID of the connector
         explode: false
@@ -1653,7 +1655,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ConnectorStatus'
+                description: All of the queries that belong to the config.
+                items:
+                  $ref: '#/components/schemas/ConnectorQuery'
+                type: array
           description: Successful operation
         "403":
           content: {}
@@ -1664,89 +1669,22 @@ paths:
         "500":
           content: {}
           description: Internal server error
-      summary: Get the connector status for the current account
-  /connector/{connectorID}/status/{entity}:
-    delete:
-      operationId: deleteConnectorEntities
-      parameters:
-      - description: ID of the connector
-        explode: false
-        in: path
-        name: connectorID
-        required: true
-        schema:
-          type: string
-        style: simple
-      - description: The entity to get the status for
-        explode: false
-        in: path
-        name: entity
-        required: true
-        schema:
-          type: string
-        style: simple
-      responses:
-        "200":
-          content: {}
-          description: Operation successfully performed
-        "403":
-          content: {}
-          description: Access denied
-        "404":
-          content: {}
-          description: Requested entity not found
-        "500":
-          content: {}
-          description: Internal server error
-      summary: Delete all entities synchronised via the connector
+      summary: Get the queries that belong to the config.
+  /connector/query:
     post:
-      operationId: resetConnectorEntitySyncStatus
-      parameters:
-      - description: ID of the connector
-        explode: false
-        in: path
-        name: connectorID
-        required: true
-        schema:
-          type: string
-        style: simple
-      - description: The entity to get the status for
-        explode: false
-        in: path
-        name: entity
-        required: true
-        schema:
-          type: string
-        style: simple
-      responses:
-        "200":
-          content: {}
-          description: Operation successfully performed
-        "403":
-          content: {}
-          description: Access denied
-        "404":
-          content: {}
-          description: Requested entity not found
-        "500":
-          content: {}
-          description: Internal server error
-      summary: Reset the synchronisation status for the given entity
-  /connector/ping:
-    post:
-      operationId: pingConnector
+      operationId: createConnectorQuery
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ConnectorPingRequest'
+              $ref: '#/components/schemas/CreateOrUpdateConnectorQueryRequest'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PingResponse'
+                $ref: '#/components/schemas/ConnectorQuery'
           description: Successful operation
         "403":
           content: {}
@@ -1757,7 +1695,89 @@ paths:
         "500":
           content: {}
           description: Internal server error
-      summary: Ping the connector
+      summary: Create a new connector query
+  /connector/{queryID}/query:
+    delete:
+      operationId: deleteConnectorQuery
+      parameters:
+      - description: ID of the query
+        explode: false
+        in: path
+        name: queryID
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content: {}
+          description: Operation successfully performed
+        "403":
+          content: {}
+          description: Access denied
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Delete the query
+    get:
+      operationId: getConnectorQuery
+      parameters:
+      - description: ID of the query
+        explode: false
+        in: path
+        name: queryID
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectorQuery'
+          description: Successful operation
+        "403":
+          content: {}
+          description: Access denied
+        "404":
+          content: {}
+          description: Requested entity not found
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Get the query for the current account
+    post:
+      operationId: updateConnectorQuery
+      parameters:
+      - description: ID of the query
+        explode: false
+        in: path
+        name: queryID
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrUpdateConnectorQueryRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectorQuery'
+          description: Successful operation
+        "403":
+          content: {}
+          description: Access denied
+        "500":
+          content: {}
+          description: Internal server error
+      summary: Update the connector Query
   /connector/sync:
     post:
       operationId: syncConnectorData
@@ -2134,7 +2154,8 @@ paths:
         "500":
           content: {}
           description: Internal server error
-      summary: "Generate the text for the document, based on template and input data"
+      summary: |
+        Generate the text for the document, based on template and input data
   /document-generation/documents/{docId}/esignature/request:
     get:
       operationId: generateESignatureRequest
@@ -3016,7 +3037,8 @@ paths:
           description: Internal server error
       summary: Delete invitation
     post:
-      description: Accept or reject an invitation from a landlord/manager for a property
+      description: |
+        Accept or reject an invitation from a landlord/manager for a property
       operationId: respondToInvitation
       parameters:
       - description: ID of the invitation to interact with
@@ -3880,7 +3902,8 @@ paths:
       summary: Get the current latest PriceIndexPoint
   /properties:
     post:
-      description: Get all properties that are registured under the user's organization
+      description: |
+        Get all properties that are registured under the user's organization
       operationId: queryProperties
       requestBody:
         content:
@@ -4252,7 +4275,8 @@ paths:
       summary: Update a property contact
   /property/{propId}/history:
     get:
-      description: Get a list of all events that were captured for the related property
+      description: |
+        Get a list of all events that were captured for the related property
       operationId: getPropertyHistory
       parameters:
       - description: ID of the property
@@ -4546,8 +4570,8 @@ paths:
       summary: Get the tenancy history for the property
   /reports:
     get:
-      description: Get a list of all report definitions that are available for the
-        account
+      description: |
+        Get a list of all report definitions that are available for the account
       operationId: getReportDefinitions
       responses:
         "200":
@@ -4945,7 +4969,7 @@ paths:
         "500":
           content: {}
           description: Internal server error
-      summary: Update the attributes of the service provider
+      summary: Update the attributes of the service provide
   /service-provider/{serviceProviderId}/cases:
     get:
       operationId: queryServiceProviderCases
@@ -5314,11 +5338,12 @@ paths:
         "500":
           content: {}
           description: Internal server error
-      summary: Create a new tenant and optionally invites them to join the platform
+      summary: |
+        Create a new tenant and optionally invites them to join the platform
   /tenant/{tenantId}:
     delete:
       description: |
-        Delete a tenant, removing it from the property they were assigned to. If the  tenant is a registered user, their account will remain active, however, they  will not be able to access that property any longer.
+        Delete a tenant, removing it from the property they were assigned to. If the tenant is a registered user, their account will remain active, however, they will not be able to access that property any longer.
       operationId: deleteTenant
       parameters:
       - description: ID of the tenant to get
@@ -5847,8 +5872,8 @@ paths:
         "500":
           content: {}
           description: Internal server error
-      summary: "Get a list of all workflow executions, matching the criteria in the\
-        \ request"
+      summary: |
+        Get a list of all workflow executions, matching the criteria in the request
   /workflows/execution:
     post:
       operationId: startWorkflowExecution
@@ -6109,17 +6134,6 @@ components:
           $ref: '#/components/schemas/Attachment'
         back:
           $ref: '#/components/schemas/Attachment'
-      type: object
-    ConnectorCustomSyncEntityTenancy:
-      description: "Used by connectors to push tenancy data to the backend. \n"
-      properties:
-        tenancy:
-          $ref: '#/components/schemas/Tenancy'
-        updates:
-          description: list of updates to be applied to the tenancy
-          items:
-            $ref: '#/components/schemas/TenancyUpdate'
-          type: array
       type: object
     Attachment:
       description: |
@@ -10190,106 +10204,6 @@ components:
             The maximum number of case templates to return.
           type: integer
       type: object
-    ConnectorConfig:
-      description: "Connector configuration that can be pulled by any connector and\
-        \ which indicates what data to be synchronised how often. \n"
-      example:
-        sync_times: sync_times
-        entities:
-        - null
-        - null
-        connector_id: connector_id
-        log_level: null
-        description: description
-        enabled: true
-        ping_times: ping_times
-      properties:
-        connector_id:
-          description: |
-            unique identifier of the connector. This is used to identify the connector when the backend pushes the config to the connector
-          type: string
-        description:
-          description: short description of the connector
-          type: string
-        enabled:
-          description: |
-            indicates whether the connector should push data or not. While disabled the connector will not attempt to push data to the backend, however, it  will continue to ping the backend to check for updates to the config.
-          type: boolean
-        sync_times:
-          description: cron expression that tells the connector how often to sync
-            data
-          type: string
-        ping_times:
-          description: |
-            cron expression that tells the connector how often to ping the server and  retrieve the config
-          type: string
-        entities:
-          description: list of entity types to be synchronised
-          items:
-            $ref: '#/components/schemas/ConnectorEntityType'
-          type: array
-        log_level:
-          $ref: '#/components/schemas/ConnectorLogLevelEnum'
-      type: object
-    ConnectorEntityType:
-      description: |
-        The type of entity that can be synchronised. This is used to indicate what data to be synchronised by the connector
-      enum:
-      - BANK_ACCOUNT
-      - TENANT
-      - TENANCY
-      - OWNER
-      - PROPERTY
-      - SERVICE_PROVIDER
-      type: string
-    ConnectorLogLevelEnum:
-      description: |
-        Log level to be used by the connector. If not provided, the connector will use the default log level
-      enum:
-      - DEBUG
-      - INFO
-      - WARNING
-      - ERROR
-      type: string
-    CreateConnectorConfigRequest:
-      description: Request used to update a connector config
-      example:
-        sync_times: sync_times
-        entities:
-        - entities
-        - entities
-        connector_id: connector_id
-        log_level: null
-        description: description
-        enabled: true
-        ping_times: ping_times
-      properties:
-        connector_id:
-          description: id of the connector
-          type: string
-        description:
-          description: short description of the connector
-          type: string
-        enabled:
-          description: |
-            indicates whether the connector should push data or not. While disabled the connector will not attempt to push data to the backend, however, it  will continue to ping the backend to check for updates to the config.
-          type: boolean
-        sync_times:
-          description: cron expression that tells the connector how often to sync
-            data
-          type: string
-        ping_times:
-          description: |
-            cron expression that tells the connector how often to ping the server and  retrieve the config
-          type: string
-        entities:
-          description: list of entities to be synchronised
-          items:
-            type: string
-          type: array
-        log_level:
-          $ref: '#/components/schemas/ConnectorLogLevelEnum'
-      type: object
     ConnectorCredentials:
       description: Connector credentials
       example:
@@ -10307,6 +10221,10 @@ components:
           description: timestamp of the last access of the credentials
           format: int64
           type: integer
+      required:
+      - api_key
+      - api_secret
+      - last_access
       type: object
     CreateConnectorCredentialsRequest:
       description: Request used to create connector credentials
@@ -10316,219 +10234,222 @@ components:
         connector_id:
           description: id of the connector
           type: string
+      required:
+      - connector_id
       type: object
-    UpdateConnectorConfigRequest:
+    ConnectorConfig:
+      example:
+        updated_at: 6
+        ping_time: ping_time
+        connector_id: connector_id
+        name: name
+        description: description
+        created_at: 0
+        sync_time: sync_time
+        enabled: true
+      properties:
+        connector_id:
+          description: The UID of the connector.
+          type: string
+        name:
+          description: A descriptive name of the connector
+          type: string
+        enabled:
+          description: "indicates whether the connector should push data or not. While\
+            \ disabled the connector will not attempt to push data to the backend,\
+            \ however, it will continue to ping the backend to check for updates to\
+            \ the config."
+          type: boolean
+        description:
+          description: a short description of the connector
+          type: string
+        ping_time:
+          description: |
+            cron expression that tells the connector how often to ping the server and retrieve the config
+          type: string
+        sync_time:
+          description: |
+            cron expression that tells the connector how often to push data
+          type: string
+        created_at:
+          description: The moment of creation of this entity - unix timestamp
+          format: int64
+          type: integer
+        updated_at:
+          description: The moment this entity was last updated - unix timestamp
+          format: int64
+          type: integer
+      required:
+      - connector_id
+      - created_at
+      - enabled
+      - name
+      - ping_time
+      - sync_time
+      - updated_at
+      type: object
+    CreateOrUpdateConnectorConfigRequest:
       description: Request used to update a connector config
       example:
-        sync_times: sync_times
-        entities:
-        - entities
-        - entities
-        log_level: null
+        ping_time: ping_time
+        name: name
         description: description
+        sync_time: sync_time
         enabled: true
-        ping_times: ping_times
       properties:
-        description:
-          description: short description of the connector
+        name:
+          description: a descriptive name for the connector
           type: string
         enabled:
           description: |
-            indicates whether the connector should push data or not. While disabled the connector will not attempt to push data to the backend, however, it  will continue to ping the backend to check for updates to the config.
+            indicates whether the connector should push data or not. While disabled the connector will not attempt to push data to the backend, however, it will continue to ping the backend to check for updates to the config.
           type: boolean
-        sync_times:
-          description: cron expression that tells the connector how often to sync
-            data
+        description:
+          description: short description of the connector
           type: string
-        ping_times:
+        sync_time:
           description: |
-            cron expression that tells the connector how often to ping the server and  retrieve the config
+            cron expression that tells the connector how often to sync data
           type: string
-        entities:
-          description: list of entities to be synchronised
-          items:
-            type: string
-          type: array
-        log_level:
-          $ref: '#/components/schemas/ConnectorLogLevelEnum'
+        ping_time:
+          description: |
+            cron expression that tells the connector how often to ping the server and retrieve the config
+          type: string
+      required:
+      - enabled
+      - name
+      - ping_time
+      - sync_time
       type: object
-    ConnectorStatus:
-      description: Information about the status of the connector
-      example:
-        last_sync: 6
-        last_ping: 0
-        entity_infos:
-        - total_count: 1
-          last_update: 5
-          progress: progress
-          type: null
-        - total_count: 1
-          last_update: 5
-          progress: progress
-          type: null
-      properties:
-        last_ping:
-          description: timestamp of the last ping
-          format: int64
-          type: integer
-        last_sync:
-          description: timestamp of the last sync
-          format: int64
-          type: integer
-        entity_infos:
-          description: list of entities that were synced by the connector
-          items:
-            $ref: '#/components/schemas/ConnectorEntitySyncInfo'
-          type: array
-      type: object
-    ConnectorEntitySyncInfo:
+    ConnectorQuery:
       description: |
-        Used in connector configurations to indicate what data to be synchronised
+        This is the query that is sent to be ran by the client and return data from their database.
       example:
-        total_count: 1
-        last_update: 5
-        progress: progress
-        type: null
+        entity_limit: 0
+        updated_at: 5
+        process_script: process_script
+        updated_last: 6
+        name: name
+        connector_ref: connector_ref
+        statement: statement
+        description: description
+        created_at: 1
+        id: id
+        enabled: true
       properties:
-        type:
-          $ref: '#/components/schemas/ConnectorEntityType'
-        total_count:
+        id:
+          description: The UID of the query
+          type: string
+        name:
           description: |
-            total count of the entities that are currently available in the Udoma database,  that were synced by the connector.
+            A unique and descriptive name given to the query.
+          type: string
+        description:
+          description: The name to display in the webapp.
+          type: string
+        connector_ref:
+          description: The ID of the connector this query belongs to.
+          type: string
+        enabled:
+          description: Whether the Query is enabled and should be used to sync data
+          type: boolean
+        entity_limit:
+          description: The amount of entities to query for at once.
+          format: int32
+          type: integer
+        statement:
+          description: |
+            The statement to be executed by the connector client against their DB.
+          type: string
+        process_script:
+          description: |
+            JavaScript code that processes the response into an object that can be understood by the backend code and upserted into the database.
+          type: string
+        updated_last:
+          description: |
+            A timestamp of the last updated object. This should be updated by the process script, to track the last update to an object we performed.
           format: int64
           type: integer
-        last_update:
-          description: |
-            optional timestamp of the last update. If the timestamp is not provided, the connector will sync all data for the entity
+        created_at:
+          description: The moment of creation of this entity - unix timestamp
           format: int64
           type: integer
-        progress:
+        updated_at:
+          description: The moment this entity was last updated - unix timestamp
+          format: int64
+          type: integer
+      required:
+      - connector_ref
+      - created_at
+      - enabled
+      - entity_limit
+      - id
+      - name
+      - process_script
+      - statement
+      - updated_at
+      - updated_last
+      type: object
+    CreateOrUpdateConnectorQueryRequest:
+      example:
+        entity_limit: 0
+        process_script: process_script
+        name: name
+        connector_ref: connector_ref
+        statement: statement
+        description: description
+        enabled: true
+      properties:
+        name:
           description: |
-            a progress indicator that can be used by the connector to know how far it is in the sync process. The backend will not use this value, but it will be returned in the response to the connector.
+            A unique and descriptive name given to the query.
           type: string
-      type: object
-    ConnectorPingRequest:
-      description: |
-        Used by connectors to ping the backend. The request only contains the  connector meta data.
-      example:
-        connector_meta:
-          connector_id: connector_id
-          version: version
-      properties:
-        connector_meta:
-          $ref: '#/components/schemas/ConnectorMeta'
-      type: object
-    ConnectorMeta:
-      example:
-        connector_id: connector_id
-        version: version
-      properties:
-        connector_id:
-          description: id of the connector
+        description:
+          description: The name to display in the webapp.
           type: string
-        version:
-          description: version of the connector
+        connector_ref:
+          description: The ID of the connector this query belongs to.
           type: string
-      type: object
-    PingResponse:
-      description: Response used for connector pings
-      example:
-        entities:
-        - total_count: 1
-          last_update: 5
-          progress: progress
-          type: null
-        - total_count: 1
-          last_update: 5
-          progress: progress
-          type: null
-        config:
-          sync_times: sync_times
-          entities:
-          - null
-          - null
-          connector_id: connector_id
-          log_level: null
-          description: description
-          enabled: true
-          ping_times: ping_times
-      properties:
-        config:
-          $ref: '#/components/schemas/ConnectorConfig'
-        entities:
-          items:
-            $ref: '#/components/schemas/ConnectorEntitySyncInfo'
-          type: array
+        enabled:
+          description: Whether the Query is enabled and should be used to sync data
+          type: boolean
+        entity_limit:
+          description: The amount of entities to query for at once.
+          format: int32
+          type: integer
+        statement:
+          description: |
+            The statement to be executed by the connector client against their DB.
+          type: string
+        process_script:
+          description: |
+            JavaScript code that processes the response into an object that can be understood by the backend code and upserted into the database.
+          type: string
+      required:
+      - connector_ref
+      - enabled
+      - entity_limit
+      - name
+      - process_script
+      - statement
       type: object
     ConnectorSyncRequest:
       description: |
-        Used by connectors to push data to the backend. It contains a list of entities to be synchronised and the timestamp of the last update, as well as error logs in case the connector failed to sync data.
+        upload data to be processed by the processing script
       example:
-        data:
-        - data: data
-          progress: progress
-          type: null
-        - data: data
-          progress: progress
-          type: null
-        connector_meta:
-          connector_id: connector_id
-          version: version
-        logs:
-        - severity: null
-          message: message
-          timestamp: 0
-        - severity: null
-          message: message
-          timestamp: 0
-      properties:
-        connector_meta:
-          $ref: '#/components/schemas/ConnectorMeta'
-        data:
-          description: list of entities to be synchronised
-          items:
-            $ref: '#/components/schemas/ConnectorSyncEntity'
-          type: array
-        logs:
-          description: list of errors that occurred during the sync
-          items:
-            $ref: '#/components/schemas/ConnectorSyncLog'
-          type: array
-      type: object
-    ConnectorSyncEntity:
-      description: "Used by connectors to push entity data to the backend. \n"
-      example:
+        query_id: query_id
         data: data
-        progress: progress
-        type: null
       properties:
-        type:
-          $ref: '#/components/schemas/ConnectorEntityType'
+        query_id:
+          description: the query this data belongs to
+          type: string
         data:
-          description: json representation of the entity
+          description: the data to be provided to the mapping script
+          format: byte
           type: string
-        progress:
-          description: |
-            a progress indicator that can be used by the connector to know how far it is in the sync process. The backend will not use this value, but it will be returned in the response to the connector.
-          type: string
-      type: object
-    ConnectorSyncLog:
-      description: |
-        Used by connectors to push error logs to the backend.
-      example:
-        severity: null
-        message: message
-        timestamp: 0
-      properties:
-        timestamp:
-          description: timestamp of the error
-          format: int64
-          type: integer
-        severity:
-          $ref: '#/components/schemas/ConnectorLogLevelEnum'
-        message:
-          description: log message
-          type: string
+      required:
+      - data
+      - query_id
       type: object
     CreateOrUpdateCustomerScriptRequest:
       example:

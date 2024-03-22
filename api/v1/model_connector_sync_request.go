@@ -11,27 +11,32 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the ConnectorSyncRequest type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ConnectorSyncRequest{}
 
-// ConnectorSyncRequest Used by connectors to push data to the backend. It contains a list of entities to be synchronised and the timestamp of the last update, as well as error logs in case the connector failed to sync data.
+// ConnectorSyncRequest upload data to be processed by the processing script
 type ConnectorSyncRequest struct {
-	ConnectorMeta *ConnectorMeta `json:"connector_meta,omitempty"`
-	// list of entities to be synchronised
-	Data []ConnectorSyncEntity `json:"data,omitempty"`
-	// list of errors that occurred during the sync
-	Logs []ConnectorSyncLog `json:"logs,omitempty"`
+	// the query this data belongs to
+	QueryId string `json:"query_id"`
+	// the data to be provided to the mapping script
+	Data string `json:"data"`
 }
+
+type _ConnectorSyncRequest ConnectorSyncRequest
 
 // NewConnectorSyncRequest instantiates a new ConnectorSyncRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewConnectorSyncRequest() *ConnectorSyncRequest {
+func NewConnectorSyncRequest(queryId string, data string) *ConnectorSyncRequest {
 	this := ConnectorSyncRequest{}
+	this.QueryId = queryId
+	this.Data = data
 	return &this
 }
 
@@ -43,100 +48,52 @@ func NewConnectorSyncRequestWithDefaults() *ConnectorSyncRequest {
 	return &this
 }
 
-// GetConnectorMeta returns the ConnectorMeta field value if set, zero value otherwise.
-func (o *ConnectorSyncRequest) GetConnectorMeta() ConnectorMeta {
-	if o == nil || IsNil(o.ConnectorMeta) {
-		var ret ConnectorMeta
+// GetQueryId returns the QueryId field value
+func (o *ConnectorSyncRequest) GetQueryId() string {
+	if o == nil {
+		var ret string
 		return ret
 	}
-	return *o.ConnectorMeta
+
+	return o.QueryId
 }
 
-// GetConnectorMetaOk returns a tuple with the ConnectorMeta field value if set, nil otherwise
+// GetQueryIdOk returns a tuple with the QueryId field value
 // and a boolean to check if the value has been set.
-func (o *ConnectorSyncRequest) GetConnectorMetaOk() (*ConnectorMeta, bool) {
-	if o == nil || IsNil(o.ConnectorMeta) {
+func (o *ConnectorSyncRequest) GetQueryIdOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.ConnectorMeta, true
+	return &o.QueryId, true
 }
 
-// HasConnectorMeta returns a boolean if a field has been set.
-func (o *ConnectorSyncRequest) HasConnectorMeta() bool {
-	if o != nil && !IsNil(o.ConnectorMeta) {
-		return true
-	}
-
-	return false
+// SetQueryId sets field value
+func (o *ConnectorSyncRequest) SetQueryId(v string) {
+	o.QueryId = v
 }
 
-// SetConnectorMeta gets a reference to the given ConnectorMeta and assigns it to the ConnectorMeta field.
-func (o *ConnectorSyncRequest) SetConnectorMeta(v ConnectorMeta) {
-	o.ConnectorMeta = &v
-}
-
-// GetData returns the Data field value if set, zero value otherwise.
-func (o *ConnectorSyncRequest) GetData() []ConnectorSyncEntity {
-	if o == nil || IsNil(o.Data) {
-		var ret []ConnectorSyncEntity
+// GetData returns the Data field value
+func (o *ConnectorSyncRequest) GetData() string {
+	if o == nil {
+		var ret string
 		return ret
 	}
+
 	return o.Data
 }
 
-// GetDataOk returns a tuple with the Data field value if set, nil otherwise
+// GetDataOk returns a tuple with the Data field value
 // and a boolean to check if the value has been set.
-func (o *ConnectorSyncRequest) GetDataOk() ([]ConnectorSyncEntity, bool) {
-	if o == nil || IsNil(o.Data) {
+func (o *ConnectorSyncRequest) GetDataOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Data, true
+	return &o.Data, true
 }
 
-// HasData returns a boolean if a field has been set.
-func (o *ConnectorSyncRequest) HasData() bool {
-	if o != nil && !IsNil(o.Data) {
-		return true
-	}
-
-	return false
-}
-
-// SetData gets a reference to the given []ConnectorSyncEntity and assigns it to the Data field.
-func (o *ConnectorSyncRequest) SetData(v []ConnectorSyncEntity) {
+// SetData sets field value
+func (o *ConnectorSyncRequest) SetData(v string) {
 	o.Data = v
-}
-
-// GetLogs returns the Logs field value if set, zero value otherwise.
-func (o *ConnectorSyncRequest) GetLogs() []ConnectorSyncLog {
-	if o == nil || IsNil(o.Logs) {
-		var ret []ConnectorSyncLog
-		return ret
-	}
-	return o.Logs
-}
-
-// GetLogsOk returns a tuple with the Logs field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *ConnectorSyncRequest) GetLogsOk() ([]ConnectorSyncLog, bool) {
-	if o == nil || IsNil(o.Logs) {
-		return nil, false
-	}
-	return o.Logs, true
-}
-
-// HasLogs returns a boolean if a field has been set.
-func (o *ConnectorSyncRequest) HasLogs() bool {
-	if o != nil && !IsNil(o.Logs) {
-		return true
-	}
-
-	return false
-}
-
-// SetLogs gets a reference to the given []ConnectorSyncLog and assigns it to the Logs field.
-func (o *ConnectorSyncRequest) SetLogs(v []ConnectorSyncLog) {
-	o.Logs = v
 }
 
 func (o ConnectorSyncRequest) MarshalJSON() ([]byte, error) {
@@ -149,16 +106,47 @@ func (o ConnectorSyncRequest) MarshalJSON() ([]byte, error) {
 
 func (o ConnectorSyncRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.ConnectorMeta) {
-		toSerialize["connector_meta"] = o.ConnectorMeta
-	}
-	if !IsNil(o.Data) {
-		toSerialize["data"] = o.Data
-	}
-	if !IsNil(o.Logs) {
-		toSerialize["logs"] = o.Logs
-	}
+	toSerialize["query_id"] = o.QueryId
+	toSerialize["data"] = o.Data
 	return toSerialize, nil
+}
+
+func (o *ConnectorSyncRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"query_id",
+		"data",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varConnectorSyncRequest := _ConnectorSyncRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varConnectorSyncRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ConnectorSyncRequest(varConnectorSyncRequest)
+
+	return err
 }
 
 type NullableConnectorSyncRequest struct {

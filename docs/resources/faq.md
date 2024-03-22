@@ -27,5 +27,8 @@ Resource represents an faq
 ### Read-Only
 
 - `id` (String) The unique identifier for the faq
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> ccddb28 (added connector support)
