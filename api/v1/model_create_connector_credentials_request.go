@@ -19,8 +19,8 @@ var _ MappedNullable = &CreateConnectorCredentialsRequest{}
 
 // CreateConnectorCredentialsRequest Request used to create connector credentials
 type CreateConnectorCredentialsRequest struct {
-	// id of the connector
-	ConnectorId *string `json:"connector_id,omitempty"`
+	// name of the connector
+	Name *string `json:"name,omitempty"`
 }
 
 // NewCreateConnectorCredentialsRequest instantiates a new CreateConnectorCredentialsRequest object
@@ -40,36 +40,36 @@ func NewCreateConnectorCredentialsRequestWithDefaults() *CreateConnectorCredenti
 	return &this
 }
 
-// GetConnectorId returns the ConnectorId field value if set, zero value otherwise.
-func (o *CreateConnectorCredentialsRequest) GetConnectorId() string {
-	if o == nil || IsNil(o.ConnectorId) {
+// GetName returns the Name field value if set, zero value otherwise.
+func (o *CreateConnectorCredentialsRequest) GetName() string {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
-	return *o.ConnectorId
+	return *o.Name
 }
 
-// GetConnectorIdOk returns a tuple with the ConnectorId field value if set, nil otherwise
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CreateConnectorCredentialsRequest) GetConnectorIdOk() (*string, bool) {
-	if o == nil || IsNil(o.ConnectorId) {
+func (o *CreateConnectorCredentialsRequest) GetNameOk() (*string, bool) {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return o.ConnectorId, true
+	return o.Name, true
 }
 
-// HasConnectorId returns a boolean if a field has been set.
-func (o *CreateConnectorCredentialsRequest) HasConnectorId() bool {
-	if o != nil && !IsNil(o.ConnectorId) {
+// HasName returns a boolean if a field has been set.
+func (o *CreateConnectorCredentialsRequest) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
 	return false
 }
 
-// SetConnectorId gets a reference to the given string and assigns it to the ConnectorId field.
-func (o *CreateConnectorCredentialsRequest) SetConnectorId(v string) {
-	o.ConnectorId = &v
+// SetName gets a reference to the given string and assigns it to the Name field.
+func (o *CreateConnectorCredentialsRequest) SetName(v string) {
+	o.Name = &v
 }
 
 func (o CreateConnectorCredentialsRequest) MarshalJSON() ([]byte, error) {
@@ -82,8 +82,8 @@ func (o CreateConnectorCredentialsRequest) MarshalJSON() ([]byte, error) {
 
 func (o CreateConnectorCredentialsRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.ConnectorId) {
-		toSerialize["connector_id"] = o.ConnectorId
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
 	}
 	return toSerialize, nil
 }

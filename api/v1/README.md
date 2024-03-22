@@ -89,8 +89,9 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateCase**](docs/DefaultAPI.md#createcase) | **Post** /case | Create a new case
 *DefaultAPI* | [**CreateCaseReportingEndpoint**](docs/DefaultAPI.md#createcasereportingendpoint) | **Post** /cases/endpoint | Create new case reporting endpoint
 *DefaultAPI* | [**CreateCaseTemplate**](docs/DefaultAPI.md#createcasetemplate) | **Post** /cases/template | Create new case template
-*DefaultAPI* | [**CreateConnectorConfiguration**](docs/DefaultAPI.md#createconnectorconfiguration) | **Post** /connector/config | Create a new connector configuration
+*DefaultAPI* | [**CreateConnectorConfig**](docs/DefaultAPI.md#createconnectorconfig) | **Post** /connector/config | Create a new connector configuration
 *DefaultAPI* | [**CreateConnectorCredentials**](docs/DefaultAPI.md#createconnectorcredentials) | **Post** /connector/credentials | Create new connector credentials
+*DefaultAPI* | [**CreateConnectorQuery**](docs/DefaultAPI.md#createconnectorquery) | **Post** /connector/query | Create a new connector query
 *DefaultAPI* | [**CreateCustomIDGenerator**](docs/DefaultAPI.md#createcustomidgenerator) | **Post** /id-generator | Create a new customer specififc ID generator
 *DefaultAPI* | [**CreateCustomerScript**](docs/DefaultAPI.md#createcustomerscript) | **Post** /customer-script | Create a new customer specififc JS script
 *DefaultAPI* | [**CreateDocument**](docs/DefaultAPI.md#createdocument) | **Post** /document-repository/entry | Create a new document
@@ -108,7 +109,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateServiceProvider**](docs/DefaultAPI.md#createserviceprovider) | **Post** /service-provider | Create a new service provider for the current account
 *DefaultAPI* | [**CreateTenancy**](docs/DefaultAPI.md#createtenancy) | **Post** /property/{propId}/tenancy | Create new tenancy for the property
 *DefaultAPI* | [**CreateTenancyUpdate**](docs/DefaultAPI.md#createtenancyupdate) | **Post** /tenancy/{tenancyId}/updates | Create new tenancy update for the tenancy
-*DefaultAPI* | [**CreateTenant**](docs/DefaultAPI.md#createtenant) | **Post** /tenant | Create a new tenant and optionally invites them to join the platform
+*DefaultAPI* | [**CreateTenant**](docs/DefaultAPI.md#createtenant) | **Post** /tenant | Create a new tenant and optionally invites them to join the platform 
 *DefaultAPI* | [**CreateWorkflowDefinition**](docs/DefaultAPI.md#createworkflowdefinition) | **Post** /workflows/definition | Create a new workflow definition
 *DefaultAPI* | [**CreateWorkflowEntrypoint**](docs/DefaultAPI.md#createworkflowentrypoint) | **Post** /workflows/definition/{definitionID}/entrypoint | Create a new workflow entry point for the workflow definition
 *DefaultAPI* | [**DeleteAppointment**](docs/DefaultAPI.md#deleteappointment) | **Delete** /calendar/appointments/entry/{entryId} | Delete an appointment
@@ -120,9 +121,10 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteCaseComment**](docs/DefaultAPI.md#deletecasecomment) | **Delete** /case/{caseId}/comment/{commentId} | Mark a case comment as deleted
 *DefaultAPI* | [**DeleteCaseReportingEndpoint**](docs/DefaultAPI.md#deletecasereportingendpoint) | **Delete** /cases/endpoints/{endpointId} | Delete the case reporting endpoint by ID
 *DefaultAPI* | [**DeleteCaseTemplate**](docs/DefaultAPI.md#deletecasetemplate) | **Delete** /cases/template/{templateId} | Delete a case template
-*DefaultAPI* | [**DeleteConnectorConfiguration**](docs/DefaultAPI.md#deleteconnectorconfiguration) | **Delete** /connector/{connectorID}/config | Delete the connector configuration
+*DefaultAPI* | [**DeleteConnectorConfig**](docs/DefaultAPI.md#deleteconnectorconfig) | **Delete** /connector/{name}/config | Delete the connector configuration
 *DefaultAPI* | [**DeleteConnectorCredentials**](docs/DefaultAPI.md#deleteconnectorcredentials) | **Delete** /connector/credentials/{apiKey} | Delete the connector credentials for the current account
-*DefaultAPI* | [**DeleteConnectorEntities**](docs/DefaultAPI.md#deleteconnectorentities) | **Delete** /connector/{connectorID}/status/{entity} | Delete all entities synchronised via the connector
+*DefaultAPI* | [**DeleteConnectorEntity**](docs/DefaultAPI.md#deleteconnectorentity) | **Delete** /connector/{name}/entity/{entityType} | Delete all the entities of a certain type.
+*DefaultAPI* | [**DeleteConnectorQuery**](docs/DefaultAPI.md#deleteconnectorquery) | **Delete** /connector/{queryID}/query | Delete the query
 *DefaultAPI* | [**DeleteCustomIDGenerator**](docs/DefaultAPI.md#deletecustomidgenerator) | **Delete** /id-generators/{generatorID} | Delete the custom ID generator with all its related data
 *DefaultAPI* | [**DeleteCustomerScript**](docs/DefaultAPI.md#deletecustomerscript) | **Delete** /customer-scripts/{scriptID} | Delete the script with all its related data
 *DefaultAPI* | [**DeleteDocument**](docs/DefaultAPI.md#deletedocument) | **Delete** /document-repository/entry/{documentId} | Delete a single document
@@ -152,8 +154,8 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**Feedback**](docs/DefaultAPI.md#feedback) | **Post** /feedback | User feedback about the product
 *DefaultAPI* | [**GenerateCaseReportingEndpointNotice**](docs/DefaultAPI.md#generatecasereportingendpointnotice) | **Post** /cases/endpoints/{endpointId}/notice | Generate a PDF for a notice of the case reporting endpoint
 *DefaultAPI* | [**GenerateDocumentPDF**](docs/DefaultAPI.md#generatedocumentpdf) | **Post** /document-generation/documents/{docId}/generate-pdf | Generate a PDF for the document generation
-*DefaultAPI* | [**GenerateDocumentText**](docs/DefaultAPI.md#generatedocumenttext) | **Post** /document-generation/documents/{docId}/generate-text | Generate the text for the document, based on template and input data
-*DefaultAPI* | [**GenerateESignatureRequest**](docs/DefaultAPI.md#generateesignaturerequest) | **Get** /document-generation/documents/{docId}/esignature/request | Generate an eSignature request for a document, based on template signature config
+*DefaultAPI* | [**GenerateDocumentText**](docs/DefaultAPI.md#generatedocumenttext) | **Post** /document-generation/documents/{docId}/generate-text | Generate the text for the document, based on template and input data 
+*DefaultAPI* | [**GenerateESignatureRequest**](docs/DefaultAPI.md#generateesignaturerequest) | **Get** /document-generation/documents/{docId}/esignature/request | Generate an eSignature request for a document, based on template signature config 
 *DefaultAPI* | [**GetAccountSummary**](docs/DefaultAPI.md#getaccountsummary) | **Post** /summary | Get overview of data in the system for current account
 *DefaultAPI* | [**GetAppointment**](docs/DefaultAPI.md#getappointment) | **Get** /calendar/appointments/entry/{entryId} | Get the appointment by ID
 *DefaultAPI* | [**GetAppointmentInIcalFormat**](docs/DefaultAPI.md#getappointmentinicalformat) | **Get** /calendar/appointments/entry/{entryId}/ical | Get appointment in ical format
@@ -164,13 +166,15 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetCase**](docs/DefaultAPI.md#getcase) | **Get** /case/{caseId} | Get case details
 *DefaultAPI* | [**GetCaseComment**](docs/DefaultAPI.md#getcasecomment) | **Get** /case/{caseId}/comment/{commentId} | Get comment details
 *DefaultAPI* | [**GetCaseReportingEndpoint**](docs/DefaultAPI.md#getcasereportingendpoint) | **Get** /cases/endpoints/{endpointId} | Get the case report endpoint by ID
-*DefaultAPI* | [**GetCaseReportingEndpointQRCode**](docs/DefaultAPI.md#getcasereportingendpointqrcode) | **Get** /cases/endpoints/{endpointId}/qr-code | Generates and returns a QR code of the URL of the case reporting endpoint
+*DefaultAPI* | [**GetCaseReportingEndpointQRCode**](docs/DefaultAPI.md#getcasereportingendpointqrcode) | **Get** /cases/endpoints/{endpointId}/qr-code | Generates and returns a QR code of the URL of the case reporting endpoint 
 *DefaultAPI* | [**GetCaseTemplate**](docs/DefaultAPI.md#getcasetemplate) | **Get** /cases/template/{templateId} | Get the case template by ID
 *DefaultAPI* | [**GetCompanyProfile**](docs/DefaultAPI.md#getcompanyprofile) | **Get** /profile/company | Get the company profile details
-*DefaultAPI* | [**GetConnectorConfiguration**](docs/DefaultAPI.md#getconnectorconfiguration) | **Get** /connector/{connectorID}/config | Get the connector configuration for the current account
-*DefaultAPI* | [**GetConnectorConfigurations**](docs/DefaultAPI.md#getconnectorconfigurations) | **Get** /connector/configs | Get the connector configurations for the current account
+*DefaultAPI* | [**GetConnectorConfig**](docs/DefaultAPI.md#getconnectorconfig) | **Get** /connector/{name}/config | Get the connector configuration for the current account
+*DefaultAPI* | [**GetConnectorConfigs**](docs/DefaultAPI.md#getconnectorconfigs) | **Get** /connector/configs | Get the connector configurations for the current account
 *DefaultAPI* | [**GetConnectorCredentials**](docs/DefaultAPI.md#getconnectorcredentials) | **Get** /connector/credentials | Get the connector credentials for the current account
-*DefaultAPI* | [**GetConnectorStatus**](docs/DefaultAPI.md#getconnectorstatus) | **Get** /connector/{connectorID}/status | Get the connector status for the current account
+*DefaultAPI* | [**GetConnectorEntityStats**](docs/DefaultAPI.md#getconnectorentitystats) | **Get** /connector/{name}/entity | Get stats for the connector
+*DefaultAPI* | [**GetConnectorQueries**](docs/DefaultAPI.md#getconnectorqueries) | **Get** /connector/{name}/queries | Get the queries that belong to the config.
+*DefaultAPI* | [**GetConnectorQuery**](docs/DefaultAPI.md#getconnectorquery) | **Get** /connector/{queryID}/query | Get the query for the current account
 *DefaultAPI* | [**GetCustomIDGenerator**](docs/DefaultAPI.md#getcustomidgenerator) | **Get** /id-generators/{generatorID} | Get the ID generator with all its attributes
 *DefaultAPI* | [**GetCustomIDGenerators**](docs/DefaultAPI.md#getcustomidgenerators) | **Get** /id-generators | Get all customer specific ID generators
 *DefaultAPI* | [**GetCustomerScript**](docs/DefaultAPI.md#getcustomerscript) | **Get** /customer-scripts/{scriptID} | Get the script with all its attributes
@@ -224,7 +228,6 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetWorkflowTriggersForSource**](docs/DefaultAPI.md#getworkflowtriggersforsource) | **Get** /workflows/trigger/source/{sourceID} | Get workflow triggers for a source
 *DefaultAPI* | [**InternalAddPriceIndexPoint**](docs/DefaultAPI.md#internaladdpriceindexpoint) | **Put** /price-index | Push a new value for the inflation index
 *DefaultAPI* | [**InviteTenant**](docs/DefaultAPI.md#invitetenant) | **Post** /invitation | Invite a tenant
-*DefaultAPI* | [**PingConnector**](docs/DefaultAPI.md#pingconnector) | **Post** /connector/ping | Ping the connector
 *DefaultAPI* | [**PublicAddCaseAttachment**](docs/DefaultAPI.md#publicaddcaseattachment) | **Post** /public/case/{caseId}/attachment | Add new attachment to an existing case
 *DefaultAPI* | [**PublicAddCaseComment**](docs/DefaultAPI.md#publicaddcasecomment) | **Post** /public/case/{caseId}/comment | Add new case comment
 *DefaultAPI* | [**PublicCleanupAttachments**](docs/DefaultAPI.md#publiccleanupattachments) | **Post** /public/attachments/cleanup/{code} | Cleanup attachments that are not referenced by any entity
@@ -238,7 +241,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**PublicGetAppointmentSchedule**](docs/DefaultAPI.md#publicgetappointmentschedule) | **Get** /public/calendar/appointments/schedules/{scheduleId} | Get appointment schedule details
 *DefaultAPI* | [**PublicGetAttachment**](docs/DefaultAPI.md#publicgetattachment) | **Get** /public/attachment/{attachmentId} | Get a file attachment
 *DefaultAPI* | [**PublicGetCase**](docs/DefaultAPI.md#publicgetcase) | **Get** /public/case/{caseId} | Get case details
-*DefaultAPI* | [**PublicGetCaseReportingEndpointInfo**](docs/DefaultAPI.md#publicgetcasereportingendpointinfo) | **Get** /public/cases/endpoint/{code}/info | Get the information for the case reporting endpoint with the given code
+*DefaultAPI* | [**PublicGetCaseReportingEndpointInfo**](docs/DefaultAPI.md#publicgetcasereportingendpointinfo) | **Get** /public/cases/endpoint/{code}/info | Get the information for the case reporting endpoint with the given code 
 *DefaultAPI* | [**PublicUpdateCaseStatus**](docs/DefaultAPI.md#publicupdatecasestatus) | **Post** /public/case/{caseId}/status | Add new case status
 *DefaultAPI* | [**PublicUploadAttachment**](docs/DefaultAPI.md#publicuploadattachment) | **Post** /public/attachment | Upload new file attachment
 *DefaultAPI* | [**PublicValidateCaseData**](docs/DefaultAPI.md#publicvalidatecasedata) | **Post** /public/case/endpoint/{code}/template/{templateId}/validate | Validate the data provided by the user against the template
@@ -261,9 +264,9 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryServiceProviders**](docs/DefaultAPI.md#queryserviceproviders) | **Post** /service-providers | Query all service providers for certain criteria
 *DefaultAPI* | [**QueryTenants**](docs/DefaultAPI.md#querytenants) | **Post** /tenants | Query all tenants
 *DefaultAPI* | [**QueryWorkflowDefinitions**](docs/DefaultAPI.md#queryworkflowdefinitions) | **Post** /workflows/definitions | Query all workflow definitions
-*DefaultAPI* | [**QueryWorkflowExecutions**](docs/DefaultAPI.md#queryworkflowexecutions) | **Post** /workflows/executions | Get a list of all workflow executions, matching the criteria in the request
+*DefaultAPI* | [**QueryWorkflowExecutions**](docs/DefaultAPI.md#queryworkflowexecutions) | **Post** /workflows/executions | Get a list of all workflow executions, matching the criteria in the request 
 *DefaultAPI* | [**RequestESignaturesForDocument**](docs/DefaultAPI.md#requestesignaturesfordocument) | **Post** /document-generation/documents/{docId}/esignature | Trigger a signing request for a document
-*DefaultAPI* | [**ResetConnectorEntitySyncStatus**](docs/DefaultAPI.md#resetconnectorentitysyncstatus) | **Post** /connector/{connectorID}/status/{entity} | Reset the synchronisation status for the given entity
+*DefaultAPI* | [**ResetConnectorQuery**](docs/DefaultAPI.md#resetconnectorquery) | **Put** /connector/{queryID}/query/reset | Get the query for the current account
 *DefaultAPI* | [**RespondToInvitation**](docs/DefaultAPI.md#respondtoinvitation) | **Post** /invitation/{invitationId} | Respond to invitation
 *DefaultAPI* | [**StartWorkflowExecution**](docs/DefaultAPI.md#startworkflowexecution) | **Post** /workflows/execution | Start a new workflow execution
 *DefaultAPI* | [**SyncConnectorData**](docs/DefaultAPI.md#syncconnectordata) | **Post** /connector/sync | Sync the next batch of connector data.
@@ -277,7 +280,8 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateCaseStatus**](docs/DefaultAPI.md#updatecasestatus) | **Post** /case/{caseId}/status | Add new case status
 *DefaultAPI* | [**UpdateCaseTemplate**](docs/DefaultAPI.md#updatecasetemplate) | **Put** /cases/template/{templateId} | Update case template
 *DefaultAPI* | [**UpdateCompanyProfile**](docs/DefaultAPI.md#updatecompanyprofile) | **Put** /profile/company | Update company profile
-*DefaultAPI* | [**UpdateConnectorConfiguration**](docs/DefaultAPI.md#updateconnectorconfiguration) | **Post** /connector/{connectorID}/config | Update the connector configuration
+*DefaultAPI* | [**UpdateConnectorConfig**](docs/DefaultAPI.md#updateconnectorconfig) | **Put** /connector/{name}/config | Update the connector configuration
+*DefaultAPI* | [**UpdateConnectorQuery**](docs/DefaultAPI.md#updateconnectorquery) | **Put** /connector/{queryID}/query | Update the connector Query
 *DefaultAPI* | [**UpdateCustomIDGenerator**](docs/DefaultAPI.md#updatecustomidgenerator) | **Put** /id-generators/{generatorID} | Update an already existing ID generator
 *DefaultAPI* | [**UpdateCustomerScript**](docs/DefaultAPI.md#updatecustomerscript) | **Put** /customer-scripts/{scriptID} | Update an already existing script
 *DefaultAPI* | [**UpdateDocument**](docs/DefaultAPI.md#updatedocument) | **Put** /document-repository/entry/{documentId} | Update an already existing document
@@ -343,15 +347,9 @@ Class | Method | HTTP request | Description
  - [CompanyProfile](docs/CompanyProfile.md)
  - [ConnectorConfig](docs/ConnectorConfig.md)
  - [ConnectorCredentials](docs/ConnectorCredentials.md)
- - [ConnectorCustomSyncEntityTenancy](docs/ConnectorCustomSyncEntityTenancy.md)
- - [ConnectorEntitySyncInfo](docs/ConnectorEntitySyncInfo.md)
- - [ConnectorEntityType](docs/ConnectorEntityType.md)
- - [ConnectorLogLevelEnum](docs/ConnectorLogLevelEnum.md)
- - [ConnectorMeta](docs/ConnectorMeta.md)
- - [ConnectorPingRequest](docs/ConnectorPingRequest.md)
- - [ConnectorStatus](docs/ConnectorStatus.md)
- - [ConnectorSyncEntity](docs/ConnectorSyncEntity.md)
- - [ConnectorSyncLog](docs/ConnectorSyncLog.md)
+ - [ConnectorEntity](docs/ConnectorEntity.md)
+ - [ConnectorEntityStats](docs/ConnectorEntityStats.md)
+ - [ConnectorQuery](docs/ConnectorQuery.md)
  - [ConnectorSyncRequest](docs/ConnectorSyncRequest.md)
  - [ContactData](docs/ContactData.md)
  - [CreateCaseCommentRequest](docs/CreateCaseCommentRequest.md)
@@ -369,6 +367,7 @@ Class | Method | HTTP request | Description
  - [CreateOrUpdateBankAccountRequest](docs/CreateOrUpdateBankAccountRequest.md)
  - [CreateOrUpdateCaseReportingEndpointRequest](docs/CreateOrUpdateCaseReportingEndpointRequest.md)
  - [CreateOrUpdateCaseTemplateRequest](docs/CreateOrUpdateCaseTemplateRequest.md)
+ - [CreateOrUpdateConnectorQueryRequest](docs/CreateOrUpdateConnectorQueryRequest.md)
  - [CreateOrUpdateCustomIDGeneratorRequest](docs/CreateOrUpdateCustomIDGeneratorRequest.md)
  - [CreateOrUpdateCustomerScriptRequest](docs/CreateOrUpdateCustomerScriptRequest.md)
  - [CreateOrUpdateDocumentTemplateRequest](docs/CreateOrUpdateDocumentTemplateRequest.md)
@@ -434,7 +433,6 @@ Class | Method | HTTP request | Description
  - [MeterTypeEnum](docs/MeterTypeEnum.md)
  - [Note](docs/Note.md)
  - [NotificationType](docs/NotificationType.md)
- - [PingResponse](docs/PingResponse.md)
  - [PriceIndexPoint](docs/PriceIndexPoint.md)
  - [PriceIndexPointQueryRequest](docs/PriceIndexPointQueryRequest.md)
  - [Property](docs/Property.md)

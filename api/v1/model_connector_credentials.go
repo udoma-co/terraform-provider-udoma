@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the ConnectorCredentials type satisfies the MappedNullable interface at compile time
@@ -20,19 +22,24 @@ var _ MappedNullable = &ConnectorCredentials{}
 // ConnectorCredentials Connector credentials
 type ConnectorCredentials struct {
 	// api key of the connector
-	ApiKey *string `json:"api_key,omitempty"`
+	ApiKey string `json:"api_key"`
 	// api secret of the connector
-	ApiSecret *string `json:"api_secret,omitempty"`
+	ApiSecret string `json:"api_secret"`
 	// timestamp of the last access of the credentials
-	LastAccess *int64 `json:"last_access,omitempty"`
+	LastAccess int64 `json:"last_access"`
 }
+
+type _ConnectorCredentials ConnectorCredentials
 
 // NewConnectorCredentials instantiates a new ConnectorCredentials object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewConnectorCredentials() *ConnectorCredentials {
+func NewConnectorCredentials(apiKey string, apiSecret string, lastAccess int64) *ConnectorCredentials {
 	this := ConnectorCredentials{}
+	this.ApiKey = apiKey
+	this.ApiSecret = apiSecret
+	this.LastAccess = lastAccess
 	return &this
 }
 
@@ -44,100 +51,76 @@ func NewConnectorCredentialsWithDefaults() *ConnectorCredentials {
 	return &this
 }
 
-// GetApiKey returns the ApiKey field value if set, zero value otherwise.
+// GetApiKey returns the ApiKey field value
 func (o *ConnectorCredentials) GetApiKey() string {
-	if o == nil || IsNil(o.ApiKey) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.ApiKey
+
+	return o.ApiKey
 }
 
-// GetApiKeyOk returns a tuple with the ApiKey field value if set, nil otherwise
+// GetApiKeyOk returns a tuple with the ApiKey field value
 // and a boolean to check if the value has been set.
 func (o *ConnectorCredentials) GetApiKeyOk() (*string, bool) {
-	if o == nil || IsNil(o.ApiKey) {
+	if o == nil {
 		return nil, false
 	}
-	return o.ApiKey, true
+	return &o.ApiKey, true
 }
 
-// HasApiKey returns a boolean if a field has been set.
-func (o *ConnectorCredentials) HasApiKey() bool {
-	if o != nil && !IsNil(o.ApiKey) {
-		return true
-	}
-
-	return false
-}
-
-// SetApiKey gets a reference to the given string and assigns it to the ApiKey field.
+// SetApiKey sets field value
 func (o *ConnectorCredentials) SetApiKey(v string) {
-	o.ApiKey = &v
+	o.ApiKey = v
 }
 
-// GetApiSecret returns the ApiSecret field value if set, zero value otherwise.
+// GetApiSecret returns the ApiSecret field value
 func (o *ConnectorCredentials) GetApiSecret() string {
-	if o == nil || IsNil(o.ApiSecret) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.ApiSecret
+
+	return o.ApiSecret
 }
 
-// GetApiSecretOk returns a tuple with the ApiSecret field value if set, nil otherwise
+// GetApiSecretOk returns a tuple with the ApiSecret field value
 // and a boolean to check if the value has been set.
 func (o *ConnectorCredentials) GetApiSecretOk() (*string, bool) {
-	if o == nil || IsNil(o.ApiSecret) {
+	if o == nil {
 		return nil, false
 	}
-	return o.ApiSecret, true
+	return &o.ApiSecret, true
 }
 
-// HasApiSecret returns a boolean if a field has been set.
-func (o *ConnectorCredentials) HasApiSecret() bool {
-	if o != nil && !IsNil(o.ApiSecret) {
-		return true
-	}
-
-	return false
-}
-
-// SetApiSecret gets a reference to the given string and assigns it to the ApiSecret field.
+// SetApiSecret sets field value
 func (o *ConnectorCredentials) SetApiSecret(v string) {
-	o.ApiSecret = &v
+	o.ApiSecret = v
 }
 
-// GetLastAccess returns the LastAccess field value if set, zero value otherwise.
+// GetLastAccess returns the LastAccess field value
 func (o *ConnectorCredentials) GetLastAccess() int64 {
-	if o == nil || IsNil(o.LastAccess) {
+	if o == nil {
 		var ret int64
 		return ret
 	}
-	return *o.LastAccess
+
+	return o.LastAccess
 }
 
-// GetLastAccessOk returns a tuple with the LastAccess field value if set, nil otherwise
+// GetLastAccessOk returns a tuple with the LastAccess field value
 // and a boolean to check if the value has been set.
 func (o *ConnectorCredentials) GetLastAccessOk() (*int64, bool) {
-	if o == nil || IsNil(o.LastAccess) {
+	if o == nil {
 		return nil, false
 	}
-	return o.LastAccess, true
+	return &o.LastAccess, true
 }
 
-// HasLastAccess returns a boolean if a field has been set.
-func (o *ConnectorCredentials) HasLastAccess() bool {
-	if o != nil && !IsNil(o.LastAccess) {
-		return true
-	}
-
-	return false
-}
-
-// SetLastAccess gets a reference to the given int64 and assigns it to the LastAccess field.
+// SetLastAccess sets field value
 func (o *ConnectorCredentials) SetLastAccess(v int64) {
-	o.LastAccess = &v
+	o.LastAccess = v
 }
 
 func (o ConnectorCredentials) MarshalJSON() ([]byte, error) {
@@ -150,16 +133,49 @@ func (o ConnectorCredentials) MarshalJSON() ([]byte, error) {
 
 func (o ConnectorCredentials) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.ApiKey) {
-		toSerialize["api_key"] = o.ApiKey
-	}
-	if !IsNil(o.ApiSecret) {
-		toSerialize["api_secret"] = o.ApiSecret
-	}
-	if !IsNil(o.LastAccess) {
-		toSerialize["last_access"] = o.LastAccess
-	}
+	toSerialize["api_key"] = o.ApiKey
+	toSerialize["api_secret"] = o.ApiSecret
+	toSerialize["last_access"] = o.LastAccess
 	return toSerialize, nil
+}
+
+func (o *ConnectorCredentials) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"api_key",
+		"api_secret",
+		"last_access",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varConnectorCredentials := _ConnectorCredentials{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varConnectorCredentials)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ConnectorCredentials(varConnectorCredentials)
+
+	return err
 }
 
 type NullableConnectorCredentials struct {

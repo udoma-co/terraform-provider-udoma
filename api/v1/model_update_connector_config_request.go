@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the UpdateConnectorConfigRequest type satisfies the MappedNullable interface at compile time
@@ -19,25 +21,26 @@ var _ MappedNullable = &UpdateConnectorConfigRequest{}
 
 // UpdateConnectorConfigRequest Request used to update a connector config
 type UpdateConnectorConfigRequest struct {
+	// indicates whether the connector should push data or not. While disabled the connector will not attempt to push data to the backend, however, it will continue to ping the backend to check for updates to the config.
+	Enabled *bool `json:"enabled,omitempty"`
 	// short description of the connector
 	Description *string `json:"description,omitempty"`
-	// indicates whether the connector should push data or not. While disabled the connector will not attempt to push data to the backend, however, it  will continue to ping the backend to check for updates to the config.
-	Enabled *bool `json:"enabled,omitempty"`
 	// cron expression that tells the connector how often to sync data
-	SyncTimes *string `json:"sync_times,omitempty"`
-	// cron expression that tells the connector how often to ping the server and  retrieve the config
-	PingTimes *string `json:"ping_times,omitempty"`
-	// list of entities to be synchronised
-	Entities []string               `json:"entities,omitempty"`
-	LogLevel *ConnectorLogLevelEnum `json:"log_level,omitempty"`
+	SyncTime string `json:"sync_time"`
+	// cron expression that tells the connector how often to ping the server and retrieve the config
+	PingTime string `json:"ping_time"`
 }
+
+type _UpdateConnectorConfigRequest UpdateConnectorConfigRequest
 
 // NewUpdateConnectorConfigRequest instantiates a new UpdateConnectorConfigRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewUpdateConnectorConfigRequest() *UpdateConnectorConfigRequest {
+func NewUpdateConnectorConfigRequest(syncTime string, pingTime string) *UpdateConnectorConfigRequest {
 	this := UpdateConnectorConfigRequest{}
+	this.SyncTime = syncTime
+	this.PingTime = pingTime
 	return &this
 }
 
@@ -47,38 +50,6 @@ func NewUpdateConnectorConfigRequest() *UpdateConnectorConfigRequest {
 func NewUpdateConnectorConfigRequestWithDefaults() *UpdateConnectorConfigRequest {
 	this := UpdateConnectorConfigRequest{}
 	return &this
-}
-
-// GetDescription returns the Description field value if set, zero value otherwise.
-func (o *UpdateConnectorConfigRequest) GetDescription() string {
-	if o == nil || IsNil(o.Description) {
-		var ret string
-		return ret
-	}
-	return *o.Description
-}
-
-// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *UpdateConnectorConfigRequest) GetDescriptionOk() (*string, bool) {
-	if o == nil || IsNil(o.Description) {
-		return nil, false
-	}
-	return o.Description, true
-}
-
-// HasDescription returns a boolean if a field has been set.
-func (o *UpdateConnectorConfigRequest) HasDescription() bool {
-	if o != nil && !IsNil(o.Description) {
-		return true
-	}
-
-	return false
-}
-
-// SetDescription gets a reference to the given string and assigns it to the Description field.
-func (o *UpdateConnectorConfigRequest) SetDescription(v string) {
-	o.Description = &v
 }
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
@@ -113,132 +84,84 @@ func (o *UpdateConnectorConfigRequest) SetEnabled(v bool) {
 	o.Enabled = &v
 }
 
-// GetSyncTimes returns the SyncTimes field value if set, zero value otherwise.
-func (o *UpdateConnectorConfigRequest) GetSyncTimes() string {
-	if o == nil || IsNil(o.SyncTimes) {
+// GetDescription returns the Description field value if set, zero value otherwise.
+func (o *UpdateConnectorConfigRequest) GetDescription() string {
+	if o == nil || IsNil(o.Description) {
 		var ret string
 		return ret
 	}
-	return *o.SyncTimes
+	return *o.Description
 }
 
-// GetSyncTimesOk returns a tuple with the SyncTimes field value if set, nil otherwise
+// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UpdateConnectorConfigRequest) GetSyncTimesOk() (*string, bool) {
-	if o == nil || IsNil(o.SyncTimes) {
+func (o *UpdateConnectorConfigRequest) GetDescriptionOk() (*string, bool) {
+	if o == nil || IsNil(o.Description) {
 		return nil, false
 	}
-	return o.SyncTimes, true
+	return o.Description, true
 }
 
-// HasSyncTimes returns a boolean if a field has been set.
-func (o *UpdateConnectorConfigRequest) HasSyncTimes() bool {
-	if o != nil && !IsNil(o.SyncTimes) {
+// HasDescription returns a boolean if a field has been set.
+func (o *UpdateConnectorConfigRequest) HasDescription() bool {
+	if o != nil && !IsNil(o.Description) {
 		return true
 	}
 
 	return false
 }
 
-// SetSyncTimes gets a reference to the given string and assigns it to the SyncTimes field.
-func (o *UpdateConnectorConfigRequest) SetSyncTimes(v string) {
-	o.SyncTimes = &v
+// SetDescription gets a reference to the given string and assigns it to the Description field.
+func (o *UpdateConnectorConfigRequest) SetDescription(v string) {
+	o.Description = &v
 }
 
-// GetPingTimes returns the PingTimes field value if set, zero value otherwise.
-func (o *UpdateConnectorConfigRequest) GetPingTimes() string {
-	if o == nil || IsNil(o.PingTimes) {
+// GetSyncTime returns the SyncTime field value
+func (o *UpdateConnectorConfigRequest) GetSyncTime() string {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.PingTimes
+
+	return o.SyncTime
 }
 
-// GetPingTimesOk returns a tuple with the PingTimes field value if set, nil otherwise
+// GetSyncTimeOk returns a tuple with the SyncTime field value
 // and a boolean to check if the value has been set.
-func (o *UpdateConnectorConfigRequest) GetPingTimesOk() (*string, bool) {
-	if o == nil || IsNil(o.PingTimes) {
+func (o *UpdateConnectorConfigRequest) GetSyncTimeOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.PingTimes, true
+	return &o.SyncTime, true
 }
 
-// HasPingTimes returns a boolean if a field has been set.
-func (o *UpdateConnectorConfigRequest) HasPingTimes() bool {
-	if o != nil && !IsNil(o.PingTimes) {
-		return true
-	}
-
-	return false
+// SetSyncTime sets field value
+func (o *UpdateConnectorConfigRequest) SetSyncTime(v string) {
+	o.SyncTime = v
 }
 
-// SetPingTimes gets a reference to the given string and assigns it to the PingTimes field.
-func (o *UpdateConnectorConfigRequest) SetPingTimes(v string) {
-	o.PingTimes = &v
-}
-
-// GetEntities returns the Entities field value if set, zero value otherwise.
-func (o *UpdateConnectorConfigRequest) GetEntities() []string {
-	if o == nil || IsNil(o.Entities) {
-		var ret []string
+// GetPingTime returns the PingTime field value
+func (o *UpdateConnectorConfigRequest) GetPingTime() string {
+	if o == nil {
+		var ret string
 		return ret
 	}
-	return o.Entities
+
+	return o.PingTime
 }
 
-// GetEntitiesOk returns a tuple with the Entities field value if set, nil otherwise
+// GetPingTimeOk returns a tuple with the PingTime field value
 // and a boolean to check if the value has been set.
-func (o *UpdateConnectorConfigRequest) GetEntitiesOk() ([]string, bool) {
-	if o == nil || IsNil(o.Entities) {
+func (o *UpdateConnectorConfigRequest) GetPingTimeOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Entities, true
+	return &o.PingTime, true
 }
 
-// HasEntities returns a boolean if a field has been set.
-func (o *UpdateConnectorConfigRequest) HasEntities() bool {
-	if o != nil && !IsNil(o.Entities) {
-		return true
-	}
-
-	return false
-}
-
-// SetEntities gets a reference to the given []string and assigns it to the Entities field.
-func (o *UpdateConnectorConfigRequest) SetEntities(v []string) {
-	o.Entities = v
-}
-
-// GetLogLevel returns the LogLevel field value if set, zero value otherwise.
-func (o *UpdateConnectorConfigRequest) GetLogLevel() ConnectorLogLevelEnum {
-	if o == nil || IsNil(o.LogLevel) {
-		var ret ConnectorLogLevelEnum
-		return ret
-	}
-	return *o.LogLevel
-}
-
-// GetLogLevelOk returns a tuple with the LogLevel field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *UpdateConnectorConfigRequest) GetLogLevelOk() (*ConnectorLogLevelEnum, bool) {
-	if o == nil || IsNil(o.LogLevel) {
-		return nil, false
-	}
-	return o.LogLevel, true
-}
-
-// HasLogLevel returns a boolean if a field has been set.
-func (o *UpdateConnectorConfigRequest) HasLogLevel() bool {
-	if o != nil && !IsNil(o.LogLevel) {
-		return true
-	}
-
-	return false
-}
-
-// SetLogLevel gets a reference to the given ConnectorLogLevelEnum and assigns it to the LogLevel field.
-func (o *UpdateConnectorConfigRequest) SetLogLevel(v ConnectorLogLevelEnum) {
-	o.LogLevel = &v
+// SetPingTime sets field value
+func (o *UpdateConnectorConfigRequest) SetPingTime(v string) {
+	o.PingTime = v
 }
 
 func (o UpdateConnectorConfigRequest) MarshalJSON() ([]byte, error) {
@@ -251,25 +174,53 @@ func (o UpdateConnectorConfigRequest) MarshalJSON() ([]byte, error) {
 
 func (o UpdateConnectorConfigRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Description) {
-		toSerialize["description"] = o.Description
-	}
 	if !IsNil(o.Enabled) {
 		toSerialize["enabled"] = o.Enabled
 	}
-	if !IsNil(o.SyncTimes) {
-		toSerialize["sync_times"] = o.SyncTimes
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
 	}
-	if !IsNil(o.PingTimes) {
-		toSerialize["ping_times"] = o.PingTimes
-	}
-	if !IsNil(o.Entities) {
-		toSerialize["entities"] = o.Entities
-	}
-	if !IsNil(o.LogLevel) {
-		toSerialize["log_level"] = o.LogLevel
-	}
+	toSerialize["sync_time"] = o.SyncTime
+	toSerialize["ping_time"] = o.PingTime
 	return toSerialize, nil
+}
+
+func (o *UpdateConnectorConfigRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"sync_time",
+		"ping_time",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varUpdateConnectorConfigRequest := _UpdateConnectorConfigRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varUpdateConnectorConfigRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = UpdateConnectorConfigRequest(varUpdateConnectorConfigRequest)
+
+	return err
 }
 
 type NullableUpdateConnectorConfigRequest struct {
