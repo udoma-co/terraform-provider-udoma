@@ -4,11 +4,15 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/mapvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	api "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
 	"gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/internal/client"
@@ -54,16 +58,27 @@ func (faq *FAQ) Schema(ctx context.Context, req resource.SchemaRequest, resp *re
 				Required:    true,
 				Description: "The question to be answered in the faq in different languages",
 				ElementType: types.StringType,
+				Validators: []validator.Map{
+					mapvalidator.SizeAtLeast(1),
+				},
 			},
 			"answer": schema.MapAttribute{
 				Required:    true,
 				Description: "The answer for the faq question in different languages",
 				ElementType: types.StringType,
+				Validators: []validator.Map{
+					mapvalidator.SizeAtLeast(1),
+				},
 			},
 			"keywords": schema.ListAttribute{
 				Optional:    true,
 				Description: "The keywords for the faq for easier searching",
 				ElementType: types.StringType,
+				Validators: []validator.List{
+					listvalidator.UniqueValues(),
+					listvalidator.ValueStringsAre(
+						stringvalidator.LengthAtLeast(3)),
+				},
 			},
 		},
 	}
@@ -285,34 +300,11 @@ func (model *FAQModel) toAPIRequest() (api.CreateOrUpdateFAQEntryRequest, error)
 		Keywords: make([]string, len(model.Keywords)),
 	}
 
-	if model.Question.IsNull() || model.Question.IsUnknown() {
-		return faq, fmt.Errorf("FAQ question is empty or of unknown type")
-	}
 	faq.Question = modelMapToStringMap(model.Question)
-
-	if len(*faq.Question) == 0 {
-		return faq, fmt.Errorf("FAQ question must contain at least one entry")
-	}
-
-	if model.Answer.IsNull() || model.Answer.IsUnknown() {
-		return faq, fmt.Errorf("FAQ answer is empty or of unknown type")
-	}
 	faq.Answer = modelMapToStringMap(model.Answer)
 
-	if len(*faq.Answer) == 0 {
-		return faq, fmt.Errorf("FAQ answer must contain at least one entry")
-	}
-
-	seen := make(map[string]bool)
 	for i := range model.Keywords {
 		faq.Keywords[i] = model.Keywords[i].ValueString()
-		if len(faq.Keywords[i]) < 3 {
-			return faq, fmt.Errorf("FAQ keyword must be at least 3 characters long")
-		}
-		if seen[faq.Keywords[i]] {
-			return faq, fmt.Errorf("FAQ keyword duplicate found")
-		}
-		seen[faq.Keywords[i]] = true
 	}
 
 	return faq, nil
