@@ -278,11 +278,34 @@ func (model *FAQModel) toAPIRequest() (api.CreateOrUpdateFAQEntryRequest, error)
 		Keywords: make([]string, len(model.Keywords)),
 	}
 
+	if model.Question.IsNull() || model.Question.IsUnknown() {
+		return faq, fmt.Errorf("FAQ question is empty or of unknown type")
+	}
 	faq.Question = modelMapToStringMap(model.Question)
+
+	if len(*faq.Question) == 0 {
+		return faq, fmt.Errorf("FAQ question must contain at least one entry")
+	}
+
+	if model.Answer.IsNull() || model.Answer.IsUnknown() {
+		return faq, fmt.Errorf("FAQ question is empty or of unknown type")
+	}
 	faq.Answer = modelMapToStringMap(model.Answer)
 
+	if len(*faq.Answer) == 0 {
+		return faq, fmt.Errorf("FAQ answer must contain at least one entry")
+	}
+
+	seen := make(map[string]bool)
 	for i := range model.Keywords {
 		faq.Keywords[i] = model.Keywords[i].ValueString()
+		if len(faq.Keywords[i]) < 3 {
+			return faq, fmt.Errorf("FAQ keyword must be at least 3 characters long")
+		}
+		if seen[faq.Keywords[i]] {
+			return faq, fmt.Errorf("FAQ keyword duplicate found")
+		}
+		seen[faq.Keywords[i]] = true
 	}
 
 	return faq, nil
