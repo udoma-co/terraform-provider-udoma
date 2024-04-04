@@ -6,11 +6,14 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	api "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
 	"gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/internal/client"
@@ -40,6 +43,7 @@ type CaseTemplateModel struct {
 	CreatedAt      types.Int64        `tfsdk:"created_at"`
 	UpdatedAt      types.Int64        `tfsdk:"updated_at"`
 	Name           types.String       `tfsdk:"name"`
+	Access         []types.String     `tfsdk:"access"`
 	NameExpression types.String       `tfsdk:"name_expression"`
 	Label          types.Map          `tfsdk:"label"`
 	Description    types.Map          `tfsdk:"description"`
@@ -80,6 +84,19 @@ func (r *CaseTemplate) Schema(ctx context.Context, req resource.SchemaRequest, r
 			"name": schema.StringAttribute{
 				Required:    true,
 				Description: "The name of the case template, shown in the admin page",
+			},
+			"access": schema.ListAttribute{
+				Required:    true,
+				Description: "The list of accessibility options for the case template",
+				ElementType: types.StringType,
+				Validators: []validator.List{
+					listvalidator.UniqueValues(),
+					listvalidator.ValueStringsAre(stringvalidator.OneOf(
+						string(api.CASETEMPLATEACCESSIBILITY_PROPERTY_MANAGER),
+						string(api.CASETEMPLATEACCESSIBILITY_TENANT),
+						string(api.CASETEMPLATEACCESSIBILITY_PUBLIC),
+					)),
+				},
 			},
 			"name_expression": schema.StringAttribute{
 				Optional:    true,
@@ -305,11 +322,18 @@ func (model *CaseTemplateModel) fromAPI(template *api.CaseTemplate) error {
 		return fmt.Errorf("case template is nil")
 	}
 
-	model.ID = types.StringPointerValue(template.Id)
-	model.CreatedAt = types.Int64PointerValue(template.CreatedAt)
-	model.UpdatedAt = types.Int64PointerValue(template.UpdatedAt)
-	model.Name = types.StringPointerValue(template.Name)
+	model.ID = types.StringValue(template.Id)
+	model.CreatedAt = types.Int64Value(template.CreatedAt)
+	model.UpdatedAt = types.Int64Value(template.UpdatedAt)
+	model.Name = types.StringValue(template.Name)
 	model.NameExpression = omittableStringValue(template.NameExpression, model.NameExpression)
+	model.Icon = omittableStringValue(template.Icon, model.Icon)
+
+	model.Access = make([]types.String, len(template.Access))
+	for i := range template.Access {
+		model.Access[i] = types.StringValue(string(template.Access[i]))
+	}
+
 	if template.Label != nil {
 		in := stringMapToValueMap(*template.Label)
 		modelValue, diags := types.MapValue(types.StringType, in)
@@ -318,6 +342,7 @@ func (model *CaseTemplateModel) fromAPI(template *api.CaseTemplate) error {
 		}
 		model.Label = modelValue
 	}
+
 	if template.Description != nil {
 		in := stringMapToValueMap(*template.Description)
 		modelValue, diags := types.MapValue(types.StringType, in)
@@ -326,6 +351,7 @@ func (model *CaseTemplateModel) fromAPI(template *api.CaseTemplate) error {
 		}
 		model.Description = modelValue
 	}
+
 	if template.InfoText != nil {
 		in := stringMapToValueMap(*template.InfoText)
 		modelValue, diags := types.MapValue(types.StringType, in)
@@ -334,15 +360,12 @@ func (model *CaseTemplateModel) fromAPI(template *api.CaseTemplate) error {
 		}
 		model.InfoText = modelValue
 	}
-	model.Icon = omittableStringValue(template.Icon, model.Icon)
 
-	if template.CustomInputs != nil {
-		customInputs, err := json.Marshal(template.CustomInputs)
-		if err != nil {
-			return fmt.Errorf("failed to marshal custom inputs: %w", err)
-		}
-		model.CustomInputs = tf.NewJsonObjectValue(string(customInputs))
+	customInputs, err := json.Marshal(template.CustomInputs)
+	if err != nil {
+		return fmt.Errorf("failed to marshal custom inputs: %w", err)
 	}
+	model.CustomInputs = tf.NewJsonObjectValue(string(customInputs))
 
 	cfg := &CaseConfigModel{}
 	isEmpty := cfg.fromApiResponse(template.Config)
@@ -358,15 +381,18 @@ func (model *CaseTemplateModel) fromAPI(template *api.CaseTemplate) error {
 func (model *CaseTemplateModel) toAPIRequest() (api.CreateOrUpdateCaseTemplateRequest, error) {
 
 	template := api.CreateOrUpdateCaseTemplateRequest{
-		Name:           model.Name.ValueStringPointer(),
+		Name:           model.Name.ValueString(),
 		NameExpression: model.NameExpression.ValueStringPointer(),
+		Label:          modelMapToStringMap(model.Label),
+		Description:    modelMapToStringMap(model.Description),
+		InfoText:       modelMapToStringMap(model.InfoText),
+		Icon:           model.Icon.ValueStringPointer(),
 	}
 
-	template.Label = modelMapToStringMap(model.Label)
-	template.Description = modelMapToStringMap(model.Description)
-	template.InfoText = modelMapToStringMap(model.InfoText)
-
-	template.Icon = model.Icon.ValueStringPointer()
+	template.Access = make([]api.CaseTemplateAccessibility, len(model.Access))
+	for i := range model.Access {
+		template.Access[i] = api.CaseTemplateAccessibility(model.Access[i].ValueString())
+	}
 
 	if !model.CustomInputs.IsNull() && !model.CustomInputs.IsUnknown() {
 		if diag := model.CustomInputs.Unmarshal(&template.CustomInputs); diag.HasError() {

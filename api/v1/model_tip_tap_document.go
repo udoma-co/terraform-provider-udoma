@@ -14,34 +14,34 @@ import (
 	"encoding/json"
 )
 
-// checks if the EditorJSDocument type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &EditorJSDocument{}
+// checks if the TipTapDocument type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &TipTapDocument{}
 
-// EditorJSDocument A document in EditorJS format
-type EditorJSDocument struct {
+// TipTapDocument A document that can be edited in a TipTap editor
+type TipTapDocument struct {
 	// JSON formatted data
 	Data *string `json:"data,omitempty"`
 }
 
-// NewEditorJSDocument instantiates a new EditorJSDocument object
+// NewTipTapDocument instantiates a new TipTapDocument object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewEditorJSDocument() *EditorJSDocument {
-	this := EditorJSDocument{}
+func NewTipTapDocument() *TipTapDocument {
+	this := TipTapDocument{}
 	return &this
 }
 
-// NewEditorJSDocumentWithDefaults instantiates a new EditorJSDocument object
+// NewTipTapDocumentWithDefaults instantiates a new TipTapDocument object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewEditorJSDocumentWithDefaults() *EditorJSDocument {
-	this := EditorJSDocument{}
+func NewTipTapDocumentWithDefaults() *TipTapDocument {
+	this := TipTapDocument{}
 	return &this
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *EditorJSDocument) GetData() string {
+func (o *TipTapDocument) GetData() string {
 	if o == nil || IsNil(o.Data) {
 		var ret string
 		return ret
@@ -51,7 +51,7 @@ func (o *EditorJSDocument) GetData() string {
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *EditorJSDocument) GetDataOk() (*string, bool) {
+func (o *TipTapDocument) GetDataOk() (*string, bool) {
 	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
@@ -59,7 +59,7 @@ func (o *EditorJSDocument) GetDataOk() (*string, bool) {
 }
 
 // HasData returns a boolean if a field has been set.
-func (o *EditorJSDocument) HasData() bool {
+func (o *TipTapDocument) HasData() bool {
 	if o != nil && !IsNil(o.Data) {
 		return true
 	}
@@ -68,11 +68,11 @@ func (o *EditorJSDocument) HasData() bool {
 }
 
 // SetData gets a reference to the given string and assigns it to the Data field.
-func (o *EditorJSDocument) SetData(v string) {
+func (o *TipTapDocument) SetData(v string) {
 	o.Data = &v
 }
 
-func (o EditorJSDocument) MarshalJSON() ([]byte, error) {
+func (o TipTapDocument) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -80,7 +80,7 @@ func (o EditorJSDocument) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o EditorJSDocument) ToMap() (map[string]interface{}, error) {
+func (o TipTapDocument) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Data) {
 		toSerialize["data"] = o.Data
@@ -88,38 +88,38 @@ func (o EditorJSDocument) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-type NullableEditorJSDocument struct {
-	value *EditorJSDocument
+type NullableTipTapDocument struct {
+	value *TipTapDocument
 	isSet bool
 }
 
-func (v NullableEditorJSDocument) Get() *EditorJSDocument {
+func (v NullableTipTapDocument) Get() *TipTapDocument {
 	return v.value
 }
 
-func (v *NullableEditorJSDocument) Set(val *EditorJSDocument) {
+func (v *NullableTipTapDocument) Set(val *TipTapDocument) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableEditorJSDocument) IsSet() bool {
+func (v NullableTipTapDocument) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableEditorJSDocument) Unset() {
+func (v *NullableTipTapDocument) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableEditorJSDocument(val *EditorJSDocument) *NullableEditorJSDocument {
-	return &NullableEditorJSDocument{value: val, isSet: true}
+func NewNullableTipTapDocument(val *TipTapDocument) *NullableTipTapDocument {
+	return &NullableTipTapDocument{value: val, isSet: true}
 }
 
-func (v NullableEditorJSDocument) MarshalJSON() ([]byte, error) {
+func (v NullableTipTapDocument) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableEditorJSDocument) UnmarshalJSON(src []byte) error {
+func (v *NullableTipTapDocument) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

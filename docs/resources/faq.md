@@ -27,5 +27,3 @@ Resource represents an faq
 ### Read-Only
 
 - `id` (String) The unique identifier for the faq
-
-

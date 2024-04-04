@@ -17,6 +17,7 @@ Resource represents a template for raising cases
 
 ### Required
 
+- `access` (List of String) The list of accessibility options for the case template
 - `custom_inputs` (String) The custom inputs to be displayed on the reporting page (as serialized JSON)
 - `name` (String) The name of the case template, shown in the admin page
 
