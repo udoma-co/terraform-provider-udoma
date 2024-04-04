@@ -23,14 +23,16 @@ type Case struct {
 	CreatedAt *int64  `json:"created_at,omitempty"`
 	UpdatedAt *int64  `json:"updated_at,omitempty"`
 	Name      *string `json:"name,omitempty"`
-	// Indicates if the case has been archived
-	Archived *bool `json:"archived,omitempty"`
-	// Reference to property
-	PropertyRef     *string  `json:"property_ref,omitempty"`
-	PropertyAddress *Address `json:"property_address,omitempty"`
 	// The ID of the case template used to create this case
 	Template *string         `json:"template,omitempty"`
 	Status   *CaseStatusEnum `json:"status,omitempty"`
+	// Indicates if the case has been archived
+	Archived *bool `json:"archived,omitempty"`
+	// Reference to property
+	PropertyRef     *string       `json:"property_ref,omitempty"`
+	PropertyAddress *Address      `json:"property_address,omitempty"`
+	Reporter        *ContactData  `json:"reporter,omitempty"`
+	Assignee        *CaseAssignee `json:"assignee,omitempty"`
 	// List of all accounts that have access to the case (e.g. manager, tenenat, and service provider)
 	Parties []CaseParty `json:"parties,omitempty"`
 	// List of all status changes. Latest one is the current one
@@ -38,7 +40,6 @@ type Case struct {
 	Comments      []CaseComment `json:"comments,omitempty"`
 	// List of feedback that was provided by the parties when changing the status of the case
 	Feedback []CaseFeedbackEntry `json:"feedback,omitempty"`
-	Assignee *string             `json:"assignee,omitempty"`
 	// Input provided by the user when raising the case as a key-value map
 	Data map[string]interface{} `json:"data,omitempty"`
 }
@@ -188,6 +189,70 @@ func (o *Case) SetName(v string) {
 	o.Name = &v
 }
 
+// GetTemplate returns the Template field value if set, zero value otherwise.
+func (o *Case) GetTemplate() string {
+	if o == nil || IsNil(o.Template) {
+		var ret string
+		return ret
+	}
+	return *o.Template
+}
+
+// GetTemplateOk returns a tuple with the Template field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Case) GetTemplateOk() (*string, bool) {
+	if o == nil || IsNil(o.Template) {
+		return nil, false
+	}
+	return o.Template, true
+}
+
+// HasTemplate returns a boolean if a field has been set.
+func (o *Case) HasTemplate() bool {
+	if o != nil && !IsNil(o.Template) {
+		return true
+	}
+
+	return false
+}
+
+// SetTemplate gets a reference to the given string and assigns it to the Template field.
+func (o *Case) SetTemplate(v string) {
+	o.Template = &v
+}
+
+// GetStatus returns the Status field value if set, zero value otherwise.
+func (o *Case) GetStatus() CaseStatusEnum {
+	if o == nil || IsNil(o.Status) {
+		var ret CaseStatusEnum
+		return ret
+	}
+	return *o.Status
+}
+
+// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Case) GetStatusOk() (*CaseStatusEnum, bool) {
+	if o == nil || IsNil(o.Status) {
+		return nil, false
+	}
+	return o.Status, true
+}
+
+// HasStatus returns a boolean if a field has been set.
+func (o *Case) HasStatus() bool {
+	if o != nil && !IsNil(o.Status) {
+		return true
+	}
+
+	return false
+}
+
+// SetStatus gets a reference to the given CaseStatusEnum and assigns it to the Status field.
+func (o *Case) SetStatus(v CaseStatusEnum) {
+	o.Status = &v
+}
+
 // GetArchived returns the Archived field value if set, zero value otherwise.
 func (o *Case) GetArchived() bool {
 	if o == nil || IsNil(o.Archived) {
@@ -284,68 +349,68 @@ func (o *Case) SetPropertyAddress(v Address) {
 	o.PropertyAddress = &v
 }
 
-// GetTemplate returns the Template field value if set, zero value otherwise.
-func (o *Case) GetTemplate() string {
-	if o == nil || IsNil(o.Template) {
-		var ret string
+// GetReporter returns the Reporter field value if set, zero value otherwise.
+func (o *Case) GetReporter() ContactData {
+	if o == nil || IsNil(o.Reporter) {
+		var ret ContactData
 		return ret
 	}
-	return *o.Template
+	return *o.Reporter
 }
 
-// GetTemplateOk returns a tuple with the Template field value if set, nil otherwise
+// GetReporterOk returns a tuple with the Reporter field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Case) GetTemplateOk() (*string, bool) {
-	if o == nil || IsNil(o.Template) {
+func (o *Case) GetReporterOk() (*ContactData, bool) {
+	if o == nil || IsNil(o.Reporter) {
 		return nil, false
 	}
-	return o.Template, true
+	return o.Reporter, true
 }
 
-// HasTemplate returns a boolean if a field has been set.
-func (o *Case) HasTemplate() bool {
-	if o != nil && !IsNil(o.Template) {
+// HasReporter returns a boolean if a field has been set.
+func (o *Case) HasReporter() bool {
+	if o != nil && !IsNil(o.Reporter) {
 		return true
 	}
 
 	return false
 }
 
-// SetTemplate gets a reference to the given string and assigns it to the Template field.
-func (o *Case) SetTemplate(v string) {
-	o.Template = &v
+// SetReporter gets a reference to the given ContactData and assigns it to the Reporter field.
+func (o *Case) SetReporter(v ContactData) {
+	o.Reporter = &v
 }
 
-// GetStatus returns the Status field value if set, zero value otherwise.
-func (o *Case) GetStatus() CaseStatusEnum {
-	if o == nil || IsNil(o.Status) {
-		var ret CaseStatusEnum
+// GetAssignee returns the Assignee field value if set, zero value otherwise.
+func (o *Case) GetAssignee() CaseAssignee {
+	if o == nil || IsNil(o.Assignee) {
+		var ret CaseAssignee
 		return ret
 	}
-	return *o.Status
+	return *o.Assignee
 }
 
-// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
+// GetAssigneeOk returns a tuple with the Assignee field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Case) GetStatusOk() (*CaseStatusEnum, bool) {
-	if o == nil || IsNil(o.Status) {
+func (o *Case) GetAssigneeOk() (*CaseAssignee, bool) {
+	if o == nil || IsNil(o.Assignee) {
 		return nil, false
 	}
-	return o.Status, true
+	return o.Assignee, true
 }
 
-// HasStatus returns a boolean if a field has been set.
-func (o *Case) HasStatus() bool {
-	if o != nil && !IsNil(o.Status) {
+// HasAssignee returns a boolean if a field has been set.
+func (o *Case) HasAssignee() bool {
+	if o != nil && !IsNil(o.Assignee) {
 		return true
 	}
 
 	return false
 }
 
-// SetStatus gets a reference to the given CaseStatusEnum and assigns it to the Status field.
-func (o *Case) SetStatus(v CaseStatusEnum) {
-	o.Status = &v
+// SetAssignee gets a reference to the given CaseAssignee and assigns it to the Assignee field.
+func (o *Case) SetAssignee(v CaseAssignee) {
+	o.Assignee = &v
 }
 
 // GetParties returns the Parties field value if set, zero value otherwise.
@@ -476,38 +541,6 @@ func (o *Case) SetFeedback(v []CaseFeedbackEntry) {
 	o.Feedback = v
 }
 
-// GetAssignee returns the Assignee field value if set, zero value otherwise.
-func (o *Case) GetAssignee() string {
-	if o == nil || IsNil(o.Assignee) {
-		var ret string
-		return ret
-	}
-	return *o.Assignee
-}
-
-// GetAssigneeOk returns a tuple with the Assignee field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Case) GetAssigneeOk() (*string, bool) {
-	if o == nil || IsNil(o.Assignee) {
-		return nil, false
-	}
-	return o.Assignee, true
-}
-
-// HasAssignee returns a boolean if a field has been set.
-func (o *Case) HasAssignee() bool {
-	if o != nil && !IsNil(o.Assignee) {
-		return true
-	}
-
-	return false
-}
-
-// SetAssignee gets a reference to the given string and assigns it to the Assignee field.
-func (o *Case) SetAssignee(v string) {
-	o.Assignee = &v
-}
-
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *Case) GetData() map[string]interface{} {
 	if o == nil || IsNil(o.Data) {
@@ -562,6 +595,12 @@ func (o Case) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
 	}
+	if !IsNil(o.Template) {
+		toSerialize["template"] = o.Template
+	}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
 	if !IsNil(o.Archived) {
 		toSerialize["archived"] = o.Archived
 	}
@@ -571,11 +610,11 @@ func (o Case) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.PropertyAddress) {
 		toSerialize["property_address"] = o.PropertyAddress
 	}
-	if !IsNil(o.Template) {
-		toSerialize["template"] = o.Template
+	if !IsNil(o.Reporter) {
+		toSerialize["reporter"] = o.Reporter
 	}
-	if !IsNil(o.Status) {
-		toSerialize["status"] = o.Status
+	if !IsNil(o.Assignee) {
+		toSerialize["assignee"] = o.Assignee
 	}
 	if !IsNil(o.Parties) {
 		toSerialize["parties"] = o.Parties
@@ -588,9 +627,6 @@ func (o Case) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Feedback) {
 		toSerialize["feedback"] = o.Feedback
-	}
-	if !IsNil(o.Assignee) {
-		toSerialize["assignee"] = o.Assignee
 	}
 	if !IsNil(o.Data) {
 		toSerialize["data"] = o.Data

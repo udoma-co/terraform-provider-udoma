@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the CreateOrUpdateCaseTemplateRequest type satisfies the MappedNullable interface at compile time
@@ -20,7 +22,9 @@ var _ MappedNullable = &CreateOrUpdateCaseTemplateRequest{}
 // CreateOrUpdateCaseTemplateRequest struct for CreateOrUpdateCaseTemplateRequest
 type CreateOrUpdateCaseTemplateRequest struct {
 	// The name of the case template
-	Name *string `json:"name,omitempty"`
+	Name string `json:"name"`
+	// The list of access possibilities for the template. This is used to determine  in which parts of the webapp the template can be used.
+	Access []CaseTemplateAccessibility `json:"access"`
 	// Optional JS expression used to generate the name of the actual case
 	NameExpression *string `json:"name_expression,omitempty"`
 	// a map of values, where the key and values are strings
@@ -31,16 +35,21 @@ type CreateOrUpdateCaseTemplateRequest struct {
 	InfoText *map[string]string `json:"info_text,omitempty"`
 	// The font-awesome icon to use for this template
 	Icon         *string     `json:"icon,omitempty"`
-	CustomInputs *CustomForm `json:"custom_inputs,omitempty"`
+	CustomInputs CustomForm  `json:"custom_inputs"`
 	Config       *CaseConfig `json:"config,omitempty"`
 }
+
+type _CreateOrUpdateCaseTemplateRequest CreateOrUpdateCaseTemplateRequest
 
 // NewCreateOrUpdateCaseTemplateRequest instantiates a new CreateOrUpdateCaseTemplateRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateOrUpdateCaseTemplateRequest() *CreateOrUpdateCaseTemplateRequest {
+func NewCreateOrUpdateCaseTemplateRequest(name string, access []CaseTemplateAccessibility, customInputs CustomForm) *CreateOrUpdateCaseTemplateRequest {
 	this := CreateOrUpdateCaseTemplateRequest{}
+	this.Name = name
+	this.Access = access
+	this.CustomInputs = customInputs
 	return &this
 }
 
@@ -52,36 +61,52 @@ func NewCreateOrUpdateCaseTemplateRequestWithDefaults() *CreateOrUpdateCaseTempl
 	return &this
 }
 
-// GetName returns the Name field value if set, zero value otherwise.
+// GetName returns the Name field value
 func (o *CreateOrUpdateCaseTemplateRequest) GetName() string {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Name
+
+	return o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// GetNameOk returns a tuple with the Name field value
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateCaseTemplateRequest) GetNameOk() (*string, bool) {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Name, true
+	return &o.Name, true
 }
 
-// HasName returns a boolean if a field has been set.
-func (o *CreateOrUpdateCaseTemplateRequest) HasName() bool {
-	if o != nil && !IsNil(o.Name) {
-		return true
+// SetName sets field value
+func (o *CreateOrUpdateCaseTemplateRequest) SetName(v string) {
+	o.Name = v
+}
+
+// GetAccess returns the Access field value
+func (o *CreateOrUpdateCaseTemplateRequest) GetAccess() []CaseTemplateAccessibility {
+	if o == nil {
+		var ret []CaseTemplateAccessibility
+		return ret
 	}
 
-	return false
+	return o.Access
 }
 
-// SetName gets a reference to the given string and assigns it to the Name field.
-func (o *CreateOrUpdateCaseTemplateRequest) SetName(v string) {
-	o.Name = &v
+// GetAccessOk returns a tuple with the Access field value
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateCaseTemplateRequest) GetAccessOk() ([]CaseTemplateAccessibility, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Access, true
+}
+
+// SetAccess sets field value
+func (o *CreateOrUpdateCaseTemplateRequest) SetAccess(v []CaseTemplateAccessibility) {
+	o.Access = v
 }
 
 // GetNameExpression returns the NameExpression field value if set, zero value otherwise.
@@ -244,36 +269,28 @@ func (o *CreateOrUpdateCaseTemplateRequest) SetIcon(v string) {
 	o.Icon = &v
 }
 
-// GetCustomInputs returns the CustomInputs field value if set, zero value otherwise.
+// GetCustomInputs returns the CustomInputs field value
 func (o *CreateOrUpdateCaseTemplateRequest) GetCustomInputs() CustomForm {
-	if o == nil || IsNil(o.CustomInputs) {
+	if o == nil {
 		var ret CustomForm
 		return ret
 	}
-	return *o.CustomInputs
+
+	return o.CustomInputs
 }
 
-// GetCustomInputsOk returns a tuple with the CustomInputs field value if set, nil otherwise
+// GetCustomInputsOk returns a tuple with the CustomInputs field value
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateCaseTemplateRequest) GetCustomInputsOk() (*CustomForm, bool) {
-	if o == nil || IsNil(o.CustomInputs) {
+	if o == nil {
 		return nil, false
 	}
-	return o.CustomInputs, true
+	return &o.CustomInputs, true
 }
 
-// HasCustomInputs returns a boolean if a field has been set.
-func (o *CreateOrUpdateCaseTemplateRequest) HasCustomInputs() bool {
-	if o != nil && !IsNil(o.CustomInputs) {
-		return true
-	}
-
-	return false
-}
-
-// SetCustomInputs gets a reference to the given CustomForm and assigns it to the CustomInputs field.
+// SetCustomInputs sets field value
 func (o *CreateOrUpdateCaseTemplateRequest) SetCustomInputs(v CustomForm) {
-	o.CustomInputs = &v
+	o.CustomInputs = v
 }
 
 // GetConfig returns the Config field value if set, zero value otherwise.
@@ -318,9 +335,8 @@ func (o CreateOrUpdateCaseTemplateRequest) MarshalJSON() ([]byte, error) {
 
 func (o CreateOrUpdateCaseTemplateRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Name) {
-		toSerialize["name"] = o.Name
-	}
+	toSerialize["name"] = o.Name
+	toSerialize["access"] = o.Access
 	if !IsNil(o.NameExpression) {
 		toSerialize["name_expression"] = o.NameExpression
 	}
@@ -336,13 +352,50 @@ func (o CreateOrUpdateCaseTemplateRequest) ToMap() (map[string]interface{}, erro
 	if !IsNil(o.Icon) {
 		toSerialize["icon"] = o.Icon
 	}
-	if !IsNil(o.CustomInputs) {
-		toSerialize["custom_inputs"] = o.CustomInputs
-	}
+	toSerialize["custom_inputs"] = o.CustomInputs
 	if !IsNil(o.Config) {
 		toSerialize["config"] = o.Config
 	}
 	return toSerialize, nil
+}
+
+func (o *CreateOrUpdateCaseTemplateRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"access",
+		"custom_inputs",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCreateOrUpdateCaseTemplateRequest := _CreateOrUpdateCaseTemplateRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCreateOrUpdateCaseTemplateRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CreateOrUpdateCaseTemplateRequest(varCreateOrUpdateCaseTemplateRequest)
+
+	return err
 }
 
 type NullableCreateOrUpdateCaseTemplateRequest struct {

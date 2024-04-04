@@ -225,6 +225,24 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**InternalAddPriceIndexPoint**](docs/DefaultAPI.md#internaladdpriceindexpoint) | **Put** /price-index | Push a new value for the inflation index
 *DefaultAPI* | [**InviteTenant**](docs/DefaultAPI.md#invitetenant) | **Post** /invitation | Invite a tenant
 *DefaultAPI* | [**PingConnector**](docs/DefaultAPI.md#pingconnector) | **Post** /connector/ping | Ping the connector
+*DefaultAPI* | [**PublicAddCaseAttachment**](docs/DefaultAPI.md#publicaddcaseattachment) | **Post** /public/case/{caseId}/attachment | Add new attachment to an existing case
+*DefaultAPI* | [**PublicAddCaseComment**](docs/DefaultAPI.md#publicaddcasecomment) | **Post** /public/case/{caseId}/comment | Add new case comment
+*DefaultAPI* | [**PublicCleanupAttachments**](docs/DefaultAPI.md#publiccleanupattachments) | **Post** /public/attachments/cleanup/{code} | Cleanup attachments that are not referenced by any entity
+*DefaultAPI* | [**PublicCreateAppointment**](docs/DefaultAPI.md#publiccreateappointment) | **Post** /public/calendar/appointments/{scheduleId}/entry | Create a new appointment for the given schedule
+*DefaultAPI* | [**PublicCreateCase**](docs/DefaultAPI.md#publiccreatecase) | **Post** /public/case | Raise a new from a public endpoint.
+*DefaultAPI* | [**PublicDeleteAppointment**](docs/DefaultAPI.md#publicdeleteappointment) | **Delete** /public/calendar/appointments/entry/{code} | Delete an appointment
+*DefaultAPI* | [**PublicDeleteAttachment**](docs/DefaultAPI.md#publicdeleteattachment) | **Delete** /public/attachment/{attachmentId} | Delete the file upload with the given ID
+*DefaultAPI* | [**PublicDeleteCaseComment**](docs/DefaultAPI.md#publicdeletecasecomment) | **Delete** /public/case/{caseId}/comment/{commentId} | Delete a comment
+*DefaultAPI* | [**PublicGetAppointment**](docs/DefaultAPI.md#publicgetappointment) | **Get** /public/calendar/appointments/entry/{code} | Get appointment details
+*DefaultAPI* | [**PublicGetAppointmentInIcalFormat**](docs/DefaultAPI.md#publicgetappointmentinicalformat) | **Get** /public/calendar/appointments/entry/{code}/ical | Get appointment in ical format
+*DefaultAPI* | [**PublicGetAppointmentSchedule**](docs/DefaultAPI.md#publicgetappointmentschedule) | **Get** /public/calendar/appointments/schedules/{scheduleId} | Get appointment schedule details
+*DefaultAPI* | [**PublicGetAttachment**](docs/DefaultAPI.md#publicgetattachment) | **Get** /public/attachment/{attachmentId} | Get a file attachment
+*DefaultAPI* | [**PublicGetCase**](docs/DefaultAPI.md#publicgetcase) | **Get** /public/case/{caseId} | Get case details
+*DefaultAPI* | [**PublicGetCaseReportingEndpointInfo**](docs/DefaultAPI.md#publicgetcasereportingendpointinfo) | **Get** /public/cases/endpoint/{code}/info | Get the information for the case reporting endpoint with the given code
+*DefaultAPI* | [**PublicUpdateCaseStatus**](docs/DefaultAPI.md#publicupdatecasestatus) | **Post** /public/case/{caseId}/status | Add new case status
+*DefaultAPI* | [**PublicUploadAttachment**](docs/DefaultAPI.md#publicuploadattachment) | **Post** /public/attachment | Upload new file attachment
+*DefaultAPI* | [**PublicValidateCaseData**](docs/DefaultAPI.md#publicvalidatecasedata) | **Post** /public/case/endpoint/{code}/template/{templateId}/validate | Validate the data provided by the user against the template
+*DefaultAPI* | [**PublicValidateUserEmail**](docs/DefaultAPI.md#publicvalidateuseremail) | **Post** /public/email/validation | Validate user&#39;s email and point out problems if there are any
 *DefaultAPI* | [**QueryAppointmentSchedules**](docs/DefaultAPI.md#queryappointmentschedules) | **Post** /calendar/appointments/schedules | Query all appointment schedules for given criteria
 *DefaultAPI* | [**QueryAppointmentTemplates**](docs/DefaultAPI.md#queryappointmenttemplates) | **Post** /calendar/appointments/templates | Query all appointment templates for given criteria
 *DefaultAPI* | [**QueryAppointments**](docs/DefaultAPI.md#queryappointments) | **Get** /calendar/appointments/window/{windowId} | Get the appointments of a Window
@@ -283,6 +301,8 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateWorkflowEntrypoint**](docs/DefaultAPI.md#updateworkflowentrypoint) | **Put** /workflows/entrypoint/{entrypointID} | Update workflow entry point
 *DefaultAPI* | [**UpdateWorkflowExecution**](docs/DefaultAPI.md#updateworkflowexecution) | **Put** /workflows/execution/{executionID} | Update workflow execution
 *DefaultAPI* | [**UploadAttachment**](docs/DefaultAPI.md#uploadattachment) | **Post** /attachment | Upload new file attachment
+*DefaultAPI* | [**ValidateCaseData**](docs/DefaultAPI.md#validatecasedata) | **Post** /cases/template/{templateId}/validate | Validate the data provided by the user against the template
+*DefaultAPI* | [**ValidateUserEmail**](docs/DefaultAPI.md#validateuseremail) | **Post** /email/validation | Validate user&#39;s email and point out problems if there are any
 
 
 ## Documentation For Models
@@ -303,6 +323,7 @@ Class | Method | HTTP request | Description
  - [CaseAutomaticActionConfig](docs/CaseAutomaticActionConfig.md)
  - [CaseComment](docs/CaseComment.md)
  - [CaseConfig](docs/CaseConfig.md)
+ - [CaseDetails](docs/CaseDetails.md)
  - [CaseFeedbackConfig](docs/CaseFeedbackConfig.md)
  - [CaseFeedbackEntry](docs/CaseFeedbackEntry.md)
  - [CaseFeedbackModeEnum](docs/CaseFeedbackModeEnum.md)
@@ -312,10 +333,13 @@ Class | Method | HTTP request | Description
  - [CaseReportingEndpoint](docs/CaseReportingEndpoint.md)
  - [CaseReportingEndpointCategory](docs/CaseReportingEndpointCategory.md)
  - [CaseReportingEndpointCategoryTemplatesInner](docs/CaseReportingEndpointCategoryTemplatesInner.md)
+ - [CaseReportingEndpointInfo](docs/CaseReportingEndpointInfo.md)
  - [CaseStatus](docs/CaseStatus.md)
  - [CaseStatusConfig](docs/CaseStatusConfig.md)
  - [CaseStatusEnum](docs/CaseStatusEnum.md)
  - [CaseTemplate](docs/CaseTemplate.md)
+ - [CaseTemplateAccessibility](docs/CaseTemplateAccessibility.md)
+ - [CleanupAttachmentsRequest](docs/CleanupAttachmentsRequest.md)
  - [CompanyProfile](docs/CompanyProfile.md)
  - [ConnectorConfig](docs/ConnectorConfig.md)
  - [ConnectorCredentials](docs/ConnectorCredentials.md)
@@ -332,6 +356,7 @@ Class | Method | HTTP request | Description
  - [ContactData](docs/ContactData.md)
  - [CreateCaseCommentRequest](docs/CreateCaseCommentRequest.md)
  - [CreateCaseRequest](docs/CreateCaseRequest.md)
+ - [CreateCaseResponse](docs/CreateCaseResponse.md)
  - [CreateConnectorConfigRequest](docs/CreateConnectorConfigRequest.md)
  - [CreateConnectorCredentialsRequest](docs/CreateConnectorCredentialsRequest.md)
  - [CreateDocumentGenerationRequest](docs/CreateDocumentGenerationRequest.md)
@@ -378,7 +403,7 @@ Class | Method | HTTP request | Description
  - [DocumentTemplateOptions](docs/DocumentTemplateOptions.md)
  - [DocumentTemplateSignatureConfguration](docs/DocumentTemplateSignatureConfguration.md)
  - [DocumentTemplateSignerDefinition](docs/DocumentTemplateSignerDefinition.md)
- - [EditorJSDocument](docs/EditorJSDocument.md)
+ - [EmailValidationResponse](docs/EmailValidationResponse.md)
  - [ExecuteReportRequest](docs/ExecuteReportRequest.md)
  - [ExecuteWorkflowEntrypointRequest](docs/ExecuteWorkflowEntrypointRequest.md)
  - [ExecuteWorkflowStepRequest](docs/ExecuteWorkflowStepRequest.md)
@@ -393,6 +418,9 @@ Class | Method | HTTP request | Description
  - [FormItem](docs/FormItem.md)
  - [FormItemType](docs/FormItemType.md)
  - [FormValidation](docs/FormValidation.md)
+ - [FormValidationError](docs/FormValidationError.md)
+ - [FormValidationRequest](docs/FormValidationRequest.md)
+ - [FormValidationResponse](docs/FormValidationResponse.md)
  - [GenerateCaseReportingEndpointNoticeRequest](docs/GenerateCaseReportingEndpointNoticeRequest.md)
  - [GetExternalUserCasesCountResponse](docs/GetExternalUserCasesCountResponse.md)
  - [GetSummaryRequest](docs/GetSummaryRequest.md)
@@ -422,6 +450,7 @@ Class | Method | HTTP request | Description
  - [PropertyParkingTypeEnum](docs/PropertyParkingTypeEnum.md)
  - [PropertyType](docs/PropertyType.md)
  - [PropertyWindowTypeEnum](docs/PropertyWindowTypeEnum.md)
+ - [PublicCleanupAttachments200Response](docs/PublicCleanupAttachments200Response.md)
  - [QueryAppointmentSchedulesRequest](docs/QueryAppointmentSchedulesRequest.md)
  - [QueryAppointmentTemplatesRequest](docs/QueryAppointmentTemplatesRequest.md)
  - [QueryBankAccountsRequest](docs/QueryBankAccountsRequest.md)
@@ -469,6 +498,7 @@ Class | Method | HTTP request | Description
  - [TenantChange](docs/TenantChange.md)
  - [TenantChangeActionEnum](docs/TenantChangeActionEnum.md)
  - [TenantChangeRequest](docs/TenantChangeRequest.md)
+ - [TipTapDocument](docs/TipTapDocument.md)
  - [UnssignCaseRequest](docs/UnssignCaseRequest.md)
  - [UpdateCaseRequest](docs/UpdateCaseRequest.md)
  - [UpdateCaseStatusRequest](docs/UpdateCaseStatusRequest.md)
@@ -502,7 +532,18 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Authorization
 
-Endpoints do not require authorization.
+
+Authentication schemes defined for the API:
+### bearerAuth
+
+- **Type**: HTTP Bearer token authentication
+
+Example
+
+```go
+auth := context.WithValue(context.Background(), v1.ContextAccessToken, "BEARER_TOKEN_STRING")
+r, err := client.Service.Operation(auth, args)
+```
 
 
 ## Documentation for Utility Methods
