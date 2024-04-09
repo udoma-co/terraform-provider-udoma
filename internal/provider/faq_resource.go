@@ -77,7 +77,7 @@ func (faq *FAQ) Schema(ctx context.Context, req resource.SchemaRequest, resp *re
 				Validators: []validator.List{
 					listvalidator.UniqueValues(),
 					listvalidator.ValueStringsAre(
-						stringvalidator.LengthAtLeast(3)),
+						stringvalidator.LengthAtLeast(2)),
 				},
 			},
 		},
