@@ -27,7 +27,6 @@ type ConnectorConfig struct {
 }
 
 type ConnectorConfigModel struct {
-	ID          types.String `tfsdk:"id"`
 	Name        types.String `tfsdk:"name"`
 	Description types.String `tfsdk:"description"`
 	Enabled     types.Bool   `tfsdk:"enabled"`
@@ -44,10 +43,6 @@ func (c *ConnectorConfig) Schema(ctx context.Context, req resource.SchemaRequest
 		MarkdownDescription: "Resource represents a connector config",
 
 		Attributes: map[string]schema.Attribute{
-			"id": schema.StringAttribute{
-				Computed:    true,
-				Description: "The unique identifier for the connector config",
-			},
 			"name": schema.StringAttribute{
 				Required:    true,
 				Description: "The name of the connector config",
@@ -122,7 +117,7 @@ func (c *ConnectorConfig) Read(ctx context.Context, req resource.ReadRequest, re
 		return
 	}
 
-	newConfig, httpResp, err := c.client.GetApi().GetConnectorConfig(ctx, state.ID.ValueString()).Execute()
+	newConfig, httpResp, err := c.client.GetApi().GetConnectorConfig(ctx, state.Name.ValueString()).Execute()
 	if httpResp != nil && httpResp.StatusCode == 404 {
 		resp.State.RemoveResource(ctx)
 		return
@@ -138,6 +133,13 @@ func (c *ConnectorConfig) Read(ctx context.Context, req resource.ReadRequest, re
 	resp.Diagnostics.Append(
 		resp.State.Set(ctx, state)...,
 	)
+
+	/*
+		resp.Diagnostics.AddError(
+			"fake error",
+			fmt.Sprintf("obj: %+v\nstate: %+v", newConfig, state),
+		)
+	*/
 }
 
 func (c *ConnectorConfig) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
@@ -149,7 +151,7 @@ func (c *ConnectorConfig) Update(ctx context.Context, req resource.UpdateRequest
 	}
 
 	apiReq := plan.toAPIUpdateRequest()
-	config, _, err := c.client.GetApi().UpdateConnectorConfig(ctx, plan.ID.ValueString()).UpdateConnectorConfigRequest(apiReq).Execute()
+	config, _, err := c.client.GetApi().UpdateConnectorConfig(ctx, plan.Name.ValueString()).UpdateConnectorConfigRequest(apiReq).Execute()
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Updating Connector Config",
@@ -172,7 +174,7 @@ func (c *ConnectorConfig) Delete(ctx context.Context, req resource.DeleteRequest
 		return
 	}
 
-	_, err := c.client.GetApi().DeleteConnectorConfig(ctx, state.ID.ValueString()).Execute()
+	_, err := c.client.GetApi().DeleteConnectorConfig(ctx, state.Name.ValueString()).Execute()
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Deleting Connector Config",

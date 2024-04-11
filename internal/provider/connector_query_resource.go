@@ -32,8 +32,9 @@ type ConnectorQueryModel struct {
 	ID          types.String `tfsdk:"id"`
 	Name        types.String `tfsdk:"name"`
 	Description types.String `tfsdk:"description"`
-	Enabled     types.Bool   `tfsdk:"enabled"`
 	Connector   types.String `tfsdk:"connector"`
+	Enabled     types.Bool   `tfsdk:"enabled"`
+	Priority    types.Int64  `tfsdk:"priority"`
 	Limit       types.Int64  `tfsdk:"limit"`
 	Statement   types.String `tfsdk:"statement"`
 	Script      types.String `tfsdk:"script"`
@@ -70,6 +71,10 @@ func (c *ConnectorQuery) Schema(ctx context.Context, req resource.SchemaRequest,
 			"connector": schema.StringAttribute{
 				Required:    true,
 				Description: "The connector ID to link this query to",
+			},
+			"priority": schema.Int64Attribute{
+				Optional:    true,
+				Description: "The priority of the query, higher values are executed first",
 			},
 			"limit": schema.Int64Attribute{
 				Required:    true,
@@ -207,6 +212,7 @@ func (c *ConnectorQueryModel) fromApiResponse(query *api.ConnectorQuery) {
 	c.Description = omittableStringValue(query.Description, c.Description)
 	c.Connector = types.StringValue(query.ConnectorRef)
 	c.Enabled = omittableBooleanValue(query.Enabled, c.Enabled)
+	c.Priority = types.Int64Value(int64(query.Priority))
 	c.Limit = types.Int64Value(int64(query.EntityLimit))
 	c.Statement = types.StringValue(query.Statement)
 	c.Script = types.StringValue(query.ProcessScript)
@@ -218,6 +224,7 @@ func (c *ConnectorQueryModel) toAPIRequest() api.CreateOrUpdateConnectorQueryReq
 		Description:   c.Description.ValueStringPointer(),
 		ConnectorRef:  c.Connector.ValueString(),
 		Enabled:       c.Enabled.ValueBoolPointer(),
+		Priority:      int32(c.Priority.ValueInt64()),
 		EntityLimit:   int32(c.Limit.ValueInt64()),
 		Statement:     c.Statement.ValueString(),
 		ProcessScript: c.Script.ValueString(),

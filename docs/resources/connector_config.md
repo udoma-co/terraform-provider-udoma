@@ -25,7 +25,3 @@ Resource represents a connector config
 ### Optional
 
 - `description` (String) The description of the connector config
-
-### Read-Only
-
-- `id` (String) The unique identifier for the connector config
