@@ -43,8 +43,6 @@ type Tenant struct {
 	Email string `json:"email"`
 	// The phone number of the tenant. Not directly used by the system, but can be used by managers and service providers to contact the tenant.
 	PhoneNumber string `json:"phone_number"`
-	// a list of notes regarding that tenant. Can only be seen by the manager, not the tenante.
-	Notes []Note `json:"notes,omitempty"`
 }
 
 type _Tenant Tenant
@@ -376,38 +374,6 @@ func (o *Tenant) SetPhoneNumber(v string) {
 	o.PhoneNumber = v
 }
 
-// GetNotes returns the Notes field value if set, zero value otherwise.
-func (o *Tenant) GetNotes() []Note {
-	if o == nil || IsNil(o.Notes) {
-		var ret []Note
-		return ret
-	}
-	return o.Notes
-}
-
-// GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Tenant) GetNotesOk() ([]Note, bool) {
-	if o == nil || IsNil(o.Notes) {
-		return nil, false
-	}
-	return o.Notes, true
-}
-
-// HasNotes returns a boolean if a field has been set.
-func (o *Tenant) HasNotes() bool {
-	if o != nil && !IsNil(o.Notes) {
-		return true
-	}
-
-	return false
-}
-
-// SetNotes gets a reference to the given []Note and assigns it to the Notes field.
-func (o *Tenant) SetNotes(v []Note) {
-	o.Notes = v
-}
-
 func (o Tenant) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -439,9 +405,6 @@ func (o Tenant) ToMap() (map[string]interface{}, error) {
 	}
 	toSerialize["email"] = o.Email
 	toSerialize["phone_number"] = o.PhoneNumber
-	if !IsNil(o.Notes) {
-		toSerialize["notes"] = o.Notes
-	}
 	return toSerialize, nil
 }
 

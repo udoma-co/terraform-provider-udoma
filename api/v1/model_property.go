@@ -44,7 +44,6 @@ type Property struct {
 	ParentAddress *Address `json:"parent_address,omitempty"`
 	// Optional reference to the bank account associated with the property
 	BankAccountRef *string          `json:"bank_account_ref,omitempty"`
-	Notes          []Note           `json:"notes,omitempty"`
 	Details        *PropertyDetails `json:"details,omitempty"`
 }
 
@@ -462,38 +461,6 @@ func (o *Property) SetBankAccountRef(v string) {
 	o.BankAccountRef = &v
 }
 
-// GetNotes returns the Notes field value if set, zero value otherwise.
-func (o *Property) GetNotes() []Note {
-	if o == nil || IsNil(o.Notes) {
-		var ret []Note
-		return ret
-	}
-	return o.Notes
-}
-
-// GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Property) GetNotesOk() ([]Note, bool) {
-	if o == nil || IsNil(o.Notes) {
-		return nil, false
-	}
-	return o.Notes, true
-}
-
-// HasNotes returns a boolean if a field has been set.
-func (o *Property) HasNotes() bool {
-	if o != nil && !IsNil(o.Notes) {
-		return true
-	}
-
-	return false
-}
-
-// SetNotes gets a reference to the given []Note and assigns it to the Notes field.
-func (o *Property) SetNotes(v []Note) {
-	o.Notes = v
-}
-
 // GetDetails returns the Details field value if set, zero value otherwise.
 func (o *Property) GetDetails() PropertyDetails {
 	if o == nil || IsNil(o.Details) {
@@ -568,9 +535,6 @@ func (o Property) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.BankAccountRef) {
 		toSerialize["bank_account_ref"] = o.BankAccountRef
-	}
-	if !IsNil(o.Notes) {
-		toSerialize["notes"] = o.Notes
 	}
 	if !IsNil(o.Details) {
 		toSerialize["details"] = o.Details

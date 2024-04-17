@@ -19,6 +19,9 @@ var _ MappedNullable = &FormValidationRequest{}
 
 // FormValidationRequest struct for FormValidationRequest
 type FormValidationRequest struct {
+	SourceType *FormSourceType `json:"source_type,omitempty"`
+	// the ID of the source of the form that will be validated
+	SourceId *string `json:"source_id,omitempty"`
 	// the data that will be validated
 	Data map[string]interface{} `json:"data,omitempty"`
 }
@@ -38,6 +41,70 @@ func NewFormValidationRequest() *FormValidationRequest {
 func NewFormValidationRequestWithDefaults() *FormValidationRequest {
 	this := FormValidationRequest{}
 	return &this
+}
+
+// GetSourceType returns the SourceType field value if set, zero value otherwise.
+func (o *FormValidationRequest) GetSourceType() FormSourceType {
+	if o == nil || IsNil(o.SourceType) {
+		var ret FormSourceType
+		return ret
+	}
+	return *o.SourceType
+}
+
+// GetSourceTypeOk returns a tuple with the SourceType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *FormValidationRequest) GetSourceTypeOk() (*FormSourceType, bool) {
+	if o == nil || IsNil(o.SourceType) {
+		return nil, false
+	}
+	return o.SourceType, true
+}
+
+// HasSourceType returns a boolean if a field has been set.
+func (o *FormValidationRequest) HasSourceType() bool {
+	if o != nil && !IsNil(o.SourceType) {
+		return true
+	}
+
+	return false
+}
+
+// SetSourceType gets a reference to the given FormSourceType and assigns it to the SourceType field.
+func (o *FormValidationRequest) SetSourceType(v FormSourceType) {
+	o.SourceType = &v
+}
+
+// GetSourceId returns the SourceId field value if set, zero value otherwise.
+func (o *FormValidationRequest) GetSourceId() string {
+	if o == nil || IsNil(o.SourceId) {
+		var ret string
+		return ret
+	}
+	return *o.SourceId
+}
+
+// GetSourceIdOk returns a tuple with the SourceId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *FormValidationRequest) GetSourceIdOk() (*string, bool) {
+	if o == nil || IsNil(o.SourceId) {
+		return nil, false
+	}
+	return o.SourceId, true
+}
+
+// HasSourceId returns a boolean if a field has been set.
+func (o *FormValidationRequest) HasSourceId() bool {
+	if o != nil && !IsNil(o.SourceId) {
+		return true
+	}
+
+	return false
+}
+
+// SetSourceId gets a reference to the given string and assigns it to the SourceId field.
+func (o *FormValidationRequest) SetSourceId(v string) {
+	o.SourceId = &v
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
@@ -82,6 +149,12 @@ func (o FormValidationRequest) MarshalJSON() ([]byte, error) {
 
 func (o FormValidationRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.SourceType) {
+		toSerialize["source_type"] = o.SourceType
+	}
+	if !IsNil(o.SourceId) {
+		toSerialize["source_id"] = o.SourceId
+	}
 	if !IsNil(o.Data) {
 		toSerialize["data"] = o.Data
 	}

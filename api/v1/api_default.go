@@ -26,7 +26,7 @@ type DefaultAPIService service
 type ApiAddCaseCommentRequest struct {
 	ctx                      context.Context
 	ApiService               *DefaultAPIService
-	caseId                   string
+	caseID                   string
 	createCaseCommentRequest *CreateCaseCommentRequest
 }
 
@@ -45,14 +45,14 @@ AddCaseComment Add new case comment
 Add a new comment to the case
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param caseId ID of the case to comment
+	@param caseID unique generate ID of a case
 	@return ApiAddCaseCommentRequest
 */
-func (a *DefaultAPIService) AddCaseComment(ctx context.Context, caseId string) ApiAddCaseCommentRequest {
+func (a *DefaultAPIService) AddCaseComment(ctx context.Context, caseID string) ApiAddCaseCommentRequest {
 	return ApiAddCaseCommentRequest{
 		ApiService: a,
 		ctx:        ctx,
-		caseId:     caseId,
+		caseID:     caseID,
 	}
 }
 
@@ -72,8 +72,8 @@ func (a *DefaultAPIService) AddCaseCommentExecute(r ApiAddCaseCommentRequest) (*
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/case/{caseId}/comment"
-	localVarPath = strings.Replace(localVarPath, "{"+"caseId"+"}", url.PathEscape(parameterValueToString(r.caseId, "caseId")), -1)
+	localVarPath := localBasePath + "/case/{caseID}/comment"
+	localVarPath = strings.Replace(localVarPath, "{"+"caseID"+"}", url.PathEscape(parameterValueToString(r.caseID, "caseID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -141,7 +141,7 @@ func (a *DefaultAPIService) AddCaseCommentExecute(r ApiAddCaseCommentRequest) (*
 type ApiArchiveCaseRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	caseId     string
+	caseID     string
 }
 
 func (r ApiArchiveCaseRequest) Execute() (*http.Response, error) {
@@ -152,14 +152,14 @@ func (r ApiArchiveCaseRequest) Execute() (*http.Response, error) {
 ArchiveCase Mark the case as archived
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param caseId ID of the case to update
+	@param caseID unique generate ID of a case
 	@return ApiArchiveCaseRequest
 */
-func (a *DefaultAPIService) ArchiveCase(ctx context.Context, caseId string) ApiArchiveCaseRequest {
+func (a *DefaultAPIService) ArchiveCase(ctx context.Context, caseID string) ApiArchiveCaseRequest {
 	return ApiArchiveCaseRequest{
 		ApiService: a,
 		ctx:        ctx,
-		caseId:     caseId,
+		caseID:     caseID,
 	}
 }
 
@@ -176,8 +176,8 @@ func (a *DefaultAPIService) ArchiveCaseExecute(r ApiArchiveCaseRequest) (*http.R
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/case/{caseId}/archive"
-	localVarPath = strings.Replace(localVarPath, "{"+"caseId"+"}", url.PathEscape(parameterValueToString(r.caseId, "caseId")), -1)
+	localVarPath := localBasePath + "/case/{caseID}/archive"
+	localVarPath = strings.Replace(localVarPath, "{"+"caseID"+"}", url.PathEscape(parameterValueToString(r.caseID, "caseID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -231,7 +231,7 @@ func (a *DefaultAPIService) ArchiveCaseExecute(r ApiArchiveCaseRequest) (*http.R
 type ApiArchiveDocumentGenerationRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	docId      string
+	docID      string
 }
 
 func (r ApiArchiveDocumentGenerationRequest) Execute() (*http.Response, error) {
@@ -242,14 +242,14 @@ func (r ApiArchiveDocumentGenerationRequest) Execute() (*http.Response, error) {
 ArchiveDocumentGeneration Move the document generation to the archive
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param docId ID of the document generation
+	@param docID unique generated ID of a document generation
 	@return ApiArchiveDocumentGenerationRequest
 */
-func (a *DefaultAPIService) ArchiveDocumentGeneration(ctx context.Context, docId string) ApiArchiveDocumentGenerationRequest {
+func (a *DefaultAPIService) ArchiveDocumentGeneration(ctx context.Context, docID string) ApiArchiveDocumentGenerationRequest {
 	return ApiArchiveDocumentGenerationRequest{
 		ApiService: a,
 		ctx:        ctx,
-		docId:      docId,
+		docID:      docID,
 	}
 }
 
@@ -266,8 +266,8 @@ func (a *DefaultAPIService) ArchiveDocumentGenerationExecute(r ApiArchiveDocumen
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/document-generation/documents/{docId}/archive"
-	localVarPath = strings.Replace(localVarPath, "{"+"docId"+"}", url.PathEscape(parameterValueToString(r.docId, "docId")), -1)
+	localVarPath := localBasePath + "/document-generation/documents/{docID}/archive"
+	localVarPath = strings.Replace(localVarPath, "{"+"docID"+"}", url.PathEscape(parameterValueToString(r.docID, "docID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -321,7 +321,7 @@ func (a *DefaultAPIService) ArchiveDocumentGenerationExecute(r ApiArchiveDocumen
 type ApiAssignCaseRequest struct {
 	ctx               context.Context
 	ApiService        *DefaultAPIService
-	caseId            string
+	caseID            string
 	assignCaseRequest *AssignCaseRequest
 }
 
@@ -338,14 +338,14 @@ func (r ApiAssignCaseRequest) Execute() (*http.Response, error) {
 AssignCase Assign case to a service provider
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param caseId ID of the case to assign
+	@param caseID unique generate ID of a case
 	@return ApiAssignCaseRequest
 */
-func (a *DefaultAPIService) AssignCase(ctx context.Context, caseId string) ApiAssignCaseRequest {
+func (a *DefaultAPIService) AssignCase(ctx context.Context, caseID string) ApiAssignCaseRequest {
 	return ApiAssignCaseRequest{
 		ApiService: a,
 		ctx:        ctx,
-		caseId:     caseId,
+		caseID:     caseID,
 	}
 }
 
@@ -362,8 +362,8 @@ func (a *DefaultAPIService) AssignCaseExecute(r ApiAssignCaseRequest) (*http.Res
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/case/{caseId}/assign"
-	localVarPath = strings.Replace(localVarPath, "{"+"caseId"+"}", url.PathEscape(parameterValueToString(r.caseId, "caseId")), -1)
+	localVarPath := localBasePath + "/case/{caseID}/assign"
+	localVarPath = strings.Replace(localVarPath, "{"+"caseID"+"}", url.PathEscape(parameterValueToString(r.caseID, "caseID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -422,7 +422,7 @@ func (a *DefaultAPIService) AssignCaseExecute(r ApiAssignCaseRequest) (*http.Res
 type ApiCancelSignaturesForDocumentRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	docId      string
+	docID      string
 }
 
 func (r ApiCancelSignaturesForDocumentRequest) Execute() (*DocumentESignatureStatus, *http.Response, error) {
@@ -433,14 +433,14 @@ func (r ApiCancelSignaturesForDocumentRequest) Execute() (*DocumentESignatureSta
 CancelSignaturesForDocument Cancel a signature request for a document
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param docId ID of the document generation
+	@param docID unique generated ID of a document generation
 	@return ApiCancelSignaturesForDocumentRequest
 */
-func (a *DefaultAPIService) CancelSignaturesForDocument(ctx context.Context, docId string) ApiCancelSignaturesForDocumentRequest {
+func (a *DefaultAPIService) CancelSignaturesForDocument(ctx context.Context, docID string) ApiCancelSignaturesForDocumentRequest {
 	return ApiCancelSignaturesForDocumentRequest{
 		ApiService: a,
 		ctx:        ctx,
-		docId:      docId,
+		docID:      docID,
 	}
 }
 
@@ -460,8 +460,8 @@ func (a *DefaultAPIService) CancelSignaturesForDocumentExecute(r ApiCancelSignat
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/document-generation/documents/{docId}/esignature"
-	localVarPath = strings.Replace(localVarPath, "{"+"docId"+"}", url.PathEscape(parameterValueToString(r.docId, "docId")), -1)
+	localVarPath := localBasePath + "/document-generation/documents/{docID}/esignature"
+	localVarPath = strings.Replace(localVarPath, "{"+"docID"+"}", url.PathEscape(parameterValueToString(r.docID, "docID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -524,7 +524,7 @@ func (a *DefaultAPIService) CancelSignaturesForDocumentExecute(r ApiCancelSignat
 type ApiCreateAppointmentRequest struct {
 	ctx                              context.Context
 	ApiService                       *DefaultAPIService
-	scheduleId                       string
+	scheduleID                       string
 	createOrUpdateAppointmentRequest *CreateOrUpdateAppointmentRequest
 }
 
@@ -542,14 +542,14 @@ func (r ApiCreateAppointmentRequest) Execute() (*Appointment, *http.Response, er
 CreateAppointment Create new appointment for a given schedule
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param scheduleId ID of the appointment schedule
+	@param scheduleID unique generate ID of an appointment schedule
 	@return ApiCreateAppointmentRequest
 */
-func (a *DefaultAPIService) CreateAppointment(ctx context.Context, scheduleId string) ApiCreateAppointmentRequest {
+func (a *DefaultAPIService) CreateAppointment(ctx context.Context, scheduleID string) ApiCreateAppointmentRequest {
 	return ApiCreateAppointmentRequest{
 		ApiService: a,
 		ctx:        ctx,
-		scheduleId: scheduleId,
+		scheduleID: scheduleID,
 	}
 }
 
@@ -569,8 +569,8 @@ func (a *DefaultAPIService) CreateAppointmentExecute(r ApiCreateAppointmentReque
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/calendar/appointments/schedule/{scheduleId}/appointment"
-	localVarPath = strings.Replace(localVarPath, "{"+"scheduleId"+"}", url.PathEscape(parameterValueToString(r.scheduleId, "scheduleId")), -1)
+	localVarPath := localBasePath + "/calendar/appointments/schedule/{scheduleID}/appointment"
+	localVarPath = strings.Replace(localVarPath, "{"+"scheduleID"+"}", url.PathEscape(parameterValueToString(r.scheduleID, "scheduleID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -2398,7 +2398,7 @@ func (a *DefaultAPIService) CreateMeterExecute(r ApiCreateMeterRequest) (*Meter,
 type ApiCreateMeterReadingRequest struct {
 	ctx                               context.Context
 	ApiService                        *DefaultAPIService
-	meterId                           string
+	meterID                           string
 	createOrUpdateMeterReadingRequest *CreateOrUpdateMeterReadingRequest
 }
 
@@ -2416,14 +2416,14 @@ func (r ApiCreateMeterReadingRequest) Execute() (*MeterReading, *http.Response, 
 CreateMeterReading Create a new meter reading for a meter
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param meterId ID of the required meter
+	@param meterID unique generate ID of a meter
 	@return ApiCreateMeterReadingRequest
 */
-func (a *DefaultAPIService) CreateMeterReading(ctx context.Context, meterId string) ApiCreateMeterReadingRequest {
+func (a *DefaultAPIService) CreateMeterReading(ctx context.Context, meterID string) ApiCreateMeterReadingRequest {
 	return ApiCreateMeterReadingRequest{
 		ApiService: a,
 		ctx:        ctx,
-		meterId:    meterId,
+		meterID:    meterID,
 	}
 }
 
@@ -2443,8 +2443,8 @@ func (a *DefaultAPIService) CreateMeterReadingExecute(r ApiCreateMeterReadingReq
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/meter/{meterId}/readings"
-	localVarPath = strings.Replace(localVarPath, "{"+"meterId"+"}", url.PathEscape(parameterValueToString(r.meterId, "meterId")), -1)
+	localVarPath := localBasePath + "/meter/{meterID}/readings"
+	localVarPath = strings.Replace(localVarPath, "{"+"meterID"+"}", url.PathEscape(parameterValueToString(r.meterID, "meterID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -2472,118 +2472,6 @@ func (a *DefaultAPIService) CreateMeterReadingExecute(r ApiCreateMeterReadingReq
 	}
 	// body params
 	localVarPostBody = r.createOrUpdateMeterReadingRequest
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiCreateNoteRequest struct {
-	ctx               context.Context
-	ApiService        *DefaultAPIService
-	createNoteRequest *CreateNoteRequest
-}
-
-// Note to be created
-func (r ApiCreateNoteRequest) CreateNoteRequest(createNoteRequest CreateNoteRequest) ApiCreateNoteRequest {
-	r.createNoteRequest = &createNoteRequest
-	return r
-}
-
-func (r ApiCreateNoteRequest) Execute() (*Note, *http.Response, error) {
-	return r.ApiService.CreateNoteExecute(r)
-}
-
-/*
-CreateNote Create a new note
-
-Create a new note for a property or a tenant
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiCreateNoteRequest
-*/
-func (a *DefaultAPIService) CreateNote(ctx context.Context) ApiCreateNoteRequest {
-	return ApiCreateNoteRequest{
-		ApiService: a,
-		ctx:        ctx,
-	}
-}
-
-// Execute executes the request
-//
-//	@return Note
-func (a *DefaultAPIService) CreateNoteExecute(r ApiCreateNoteRequest) (*Note, *http.Response, error) {
-	var (
-		localVarHTTPMethod  = http.MethodPost
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *Note
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateNote")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/note"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.createNoteRequest == nil {
-		return localVarReturnValue, nil, reportError("createNoteRequest is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.createNoteRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -2696,238 +2584,6 @@ func (a *DefaultAPIService) CreatePropertyExecute(r ApiCreatePropertyRequest) (*
 	}
 	// body params
 	localVarPostBody = r.createPropertyRequest
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiCreatePropertyContactRequest struct {
-	ctx                           context.Context
-	ApiService                    *DefaultAPIService
-	propId                        string
-	createOrUpdatePropertyContact *CreateOrUpdatePropertyContact
-}
-
-// Contact to be created
-func (r ApiCreatePropertyContactRequest) CreateOrUpdatePropertyContact(createOrUpdatePropertyContact CreateOrUpdatePropertyContact) ApiCreatePropertyContactRequest {
-	r.createOrUpdatePropertyContact = &createOrUpdatePropertyContact
-	return r
-}
-
-func (r ApiCreatePropertyContactRequest) Execute() (*PropertyContact, *http.Response, error) {
-	return r.ApiService.CreatePropertyContactExecute(r)
-}
-
-/*
-CreatePropertyContact Create a property contact
-
-Link an service provider as a contact to a property
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param propId ID of the property
-	@return ApiCreatePropertyContactRequest
-*/
-func (a *DefaultAPIService) CreatePropertyContact(ctx context.Context, propId string) ApiCreatePropertyContactRequest {
-	return ApiCreatePropertyContactRequest{
-		ApiService: a,
-		ctx:        ctx,
-		propId:     propId,
-	}
-}
-
-// Execute executes the request
-//
-//	@return PropertyContact
-func (a *DefaultAPIService) CreatePropertyContactExecute(r ApiCreatePropertyContactRequest) (*PropertyContact, *http.Response, error) {
-	var (
-		localVarHTTPMethod  = http.MethodPost
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *PropertyContact
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreatePropertyContact")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/property/{propId}/contacts"
-	localVarPath = strings.Replace(localVarPath, "{"+"propId"+"}", url.PathEscape(parameterValueToString(r.propId, "propId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.createOrUpdatePropertyContact == nil {
-		return localVarReturnValue, nil, reportError("createOrUpdatePropertyContact is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.createOrUpdatePropertyContact
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiCreatePropertyHistoryEntryRequest struct {
-	ctx                                       context.Context
-	ApiService                                *DefaultAPIService
-	propId                                    string
-	createOrUpdatePropertyHistoryEntryRequest *CreateOrUpdatePropertyHistoryEntryRequest
-}
-
-// History entry to be created for property
-func (r ApiCreatePropertyHistoryEntryRequest) CreateOrUpdatePropertyHistoryEntryRequest(createOrUpdatePropertyHistoryEntryRequest CreateOrUpdatePropertyHistoryEntryRequest) ApiCreatePropertyHistoryEntryRequest {
-	r.createOrUpdatePropertyHistoryEntryRequest = &createOrUpdatePropertyHistoryEntryRequest
-	return r
-}
-
-func (r ApiCreatePropertyHistoryEntryRequest) Execute() (*PropertyHistoryEntry, *http.Response, error) {
-	return r.ApiService.CreatePropertyHistoryEntryExecute(r)
-}
-
-/*
-CreatePropertyHistoryEntry Create a property history entry
-
-Create a new entry in the property history
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param propId ID of the property
-	@return ApiCreatePropertyHistoryEntryRequest
-*/
-func (a *DefaultAPIService) CreatePropertyHistoryEntry(ctx context.Context, propId string) ApiCreatePropertyHistoryEntryRequest {
-	return ApiCreatePropertyHistoryEntryRequest{
-		ApiService: a,
-		ctx:        ctx,
-		propId:     propId,
-	}
-}
-
-// Execute executes the request
-//
-//	@return PropertyHistoryEntry
-func (a *DefaultAPIService) CreatePropertyHistoryEntryExecute(r ApiCreatePropertyHistoryEntryRequest) (*PropertyHistoryEntry, *http.Response, error) {
-	var (
-		localVarHTTPMethod  = http.MethodPost
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *PropertyHistoryEntry
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreatePropertyHistoryEntry")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/property/{propId}/history"
-	localVarPath = strings.Replace(localVarPath, "{"+"propId"+"}", url.PathEscape(parameterValueToString(r.propId, "propId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.createOrUpdatePropertyHistoryEntryRequest == nil {
-		return localVarReturnValue, nil, reportError("createOrUpdatePropertyHistoryEntryRequest is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.createOrUpdatePropertyHistoryEntryRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -3298,7 +2954,7 @@ func (a *DefaultAPIService) CreateServiceProviderExecute(r ApiCreateServiceProvi
 type ApiCreateTenancyRequest struct {
 	ctx                  context.Context
 	ApiService           *DefaultAPIService
-	propId               string
+	propID               string
 	createTenancyRequest *CreateTenancyRequest
 }
 
@@ -3315,14 +2971,14 @@ func (r ApiCreateTenancyRequest) Execute() (*Tenancy, *http.Response, error) {
 CreateTenancy Create new tenancy for the property
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param propId ID of the property
+	@param propID unique generate ID of a property
 	@return ApiCreateTenancyRequest
 */
-func (a *DefaultAPIService) CreateTenancy(ctx context.Context, propId string) ApiCreateTenancyRequest {
+func (a *DefaultAPIService) CreateTenancy(ctx context.Context, propID string) ApiCreateTenancyRequest {
 	return ApiCreateTenancyRequest{
 		ApiService: a,
 		ctx:        ctx,
-		propId:     propId,
+		propID:     propID,
 	}
 }
 
@@ -3342,8 +2998,8 @@ func (a *DefaultAPIService) CreateTenancyExecute(r ApiCreateTenancyRequest) (*Te
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/property/{propId}/tenancy"
-	localVarPath = strings.Replace(localVarPath, "{"+"propId"+"}", url.PathEscape(parameterValueToString(r.propId, "propId")), -1)
+	localVarPath := localBasePath + "/property/{propID}/tenancy"
+	localVarPath = strings.Replace(localVarPath, "{"+"propID"+"}", url.PathEscape(parameterValueToString(r.propID, "propID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -3411,7 +3067,7 @@ func (a *DefaultAPIService) CreateTenancyExecute(r ApiCreateTenancyRequest) (*Te
 type ApiCreateTenancyUpdateRequest struct {
 	ctx                        context.Context
 	ApiService                 *DefaultAPIService
-	tenancyId                  string
+	tenancyID                  string
 	createTenancyUpdateRequest *CreateTenancyUpdateRequest
 }
 
@@ -3429,14 +3085,14 @@ func (r ApiCreateTenancyUpdateRequest) Execute() (*TenancyUpdate, *http.Response
 CreateTenancyUpdate Create new tenancy update for the tenancy
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param tenancyId ID of the tenancy
+	@param tenancyID unique generated ID of a tenancy
 	@return ApiCreateTenancyUpdateRequest
 */
-func (a *DefaultAPIService) CreateTenancyUpdate(ctx context.Context, tenancyId string) ApiCreateTenancyUpdateRequest {
+func (a *DefaultAPIService) CreateTenancyUpdate(ctx context.Context, tenancyID string) ApiCreateTenancyUpdateRequest {
 	return ApiCreateTenancyUpdateRequest{
 		ApiService: a,
 		ctx:        ctx,
-		tenancyId:  tenancyId,
+		tenancyID:  tenancyID,
 	}
 }
 
@@ -3456,8 +3112,8 @@ func (a *DefaultAPIService) CreateTenancyUpdateExecute(r ApiCreateTenancyUpdateR
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/tenancy/{tenancyId}/updates"
-	localVarPath = strings.Replace(localVarPath, "{"+"tenancyId"+"}", url.PathEscape(parameterValueToString(r.tenancyId, "tenancyId")), -1)
+	localVarPath := localBasePath + "/tenancy/{tenancyID}/updates"
+	localVarPath = strings.Replace(localVarPath, "{"+"tenancyID"+"}", url.PathEscape(parameterValueToString(r.tenancyID, "tenancyID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -3762,7 +3418,7 @@ func (r ApiCreateWorkflowEntrypointRequest) Execute() (*WorkflowEntrypoint, *htt
 CreateWorkflowEntrypoint Create a new workflow entry point for the workflow definition
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param definitionID ID of the workflow definition to get
+	@param definitionID unique generated ID of a workflow definition
 	@return ApiCreateWorkflowEntrypointRequest
 */
 func (a *DefaultAPIService) CreateWorkflowEntrypoint(ctx context.Context, definitionID string) ApiCreateWorkflowEntrypointRequest {
@@ -3858,7 +3514,7 @@ func (a *DefaultAPIService) CreateWorkflowEntrypointExecute(r ApiCreateWorkflowE
 type ApiDeleteAppointmentRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	entryId    string
+	entryID    string
 }
 
 func (r ApiDeleteAppointmentRequest) Execute() (*http.Response, error) {
@@ -3871,14 +3527,14 @@ DeleteAppointment Delete an appointment
 Delete the appointment
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param entryId ID of the appointment
+	@param entryID unique generate ID of an appointment entry
 	@return ApiDeleteAppointmentRequest
 */
-func (a *DefaultAPIService) DeleteAppointment(ctx context.Context, entryId string) ApiDeleteAppointmentRequest {
+func (a *DefaultAPIService) DeleteAppointment(ctx context.Context, entryID string) ApiDeleteAppointmentRequest {
 	return ApiDeleteAppointmentRequest{
 		ApiService: a,
 		ctx:        ctx,
-		entryId:    entryId,
+		entryID:    entryID,
 	}
 }
 
@@ -3895,8 +3551,8 @@ func (a *DefaultAPIService) DeleteAppointmentExecute(r ApiDeleteAppointmentReque
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/calendar/appointments/entry/{entryId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"entryId"+"}", url.PathEscape(parameterValueToString(r.entryId, "entryId")), -1)
+	localVarPath := localBasePath + "/calendar/appointments/entry/{entryID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"entryID"+"}", url.PathEscape(parameterValueToString(r.entryID, "entryID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -3950,7 +3606,7 @@ func (a *DefaultAPIService) DeleteAppointmentExecute(r ApiDeleteAppointmentReque
 type ApiDeleteAppointmentScheduleRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	scheduleId string
+	scheduleID string
 }
 
 func (r ApiDeleteAppointmentScheduleRequest) Execute() (*http.Response, error) {
@@ -3963,14 +3619,14 @@ DeleteAppointmentSchedule Delete an appointment schedule
 Delete the appointment schedule with all appointments
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param scheduleId ID of the appointment schedule
+	@param scheduleID unique generate ID of an appointment schedule
 	@return ApiDeleteAppointmentScheduleRequest
 */
-func (a *DefaultAPIService) DeleteAppointmentSchedule(ctx context.Context, scheduleId string) ApiDeleteAppointmentScheduleRequest {
+func (a *DefaultAPIService) DeleteAppointmentSchedule(ctx context.Context, scheduleID string) ApiDeleteAppointmentScheduleRequest {
 	return ApiDeleteAppointmentScheduleRequest{
 		ApiService: a,
 		ctx:        ctx,
-		scheduleId: scheduleId,
+		scheduleID: scheduleID,
 	}
 }
 
@@ -3987,8 +3643,8 @@ func (a *DefaultAPIService) DeleteAppointmentScheduleExecute(r ApiDeleteAppointm
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/calendar/appointments/schedule/{scheduleId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"scheduleId"+"}", url.PathEscape(parameterValueToString(r.scheduleId, "scheduleId")), -1)
+	localVarPath := localBasePath + "/calendar/appointments/schedule/{scheduleID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"scheduleID"+"}", url.PathEscape(parameterValueToString(r.scheduleID, "scheduleID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -4042,7 +3698,7 @@ func (a *DefaultAPIService) DeleteAppointmentScheduleExecute(r ApiDeleteAppointm
 type ApiDeleteAppointmentTemplateRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	templateId string
+	templateID string
 }
 
 func (r ApiDeleteAppointmentTemplateRequest) Execute() (*http.Response, error) {
@@ -4055,14 +3711,14 @@ DeleteAppointmentTemplate Delete an appointment template
 Delete the appointment template with all it's attachments
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param templateId the ID of the template for which to validate the data
+	@param templateID unique generate ID of an appointments template
 	@return ApiDeleteAppointmentTemplateRequest
 */
-func (a *DefaultAPIService) DeleteAppointmentTemplate(ctx context.Context, templateId string) ApiDeleteAppointmentTemplateRequest {
+func (a *DefaultAPIService) DeleteAppointmentTemplate(ctx context.Context, templateID string) ApiDeleteAppointmentTemplateRequest {
 	return ApiDeleteAppointmentTemplateRequest{
 		ApiService: a,
 		ctx:        ctx,
-		templateId: templateId,
+		templateID: templateID,
 	}
 }
 
@@ -4079,8 +3735,8 @@ func (a *DefaultAPIService) DeleteAppointmentTemplateExecute(r ApiDeleteAppointm
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/calendar/appointments/template/{templateId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"templateId"+"}", url.PathEscape(parameterValueToString(r.templateId, "templateId")), -1)
+	localVarPath := localBasePath + "/calendar/appointments/template/{templateID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"templateID"+"}", url.PathEscape(parameterValueToString(r.templateID, "templateID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -4134,7 +3790,7 @@ func (a *DefaultAPIService) DeleteAppointmentTemplateExecute(r ApiDeleteAppointm
 type ApiDeleteAttachmentRequest struct {
 	ctx          context.Context
 	ApiService   *DefaultAPIService
-	attachmentId string
+	attachmentID string
 }
 
 func (r ApiDeleteAttachmentRequest) Execute() (*http.Response, error) {
@@ -4147,14 +3803,14 @@ DeleteAttachment Delete the file upload with the given ID
 Delete the file upload with the given ID
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param attachmentId ID of the affected file attachment
+	@param attachmentID unique generate ID of a file attachment
 	@return ApiDeleteAttachmentRequest
 */
-func (a *DefaultAPIService) DeleteAttachment(ctx context.Context, attachmentId string) ApiDeleteAttachmentRequest {
+func (a *DefaultAPIService) DeleteAttachment(ctx context.Context, attachmentID string) ApiDeleteAttachmentRequest {
 	return ApiDeleteAttachmentRequest{
 		ApiService:   a,
 		ctx:          ctx,
-		attachmentId: attachmentId,
+		attachmentID: attachmentID,
 	}
 }
 
@@ -4171,8 +3827,8 @@ func (a *DefaultAPIService) DeleteAttachmentExecute(r ApiDeleteAttachmentRequest
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/attachment/{attachmentId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"attachmentId"+"}", url.PathEscape(parameterValueToString(r.attachmentId, "attachmentId")), -1)
+	localVarPath := localBasePath + "/attachment/{attachmentID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"attachmentID"+"}", url.PathEscape(parameterValueToString(r.attachmentID, "attachmentID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -4226,7 +3882,7 @@ func (a *DefaultAPIService) DeleteAttachmentExecute(r ApiDeleteAttachmentRequest
 type ApiDeleteBankAccountRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	accountId  string
+	accountID  string
 }
 
 func (r ApiDeleteBankAccountRequest) Execute() (*http.Response, error) {
@@ -4237,14 +3893,14 @@ func (r ApiDeleteBankAccountRequest) Execute() (*http.Response, error) {
 DeleteBankAccount Delete an already existing bank account
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param accountId ID of the required bank account
+	@param accountID unique generate ID of a bank account
 	@return ApiDeleteBankAccountRequest
 */
-func (a *DefaultAPIService) DeleteBankAccount(ctx context.Context, accountId string) ApiDeleteBankAccountRequest {
+func (a *DefaultAPIService) DeleteBankAccount(ctx context.Context, accountID string) ApiDeleteBankAccountRequest {
 	return ApiDeleteBankAccountRequest{
 		ApiService: a,
 		ctx:        ctx,
-		accountId:  accountId,
+		accountID:  accountID,
 	}
 }
 
@@ -4261,8 +3917,8 @@ func (a *DefaultAPIService) DeleteBankAccountExecute(r ApiDeleteBankAccountReque
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/bank-account/{accountId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"accountId"+"}", url.PathEscape(parameterValueToString(r.accountId, "accountId")), -1)
+	localVarPath := localBasePath + "/bank-account/{accountID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"accountID"+"}", url.PathEscape(parameterValueToString(r.accountID, "accountID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -4316,7 +3972,7 @@ func (a *DefaultAPIService) DeleteBankAccountExecute(r ApiDeleteBankAccountReque
 type ApiDeleteCaseRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	caseId     string
+	caseID     string
 }
 
 func (r ApiDeleteCaseRequest) Execute() (*http.Response, error) {
@@ -4329,14 +3985,14 @@ DeleteCase Delete case
 Delete the case with all its related comments and attachments
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param caseId ID of the required case
+	@param caseID unique generate ID of a case
 	@return ApiDeleteCaseRequest
 */
-func (a *DefaultAPIService) DeleteCase(ctx context.Context, caseId string) ApiDeleteCaseRequest {
+func (a *DefaultAPIService) DeleteCase(ctx context.Context, caseID string) ApiDeleteCaseRequest {
 	return ApiDeleteCaseRequest{
 		ApiService: a,
 		ctx:        ctx,
-		caseId:     caseId,
+		caseID:     caseID,
 	}
 }
 
@@ -4353,8 +4009,8 @@ func (a *DefaultAPIService) DeleteCaseExecute(r ApiDeleteCaseRequest) (*http.Res
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/case/{caseId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"caseId"+"}", url.PathEscape(parameterValueToString(r.caseId, "caseId")), -1)
+	localVarPath := localBasePath + "/case/{caseID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"caseID"+"}", url.PathEscape(parameterValueToString(r.caseID, "caseID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -4408,8 +4064,8 @@ func (a *DefaultAPIService) DeleteCaseExecute(r ApiDeleteCaseRequest) (*http.Res
 type ApiDeleteCaseCommentRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	caseId     string
-	commentId  string
+	caseID     string
+	commentID  string
 }
 
 func (r ApiDeleteCaseCommentRequest) Execute() (*http.Response, error) {
@@ -4420,16 +4076,16 @@ func (r ApiDeleteCaseCommentRequest) Execute() (*http.Response, error) {
 DeleteCaseComment Mark a case comment as deleted
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param caseId ID of the related case
-	@param commentId ID of the required comment
+	@param caseID unique generate ID of a case
+	@param commentID unique generate ID of a case comment
 	@return ApiDeleteCaseCommentRequest
 */
-func (a *DefaultAPIService) DeleteCaseComment(ctx context.Context, caseId string, commentId string) ApiDeleteCaseCommentRequest {
+func (a *DefaultAPIService) DeleteCaseComment(ctx context.Context, caseID string, commentID string) ApiDeleteCaseCommentRequest {
 	return ApiDeleteCaseCommentRequest{
 		ApiService: a,
 		ctx:        ctx,
-		caseId:     caseId,
-		commentId:  commentId,
+		caseID:     caseID,
+		commentID:  commentID,
 	}
 }
 
@@ -4446,9 +4102,9 @@ func (a *DefaultAPIService) DeleteCaseCommentExecute(r ApiDeleteCaseCommentReque
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/case/{caseId}/comment/{commentId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"caseId"+"}", url.PathEscape(parameterValueToString(r.caseId, "caseId")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"commentId"+"}", url.PathEscape(parameterValueToString(r.commentId, "commentId")), -1)
+	localVarPath := localBasePath + "/case/{caseID}/comment/{commentID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"caseID"+"}", url.PathEscape(parameterValueToString(r.caseID, "caseID")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"commentID"+"}", url.PathEscape(parameterValueToString(r.commentID, "commentID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -4502,7 +4158,7 @@ func (a *DefaultAPIService) DeleteCaseCommentExecute(r ApiDeleteCaseCommentReque
 type ApiDeleteCaseReportingEndpointRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	endpointId string
+	endpointID string
 }
 
 func (r ApiDeleteCaseReportingEndpointRequest) Execute() (*http.Response, error) {
@@ -4513,14 +4169,14 @@ func (r ApiDeleteCaseReportingEndpointRequest) Execute() (*http.Response, error)
 DeleteCaseReportingEndpoint Delete the case reporting endpoint by ID
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param endpointId ID of the case reporting endpoint
+	@param endpointID unique generate ID of a case reporting endpoint
 	@return ApiDeleteCaseReportingEndpointRequest
 */
-func (a *DefaultAPIService) DeleteCaseReportingEndpoint(ctx context.Context, endpointId string) ApiDeleteCaseReportingEndpointRequest {
+func (a *DefaultAPIService) DeleteCaseReportingEndpoint(ctx context.Context, endpointID string) ApiDeleteCaseReportingEndpointRequest {
 	return ApiDeleteCaseReportingEndpointRequest{
 		ApiService: a,
 		ctx:        ctx,
-		endpointId: endpointId,
+		endpointID: endpointID,
 	}
 }
 
@@ -4537,8 +4193,8 @@ func (a *DefaultAPIService) DeleteCaseReportingEndpointExecute(r ApiDeleteCaseRe
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/cases/endpoints/{endpointId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"endpointId"+"}", url.PathEscape(parameterValueToString(r.endpointId, "endpointId")), -1)
+	localVarPath := localBasePath + "/cases/endpoints/{endpointID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"endpointID"+"}", url.PathEscape(parameterValueToString(r.endpointID, "endpointID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -4592,7 +4248,7 @@ func (a *DefaultAPIService) DeleteCaseReportingEndpointExecute(r ApiDeleteCaseRe
 type ApiDeleteCaseTemplateRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	templateId string
+	templateID string
 }
 
 func (r ApiDeleteCaseTemplateRequest) Execute() (*http.Response, error) {
@@ -4605,14 +4261,14 @@ DeleteCaseTemplate Delete a case template
 Delete the case template with all it's attachments
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param templateId the ID of the template for which to validate the data
+	@param templateID unique generate ID of a case template
 	@return ApiDeleteCaseTemplateRequest
 */
-func (a *DefaultAPIService) DeleteCaseTemplate(ctx context.Context, templateId string) ApiDeleteCaseTemplateRequest {
+func (a *DefaultAPIService) DeleteCaseTemplate(ctx context.Context, templateID string) ApiDeleteCaseTemplateRequest {
 	return ApiDeleteCaseTemplateRequest{
 		ApiService: a,
 		ctx:        ctx,
-		templateId: templateId,
+		templateID: templateID,
 	}
 }
 
@@ -4629,8 +4285,8 @@ func (a *DefaultAPIService) DeleteCaseTemplateExecute(r ApiDeleteCaseTemplateReq
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/cases/template/{templateId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"templateId"+"}", url.PathEscape(parameterValueToString(r.templateId, "templateId")), -1)
+	localVarPath := localBasePath + "/cases/template/{templateID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"templateID"+"}", url.PathEscape(parameterValueToString(r.templateID, "templateID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -5059,7 +4715,7 @@ func (r ApiDeleteCustomIDGeneratorRequest) Execute() (*http.Response, error) {
 DeleteCustomIDGenerator Delete the custom ID generator with all its related data
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param generatorID ID of the custom ID generator
+	@param generatorID unique generated ID of a custom ID generator
 	@return ApiDeleteCustomIDGeneratorRequest
 */
 func (a *DefaultAPIService) DeleteCustomIDGenerator(ctx context.Context, generatorID string) ApiDeleteCustomIDGeneratorRequest {
@@ -5149,7 +4805,7 @@ func (r ApiDeleteCustomerScriptRequest) Execute() (*http.Response, error) {
 DeleteCustomerScript Delete the script with all its related data
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param scriptID ID of the script
+	@param scriptID unique generated ID of a customer JS script
 	@return ApiDeleteCustomerScriptRequest
 */
 func (a *DefaultAPIService) DeleteCustomerScript(ctx context.Context, scriptID string) ApiDeleteCustomerScriptRequest {
@@ -5228,7 +4884,7 @@ func (a *DefaultAPIService) DeleteCustomerScriptExecute(r ApiDeleteCustomerScrip
 type ApiDeleteDocumentRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	documentId string
+	documentID string
 }
 
 func (r ApiDeleteDocumentRequest) Execute() (*http.Response, error) {
@@ -5239,14 +4895,14 @@ func (r ApiDeleteDocumentRequest) Execute() (*http.Response, error) {
 DeleteDocument Delete a single document
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param documentId ID of the document
+	@param documentID unique generated ID of an uploaded document
 	@return ApiDeleteDocumentRequest
 */
-func (a *DefaultAPIService) DeleteDocument(ctx context.Context, documentId string) ApiDeleteDocumentRequest {
+func (a *DefaultAPIService) DeleteDocument(ctx context.Context, documentID string) ApiDeleteDocumentRequest {
 	return ApiDeleteDocumentRequest{
 		ApiService: a,
 		ctx:        ctx,
-		documentId: documentId,
+		documentID: documentID,
 	}
 }
 
@@ -5263,8 +4919,8 @@ func (a *DefaultAPIService) DeleteDocumentExecute(r ApiDeleteDocumentRequest) (*
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/document-repository/entry/{documentId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"documentId"+"}", url.PathEscape(parameterValueToString(r.documentId, "documentId")), -1)
+	localVarPath := localBasePath + "/document-repository/entry/{documentID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"documentID"+"}", url.PathEscape(parameterValueToString(r.documentID, "documentID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -5318,7 +4974,7 @@ func (a *DefaultAPIService) DeleteDocumentExecute(r ApiDeleteDocumentRequest) (*
 type ApiDeleteDocumentGenerationRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	docId      string
+	docID      string
 }
 
 func (r ApiDeleteDocumentGenerationRequest) Execute() (*http.Response, error) {
@@ -5329,14 +4985,14 @@ func (r ApiDeleteDocumentGenerationRequest) Execute() (*http.Response, error) {
 DeleteDocumentGeneration Delete an existing document generation
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param docId ID of the document generation
+	@param docID unique generated ID of a document generation
 	@return ApiDeleteDocumentGenerationRequest
 */
-func (a *DefaultAPIService) DeleteDocumentGeneration(ctx context.Context, docId string) ApiDeleteDocumentGenerationRequest {
+func (a *DefaultAPIService) DeleteDocumentGeneration(ctx context.Context, docID string) ApiDeleteDocumentGenerationRequest {
 	return ApiDeleteDocumentGenerationRequest{
 		ApiService: a,
 		ctx:        ctx,
-		docId:      docId,
+		docID:      docID,
 	}
 }
 
@@ -5353,8 +5009,8 @@ func (a *DefaultAPIService) DeleteDocumentGenerationExecute(r ApiDeleteDocumentG
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/document-generation/documents/{docId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"docId"+"}", url.PathEscape(parameterValueToString(r.docId, "docId")), -1)
+	localVarPath := localBasePath + "/document-generation/documents/{docID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"docID"+"}", url.PathEscape(parameterValueToString(r.docID, "docID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -5408,7 +5064,7 @@ func (a *DefaultAPIService) DeleteDocumentGenerationExecute(r ApiDeleteDocumentG
 type ApiDeleteDocumentTemplateRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	templateId string
+	templateID string
 }
 
 func (r ApiDeleteDocumentTemplateRequest) Execute() (*http.Response, error) {
@@ -5419,14 +5075,14 @@ func (r ApiDeleteDocumentTemplateRequest) Execute() (*http.Response, error) {
 DeleteDocumentTemplate Delete a document template
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param templateId the ID of the template for which to validate the data
+	@param templateID unique generated ID of a document generation
 	@return ApiDeleteDocumentTemplateRequest
 */
-func (a *DefaultAPIService) DeleteDocumentTemplate(ctx context.Context, templateId string) ApiDeleteDocumentTemplateRequest {
+func (a *DefaultAPIService) DeleteDocumentTemplate(ctx context.Context, templateID string) ApiDeleteDocumentTemplateRequest {
 	return ApiDeleteDocumentTemplateRequest{
 		ApiService: a,
 		ctx:        ctx,
-		templateId: templateId,
+		templateID: templateID,
 	}
 }
 
@@ -5443,8 +5099,8 @@ func (a *DefaultAPIService) DeleteDocumentTemplateExecute(r ApiDeleteDocumentTem
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/document-generation/template/{templateId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"templateId"+"}", url.PathEscape(parameterValueToString(r.templateId, "templateId")), -1)
+	localVarPath := localBasePath + "/document-generation/template/{templateID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"templateID"+"}", url.PathEscape(parameterValueToString(r.templateID, "templateID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -5498,7 +5154,7 @@ func (a *DefaultAPIService) DeleteDocumentTemplateExecute(r ApiDeleteDocumentTem
 type ApiDeleteFAQEntryRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	entryId    string
+	entryID    string
 }
 
 func (r ApiDeleteFAQEntryRequest) Execute() (*http.Response, error) {
@@ -5509,14 +5165,14 @@ func (r ApiDeleteFAQEntryRequest) Execute() (*http.Response, error) {
 DeleteFAQEntry Delete a FAQ entry
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param entryId ID of the FAQ entry
+	@param entryID unique generate ID of a FAQ entry
 	@return ApiDeleteFAQEntryRequest
 */
-func (a *DefaultAPIService) DeleteFAQEntry(ctx context.Context, entryId string) ApiDeleteFAQEntryRequest {
+func (a *DefaultAPIService) DeleteFAQEntry(ctx context.Context, entryID string) ApiDeleteFAQEntryRequest {
 	return ApiDeleteFAQEntryRequest{
 		ApiService: a,
 		ctx:        ctx,
-		entryId:    entryId,
+		entryID:    entryID,
 	}
 }
 
@@ -5533,100 +5189,8 @@ func (a *DefaultAPIService) DeleteFAQEntryExecute(r ApiDeleteFAQEntryRequest) (*
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/faqs/entry/{entryId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"entryId"+"}", url.PathEscape(parameterValueToString(r.entryId, "entryId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarHTTPResponse, newErr
-	}
-
-	return localVarHTTPResponse, nil
-}
-
-type ApiDeleteInvitationRequest struct {
-	ctx          context.Context
-	ApiService   *DefaultAPIService
-	invitationId string
-}
-
-func (r ApiDeleteInvitationRequest) Execute() (*http.Response, error) {
-	return r.ApiService.DeleteInvitationExecute(r)
-}
-
-/*
-DeleteInvitation Delete invitation
-
-Delete an invitation from a landlord/manager for a property
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param invitationId ID of the invitation to interact with
-	@return ApiDeleteInvitationRequest
-*/
-func (a *DefaultAPIService) DeleteInvitation(ctx context.Context, invitationId string) ApiDeleteInvitationRequest {
-	return ApiDeleteInvitationRequest{
-		ApiService:   a,
-		ctx:          ctx,
-		invitationId: invitationId,
-	}
-}
-
-// Execute executes the request
-func (a *DefaultAPIService) DeleteInvitationExecute(r ApiDeleteInvitationRequest) (*http.Response, error) {
-	var (
-		localVarHTTPMethod = http.MethodDelete
-		localVarPostBody   interface{}
-		formFiles          []formFile
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteInvitation")
-	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/invitation/{invitationId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"invitationId"+"}", url.PathEscape(parameterValueToString(r.invitationId, "invitationId")), -1)
+	localVarPath := localBasePath + "/faqs/entry/{entryID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"entryID"+"}", url.PathEscape(parameterValueToString(r.entryID, "entryID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -5680,7 +5244,7 @@ func (a *DefaultAPIService) DeleteInvitationExecute(r ApiDeleteInvitationRequest
 type ApiDeleteMeterRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	meterId    string
+	meterID    string
 }
 
 func (r ApiDeleteMeterRequest) Execute() (*http.Response, error) {
@@ -5693,14 +5257,14 @@ DeleteMeter Delete meter
 Delete a meter by ID
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param meterId ID of the required meter
+	@param meterID unique generate ID of a meter
 	@return ApiDeleteMeterRequest
 */
-func (a *DefaultAPIService) DeleteMeter(ctx context.Context, meterId string) ApiDeleteMeterRequest {
+func (a *DefaultAPIService) DeleteMeter(ctx context.Context, meterID string) ApiDeleteMeterRequest {
 	return ApiDeleteMeterRequest{
 		ApiService: a,
 		ctx:        ctx,
-		meterId:    meterId,
+		meterID:    meterID,
 	}
 }
 
@@ -5717,8 +5281,8 @@ func (a *DefaultAPIService) DeleteMeterExecute(r ApiDeleteMeterRequest) (*http.R
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/meter/{meterId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"meterId"+"}", url.PathEscape(parameterValueToString(r.meterId, "meterId")), -1)
+	localVarPath := localBasePath + "/meter/{meterID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"meterID"+"}", url.PathEscape(parameterValueToString(r.meterID, "meterID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -5772,8 +5336,8 @@ func (a *DefaultAPIService) DeleteMeterExecute(r ApiDeleteMeterRequest) (*http.R
 type ApiDeleteMeterReadingRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	meterId    string
-	readingId  string
+	meterID    string
+	readingID  string
 }
 
 func (r ApiDeleteMeterReadingRequest) Execute() (*http.Response, error) {
@@ -5786,16 +5350,16 @@ DeleteMeterReading Delete meter reading
 Delete a meter reading by ID
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param meterId ID of the required meter
-	@param readingId ID of the required meter reading
+	@param meterID unique generate ID of a meter
+	@param readingID unique generate ID of a meter reading
 	@return ApiDeleteMeterReadingRequest
 */
-func (a *DefaultAPIService) DeleteMeterReading(ctx context.Context, meterId string, readingId string) ApiDeleteMeterReadingRequest {
+func (a *DefaultAPIService) DeleteMeterReading(ctx context.Context, meterID string, readingID string) ApiDeleteMeterReadingRequest {
 	return ApiDeleteMeterReadingRequest{
 		ApiService: a,
 		ctx:        ctx,
-		meterId:    meterId,
-		readingId:  readingId,
+		meterID:    meterID,
+		readingID:  readingID,
 	}
 }
 
@@ -5812,101 +5376,9 @@ func (a *DefaultAPIService) DeleteMeterReadingExecute(r ApiDeleteMeterReadingReq
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/meter/{meterId}/reading/{readingId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"meterId"+"}", url.PathEscape(parameterValueToString(r.meterId, "meterId")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"readingId"+"}", url.PathEscape(parameterValueToString(r.readingId, "readingId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarHTTPResponse, newErr
-	}
-
-	return localVarHTTPResponse, nil
-}
-
-type ApiDeleteNoteRequest struct {
-	ctx        context.Context
-	ApiService *DefaultAPIService
-	noteId     string
-}
-
-func (r ApiDeleteNoteRequest) Execute() (*http.Response, error) {
-	return r.ApiService.DeleteNoteExecute(r)
-}
-
-/*
-DeleteNote Delete note
-
-Permantenly delete the note
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param noteId ID of the required note
-	@return ApiDeleteNoteRequest
-*/
-func (a *DefaultAPIService) DeleteNote(ctx context.Context, noteId string) ApiDeleteNoteRequest {
-	return ApiDeleteNoteRequest{
-		ApiService: a,
-		ctx:        ctx,
-		noteId:     noteId,
-	}
-}
-
-// Execute executes the request
-func (a *DefaultAPIService) DeleteNoteExecute(r ApiDeleteNoteRequest) (*http.Response, error) {
-	var (
-		localVarHTTPMethod = http.MethodDelete
-		localVarPostBody   interface{}
-		formFiles          []formFile
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteNote")
-	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/note/{noteId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"noteId"+"}", url.PathEscape(parameterValueToString(r.noteId, "noteId")), -1)
+	localVarPath := localBasePath + "/meter/{meterID}/reading/{readingID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"meterID"+"}", url.PathEscape(parameterValueToString(r.meterID, "meterID")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"readingID"+"}", url.PathEscape(parameterValueToString(r.readingID, "readingID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -5960,7 +5432,7 @@ func (a *DefaultAPIService) DeleteNoteExecute(r ApiDeleteNoteRequest) (*http.Res
 type ApiDeletePropertyRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	propId     string
+	propID     string
 }
 
 func (r ApiDeletePropertyRequest) Execute() (*http.Response, error) {
@@ -5973,14 +5445,14 @@ DeleteProperty Delete property
 Delete the property with all its related data
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param propId ID of the required property
+	@param propID unique generate ID of a property
 	@return ApiDeletePropertyRequest
 */
-func (a *DefaultAPIService) DeleteProperty(ctx context.Context, propId string) ApiDeletePropertyRequest {
+func (a *DefaultAPIService) DeleteProperty(ctx context.Context, propID string) ApiDeletePropertyRequest {
 	return ApiDeletePropertyRequest{
 		ApiService: a,
 		ctx:        ctx,
-		propId:     propId,
+		propID:     propID,
 	}
 }
 
@@ -5997,200 +5469,8 @@ func (a *DefaultAPIService) DeletePropertyExecute(r ApiDeletePropertyRequest) (*
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/properties/{propId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"propId"+"}", url.PathEscape(parameterValueToString(r.propId, "propId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarHTTPResponse, newErr
-	}
-
-	return localVarHTTPResponse, nil
-}
-
-type ApiDeletePropertyContactRequest struct {
-	ctx        context.Context
-	ApiService *DefaultAPIService
-	propId     string
-	entryId    string
-}
-
-func (r ApiDeletePropertyContactRequest) Execute() (*http.Response, error) {
-	return r.ApiService.DeletePropertyContactExecute(r)
-}
-
-/*
-DeletePropertyContact Delete a property contact
-
-Delete the property reference to the service provider
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param propId ID of the property
-	@param entryId ID of the contact
-	@return ApiDeletePropertyContactRequest
-*/
-func (a *DefaultAPIService) DeletePropertyContact(ctx context.Context, propId string, entryId string) ApiDeletePropertyContactRequest {
-	return ApiDeletePropertyContactRequest{
-		ApiService: a,
-		ctx:        ctx,
-		propId:     propId,
-		entryId:    entryId,
-	}
-}
-
-// Execute executes the request
-func (a *DefaultAPIService) DeletePropertyContactExecute(r ApiDeletePropertyContactRequest) (*http.Response, error) {
-	var (
-		localVarHTTPMethod = http.MethodDelete
-		localVarPostBody   interface{}
-		formFiles          []formFile
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeletePropertyContact")
-	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/property/{propId}/contacts/{entryId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"propId"+"}", url.PathEscape(parameterValueToString(r.propId, "propId")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"entryId"+"}", url.PathEscape(parameterValueToString(r.entryId, "entryId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarHTTPResponse, newErr
-	}
-
-	return localVarHTTPResponse, nil
-}
-
-type ApiDeletePropertyHistoryEntryRequest struct {
-	ctx        context.Context
-	ApiService *DefaultAPIService
-	propId     string
-	entryId    string
-}
-
-func (r ApiDeletePropertyHistoryEntryRequest) Execute() (*http.Response, error) {
-	return r.ApiService.DeletePropertyHistoryEntryExecute(r)
-}
-
-/*
-DeletePropertyHistoryEntry Delete a history entry
-
-Delete the property history entry with all it's attachments
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param propId ID of the property
-	@param entryId ID of the individual history entry to get
-	@return ApiDeletePropertyHistoryEntryRequest
-*/
-func (a *DefaultAPIService) DeletePropertyHistoryEntry(ctx context.Context, propId string, entryId string) ApiDeletePropertyHistoryEntryRequest {
-	return ApiDeletePropertyHistoryEntryRequest{
-		ApiService: a,
-		ctx:        ctx,
-		propId:     propId,
-		entryId:    entryId,
-	}
-}
-
-// Execute executes the request
-func (a *DefaultAPIService) DeletePropertyHistoryEntryExecute(r ApiDeletePropertyHistoryEntryRequest) (*http.Response, error) {
-	var (
-		localVarHTTPMethod = http.MethodDelete
-		localVarPostBody   interface{}
-		formFiles          []formFile
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeletePropertyHistoryEntry")
-	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/property/{propId}/history/{entryId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"propId"+"}", url.PathEscape(parameterValueToString(r.propId, "propId")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"entryId"+"}", url.PathEscape(parameterValueToString(r.entryId, "entryId")), -1)
+	localVarPath := localBasePath + "/properties/{propID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"propID"+"}", url.PathEscape(parameterValueToString(r.propID, "propID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -6244,7 +5524,7 @@ func (a *DefaultAPIService) DeletePropertyHistoryEntryExecute(r ApiDeletePropert
 type ApiDeletePropertyOwnerRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	ownerId    string
+	ownerID    string
 }
 
 func (r ApiDeletePropertyOwnerRequest) Execute() (*http.Response, error) {
@@ -6257,14 +5537,14 @@ DeletePropertyOwner Delete property owner
 Permantenly delete the property owner
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param ownerId ID of the required owner
+	@param ownerID unique generate ID of a property owner
 	@return ApiDeletePropertyOwnerRequest
 */
-func (a *DefaultAPIService) DeletePropertyOwner(ctx context.Context, ownerId string) ApiDeletePropertyOwnerRequest {
+func (a *DefaultAPIService) DeletePropertyOwner(ctx context.Context, ownerID string) ApiDeletePropertyOwnerRequest {
 	return ApiDeletePropertyOwnerRequest{
 		ApiService: a,
 		ctx:        ctx,
-		ownerId:    ownerId,
+		ownerID:    ownerID,
 	}
 }
 
@@ -6281,8 +5561,8 @@ func (a *DefaultAPIService) DeletePropertyOwnerExecute(r ApiDeletePropertyOwnerR
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/owner/{ownerId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"ownerId"+"}", url.PathEscape(parameterValueToString(r.ownerId, "ownerId")), -1)
+	localVarPath := localBasePath + "/owner/{ownerID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"ownerID"+"}", url.PathEscape(parameterValueToString(r.ownerID, "ownerID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -6336,7 +5616,7 @@ func (a *DefaultAPIService) DeletePropertyOwnerExecute(r ApiDeletePropertyOwnerR
 type ApiDeleteReportDefinitionRequest struct {
 	ctx          context.Context
 	ApiService   *DefaultAPIService
-	definitionId string
+	definitionID string
 }
 
 func (r ApiDeleteReportDefinitionRequest) Execute() (*http.Response, error) {
@@ -6349,14 +5629,14 @@ DeleteReportDefinition Method for DeleteReportDefinition
 Delete the report definition with all its related data
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param definitionId ID of the report definition
+	@param definitionID unique generated ID of a report definition
 	@return ApiDeleteReportDefinitionRequest
 */
-func (a *DefaultAPIService) DeleteReportDefinition(ctx context.Context, definitionId string) ApiDeleteReportDefinitionRequest {
+func (a *DefaultAPIService) DeleteReportDefinition(ctx context.Context, definitionID string) ApiDeleteReportDefinitionRequest {
 	return ApiDeleteReportDefinitionRequest{
 		ApiService:   a,
 		ctx:          ctx,
-		definitionId: definitionId,
+		definitionID: definitionID,
 	}
 }
 
@@ -6373,8 +5653,8 @@ func (a *DefaultAPIService) DeleteReportDefinitionExecute(r ApiDeleteReportDefin
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/report/{definitionId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"definitionId"+"}", url.PathEscape(parameterValueToString(r.definitionId, "definitionId")), -1)
+	localVarPath := localBasePath + "/report/{definitionID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"definitionID"+"}", url.PathEscape(parameterValueToString(r.definitionID, "definitionID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -6428,7 +5708,7 @@ func (a *DefaultAPIService) DeleteReportDefinitionExecute(r ApiDeleteReportDefin
 type ApiDeleteReportExecutionRequest struct {
 	ctx         context.Context
 	ApiService  *DefaultAPIService
-	executionId string
+	executionID string
 }
 
 func (r ApiDeleteReportExecutionRequest) Execute() (*http.Response, error) {
@@ -6441,14 +5721,14 @@ DeleteReportExecution Method for DeleteReportExecution
 Delete the report execution with all its related data
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param executionId ID of the report execution
+	@param executionID unique generated ID of a report execution
 	@return ApiDeleteReportExecutionRequest
 */
-func (a *DefaultAPIService) DeleteReportExecution(ctx context.Context, executionId string) ApiDeleteReportExecutionRequest {
+func (a *DefaultAPIService) DeleteReportExecution(ctx context.Context, executionID string) ApiDeleteReportExecutionRequest {
 	return ApiDeleteReportExecutionRequest{
 		ApiService:  a,
 		ctx:         ctx,
-		executionId: executionId,
+		executionID: executionID,
 	}
 }
 
@@ -6465,8 +5745,8 @@ func (a *DefaultAPIService) DeleteReportExecutionExecute(r ApiDeleteReportExecut
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/report/executions/{executionId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"executionId"+"}", url.PathEscape(parameterValueToString(r.executionId, "executionId")), -1)
+	localVarPath := localBasePath + "/report/executions/{executionID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"executionID"+"}", url.PathEscape(parameterValueToString(r.executionID, "executionID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -6520,7 +5800,7 @@ func (a *DefaultAPIService) DeleteReportExecutionExecute(r ApiDeleteReportExecut
 type ApiDeleteServiceProviderRequest struct {
 	ctx               context.Context
 	ApiService        *DefaultAPIService
-	serviceProviderId string
+	serviceProviderID string
 }
 
 func (r ApiDeleteServiceProviderRequest) Execute() (*http.Response, error) {
@@ -6531,14 +5811,14 @@ func (r ApiDeleteServiceProviderRequest) Execute() (*http.Response, error) {
 DeleteServiceProvider Delete the service provider
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param serviceProviderId ID of the required service provider
+	@param serviceProviderID unique generated ID of a service provider
 	@return ApiDeleteServiceProviderRequest
 */
-func (a *DefaultAPIService) DeleteServiceProvider(ctx context.Context, serviceProviderId string) ApiDeleteServiceProviderRequest {
+func (a *DefaultAPIService) DeleteServiceProvider(ctx context.Context, serviceProviderID string) ApiDeleteServiceProviderRequest {
 	return ApiDeleteServiceProviderRequest{
 		ApiService:        a,
 		ctx:               ctx,
-		serviceProviderId: serviceProviderId,
+		serviceProviderID: serviceProviderID,
 	}
 }
 
@@ -6555,8 +5835,8 @@ func (a *DefaultAPIService) DeleteServiceProviderExecute(r ApiDeleteServiceProvi
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/service-provider/{serviceProviderId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"serviceProviderId"+"}", url.PathEscape(parameterValueToString(r.serviceProviderId, "serviceProviderId")), -1)
+	localVarPath := localBasePath + "/service-provider/{serviceProviderID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"serviceProviderID"+"}", url.PathEscape(parameterValueToString(r.serviceProviderID, "serviceProviderID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -6610,7 +5890,7 @@ func (a *DefaultAPIService) DeleteServiceProviderExecute(r ApiDeleteServiceProvi
 type ApiDeleteTenancyRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	tenancyId  string
+	tenancyID  string
 }
 
 func (r ApiDeleteTenancyRequest) Execute() (*http.Response, error) {
@@ -6621,14 +5901,14 @@ func (r ApiDeleteTenancyRequest) Execute() (*http.Response, error) {
 DeleteTenancy Delete the tenancy with the given ID
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param tenancyId ID of the tenancy
+	@param tenancyID unique generated ID of a tenancy
 	@return ApiDeleteTenancyRequest
 */
-func (a *DefaultAPIService) DeleteTenancy(ctx context.Context, tenancyId string) ApiDeleteTenancyRequest {
+func (a *DefaultAPIService) DeleteTenancy(ctx context.Context, tenancyID string) ApiDeleteTenancyRequest {
 	return ApiDeleteTenancyRequest{
 		ApiService: a,
 		ctx:        ctx,
-		tenancyId:  tenancyId,
+		tenancyID:  tenancyID,
 	}
 }
 
@@ -6645,8 +5925,8 @@ func (a *DefaultAPIService) DeleteTenancyExecute(r ApiDeleteTenancyRequest) (*ht
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/tenancy/{tenancyId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"tenancyId"+"}", url.PathEscape(parameterValueToString(r.tenancyId, "tenancyId")), -1)
+	localVarPath := localBasePath + "/tenancy/{tenancyID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"tenancyID"+"}", url.PathEscape(parameterValueToString(r.tenancyID, "tenancyID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -6700,7 +5980,7 @@ func (a *DefaultAPIService) DeleteTenancyExecute(r ApiDeleteTenancyRequest) (*ht
 type ApiDeleteTenancyUpdateRequest struct {
 	ctx             context.Context
 	ApiService      *DefaultAPIService
-	tenancyUpdateId string
+	tenancyUpdateID string
 }
 
 func (r ApiDeleteTenancyUpdateRequest) Execute() (*http.Response, error) {
@@ -6711,14 +5991,14 @@ func (r ApiDeleteTenancyUpdateRequest) Execute() (*http.Response, error) {
 DeleteTenancyUpdate Delete the tenancy update with the given ID
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param tenancyUpdateId ID of the tenancy update
+	@param tenancyUpdateID unique generated ID of a tenancy update
 	@return ApiDeleteTenancyUpdateRequest
 */
-func (a *DefaultAPIService) DeleteTenancyUpdate(ctx context.Context, tenancyUpdateId string) ApiDeleteTenancyUpdateRequest {
+func (a *DefaultAPIService) DeleteTenancyUpdate(ctx context.Context, tenancyUpdateID string) ApiDeleteTenancyUpdateRequest {
 	return ApiDeleteTenancyUpdateRequest{
 		ApiService:      a,
 		ctx:             ctx,
-		tenancyUpdateId: tenancyUpdateId,
+		tenancyUpdateID: tenancyUpdateID,
 	}
 }
 
@@ -6735,8 +6015,8 @@ func (a *DefaultAPIService) DeleteTenancyUpdateExecute(r ApiDeleteTenancyUpdateR
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/tenancy-update/{tenancyUpdateId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"tenancyUpdateId"+"}", url.PathEscape(parameterValueToString(r.tenancyUpdateId, "tenancyUpdateId")), -1)
+	localVarPath := localBasePath + "/tenancy-update/{tenancyUpdateID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"tenancyUpdateID"+"}", url.PathEscape(parameterValueToString(r.tenancyUpdateID, "tenancyUpdateID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -6790,7 +6070,7 @@ func (a *DefaultAPIService) DeleteTenancyUpdateExecute(r ApiDeleteTenancyUpdateR
 type ApiDeleteTenantRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	tenantId   string
+	tenantID   string
 }
 
 func (r ApiDeleteTenantRequest) Execute() (*http.Response, error) {
@@ -6803,14 +6083,14 @@ DeleteTenant Remove tenant from property
 Delete a tenant, removing it from the property they were assigned to. If the tenant is a registered user, their account will remain active, however, they will not be able to access that property any longer.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param tenantId ID of the tenant to get
+	@param tenantID unique generated ID of a tenant
 	@return ApiDeleteTenantRequest
 */
-func (a *DefaultAPIService) DeleteTenant(ctx context.Context, tenantId string) ApiDeleteTenantRequest {
+func (a *DefaultAPIService) DeleteTenant(ctx context.Context, tenantID string) ApiDeleteTenantRequest {
 	return ApiDeleteTenantRequest{
 		ApiService: a,
 		ctx:        ctx,
-		tenantId:   tenantId,
+		tenantID:   tenantID,
 	}
 }
 
@@ -6827,8 +6107,8 @@ func (a *DefaultAPIService) DeleteTenantExecute(r ApiDeleteTenantRequest) (*http
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/tenant/{tenantId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"tenantId"+"}", url.PathEscape(parameterValueToString(r.tenantId, "tenantId")), -1)
+	localVarPath := localBasePath + "/tenant/{tenantID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"tenantID"+"}", url.PathEscape(parameterValueToString(r.tenantID, "tenantID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -6893,7 +6173,7 @@ func (r ApiDeleteWorkflowDefinitionRequest) Execute() (*http.Response, error) {
 DeleteWorkflowDefinition Delete workflow definition
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param definitionID ID of the workflow definition to get
+	@param definitionID unique generated ID of a workflow definition
 	@return ApiDeleteWorkflowDefinitionRequest
 */
 func (a *DefaultAPIService) DeleteWorkflowDefinition(ctx context.Context, definitionID string) ApiDeleteWorkflowDefinitionRequest {
@@ -6983,7 +6263,7 @@ func (r ApiDeleteWorkflowEntrypointRequest) Execute() (*http.Response, error) {
 DeleteWorkflowEntrypoint Delete workflow entry point
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param entrypointID ID of the workflow entry point to get
+	@param entrypointID unique generated ID of a workflow entry point
 	@return ApiDeleteWorkflowEntrypointRequest
 */
 func (a *DefaultAPIService) DeleteWorkflowEntrypoint(ctx context.Context, entrypointID string) ApiDeleteWorkflowEntrypointRequest {
@@ -7073,7 +6353,7 @@ func (r ApiDeleteWorkflowExecutionRequest) Execute() (*http.Response, error) {
 DeleteWorkflowExecution Delete workflow execution
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param executionID ID of the workflow execution to get
+	@param executionID unique generated ID of a workflow execution
 	@return ApiDeleteWorkflowExecutionRequest
 */
 func (a *DefaultAPIService) DeleteWorkflowExecution(ctx context.Context, executionID string) ApiDeleteWorkflowExecutionRequest {
@@ -7152,7 +6432,7 @@ func (a *DefaultAPIService) DeleteWorkflowExecutionExecute(r ApiDeleteWorkflowEx
 type ApiExecuteReportRequest struct {
 	ctx                  context.Context
 	ApiService           *DefaultAPIService
-	definitionId         string
+	definitionID         string
 	executeReportRequest *ExecuteReportRequest
 }
 
@@ -7172,14 +6452,14 @@ ExecuteReport Method for ExecuteReport
 Execute a report for the given report definition ID
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param definitionId ID of the report definition to execute
+	@param definitionID unique generated ID of a report definition
 	@return ApiExecuteReportRequest
 */
-func (a *DefaultAPIService) ExecuteReport(ctx context.Context, definitionId string) ApiExecuteReportRequest {
+func (a *DefaultAPIService) ExecuteReport(ctx context.Context, definitionID string) ApiExecuteReportRequest {
 	return ApiExecuteReportRequest{
 		ApiService:   a,
 		ctx:          ctx,
-		definitionId: definitionId,
+		definitionID: definitionID,
 	}
 }
 
@@ -7199,8 +6479,8 @@ func (a *DefaultAPIService) ExecuteReportExecute(r ApiExecuteReportRequest) (*Re
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/report/{definitionId}/execute"
-	localVarPath = strings.Replace(localVarPath, "{"+"definitionId"+"}", url.PathEscape(parameterValueToString(r.definitionId, "definitionId")), -1)
+	localVarPath := localBasePath + "/report/{definitionID}/execute"
+	localVarPath = strings.Replace(localVarPath, "{"+"definitionID"+"}", url.PathEscape(parameterValueToString(r.definitionID, "definitionID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -7286,7 +6566,7 @@ func (r ApiExecuteWorkflowEntrypointRequest) Execute() (*WorkflowExecutionRespon
 ExecuteWorkflowEntrypoint Execute the workflow entry point
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param entrypointID ID of the workflow entry point to execute
+	@param entrypointID unique generated ID of a workflow entry point
 	@return ApiExecuteWorkflowEntrypointRequest
 */
 func (a *DefaultAPIService) ExecuteWorkflowEntrypoint(ctx context.Context, entrypointID string) ApiExecuteWorkflowEntrypointRequest {
@@ -7400,7 +6680,7 @@ func (r ApiExecuteWorkflowExecutionStepRequest) Execute() (*WorkflowExecutionRes
 ExecuteWorkflowExecutionStep Execute workflow execution step
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param executionID ID of the workflow execution to get
+	@param executionID unique generated ID of a workflow execution
 	@return ApiExecuteWorkflowExecutionStepRequest
 */
 func (a *DefaultAPIService) ExecuteWorkflowExecutionStep(ctx context.Context, executionID string) ApiExecuteWorkflowExecutionStepRequest {
@@ -7596,7 +6876,7 @@ func (a *DefaultAPIService) FeedbackExecute(r ApiFeedbackRequest) (*http.Respons
 type ApiGenerateCaseReportingEndpointNoticeRequest struct {
 	ctx                                        context.Context
 	ApiService                                 *DefaultAPIService
-	endpointId                                 string
+	endpointID                                 string
 	generateCaseReportingEndpointNoticeRequest *GenerateCaseReportingEndpointNoticeRequest
 }
 
@@ -7613,14 +6893,14 @@ func (r ApiGenerateCaseReportingEndpointNoticeRequest) Execute() (string, *http.
 GenerateCaseReportingEndpointNotice Generate a PDF for a notice of the case reporting endpoint
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param endpointId ID of the case reporting endpoint
+	@param endpointID unique generate ID of a case reporting endpoint
 	@return ApiGenerateCaseReportingEndpointNoticeRequest
 */
-func (a *DefaultAPIService) GenerateCaseReportingEndpointNotice(ctx context.Context, endpointId string) ApiGenerateCaseReportingEndpointNoticeRequest {
+func (a *DefaultAPIService) GenerateCaseReportingEndpointNotice(ctx context.Context, endpointID string) ApiGenerateCaseReportingEndpointNoticeRequest {
 	return ApiGenerateCaseReportingEndpointNoticeRequest{
 		ApiService: a,
 		ctx:        ctx,
-		endpointId: endpointId,
+		endpointID: endpointID,
 	}
 }
 
@@ -7640,8 +6920,8 @@ func (a *DefaultAPIService) GenerateCaseReportingEndpointNoticeExecute(r ApiGene
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/cases/endpoints/{endpointId}/notice"
-	localVarPath = strings.Replace(localVarPath, "{"+"endpointId"+"}", url.PathEscape(parameterValueToString(r.endpointId, "endpointId")), -1)
+	localVarPath := localBasePath + "/cases/endpoints/{endpointID}/notice"
+	localVarPath = strings.Replace(localVarPath, "{"+"endpointID"+"}", url.PathEscape(parameterValueToString(r.endpointID, "endpointID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -7709,7 +6989,7 @@ func (a *DefaultAPIService) GenerateCaseReportingEndpointNoticeExecute(r ApiGene
 type ApiGenerateDocumentPDFRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	docId      string
+	docID      string
 }
 
 func (r ApiGenerateDocumentPDFRequest) Execute() (*DocumentPDFResponse, *http.Response, error) {
@@ -7720,14 +7000,14 @@ func (r ApiGenerateDocumentPDFRequest) Execute() (*DocumentPDFResponse, *http.Re
 GenerateDocumentPDF Generate a PDF for the document generation
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param docId ID of the document generation
+	@param docID unique generated ID of a document generation
 	@return ApiGenerateDocumentPDFRequest
 */
-func (a *DefaultAPIService) GenerateDocumentPDF(ctx context.Context, docId string) ApiGenerateDocumentPDFRequest {
+func (a *DefaultAPIService) GenerateDocumentPDF(ctx context.Context, docID string) ApiGenerateDocumentPDFRequest {
 	return ApiGenerateDocumentPDFRequest{
 		ApiService: a,
 		ctx:        ctx,
-		docId:      docId,
+		docID:      docID,
 	}
 }
 
@@ -7747,8 +7027,8 @@ func (a *DefaultAPIService) GenerateDocumentPDFExecute(r ApiGenerateDocumentPDFR
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/document-generation/documents/{docId}/generate-pdf"
-	localVarPath = strings.Replace(localVarPath, "{"+"docId"+"}", url.PathEscape(parameterValueToString(r.docId, "docId")), -1)
+	localVarPath := localBasePath + "/document-generation/documents/{docID}/generate-pdf"
+	localVarPath = strings.Replace(localVarPath, "{"+"docID"+"}", url.PathEscape(parameterValueToString(r.docID, "docID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -7811,7 +7091,7 @@ func (a *DefaultAPIService) GenerateDocumentPDFExecute(r ApiGenerateDocumentPDFR
 type ApiGenerateDocumentTextRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	docId      string
+	docID      string
 }
 
 func (r ApiGenerateDocumentTextRequest) Execute() (*TipTapDocument, *http.Response, error) {
@@ -7822,14 +7102,14 @@ func (r ApiGenerateDocumentTextRequest) Execute() (*TipTapDocument, *http.Respon
 GenerateDocumentText Generate the text for the document, based on template and input data
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param docId ID of the document generation
+	@param docID unique generated ID of a document generation
 	@return ApiGenerateDocumentTextRequest
 */
-func (a *DefaultAPIService) GenerateDocumentText(ctx context.Context, docId string) ApiGenerateDocumentTextRequest {
+func (a *DefaultAPIService) GenerateDocumentText(ctx context.Context, docID string) ApiGenerateDocumentTextRequest {
 	return ApiGenerateDocumentTextRequest{
 		ApiService: a,
 		ctx:        ctx,
-		docId:      docId,
+		docID:      docID,
 	}
 }
 
@@ -7849,8 +7129,8 @@ func (a *DefaultAPIService) GenerateDocumentTextExecute(r ApiGenerateDocumentTex
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/document-generation/documents/{docId}/generate-text"
-	localVarPath = strings.Replace(localVarPath, "{"+"docId"+"}", url.PathEscape(parameterValueToString(r.docId, "docId")), -1)
+	localVarPath := localBasePath + "/document-generation/documents/{docID}/generate-text"
+	localVarPath = strings.Replace(localVarPath, "{"+"docID"+"}", url.PathEscape(parameterValueToString(r.docID, "docID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -7913,7 +7193,7 @@ func (a *DefaultAPIService) GenerateDocumentTextExecute(r ApiGenerateDocumentTex
 type ApiGenerateESignatureRequestRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	docId      string
+	docID      string
 }
 
 func (r ApiGenerateESignatureRequestRequest) Execute() (*DocumentESignatureRequest, *http.Response, error) {
@@ -7924,14 +7204,14 @@ func (r ApiGenerateESignatureRequestRequest) Execute() (*DocumentESignatureReque
 GenerateESignatureRequest Generate an eSignature request for a document, based on template signature config
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param docId ID of the document generation
+	@param docID unique generated ID of a document generation
 	@return ApiGenerateESignatureRequestRequest
 */
-func (a *DefaultAPIService) GenerateESignatureRequest(ctx context.Context, docId string) ApiGenerateESignatureRequestRequest {
+func (a *DefaultAPIService) GenerateESignatureRequest(ctx context.Context, docID string) ApiGenerateESignatureRequestRequest {
 	return ApiGenerateESignatureRequestRequest{
 		ApiService: a,
 		ctx:        ctx,
-		docId:      docId,
+		docID:      docID,
 	}
 }
 
@@ -7951,8 +7231,8 @@ func (a *DefaultAPIService) GenerateESignatureRequestExecute(r ApiGenerateESigna
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/document-generation/documents/{docId}/esignature/request"
-	localVarPath = strings.Replace(localVarPath, "{"+"docId"+"}", url.PathEscape(parameterValueToString(r.docId, "docId")), -1)
+	localVarPath := localBasePath + "/document-generation/documents/{docID}/esignature/request"
+	localVarPath = strings.Replace(localVarPath, "{"+"docID"+"}", url.PathEscape(parameterValueToString(r.docID, "docID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -8124,7 +7404,7 @@ func (a *DefaultAPIService) GetAccountSummaryExecute(r ApiGetAccountSummaryReque
 type ApiGetAppointmentRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	entryId    string
+	entryID    string
 }
 
 func (r ApiGetAppointmentRequest) Execute() (*Appointment, *http.Response, error) {
@@ -8135,14 +7415,14 @@ func (r ApiGetAppointmentRequest) Execute() (*Appointment, *http.Response, error
 GetAppointment Get the appointment by ID
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param entryId ID of the appointment
+	@param entryID unique generate ID of an appointment entry
 	@return ApiGetAppointmentRequest
 */
-func (a *DefaultAPIService) GetAppointment(ctx context.Context, entryId string) ApiGetAppointmentRequest {
+func (a *DefaultAPIService) GetAppointment(ctx context.Context, entryID string) ApiGetAppointmentRequest {
 	return ApiGetAppointmentRequest{
 		ApiService: a,
 		ctx:        ctx,
-		entryId:    entryId,
+		entryID:    entryID,
 	}
 }
 
@@ -8162,8 +7442,8 @@ func (a *DefaultAPIService) GetAppointmentExecute(r ApiGetAppointmentRequest) (*
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/calendar/appointments/entry/{entryId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"entryId"+"}", url.PathEscape(parameterValueToString(r.entryId, "entryId")), -1)
+	localVarPath := localBasePath + "/calendar/appointments/entry/{entryID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"entryID"+"}", url.PathEscape(parameterValueToString(r.entryID, "entryID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -8226,7 +7506,7 @@ func (a *DefaultAPIService) GetAppointmentExecute(r ApiGetAppointmentRequest) (*
 type ApiGetAppointmentInIcalFormatRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	entryId    string
+	entryID    string
 }
 
 func (r ApiGetAppointmentInIcalFormatRequest) Execute() (string, *http.Response, error) {
@@ -8237,14 +7517,14 @@ func (r ApiGetAppointmentInIcalFormatRequest) Execute() (string, *http.Response,
 GetAppointmentInIcalFormat Get appointment in ical format
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param entryId ID of the appointment
+	@param entryID unique generate ID of an appointment entry
 	@return ApiGetAppointmentInIcalFormatRequest
 */
-func (a *DefaultAPIService) GetAppointmentInIcalFormat(ctx context.Context, entryId string) ApiGetAppointmentInIcalFormatRequest {
+func (a *DefaultAPIService) GetAppointmentInIcalFormat(ctx context.Context, entryID string) ApiGetAppointmentInIcalFormatRequest {
 	return ApiGetAppointmentInIcalFormatRequest{
 		ApiService: a,
 		ctx:        ctx,
-		entryId:    entryId,
+		entryID:    entryID,
 	}
 }
 
@@ -8264,8 +7544,8 @@ func (a *DefaultAPIService) GetAppointmentInIcalFormatExecute(r ApiGetAppointmen
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/calendar/appointments/entry/{entryId}/ical"
-	localVarPath = strings.Replace(localVarPath, "{"+"entryId"+"}", url.PathEscape(parameterValueToString(r.entryId, "entryId")), -1)
+	localVarPath := localBasePath + "/calendar/appointments/entry/{entryID}/ical"
+	localVarPath = strings.Replace(localVarPath, "{"+"entryID"+"}", url.PathEscape(parameterValueToString(r.entryID, "entryID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -8328,7 +7608,7 @@ func (a *DefaultAPIService) GetAppointmentInIcalFormatExecute(r ApiGetAppointmen
 type ApiGetAppointmentScheduleRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	scheduleId string
+	scheduleID string
 }
 
 func (r ApiGetAppointmentScheduleRequest) Execute() (*AppointmentSchedule, *http.Response, error) {
@@ -8339,14 +7619,14 @@ func (r ApiGetAppointmentScheduleRequest) Execute() (*AppointmentSchedule, *http
 GetAppointmentSchedule Get the appointment schedule by ID
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param scheduleId ID of the appointment schedule
+	@param scheduleID unique generate ID of an appointment schedule
 	@return ApiGetAppointmentScheduleRequest
 */
-func (a *DefaultAPIService) GetAppointmentSchedule(ctx context.Context, scheduleId string) ApiGetAppointmentScheduleRequest {
+func (a *DefaultAPIService) GetAppointmentSchedule(ctx context.Context, scheduleID string) ApiGetAppointmentScheduleRequest {
 	return ApiGetAppointmentScheduleRequest{
 		ApiService: a,
 		ctx:        ctx,
-		scheduleId: scheduleId,
+		scheduleID: scheduleID,
 	}
 }
 
@@ -8366,8 +7646,8 @@ func (a *DefaultAPIService) GetAppointmentScheduleExecute(r ApiGetAppointmentSch
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/calendar/appointments/schedule/{scheduleId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"scheduleId"+"}", url.PathEscape(parameterValueToString(r.scheduleId, "scheduleId")), -1)
+	localVarPath := localBasePath + "/calendar/appointments/schedule/{scheduleID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"scheduleID"+"}", url.PathEscape(parameterValueToString(r.scheduleID, "scheduleID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -8430,7 +7710,7 @@ func (a *DefaultAPIService) GetAppointmentScheduleExecute(r ApiGetAppointmentSch
 type ApiGetAppointmentTemplateRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	templateId string
+	templateID string
 }
 
 func (r ApiGetAppointmentTemplateRequest) Execute() (*AppointmentTemplate, *http.Response, error) {
@@ -8441,14 +7721,14 @@ func (r ApiGetAppointmentTemplateRequest) Execute() (*AppointmentTemplate, *http
 GetAppointmentTemplate Get the appointment template by ID
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param templateId the ID of the template for which to validate the data
+	@param templateID unique generate ID of an appointments template
 	@return ApiGetAppointmentTemplateRequest
 */
-func (a *DefaultAPIService) GetAppointmentTemplate(ctx context.Context, templateId string) ApiGetAppointmentTemplateRequest {
+func (a *DefaultAPIService) GetAppointmentTemplate(ctx context.Context, templateID string) ApiGetAppointmentTemplateRequest {
 	return ApiGetAppointmentTemplateRequest{
 		ApiService: a,
 		ctx:        ctx,
-		templateId: templateId,
+		templateID: templateID,
 	}
 }
 
@@ -8468,8 +7748,8 @@ func (a *DefaultAPIService) GetAppointmentTemplateExecute(r ApiGetAppointmentTem
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/calendar/appointments/template/{templateId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"templateId"+"}", url.PathEscape(parameterValueToString(r.templateId, "templateId")), -1)
+	localVarPath := localBasePath + "/calendar/appointments/template/{templateID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"templateID"+"}", url.PathEscape(parameterValueToString(r.templateID, "templateID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -8532,7 +7812,7 @@ func (a *DefaultAPIService) GetAppointmentTemplateExecute(r ApiGetAppointmentTem
 type ApiGetAttachmentRequest struct {
 	ctx          context.Context
 	ApiService   *DefaultAPIService
-	attachmentId string
+	attachmentID string
 }
 
 func (r ApiGetAttachmentRequest) Execute() (*Attachment, *http.Response, error) {
@@ -8545,14 +7825,14 @@ GetAttachment Get a file attachment
 Get the file attachment with the given ID
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param attachmentId ID of the affected file attachment
+	@param attachmentID unique generate ID of a file attachment
 	@return ApiGetAttachmentRequest
 */
-func (a *DefaultAPIService) GetAttachment(ctx context.Context, attachmentId string) ApiGetAttachmentRequest {
+func (a *DefaultAPIService) GetAttachment(ctx context.Context, attachmentID string) ApiGetAttachmentRequest {
 	return ApiGetAttachmentRequest{
 		ApiService:   a,
 		ctx:          ctx,
-		attachmentId: attachmentId,
+		attachmentID: attachmentID,
 	}
 }
 
@@ -8572,8 +7852,8 @@ func (a *DefaultAPIService) GetAttachmentExecute(r ApiGetAttachmentRequest) (*At
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/attachment/{attachmentId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"attachmentId"+"}", url.PathEscape(parameterValueToString(r.attachmentId, "attachmentId")), -1)
+	localVarPath := localBasePath + "/attachment/{attachmentID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"attachmentID"+"}", url.PathEscape(parameterValueToString(r.attachmentID, "attachmentID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -8636,7 +7916,7 @@ func (a *DefaultAPIService) GetAttachmentExecute(r ApiGetAttachmentRequest) (*At
 type ApiGetBankAccountRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	accountId  string
+	accountID  string
 }
 
 func (r ApiGetBankAccountRequest) Execute() (*BankAccount, *http.Response, error) {
@@ -8647,14 +7927,14 @@ func (r ApiGetBankAccountRequest) Execute() (*BankAccount, *http.Response, error
 GetBankAccount Get the bank account with the given ID
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param accountId ID of the required bank account
+	@param accountID unique generate ID of a bank account
 	@return ApiGetBankAccountRequest
 */
-func (a *DefaultAPIService) GetBankAccount(ctx context.Context, accountId string) ApiGetBankAccountRequest {
+func (a *DefaultAPIService) GetBankAccount(ctx context.Context, accountID string) ApiGetBankAccountRequest {
 	return ApiGetBankAccountRequest{
 		ApiService: a,
 		ctx:        ctx,
-		accountId:  accountId,
+		accountID:  accountID,
 	}
 }
 
@@ -8674,8 +7954,8 @@ func (a *DefaultAPIService) GetBankAccountExecute(r ApiGetBankAccountRequest) (*
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/bank-account/{accountId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"accountId"+"}", url.PathEscape(parameterValueToString(r.accountId, "accountId")), -1)
+	localVarPath := localBasePath + "/bank-account/{accountID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"accountID"+"}", url.PathEscape(parameterValueToString(r.accountID, "accountID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -8738,7 +8018,7 @@ func (a *DefaultAPIService) GetBankAccountExecute(r ApiGetBankAccountRequest) (*
 type ApiGetCaseRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	caseId     string
+	caseID     string
 }
 
 func (r ApiGetCaseRequest) Execute() (*Case, *http.Response, error) {
@@ -8751,14 +8031,14 @@ GetCase Get case details
 Get the case with all its attributes and comments
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param caseId ID of the required case
+	@param caseID unique generate ID of a case
 	@return ApiGetCaseRequest
 */
-func (a *DefaultAPIService) GetCase(ctx context.Context, caseId string) ApiGetCaseRequest {
+func (a *DefaultAPIService) GetCase(ctx context.Context, caseID string) ApiGetCaseRequest {
 	return ApiGetCaseRequest{
 		ApiService: a,
 		ctx:        ctx,
-		caseId:     caseId,
+		caseID:     caseID,
 	}
 }
 
@@ -8778,8 +8058,8 @@ func (a *DefaultAPIService) GetCaseExecute(r ApiGetCaseRequest) (*Case, *http.Re
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/case/{caseId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"caseId"+"}", url.PathEscape(parameterValueToString(r.caseId, "caseId")), -1)
+	localVarPath := localBasePath + "/case/{caseID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"caseID"+"}", url.PathEscape(parameterValueToString(r.caseID, "caseID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -8842,8 +8122,8 @@ func (a *DefaultAPIService) GetCaseExecute(r ApiGetCaseRequest) (*Case, *http.Re
 type ApiGetCaseCommentRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	caseId     string
-	commentId  string
+	caseID     string
+	commentID  string
 }
 
 func (r ApiGetCaseCommentRequest) Execute() (*CaseComment, *http.Response, error) {
@@ -8856,16 +8136,16 @@ GetCaseComment Get comment details
 Get all details of the comment
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param caseId ID of the related case
-	@param commentId ID of the required comment
+	@param caseID unique generate ID of a case
+	@param commentID unique generate ID of a case comment
 	@return ApiGetCaseCommentRequest
 */
-func (a *DefaultAPIService) GetCaseComment(ctx context.Context, caseId string, commentId string) ApiGetCaseCommentRequest {
+func (a *DefaultAPIService) GetCaseComment(ctx context.Context, caseID string, commentID string) ApiGetCaseCommentRequest {
 	return ApiGetCaseCommentRequest{
 		ApiService: a,
 		ctx:        ctx,
-		caseId:     caseId,
-		commentId:  commentId,
+		caseID:     caseID,
+		commentID:  commentID,
 	}
 }
 
@@ -8885,9 +8165,9 @@ func (a *DefaultAPIService) GetCaseCommentExecute(r ApiGetCaseCommentRequest) (*
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/case/{caseId}/comment/{commentId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"caseId"+"}", url.PathEscape(parameterValueToString(r.caseId, "caseId")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"commentId"+"}", url.PathEscape(parameterValueToString(r.commentId, "commentId")), -1)
+	localVarPath := localBasePath + "/case/{caseID}/comment/{commentID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"caseID"+"}", url.PathEscape(parameterValueToString(r.caseID, "caseID")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"commentID"+"}", url.PathEscape(parameterValueToString(r.commentID, "commentID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -8950,7 +8230,7 @@ func (a *DefaultAPIService) GetCaseCommentExecute(r ApiGetCaseCommentRequest) (*
 type ApiGetCaseReportingEndpointRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	endpointId string
+	endpointID string
 }
 
 func (r ApiGetCaseReportingEndpointRequest) Execute() (*CaseReportingEndpoint, *http.Response, error) {
@@ -8961,14 +8241,14 @@ func (r ApiGetCaseReportingEndpointRequest) Execute() (*CaseReportingEndpoint, *
 GetCaseReportingEndpoint Get the case report endpoint by ID
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param endpointId ID of the case reporting endpoint
+	@param endpointID unique generate ID of a case reporting endpoint
 	@return ApiGetCaseReportingEndpointRequest
 */
-func (a *DefaultAPIService) GetCaseReportingEndpoint(ctx context.Context, endpointId string) ApiGetCaseReportingEndpointRequest {
+func (a *DefaultAPIService) GetCaseReportingEndpoint(ctx context.Context, endpointID string) ApiGetCaseReportingEndpointRequest {
 	return ApiGetCaseReportingEndpointRequest{
 		ApiService: a,
 		ctx:        ctx,
-		endpointId: endpointId,
+		endpointID: endpointID,
 	}
 }
 
@@ -8988,8 +8268,8 @@ func (a *DefaultAPIService) GetCaseReportingEndpointExecute(r ApiGetCaseReportin
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/cases/endpoints/{endpointId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"endpointId"+"}", url.PathEscape(parameterValueToString(r.endpointId, "endpointId")), -1)
+	localVarPath := localBasePath + "/cases/endpoints/{endpointID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"endpointID"+"}", url.PathEscape(parameterValueToString(r.endpointID, "endpointID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -9052,7 +8332,7 @@ func (a *DefaultAPIService) GetCaseReportingEndpointExecute(r ApiGetCaseReportin
 type ApiGetCaseReportingEndpointQRCodeRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	endpointId string
+	endpointID string
 }
 
 func (r ApiGetCaseReportingEndpointQRCodeRequest) Execute() (string, *http.Response, error) {
@@ -9063,14 +8343,14 @@ func (r ApiGetCaseReportingEndpointQRCodeRequest) Execute() (string, *http.Respo
 GetCaseReportingEndpointQRCode Generates and returns a QR code of the URL of the case reporting endpoint
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param endpointId ID of the case reporting endpoint
+	@param endpointID unique generate ID of a case reporting endpoint
 	@return ApiGetCaseReportingEndpointQRCodeRequest
 */
-func (a *DefaultAPIService) GetCaseReportingEndpointQRCode(ctx context.Context, endpointId string) ApiGetCaseReportingEndpointQRCodeRequest {
+func (a *DefaultAPIService) GetCaseReportingEndpointQRCode(ctx context.Context, endpointID string) ApiGetCaseReportingEndpointQRCodeRequest {
 	return ApiGetCaseReportingEndpointQRCodeRequest{
 		ApiService: a,
 		ctx:        ctx,
-		endpointId: endpointId,
+		endpointID: endpointID,
 	}
 }
 
@@ -9090,8 +8370,8 @@ func (a *DefaultAPIService) GetCaseReportingEndpointQRCodeExecute(r ApiGetCaseRe
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/cases/endpoints/{endpointId}/qr-code"
-	localVarPath = strings.Replace(localVarPath, "{"+"endpointId"+"}", url.PathEscape(parameterValueToString(r.endpointId, "endpointId")), -1)
+	localVarPath := localBasePath + "/cases/endpoints/{endpointID}/qr-code"
+	localVarPath = strings.Replace(localVarPath, "{"+"endpointID"+"}", url.PathEscape(parameterValueToString(r.endpointID, "endpointID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -9154,7 +8434,7 @@ func (a *DefaultAPIService) GetCaseReportingEndpointQRCodeExecute(r ApiGetCaseRe
 type ApiGetCaseTemplateRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	templateId string
+	templateID string
 }
 
 func (r ApiGetCaseTemplateRequest) Execute() (*CaseTemplate, *http.Response, error) {
@@ -9165,14 +8445,14 @@ func (r ApiGetCaseTemplateRequest) Execute() (*CaseTemplate, *http.Response, err
 GetCaseTemplate Get the case template by ID
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param templateId the ID of the template for which to validate the data
+	@param templateID unique generate ID of a case template
 	@return ApiGetCaseTemplateRequest
 */
-func (a *DefaultAPIService) GetCaseTemplate(ctx context.Context, templateId string) ApiGetCaseTemplateRequest {
+func (a *DefaultAPIService) GetCaseTemplate(ctx context.Context, templateID string) ApiGetCaseTemplateRequest {
 	return ApiGetCaseTemplateRequest{
 		ApiService: a,
 		ctx:        ctx,
-		templateId: templateId,
+		templateID: templateID,
 	}
 }
 
@@ -9192,8 +8472,8 @@ func (a *DefaultAPIService) GetCaseTemplateExecute(r ApiGetCaseTemplateRequest) 
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/cases/template/{templateId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"templateId"+"}", url.PathEscape(parameterValueToString(r.templateId, "templateId")), -1)
+	localVarPath := localBasePath + "/cases/template/{templateID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"templateID"+"}", url.PathEscape(parameterValueToString(r.templateID, "templateID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -9971,7 +9251,7 @@ func (r ApiGetCustomIDGeneratorRequest) Execute() (*CustomIDGenerator, *http.Res
 GetCustomIDGenerator Get the ID generator with all its attributes
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param generatorID ID of the custom ID generator
+	@param generatorID unique generated ID of a custom ID generator
 	@return ApiGetCustomIDGeneratorRequest
 */
 func (a *DefaultAPIService) GetCustomIDGenerator(ctx context.Context, generatorID string) ApiGetCustomIDGeneratorRequest {
@@ -10171,7 +9451,7 @@ func (r ApiGetCustomerScriptRequest) Execute() (*CustomerScript, *http.Response,
 GetCustomerScript Get the script with all its attributes
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param scriptID ID of the script
+	@param scriptID unique generated ID of a customer JS script
 	@return ApiGetCustomerScriptRequest
 */
 func (a *DefaultAPIService) GetCustomerScript(ctx context.Context, scriptID string) ApiGetCustomerScriptRequest {
@@ -10360,7 +9640,7 @@ func (a *DefaultAPIService) GetCustomerScriptsExecute(r ApiGetCustomerScriptsReq
 type ApiGetDocumentRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	documentId string
+	documentID string
 }
 
 func (r ApiGetDocumentRequest) Execute() (*Document, *http.Response, error) {
@@ -10371,14 +9651,14 @@ func (r ApiGetDocumentRequest) Execute() (*Document, *http.Response, error) {
 GetDocument Get an already existing document
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param documentId ID of the document
+	@param documentID unique generated ID of an uploaded document
 	@return ApiGetDocumentRequest
 */
-func (a *DefaultAPIService) GetDocument(ctx context.Context, documentId string) ApiGetDocumentRequest {
+func (a *DefaultAPIService) GetDocument(ctx context.Context, documentID string) ApiGetDocumentRequest {
 	return ApiGetDocumentRequest{
 		ApiService: a,
 		ctx:        ctx,
-		documentId: documentId,
+		documentID: documentID,
 	}
 }
 
@@ -10398,8 +9678,8 @@ func (a *DefaultAPIService) GetDocumentExecute(r ApiGetDocumentRequest) (*Docume
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/document-repository/entry/{documentId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"documentId"+"}", url.PathEscape(parameterValueToString(r.documentId, "documentId")), -1)
+	localVarPath := localBasePath + "/document-repository/entry/{documentID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"documentID"+"}", url.PathEscape(parameterValueToString(r.documentID, "documentID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -10462,7 +9742,7 @@ func (a *DefaultAPIService) GetDocumentExecute(r ApiGetDocumentRequest) (*Docume
 type ApiGetDocumentGenerationRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	docId      string
+	docID      string
 }
 
 func (r ApiGetDocumentGenerationRequest) Execute() (*DocumentGeneration, *http.Response, error) {
@@ -10473,14 +9753,14 @@ func (r ApiGetDocumentGenerationRequest) Execute() (*DocumentGeneration, *http.R
 GetDocumentGeneration Get a single document generation
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param docId ID of the document generation
+	@param docID unique generated ID of a document generation
 	@return ApiGetDocumentGenerationRequest
 */
-func (a *DefaultAPIService) GetDocumentGeneration(ctx context.Context, docId string) ApiGetDocumentGenerationRequest {
+func (a *DefaultAPIService) GetDocumentGeneration(ctx context.Context, docID string) ApiGetDocumentGenerationRequest {
 	return ApiGetDocumentGenerationRequest{
 		ApiService: a,
 		ctx:        ctx,
-		docId:      docId,
+		docID:      docID,
 	}
 }
 
@@ -10500,8 +9780,8 @@ func (a *DefaultAPIService) GetDocumentGenerationExecute(r ApiGetDocumentGenerat
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/document-generation/documents/{docId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"docId"+"}", url.PathEscape(parameterValueToString(r.docId, "docId")), -1)
+	localVarPath := localBasePath + "/document-generation/documents/{docID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"docID"+"}", url.PathEscape(parameterValueToString(r.docID, "docID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -10564,7 +9844,7 @@ func (a *DefaultAPIService) GetDocumentGenerationExecute(r ApiGetDocumentGenerat
 type ApiGetDocumentTemplateRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	templateId string
+	templateID string
 }
 
 func (r ApiGetDocumentTemplateRequest) Execute() (*DocumentTemplate, *http.Response, error) {
@@ -10575,14 +9855,14 @@ func (r ApiGetDocumentTemplateRequest) Execute() (*DocumentTemplate, *http.Respo
 GetDocumentTemplate Get a document template
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param templateId the ID of the template for which to validate the data
+	@param templateID unique generated ID of a document generation
 	@return ApiGetDocumentTemplateRequest
 */
-func (a *DefaultAPIService) GetDocumentTemplate(ctx context.Context, templateId string) ApiGetDocumentTemplateRequest {
+func (a *DefaultAPIService) GetDocumentTemplate(ctx context.Context, templateID string) ApiGetDocumentTemplateRequest {
 	return ApiGetDocumentTemplateRequest{
 		ApiService: a,
 		ctx:        ctx,
-		templateId: templateId,
+		templateID: templateID,
 	}
 }
 
@@ -10602,8 +9882,8 @@ func (a *DefaultAPIService) GetDocumentTemplateExecute(r ApiGetDocumentTemplateR
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/document-generation/template/{templateId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"templateId"+"}", url.PathEscape(parameterValueToString(r.templateId, "templateId")), -1)
+	localVarPath := localBasePath + "/document-generation/template/{templateID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"templateID"+"}", url.PathEscape(parameterValueToString(r.templateID, "templateID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -10764,7 +10044,7 @@ func (a *DefaultAPIService) GetDocumentTemplatesExecute(r ApiGetDocumentTemplate
 type ApiGetESignatureStatusForDocumentRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	docId      string
+	docID      string
 }
 
 func (r ApiGetESignatureStatusForDocumentRequest) Execute() (*DocumentESignatureStatus, *http.Response, error) {
@@ -10775,14 +10055,14 @@ func (r ApiGetESignatureStatusForDocumentRequest) Execute() (*DocumentESignature
 GetESignatureStatusForDocument Get the singing status for the document
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param docId ID of the document generation
+	@param docID unique generated ID of a document generation
 	@return ApiGetESignatureStatusForDocumentRequest
 */
-func (a *DefaultAPIService) GetESignatureStatusForDocument(ctx context.Context, docId string) ApiGetESignatureStatusForDocumentRequest {
+func (a *DefaultAPIService) GetESignatureStatusForDocument(ctx context.Context, docID string) ApiGetESignatureStatusForDocumentRequest {
 	return ApiGetESignatureStatusForDocumentRequest{
 		ApiService: a,
 		ctx:        ctx,
-		docId:      docId,
+		docID:      docID,
 	}
 }
 
@@ -10802,8 +10082,8 @@ func (a *DefaultAPIService) GetESignatureStatusForDocumentExecute(r ApiGetESigna
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/document-generation/documents/{docId}/esignature"
-	localVarPath = strings.Replace(localVarPath, "{"+"docId"+"}", url.PathEscape(parameterValueToString(r.docId, "docId")), -1)
+	localVarPath := localBasePath + "/document-generation/documents/{docID}/esignature"
+	localVarPath = strings.Replace(localVarPath, "{"+"docID"+"}", url.PathEscape(parameterValueToString(r.docID, "docID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -10877,7 +10157,7 @@ func (r ApiGetExternalUserRequest) Execute() (*UserReference, *http.Response, er
 GetExternalUser Get information about external user
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param userID ID of the external user
+	@param userID unique generate ID of an external user
 	@return ApiGetExternalUserRequest
 */
 func (a *DefaultAPIService) GetExternalUser(ctx context.Context, userID string) ApiGetExternalUserRequest {
@@ -10979,7 +10259,7 @@ func (r ApiGetExternalUserCasesCountRequest) Execute() (*GetExternalUserCasesCou
 GetExternalUserCasesCount Get the number of cases the the given user has opened
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param userID ID of the external user
+	@param userID unique generate ID of an external user
 	@return ApiGetExternalUserCasesCountRequest
 */
 func (a *DefaultAPIService) GetExternalUserCasesCount(ctx context.Context, userID string) ApiGetExternalUserCasesCountRequest {
@@ -11168,7 +10448,7 @@ func (a *DefaultAPIService) GetFAQEntriesExecute(r ApiGetFAQEntriesRequest) ([]F
 type ApiGetFAQEntryRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	entryId    string
+	entryID    string
 }
 
 func (r ApiGetFAQEntryRequest) Execute() (*FAQEntry, *http.Response, error) {
@@ -11179,14 +10459,14 @@ func (r ApiGetFAQEntryRequest) Execute() (*FAQEntry, *http.Response, error) {
 GetFAQEntry Get a FAQ entry
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param entryId ID of the FAQ entry
+	@param entryID unique generate ID of a FAQ entry
 	@return ApiGetFAQEntryRequest
 */
-func (a *DefaultAPIService) GetFAQEntry(ctx context.Context, entryId string) ApiGetFAQEntryRequest {
+func (a *DefaultAPIService) GetFAQEntry(ctx context.Context, entryID string) ApiGetFAQEntryRequest {
 	return ApiGetFAQEntryRequest{
 		ApiService: a,
 		ctx:        ctx,
-		entryId:    entryId,
+		entryID:    entryID,
 	}
 }
 
@@ -11206,108 +10486,8 @@ func (a *DefaultAPIService) GetFAQEntryExecute(r ApiGetFAQEntryRequest) (*FAQEnt
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/faqs/entry/{entryId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"entryId"+"}", url.PathEscape(parameterValueToString(r.entryId, "entryId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiGetInvitationsRequest struct {
-	ctx        context.Context
-	ApiService *DefaultAPIService
-}
-
-func (r ApiGetInvitationsRequest) Execute() ([]Invitation, *http.Response, error) {
-	return r.ApiService.GetInvitationsExecute(r)
-}
-
-/*
-GetInvitations List tenancy invitations
-
-List all active tenancy invitations for the current user
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiGetInvitationsRequest
-*/
-func (a *DefaultAPIService) GetInvitations(ctx context.Context) ApiGetInvitationsRequest {
-	return ApiGetInvitationsRequest{
-		ApiService: a,
-		ctx:        ctx,
-	}
-}
-
-// Execute executes the request
-//
-//	@return []Invitation
-func (a *DefaultAPIService) GetInvitationsExecute(r ApiGetInvitationsRequest) ([]Invitation, *http.Response, error) {
-	var (
-		localVarHTTPMethod  = http.MethodGet
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue []Invitation
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetInvitations")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/invitations"
+	localVarPath := localBasePath + "/faqs/entry/{entryID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"entryID"+"}", url.PathEscape(parameterValueToString(r.entryID, "entryID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -11381,7 +10561,7 @@ func (r ApiGetLatestPriceIndexPointRequest) Execute() (*PriceIndexPoint, *http.R
 GetLatestPriceIndexPoint Get the current latest PriceIndexPoint
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param countryCode The country to get the latest inflation index of
+	@param countryCode a valid country code
 	@return ApiGetLatestPriceIndexPointRequest
 */
 func (a *DefaultAPIService) GetLatestPriceIndexPoint(ctx context.Context, countryCode string) ApiGetLatestPriceIndexPointRequest {
@@ -11472,7 +10652,7 @@ func (a *DefaultAPIService) GetLatestPriceIndexPointExecute(r ApiGetLatestPriceI
 type ApiGetMeterRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	meterId    string
+	meterID    string
 }
 
 func (r ApiGetMeterRequest) Execute() (*Meter, *http.Response, error) {
@@ -11485,14 +10665,14 @@ GetMeter Get meter
 Get a meter by ID
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param meterId ID of the required meter
+	@param meterID unique generate ID of a meter
 	@return ApiGetMeterRequest
 */
-func (a *DefaultAPIService) GetMeter(ctx context.Context, meterId string) ApiGetMeterRequest {
+func (a *DefaultAPIService) GetMeter(ctx context.Context, meterID string) ApiGetMeterRequest {
 	return ApiGetMeterRequest{
 		ApiService: a,
 		ctx:        ctx,
-		meterId:    meterId,
+		meterID:    meterID,
 	}
 }
 
@@ -11512,8 +10692,8 @@ func (a *DefaultAPIService) GetMeterExecute(r ApiGetMeterRequest) (*Meter, *http
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/meter/{meterId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"meterId"+"}", url.PathEscape(parameterValueToString(r.meterId, "meterId")), -1)
+	localVarPath := localBasePath + "/meter/{meterID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"meterID"+"}", url.PathEscape(parameterValueToString(r.meterID, "meterID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -11576,8 +10756,8 @@ func (a *DefaultAPIService) GetMeterExecute(r ApiGetMeterRequest) (*Meter, *http
 type ApiGetMeterReadingRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	meterId    string
-	readingId  string
+	meterID    string
+	readingID  string
 }
 
 func (r ApiGetMeterReadingRequest) Execute() (*MeterReading, *http.Response, error) {
@@ -11590,16 +10770,16 @@ GetMeterReading Get meter reading
 Get a meter reading by ID
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param meterId ID of the required meter
-	@param readingId ID of the required meter reading
+	@param meterID unique generate ID of a meter
+	@param readingID unique generate ID of a meter reading
 	@return ApiGetMeterReadingRequest
 */
-func (a *DefaultAPIService) GetMeterReading(ctx context.Context, meterId string, readingId string) ApiGetMeterReadingRequest {
+func (a *DefaultAPIService) GetMeterReading(ctx context.Context, meterID string, readingID string) ApiGetMeterReadingRequest {
 	return ApiGetMeterReadingRequest{
 		ApiService: a,
 		ctx:        ctx,
-		meterId:    meterId,
-		readingId:  readingId,
+		meterID:    meterID,
+		readingID:  readingID,
 	}
 }
 
@@ -11619,9 +10799,9 @@ func (a *DefaultAPIService) GetMeterReadingExecute(r ApiGetMeterReadingRequest) 
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/meter/{meterId}/reading/{readingId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"meterId"+"}", url.PathEscape(parameterValueToString(r.meterId, "meterId")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"readingId"+"}", url.PathEscape(parameterValueToString(r.readingId, "readingId")), -1)
+	localVarPath := localBasePath + "/meter/{meterID}/reading/{readingID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"meterID"+"}", url.PathEscape(parameterValueToString(r.meterID, "meterID")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"readingID"+"}", url.PathEscape(parameterValueToString(r.readingID, "readingID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -11684,7 +10864,7 @@ func (a *DefaultAPIService) GetMeterReadingExecute(r ApiGetMeterReadingRequest) 
 type ApiGetMeterReadingsRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	meterId    string
+	meterID    string
 }
 
 func (r ApiGetMeterReadingsRequest) Execute() ([]MeterReading, *http.Response, error) {
@@ -11697,14 +10877,14 @@ GetMeterReadings List meter readings
 List all meter readings for the current user
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param meterId ID of the required meter
+	@param meterID unique generate ID of a meter
 	@return ApiGetMeterReadingsRequest
 */
-func (a *DefaultAPIService) GetMeterReadings(ctx context.Context, meterId string) ApiGetMeterReadingsRequest {
+func (a *DefaultAPIService) GetMeterReadings(ctx context.Context, meterID string) ApiGetMeterReadingsRequest {
 	return ApiGetMeterReadingsRequest{
 		ApiService: a,
 		ctx:        ctx,
-		meterId:    meterId,
+		meterID:    meterID,
 	}
 }
 
@@ -11724,8 +10904,8 @@ func (a *DefaultAPIService) GetMeterReadingsExecute(r ApiGetMeterReadingsRequest
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/meter/{meterId}/readings"
-	localVarPath = strings.Replace(localVarPath, "{"+"meterId"+"}", url.PathEscape(parameterValueToString(r.meterId, "meterId")), -1)
+	localVarPath := localBasePath + "/meter/{meterID}/readings"
+	localVarPath = strings.Replace(localVarPath, "{"+"meterID"+"}", url.PathEscape(parameterValueToString(r.meterID, "meterID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -11888,7 +11068,7 @@ func (a *DefaultAPIService) GetMetersExecute(r ApiGetMetersRequest) ([]Meter, *h
 type ApiGetMetersByPropertyRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	propertyId string
+	propID     string
 }
 
 func (r ApiGetMetersByPropertyRequest) Execute() ([]Meter, *http.Response, error) {
@@ -11901,14 +11081,14 @@ GetMetersByProperty List meters for a property
 List all meters for a property
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param propertyId ID of the property to get meters for
+	@param propID unique generate ID of a property
 	@return ApiGetMetersByPropertyRequest
 */
-func (a *DefaultAPIService) GetMetersByProperty(ctx context.Context, propertyId string) ApiGetMetersByPropertyRequest {
+func (a *DefaultAPIService) GetMetersByProperty(ctx context.Context, propID string) ApiGetMetersByPropertyRequest {
 	return ApiGetMetersByPropertyRequest{
 		ApiService: a,
 		ctx:        ctx,
-		propertyId: propertyId,
+		propID:     propID,
 	}
 }
 
@@ -11928,112 +11108,8 @@ func (a *DefaultAPIService) GetMetersByPropertyExecute(r ApiGetMetersByPropertyR
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/meters/by-property/{propertyId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"propertyId"+"}", url.PathEscape(parameterValueToString(r.propertyId, "propertyId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiGetNoteRequest struct {
-	ctx        context.Context
-	ApiService *DefaultAPIService
-	noteId     string
-}
-
-func (r ApiGetNoteRequest) Execute() (*Note, *http.Response, error) {
-	return r.ApiService.GetNoteExecute(r)
-}
-
-/*
-GetNote Get note details
-
-Get the note with all its attributes
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param noteId ID of the required note
-	@return ApiGetNoteRequest
-*/
-func (a *DefaultAPIService) GetNote(ctx context.Context, noteId string) ApiGetNoteRequest {
-	return ApiGetNoteRequest{
-		ApiService: a,
-		ctx:        ctx,
-		noteId:     noteId,
-	}
-}
-
-// Execute executes the request
-//
-//	@return Note
-func (a *DefaultAPIService) GetNoteExecute(r ApiGetNoteRequest) (*Note, *http.Response, error) {
-	var (
-		localVarHTTPMethod  = http.MethodGet
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *Note
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetNote")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/note/{noteId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"noteId"+"}", url.PathEscape(parameterValueToString(r.noteId, "noteId")), -1)
+	localVarPath := localBasePath + "/meters/by-property/{propID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"propID"+"}", url.PathEscape(parameterValueToString(r.propID, "propID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -12207,7 +11283,7 @@ func (a *DefaultAPIService) GetPriceIndexPointExecute(r ApiGetPriceIndexPointReq
 type ApiGetPropertyRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	propId     string
+	propID     string
 }
 
 func (r ApiGetPropertyRequest) Execute() (*Property, *http.Response, error) {
@@ -12220,14 +11296,14 @@ GetProperty Get property details
 Get the property with all its attributes
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param propId ID of the required property
+	@param propID unique generate ID of a property
 	@return ApiGetPropertyRequest
 */
-func (a *DefaultAPIService) GetProperty(ctx context.Context, propId string) ApiGetPropertyRequest {
+func (a *DefaultAPIService) GetProperty(ctx context.Context, propID string) ApiGetPropertyRequest {
 	return ApiGetPropertyRequest{
 		ApiService: a,
 		ctx:        ctx,
-		propId:     propId,
+		propID:     propID,
 	}
 }
 
@@ -12247,8 +11323,8 @@ func (a *DefaultAPIService) GetPropertyExecute(r ApiGetPropertyRequest) (*Proper
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/properties/{propId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"propId"+"}", url.PathEscape(parameterValueToString(r.propId, "propId")), -1)
+	localVarPath := localBasePath + "/properties/{propID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"propID"+"}", url.PathEscape(parameterValueToString(r.propID, "propID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -12311,7 +11387,7 @@ func (a *DefaultAPIService) GetPropertyExecute(r ApiGetPropertyRequest) (*Proper
 type ApiGetPropertyCasesRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	propId     string
+	propID     string
 }
 
 func (r ApiGetPropertyCasesRequest) Execute() ([]Case, *http.Response, error) {
@@ -12324,14 +11400,14 @@ GetPropertyCases Get property cases
 Get all cases of the property that.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param propId ID of the property
+	@param propID unique generate ID of a property
 	@return ApiGetPropertyCasesRequest
 */
-func (a *DefaultAPIService) GetPropertyCases(ctx context.Context, propId string) ApiGetPropertyCasesRequest {
+func (a *DefaultAPIService) GetPropertyCases(ctx context.Context, propID string) ApiGetPropertyCasesRequest {
 	return ApiGetPropertyCasesRequest{
 		ApiService: a,
 		ctx:        ctx,
-		propId:     propId,
+		propID:     propID,
 	}
 }
 
@@ -12351,432 +11427,8 @@ func (a *DefaultAPIService) GetPropertyCasesExecute(r ApiGetPropertyCasesRequest
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/property/{propId}/cases"
-	localVarPath = strings.Replace(localVarPath, "{"+"propId"+"}", url.PathEscape(parameterValueToString(r.propId, "propId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiGetPropertyContactRequest struct {
-	ctx        context.Context
-	ApiService *DefaultAPIService
-	propId     string
-	entryId    string
-}
-
-func (r ApiGetPropertyContactRequest) Execute() (*PropertyContact, *http.Response, error) {
-	return r.ApiService.GetPropertyContactExecute(r)
-}
-
-/*
-GetPropertyContact Get details of a property contact
-
-Get details of a property contact
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param propId ID of the property
-	@param entryId ID of the contact
-	@return ApiGetPropertyContactRequest
-*/
-func (a *DefaultAPIService) GetPropertyContact(ctx context.Context, propId string, entryId string) ApiGetPropertyContactRequest {
-	return ApiGetPropertyContactRequest{
-		ApiService: a,
-		ctx:        ctx,
-		propId:     propId,
-		entryId:    entryId,
-	}
-}
-
-// Execute executes the request
-//
-//	@return PropertyContact
-func (a *DefaultAPIService) GetPropertyContactExecute(r ApiGetPropertyContactRequest) (*PropertyContact, *http.Response, error) {
-	var (
-		localVarHTTPMethod  = http.MethodGet
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *PropertyContact
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetPropertyContact")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/property/{propId}/contacts/{entryId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"propId"+"}", url.PathEscape(parameterValueToString(r.propId, "propId")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"entryId"+"}", url.PathEscape(parameterValueToString(r.entryId, "entryId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiGetPropertyContactsRequest struct {
-	ctx        context.Context
-	ApiService *DefaultAPIService
-	propId     string
-}
-
-func (r ApiGetPropertyContactsRequest) Execute() ([]PropertyContact, *http.Response, error) {
-	return r.ApiService.GetPropertyContactsExecute(r)
-}
-
-/*
-GetPropertyContacts Get all contacts for this property
-
-Get a list of contacts for this property
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param propId ID of the property
-	@return ApiGetPropertyContactsRequest
-*/
-func (a *DefaultAPIService) GetPropertyContacts(ctx context.Context, propId string) ApiGetPropertyContactsRequest {
-	return ApiGetPropertyContactsRequest{
-		ApiService: a,
-		ctx:        ctx,
-		propId:     propId,
-	}
-}
-
-// Execute executes the request
-//
-//	@return []PropertyContact
-func (a *DefaultAPIService) GetPropertyContactsExecute(r ApiGetPropertyContactsRequest) ([]PropertyContact, *http.Response, error) {
-	var (
-		localVarHTTPMethod  = http.MethodGet
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue []PropertyContact
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetPropertyContacts")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/property/{propId}/contacts"
-	localVarPath = strings.Replace(localVarPath, "{"+"propId"+"}", url.PathEscape(parameterValueToString(r.propId, "propId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiGetPropertyHistoryRequest struct {
-	ctx        context.Context
-	ApiService *DefaultAPIService
-	propId     string
-}
-
-func (r ApiGetPropertyHistoryRequest) Execute() (*PropertyHistory, *http.Response, error) {
-	return r.ApiService.GetPropertyHistoryExecute(r)
-}
-
-/*
-GetPropertyHistory Get property history
-
-# Get a list of all events that were captured for the related property
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param propId ID of the property
-	@return ApiGetPropertyHistoryRequest
-*/
-func (a *DefaultAPIService) GetPropertyHistory(ctx context.Context, propId string) ApiGetPropertyHistoryRequest {
-	return ApiGetPropertyHistoryRequest{
-		ApiService: a,
-		ctx:        ctx,
-		propId:     propId,
-	}
-}
-
-// Execute executes the request
-//
-//	@return PropertyHistory
-func (a *DefaultAPIService) GetPropertyHistoryExecute(r ApiGetPropertyHistoryRequest) (*PropertyHistory, *http.Response, error) {
-	var (
-		localVarHTTPMethod  = http.MethodGet
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *PropertyHistory
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetPropertyHistory")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/property/{propId}/history"
-	localVarPath = strings.Replace(localVarPath, "{"+"propId"+"}", url.PathEscape(parameterValueToString(r.propId, "propId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiGetPropertyHistoryEntryRequest struct {
-	ctx        context.Context
-	ApiService *DefaultAPIService
-	propId     string
-	entryId    string
-}
-
-func (r ApiGetPropertyHistoryEntryRequest) Execute() (*PropertyHistoryEntry, *http.Response, error) {
-	return r.ApiService.GetPropertyHistoryEntryExecute(r)
-}
-
-/*
-GetPropertyHistoryEntry Get property history entry
-
-Get an individual property history entry
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param propId ID of the property
-	@param entryId ID of the individual history entry to get
-	@return ApiGetPropertyHistoryEntryRequest
-*/
-func (a *DefaultAPIService) GetPropertyHistoryEntry(ctx context.Context, propId string, entryId string) ApiGetPropertyHistoryEntryRequest {
-	return ApiGetPropertyHistoryEntryRequest{
-		ApiService: a,
-		ctx:        ctx,
-		propId:     propId,
-		entryId:    entryId,
-	}
-}
-
-// Execute executes the request
-//
-//	@return PropertyHistoryEntry
-func (a *DefaultAPIService) GetPropertyHistoryEntryExecute(r ApiGetPropertyHistoryEntryRequest) (*PropertyHistoryEntry, *http.Response, error) {
-	var (
-		localVarHTTPMethod  = http.MethodGet
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *PropertyHistoryEntry
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetPropertyHistoryEntry")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/property/{propId}/history/{entryId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"propId"+"}", url.PathEscape(parameterValueToString(r.propId, "propId")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"entryId"+"}", url.PathEscape(parameterValueToString(r.entryId, "entryId")), -1)
+	localVarPath := localBasePath + "/property/{propID}/cases"
+	localVarPath = strings.Replace(localVarPath, "{"+"propID"+"}", url.PathEscape(parameterValueToString(r.propID, "propID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -12839,7 +11491,7 @@ func (a *DefaultAPIService) GetPropertyHistoryEntryExecute(r ApiGetPropertyHisto
 type ApiGetPropertyOwnerRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	ownerId    string
+	ownerID    string
 }
 
 func (r ApiGetPropertyOwnerRequest) Execute() (*PropertyOwner, *http.Response, error) {
@@ -12852,14 +11504,14 @@ GetPropertyOwner Get property owner details
 Get the property owner with all its attributes
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param ownerId ID of the required owner
+	@param ownerID unique generate ID of a property owner
 	@return ApiGetPropertyOwnerRequest
 */
-func (a *DefaultAPIService) GetPropertyOwner(ctx context.Context, ownerId string) ApiGetPropertyOwnerRequest {
+func (a *DefaultAPIService) GetPropertyOwner(ctx context.Context, ownerID string) ApiGetPropertyOwnerRequest {
 	return ApiGetPropertyOwnerRequest{
 		ApiService: a,
 		ctx:        ctx,
-		ownerId:    ownerId,
+		ownerID:    ownerID,
 	}
 }
 
@@ -12879,8 +11531,8 @@ func (a *DefaultAPIService) GetPropertyOwnerExecute(r ApiGetPropertyOwnerRequest
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/owner/{ownerId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"ownerId"+"}", url.PathEscape(parameterValueToString(r.ownerId, "ownerId")), -1)
+	localVarPath := localBasePath + "/owner/{ownerID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"ownerID"+"}", url.PathEscape(parameterValueToString(r.ownerID, "ownerID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -12943,7 +11595,7 @@ func (a *DefaultAPIService) GetPropertyOwnerExecute(r ApiGetPropertyOwnerRequest
 type ApiGetPropertyTenancyRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	propId     string
+	propID     string
 }
 
 func (r ApiGetPropertyTenancyRequest) Execute() (*Tenancy, *http.Response, error) {
@@ -12954,14 +11606,14 @@ func (r ApiGetPropertyTenancyRequest) Execute() (*Tenancy, *http.Response, error
 GetPropertyTenancy Get the current tenancy for the property
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param propId ID of the property
+	@param propID unique generate ID of a property
 	@return ApiGetPropertyTenancyRequest
 */
-func (a *DefaultAPIService) GetPropertyTenancy(ctx context.Context, propId string) ApiGetPropertyTenancyRequest {
+func (a *DefaultAPIService) GetPropertyTenancy(ctx context.Context, propID string) ApiGetPropertyTenancyRequest {
 	return ApiGetPropertyTenancyRequest{
 		ApiService: a,
 		ctx:        ctx,
-		propId:     propId,
+		propID:     propID,
 	}
 }
 
@@ -12981,8 +11633,8 @@ func (a *DefaultAPIService) GetPropertyTenancyExecute(r ApiGetPropertyTenancyReq
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/property/{propId}/tenancy"
-	localVarPath = strings.Replace(localVarPath, "{"+"propId"+"}", url.PathEscape(parameterValueToString(r.propId, "propId")), -1)
+	localVarPath := localBasePath + "/property/{propID}/tenancy"
+	localVarPath = strings.Replace(localVarPath, "{"+"propID"+"}", url.PathEscape(parameterValueToString(r.propID, "propID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -13045,7 +11697,7 @@ func (a *DefaultAPIService) GetPropertyTenancyExecute(r ApiGetPropertyTenancyReq
 type ApiGetReportDefinitionRequest struct {
 	ctx          context.Context
 	ApiService   *DefaultAPIService
-	definitionId string
+	definitionID string
 }
 
 func (r ApiGetReportDefinitionRequest) Execute() (*ReportDefinition, *http.Response, error) {
@@ -13058,14 +11710,14 @@ GetReportDefinition Method for GetReportDefinition
 Get the report definition with all its attributes
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param definitionId ID of the report definition
+	@param definitionID unique generated ID of a report definition
 	@return ApiGetReportDefinitionRequest
 */
-func (a *DefaultAPIService) GetReportDefinition(ctx context.Context, definitionId string) ApiGetReportDefinitionRequest {
+func (a *DefaultAPIService) GetReportDefinition(ctx context.Context, definitionID string) ApiGetReportDefinitionRequest {
 	return ApiGetReportDefinitionRequest{
 		ApiService:   a,
 		ctx:          ctx,
-		definitionId: definitionId,
+		definitionID: definitionID,
 	}
 }
 
@@ -13085,8 +11737,8 @@ func (a *DefaultAPIService) GetReportDefinitionExecute(r ApiGetReportDefinitionR
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/report/{definitionId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"definitionId"+"}", url.PathEscape(parameterValueToString(r.definitionId, "definitionId")), -1)
+	localVarPath := localBasePath + "/report/{definitionID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"definitionID"+"}", url.PathEscape(parameterValueToString(r.definitionID, "definitionID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -13249,7 +11901,7 @@ func (a *DefaultAPIService) GetReportDefinitionsExecute(r ApiGetReportDefinition
 type ApiGetReportExecutionRequest struct {
 	ctx         context.Context
 	ApiService  *DefaultAPIService
-	executionId string
+	executionID string
 }
 
 func (r ApiGetReportExecutionRequest) Execute() (*ReportExecution, *http.Response, error) {
@@ -13262,14 +11914,14 @@ GetReportExecution Get report execution details
 Get the report execution with all its attributes
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param executionId ID of the report execution
+	@param executionID unique generated ID of a report execution
 	@return ApiGetReportExecutionRequest
 */
-func (a *DefaultAPIService) GetReportExecution(ctx context.Context, executionId string) ApiGetReportExecutionRequest {
+func (a *DefaultAPIService) GetReportExecution(ctx context.Context, executionID string) ApiGetReportExecutionRequest {
 	return ApiGetReportExecutionRequest{
 		ApiService:  a,
 		ctx:         ctx,
-		executionId: executionId,
+		executionID: executionID,
 	}
 }
 
@@ -13289,8 +11941,8 @@ func (a *DefaultAPIService) GetReportExecutionExecute(r ApiGetReportExecutionReq
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/report/executions/{executionId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"executionId"+"}", url.PathEscape(parameterValueToString(r.executionId, "executionId")), -1)
+	localVarPath := localBasePath + "/report/executions/{executionID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"executionID"+"}", url.PathEscape(parameterValueToString(r.executionID, "executionID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -13463,7 +12115,7 @@ func (a *DefaultAPIService) GetReportExecutionsExecute(r ApiGetReportExecutionsR
 type ApiGetServiceProviderRequest struct {
 	ctx               context.Context
 	ApiService        *DefaultAPIService
-	serviceProviderId string
+	serviceProviderID string
 }
 
 func (r ApiGetServiceProviderRequest) Execute() (*ServiceProvider, *http.Response, error) {
@@ -13474,14 +12126,14 @@ func (r ApiGetServiceProviderRequest) Execute() (*ServiceProvider, *http.Respons
 GetServiceProvider Get the service provider with the given ID
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param serviceProviderId ID of the required service provider
+	@param serviceProviderID unique generated ID of a service provider
 	@return ApiGetServiceProviderRequest
 */
-func (a *DefaultAPIService) GetServiceProvider(ctx context.Context, serviceProviderId string) ApiGetServiceProviderRequest {
+func (a *DefaultAPIService) GetServiceProvider(ctx context.Context, serviceProviderID string) ApiGetServiceProviderRequest {
 	return ApiGetServiceProviderRequest{
 		ApiService:        a,
 		ctx:               ctx,
-		serviceProviderId: serviceProviderId,
+		serviceProviderID: serviceProviderID,
 	}
 }
 
@@ -13501,8 +12153,8 @@ func (a *DefaultAPIService) GetServiceProviderExecute(r ApiGetServiceProviderReq
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/service-provider/{serviceProviderId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"serviceProviderId"+"}", url.PathEscape(parameterValueToString(r.serviceProviderId, "serviceProviderId")), -1)
+	localVarPath := localBasePath + "/service-provider/{serviceProviderID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"serviceProviderID"+"}", url.PathEscape(parameterValueToString(r.serviceProviderID, "serviceProviderID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -13565,7 +12217,7 @@ func (a *DefaultAPIService) GetServiceProviderExecute(r ApiGetServiceProviderReq
 type ApiGetSignedDocumentAuditDownloadRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	docId      string
+	docID      string
 }
 
 func (r ApiGetSignedDocumentAuditDownloadRequest) Execute() (*DocumentPDFResponse, *http.Response, error) {
@@ -13576,14 +12228,14 @@ func (r ApiGetSignedDocumentAuditDownloadRequest) Execute() (*DocumentPDFRespons
 GetSignedDocumentAuditDownload Get the audit information for the signed document
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param docId ID of the document generation
+	@param docID unique generated ID of a document generation
 	@return ApiGetSignedDocumentAuditDownloadRequest
 */
-func (a *DefaultAPIService) GetSignedDocumentAuditDownload(ctx context.Context, docId string) ApiGetSignedDocumentAuditDownloadRequest {
+func (a *DefaultAPIService) GetSignedDocumentAuditDownload(ctx context.Context, docID string) ApiGetSignedDocumentAuditDownloadRequest {
 	return ApiGetSignedDocumentAuditDownloadRequest{
 		ApiService: a,
 		ctx:        ctx,
-		docId:      docId,
+		docID:      docID,
 	}
 }
 
@@ -13603,8 +12255,8 @@ func (a *DefaultAPIService) GetSignedDocumentAuditDownloadExecute(r ApiGetSigned
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/document-generation/documents/{docId}/esignature/download-audits"
-	localVarPath = strings.Replace(localVarPath, "{"+"docId"+"}", url.PathEscape(parameterValueToString(r.docId, "docId")), -1)
+	localVarPath := localBasePath + "/document-generation/documents/{docID}/esignature/download-audits"
+	localVarPath = strings.Replace(localVarPath, "{"+"docID"+"}", url.PathEscape(parameterValueToString(r.docID, "docID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -13667,7 +12319,7 @@ func (a *DefaultAPIService) GetSignedDocumentAuditDownloadExecute(r ApiGetSigned
 type ApiGetSignedDocumentDownloadRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	docId      string
+	docID      string
 }
 
 func (r ApiGetSignedDocumentDownloadRequest) Execute() (*DocumentPDFResponse, *http.Response, error) {
@@ -13678,14 +12330,14 @@ func (r ApiGetSignedDocumentDownloadRequest) Execute() (*DocumentPDFResponse, *h
 GetSignedDocumentDownload Get the signed document
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param docId ID of the document generation
+	@param docID unique generated ID of a document generation
 	@return ApiGetSignedDocumentDownloadRequest
 */
-func (a *DefaultAPIService) GetSignedDocumentDownload(ctx context.Context, docId string) ApiGetSignedDocumentDownloadRequest {
+func (a *DefaultAPIService) GetSignedDocumentDownload(ctx context.Context, docID string) ApiGetSignedDocumentDownloadRequest {
 	return ApiGetSignedDocumentDownloadRequest{
 		ApiService: a,
 		ctx:        ctx,
-		docId:      docId,
+		docID:      docID,
 	}
 }
 
@@ -13705,8 +12357,8 @@ func (a *DefaultAPIService) GetSignedDocumentDownloadExecute(r ApiGetSignedDocum
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/document-generation/documents/{docId}/esignature/download-document"
-	localVarPath = strings.Replace(localVarPath, "{"+"docId"+"}", url.PathEscape(parameterValueToString(r.docId, "docId")), -1)
+	localVarPath := localBasePath + "/document-generation/documents/{docID}/esignature/download-document"
+	localVarPath = strings.Replace(localVarPath, "{"+"docID"+"}", url.PathEscape(parameterValueToString(r.docID, "docID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -13769,7 +12421,7 @@ func (a *DefaultAPIService) GetSignedDocumentDownloadExecute(r ApiGetSignedDocum
 type ApiGetTenancyRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	tenancyId  string
+	tenancyID  string
 }
 
 func (r ApiGetTenancyRequest) Execute() (*Tenancy, *http.Response, error) {
@@ -13780,14 +12432,14 @@ func (r ApiGetTenancyRequest) Execute() (*Tenancy, *http.Response, error) {
 GetTenancy Get the tenancy with the given ID
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param tenancyId ID of the tenancy
+	@param tenancyID unique generated ID of a tenancy
 	@return ApiGetTenancyRequest
 */
-func (a *DefaultAPIService) GetTenancy(ctx context.Context, tenancyId string) ApiGetTenancyRequest {
+func (a *DefaultAPIService) GetTenancy(ctx context.Context, tenancyID string) ApiGetTenancyRequest {
 	return ApiGetTenancyRequest{
 		ApiService: a,
 		ctx:        ctx,
-		tenancyId:  tenancyId,
+		tenancyID:  tenancyID,
 	}
 }
 
@@ -13807,8 +12459,8 @@ func (a *DefaultAPIService) GetTenancyExecute(r ApiGetTenancyRequest) (*Tenancy,
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/tenancy/{tenancyId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"tenancyId"+"}", url.PathEscape(parameterValueToString(r.tenancyId, "tenancyId")), -1)
+	localVarPath := localBasePath + "/tenancy/{tenancyID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"tenancyID"+"}", url.PathEscape(parameterValueToString(r.tenancyID, "tenancyID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -13871,7 +12523,7 @@ func (a *DefaultAPIService) GetTenancyExecute(r ApiGetTenancyRequest) (*Tenancy,
 type ApiGetTenancyHistoryRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	propId     string
+	propID     string
 }
 
 func (r ApiGetTenancyHistoryRequest) Execute() ([]Tenancy, *http.Response, error) {
@@ -13882,14 +12534,14 @@ func (r ApiGetTenancyHistoryRequest) Execute() ([]Tenancy, *http.Response, error
 GetTenancyHistory Get the tenancy history for the property
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param propId ID of the property
+	@param propID unique generate ID of a property
 	@return ApiGetTenancyHistoryRequest
 */
-func (a *DefaultAPIService) GetTenancyHistory(ctx context.Context, propId string) ApiGetTenancyHistoryRequest {
+func (a *DefaultAPIService) GetTenancyHistory(ctx context.Context, propID string) ApiGetTenancyHistoryRequest {
 	return ApiGetTenancyHistoryRequest{
 		ApiService: a,
 		ctx:        ctx,
-		propId:     propId,
+		propID:     propID,
 	}
 }
 
@@ -13909,8 +12561,8 @@ func (a *DefaultAPIService) GetTenancyHistoryExecute(r ApiGetTenancyHistoryReque
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/property/{propId}/tenancy/history"
-	localVarPath = strings.Replace(localVarPath, "{"+"propId"+"}", url.PathEscape(parameterValueToString(r.propId, "propId")), -1)
+	localVarPath := localBasePath + "/property/{propID}/tenancy/history"
+	localVarPath = strings.Replace(localVarPath, "{"+"propID"+"}", url.PathEscape(parameterValueToString(r.propID, "propID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -13973,7 +12625,7 @@ func (a *DefaultAPIService) GetTenancyHistoryExecute(r ApiGetTenancyHistoryReque
 type ApiGetTenancyUpdateRequest struct {
 	ctx             context.Context
 	ApiService      *DefaultAPIService
-	tenancyUpdateId string
+	tenancyUpdateID string
 }
 
 func (r ApiGetTenancyUpdateRequest) Execute() (*TenancyUpdate, *http.Response, error) {
@@ -13984,14 +12636,14 @@ func (r ApiGetTenancyUpdateRequest) Execute() (*TenancyUpdate, *http.Response, e
 GetTenancyUpdate Get the tenancy update with the given ID
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param tenancyUpdateId ID of the tenancy update
+	@param tenancyUpdateID unique generated ID of a tenancy update
 	@return ApiGetTenancyUpdateRequest
 */
-func (a *DefaultAPIService) GetTenancyUpdate(ctx context.Context, tenancyUpdateId string) ApiGetTenancyUpdateRequest {
+func (a *DefaultAPIService) GetTenancyUpdate(ctx context.Context, tenancyUpdateID string) ApiGetTenancyUpdateRequest {
 	return ApiGetTenancyUpdateRequest{
 		ApiService:      a,
 		ctx:             ctx,
-		tenancyUpdateId: tenancyUpdateId,
+		tenancyUpdateID: tenancyUpdateID,
 	}
 }
 
@@ -14011,8 +12663,8 @@ func (a *DefaultAPIService) GetTenancyUpdateExecute(r ApiGetTenancyUpdateRequest
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/tenancy-update/{tenancyUpdateId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"tenancyUpdateId"+"}", url.PathEscape(parameterValueToString(r.tenancyUpdateId, "tenancyUpdateId")), -1)
+	localVarPath := localBasePath + "/tenancy-update/{tenancyUpdateID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"tenancyUpdateID"+"}", url.PathEscape(parameterValueToString(r.tenancyUpdateID, "tenancyUpdateID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -14075,7 +12727,7 @@ func (a *DefaultAPIService) GetTenancyUpdateExecute(r ApiGetTenancyUpdateRequest
 type ApiGetTenancyUpdatesRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	tenancyId  string
+	tenancyID  string
 }
 
 func (r ApiGetTenancyUpdatesRequest) Execute() ([]TenancyUpdate, *http.Response, error) {
@@ -14086,14 +12738,14 @@ func (r ApiGetTenancyUpdatesRequest) Execute() ([]TenancyUpdate, *http.Response,
 GetTenancyUpdates Get the tenancy updates for the tenancy
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param tenancyId ID of the tenancy
+	@param tenancyID unique generated ID of a tenancy
 	@return ApiGetTenancyUpdatesRequest
 */
-func (a *DefaultAPIService) GetTenancyUpdates(ctx context.Context, tenancyId string) ApiGetTenancyUpdatesRequest {
+func (a *DefaultAPIService) GetTenancyUpdates(ctx context.Context, tenancyID string) ApiGetTenancyUpdatesRequest {
 	return ApiGetTenancyUpdatesRequest{
 		ApiService: a,
 		ctx:        ctx,
-		tenancyId:  tenancyId,
+		tenancyID:  tenancyID,
 	}
 }
 
@@ -14113,8 +12765,8 @@ func (a *DefaultAPIService) GetTenancyUpdatesExecute(r ApiGetTenancyUpdatesReque
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/tenancy/{tenancyId}/updates"
-	localVarPath = strings.Replace(localVarPath, "{"+"tenancyId"+"}", url.PathEscape(parameterValueToString(r.tenancyId, "tenancyId")), -1)
+	localVarPath := localBasePath + "/tenancy/{tenancyID}/updates"
+	localVarPath = strings.Replace(localVarPath, "{"+"tenancyID"+"}", url.PathEscape(parameterValueToString(r.tenancyID, "tenancyID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -14177,7 +12829,7 @@ func (a *DefaultAPIService) GetTenancyUpdatesExecute(r ApiGetTenancyUpdatesReque
 type ApiGetTenantRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	tenantId   string
+	tenantID   string
 }
 
 func (r ApiGetTenantRequest) Execute() (*Tenant, *http.Response, error) {
@@ -14190,14 +12842,14 @@ GetTenant Get tenant details
 Get all details of the tenant
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param tenantId ID of the tenant to get
+	@param tenantID unique generated ID of a tenant
 	@return ApiGetTenantRequest
 */
-func (a *DefaultAPIService) GetTenant(ctx context.Context, tenantId string) ApiGetTenantRequest {
+func (a *DefaultAPIService) GetTenant(ctx context.Context, tenantID string) ApiGetTenantRequest {
 	return ApiGetTenantRequest{
 		ApiService: a,
 		ctx:        ctx,
-		tenantId:   tenantId,
+		tenantID:   tenantID,
 	}
 }
 
@@ -14217,8 +12869,8 @@ func (a *DefaultAPIService) GetTenantExecute(r ApiGetTenantRequest) (*Tenant, *h
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/tenant/{tenantId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"tenantId"+"}", url.PathEscape(parameterValueToString(r.tenantId, "tenantId")), -1)
+	localVarPath := localBasePath + "/tenant/{tenantID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"tenantID"+"}", url.PathEscape(parameterValueToString(r.tenantID, "tenantID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -14281,7 +12933,7 @@ func (a *DefaultAPIService) GetTenantExecute(r ApiGetTenantRequest) (*Tenant, *h
 type ApiGetTenantTenanciesRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	tenantId   string
+	tenantID   string
 }
 
 func (r ApiGetTenantTenanciesRequest) Execute() ([]Tenancy, *http.Response, error) {
@@ -14292,14 +12944,14 @@ func (r ApiGetTenantTenanciesRequest) Execute() ([]Tenancy, *http.Response, erro
 GetTenantTenancies Get all tenancies for the tenant
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param tenantId ID of the tenant to get
+	@param tenantID unique generated ID of a tenant
 	@return ApiGetTenantTenanciesRequest
 */
-func (a *DefaultAPIService) GetTenantTenancies(ctx context.Context, tenantId string) ApiGetTenantTenanciesRequest {
+func (a *DefaultAPIService) GetTenantTenancies(ctx context.Context, tenantID string) ApiGetTenantTenanciesRequest {
 	return ApiGetTenantTenanciesRequest{
 		ApiService: a,
 		ctx:        ctx,
-		tenantId:   tenantId,
+		tenantID:   tenantID,
 	}
 }
 
@@ -14319,8 +12971,8 @@ func (a *DefaultAPIService) GetTenantTenanciesExecute(r ApiGetTenantTenanciesReq
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/tenant/{tenantId}/tenancies"
-	localVarPath = strings.Replace(localVarPath, "{"+"tenantId"+"}", url.PathEscape(parameterValueToString(r.tenantId, "tenantId")), -1)
+	localVarPath := localBasePath + "/tenant/{tenantID}/tenancies"
+	localVarPath = strings.Replace(localVarPath, "{"+"tenantID"+"}", url.PathEscape(parameterValueToString(r.tenantID, "tenantID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -14494,7 +13146,7 @@ func (r ApiGetWorkflowDefinitionRequest) Execute() (*WorkflowDefinition, *http.R
 GetWorkflowDefinition Get workflow definition details
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param definitionID ID of the workflow definition to get
+	@param definitionID unique generated ID of a workflow definition
 	@return ApiGetWorkflowDefinitionRequest
 */
 func (a *DefaultAPIService) GetWorkflowDefinition(ctx context.Context, definitionID string) ApiGetWorkflowDefinitionRequest {
@@ -14596,7 +13248,7 @@ func (r ApiGetWorkflowEntrypointRequest) Execute() (*WorkflowEntrypoint, *http.R
 GetWorkflowEntrypoint Get the workflow entry point for the workflow definition
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param entrypointID ID of the workflow entry point to get
+	@param entrypointID unique generated ID of a workflow entry point
 	@return ApiGetWorkflowEntrypointRequest
 */
 func (a *DefaultAPIService) GetWorkflowEntrypoint(ctx context.Context, entrypointID string) ApiGetWorkflowEntrypointRequest {
@@ -14796,7 +13448,7 @@ func (r ApiGetWorkflowEntrypointsForDefinitionRequest) Execute() ([]WorkflowEntr
 GetWorkflowEntrypointsForDefinition Get the workflow entry points for the workflow definition
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param definitionID ID of the workflow definition to get
+	@param definitionID unique generated ID of a workflow definition
 	@return ApiGetWorkflowEntrypointsForDefinitionRequest
 */
 func (a *DefaultAPIService) GetWorkflowEntrypointsForDefinition(ctx context.Context, definitionID string) ApiGetWorkflowEntrypointsForDefinitionRequest {
@@ -14898,7 +13550,7 @@ func (r ApiGetWorkflowExecutionRequest) Execute() (*WorkflowExecution, *http.Res
 GetWorkflowExecution Get workflow execution details
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param executionID ID of the workflow execution to get
+	@param executionID unique generated ID of a workflow execution
 	@return ApiGetWorkflowExecutionRequest
 */
 func (a *DefaultAPIService) GetWorkflowExecution(ctx context.Context, executionID string) ApiGetWorkflowExecutionRequest {
@@ -15000,7 +13652,7 @@ func (r ApiGetWorkflowExecutionTriggerRequest) Execute() (*WorkflowTrigger, *htt
 GetWorkflowExecutionTrigger Get workflow trigger for an execution
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param executionID ID of the workflow execution to get
+	@param executionID unique generated ID of a workflow execution
 	@return ApiGetWorkflowExecutionTriggerRequest
 */
 func (a *DefaultAPIService) GetWorkflowExecutionTrigger(ctx context.Context, executionID string) ApiGetWorkflowExecutionTriggerRequest {
@@ -15302,279 +13954,22 @@ func (a *DefaultAPIService) InternalAddPriceIndexPointExecute(r ApiInternalAddPr
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiInviteTenantRequest struct {
-	ctx                     context.Context
-	ApiService              *DefaultAPIService
-	createInvitationRequest *CreateInvitationRequest
-}
-
-// Invite a tenant to a property
-func (r ApiInviteTenantRequest) CreateInvitationRequest(createInvitationRequest CreateInvitationRequest) ApiInviteTenantRequest {
-	r.createInvitationRequest = &createInvitationRequest
-	return r
-}
-
-func (r ApiInviteTenantRequest) Execute() (*Invitation, *http.Response, error) {
-	return r.ApiService.InviteTenantExecute(r)
-}
-
-/*
-InviteTenant Invite a tenant
-
-Invite a tenant to a property
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiInviteTenantRequest
-*/
-func (a *DefaultAPIService) InviteTenant(ctx context.Context) ApiInviteTenantRequest {
-	return ApiInviteTenantRequest{
-		ApiService: a,
-		ctx:        ctx,
-	}
-}
-
-// Execute executes the request
-//
-//	@return Invitation
-func (a *DefaultAPIService) InviteTenantExecute(r ApiInviteTenantRequest) (*Invitation, *http.Response, error) {
-	var (
-		localVarHTTPMethod  = http.MethodPost
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *Invitation
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.InviteTenant")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/invitation"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.createInvitationRequest == nil {
-		return localVarReturnValue, nil, reportError("createInvitationRequest is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.createInvitationRequest
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiPublicAddCaseAttachmentRequest struct {
-	ctx        context.Context
-	ApiService *DefaultAPIService
-	code       *string
-	challenge  *string
-	caseId     string
-	data       *os.File
-}
-
-// the unique code that grants access to the case
-func (r ApiPublicAddCaseAttachmentRequest) Code(code string) ApiPublicAddCaseAttachmentRequest {
-	r.code = &code
-	return r
-}
-
-// the captcha challenge string
-func (r ApiPublicAddCaseAttachmentRequest) Challenge(challenge string) ApiPublicAddCaseAttachmentRequest {
-	r.challenge = &challenge
-	return r
-}
-
-func (r ApiPublicAddCaseAttachmentRequest) Data(data *os.File) ApiPublicAddCaseAttachmentRequest {
-	r.data = data
-	return r
-}
-
-func (r ApiPublicAddCaseAttachmentRequest) Execute() (*Attachment, *http.Response, error) {
-	return r.ApiService.PublicAddCaseAttachmentExecute(r)
-}
-
-/*
-PublicAddCaseAttachment Add new attachment to an existing case
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param caseId ID of the case to comment
-	@return ApiPublicAddCaseAttachmentRequest
-*/
-func (a *DefaultAPIService) PublicAddCaseAttachment(ctx context.Context, caseId string) ApiPublicAddCaseAttachmentRequest {
-	return ApiPublicAddCaseAttachmentRequest{
-		ApiService: a,
-		ctx:        ctx,
-		caseId:     caseId,
-	}
-}
-
-// Execute executes the request
-//
-//	@return Attachment
-func (a *DefaultAPIService) PublicAddCaseAttachmentExecute(r ApiPublicAddCaseAttachmentRequest) (*Attachment, *http.Response, error) {
-	var (
-		localVarHTTPMethod  = http.MethodPost
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *Attachment
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.PublicAddCaseAttachment")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/public/case/{caseId}/attachment"
-	localVarPath = strings.Replace(localVarPath, "{"+"caseId"+"}", url.PathEscape(parameterValueToString(r.caseId, "caseId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.code == nil {
-		return localVarReturnValue, nil, reportError("code is required and must be specified")
-	}
-	if r.challenge == nil {
-		return localVarReturnValue, nil, reportError("challenge is required and must be specified")
-	}
-
-	parameterAddToHeaderOrQuery(localVarQueryParams, "code", r.code, "")
-	parameterAddToHeaderOrQuery(localVarQueryParams, "challenge", r.challenge, "")
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"multipart/form-data"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	var dataLocalVarFormFileName string
-	var dataLocalVarFileName string
-	var dataLocalVarFileBytes []byte
-
-	dataLocalVarFormFileName = "data"
-	dataLocalVarFile := r.data
-
-	if dataLocalVarFile != nil {
-		fbs, _ := io.ReadAll(dataLocalVarFile)
-
-		dataLocalVarFileBytes = fbs
-		dataLocalVarFileName = dataLocalVarFile.Name()
-		dataLocalVarFile.Close()
-		formFiles = append(formFiles, formFile{fileBytes: dataLocalVarFileBytes, fileName: dataLocalVarFileName, formFileName: dataLocalVarFormFileName})
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
 type ApiPublicAddCaseCommentRequest struct {
 	ctx                      context.Context
 	ApiService               *DefaultAPIService
+	caseID                   string
 	code                     *string
 	challenge                *string
-	caseId                   string
 	createCaseCommentRequest *CreateCaseCommentRequest
 }
 
-// the unique code that grants access to the case
+// A unique code that grants access to public users to the requested resource. Depending on the context, the code can have a different format and be validated in a different way. The parameter can be either provided in a path or as a query parameter
 func (r ApiPublicAddCaseCommentRequest) Code(code string) ApiPublicAddCaseCommentRequest {
 	r.code = &code
 	return r
 }
 
-// the captcha challenge string
+// A user challenge code (e.g. reCaptcha response), used for protection of public API endpoints against bots or other malicious actors. A challenge should only be used when posting data to the backend. For reading operations, the code parameter should be used. The content of the challenge can be one of reCaptcha, code, certificate and should be prefixed accordingly. The challenge can also be ommitted by registered users, as those will be validated against their session.
 func (r ApiPublicAddCaseCommentRequest) Challenge(challenge string) ApiPublicAddCaseCommentRequest {
 	r.challenge = &challenge
 	return r
@@ -15595,14 +13990,14 @@ PublicAddCaseComment Add new case comment
 Add a new comment to the case
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param caseId ID of the case to comment
+	@param caseID unique generate ID of a case
 	@return ApiPublicAddCaseCommentRequest
 */
-func (a *DefaultAPIService) PublicAddCaseComment(ctx context.Context, caseId string) ApiPublicAddCaseCommentRequest {
+func (a *DefaultAPIService) PublicAddCaseComment(ctx context.Context, caseID string) ApiPublicAddCaseCommentRequest {
 	return ApiPublicAddCaseCommentRequest{
 		ApiService: a,
 		ctx:        ctx,
-		caseId:     caseId,
+		caseID:     caseID,
 	}
 }
 
@@ -15622,8 +14017,8 @@ func (a *DefaultAPIService) PublicAddCaseCommentExecute(r ApiPublicAddCaseCommen
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/public/case/{caseId}/comment"
-	localVarPath = strings.Replace(localVarPath, "{"+"caseId"+"}", url.PathEscape(parameterValueToString(r.caseId, "caseId")), -1)
+	localVarPath := localBasePath + "/public/case/{caseID}/comment"
+	localVarPath = strings.Replace(localVarPath, "{"+"caseID"+"}", url.PathEscape(parameterValueToString(r.caseID, "caseID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -15696,126 +14091,19 @@ func (a *DefaultAPIService) PublicAddCaseCommentExecute(r ApiPublicAddCaseCommen
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiPublicCleanupAttachmentsRequest struct {
-	ctx                       context.Context
-	ApiService                *DefaultAPIService
-	code                      string
-	cleanupAttachmentsRequest *CleanupAttachmentsRequest
-}
-
-// Case that needs to be created by the user for the organization
-func (r ApiPublicCleanupAttachmentsRequest) CleanupAttachmentsRequest(cleanupAttachmentsRequest CleanupAttachmentsRequest) ApiPublicCleanupAttachmentsRequest {
-	r.cleanupAttachmentsRequest = &cleanupAttachmentsRequest
-	return r
-}
-
-func (r ApiPublicCleanupAttachmentsRequest) Execute() (*PublicCleanupAttachments200Response, *http.Response, error) {
-	return r.ApiService.PublicCleanupAttachmentsExecute(r)
-}
-
-/*
-PublicCleanupAttachments Cleanup attachments that are not referenced by any entity
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param code the unique endpoint code that grants access upload attachments
-	@return ApiPublicCleanupAttachmentsRequest
-*/
-func (a *DefaultAPIService) PublicCleanupAttachments(ctx context.Context, code string) ApiPublicCleanupAttachmentsRequest {
-	return ApiPublicCleanupAttachmentsRequest{
-		ApiService: a,
-		ctx:        ctx,
-		code:       code,
-	}
-}
-
-// Execute executes the request
-//
-//	@return PublicCleanupAttachments200Response
-func (a *DefaultAPIService) PublicCleanupAttachmentsExecute(r ApiPublicCleanupAttachmentsRequest) (*PublicCleanupAttachments200Response, *http.Response, error) {
-	var (
-		localVarHTTPMethod  = http.MethodPost
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *PublicCleanupAttachments200Response
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.PublicCleanupAttachments")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/public/attachments/cleanup/{code}"
-	localVarPath = strings.Replace(localVarPath, "{"+"code"+"}", url.PathEscape(parameterValueToString(r.code, "code")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.cleanupAttachmentsRequest == nil {
-		return localVarReturnValue, nil, reportError("cleanupAttachmentsRequest is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.cleanupAttachmentsRequest
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
 type ApiPublicCreateAppointmentRequest struct {
 	ctx                              context.Context
 	ApiService                       *DefaultAPIService
-	scheduleId                       string
+	scheduleID                       string
+	challenge                        *string
 	locale                           *string
 	createOrUpdateAppointmentRequest *CreateOrUpdateAppointmentRequest
+}
+
+// A user challenge code (e.g. reCaptcha response), used for protection of public API endpoints against bots or other malicious actors. A challenge should only be used when posting data to the backend. For reading operations, the code parameter should be used. The content of the challenge can be one of reCaptcha, code, certificate and should be prefixed accordingly. The challenge can also be ommitted by registered users, as those will be validated against their session.
+func (r ApiPublicCreateAppointmentRequest) Challenge(challenge string) ApiPublicCreateAppointmentRequest {
+	r.challenge = &challenge
+	return r
 }
 
 // the string containing the language for the user
@@ -15838,14 +14126,14 @@ func (r ApiPublicCreateAppointmentRequest) Execute() (*Appointment, *http.Respon
 PublicCreateAppointment Create a new appointment for the given schedule
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param scheduleId The id of the schedule to assign the appointment to
+	@param scheduleID unique generate ID of a appointment schedule
 	@return ApiPublicCreateAppointmentRequest
 */
-func (a *DefaultAPIService) PublicCreateAppointment(ctx context.Context, scheduleId string) ApiPublicCreateAppointmentRequest {
+func (a *DefaultAPIService) PublicCreateAppointment(ctx context.Context, scheduleID string) ApiPublicCreateAppointmentRequest {
 	return ApiPublicCreateAppointmentRequest{
 		ApiService: a,
 		ctx:        ctx,
-		scheduleId: scheduleId,
+		scheduleID: scheduleID,
 	}
 }
 
@@ -15865,12 +14153,15 @@ func (a *DefaultAPIService) PublicCreateAppointmentExecute(r ApiPublicCreateAppo
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/public/calendar/appointments/{scheduleId}/entry"
-	localVarPath = strings.Replace(localVarPath, "{"+"scheduleId"+"}", url.PathEscape(parameterValueToString(r.scheduleId, "scheduleId")), -1)
+	localVarPath := localBasePath + "/public/calendar/appointments/{scheduleID}/entry"
+	localVarPath = strings.Replace(localVarPath, "{"+"scheduleID"+"}", url.PathEscape(parameterValueToString(r.scheduleID, "scheduleID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.challenge == nil {
+		return localVarReturnValue, nil, reportError("challenge is required and must be specified")
+	}
 	if r.locale == nil {
 		return localVarReturnValue, nil, reportError("locale is required and must be specified")
 	}
@@ -15878,6 +14169,7 @@ func (a *DefaultAPIService) PublicCreateAppointmentExecute(r ApiPublicCreateAppo
 		return localVarReturnValue, nil, reportError("createOrUpdateAppointmentRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "challenge", r.challenge, "")
 	parameterAddToHeaderOrQuery(localVarQueryParams, "locale", r.locale, "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -15944,13 +14236,13 @@ type ApiPublicCreateCaseRequest struct {
 	createCaseRequest *CreateCaseRequest
 }
 
-// the unique code of the public endpoint, where case will be created
+// A unique code that grants access to public users to the requested resource. Depending on the context, the code can have a different format and be validated in a different way. The parameter can be either provided in a path or as a query parameter
 func (r ApiPublicCreateCaseRequest) Code(code string) ApiPublicCreateCaseRequest {
 	r.code = &code
 	return r
 }
 
-// the captcha challenge string
+// A user challenge code (e.g. reCaptcha response), used for protection of public API endpoints against bots or other malicious actors. A challenge should only be used when posting data to the backend. For reading operations, the code parameter should be used. The content of the challenge can be one of reCaptcha, code, certificate and should be prefixed accordingly. The challenge can also be ommitted by registered users, as those will be validated against their session.
 func (r ApiPublicCreateCaseRequest) Challenge(challenge string) ApiPublicCreateCaseRequest {
 	r.challenge = &challenge
 	return r
@@ -15973,7 +14265,7 @@ func (r ApiPublicCreateCaseRequest) Execute() (*CreateCaseResponse, *http.Respon
 }
 
 /*
-PublicCreateCase Raise a new from a public endpoint.
+PublicCreateCase Raise a new case from a public endpoint.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiPublicCreateCaseRequest
@@ -16082,6 +14374,13 @@ type ApiPublicDeleteAppointmentRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
 	code       string
+	challenge  *string
+}
+
+// A user challenge code (e.g. reCaptcha response), used for protection of public API endpoints against bots or other malicious actors. A challenge should only be used when posting data to the backend. For reading operations, the code parameter should be used. The content of the challenge can be one of reCaptcha, code, certificate and should be prefixed accordingly. The challenge can also be ommitted by registered users, as those will be validated against their session.
+func (r ApiPublicDeleteAppointmentRequest) Challenge(challenge string) ApiPublicDeleteAppointmentRequest {
+	r.challenge = &challenge
+	return r
 }
 
 func (r ApiPublicDeleteAppointmentRequest) Execute() (*http.Response, error) {
@@ -16092,7 +14391,7 @@ func (r ApiPublicDeleteAppointmentRequest) Execute() (*http.Response, error) {
 PublicDeleteAppointment Delete an appointment
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param code the unique code that grants access to the appointment
+	@param code A unique code that grants access to public users to the requested resource. Depending on the context, the code can have a different format and be validated in a different way. The parameter can be either provided in a path or as a query parameter
 	@return ApiPublicDeleteAppointmentRequest
 */
 func (a *DefaultAPIService) PublicDeleteAppointment(ctx context.Context, code string) ApiPublicDeleteAppointmentRequest {
@@ -16122,7 +14421,11 @@ func (a *DefaultAPIService) PublicDeleteAppointmentExecute(r ApiPublicDeleteAppo
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.challenge == nil {
+		return nil, reportError("challenge is required and must be specified")
+	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "challenge", r.challenge, "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -16171,18 +14474,18 @@ func (a *DefaultAPIService) PublicDeleteAppointmentExecute(r ApiPublicDeleteAppo
 type ApiPublicDeleteAttachmentRequest struct {
 	ctx          context.Context
 	ApiService   *DefaultAPIService
+	attachmentID string
 	code         *string
-	attachmentId string
 	challenge    *string
 }
 
-// unique access code that grants access to public users
+// A unique code that grants access to public users to the requested resource. Depending on the context, the code can have a different format and be validated in a different way. The parameter can be either provided in a path or as a query parameter
 func (r ApiPublicDeleteAttachmentRequest) Code(code string) ApiPublicDeleteAttachmentRequest {
 	r.code = &code
 	return r
 }
 
-// the captcha challenge string
+// A user challenge code (e.g. reCaptcha response), used for protection of public API endpoints against bots or other malicious actors. A challenge should only be used when posting data to the backend. For reading operations, the code parameter should be used. The content of the challenge can be one of reCaptcha, code, certificate and should be prefixed accordingly. The challenge can also be ommitted by registered users, as those will be validated against their session.
 func (r ApiPublicDeleteAttachmentRequest) Challenge(challenge string) ApiPublicDeleteAttachmentRequest {
 	r.challenge = &challenge
 	return r
@@ -16196,14 +14499,14 @@ func (r ApiPublicDeleteAttachmentRequest) Execute() (*http.Response, error) {
 PublicDeleteAttachment Delete the file upload with the given ID
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param attachmentId ID of the file attachment to get
+	@param attachmentID unique generate ID of a file attachment
 	@return ApiPublicDeleteAttachmentRequest
 */
-func (a *DefaultAPIService) PublicDeleteAttachment(ctx context.Context, attachmentId string) ApiPublicDeleteAttachmentRequest {
+func (a *DefaultAPIService) PublicDeleteAttachment(ctx context.Context, attachmentID string) ApiPublicDeleteAttachmentRequest {
 	return ApiPublicDeleteAttachmentRequest{
 		ApiService:   a,
 		ctx:          ctx,
-		attachmentId: attachmentId,
+		attachmentID: attachmentID,
 	}
 }
 
@@ -16220,8 +14523,8 @@ func (a *DefaultAPIService) PublicDeleteAttachmentExecute(r ApiPublicDeleteAttac
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/public/attachment/{attachmentId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"attachmentId"+"}", url.PathEscape(parameterValueToString(r.attachmentId, "attachmentId")), -1)
+	localVarPath := localBasePath + "/public/attachment/{attachmentID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"attachmentID"+"}", url.PathEscape(parameterValueToString(r.attachmentID, "attachmentID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -16283,19 +14586,19 @@ func (a *DefaultAPIService) PublicDeleteAttachmentExecute(r ApiPublicDeleteAttac
 type ApiPublicDeleteCaseCommentRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
+	caseID     string
+	commentID  string
 	code       *string
 	challenge  *string
-	caseId     string
-	commentId  string
 }
 
-// the unique code that grants access to the form
+// A unique code that grants access to public users to the requested resource. Depending on the context, the code can have a different format and be validated in a different way. The parameter can be either provided in a path or as a query parameter
 func (r ApiPublicDeleteCaseCommentRequest) Code(code string) ApiPublicDeleteCaseCommentRequest {
 	r.code = &code
 	return r
 }
 
-// the captcha challenge string
+// A user challenge code (e.g. reCaptcha response), used for protection of public API endpoints against bots or other malicious actors. A challenge should only be used when posting data to the backend. For reading operations, the code parameter should be used. The content of the challenge can be one of reCaptcha, code, certificate and should be prefixed accordingly. The challenge can also be ommitted by registered users, as those will be validated against their session.
 func (r ApiPublicDeleteCaseCommentRequest) Challenge(challenge string) ApiPublicDeleteCaseCommentRequest {
 	r.challenge = &challenge
 	return r
@@ -16311,16 +14614,16 @@ PublicDeleteCaseComment Delete a comment
 Delete the comment with all it's attachments
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param caseId ID of the related case
-	@param commentId ID of the required comment
+	@param caseID unique generate ID of a case
+	@param commentID unique generate ID of a case comment
 	@return ApiPublicDeleteCaseCommentRequest
 */
-func (a *DefaultAPIService) PublicDeleteCaseComment(ctx context.Context, caseId string, commentId string) ApiPublicDeleteCaseCommentRequest {
+func (a *DefaultAPIService) PublicDeleteCaseComment(ctx context.Context, caseID string, commentID string) ApiPublicDeleteCaseCommentRequest {
 	return ApiPublicDeleteCaseCommentRequest{
 		ApiService: a,
 		ctx:        ctx,
-		caseId:     caseId,
-		commentId:  commentId,
+		caseID:     caseID,
+		commentID:  commentID,
 	}
 }
 
@@ -16337,9 +14640,9 @@ func (a *DefaultAPIService) PublicDeleteCaseCommentExecute(r ApiPublicDeleteCase
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/public/case/{caseId}/comment/{commentId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"caseId"+"}", url.PathEscape(parameterValueToString(r.caseId, "caseId")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"commentId"+"}", url.PathEscape(parameterValueToString(r.commentId, "commentId")), -1)
+	localVarPath := localBasePath + "/public/case/{caseID}/comment/{commentID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"caseID"+"}", url.PathEscape(parameterValueToString(r.caseID, "caseID")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"commentID"+"}", url.PathEscape(parameterValueToString(r.commentID, "commentID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -16412,7 +14715,7 @@ func (r ApiPublicGetAppointmentRequest) Execute() (*Appointment, *http.Response,
 PublicGetAppointment Get appointment details
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param code the unique code that grants access to the appointment
+	@param code A unique code that grants access to public users to the requested resource. Depending on the context, the code can have a different format and be validated in a different way. The parameter can be either provided in a path or as a query parameter
 	@return ApiPublicGetAppointmentRequest
 */
 func (a *DefaultAPIService) PublicGetAppointment(ctx context.Context, code string) ApiPublicGetAppointmentRequest {
@@ -16514,7 +14817,7 @@ func (r ApiPublicGetAppointmentInIcalFormatRequest) Execute() (string, *http.Res
 PublicGetAppointmentInIcalFormat Get appointment in ical format
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param code the unique code that grants access to the appointment
+	@param code A unique code that grants access to public users to the requested resource. Depending on the context, the code can have a different format and be validated in a different way. The parameter can be either provided in a path or as a query parameter
 	@return ApiPublicGetAppointmentInIcalFormatRequest
 */
 func (a *DefaultAPIService) PublicGetAppointmentInIcalFormat(ctx context.Context, code string) ApiPublicGetAppointmentInIcalFormatRequest {
@@ -16605,7 +14908,7 @@ func (a *DefaultAPIService) PublicGetAppointmentInIcalFormatExecute(r ApiPublicG
 type ApiPublicGetAppointmentScheduleRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	scheduleId string
+	scheduleID string
 }
 
 func (r ApiPublicGetAppointmentScheduleRequest) Execute() (*AppointmentSchedule, *http.Response, error) {
@@ -16618,14 +14921,14 @@ PublicGetAppointmentSchedule Get appointment schedule details
 # Get the appointment schedule with all its attributes and slots
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param scheduleId ID of the appointment schedule to get
+	@param scheduleID unique generate ID of a appointment schedule
 	@return ApiPublicGetAppointmentScheduleRequest
 */
-func (a *DefaultAPIService) PublicGetAppointmentSchedule(ctx context.Context, scheduleId string) ApiPublicGetAppointmentScheduleRequest {
+func (a *DefaultAPIService) PublicGetAppointmentSchedule(ctx context.Context, scheduleID string) ApiPublicGetAppointmentScheduleRequest {
 	return ApiPublicGetAppointmentScheduleRequest{
 		ApiService: a,
 		ctx:        ctx,
-		scheduleId: scheduleId,
+		scheduleID: scheduleID,
 	}
 }
 
@@ -16645,8 +14948,8 @@ func (a *DefaultAPIService) PublicGetAppointmentScheduleExecute(r ApiPublicGetAp
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/public/calendar/appointments/schedules/{scheduleId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"scheduleId"+"}", url.PathEscape(parameterValueToString(r.scheduleId, "scheduleId")), -1)
+	localVarPath := localBasePath + "/public/calendar/appointments/schedules/{scheduleID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"scheduleID"+"}", url.PathEscape(parameterValueToString(r.scheduleID, "scheduleID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -16709,11 +15012,11 @@ func (a *DefaultAPIService) PublicGetAppointmentScheduleExecute(r ApiPublicGetAp
 type ApiPublicGetAttachmentRequest struct {
 	ctx          context.Context
 	ApiService   *DefaultAPIService
+	attachmentID string
 	code         *string
-	attachmentId string
 }
 
-// unique access code that grants access to public users
+// A unique code that grants access to public users to the requested resource. Depending on the context, the code can have a different format and be validated in a different way. The parameter can be either provided in a path or as a query parameter
 func (r ApiPublicGetAttachmentRequest) Code(code string) ApiPublicGetAttachmentRequest {
 	r.code = &code
 	return r
@@ -16729,14 +15032,14 @@ PublicGetAttachment Get a file attachment
 Get the file attachment with the given ID
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param attachmentId ID of the file attachment to get
+	@param attachmentID unique generate ID of a file attachment
 	@return ApiPublicGetAttachmentRequest
 */
-func (a *DefaultAPIService) PublicGetAttachment(ctx context.Context, attachmentId string) ApiPublicGetAttachmentRequest {
+func (a *DefaultAPIService) PublicGetAttachment(ctx context.Context, attachmentID string) ApiPublicGetAttachmentRequest {
 	return ApiPublicGetAttachmentRequest{
 		ApiService:   a,
 		ctx:          ctx,
-		attachmentId: attachmentId,
+		attachmentID: attachmentID,
 	}
 }
 
@@ -16756,8 +15059,8 @@ func (a *DefaultAPIService) PublicGetAttachmentExecute(r ApiPublicGetAttachmentR
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/public/attachment/{attachmentId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"attachmentId"+"}", url.PathEscape(parameterValueToString(r.attachmentId, "attachmentId")), -1)
+	localVarPath := localBasePath + "/public/attachment/{attachmentID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"attachmentID"+"}", url.PathEscape(parameterValueToString(r.attachmentID, "attachmentID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -16824,11 +15127,11 @@ func (a *DefaultAPIService) PublicGetAttachmentExecute(r ApiPublicGetAttachmentR
 type ApiPublicGetCaseRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
+	caseID     string
 	code       *string
-	caseId     string
 }
 
-// the unique code that grants access to the case
+// A unique code that grants access to public users to the requested resource. Depending on the context, the code can have a different format and be validated in a different way. The parameter can be either provided in a path or as a query parameter
 func (r ApiPublicGetCaseRequest) Code(code string) ApiPublicGetCaseRequest {
 	r.code = &code
 	return r
@@ -16844,14 +15147,14 @@ PublicGetCase Get case details
 Get the case with all its attributes and comments
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param caseId ID of the case to get
+	@param caseID unique generate ID of a case
 	@return ApiPublicGetCaseRequest
 */
-func (a *DefaultAPIService) PublicGetCase(ctx context.Context, caseId string) ApiPublicGetCaseRequest {
+func (a *DefaultAPIService) PublicGetCase(ctx context.Context, caseID string) ApiPublicGetCaseRequest {
 	return ApiPublicGetCaseRequest{
 		ApiService: a,
 		ctx:        ctx,
-		caseId:     caseId,
+		caseID:     caseID,
 	}
 }
 
@@ -16871,8 +15174,8 @@ func (a *DefaultAPIService) PublicGetCaseExecute(r ApiPublicGetCaseRequest) (*Ca
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/public/case/{caseId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"caseId"+"}", url.PathEscape(parameterValueToString(r.caseId, "caseId")), -1)
+	localVarPath := localBasePath + "/public/case/{caseID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"caseID"+"}", url.PathEscape(parameterValueToString(r.caseID, "caseID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -16939,7 +15242,7 @@ func (a *DefaultAPIService) PublicGetCaseExecute(r ApiPublicGetCaseRequest) (*Ca
 type ApiPublicGetCaseReportingEndpointInfoRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	code       string
+	endpointID string
 }
 
 func (r ApiPublicGetCaseReportingEndpointInfoRequest) Execute() (*CaseReportingEndpointInfo, *http.Response, error) {
@@ -16950,14 +15253,14 @@ func (r ApiPublicGetCaseReportingEndpointInfoRequest) Execute() (*CaseReportingE
 PublicGetCaseReportingEndpointInfo Get the information for the case reporting endpoint with the given code
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param code the unique code that grants access to the case reporting endpoint
+	@param endpointID unique generate ID of a case reporting endpoint
 	@return ApiPublicGetCaseReportingEndpointInfoRequest
 */
-func (a *DefaultAPIService) PublicGetCaseReportingEndpointInfo(ctx context.Context, code string) ApiPublicGetCaseReportingEndpointInfoRequest {
+func (a *DefaultAPIService) PublicGetCaseReportingEndpointInfo(ctx context.Context, endpointID string) ApiPublicGetCaseReportingEndpointInfoRequest {
 	return ApiPublicGetCaseReportingEndpointInfoRequest{
 		ApiService: a,
 		ctx:        ctx,
-		code:       code,
+		endpointID: endpointID,
 	}
 }
 
@@ -16977,8 +15280,8 @@ func (a *DefaultAPIService) PublicGetCaseReportingEndpointInfoExecute(r ApiPubli
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/public/cases/endpoint/{code}/info"
-	localVarPath = strings.Replace(localVarPath, "{"+"code"+"}", url.PathEscape(parameterValueToString(r.code, "code")), -1)
+	localVarPath := localBasePath + "/public/cases/endpoint/{endpointID}/info"
+	localVarPath = strings.Replace(localVarPath, "{"+"endpointID"+"}", url.PathEscape(parameterValueToString(r.endpointID, "endpointID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -17041,19 +15344,19 @@ func (a *DefaultAPIService) PublicGetCaseReportingEndpointInfoExecute(r ApiPubli
 type ApiPublicUpdateCaseStatusRequest struct {
 	ctx                     context.Context
 	ApiService              *DefaultAPIService
-	caseId                  string
+	caseID                  string
 	code                    *string
 	challenge               *string
 	updateCaseStatusRequest *UpdateCaseStatusRequest
 }
 
-// the unique code that grants access to the case
+// A unique code that grants access to public users to the requested resource. Depending on the context, the code can have a different format and be validated in a different way. The parameter can be either provided in a path or as a query parameter
 func (r ApiPublicUpdateCaseStatusRequest) Code(code string) ApiPublicUpdateCaseStatusRequest {
 	r.code = &code
 	return r
 }
 
-// the captcha challenge string
+// A user challenge code (e.g. reCaptcha response), used for protection of public API endpoints against bots or other malicious actors. A challenge should only be used when posting data to the backend. For reading operations, the code parameter should be used. The content of the challenge can be one of reCaptcha, code, certificate and should be prefixed accordingly. The challenge can also be ommitted by registered users, as those will be validated against their session.
 func (r ApiPublicUpdateCaseStatusRequest) Challenge(challenge string) ApiPublicUpdateCaseStatusRequest {
 	r.challenge = &challenge
 	return r
@@ -17074,14 +15377,14 @@ PublicUpdateCaseStatus Add new case status
 Add new status change to the case
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param caseId ID of the case to update
+	@param caseID unique generate ID of a case
 	@return ApiPublicUpdateCaseStatusRequest
 */
-func (a *DefaultAPIService) PublicUpdateCaseStatus(ctx context.Context, caseId string) ApiPublicUpdateCaseStatusRequest {
+func (a *DefaultAPIService) PublicUpdateCaseStatus(ctx context.Context, caseID string) ApiPublicUpdateCaseStatusRequest {
 	return ApiPublicUpdateCaseStatusRequest{
 		ApiService: a,
 		ctx:        ctx,
-		caseId:     caseId,
+		caseID:     caseID,
 	}
 }
 
@@ -17101,8 +15404,8 @@ func (a *DefaultAPIService) PublicUpdateCaseStatusExecute(r ApiPublicUpdateCaseS
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/public/case/{caseId}/status"
-	localVarPath = strings.Replace(localVarPath, "{"+"caseId"+"}", url.PathEscape(parameterValueToString(r.caseId, "caseId")), -1)
+	localVarPath := localBasePath + "/public/case/{caseID}/status"
+	localVarPath = strings.Replace(localVarPath, "{"+"caseID"+"}", url.PathEscape(parameterValueToString(r.caseID, "caseID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -17183,13 +15486,13 @@ type ApiPublicUploadAttachmentRequest struct {
 	data       *os.File
 }
 
-// unique code that grants access to public users
+// A unique code that grants access to public users to the requested resource. Depending on the context, the code can have a different format and be validated in a different way. The parameter can be either provided in a path or as a query parameter
 func (r ApiPublicUploadAttachmentRequest) Code(code string) ApiPublicUploadAttachmentRequest {
 	r.code = &code
 	return r
 }
 
-// captcha response string for validation
+// A user challenge code (e.g. reCaptcha response), used for protection of public API endpoints against bots or other malicious actors. A challenge should only be used when posting data to the backend. For reading operations, the code parameter should be used. The content of the challenge can be one of reCaptcha, code, certificate and should be prefixed accordingly. The challenge can also be ommitted by registered users, as those will be validated against their session.
 func (r ApiPublicUploadAttachmentRequest) Challenge(challenge string) ApiPublicUploadAttachmentRequest {
 	r.challenge = &challenge
 	return r
@@ -17243,11 +15546,12 @@ func (a *DefaultAPIService) PublicUploadAttachmentExecute(r ApiPublicUploadAttac
 	if r.code == nil {
 		return localVarReturnValue, nil, reportError("code is required and must be specified")
 	}
+	if r.challenge == nil {
+		return localVarReturnValue, nil, reportError("challenge is required and must be specified")
+	}
 
 	parameterAddToHeaderOrQuery(localVarQueryParams, "code", r.code, "")
-	if r.challenge != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "challenge", r.challenge, "")
-	}
+	parameterAddToHeaderOrQuery(localVarQueryParams, "challenge", r.challenge, "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"multipart/form-data"}
 
@@ -17317,45 +15621,46 @@ func (a *DefaultAPIService) PublicUploadAttachmentExecute(r ApiPublicUploadAttac
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiPublicValidateCaseDataRequest struct {
+type ApiPublicValidateFormDataRequest struct {
 	ctx                   context.Context
 	ApiService            *DefaultAPIService
-	code                  string
-	templateId            string
+	challenge             *string
 	formValidationRequest *FormValidationRequest
 }
 
+// A user challenge code (e.g. reCaptcha response), used for protection of public API endpoints against bots or other malicious actors. A challenge should only be used when posting data to the backend. For reading operations, the code parameter should be used. The content of the challenge can be one of reCaptcha, code, certificate and should be prefixed accordingly. The challenge can also be ommitted by registered users, as those will be validated against their session.
+func (r ApiPublicValidateFormDataRequest) Challenge(challenge string) ApiPublicValidateFormDataRequest {
+	r.challenge = &challenge
+	return r
+}
+
 // Custom form data that needs to be validated
-func (r ApiPublicValidateCaseDataRequest) FormValidationRequest(formValidationRequest FormValidationRequest) ApiPublicValidateCaseDataRequest {
+func (r ApiPublicValidateFormDataRequest) FormValidationRequest(formValidationRequest FormValidationRequest) ApiPublicValidateFormDataRequest {
 	r.formValidationRequest = &formValidationRequest
 	return r
 }
 
-func (r ApiPublicValidateCaseDataRequest) Execute() (*FormValidationResponse, *http.Response, error) {
-	return r.ApiService.PublicValidateCaseDataExecute(r)
+func (r ApiPublicValidateFormDataRequest) Execute() (*FormValidationResponse, *http.Response, error) {
+	return r.ApiService.PublicValidateFormDataExecute(r)
 }
 
 /*
-PublicValidateCaseData Validate the data provided by the user against the template
+PublicValidateFormData Validate the data provided by the user against a custom form
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param code the unique code that grants access to the case reporting endpoint
-	@param templateId the ID of the template for which to validate the data
-	@return ApiPublicValidateCaseDataRequest
+	@return ApiPublicValidateFormDataRequest
 */
-func (a *DefaultAPIService) PublicValidateCaseData(ctx context.Context, code string, templateId string) ApiPublicValidateCaseDataRequest {
-	return ApiPublicValidateCaseDataRequest{
+func (a *DefaultAPIService) PublicValidateFormData(ctx context.Context) ApiPublicValidateFormDataRequest {
+	return ApiPublicValidateFormDataRequest{
 		ApiService: a,
 		ctx:        ctx,
-		code:       code,
-		templateId: templateId,
 	}
 }
 
 // Execute executes the request
 //
 //	@return FormValidationResponse
-func (a *DefaultAPIService) PublicValidateCaseDataExecute(r ApiPublicValidateCaseDataRequest) (*FormValidationResponse, *http.Response, error) {
+func (a *DefaultAPIService) PublicValidateFormDataExecute(r ApiPublicValidateFormDataRequest) (*FormValidationResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -17363,22 +15668,24 @@ func (a *DefaultAPIService) PublicValidateCaseDataExecute(r ApiPublicValidateCas
 		localVarReturnValue *FormValidationResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.PublicValidateCaseData")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.PublicValidateFormData")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/public/case/endpoint/{code}/template/{templateId}/validate"
-	localVarPath = strings.Replace(localVarPath, "{"+"code"+"}", url.PathEscape(parameterValueToString(r.code, "code")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"templateId"+"}", url.PathEscape(parameterValueToString(r.templateId, "templateId")), -1)
+	localVarPath := localBasePath + "/public/validate/formData"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.challenge == nil {
+		return localVarReturnValue, nil, reportError("challenge is required and must be specified")
+	}
 	if r.formValidationRequest == nil {
 		return localVarReturnValue, nil, reportError("formValidationRequest is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "challenge", r.challenge, "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -17436,10 +15743,22 @@ func (a *DefaultAPIService) PublicValidateCaseDataExecute(r ApiPublicValidateCas
 }
 
 type ApiPublicValidateUserEmailRequest struct {
-	ctx        context.Context
-	ApiService *DefaultAPIService
-	code       string
-	email      string
+	ctx                    context.Context
+	ApiService             *DefaultAPIService
+	challenge              *string
+	emailValidationRequest *EmailValidationRequest
+}
+
+// A user challenge code (e.g. reCaptcha response), used for protection of public API endpoints against bots or other malicious actors. A challenge should only be used when posting data to the backend. For reading operations, the code parameter should be used. The content of the challenge can be one of reCaptcha, code, certificate and should be prefixed accordingly. The challenge can also be ommitted by registered users, as those will be validated against their session.
+func (r ApiPublicValidateUserEmailRequest) Challenge(challenge string) ApiPublicValidateUserEmailRequest {
+	r.challenge = &challenge
+	return r
+}
+
+// User email that needs to be validated
+func (r ApiPublicValidateUserEmailRequest) EmailValidationRequest(emailValidationRequest EmailValidationRequest) ApiPublicValidateUserEmailRequest {
+	r.emailValidationRequest = &emailValidationRequest
+	return r
 }
 
 func (r ApiPublicValidateUserEmailRequest) Execute() (*EmailValidationResponse, *http.Response, error) {
@@ -17450,16 +15769,12 @@ func (r ApiPublicValidateUserEmailRequest) Execute() (*EmailValidationResponse, 
 PublicValidateUserEmail Validate user's email and point out problems if there are any
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param code the unique code that grants access to the user
-	@param email the email to be validated
 	@return ApiPublicValidateUserEmailRequest
 */
-func (a *DefaultAPIService) PublicValidateUserEmail(ctx context.Context, code string, email string) ApiPublicValidateUserEmailRequest {
+func (a *DefaultAPIService) PublicValidateUserEmail(ctx context.Context) ApiPublicValidateUserEmailRequest {
 	return ApiPublicValidateUserEmailRequest{
 		ApiService: a,
 		ctx:        ctx,
-		code:       code,
-		email:      email,
 	}
 }
 
@@ -17479,16 +15794,21 @@ func (a *DefaultAPIService) PublicValidateUserEmailExecute(r ApiPublicValidateUs
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/public/email/validation"
-	localVarPath = strings.Replace(localVarPath, "{"+"code"+"}", url.PathEscape(parameterValueToString(r.code, "code")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"email"+"}", url.PathEscape(parameterValueToString(r.email, "email")), -1)
+	localVarPath := localBasePath + "/public/validate/email"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.challenge == nil {
+		return localVarReturnValue, nil, reportError("challenge is required and must be specified")
+	}
+	if r.emailValidationRequest == nil {
+		return localVarReturnValue, nil, reportError("emailValidationRequest is required and must be specified")
+	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "challenge", r.challenge, "")
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -17504,6 +15824,8 @@ func (a *DefaultAPIService) PublicValidateUserEmailExecute(r ApiPublicValidateUs
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.emailValidationRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -17762,7 +16084,7 @@ func (a *DefaultAPIService) QueryAppointmentTemplatesExecute(r ApiQueryAppointme
 type ApiQueryAppointmentsRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	windowId   string
+	windowID   string
 }
 
 func (r ApiQueryAppointmentsRequest) Execute() ([]Appointment, *http.Response, error) {
@@ -17773,14 +16095,14 @@ func (r ApiQueryAppointmentsRequest) Execute() ([]Appointment, *http.Response, e
 QueryAppointments Get the appointments of a Window
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param windowId ID of the appointment window
+	@param windowID unique generate ID of an appointment window
 	@return ApiQueryAppointmentsRequest
 */
-func (a *DefaultAPIService) QueryAppointments(ctx context.Context, windowId string) ApiQueryAppointmentsRequest {
+func (a *DefaultAPIService) QueryAppointments(ctx context.Context, windowID string) ApiQueryAppointmentsRequest {
 	return ApiQueryAppointmentsRequest{
 		ApiService: a,
 		ctx:        ctx,
-		windowId:   windowId,
+		windowID:   windowID,
 	}
 }
 
@@ -17800,8 +16122,8 @@ func (a *DefaultAPIService) QueryAppointmentsExecute(r ApiQueryAppointmentsReque
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/calendar/appointments/window/{windowId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"windowId"+"}", url.PathEscape(parameterValueToString(r.windowId, "windowId")), -1)
+	localVarPath := localBasePath + "/calendar/appointments/window/{windowID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"windowID"+"}", url.PathEscape(parameterValueToString(r.windowID, "windowID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -18644,7 +16966,7 @@ func (r ApiQueryExternalUserCasesRequest) Execute() (*QueryExternalUserCasesResp
 QueryExternalUserCases Get the cases the the given user has opened
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param userID ID of the external user
+	@param userID unique generate ID of an external user
 	@return ApiQueryExternalUserCasesRequest
 */
 func (a *DefaultAPIService) QueryExternalUserCases(ctx context.Context, userID string) ApiQueryExternalUserCasesRequest {
@@ -19054,7 +17376,7 @@ func (a *DefaultAPIService) QueryPropertyOwnersExecute(r ApiQueryPropertyOwnersR
 type ApiQueryServiceProviderCasesRequest struct {
 	ctx               context.Context
 	ApiService        *DefaultAPIService
-	serviceProviderId string
+	serviceProviderID string
 }
 
 func (r ApiQueryServiceProviderCasesRequest) Execute() (*QueryServiceProviderCasesResponse, *http.Response, error) {
@@ -19065,14 +17387,14 @@ func (r ApiQueryServiceProviderCasesRequest) Execute() (*QueryServiceProviderCas
 QueryServiceProviderCases Get the cases the the given service provider has access to
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param serviceProviderId ID of the required service provider
+	@param serviceProviderID unique generated ID of a service provider
 	@return ApiQueryServiceProviderCasesRequest
 */
-func (a *DefaultAPIService) QueryServiceProviderCases(ctx context.Context, serviceProviderId string) ApiQueryServiceProviderCasesRequest {
+func (a *DefaultAPIService) QueryServiceProviderCases(ctx context.Context, serviceProviderID string) ApiQueryServiceProviderCasesRequest {
 	return ApiQueryServiceProviderCasesRequest{
 		ApiService:        a,
 		ctx:               ctx,
-		serviceProviderId: serviceProviderId,
+		serviceProviderID: serviceProviderID,
 	}
 }
 
@@ -19092,8 +17414,8 @@ func (a *DefaultAPIService) QueryServiceProviderCasesExecute(r ApiQueryServicePr
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/service-provider/{serviceProviderId}/cases"
-	localVarPath = strings.Replace(localVarPath, "{"+"serviceProviderId"+"}", url.PathEscape(parameterValueToString(r.serviceProviderId, "serviceProviderId")), -1)
+	localVarPath := localBasePath + "/service-provider/{serviceProviderID}/cases"
+	localVarPath = strings.Replace(localVarPath, "{"+"serviceProviderID"+"}", url.PathEscape(parameterValueToString(r.serviceProviderID, "serviceProviderID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -19598,7 +17920,7 @@ func (a *DefaultAPIService) QueryWorkflowExecutionsExecute(r ApiQueryWorkflowExe
 type ApiRequestESignaturesForDocumentRequest struct {
 	ctx                       context.Context
 	ApiService                *DefaultAPIService
-	docId                     string
+	docID                     string
 	documentESignatureRequest *DocumentESignatureRequest
 }
 
@@ -19615,14 +17937,14 @@ func (r ApiRequestESignaturesForDocumentRequest) Execute() (*DocumentESignatureS
 RequestESignaturesForDocument Trigger a signing request for a document
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param docId ID of the document generation
+	@param docID unique generated ID of a document generation
 	@return ApiRequestESignaturesForDocumentRequest
 */
-func (a *DefaultAPIService) RequestESignaturesForDocument(ctx context.Context, docId string) ApiRequestESignaturesForDocumentRequest {
+func (a *DefaultAPIService) RequestESignaturesForDocument(ctx context.Context, docID string) ApiRequestESignaturesForDocumentRequest {
 	return ApiRequestESignaturesForDocumentRequest{
 		ApiService: a,
 		ctx:        ctx,
-		docId:      docId,
+		docID:      docID,
 	}
 }
 
@@ -19642,8 +17964,8 @@ func (a *DefaultAPIService) RequestESignaturesForDocumentExecute(r ApiRequestESi
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/document-generation/documents/{docId}/esignature"
-	localVarPath = strings.Replace(localVarPath, "{"+"docId"+"}", url.PathEscape(parameterValueToString(r.docId, "docId")), -1)
+	localVarPath := localBasePath + "/document-generation/documents/{docID}/esignature"
+	localVarPath = strings.Replace(localVarPath, "{"+"docID"+"}", url.PathEscape(parameterValueToString(r.docID, "docID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -19770,110 +18092,6 @@ func (a *DefaultAPIService) ResetConnectorQueryExecute(r ApiResetConnectorQueryR
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarHTTPResponse, newErr
-	}
-
-	return localVarHTTPResponse, nil
-}
-
-type ApiRespondToInvitationRequest struct {
-	ctx                        context.Context
-	ApiService                 *DefaultAPIService
-	invitationId               string
-	respondToInvitationRequest *RespondToInvitationRequest
-}
-
-// Tenants response to the invitation
-func (r ApiRespondToInvitationRequest) RespondToInvitationRequest(respondToInvitationRequest RespondToInvitationRequest) ApiRespondToInvitationRequest {
-	r.respondToInvitationRequest = &respondToInvitationRequest
-	return r
-}
-
-func (r ApiRespondToInvitationRequest) Execute() (*http.Response, error) {
-	return r.ApiService.RespondToInvitationExecute(r)
-}
-
-/*
-RespondToInvitation Respond to invitation
-
-Accept or reject an invitation from a landlord/manager for a property
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param invitationId ID of the invitation to interact with
-	@return ApiRespondToInvitationRequest
-*/
-func (a *DefaultAPIService) RespondToInvitation(ctx context.Context, invitationId string) ApiRespondToInvitationRequest {
-	return ApiRespondToInvitationRequest{
-		ApiService:   a,
-		ctx:          ctx,
-		invitationId: invitationId,
-	}
-}
-
-// Execute executes the request
-func (a *DefaultAPIService) RespondToInvitationExecute(r ApiRespondToInvitationRequest) (*http.Response, error) {
-	var (
-		localVarHTTPMethod = http.MethodPost
-		localVarPostBody   interface{}
-		formFiles          []formFile
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.RespondToInvitation")
-	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/invitation/{invitationId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"invitationId"+"}", url.PathEscape(parameterValueToString(r.invitationId, "invitationId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.respondToInvitationRequest == nil {
-		return nil, reportError("respondToInvitationRequest is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.respondToInvitationRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -20112,7 +18330,7 @@ func (a *DefaultAPIService) SyncConnectorDataExecute(r ApiSyncConnectorDataReque
 type ApiUnassignCaseRequest struct {
 	ctx                context.Context
 	ApiService         *DefaultAPIService
-	caseId             string
+	caseID             string
 	unssignCaseRequest *UnssignCaseRequest
 }
 
@@ -20129,14 +18347,14 @@ func (r ApiUnassignCaseRequest) Execute() (*http.Response, error) {
 UnassignCase Remove access from case
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param caseId ID of the case to comment
+	@param caseID unique generate ID of a case
 	@return ApiUnassignCaseRequest
 */
-func (a *DefaultAPIService) UnassignCase(ctx context.Context, caseId string) ApiUnassignCaseRequest {
+func (a *DefaultAPIService) UnassignCase(ctx context.Context, caseID string) ApiUnassignCaseRequest {
 	return ApiUnassignCaseRequest{
 		ApiService: a,
 		ctx:        ctx,
-		caseId:     caseId,
+		caseID:     caseID,
 	}
 }
 
@@ -20153,8 +18371,8 @@ func (a *DefaultAPIService) UnassignCaseExecute(r ApiUnassignCaseRequest) (*http
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/case/{caseId}/unassign"
-	localVarPath = strings.Replace(localVarPath, "{"+"caseId"+"}", url.PathEscape(parameterValueToString(r.caseId, "caseId")), -1)
+	localVarPath := localBasePath + "/case/{caseID}/unassign"
+	localVarPath = strings.Replace(localVarPath, "{"+"caseID"+"}", url.PathEscape(parameterValueToString(r.caseID, "caseID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -20213,7 +18431,7 @@ func (a *DefaultAPIService) UnassignCaseExecute(r ApiUnassignCaseRequest) (*http
 type ApiUpdateAppointmentRequest struct {
 	ctx                              context.Context
 	ApiService                       *DefaultAPIService
-	entryId                          string
+	entryID                          string
 	createOrUpdateAppointmentRequest *CreateOrUpdateAppointmentRequest
 }
 
@@ -20231,14 +18449,14 @@ func (r ApiUpdateAppointmentRequest) Execute() (*Appointment, *http.Response, er
 UpdateAppointment Update appointment
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param entryId ID of the appointment
+	@param entryID unique generate ID of an appointment entry
 	@return ApiUpdateAppointmentRequest
 */
-func (a *DefaultAPIService) UpdateAppointment(ctx context.Context, entryId string) ApiUpdateAppointmentRequest {
+func (a *DefaultAPIService) UpdateAppointment(ctx context.Context, entryID string) ApiUpdateAppointmentRequest {
 	return ApiUpdateAppointmentRequest{
 		ApiService: a,
 		ctx:        ctx,
-		entryId:    entryId,
+		entryID:    entryID,
 	}
 }
 
@@ -20258,8 +18476,8 @@ func (a *DefaultAPIService) UpdateAppointmentExecute(r ApiUpdateAppointmentReque
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/calendar/appointments/entry/{entryId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"entryId"+"}", url.PathEscape(parameterValueToString(r.entryId, "entryId")), -1)
+	localVarPath := localBasePath + "/calendar/appointments/entry/{entryID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"entryID"+"}", url.PathEscape(parameterValueToString(r.entryID, "entryID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -20327,7 +18545,7 @@ func (a *DefaultAPIService) UpdateAppointmentExecute(r ApiUpdateAppointmentReque
 type ApiUpdateAppointmentScheduleRequest struct {
 	ctx                                      context.Context
 	ApiService                               *DefaultAPIService
-	scheduleId                               string
+	scheduleID                               string
 	createOrUpdateAppointmentScheduleRequest *CreateOrUpdateAppointmentScheduleRequest
 }
 
@@ -20345,14 +18563,14 @@ func (r ApiUpdateAppointmentScheduleRequest) Execute() (*AppointmentSchedule, *h
 UpdateAppointmentSchedule Update appointment schedule
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param scheduleId ID of the appointment schedule
+	@param scheduleID unique generate ID of an appointment schedule
 	@return ApiUpdateAppointmentScheduleRequest
 */
-func (a *DefaultAPIService) UpdateAppointmentSchedule(ctx context.Context, scheduleId string) ApiUpdateAppointmentScheduleRequest {
+func (a *DefaultAPIService) UpdateAppointmentSchedule(ctx context.Context, scheduleID string) ApiUpdateAppointmentScheduleRequest {
 	return ApiUpdateAppointmentScheduleRequest{
 		ApiService: a,
 		ctx:        ctx,
-		scheduleId: scheduleId,
+		scheduleID: scheduleID,
 	}
 }
 
@@ -20372,8 +18590,8 @@ func (a *DefaultAPIService) UpdateAppointmentScheduleExecute(r ApiUpdateAppointm
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/calendar/appointments/schedule/{scheduleId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"scheduleId"+"}", url.PathEscape(parameterValueToString(r.scheduleId, "scheduleId")), -1)
+	localVarPath := localBasePath + "/calendar/appointments/schedule/{scheduleID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"scheduleID"+"}", url.PathEscape(parameterValueToString(r.scheduleID, "scheduleID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -20441,7 +18659,7 @@ func (a *DefaultAPIService) UpdateAppointmentScheduleExecute(r ApiUpdateAppointm
 type ApiUpdateAppointmentTemplateRequest struct {
 	ctx                                      context.Context
 	ApiService                               *DefaultAPIService
-	templateId                               string
+	templateID                               string
 	createOrUpdateAppointmentTemplateRequest *CreateOrUpdateAppointmentTemplateRequest
 }
 
@@ -20459,14 +18677,14 @@ func (r ApiUpdateAppointmentTemplateRequest) Execute() (*AppointmentTemplate, *h
 UpdateAppointmentTemplate Update appointment template
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param templateId the ID of the template for which to validate the data
+	@param templateID unique generate ID of an appointments template
 	@return ApiUpdateAppointmentTemplateRequest
 */
-func (a *DefaultAPIService) UpdateAppointmentTemplate(ctx context.Context, templateId string) ApiUpdateAppointmentTemplateRequest {
+func (a *DefaultAPIService) UpdateAppointmentTemplate(ctx context.Context, templateID string) ApiUpdateAppointmentTemplateRequest {
 	return ApiUpdateAppointmentTemplateRequest{
 		ApiService: a,
 		ctx:        ctx,
-		templateId: templateId,
+		templateID: templateID,
 	}
 }
 
@@ -20486,8 +18704,8 @@ func (a *DefaultAPIService) UpdateAppointmentTemplateExecute(r ApiUpdateAppointm
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/calendar/appointments/template/{templateId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"templateId"+"}", url.PathEscape(parameterValueToString(r.templateId, "templateId")), -1)
+	localVarPath := localBasePath + "/calendar/appointments/template/{templateID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"templateID"+"}", url.PathEscape(parameterValueToString(r.templateID, "templateID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -20555,7 +18773,7 @@ func (a *DefaultAPIService) UpdateAppointmentTemplateExecute(r ApiUpdateAppointm
 type ApiUpdateBankAccountRequest struct {
 	ctx                              context.Context
 	ApiService                       *DefaultAPIService
-	accountId                        string
+	accountID                        string
 	createOrUpdateBankAccountRequest *CreateOrUpdateBankAccountRequest
 }
 
@@ -20573,14 +18791,14 @@ func (r ApiUpdateBankAccountRequest) Execute() (*BankAccount, *http.Response, er
 UpdateBankAccount Update the attributes of the already existing bank account
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param accountId ID of the required bank account
+	@param accountID unique generate ID of a bank account
 	@return ApiUpdateBankAccountRequest
 */
-func (a *DefaultAPIService) UpdateBankAccount(ctx context.Context, accountId string) ApiUpdateBankAccountRequest {
+func (a *DefaultAPIService) UpdateBankAccount(ctx context.Context, accountID string) ApiUpdateBankAccountRequest {
 	return ApiUpdateBankAccountRequest{
 		ApiService: a,
 		ctx:        ctx,
-		accountId:  accountId,
+		accountID:  accountID,
 	}
 }
 
@@ -20600,8 +18818,8 @@ func (a *DefaultAPIService) UpdateBankAccountExecute(r ApiUpdateBankAccountReque
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/bank-account/{accountId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"accountId"+"}", url.PathEscape(parameterValueToString(r.accountId, "accountId")), -1)
+	localVarPath := localBasePath + "/bank-account/{accountID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"accountID"+"}", url.PathEscape(parameterValueToString(r.accountID, "accountID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -20669,7 +18887,7 @@ func (a *DefaultAPIService) UpdateBankAccountExecute(r ApiUpdateBankAccountReque
 type ApiUpdateCaseRequest struct {
 	ctx               context.Context
 	ApiService        *DefaultAPIService
-	caseId            string
+	caseID            string
 	updateCaseRequest *UpdateCaseRequest
 }
 
@@ -20689,14 +18907,14 @@ UpdateCase Update case
 Update the base attributes of a case
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param caseId ID of the required case
+	@param caseID unique generate ID of a case
 	@return ApiUpdateCaseRequest
 */
-func (a *DefaultAPIService) UpdateCase(ctx context.Context, caseId string) ApiUpdateCaseRequest {
+func (a *DefaultAPIService) UpdateCase(ctx context.Context, caseID string) ApiUpdateCaseRequest {
 	return ApiUpdateCaseRequest{
 		ApiService: a,
 		ctx:        ctx,
-		caseId:     caseId,
+		caseID:     caseID,
 	}
 }
 
@@ -20716,8 +18934,8 @@ func (a *DefaultAPIService) UpdateCaseExecute(r ApiUpdateCaseRequest) (*Case, *h
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/case/{caseId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"caseId"+"}", url.PathEscape(parameterValueToString(r.caseId, "caseId")), -1)
+	localVarPath := localBasePath + "/case/{caseID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"caseID"+"}", url.PathEscape(parameterValueToString(r.caseID, "caseID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -20785,7 +19003,7 @@ func (a *DefaultAPIService) UpdateCaseExecute(r ApiUpdateCaseRequest) (*Case, *h
 type ApiUpdateCaseReportingEndpointRequest struct {
 	ctx                                        context.Context
 	ApiService                                 *DefaultAPIService
-	endpointId                                 string
+	endpointID                                 string
 	createOrUpdateCaseReportingEndpointRequest *CreateOrUpdateCaseReportingEndpointRequest
 }
 
@@ -20802,14 +19020,14 @@ func (r ApiUpdateCaseReportingEndpointRequest) Execute() (*CaseReportingEndpoint
 UpdateCaseReportingEndpoint Update the case reporting endpoint by ID
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param endpointId ID of the case reporting endpoint
+	@param endpointID unique generate ID of a case reporting endpoint
 	@return ApiUpdateCaseReportingEndpointRequest
 */
-func (a *DefaultAPIService) UpdateCaseReportingEndpoint(ctx context.Context, endpointId string) ApiUpdateCaseReportingEndpointRequest {
+func (a *DefaultAPIService) UpdateCaseReportingEndpoint(ctx context.Context, endpointID string) ApiUpdateCaseReportingEndpointRequest {
 	return ApiUpdateCaseReportingEndpointRequest{
 		ApiService: a,
 		ctx:        ctx,
-		endpointId: endpointId,
+		endpointID: endpointID,
 	}
 }
 
@@ -20829,8 +19047,8 @@ func (a *DefaultAPIService) UpdateCaseReportingEndpointExecute(r ApiUpdateCaseRe
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/cases/endpoints/{endpointId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"endpointId"+"}", url.PathEscape(parameterValueToString(r.endpointId, "endpointId")), -1)
+	localVarPath := localBasePath + "/cases/endpoints/{endpointID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"endpointID"+"}", url.PathEscape(parameterValueToString(r.endpointID, "endpointID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -20898,7 +19116,7 @@ func (a *DefaultAPIService) UpdateCaseReportingEndpointExecute(r ApiUpdateCaseRe
 type ApiUpdateCaseStatusRequest struct {
 	ctx                     context.Context
 	ApiService              *DefaultAPIService
-	caseId                  string
+	caseID                  string
 	updateCaseStatusRequest *UpdateCaseStatusRequest
 }
 
@@ -20917,14 +19135,14 @@ UpdateCaseStatus Add new case status
 Add new status change to the case
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param caseId ID of the case to update
+	@param caseID unique generate ID of a case
 	@return ApiUpdateCaseStatusRequest
 */
-func (a *DefaultAPIService) UpdateCaseStatus(ctx context.Context, caseId string) ApiUpdateCaseStatusRequest {
+func (a *DefaultAPIService) UpdateCaseStatus(ctx context.Context, caseID string) ApiUpdateCaseStatusRequest {
 	return ApiUpdateCaseStatusRequest{
 		ApiService: a,
 		ctx:        ctx,
-		caseId:     caseId,
+		caseID:     caseID,
 	}
 }
 
@@ -20944,8 +19162,8 @@ func (a *DefaultAPIService) UpdateCaseStatusExecute(r ApiUpdateCaseStatusRequest
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/case/{caseId}/status"
-	localVarPath = strings.Replace(localVarPath, "{"+"caseId"+"}", url.PathEscape(parameterValueToString(r.caseId, "caseId")), -1)
+	localVarPath := localBasePath + "/case/{caseID}/status"
+	localVarPath = strings.Replace(localVarPath, "{"+"caseID"+"}", url.PathEscape(parameterValueToString(r.caseID, "caseID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -21013,7 +19231,7 @@ func (a *DefaultAPIService) UpdateCaseStatusExecute(r ApiUpdateCaseStatusRequest
 type ApiUpdateCaseTemplateRequest struct {
 	ctx                               context.Context
 	ApiService                        *DefaultAPIService
-	templateId                        string
+	templateID                        string
 	createOrUpdateCaseTemplateRequest *CreateOrUpdateCaseTemplateRequest
 }
 
@@ -21031,14 +19249,14 @@ func (r ApiUpdateCaseTemplateRequest) Execute() (*CaseTemplate, *http.Response, 
 UpdateCaseTemplate Update case template
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param templateId the ID of the template for which to validate the data
+	@param templateID unique generate ID of a case template
 	@return ApiUpdateCaseTemplateRequest
 */
-func (a *DefaultAPIService) UpdateCaseTemplate(ctx context.Context, templateId string) ApiUpdateCaseTemplateRequest {
+func (a *DefaultAPIService) UpdateCaseTemplate(ctx context.Context, templateID string) ApiUpdateCaseTemplateRequest {
 	return ApiUpdateCaseTemplateRequest{
 		ApiService: a,
 		ctx:        ctx,
-		templateId: templateId,
+		templateID: templateID,
 	}
 }
 
@@ -21058,8 +19276,8 @@ func (a *DefaultAPIService) UpdateCaseTemplateExecute(r ApiUpdateCaseTemplateReq
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/cases/template/{templateId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"templateId"+"}", url.PathEscape(parameterValueToString(r.templateId, "templateId")), -1)
+	localVarPath := localBasePath + "/cases/template/{templateID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"templateID"+"}", url.PathEscape(parameterValueToString(r.templateID, "templateID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -21483,7 +19701,7 @@ func (r ApiUpdateCustomIDGeneratorRequest) Execute() (*CustomIDGenerator, *http.
 UpdateCustomIDGenerator Update an already existing ID generator
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param generatorID ID of the custom ID generator
+	@param generatorID unique generated ID of a custom ID generator
 	@return ApiUpdateCustomIDGeneratorRequest
 */
 func (a *DefaultAPIService) UpdateCustomIDGenerator(ctx context.Context, generatorID string) ApiUpdateCustomIDGeneratorRequest {
@@ -21597,7 +19815,7 @@ func (r ApiUpdateCustomerScriptRequest) Execute() (*CustomerScript, *http.Respon
 UpdateCustomerScript Update an already existing script
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param scriptID ID of the script
+	@param scriptID unique generated ID of a customer JS script
 	@return ApiUpdateCustomerScriptRequest
 */
 func (a *DefaultAPIService) UpdateCustomerScript(ctx context.Context, scriptID string) ApiUpdateCustomerScriptRequest {
@@ -21693,7 +19911,7 @@ func (a *DefaultAPIService) UpdateCustomerScriptExecute(r ApiUpdateCustomerScrip
 type ApiUpdateDocumentRequest struct {
 	ctx                   context.Context
 	ApiService            *DefaultAPIService
-	documentId            string
+	documentID            string
 	updateDocumentRequest *UpdateDocumentRequest
 }
 
@@ -21710,14 +19928,14 @@ func (r ApiUpdateDocumentRequest) Execute() (*Document, *http.Response, error) {
 UpdateDocument Update an already existing document
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param documentId ID of the document
+	@param documentID unique generated ID of an uploaded document
 	@return ApiUpdateDocumentRequest
 */
-func (a *DefaultAPIService) UpdateDocument(ctx context.Context, documentId string) ApiUpdateDocumentRequest {
+func (a *DefaultAPIService) UpdateDocument(ctx context.Context, documentID string) ApiUpdateDocumentRequest {
 	return ApiUpdateDocumentRequest{
 		ApiService: a,
 		ctx:        ctx,
-		documentId: documentId,
+		documentID: documentID,
 	}
 }
 
@@ -21737,8 +19955,8 @@ func (a *DefaultAPIService) UpdateDocumentExecute(r ApiUpdateDocumentRequest) (*
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/document-repository/entry/{documentId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"documentId"+"}", url.PathEscape(parameterValueToString(r.documentId, "documentId")), -1)
+	localVarPath := localBasePath + "/document-repository/entry/{documentID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"documentID"+"}", url.PathEscape(parameterValueToString(r.documentID, "documentID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -21806,7 +20024,7 @@ func (a *DefaultAPIService) UpdateDocumentExecute(r ApiUpdateDocumentRequest) (*
 type ApiUpdateDocumentGenerationRequest struct {
 	ctx                context.Context
 	ApiService         *DefaultAPIService
-	docId              string
+	docID              string
 	documentGeneration *DocumentGeneration
 }
 
@@ -21823,14 +20041,14 @@ func (r ApiUpdateDocumentGenerationRequest) Execute() (*http.Response, error) {
 UpdateDocumentGeneration Update an already existing document generation
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param docId ID of the document generation
+	@param docID unique generated ID of a document generation
 	@return ApiUpdateDocumentGenerationRequest
 */
-func (a *DefaultAPIService) UpdateDocumentGeneration(ctx context.Context, docId string) ApiUpdateDocumentGenerationRequest {
+func (a *DefaultAPIService) UpdateDocumentGeneration(ctx context.Context, docID string) ApiUpdateDocumentGenerationRequest {
 	return ApiUpdateDocumentGenerationRequest{
 		ApiService: a,
 		ctx:        ctx,
-		docId:      docId,
+		docID:      docID,
 	}
 }
 
@@ -21847,8 +20065,8 @@ func (a *DefaultAPIService) UpdateDocumentGenerationExecute(r ApiUpdateDocumentG
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/document-generation/documents/{docId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"docId"+"}", url.PathEscape(parameterValueToString(r.docId, "docId")), -1)
+	localVarPath := localBasePath + "/document-generation/documents/{docID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"docID"+"}", url.PathEscape(parameterValueToString(r.docID, "docID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -21907,7 +20125,7 @@ func (a *DefaultAPIService) UpdateDocumentGenerationExecute(r ApiUpdateDocumentG
 type ApiUpdateDocumentTemplateRequest struct {
 	ctx                                   context.Context
 	ApiService                            *DefaultAPIService
-	templateId                            string
+	templateID                            string
 	createOrUpdateDocumentTemplateRequest *CreateOrUpdateDocumentTemplateRequest
 }
 
@@ -21924,14 +20142,14 @@ func (r ApiUpdateDocumentTemplateRequest) Execute() (*DocumentTemplate, *http.Re
 UpdateDocumentTemplate Update an existing document template
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param templateId the ID of the template for which to validate the data
+	@param templateID unique generated ID of a document generation
 	@return ApiUpdateDocumentTemplateRequest
 */
-func (a *DefaultAPIService) UpdateDocumentTemplate(ctx context.Context, templateId string) ApiUpdateDocumentTemplateRequest {
+func (a *DefaultAPIService) UpdateDocumentTemplate(ctx context.Context, templateID string) ApiUpdateDocumentTemplateRequest {
 	return ApiUpdateDocumentTemplateRequest{
 		ApiService: a,
 		ctx:        ctx,
-		templateId: templateId,
+		templateID: templateID,
 	}
 }
 
@@ -21951,8 +20169,8 @@ func (a *DefaultAPIService) UpdateDocumentTemplateExecute(r ApiUpdateDocumentTem
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/document-generation/template/{templateId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"templateId"+"}", url.PathEscape(parameterValueToString(r.templateId, "templateId")), -1)
+	localVarPath := localBasePath + "/document-generation/template/{templateID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"templateID"+"}", url.PathEscape(parameterValueToString(r.templateID, "templateID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -22020,7 +20238,7 @@ func (a *DefaultAPIService) UpdateDocumentTemplateExecute(r ApiUpdateDocumentTem
 type ApiUpdateFAQEntryRequest struct {
 	ctx                           context.Context
 	ApiService                    *DefaultAPIService
-	entryId                       string
+	entryID                       string
 	createOrUpdateFAQEntryRequest *CreateOrUpdateFAQEntryRequest
 }
 
@@ -22037,14 +20255,14 @@ func (r ApiUpdateFAQEntryRequest) Execute() (*FAQEntry, *http.Response, error) {
 UpdateFAQEntry Update an existing FAQ entry
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param entryId ID of the FAQ entry
+	@param entryID unique generate ID of a FAQ entry
 	@return ApiUpdateFAQEntryRequest
 */
-func (a *DefaultAPIService) UpdateFAQEntry(ctx context.Context, entryId string) ApiUpdateFAQEntryRequest {
+func (a *DefaultAPIService) UpdateFAQEntry(ctx context.Context, entryID string) ApiUpdateFAQEntryRequest {
 	return ApiUpdateFAQEntryRequest{
 		ApiService: a,
 		ctx:        ctx,
-		entryId:    entryId,
+		entryID:    entryID,
 	}
 }
 
@@ -22064,8 +20282,8 @@ func (a *DefaultAPIService) UpdateFAQEntryExecute(r ApiUpdateFAQEntryRequest) (*
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/faqs/entry/{entryId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"entryId"+"}", url.PathEscape(parameterValueToString(r.entryId, "entryId")), -1)
+	localVarPath := localBasePath + "/faqs/entry/{entryID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"entryID"+"}", url.PathEscape(parameterValueToString(r.entryID, "entryID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -22133,7 +20351,7 @@ func (a *DefaultAPIService) UpdateFAQEntryExecute(r ApiUpdateFAQEntryRequest) (*
 type ApiUpdateMeterRequest struct {
 	ctx                        context.Context
 	ApiService                 *DefaultAPIService
-	meterId                    string
+	meterID                    string
 	createOrUpdateMeterRequest *CreateOrUpdateMeterRequest
 }
 
@@ -22153,14 +20371,14 @@ UpdateMeter Update meter
 Update a meter by ID
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param meterId ID of the required meter
+	@param meterID unique generate ID of a meter
 	@return ApiUpdateMeterRequest
 */
-func (a *DefaultAPIService) UpdateMeter(ctx context.Context, meterId string) ApiUpdateMeterRequest {
+func (a *DefaultAPIService) UpdateMeter(ctx context.Context, meterID string) ApiUpdateMeterRequest {
 	return ApiUpdateMeterRequest{
 		ApiService: a,
 		ctx:        ctx,
-		meterId:    meterId,
+		meterID:    meterID,
 	}
 }
 
@@ -22180,8 +20398,8 @@ func (a *DefaultAPIService) UpdateMeterExecute(r ApiUpdateMeterRequest) (*Meter,
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/meter/{meterId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"meterId"+"}", url.PathEscape(parameterValueToString(r.meterId, "meterId")), -1)
+	localVarPath := localBasePath + "/meter/{meterID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"meterID"+"}", url.PathEscape(parameterValueToString(r.meterID, "meterID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -22249,8 +20467,8 @@ func (a *DefaultAPIService) UpdateMeterExecute(r ApiUpdateMeterRequest) (*Meter,
 type ApiUpdateMeterReadingRequest struct {
 	ctx                               context.Context
 	ApiService                        *DefaultAPIService
-	meterId                           string
-	readingId                         string
+	meterID                           string
+	readingID                         string
 	createOrUpdateMeterReadingRequest *CreateOrUpdateMeterReadingRequest
 }
 
@@ -22270,16 +20488,16 @@ UpdateMeterReading Update meter reading
 Update a meter reading by ID
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param meterId ID of the required meter
-	@param readingId ID of the required meter reading
+	@param meterID unique generate ID of a meter
+	@param readingID unique generate ID of a meter reading
 	@return ApiUpdateMeterReadingRequest
 */
-func (a *DefaultAPIService) UpdateMeterReading(ctx context.Context, meterId string, readingId string) ApiUpdateMeterReadingRequest {
+func (a *DefaultAPIService) UpdateMeterReading(ctx context.Context, meterID string, readingID string) ApiUpdateMeterReadingRequest {
 	return ApiUpdateMeterReadingRequest{
 		ApiService: a,
 		ctx:        ctx,
-		meterId:    meterId,
-		readingId:  readingId,
+		meterID:    meterID,
+		readingID:  readingID,
 	}
 }
 
@@ -22299,9 +20517,9 @@ func (a *DefaultAPIService) UpdateMeterReadingExecute(r ApiUpdateMeterReadingReq
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/meter/{meterId}/reading/{readingId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"meterId"+"}", url.PathEscape(parameterValueToString(r.meterId, "meterId")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"readingId"+"}", url.PathEscape(parameterValueToString(r.readingId, "readingId")), -1)
+	localVarPath := localBasePath + "/meter/{meterID}/reading/{readingID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"meterID"+"}", url.PathEscape(parameterValueToString(r.meterID, "meterID")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"readingID"+"}", url.PathEscape(parameterValueToString(r.readingID, "readingID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -22366,126 +20584,10 @@ func (a *DefaultAPIService) UpdateMeterReadingExecute(r ApiUpdateMeterReadingReq
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiUpdateNoteRequest struct {
-	ctx               context.Context
-	ApiService        *DefaultAPIService
-	noteId            string
-	updateNoteRequest *UpdateNoteRequest
-}
-
-// Updated note object
-func (r ApiUpdateNoteRequest) UpdateNoteRequest(updateNoteRequest UpdateNoteRequest) ApiUpdateNoteRequest {
-	r.updateNoteRequest = &updateNoteRequest
-	return r
-}
-
-func (r ApiUpdateNoteRequest) Execute() (*Note, *http.Response, error) {
-	return r.ApiService.UpdateNoteExecute(r)
-}
-
-/*
-UpdateNote Update note
-
-Update an already existing note
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param noteId ID of the required note
-	@return ApiUpdateNoteRequest
-*/
-func (a *DefaultAPIService) UpdateNote(ctx context.Context, noteId string) ApiUpdateNoteRequest {
-	return ApiUpdateNoteRequest{
-		ApiService: a,
-		ctx:        ctx,
-		noteId:     noteId,
-	}
-}
-
-// Execute executes the request
-//
-//	@return Note
-func (a *DefaultAPIService) UpdateNoteExecute(r ApiUpdateNoteRequest) (*Note, *http.Response, error) {
-	var (
-		localVarHTTPMethod  = http.MethodPut
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *Note
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdateNote")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/note/{noteId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"noteId"+"}", url.PathEscape(parameterValueToString(r.noteId, "noteId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.updateNoteRequest == nil {
-		return localVarReturnValue, nil, reportError("updateNoteRequest is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.updateNoteRequest
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
 type ApiUpdatePropertyRequest struct {
 	ctx                   context.Context
 	ApiService            *DefaultAPIService
-	propId                string
+	propID                string
 	updatePropertyRequest *UpdatePropertyRequest
 }
 
@@ -22505,14 +20607,14 @@ UpdateProperty Update property
 Update the base attributes of a property
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param propId ID of the required property
+	@param propID unique generate ID of a property
 	@return ApiUpdatePropertyRequest
 */
-func (a *DefaultAPIService) UpdateProperty(ctx context.Context, propId string) ApiUpdatePropertyRequest {
+func (a *DefaultAPIService) UpdateProperty(ctx context.Context, propID string) ApiUpdatePropertyRequest {
 	return ApiUpdatePropertyRequest{
 		ApiService: a,
 		ctx:        ctx,
-		propId:     propId,
+		propID:     propID,
 	}
 }
 
@@ -22532,8 +20634,8 @@ func (a *DefaultAPIService) UpdatePropertyExecute(r ApiUpdatePropertyRequest) (*
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/properties/{propId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"propId"+"}", url.PathEscape(parameterValueToString(r.propId, "propId")), -1)
+	localVarPath := localBasePath + "/properties/{propID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"propID"+"}", url.PathEscape(parameterValueToString(r.propID, "propID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -22598,250 +20700,10 @@ func (a *DefaultAPIService) UpdatePropertyExecute(r ApiUpdatePropertyRequest) (*
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiUpdatePropertyContactRequest struct {
-	ctx                           context.Context
-	ApiService                    *DefaultAPIService
-	propId                        string
-	entryId                       string
-	createOrUpdatePropertyContact *CreateOrUpdatePropertyContact
-}
-
-// Contact to be updated
-func (r ApiUpdatePropertyContactRequest) CreateOrUpdatePropertyContact(createOrUpdatePropertyContact CreateOrUpdatePropertyContact) ApiUpdatePropertyContactRequest {
-	r.createOrUpdatePropertyContact = &createOrUpdatePropertyContact
-	return r
-}
-
-func (r ApiUpdatePropertyContactRequest) Execute() (*PropertyContact, *http.Response, error) {
-	return r.ApiService.UpdatePropertyContactExecute(r)
-}
-
-/*
-UpdatePropertyContact Update a property contact
-
-Update an already existing property contact
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param propId ID of the property
-	@param entryId ID of the contact
-	@return ApiUpdatePropertyContactRequest
-*/
-func (a *DefaultAPIService) UpdatePropertyContact(ctx context.Context, propId string, entryId string) ApiUpdatePropertyContactRequest {
-	return ApiUpdatePropertyContactRequest{
-		ApiService: a,
-		ctx:        ctx,
-		propId:     propId,
-		entryId:    entryId,
-	}
-}
-
-// Execute executes the request
-//
-//	@return PropertyContact
-func (a *DefaultAPIService) UpdatePropertyContactExecute(r ApiUpdatePropertyContactRequest) (*PropertyContact, *http.Response, error) {
-	var (
-		localVarHTTPMethod  = http.MethodPut
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *PropertyContact
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdatePropertyContact")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/property/{propId}/contacts/{entryId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"propId"+"}", url.PathEscape(parameterValueToString(r.propId, "propId")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"entryId"+"}", url.PathEscape(parameterValueToString(r.entryId, "entryId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.createOrUpdatePropertyContact == nil {
-		return localVarReturnValue, nil, reportError("createOrUpdatePropertyContact is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.createOrUpdatePropertyContact
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiUpdatePropertyHistoryEntryRequest struct {
-	ctx                                       context.Context
-	ApiService                                *DefaultAPIService
-	propId                                    string
-	entryId                                   string
-	createOrUpdatePropertyHistoryEntryRequest *CreateOrUpdatePropertyHistoryEntryRequest
-}
-
-// Updated property history entry object
-func (r ApiUpdatePropertyHistoryEntryRequest) CreateOrUpdatePropertyHistoryEntryRequest(createOrUpdatePropertyHistoryEntryRequest CreateOrUpdatePropertyHistoryEntryRequest) ApiUpdatePropertyHistoryEntryRequest {
-	r.createOrUpdatePropertyHistoryEntryRequest = &createOrUpdatePropertyHistoryEntryRequest
-	return r
-}
-
-func (r ApiUpdatePropertyHistoryEntryRequest) Execute() (*PropertyHistoryEntry, *http.Response, error) {
-	return r.ApiService.UpdatePropertyHistoryEntryExecute(r)
-}
-
-/*
-UpdatePropertyHistoryEntry Update history entry
-
-Update an already existing
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param propId ID of the property
-	@param entryId ID of the individual history entry to get
-	@return ApiUpdatePropertyHistoryEntryRequest
-*/
-func (a *DefaultAPIService) UpdatePropertyHistoryEntry(ctx context.Context, propId string, entryId string) ApiUpdatePropertyHistoryEntryRequest {
-	return ApiUpdatePropertyHistoryEntryRequest{
-		ApiService: a,
-		ctx:        ctx,
-		propId:     propId,
-		entryId:    entryId,
-	}
-}
-
-// Execute executes the request
-//
-//	@return PropertyHistoryEntry
-func (a *DefaultAPIService) UpdatePropertyHistoryEntryExecute(r ApiUpdatePropertyHistoryEntryRequest) (*PropertyHistoryEntry, *http.Response, error) {
-	var (
-		localVarHTTPMethod  = http.MethodPut
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *PropertyHistoryEntry
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdatePropertyHistoryEntry")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/property/{propId}/history/{entryId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"propId"+"}", url.PathEscape(parameterValueToString(r.propId, "propId")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"entryId"+"}", url.PathEscape(parameterValueToString(r.entryId, "entryId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.createOrUpdatePropertyHistoryEntryRequest == nil {
-		return localVarReturnValue, nil, reportError("createOrUpdatePropertyHistoryEntryRequest is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.createOrUpdatePropertyHistoryEntryRequest
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
 type ApiUpdatePropertyOwnerRequest struct {
 	ctx                                context.Context
 	ApiService                         *DefaultAPIService
-	ownerId                            string
+	ownerID                            string
 	createOrUpdatePropertyOwnerRequest *CreateOrUpdatePropertyOwnerRequest
 }
 
@@ -22861,14 +20723,14 @@ UpdatePropertyOwner Update property owner
 Update an already existing property owner
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param ownerId ID of the required owner
+	@param ownerID unique generate ID of a property owner
 	@return ApiUpdatePropertyOwnerRequest
 */
-func (a *DefaultAPIService) UpdatePropertyOwner(ctx context.Context, ownerId string) ApiUpdatePropertyOwnerRequest {
+func (a *DefaultAPIService) UpdatePropertyOwner(ctx context.Context, ownerID string) ApiUpdatePropertyOwnerRequest {
 	return ApiUpdatePropertyOwnerRequest{
 		ApiService: a,
 		ctx:        ctx,
-		ownerId:    ownerId,
+		ownerID:    ownerID,
 	}
 }
 
@@ -22888,8 +20750,8 @@ func (a *DefaultAPIService) UpdatePropertyOwnerExecute(r ApiUpdatePropertyOwnerR
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/owner/{ownerId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"ownerId"+"}", url.PathEscape(parameterValueToString(r.ownerId, "ownerId")), -1)
+	localVarPath := localBasePath + "/owner/{ownerID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"ownerID"+"}", url.PathEscape(parameterValueToString(r.ownerID, "ownerID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -22957,7 +20819,7 @@ func (a *DefaultAPIService) UpdatePropertyOwnerExecute(r ApiUpdatePropertyOwnerR
 type ApiUpdateReportDefinitionRequest struct {
 	ctx                                   context.Context
 	ApiService                            *DefaultAPIService
-	definitionId                          string
+	definitionID                          string
 	createOrUpdateReportDefinitionRequest *CreateOrUpdateReportDefinitionRequest
 }
 
@@ -22977,14 +20839,14 @@ UpdateReportDefinition Method for UpdateReportDefinition
 Update an already existing report definition
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param definitionId ID of the report definition
+	@param definitionID unique generated ID of a report definition
 	@return ApiUpdateReportDefinitionRequest
 */
-func (a *DefaultAPIService) UpdateReportDefinition(ctx context.Context, definitionId string) ApiUpdateReportDefinitionRequest {
+func (a *DefaultAPIService) UpdateReportDefinition(ctx context.Context, definitionID string) ApiUpdateReportDefinitionRequest {
 	return ApiUpdateReportDefinitionRequest{
 		ApiService:   a,
 		ctx:          ctx,
-		definitionId: definitionId,
+		definitionID: definitionID,
 	}
 }
 
@@ -23004,8 +20866,8 @@ func (a *DefaultAPIService) UpdateReportDefinitionExecute(r ApiUpdateReportDefin
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/report/{definitionId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"definitionId"+"}", url.PathEscape(parameterValueToString(r.definitionId, "definitionId")), -1)
+	localVarPath := localBasePath + "/report/{definitionID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"definitionID"+"}", url.PathEscape(parameterValueToString(r.definitionID, "definitionID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -23073,7 +20935,7 @@ func (a *DefaultAPIService) UpdateReportDefinitionExecute(r ApiUpdateReportDefin
 type ApiUpdateServiceProviderRequest struct {
 	ctx                           context.Context
 	ApiService                    *DefaultAPIService
-	serviceProviderId             string
+	serviceProviderID             string
 	createOrUpdateServiceProvider *CreateOrUpdateServiceProvider
 }
 
@@ -23091,14 +20953,14 @@ func (r ApiUpdateServiceProviderRequest) Execute() (*Case, *http.Response, error
 UpdateServiceProvider Update the attributes of the service provider
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param serviceProviderId ID of the required service provider
+	@param serviceProviderID unique generated ID of a service provider
 	@return ApiUpdateServiceProviderRequest
 */
-func (a *DefaultAPIService) UpdateServiceProvider(ctx context.Context, serviceProviderId string) ApiUpdateServiceProviderRequest {
+func (a *DefaultAPIService) UpdateServiceProvider(ctx context.Context, serviceProviderID string) ApiUpdateServiceProviderRequest {
 	return ApiUpdateServiceProviderRequest{
 		ApiService:        a,
 		ctx:               ctx,
-		serviceProviderId: serviceProviderId,
+		serviceProviderID: serviceProviderID,
 	}
 }
 
@@ -23118,8 +20980,8 @@ func (a *DefaultAPIService) UpdateServiceProviderExecute(r ApiUpdateServiceProvi
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/service-provider/{serviceProviderId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"serviceProviderId"+"}", url.PathEscape(parameterValueToString(r.serviceProviderId, "serviceProviderId")), -1)
+	localVarPath := localBasePath + "/service-provider/{serviceProviderID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"serviceProviderID"+"}", url.PathEscape(parameterValueToString(r.serviceProviderID, "serviceProviderID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -23187,7 +21049,7 @@ func (a *DefaultAPIService) UpdateServiceProviderExecute(r ApiUpdateServiceProvi
 type ApiUpdateTenancyRequest struct {
 	ctx                  context.Context
 	ApiService           *DefaultAPIService
-	tenancyId            string
+	tenancyID            string
 	updateTenancyRequest *UpdateTenancyRequest
 }
 
@@ -23204,14 +21066,14 @@ func (r ApiUpdateTenancyRequest) Execute() (*Tenancy, *http.Response, error) {
 UpdateTenancy Update the tenancy with the given ID
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param tenancyId ID of the tenancy
+	@param tenancyID unique generated ID of a tenancy
 	@return ApiUpdateTenancyRequest
 */
-func (a *DefaultAPIService) UpdateTenancy(ctx context.Context, tenancyId string) ApiUpdateTenancyRequest {
+func (a *DefaultAPIService) UpdateTenancy(ctx context.Context, tenancyID string) ApiUpdateTenancyRequest {
 	return ApiUpdateTenancyRequest{
 		ApiService: a,
 		ctx:        ctx,
-		tenancyId:  tenancyId,
+		tenancyID:  tenancyID,
 	}
 }
 
@@ -23231,8 +21093,8 @@ func (a *DefaultAPIService) UpdateTenancyExecute(r ApiUpdateTenancyRequest) (*Te
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/tenancy/{tenancyId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"tenancyId"+"}", url.PathEscape(parameterValueToString(r.tenancyId, "tenancyId")), -1)
+	localVarPath := localBasePath + "/tenancy/{tenancyID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"tenancyID"+"}", url.PathEscape(parameterValueToString(r.tenancyID, "tenancyID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -23300,7 +21162,7 @@ func (a *DefaultAPIService) UpdateTenancyExecute(r ApiUpdateTenancyRequest) (*Te
 type ApiUpdateTenancyUpdateRequest struct {
 	ctx                        context.Context
 	ApiService                 *DefaultAPIService
-	tenancyUpdateId            string
+	tenancyUpdateID            string
 	updateTenancyUpdateRequest *UpdateTenancyUpdateRequest
 }
 
@@ -23317,14 +21179,14 @@ func (r ApiUpdateTenancyUpdateRequest) Execute() (*TenancyUpdate, *http.Response
 UpdateTenancyUpdate Update the tenancy update with the given ID
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param tenancyUpdateId ID of the tenancy update
+	@param tenancyUpdateID unique generated ID of a tenancy update
 	@return ApiUpdateTenancyUpdateRequest
 */
-func (a *DefaultAPIService) UpdateTenancyUpdate(ctx context.Context, tenancyUpdateId string) ApiUpdateTenancyUpdateRequest {
+func (a *DefaultAPIService) UpdateTenancyUpdate(ctx context.Context, tenancyUpdateID string) ApiUpdateTenancyUpdateRequest {
 	return ApiUpdateTenancyUpdateRequest{
 		ApiService:      a,
 		ctx:             ctx,
-		tenancyUpdateId: tenancyUpdateId,
+		tenancyUpdateID: tenancyUpdateID,
 	}
 }
 
@@ -23344,8 +21206,8 @@ func (a *DefaultAPIService) UpdateTenancyUpdateExecute(r ApiUpdateTenancyUpdateR
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/tenancy-update/{tenancyUpdateId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"tenancyUpdateId"+"}", url.PathEscape(parameterValueToString(r.tenancyUpdateId, "tenancyUpdateId")), -1)
+	localVarPath := localBasePath + "/tenancy-update/{tenancyUpdateID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"tenancyUpdateID"+"}", url.PathEscape(parameterValueToString(r.tenancyUpdateID, "tenancyUpdateID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -23413,7 +21275,7 @@ func (a *DefaultAPIService) UpdateTenancyUpdateExecute(r ApiUpdateTenancyUpdateR
 type ApiUpdateTenantRequest struct {
 	ctx                 context.Context
 	ApiService          *DefaultAPIService
-	tenantId            string
+	tenantID            string
 	updateTenantRequest *UpdateTenantRequest
 }
 
@@ -23433,14 +21295,14 @@ UpdateTenant Update tenant information
 Update the contact details of an existing tenant
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param tenantId ID of the tenant to get
+	@param tenantID unique generated ID of a tenant
 	@return ApiUpdateTenantRequest
 */
-func (a *DefaultAPIService) UpdateTenant(ctx context.Context, tenantId string) ApiUpdateTenantRequest {
+func (a *DefaultAPIService) UpdateTenant(ctx context.Context, tenantID string) ApiUpdateTenantRequest {
 	return ApiUpdateTenantRequest{
 		ApiService: a,
 		ctx:        ctx,
-		tenantId:   tenantId,
+		tenantID:   tenantID,
 	}
 }
 
@@ -23460,8 +21322,8 @@ func (a *DefaultAPIService) UpdateTenantExecute(r ApiUpdateTenantRequest) (*Tena
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/tenant/{tenantId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"tenantId"+"}", url.PathEscape(parameterValueToString(r.tenantId, "tenantId")), -1)
+	localVarPath := localBasePath + "/tenant/{tenantID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"tenantID"+"}", url.PathEscape(parameterValueToString(r.tenantID, "tenantID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -23659,7 +21521,7 @@ func (r ApiUpdateWorkflowDefinitionRequest) Execute() (*WorkflowDefinition, *htt
 UpdateWorkflowDefinition Update workflow definition
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param definitionID ID of the workflow definition to get
+	@param definitionID unique generated ID of a workflow definition
 	@return ApiUpdateWorkflowDefinitionRequest
 */
 func (a *DefaultAPIService) UpdateWorkflowDefinition(ctx context.Context, definitionID string) ApiUpdateWorkflowDefinitionRequest {
@@ -23773,7 +21635,7 @@ func (r ApiUpdateWorkflowEntrypointRequest) Execute() (*WorkflowEntrypoint, *htt
 UpdateWorkflowEntrypoint Update workflow entry point
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param entrypointID ID of the workflow entry point to get
+	@param entrypointID unique generated ID of a workflow entry point
 	@return ApiUpdateWorkflowEntrypointRequest
 */
 func (a *DefaultAPIService) UpdateWorkflowEntrypoint(ctx context.Context, entrypointID string) ApiUpdateWorkflowEntrypointRequest {
@@ -23887,7 +21749,7 @@ func (r ApiUpdateWorkflowExecutionRequest) Execute() (*WorkflowExecutionResponse
 UpdateWorkflowExecution Update workflow execution
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param executionID ID of the workflow execution to get
+	@param executionID unique generated ID of a workflow execution
 	@return ApiUpdateWorkflowExecutionRequest
 */
 func (a *DefaultAPIService) UpdateWorkflowExecution(ctx context.Context, executionID string) ApiUpdateWorkflowExecutionRequest {
@@ -24064,120 +21926,6 @@ func (a *DefaultAPIService) UploadAttachmentExecute(r ApiUploadAttachmentRequest
 		dataLocalVarFile.Close()
 		formFiles = append(formFiles, formFile{fileBytes: dataLocalVarFileBytes, fileName: dataLocalVarFileName, formFileName: dataLocalVarFormFileName})
 	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiValidateCaseDataRequest struct {
-	ctx                   context.Context
-	ApiService            *DefaultAPIService
-	templateId            string
-	formValidationRequest *FormValidationRequest
-}
-
-// Custom form data that needs to be validated
-func (r ApiValidateCaseDataRequest) FormValidationRequest(formValidationRequest FormValidationRequest) ApiValidateCaseDataRequest {
-	r.formValidationRequest = &formValidationRequest
-	return r
-}
-
-func (r ApiValidateCaseDataRequest) Execute() (*FormValidationResponse, *http.Response, error) {
-	return r.ApiService.ValidateCaseDataExecute(r)
-}
-
-/*
-ValidateCaseData Validate the data provided by the user against the template
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param templateId the ID of the template for which to validate the data
-	@return ApiValidateCaseDataRequest
-*/
-func (a *DefaultAPIService) ValidateCaseData(ctx context.Context, templateId string) ApiValidateCaseDataRequest {
-	return ApiValidateCaseDataRequest{
-		ApiService: a,
-		ctx:        ctx,
-		templateId: templateId,
-	}
-}
-
-// Execute executes the request
-//
-//	@return FormValidationResponse
-func (a *DefaultAPIService) ValidateCaseDataExecute(r ApiValidateCaseDataRequest) (*FormValidationResponse, *http.Response, error) {
-	var (
-		localVarHTTPMethod  = http.MethodPost
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *FormValidationResponse
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ValidateCaseData")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/cases/template/{templateId}/validate"
-	localVarPath = strings.Replace(localVarPath, "{"+"templateId"+"}", url.PathEscape(parameterValueToString(r.templateId, "templateId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.formValidationRequest == nil {
-		return localVarReturnValue, nil, reportError("formValidationRequest is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.formValidationRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

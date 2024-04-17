@@ -77,12 +77,12 @@ All URIs are relative to *https://dev.udoma.cloud/api/udoma/v1*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*DefaultAPI* | [**AddCaseComment**](docs/DefaultAPI.md#addcasecomment) | **Post** /case/{caseId}/comment | Add new case comment
-*DefaultAPI* | [**ArchiveCase**](docs/DefaultAPI.md#archivecase) | **Post** /case/{caseId}/archive | Mark the case as archived
-*DefaultAPI* | [**ArchiveDocumentGeneration**](docs/DefaultAPI.md#archivedocumentgeneration) | **Post** /document-generation/documents/{docId}/archive | Move the document generation to the archive
-*DefaultAPI* | [**AssignCase**](docs/DefaultAPI.md#assigncase) | **Post** /case/{caseId}/assign | Assign case to a service provider
-*DefaultAPI* | [**CancelSignaturesForDocument**](docs/DefaultAPI.md#cancelsignaturesfordocument) | **Delete** /document-generation/documents/{docId}/esignature | Cancel a signature request for a document
-*DefaultAPI* | [**CreateAppointment**](docs/DefaultAPI.md#createappointment) | **Post** /calendar/appointments/schedule/{scheduleId}/appointment | Create new appointment for a given schedule
+*DefaultAPI* | [**AddCaseComment**](docs/DefaultAPI.md#addcasecomment) | **Post** /case/{caseID}/comment | Add new case comment
+*DefaultAPI* | [**ArchiveCase**](docs/DefaultAPI.md#archivecase) | **Post** /case/{caseID}/archive | Mark the case as archived
+*DefaultAPI* | [**ArchiveDocumentGeneration**](docs/DefaultAPI.md#archivedocumentgeneration) | **Post** /document-generation/documents/{docID}/archive | Move the document generation to the archive
+*DefaultAPI* | [**AssignCase**](docs/DefaultAPI.md#assigncase) | **Post** /case/{caseID}/assign | Assign case to a service provider
+*DefaultAPI* | [**CancelSignaturesForDocument**](docs/DefaultAPI.md#cancelsignaturesfordocument) | **Delete** /document-generation/documents/{docID}/esignature | Cancel a signature request for a document
+*DefaultAPI* | [**CreateAppointment**](docs/DefaultAPI.md#createappointment) | **Post** /calendar/appointments/schedule/{scheduleID}/appointment | Create new appointment for a given schedule
 *DefaultAPI* | [**CreateAppointmentSchedule**](docs/DefaultAPI.md#createappointmentschedule) | **Post** /calendar/appointments/schedule | Create new appointment schedule
 *DefaultAPI* | [**CreateAppointmentTemplate**](docs/DefaultAPI.md#createappointmenttemplate) | **Post** /calendar/appointments/template | Create new appointment template
 *DefaultAPI* | [**CreateBankAccount**](docs/DefaultAPI.md#createbankaccount) | **Post** /bank-account | Create new bank account
@@ -99,75 +99,68 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateDocumentTemplate**](docs/DefaultAPI.md#createdocumenttemplate) | **Post** /document-generation/template | Create a new document template
 *DefaultAPI* | [**CreateFAQEntry**](docs/DefaultAPI.md#createfaqentry) | **Post** /faqs/entry | Create a new FAQ entry
 *DefaultAPI* | [**CreateMeter**](docs/DefaultAPI.md#createmeter) | **Post** /meters | Create a new meter for a property
-*DefaultAPI* | [**CreateMeterReading**](docs/DefaultAPI.md#createmeterreading) | **Post** /meter/{meterId}/readings | Create a new meter reading for a meter
-*DefaultAPI* | [**CreateNote**](docs/DefaultAPI.md#createnote) | **Post** /note | Create a new note
+*DefaultAPI* | [**CreateMeterReading**](docs/DefaultAPI.md#createmeterreading) | **Post** /meter/{meterID}/readings | Create a new meter reading for a meter
 *DefaultAPI* | [**CreateProperty**](docs/DefaultAPI.md#createproperty) | **Post** /property | Create property
-*DefaultAPI* | [**CreatePropertyContact**](docs/DefaultAPI.md#createpropertycontact) | **Post** /property/{propId}/contacts | Create a property contact
-*DefaultAPI* | [**CreatePropertyHistoryEntry**](docs/DefaultAPI.md#createpropertyhistoryentry) | **Post** /property/{propId}/history | Create a property history entry
 *DefaultAPI* | [**CreatePropertyOwner**](docs/DefaultAPI.md#createpropertyowner) | **Post** /owner | Create a new property owner
 *DefaultAPI* | [**CreateReportDefinition**](docs/DefaultAPI.md#createreportdefinition) | **Post** /report | Create a new report definition
 *DefaultAPI* | [**CreateServiceProvider**](docs/DefaultAPI.md#createserviceprovider) | **Post** /service-provider | Create a new service provider for the current account
-*DefaultAPI* | [**CreateTenancy**](docs/DefaultAPI.md#createtenancy) | **Post** /property/{propId}/tenancy | Create new tenancy for the property
-*DefaultAPI* | [**CreateTenancyUpdate**](docs/DefaultAPI.md#createtenancyupdate) | **Post** /tenancy/{tenancyId}/updates | Create new tenancy update for the tenancy
+*DefaultAPI* | [**CreateTenancy**](docs/DefaultAPI.md#createtenancy) | **Post** /property/{propID}/tenancy | Create new tenancy for the property
+*DefaultAPI* | [**CreateTenancyUpdate**](docs/DefaultAPI.md#createtenancyupdate) | **Post** /tenancy/{tenancyID}/updates | Create new tenancy update for the tenancy
 *DefaultAPI* | [**CreateTenant**](docs/DefaultAPI.md#createtenant) | **Post** /tenant | Create a new tenant and optionally invites them to join the platform 
 *DefaultAPI* | [**CreateWorkflowDefinition**](docs/DefaultAPI.md#createworkflowdefinition) | **Post** /workflows/definition | Create a new workflow definition
 *DefaultAPI* | [**CreateWorkflowEntrypoint**](docs/DefaultAPI.md#createworkflowentrypoint) | **Post** /workflows/definition/{definitionID}/entrypoint | Create a new workflow entry point for the workflow definition
-*DefaultAPI* | [**DeleteAppointment**](docs/DefaultAPI.md#deleteappointment) | **Delete** /calendar/appointments/entry/{entryId} | Delete an appointment
-*DefaultAPI* | [**DeleteAppointmentSchedule**](docs/DefaultAPI.md#deleteappointmentschedule) | **Delete** /calendar/appointments/schedule/{scheduleId} | Delete an appointment schedule
-*DefaultAPI* | [**DeleteAppointmentTemplate**](docs/DefaultAPI.md#deleteappointmenttemplate) | **Delete** /calendar/appointments/template/{templateId} | Delete an appointment template
-*DefaultAPI* | [**DeleteAttachment**](docs/DefaultAPI.md#deleteattachment) | **Delete** /attachment/{attachmentId} | Delete the file upload with the given ID
-*DefaultAPI* | [**DeleteBankAccount**](docs/DefaultAPI.md#deletebankaccount) | **Delete** /bank-account/{accountId} | Delete an already existing bank account
-*DefaultAPI* | [**DeleteCase**](docs/DefaultAPI.md#deletecase) | **Delete** /case/{caseId} | Delete case
-*DefaultAPI* | [**DeleteCaseComment**](docs/DefaultAPI.md#deletecasecomment) | **Delete** /case/{caseId}/comment/{commentId} | Mark a case comment as deleted
-*DefaultAPI* | [**DeleteCaseReportingEndpoint**](docs/DefaultAPI.md#deletecasereportingendpoint) | **Delete** /cases/endpoints/{endpointId} | Delete the case reporting endpoint by ID
-*DefaultAPI* | [**DeleteCaseTemplate**](docs/DefaultAPI.md#deletecasetemplate) | **Delete** /cases/template/{templateId} | Delete a case template
+*DefaultAPI* | [**DeleteAppointment**](docs/DefaultAPI.md#deleteappointment) | **Delete** /calendar/appointments/entry/{entryID} | Delete an appointment
+*DefaultAPI* | [**DeleteAppointmentSchedule**](docs/DefaultAPI.md#deleteappointmentschedule) | **Delete** /calendar/appointments/schedule/{scheduleID} | Delete an appointment schedule
+*DefaultAPI* | [**DeleteAppointmentTemplate**](docs/DefaultAPI.md#deleteappointmenttemplate) | **Delete** /calendar/appointments/template/{templateID} | Delete an appointment template
+*DefaultAPI* | [**DeleteAttachment**](docs/DefaultAPI.md#deleteattachment) | **Delete** /attachment/{attachmentID} | Delete the file upload with the given ID
+*DefaultAPI* | [**DeleteBankAccount**](docs/DefaultAPI.md#deletebankaccount) | **Delete** /bank-account/{accountID} | Delete an already existing bank account
+*DefaultAPI* | [**DeleteCase**](docs/DefaultAPI.md#deletecase) | **Delete** /case/{caseID} | Delete case
+*DefaultAPI* | [**DeleteCaseComment**](docs/DefaultAPI.md#deletecasecomment) | **Delete** /case/{caseID}/comment/{commentID} | Mark a case comment as deleted
+*DefaultAPI* | [**DeleteCaseReportingEndpoint**](docs/DefaultAPI.md#deletecasereportingendpoint) | **Delete** /cases/endpoints/{endpointID} | Delete the case reporting endpoint by ID
+*DefaultAPI* | [**DeleteCaseTemplate**](docs/DefaultAPI.md#deletecasetemplate) | **Delete** /cases/template/{templateID} | Delete a case template
 *DefaultAPI* | [**DeleteConnectorConfig**](docs/DefaultAPI.md#deleteconnectorconfig) | **Delete** /connector/{name}/config | Delete the connector configuration
 *DefaultAPI* | [**DeleteConnectorCredentials**](docs/DefaultAPI.md#deleteconnectorcredentials) | **Delete** /connector/credentials/{apiKey} | Delete the connector credentials for the current account
 *DefaultAPI* | [**DeleteConnectorEntity**](docs/DefaultAPI.md#deleteconnectorentity) | **Delete** /connector/{name}/entity/{entityType} | Delete all the entities of a certain type.
 *DefaultAPI* | [**DeleteConnectorQuery**](docs/DefaultAPI.md#deleteconnectorquery) | **Delete** /connector/{queryID}/query | Delete the query
 *DefaultAPI* | [**DeleteCustomIDGenerator**](docs/DefaultAPI.md#deletecustomidgenerator) | **Delete** /id-generators/{generatorID} | Delete the custom ID generator with all its related data
 *DefaultAPI* | [**DeleteCustomerScript**](docs/DefaultAPI.md#deletecustomerscript) | **Delete** /customer-scripts/{scriptID} | Delete the script with all its related data
-*DefaultAPI* | [**DeleteDocument**](docs/DefaultAPI.md#deletedocument) | **Delete** /document-repository/entry/{documentId} | Delete a single document
-*DefaultAPI* | [**DeleteDocumentGeneration**](docs/DefaultAPI.md#deletedocumentgeneration) | **Delete** /document-generation/documents/{docId} | Delete an existing document generation
-*DefaultAPI* | [**DeleteDocumentTemplate**](docs/DefaultAPI.md#deletedocumenttemplate) | **Delete** /document-generation/template/{templateId} | Delete a document template
-*DefaultAPI* | [**DeleteFAQEntry**](docs/DefaultAPI.md#deletefaqentry) | **Delete** /faqs/entry/{entryId} | Delete a FAQ entry
-*DefaultAPI* | [**DeleteInvitation**](docs/DefaultAPI.md#deleteinvitation) | **Delete** /invitation/{invitationId} | Delete invitation
-*DefaultAPI* | [**DeleteMeter**](docs/DefaultAPI.md#deletemeter) | **Delete** /meter/{meterId} | Delete meter
-*DefaultAPI* | [**DeleteMeterReading**](docs/DefaultAPI.md#deletemeterreading) | **Delete** /meter/{meterId}/reading/{readingId} | Delete meter reading
-*DefaultAPI* | [**DeleteNote**](docs/DefaultAPI.md#deletenote) | **Delete** /note/{noteId} | Delete note
-*DefaultAPI* | [**DeleteProperty**](docs/DefaultAPI.md#deleteproperty) | **Delete** /properties/{propId} | Delete property
-*DefaultAPI* | [**DeletePropertyContact**](docs/DefaultAPI.md#deletepropertycontact) | **Delete** /property/{propId}/contacts/{entryId} | Delete a property contact
-*DefaultAPI* | [**DeletePropertyHistoryEntry**](docs/DefaultAPI.md#deletepropertyhistoryentry) | **Delete** /property/{propId}/history/{entryId} | Delete a history entry
-*DefaultAPI* | [**DeletePropertyOwner**](docs/DefaultAPI.md#deletepropertyowner) | **Delete** /owner/{ownerId} | Delete property owner
-*DefaultAPI* | [**DeleteReportDefinition**](docs/DefaultAPI.md#deletereportdefinition) | **Delete** /report/{definitionId} | 
-*DefaultAPI* | [**DeleteReportExecution**](docs/DefaultAPI.md#deletereportexecution) | **Delete** /report/executions/{executionId} | 
-*DefaultAPI* | [**DeleteServiceProvider**](docs/DefaultAPI.md#deleteserviceprovider) | **Delete** /service-provider/{serviceProviderId} | Delete the service provider
-*DefaultAPI* | [**DeleteTenancy**](docs/DefaultAPI.md#deletetenancy) | **Delete** /tenancy/{tenancyId} | Delete the tenancy with the given ID
-*DefaultAPI* | [**DeleteTenancyUpdate**](docs/DefaultAPI.md#deletetenancyupdate) | **Delete** /tenancy-update/{tenancyUpdateId} | Delete the tenancy update with the given ID
-*DefaultAPI* | [**DeleteTenant**](docs/DefaultAPI.md#deletetenant) | **Delete** /tenant/{tenantId} | Remove tenant from property
+*DefaultAPI* | [**DeleteDocument**](docs/DefaultAPI.md#deletedocument) | **Delete** /document-repository/entry/{documentID} | Delete a single document
+*DefaultAPI* | [**DeleteDocumentGeneration**](docs/DefaultAPI.md#deletedocumentgeneration) | **Delete** /document-generation/documents/{docID} | Delete an existing document generation
+*DefaultAPI* | [**DeleteDocumentTemplate**](docs/DefaultAPI.md#deletedocumenttemplate) | **Delete** /document-generation/template/{templateID} | Delete a document template
+*DefaultAPI* | [**DeleteFAQEntry**](docs/DefaultAPI.md#deletefaqentry) | **Delete** /faqs/entry/{entryID} | Delete a FAQ entry
+*DefaultAPI* | [**DeleteMeter**](docs/DefaultAPI.md#deletemeter) | **Delete** /meter/{meterID} | Delete meter
+*DefaultAPI* | [**DeleteMeterReading**](docs/DefaultAPI.md#deletemeterreading) | **Delete** /meter/{meterID}/reading/{readingID} | Delete meter reading
+*DefaultAPI* | [**DeleteProperty**](docs/DefaultAPI.md#deleteproperty) | **Delete** /properties/{propID} | Delete property
+*DefaultAPI* | [**DeletePropertyOwner**](docs/DefaultAPI.md#deletepropertyowner) | **Delete** /owner/{ownerID} | Delete property owner
+*DefaultAPI* | [**DeleteReportDefinition**](docs/DefaultAPI.md#deletereportdefinition) | **Delete** /report/{definitionID} | 
+*DefaultAPI* | [**DeleteReportExecution**](docs/DefaultAPI.md#deletereportexecution) | **Delete** /report/executions/{executionID} | 
+*DefaultAPI* | [**DeleteServiceProvider**](docs/DefaultAPI.md#deleteserviceprovider) | **Delete** /service-provider/{serviceProviderID} | Delete the service provider
+*DefaultAPI* | [**DeleteTenancy**](docs/DefaultAPI.md#deletetenancy) | **Delete** /tenancy/{tenancyID} | Delete the tenancy with the given ID
+*DefaultAPI* | [**DeleteTenancyUpdate**](docs/DefaultAPI.md#deletetenancyupdate) | **Delete** /tenancy-update/{tenancyUpdateID} | Delete the tenancy update with the given ID
+*DefaultAPI* | [**DeleteTenant**](docs/DefaultAPI.md#deletetenant) | **Delete** /tenant/{tenantID} | Remove tenant from property
 *DefaultAPI* | [**DeleteWorkflowDefinition**](docs/DefaultAPI.md#deleteworkflowdefinition) | **Delete** /workflows/definition/{definitionID} | Delete workflow definition
 *DefaultAPI* | [**DeleteWorkflowEntrypoint**](docs/DefaultAPI.md#deleteworkflowentrypoint) | **Delete** /workflows/entrypoint/{entrypointID} | Delete workflow entry point
 *DefaultAPI* | [**DeleteWorkflowExecution**](docs/DefaultAPI.md#deleteworkflowexecution) | **Delete** /workflows/execution/{executionID} | Delete workflow execution
-*DefaultAPI* | [**ExecuteReport**](docs/DefaultAPI.md#executereport) | **Post** /report/{definitionId}/execute | 
+*DefaultAPI* | [**ExecuteReport**](docs/DefaultAPI.md#executereport) | **Post** /report/{definitionID}/execute | 
 *DefaultAPI* | [**ExecuteWorkflowEntrypoint**](docs/DefaultAPI.md#executeworkflowentrypoint) | **Post** /workflows/entrypoint/{entrypointID}/execute | Execute the workflow entry point
 *DefaultAPI* | [**ExecuteWorkflowExecutionStep**](docs/DefaultAPI.md#executeworkflowexecutionstep) | **Post** /workflows/execution/{executionID} | Execute workflow execution step
 *DefaultAPI* | [**Feedback**](docs/DefaultAPI.md#feedback) | **Post** /feedback | User feedback about the product
-*DefaultAPI* | [**GenerateCaseReportingEndpointNotice**](docs/DefaultAPI.md#generatecasereportingendpointnotice) | **Post** /cases/endpoints/{endpointId}/notice | Generate a PDF for a notice of the case reporting endpoint
-*DefaultAPI* | [**GenerateDocumentPDF**](docs/DefaultAPI.md#generatedocumentpdf) | **Post** /document-generation/documents/{docId}/generate-pdf | Generate a PDF for the document generation
-*DefaultAPI* | [**GenerateDocumentText**](docs/DefaultAPI.md#generatedocumenttext) | **Post** /document-generation/documents/{docId}/generate-text | Generate the text for the document, based on template and input data 
-*DefaultAPI* | [**GenerateESignatureRequest**](docs/DefaultAPI.md#generateesignaturerequest) | **Get** /document-generation/documents/{docId}/esignature/request | Generate an eSignature request for a document, based on template signature config 
+*DefaultAPI* | [**GenerateCaseReportingEndpointNotice**](docs/DefaultAPI.md#generatecasereportingendpointnotice) | **Post** /cases/endpoints/{endpointID}/notice | Generate a PDF for a notice of the case reporting endpoint
+*DefaultAPI* | [**GenerateDocumentPDF**](docs/DefaultAPI.md#generatedocumentpdf) | **Post** /document-generation/documents/{docID}/generate-pdf | Generate a PDF for the document generation
+*DefaultAPI* | [**GenerateDocumentText**](docs/DefaultAPI.md#generatedocumenttext) | **Post** /document-generation/documents/{docID}/generate-text | Generate the text for the document, based on template and input data 
+*DefaultAPI* | [**GenerateESignatureRequest**](docs/DefaultAPI.md#generateesignaturerequest) | **Get** /document-generation/documents/{docID}/esignature/request | Generate an eSignature request for a document, based on template signature config 
 *DefaultAPI* | [**GetAccountSummary**](docs/DefaultAPI.md#getaccountsummary) | **Post** /summary | Get overview of data in the system for current account
-*DefaultAPI* | [**GetAppointment**](docs/DefaultAPI.md#getappointment) | **Get** /calendar/appointments/entry/{entryId} | Get the appointment by ID
-*DefaultAPI* | [**GetAppointmentInIcalFormat**](docs/DefaultAPI.md#getappointmentinicalformat) | **Get** /calendar/appointments/entry/{entryId}/ical | Get appointment in ical format
-*DefaultAPI* | [**GetAppointmentSchedule**](docs/DefaultAPI.md#getappointmentschedule) | **Get** /calendar/appointments/schedule/{scheduleId} | Get the appointment schedule by ID
-*DefaultAPI* | [**GetAppointmentTemplate**](docs/DefaultAPI.md#getappointmenttemplate) | **Get** /calendar/appointments/template/{templateId} | Get the appointment template by ID
-*DefaultAPI* | [**GetAttachment**](docs/DefaultAPI.md#getattachment) | **Get** /attachment/{attachmentId} | Get a file attachment
-*DefaultAPI* | [**GetBankAccount**](docs/DefaultAPI.md#getbankaccount) | **Get** /bank-account/{accountId} | Get the bank account with the given ID
-*DefaultAPI* | [**GetCase**](docs/DefaultAPI.md#getcase) | **Get** /case/{caseId} | Get case details
-*DefaultAPI* | [**GetCaseComment**](docs/DefaultAPI.md#getcasecomment) | **Get** /case/{caseId}/comment/{commentId} | Get comment details
-*DefaultAPI* | [**GetCaseReportingEndpoint**](docs/DefaultAPI.md#getcasereportingendpoint) | **Get** /cases/endpoints/{endpointId} | Get the case report endpoint by ID
-*DefaultAPI* | [**GetCaseReportingEndpointQRCode**](docs/DefaultAPI.md#getcasereportingendpointqrcode) | **Get** /cases/endpoints/{endpointId}/qr-code | Generates and returns a QR code of the URL of the case reporting endpoint 
-*DefaultAPI* | [**GetCaseTemplate**](docs/DefaultAPI.md#getcasetemplate) | **Get** /cases/template/{templateId} | Get the case template by ID
+*DefaultAPI* | [**GetAppointment**](docs/DefaultAPI.md#getappointment) | **Get** /calendar/appointments/entry/{entryID} | Get the appointment by ID
+*DefaultAPI* | [**GetAppointmentInIcalFormat**](docs/DefaultAPI.md#getappointmentinicalformat) | **Get** /calendar/appointments/entry/{entryID}/ical | Get appointment in ical format
+*DefaultAPI* | [**GetAppointmentSchedule**](docs/DefaultAPI.md#getappointmentschedule) | **Get** /calendar/appointments/schedule/{scheduleID} | Get the appointment schedule by ID
+*DefaultAPI* | [**GetAppointmentTemplate**](docs/DefaultAPI.md#getappointmenttemplate) | **Get** /calendar/appointments/template/{templateID} | Get the appointment template by ID
+*DefaultAPI* | [**GetAttachment**](docs/DefaultAPI.md#getattachment) | **Get** /attachment/{attachmentID} | Get a file attachment
+*DefaultAPI* | [**GetBankAccount**](docs/DefaultAPI.md#getbankaccount) | **Get** /bank-account/{accountID} | Get the bank account with the given ID
+*DefaultAPI* | [**GetCase**](docs/DefaultAPI.md#getcase) | **Get** /case/{caseID} | Get case details
+*DefaultAPI* | [**GetCaseComment**](docs/DefaultAPI.md#getcasecomment) | **Get** /case/{caseID}/comment/{commentID} | Get comment details
+*DefaultAPI* | [**GetCaseReportingEndpoint**](docs/DefaultAPI.md#getcasereportingendpoint) | **Get** /cases/endpoints/{endpointID} | Get the case report endpoint by ID
+*DefaultAPI* | [**GetCaseReportingEndpointQRCode**](docs/DefaultAPI.md#getcasereportingendpointqrcode) | **Get** /cases/endpoints/{endpointID}/qr-code | Generates and returns a QR code of the URL of the case reporting endpoint 
+*DefaultAPI* | [**GetCaseTemplate**](docs/DefaultAPI.md#getcasetemplate) | **Get** /cases/template/{templateID} | Get the case template by ID
 *DefaultAPI* | [**GetCompanyProfile**](docs/DefaultAPI.md#getcompanyprofile) | **Get** /profile/company | Get the company profile details
 *DefaultAPI* | [**GetConnectorConfig**](docs/DefaultAPI.md#getconnectorconfig) | **Get** /connector/{name}/config | Get the connector configuration for the current account
 *DefaultAPI* | [**GetConnectorConfigs**](docs/DefaultAPI.md#getconnectorconfigs) | **Get** /connector/configs | Get the connector configurations for the current account
@@ -179,45 +172,39 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetCustomIDGenerators**](docs/DefaultAPI.md#getcustomidgenerators) | **Get** /id-generators | Get all customer specific ID generators
 *DefaultAPI* | [**GetCustomerScript**](docs/DefaultAPI.md#getcustomerscript) | **Get** /customer-scripts/{scriptID} | Get the script with all its attributes
 *DefaultAPI* | [**GetCustomerScripts**](docs/DefaultAPI.md#getcustomerscripts) | **Get** /customer-scripts | Get all customer specific JS scripts
-*DefaultAPI* | [**GetDocument**](docs/DefaultAPI.md#getdocument) | **Get** /document-repository/entry/{documentId} | Get an already existing document
-*DefaultAPI* | [**GetDocumentGeneration**](docs/DefaultAPI.md#getdocumentgeneration) | **Get** /document-generation/documents/{docId} | Get a single document generation
-*DefaultAPI* | [**GetDocumentTemplate**](docs/DefaultAPI.md#getdocumenttemplate) | **Get** /document-generation/template/{templateId} | Get a document template
+*DefaultAPI* | [**GetDocument**](docs/DefaultAPI.md#getdocument) | **Get** /document-repository/entry/{documentID} | Get an already existing document
+*DefaultAPI* | [**GetDocumentGeneration**](docs/DefaultAPI.md#getdocumentgeneration) | **Get** /document-generation/documents/{docID} | Get a single document generation
+*DefaultAPI* | [**GetDocumentTemplate**](docs/DefaultAPI.md#getdocumenttemplate) | **Get** /document-generation/template/{templateID} | Get a document template
 *DefaultAPI* | [**GetDocumentTemplates**](docs/DefaultAPI.md#getdocumenttemplates) | **Get** /document-generation/templates | Get all available document templates
-*DefaultAPI* | [**GetESignatureStatusForDocument**](docs/DefaultAPI.md#getesignaturestatusfordocument) | **Get** /document-generation/documents/{docId}/esignature | Get the singing status for the document
+*DefaultAPI* | [**GetESignatureStatusForDocument**](docs/DefaultAPI.md#getesignaturestatusfordocument) | **Get** /document-generation/documents/{docID}/esignature | Get the singing status for the document
 *DefaultAPI* | [**GetExternalUser**](docs/DefaultAPI.md#getexternaluser) | **Get** /external-users/{userID} | Get information about external user
 *DefaultAPI* | [**GetExternalUserCasesCount**](docs/DefaultAPI.md#getexternalusercasescount) | **Get** /external-users/{userID}/cases/count | Get the number of cases the the given user has opened
 *DefaultAPI* | [**GetFAQEntries**](docs/DefaultAPI.md#getfaqentries) | **Get** /faqs/entries | Get all available FAQ entries
-*DefaultAPI* | [**GetFAQEntry**](docs/DefaultAPI.md#getfaqentry) | **Get** /faqs/entry/{entryId} | Get a FAQ entry
-*DefaultAPI* | [**GetInvitations**](docs/DefaultAPI.md#getinvitations) | **Get** /invitations | List tenancy invitations
+*DefaultAPI* | [**GetFAQEntry**](docs/DefaultAPI.md#getfaqentry) | **Get** /faqs/entry/{entryID} | Get a FAQ entry
 *DefaultAPI* | [**GetLatestPriceIndexPoint**](docs/DefaultAPI.md#getlatestpriceindexpoint) | **Get** /price-index/latest/{countryCode} | Get the current latest PriceIndexPoint
-*DefaultAPI* | [**GetMeter**](docs/DefaultAPI.md#getmeter) | **Get** /meter/{meterId} | Get meter
-*DefaultAPI* | [**GetMeterReading**](docs/DefaultAPI.md#getmeterreading) | **Get** /meter/{meterId}/reading/{readingId} | Get meter reading
-*DefaultAPI* | [**GetMeterReadings**](docs/DefaultAPI.md#getmeterreadings) | **Get** /meter/{meterId}/readings | List meter readings
+*DefaultAPI* | [**GetMeter**](docs/DefaultAPI.md#getmeter) | **Get** /meter/{meterID} | Get meter
+*DefaultAPI* | [**GetMeterReading**](docs/DefaultAPI.md#getmeterreading) | **Get** /meter/{meterID}/reading/{readingID} | Get meter reading
+*DefaultAPI* | [**GetMeterReadings**](docs/DefaultAPI.md#getmeterreadings) | **Get** /meter/{meterID}/readings | List meter readings
 *DefaultAPI* | [**GetMeters**](docs/DefaultAPI.md#getmeters) | **Get** /meters | List meters
-*DefaultAPI* | [**GetMetersByProperty**](docs/DefaultAPI.md#getmetersbyproperty) | **Get** /meters/by-property/{propertyId} | List meters for a property
-*DefaultAPI* | [**GetNote**](docs/DefaultAPI.md#getnote) | **Get** /note/{noteId} | Get note details
+*DefaultAPI* | [**GetMetersByProperty**](docs/DefaultAPI.md#getmetersbyproperty) | **Get** /meters/by-property/{propID} | List meters for a property
 *DefaultAPI* | [**GetPriceIndexPoint**](docs/DefaultAPI.md#getpriceindexpoint) | **Post** /price-index | Get the PriceIndexPoint
-*DefaultAPI* | [**GetProperty**](docs/DefaultAPI.md#getproperty) | **Get** /properties/{propId} | Get property details
-*DefaultAPI* | [**GetPropertyCases**](docs/DefaultAPI.md#getpropertycases) | **Post** /property/{propId}/cases | Get property cases
-*DefaultAPI* | [**GetPropertyContact**](docs/DefaultAPI.md#getpropertycontact) | **Get** /property/{propId}/contacts/{entryId} | Get details of a property contact
-*DefaultAPI* | [**GetPropertyContacts**](docs/DefaultAPI.md#getpropertycontacts) | **Get** /property/{propId}/contacts | Get all contacts for this property
-*DefaultAPI* | [**GetPropertyHistory**](docs/DefaultAPI.md#getpropertyhistory) | **Get** /property/{propId}/history | Get property history
-*DefaultAPI* | [**GetPropertyHistoryEntry**](docs/DefaultAPI.md#getpropertyhistoryentry) | **Get** /property/{propId}/history/{entryId} | Get property history entry
-*DefaultAPI* | [**GetPropertyOwner**](docs/DefaultAPI.md#getpropertyowner) | **Get** /owner/{ownerId} | Get property owner details
-*DefaultAPI* | [**GetPropertyTenancy**](docs/DefaultAPI.md#getpropertytenancy) | **Get** /property/{propId}/tenancy | Get the current tenancy for the property
-*DefaultAPI* | [**GetReportDefinition**](docs/DefaultAPI.md#getreportdefinition) | **Get** /report/{definitionId} | 
+*DefaultAPI* | [**GetProperty**](docs/DefaultAPI.md#getproperty) | **Get** /properties/{propID} | Get property details
+*DefaultAPI* | [**GetPropertyCases**](docs/DefaultAPI.md#getpropertycases) | **Post** /property/{propID}/cases | Get property cases
+*DefaultAPI* | [**GetPropertyOwner**](docs/DefaultAPI.md#getpropertyowner) | **Get** /owner/{ownerID} | Get property owner details
+*DefaultAPI* | [**GetPropertyTenancy**](docs/DefaultAPI.md#getpropertytenancy) | **Get** /property/{propID}/tenancy | Get the current tenancy for the property
+*DefaultAPI* | [**GetReportDefinition**](docs/DefaultAPI.md#getreportdefinition) | **Get** /report/{definitionID} | 
 *DefaultAPI* | [**GetReportDefinitions**](docs/DefaultAPI.md#getreportdefinitions) | **Get** /reports | 
-*DefaultAPI* | [**GetReportExecution**](docs/DefaultAPI.md#getreportexecution) | **Get** /report/executions/{executionId} | Get report execution details
+*DefaultAPI* | [**GetReportExecution**](docs/DefaultAPI.md#getreportexecution) | **Get** /report/executions/{executionID} | Get report execution details
 *DefaultAPI* | [**GetReportExecutions**](docs/DefaultAPI.md#getreportexecutions) | **Post** /reports/executions | Get all executions that match the given criteria
-*DefaultAPI* | [**GetServiceProvider**](docs/DefaultAPI.md#getserviceprovider) | **Get** /service-provider/{serviceProviderId} | Get the service provider with the given ID
-*DefaultAPI* | [**GetSignedDocumentAuditDownload**](docs/DefaultAPI.md#getsigneddocumentauditdownload) | **Get** /document-generation/documents/{docId}/esignature/download-audits | Get the audit information for the signed document
-*DefaultAPI* | [**GetSignedDocumentDownload**](docs/DefaultAPI.md#getsigneddocumentdownload) | **Get** /document-generation/documents/{docId}/esignature/download-document | Get the signed document
-*DefaultAPI* | [**GetTenancy**](docs/DefaultAPI.md#gettenancy) | **Get** /tenancy/{tenancyId} | Get the tenancy with the given ID
-*DefaultAPI* | [**GetTenancyHistory**](docs/DefaultAPI.md#gettenancyhistory) | **Get** /property/{propId}/tenancy/history | Get the tenancy history for the property
-*DefaultAPI* | [**GetTenancyUpdate**](docs/DefaultAPI.md#gettenancyupdate) | **Get** /tenancy-update/{tenancyUpdateId} | Get the tenancy update with the given ID
-*DefaultAPI* | [**GetTenancyUpdates**](docs/DefaultAPI.md#gettenancyupdates) | **Get** /tenancy/{tenancyId}/updates | Get the tenancy updates for the tenancy
-*DefaultAPI* | [**GetTenant**](docs/DefaultAPI.md#gettenant) | **Get** /tenant/{tenantId} | Get tenant details
-*DefaultAPI* | [**GetTenantTenancies**](docs/DefaultAPI.md#gettenanttenancies) | **Get** /tenant/{tenantId}/tenancies | Get all tenancies for the tenant
+*DefaultAPI* | [**GetServiceProvider**](docs/DefaultAPI.md#getserviceprovider) | **Get** /service-provider/{serviceProviderID} | Get the service provider with the given ID
+*DefaultAPI* | [**GetSignedDocumentAuditDownload**](docs/DefaultAPI.md#getsigneddocumentauditdownload) | **Get** /document-generation/documents/{docID}/esignature/download-audits | Get the audit information for the signed document
+*DefaultAPI* | [**GetSignedDocumentDownload**](docs/DefaultAPI.md#getsigneddocumentdownload) | **Get** /document-generation/documents/{docID}/esignature/download-document | Get the signed document
+*DefaultAPI* | [**GetTenancy**](docs/DefaultAPI.md#gettenancy) | **Get** /tenancy/{tenancyID} | Get the tenancy with the given ID
+*DefaultAPI* | [**GetTenancyHistory**](docs/DefaultAPI.md#gettenancyhistory) | **Get** /property/{propID}/tenancy/history | Get the tenancy history for the property
+*DefaultAPI* | [**GetTenancyUpdate**](docs/DefaultAPI.md#gettenancyupdate) | **Get** /tenancy-update/{tenancyUpdateID} | Get the tenancy update with the given ID
+*DefaultAPI* | [**GetTenancyUpdates**](docs/DefaultAPI.md#gettenancyupdates) | **Get** /tenancy/{tenancyID}/updates | Get the tenancy updates for the tenancy
+*DefaultAPI* | [**GetTenant**](docs/DefaultAPI.md#gettenant) | **Get** /tenant/{tenantID} | Get tenant details
+*DefaultAPI* | [**GetTenantTenancies**](docs/DefaultAPI.md#gettenanttenancies) | **Get** /tenant/{tenantID}/tenancies | Get all tenancies for the tenant
 *DefaultAPI* | [**GetUserPreferences**](docs/DefaultAPI.md#getuserpreferences) | **Get** /preferences | Get the user preferences details
 *DefaultAPI* | [**GetWorkflowDefinition**](docs/DefaultAPI.md#getworkflowdefinition) | **Get** /workflows/definition/{definitionID} | Get workflow definition details
 *DefaultAPI* | [**GetWorkflowEntrypoint**](docs/DefaultAPI.md#getworkflowentrypoint) | **Get** /workflows/entrypoint/{entrypointID} | Get the workflow entry point for the workflow definition
@@ -227,28 +214,25 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetWorkflowExecutionTrigger**](docs/DefaultAPI.md#getworkflowexecutiontrigger) | **Get** /workflows/triggers/{executionID} | Get workflow trigger for an execution
 *DefaultAPI* | [**GetWorkflowTriggersForSource**](docs/DefaultAPI.md#getworkflowtriggersforsource) | **Get** /workflows/trigger/source/{sourceID} | Get workflow triggers for a source
 *DefaultAPI* | [**InternalAddPriceIndexPoint**](docs/DefaultAPI.md#internaladdpriceindexpoint) | **Put** /price-index | Push a new value for the inflation index
-*DefaultAPI* | [**InviteTenant**](docs/DefaultAPI.md#invitetenant) | **Post** /invitation | Invite a tenant
-*DefaultAPI* | [**PublicAddCaseAttachment**](docs/DefaultAPI.md#publicaddcaseattachment) | **Post** /public/case/{caseId}/attachment | Add new attachment to an existing case
-*DefaultAPI* | [**PublicAddCaseComment**](docs/DefaultAPI.md#publicaddcasecomment) | **Post** /public/case/{caseId}/comment | Add new case comment
-*DefaultAPI* | [**PublicCleanupAttachments**](docs/DefaultAPI.md#publiccleanupattachments) | **Post** /public/attachments/cleanup/{code} | Cleanup attachments that are not referenced by any entity
-*DefaultAPI* | [**PublicCreateAppointment**](docs/DefaultAPI.md#publiccreateappointment) | **Post** /public/calendar/appointments/{scheduleId}/entry | Create a new appointment for the given schedule
-*DefaultAPI* | [**PublicCreateCase**](docs/DefaultAPI.md#publiccreatecase) | **Post** /public/case | Raise a new from a public endpoint.
+*DefaultAPI* | [**PublicAddCaseComment**](docs/DefaultAPI.md#publicaddcasecomment) | **Post** /public/case/{caseID}/comment | Add new case comment
+*DefaultAPI* | [**PublicCreateAppointment**](docs/DefaultAPI.md#publiccreateappointment) | **Post** /public/calendar/appointments/{scheduleID}/entry | Create a new appointment for the given schedule
+*DefaultAPI* | [**PublicCreateCase**](docs/DefaultAPI.md#publiccreatecase) | **Post** /public/case | Raise a new case from a public endpoint.
 *DefaultAPI* | [**PublicDeleteAppointment**](docs/DefaultAPI.md#publicdeleteappointment) | **Delete** /public/calendar/appointments/entry/{code} | Delete an appointment
-*DefaultAPI* | [**PublicDeleteAttachment**](docs/DefaultAPI.md#publicdeleteattachment) | **Delete** /public/attachment/{attachmentId} | Delete the file upload with the given ID
-*DefaultAPI* | [**PublicDeleteCaseComment**](docs/DefaultAPI.md#publicdeletecasecomment) | **Delete** /public/case/{caseId}/comment/{commentId} | Delete a comment
+*DefaultAPI* | [**PublicDeleteAttachment**](docs/DefaultAPI.md#publicdeleteattachment) | **Delete** /public/attachment/{attachmentID} | Delete the file upload with the given ID
+*DefaultAPI* | [**PublicDeleteCaseComment**](docs/DefaultAPI.md#publicdeletecasecomment) | **Delete** /public/case/{caseID}/comment/{commentID} | Delete a comment
 *DefaultAPI* | [**PublicGetAppointment**](docs/DefaultAPI.md#publicgetappointment) | **Get** /public/calendar/appointments/entry/{code} | Get appointment details
 *DefaultAPI* | [**PublicGetAppointmentInIcalFormat**](docs/DefaultAPI.md#publicgetappointmentinicalformat) | **Get** /public/calendar/appointments/entry/{code}/ical | Get appointment in ical format
-*DefaultAPI* | [**PublicGetAppointmentSchedule**](docs/DefaultAPI.md#publicgetappointmentschedule) | **Get** /public/calendar/appointments/schedules/{scheduleId} | Get appointment schedule details
-*DefaultAPI* | [**PublicGetAttachment**](docs/DefaultAPI.md#publicgetattachment) | **Get** /public/attachment/{attachmentId} | Get a file attachment
-*DefaultAPI* | [**PublicGetCase**](docs/DefaultAPI.md#publicgetcase) | **Get** /public/case/{caseId} | Get case details
-*DefaultAPI* | [**PublicGetCaseReportingEndpointInfo**](docs/DefaultAPI.md#publicgetcasereportingendpointinfo) | **Get** /public/cases/endpoint/{code}/info | Get the information for the case reporting endpoint with the given code 
-*DefaultAPI* | [**PublicUpdateCaseStatus**](docs/DefaultAPI.md#publicupdatecasestatus) | **Post** /public/case/{caseId}/status | Add new case status
+*DefaultAPI* | [**PublicGetAppointmentSchedule**](docs/DefaultAPI.md#publicgetappointmentschedule) | **Get** /public/calendar/appointments/schedules/{scheduleID} | Get appointment schedule details
+*DefaultAPI* | [**PublicGetAttachment**](docs/DefaultAPI.md#publicgetattachment) | **Get** /public/attachment/{attachmentID} | Get a file attachment
+*DefaultAPI* | [**PublicGetCase**](docs/DefaultAPI.md#publicgetcase) | **Get** /public/case/{caseID} | Get case details
+*DefaultAPI* | [**PublicGetCaseReportingEndpointInfo**](docs/DefaultAPI.md#publicgetcasereportingendpointinfo) | **Get** /public/cases/endpoint/{endpointID}/info | Get the information for the case reporting endpoint with the given code 
+*DefaultAPI* | [**PublicUpdateCaseStatus**](docs/DefaultAPI.md#publicupdatecasestatus) | **Post** /public/case/{caseID}/status | Add new case status
 *DefaultAPI* | [**PublicUploadAttachment**](docs/DefaultAPI.md#publicuploadattachment) | **Post** /public/attachment | Upload new file attachment
-*DefaultAPI* | [**PublicValidateCaseData**](docs/DefaultAPI.md#publicvalidatecasedata) | **Post** /public/case/endpoint/{code}/template/{templateId}/validate | Validate the data provided by the user against the template
-*DefaultAPI* | [**PublicValidateUserEmail**](docs/DefaultAPI.md#publicvalidateuseremail) | **Post** /public/email/validation | Validate user&#39;s email and point out problems if there are any
+*DefaultAPI* | [**PublicValidateFormData**](docs/DefaultAPI.md#publicvalidateformdata) | **Post** /public/validate/formData | Validate the data provided by the user against a custom form
+*DefaultAPI* | [**PublicValidateUserEmail**](docs/DefaultAPI.md#publicvalidateuseremail) | **Post** /public/validate/email | Validate user&#39;s email and point out problems if there are any
 *DefaultAPI* | [**QueryAppointmentSchedules**](docs/DefaultAPI.md#queryappointmentschedules) | **Post** /calendar/appointments/schedules | Query all appointment schedules for given criteria
 *DefaultAPI* | [**QueryAppointmentTemplates**](docs/DefaultAPI.md#queryappointmenttemplates) | **Post** /calendar/appointments/templates | Query all appointment templates for given criteria
-*DefaultAPI* | [**QueryAppointments**](docs/DefaultAPI.md#queryappointments) | **Get** /calendar/appointments/window/{windowId} | Get the appointments of a Window
+*DefaultAPI* | [**QueryAppointments**](docs/DefaultAPI.md#queryappointments) | **Get** /calendar/appointments/window/{windowID} | Get the appointments of a Window
 *DefaultAPI* | [**QueryArchivedDocumentGenerations**](docs/DefaultAPI.md#queryarchiveddocumentgenerations) | **Post** /document-generation/documents/archive | Request a list of archived document generations
 *DefaultAPI* | [**QueryBankAccounts**](docs/DefaultAPI.md#querybankaccounts) | **Post** /bank-accounts | Query bank accounts
 *DefaultAPI* | [**QueryCaseReportingEndpoints**](docs/DefaultAPI.md#querycasereportingendpoints) | **Post** /cases/endpoints | Query all case reporting endpoints for given criteria
@@ -260,52 +244,47 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryExternalUsers**](docs/DefaultAPI.md#queryexternalusers) | **Get** /external-users | Get a list of external users who reported to the current manager
 *DefaultAPI* | [**QueryProperties**](docs/DefaultAPI.md#queryproperties) | **Post** /properties | Query properties
 *DefaultAPI* | [**QueryPropertyOwners**](docs/DefaultAPI.md#querypropertyowners) | **Post** /owners | Query property owners
-*DefaultAPI* | [**QueryServiceProviderCases**](docs/DefaultAPI.md#queryserviceprovidercases) | **Get** /service-provider/{serviceProviderId}/cases | Get the cases the the given service provider has access to
+*DefaultAPI* | [**QueryServiceProviderCases**](docs/DefaultAPI.md#queryserviceprovidercases) | **Get** /service-provider/{serviceProviderID}/cases | Get the cases the the given service provider has access to
 *DefaultAPI* | [**QueryServiceProviders**](docs/DefaultAPI.md#queryserviceproviders) | **Post** /service-providers | Query all service providers for certain criteria
 *DefaultAPI* | [**QueryTenants**](docs/DefaultAPI.md#querytenants) | **Post** /tenants | Query all tenants
 *DefaultAPI* | [**QueryWorkflowDefinitions**](docs/DefaultAPI.md#queryworkflowdefinitions) | **Post** /workflows/definitions | Query all workflow definitions
 *DefaultAPI* | [**QueryWorkflowExecutions**](docs/DefaultAPI.md#queryworkflowexecutions) | **Post** /workflows/executions | Get a list of all workflow executions, matching the criteria in the request 
-*DefaultAPI* | [**RequestESignaturesForDocument**](docs/DefaultAPI.md#requestesignaturesfordocument) | **Post** /document-generation/documents/{docId}/esignature | Trigger a signing request for a document
+*DefaultAPI* | [**RequestESignaturesForDocument**](docs/DefaultAPI.md#requestesignaturesfordocument) | **Post** /document-generation/documents/{docID}/esignature | Trigger a signing request for a document
 *DefaultAPI* | [**ResetConnectorQuery**](docs/DefaultAPI.md#resetconnectorquery) | **Put** /connector/{queryID}/query/reset | Get the query for the current account
-*DefaultAPI* | [**RespondToInvitation**](docs/DefaultAPI.md#respondtoinvitation) | **Post** /invitation/{invitationId} | Respond to invitation
 *DefaultAPI* | [**StartWorkflowExecution**](docs/DefaultAPI.md#startworkflowexecution) | **Post** /workflows/execution | Start a new workflow execution
 *DefaultAPI* | [**SyncConnectorData**](docs/DefaultAPI.md#syncconnectordata) | **Post** /connector/sync | Sync the next batch of connector data.
-*DefaultAPI* | [**UnassignCase**](docs/DefaultAPI.md#unassigncase) | **Post** /case/{caseId}/unassign | Remove access from case
-*DefaultAPI* | [**UpdateAppointment**](docs/DefaultAPI.md#updateappointment) | **Put** /calendar/appointments/entry/{entryId} | Update appointment
-*DefaultAPI* | [**UpdateAppointmentSchedule**](docs/DefaultAPI.md#updateappointmentschedule) | **Put** /calendar/appointments/schedule/{scheduleId} | Update appointment schedule
-*DefaultAPI* | [**UpdateAppointmentTemplate**](docs/DefaultAPI.md#updateappointmenttemplate) | **Put** /calendar/appointments/template/{templateId} | Update appointment template
-*DefaultAPI* | [**UpdateBankAccount**](docs/DefaultAPI.md#updatebankaccount) | **Put** /bank-account/{accountId} | Update the attributes of the already existing bank account
-*DefaultAPI* | [**UpdateCase**](docs/DefaultAPI.md#updatecase) | **Put** /case/{caseId} | Update case
-*DefaultAPI* | [**UpdateCaseReportingEndpoint**](docs/DefaultAPI.md#updatecasereportingendpoint) | **Put** /cases/endpoints/{endpointId} | Update the case reporting endpoint by ID
-*DefaultAPI* | [**UpdateCaseStatus**](docs/DefaultAPI.md#updatecasestatus) | **Post** /case/{caseId}/status | Add new case status
-*DefaultAPI* | [**UpdateCaseTemplate**](docs/DefaultAPI.md#updatecasetemplate) | **Put** /cases/template/{templateId} | Update case template
+*DefaultAPI* | [**UnassignCase**](docs/DefaultAPI.md#unassigncase) | **Post** /case/{caseID}/unassign | Remove access from case
+*DefaultAPI* | [**UpdateAppointment**](docs/DefaultAPI.md#updateappointment) | **Put** /calendar/appointments/entry/{entryID} | Update appointment
+*DefaultAPI* | [**UpdateAppointmentSchedule**](docs/DefaultAPI.md#updateappointmentschedule) | **Put** /calendar/appointments/schedule/{scheduleID} | Update appointment schedule
+*DefaultAPI* | [**UpdateAppointmentTemplate**](docs/DefaultAPI.md#updateappointmenttemplate) | **Put** /calendar/appointments/template/{templateID} | Update appointment template
+*DefaultAPI* | [**UpdateBankAccount**](docs/DefaultAPI.md#updatebankaccount) | **Put** /bank-account/{accountID} | Update the attributes of the already existing bank account
+*DefaultAPI* | [**UpdateCase**](docs/DefaultAPI.md#updatecase) | **Put** /case/{caseID} | Update case
+*DefaultAPI* | [**UpdateCaseReportingEndpoint**](docs/DefaultAPI.md#updatecasereportingendpoint) | **Put** /cases/endpoints/{endpointID} | Update the case reporting endpoint by ID
+*DefaultAPI* | [**UpdateCaseStatus**](docs/DefaultAPI.md#updatecasestatus) | **Post** /case/{caseID}/status | Add new case status
+*DefaultAPI* | [**UpdateCaseTemplate**](docs/DefaultAPI.md#updatecasetemplate) | **Put** /cases/template/{templateID} | Update case template
 *DefaultAPI* | [**UpdateCompanyProfile**](docs/DefaultAPI.md#updatecompanyprofile) | **Put** /profile/company | Update company profile
 *DefaultAPI* | [**UpdateConnectorConfig**](docs/DefaultAPI.md#updateconnectorconfig) | **Put** /connector/{name}/config | Update the connector configuration
 *DefaultAPI* | [**UpdateConnectorQuery**](docs/DefaultAPI.md#updateconnectorquery) | **Put** /connector/{queryID}/query | Update the connector Query
 *DefaultAPI* | [**UpdateCustomIDGenerator**](docs/DefaultAPI.md#updatecustomidgenerator) | **Put** /id-generators/{generatorID} | Update an already existing ID generator
 *DefaultAPI* | [**UpdateCustomerScript**](docs/DefaultAPI.md#updatecustomerscript) | **Put** /customer-scripts/{scriptID} | Update an already existing script
-*DefaultAPI* | [**UpdateDocument**](docs/DefaultAPI.md#updatedocument) | **Put** /document-repository/entry/{documentId} | Update an already existing document
-*DefaultAPI* | [**UpdateDocumentGeneration**](docs/DefaultAPI.md#updatedocumentgeneration) | **Put** /document-generation/documents/{docId} | Update an already existing document generation
-*DefaultAPI* | [**UpdateDocumentTemplate**](docs/DefaultAPI.md#updatedocumenttemplate) | **Put** /document-generation/template/{templateId} | Update an existing document template
-*DefaultAPI* | [**UpdateFAQEntry**](docs/DefaultAPI.md#updatefaqentry) | **Put** /faqs/entry/{entryId} | Update an existing FAQ entry
-*DefaultAPI* | [**UpdateMeter**](docs/DefaultAPI.md#updatemeter) | **Put** /meter/{meterId} | Update meter
-*DefaultAPI* | [**UpdateMeterReading**](docs/DefaultAPI.md#updatemeterreading) | **Put** /meter/{meterId}/reading/{readingId} | Update meter reading
-*DefaultAPI* | [**UpdateNote**](docs/DefaultAPI.md#updatenote) | **Put** /note/{noteId} | Update note
-*DefaultAPI* | [**UpdateProperty**](docs/DefaultAPI.md#updateproperty) | **Put** /properties/{propId} | Update property
-*DefaultAPI* | [**UpdatePropertyContact**](docs/DefaultAPI.md#updatepropertycontact) | **Put** /property/{propId}/contacts/{entryId} | Update a property contact
-*DefaultAPI* | [**UpdatePropertyHistoryEntry**](docs/DefaultAPI.md#updatepropertyhistoryentry) | **Put** /property/{propId}/history/{entryId} | Update history entry
-*DefaultAPI* | [**UpdatePropertyOwner**](docs/DefaultAPI.md#updatepropertyowner) | **Put** /owner/{ownerId} | Update property owner
-*DefaultAPI* | [**UpdateReportDefinition**](docs/DefaultAPI.md#updatereportdefinition) | **Put** /report/{definitionId} | 
-*DefaultAPI* | [**UpdateServiceProvider**](docs/DefaultAPI.md#updateserviceprovider) | **Put** /service-provider/{serviceProviderId} | Update the attributes of the service provider
-*DefaultAPI* | [**UpdateTenancy**](docs/DefaultAPI.md#updatetenancy) | **Put** /tenancy/{tenancyId} | Update the tenancy with the given ID
-*DefaultAPI* | [**UpdateTenancyUpdate**](docs/DefaultAPI.md#updatetenancyupdate) | **Put** /tenancy-update/{tenancyUpdateId} | Update the tenancy update with the given ID
-*DefaultAPI* | [**UpdateTenant**](docs/DefaultAPI.md#updatetenant) | **Put** /tenant/{tenantId} | Update tenant information
+*DefaultAPI* | [**UpdateDocument**](docs/DefaultAPI.md#updatedocument) | **Put** /document-repository/entry/{documentID} | Update an already existing document
+*DefaultAPI* | [**UpdateDocumentGeneration**](docs/DefaultAPI.md#updatedocumentgeneration) | **Put** /document-generation/documents/{docID} | Update an already existing document generation
+*DefaultAPI* | [**UpdateDocumentTemplate**](docs/DefaultAPI.md#updatedocumenttemplate) | **Put** /document-generation/template/{templateID} | Update an existing document template
+*DefaultAPI* | [**UpdateFAQEntry**](docs/DefaultAPI.md#updatefaqentry) | **Put** /faqs/entry/{entryID} | Update an existing FAQ entry
+*DefaultAPI* | [**UpdateMeter**](docs/DefaultAPI.md#updatemeter) | **Put** /meter/{meterID} | Update meter
+*DefaultAPI* | [**UpdateMeterReading**](docs/DefaultAPI.md#updatemeterreading) | **Put** /meter/{meterID}/reading/{readingID} | Update meter reading
+*DefaultAPI* | [**UpdateProperty**](docs/DefaultAPI.md#updateproperty) | **Put** /properties/{propID} | Update property
+*DefaultAPI* | [**UpdatePropertyOwner**](docs/DefaultAPI.md#updatepropertyowner) | **Put** /owner/{ownerID} | Update property owner
+*DefaultAPI* | [**UpdateReportDefinition**](docs/DefaultAPI.md#updatereportdefinition) | **Put** /report/{definitionID} | 
+*DefaultAPI* | [**UpdateServiceProvider**](docs/DefaultAPI.md#updateserviceprovider) | **Put** /service-provider/{serviceProviderID} | Update the attributes of the service provider
+*DefaultAPI* | [**UpdateTenancy**](docs/DefaultAPI.md#updatetenancy) | **Put** /tenancy/{tenancyID} | Update the tenancy with the given ID
+*DefaultAPI* | [**UpdateTenancyUpdate**](docs/DefaultAPI.md#updatetenancyupdate) | **Put** /tenancy-update/{tenancyUpdateID} | Update the tenancy update with the given ID
+*DefaultAPI* | [**UpdateTenant**](docs/DefaultAPI.md#updatetenant) | **Put** /tenant/{tenantID} | Update tenant information
 *DefaultAPI* | [**UpdateUserPreferences**](docs/DefaultAPI.md#updateuserpreferences) | **Put** /preferences | Update the user preferences
 *DefaultAPI* | [**UpdateWorkflowDefinition**](docs/DefaultAPI.md#updateworkflowdefinition) | **Put** /workflows/definition/{definitionID} | Update workflow definition
 *DefaultAPI* | [**UpdateWorkflowEntrypoint**](docs/DefaultAPI.md#updateworkflowentrypoint) | **Put** /workflows/entrypoint/{entrypointID} | Update workflow entry point
 *DefaultAPI* | [**UpdateWorkflowExecution**](docs/DefaultAPI.md#updateworkflowexecution) | **Put** /workflows/execution/{executionID} | Update workflow execution
 *DefaultAPI* | [**UploadAttachment**](docs/DefaultAPI.md#uploadattachment) | **Post** /attachment | Upload new file attachment
-*DefaultAPI* | [**ValidateCaseData**](docs/DefaultAPI.md#validatecasedata) | **Post** /cases/template/{templateId}/validate | Validate the data provided by the user against the template
 *DefaultAPI* | [**ValidateUserEmail**](docs/DefaultAPI.md#validateuseremail) | **Post** /email/validation | Validate user&#39;s email and point out problems if there are any
 
 
@@ -343,7 +322,6 @@ Class | Method | HTTP request | Description
  - [CaseStatusEnum](docs/CaseStatusEnum.md)
  - [CaseTemplate](docs/CaseTemplate.md)
  - [CaseTemplateAccessibility](docs/CaseTemplateAccessibility.md)
- - [CleanupAttachmentsRequest](docs/CleanupAttachmentsRequest.md)
  - [CompanyProfile](docs/CompanyProfile.md)
  - [ConnectorConfig](docs/ConnectorConfig.md)
  - [ConnectorCredentials](docs/ConnectorCredentials.md)
@@ -359,8 +337,6 @@ Class | Method | HTTP request | Description
  - [CreateConnectorCredentialsRequest](docs/CreateConnectorCredentialsRequest.md)
  - [CreateDocumentGenerationRequest](docs/CreateDocumentGenerationRequest.md)
  - [CreateDocumentRequest](docs/CreateDocumentRequest.md)
- - [CreateInvitationRequest](docs/CreateInvitationRequest.md)
- - [CreateNoteRequest](docs/CreateNoteRequest.md)
  - [CreateOrUpdateAppointmentRequest](docs/CreateOrUpdateAppointmentRequest.md)
  - [CreateOrUpdateAppointmentScheduleRequest](docs/CreateOrUpdateAppointmentScheduleRequest.md)
  - [CreateOrUpdateAppointmentTemplateRequest](docs/CreateOrUpdateAppointmentTemplateRequest.md)
@@ -374,8 +350,6 @@ Class | Method | HTTP request | Description
  - [CreateOrUpdateFAQEntryRequest](docs/CreateOrUpdateFAQEntryRequest.md)
  - [CreateOrUpdateMeterReadingRequest](docs/CreateOrUpdateMeterReadingRequest.md)
  - [CreateOrUpdateMeterRequest](docs/CreateOrUpdateMeterRequest.md)
- - [CreateOrUpdatePropertyContact](docs/CreateOrUpdatePropertyContact.md)
- - [CreateOrUpdatePropertyHistoryEntryRequest](docs/CreateOrUpdatePropertyHistoryEntryRequest.md)
  - [CreateOrUpdatePropertyOwnerRequest](docs/CreateOrUpdatePropertyOwnerRequest.md)
  - [CreateOrUpdateReportDefinitionRequest](docs/CreateOrUpdateReportDefinitionRequest.md)
  - [CreateOrUpdateServiceProvider](docs/CreateOrUpdateServiceProvider.md)
@@ -402,6 +376,7 @@ Class | Method | HTTP request | Description
  - [DocumentTemplateOptions](docs/DocumentTemplateOptions.md)
  - [DocumentTemplateSignatureConfguration](docs/DocumentTemplateSignatureConfguration.md)
  - [DocumentTemplateSignerDefinition](docs/DocumentTemplateSignerDefinition.md)
+ - [EmailValidationRequest](docs/EmailValidationRequest.md)
  - [EmailValidationResponse](docs/EmailValidationResponse.md)
  - [ExecuteReportRequest](docs/ExecuteReportRequest.md)
  - [ExecuteWorkflowEntrypointRequest](docs/ExecuteWorkflowEntrypointRequest.md)
@@ -416,6 +391,7 @@ Class | Method | HTTP request | Description
  - [FormInputType](docs/FormInputType.md)
  - [FormItem](docs/FormItem.md)
  - [FormItemType](docs/FormItemType.md)
+ - [FormSourceType](docs/FormSourceType.md)
  - [FormValidation](docs/FormValidation.md)
  - [FormValidationError](docs/FormValidationError.md)
  - [FormValidationRequest](docs/FormValidationRequest.md)
@@ -425,30 +401,21 @@ Class | Method | HTTP request | Description
  - [GetSummaryRequest](docs/GetSummaryRequest.md)
  - [GetSummaryResponse](docs/GetSummaryResponse.md)
  - [IDUpload](docs/IDUpload.md)
- - [Invitation](docs/Invitation.md)
- - [InvitationResponseAction](docs/InvitationResponseAction.md)
- - [InvitationStatus](docs/InvitationStatus.md)
  - [Meter](docs/Meter.md)
  - [MeterReading](docs/MeterReading.md)
  - [MeterTypeEnum](docs/MeterTypeEnum.md)
- - [Note](docs/Note.md)
  - [NotificationType](docs/NotificationType.md)
  - [PriceIndexPoint](docs/PriceIndexPoint.md)
  - [PriceIndexPointQueryRequest](docs/PriceIndexPointQueryRequest.md)
  - [Property](docs/Property.md)
- - [PropertyContact](docs/PropertyContact.md)
  - [PropertyDetails](docs/PropertyDetails.md)
  - [PropertyFloorTypeEnum](docs/PropertyFloorTypeEnum.md)
  - [PropertyFurnishingEnum](docs/PropertyFurnishingEnum.md)
  - [PropertyHeatingTypeEnum](docs/PropertyHeatingTypeEnum.md)
- - [PropertyHistory](docs/PropertyHistory.md)
- - [PropertyHistoryEntry](docs/PropertyHistoryEntry.md)
- - [PropertyHistoryEventTypeEnum](docs/PropertyHistoryEventTypeEnum.md)
  - [PropertyOwner](docs/PropertyOwner.md)
  - [PropertyParkingTypeEnum](docs/PropertyParkingTypeEnum.md)
  - [PropertyType](docs/PropertyType.md)
  - [PropertyWindowTypeEnum](docs/PropertyWindowTypeEnum.md)
- - [PublicCleanupAttachments200Response](docs/PublicCleanupAttachments200Response.md)
  - [QueryAppointmentSchedulesRequest](docs/QueryAppointmentSchedulesRequest.md)
  - [QueryAppointmentTemplatesRequest](docs/QueryAppointmentTemplatesRequest.md)
  - [QueryBankAccountsRequest](docs/QueryBankAccountsRequest.md)
@@ -485,7 +452,6 @@ Class | Method | HTTP request | Description
  - [ReportExecutionStatusEnum](docs/ReportExecutionStatusEnum.md)
  - [ReportResultSchema](docs/ReportResultSchema.md)
  - [ReportResultSchemaProperty](docs/ReportResultSchemaProperty.md)
- - [RespondToInvitationRequest](docs/RespondToInvitationRequest.md)
  - [ServiceCategoryEnum](docs/ServiceCategoryEnum.md)
  - [ServiceProvider](docs/ServiceProvider.md)
  - [StartWorkflowExecutionRequest](docs/StartWorkflowExecutionRequest.md)
@@ -503,7 +469,6 @@ Class | Method | HTTP request | Description
  - [UpdateCompanyProfileRequest](docs/UpdateCompanyProfileRequest.md)
  - [UpdateConnectorConfigRequest](docs/UpdateConnectorConfigRequest.md)
  - [UpdateDocumentRequest](docs/UpdateDocumentRequest.md)
- - [UpdateNoteRequest](docs/UpdateNoteRequest.md)
  - [UpdatePropertyRequest](docs/UpdatePropertyRequest.md)
  - [UpdateTenancyRequest](docs/UpdateTenancyRequest.md)
  - [UpdateTenancyUpdateRequest](docs/UpdateTenancyUpdateRequest.md)
