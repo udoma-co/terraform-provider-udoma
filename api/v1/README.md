@@ -121,7 +121,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteConnectorConfig**](docs/DefaultAPI.md#deleteconnectorconfig) | **Delete** /connector/{name}/config | Delete the connector configuration
 *DefaultAPI* | [**DeleteConnectorCredentials**](docs/DefaultAPI.md#deleteconnectorcredentials) | **Delete** /connector/credentials/{apiKey} | Delete the connector credentials for the current account
 *DefaultAPI* | [**DeleteConnectorEntity**](docs/DefaultAPI.md#deleteconnectorentity) | **Delete** /connector/{name}/entity/{entityType} | Delete all the entities of a certain type.
-*DefaultAPI* | [**DeleteConnectorQuery**](docs/DefaultAPI.md#deleteconnectorquery) | **Delete** /connector/{queryID}/query | Delete the query
+*DefaultAPI* | [**DeleteConnectorQuery**](docs/DefaultAPI.md#deleteconnectorquery) | **Delete** /connector/query/{queryID} | Delete the query
 *DefaultAPI* | [**DeleteCustomIDGenerator**](docs/DefaultAPI.md#deletecustomidgenerator) | **Delete** /id-generators/{generatorID} | Delete the custom ID generator with all its related data
 *DefaultAPI* | [**DeleteCustomerScript**](docs/DefaultAPI.md#deletecustomerscript) | **Delete** /customer-scripts/{scriptID} | Delete the script with all its related data
 *DefaultAPI* | [**DeleteDocument**](docs/DefaultAPI.md#deletedocument) | **Delete** /document-repository/entry/{documentID} | Delete a single document
@@ -167,7 +167,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetConnectorCredentials**](docs/DefaultAPI.md#getconnectorcredentials) | **Get** /connector/credentials | Get the connector credentials for the current account
 *DefaultAPI* | [**GetConnectorEntityStats**](docs/DefaultAPI.md#getconnectorentitystats) | **Get** /connector/{name}/entity | Get stats for the connector
 *DefaultAPI* | [**GetConnectorQueries**](docs/DefaultAPI.md#getconnectorqueries) | **Get** /connector/{name}/queries | Get the queries that belong to the config.
-*DefaultAPI* | [**GetConnectorQuery**](docs/DefaultAPI.md#getconnectorquery) | **Get** /connector/{queryID}/query | Get the query for the current account
+*DefaultAPI* | [**GetConnectorQuery**](docs/DefaultAPI.md#getconnectorquery) | **Get** /connector/query/{queryID} | Get the query for the current account
 *DefaultAPI* | [**GetCustomIDGenerator**](docs/DefaultAPI.md#getcustomidgenerator) | **Get** /id-generators/{generatorID} | Get the ID generator with all its attributes
 *DefaultAPI* | [**GetCustomIDGenerators**](docs/DefaultAPI.md#getcustomidgenerators) | **Get** /id-generators | Get all customer specific ID generators
 *DefaultAPI* | [**GetCustomerScript**](docs/DefaultAPI.md#getcustomerscript) | **Get** /customer-scripts/{scriptID} | Get the script with all its attributes
@@ -230,6 +230,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**PublicUploadAttachment**](docs/DefaultAPI.md#publicuploadattachment) | **Post** /public/attachment | Upload new file attachment
 *DefaultAPI* | [**PublicValidateFormData**](docs/DefaultAPI.md#publicvalidateformdata) | **Post** /public/validate/formData | Validate the data provided by the user against a custom form
 *DefaultAPI* | [**PublicValidateUserEmail**](docs/DefaultAPI.md#publicvalidateuseremail) | **Post** /public/validate/email | Validate user&#39;s email and point out problems if there are any
+*DefaultAPI* | [**PushConnectorLog**](docs/DefaultAPI.md#pushconnectorlog) | **Post** /connector/{name}/log | Push logs from the connector
 *DefaultAPI* | [**QueryAppointmentSchedules**](docs/DefaultAPI.md#queryappointmentschedules) | **Post** /calendar/appointments/schedules | Query all appointment schedules for given criteria
 *DefaultAPI* | [**QueryAppointmentTemplates**](docs/DefaultAPI.md#queryappointmenttemplates) | **Post** /calendar/appointments/templates | Query all appointment templates for given criteria
 *DefaultAPI* | [**QueryAppointments**](docs/DefaultAPI.md#queryappointments) | **Get** /calendar/appointments/window/{windowID} | Get the appointments of a Window
@@ -250,7 +251,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryWorkflowDefinitions**](docs/DefaultAPI.md#queryworkflowdefinitions) | **Post** /workflows/definitions | Query all workflow definitions
 *DefaultAPI* | [**QueryWorkflowExecutions**](docs/DefaultAPI.md#queryworkflowexecutions) | **Post** /workflows/executions | Get a list of all workflow executions, matching the criteria in the request 
 *DefaultAPI* | [**RequestESignaturesForDocument**](docs/DefaultAPI.md#requestesignaturesfordocument) | **Post** /document-generation/documents/{docID}/esignature | Trigger a signing request for a document
-*DefaultAPI* | [**ResetConnectorQuery**](docs/DefaultAPI.md#resetconnectorquery) | **Put** /connector/{queryID}/query/reset | Get the query for the current account
+*DefaultAPI* | [**ResetConnectorQuery**](docs/DefaultAPI.md#resetconnectorquery) | **Put** /connector/query/{queryID}/reset | Get the query for the current account
 *DefaultAPI* | [**StartWorkflowExecution**](docs/DefaultAPI.md#startworkflowexecution) | **Post** /workflows/execution | Start a new workflow execution
 *DefaultAPI* | [**SyncConnectorData**](docs/DefaultAPI.md#syncconnectordata) | **Post** /connector/sync | Sync the next batch of connector data.
 *DefaultAPI* | [**UnassignCase**](docs/DefaultAPI.md#unassigncase) | **Post** /case/{caseID}/unassign | Remove access from case
@@ -264,7 +265,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateCaseTemplate**](docs/DefaultAPI.md#updatecasetemplate) | **Put** /cases/template/{templateID} | Update case template
 *DefaultAPI* | [**UpdateCompanyProfile**](docs/DefaultAPI.md#updatecompanyprofile) | **Put** /profile/company | Update company profile
 *DefaultAPI* | [**UpdateConnectorConfig**](docs/DefaultAPI.md#updateconnectorconfig) | **Put** /connector/{name}/config | Update the connector configuration
-*DefaultAPI* | [**UpdateConnectorQuery**](docs/DefaultAPI.md#updateconnectorquery) | **Put** /connector/{queryID}/query | Update the connector Query
+*DefaultAPI* | [**UpdateConnectorQuery**](docs/DefaultAPI.md#updateconnectorquery) | **Put** /connector/query/{queryID} | Update the connector Query
 *DefaultAPI* | [**UpdateCustomIDGenerator**](docs/DefaultAPI.md#updatecustomidgenerator) | **Put** /id-generators/{generatorID} | Update an already existing ID generator
 *DefaultAPI* | [**UpdateCustomerScript**](docs/DefaultAPI.md#updatecustomerscript) | **Put** /customer-scripts/{scriptID} | Update an already existing script
 *DefaultAPI* | [**UpdateDocument**](docs/DefaultAPI.md#updatedocument) | **Put** /document-repository/entry/{documentID} | Update an already existing document
@@ -401,6 +402,7 @@ Class | Method | HTTP request | Description
  - [GetSummaryRequest](docs/GetSummaryRequest.md)
  - [GetSummaryResponse](docs/GetSummaryResponse.md)
  - [IDUpload](docs/IDUpload.md)
+ - [LogRequest](docs/LogRequest.md)
  - [Meter](docs/Meter.md)
  - [MeterReading](docs/MeterReading.md)
  - [MeterTypeEnum](docs/MeterTypeEnum.md)

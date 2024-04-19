@@ -1945,7 +1945,7 @@ paths:
     delete:
       operationId: deleteConnectorCredentials
       parameters:
-      - description: ID of the api key to be deleted
+      - description: unique generated ID of an api key
         explode: false
         in: path
         name: apiKey
@@ -2079,6 +2079,32 @@ paths:
       security:
       - bearerAuth: []
       summary: Update the connector configuration
+  /connector/{name}/log:
+    post:
+      operationId: pushConnectorLog
+      parameters:
+      - description: Name of the connector
+        explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LogRequest'
+        required: true
+      responses:
+        default:
+          content: {}
+          description: |
+            Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
+      security:
+      - bearerAuth: []
+      summary: Push logs from the connector
   /connector/{name}/entity:
     get:
       operationId: getConnectorEntityStats
@@ -2126,7 +2152,7 @@ paths:
         name: entityType
         required: true
         schema:
-          type: string
+          $ref: '#/components/schemas/ConnectorEntity'
         style: simple
       responses:
         default:
@@ -2188,7 +2214,7 @@ paths:
       security:
       - bearerAuth: []
       summary: Create a new connector query
-  /connector/{queryID}/query/reset:
+  /connector/query/{queryID}/reset:
     put:
       operationId: resetConnectorQuery
       parameters:
@@ -2208,7 +2234,7 @@ paths:
       security:
       - bearerAuth: []
       summary: Get the query for the current account
-  /connector/{queryID}/query:
+  /connector/query/{queryID}:
     delete:
       operationId: deleteConnectorQuery
       parameters:
@@ -5798,11 +5824,29 @@ components:
       schema:
         type: string
       style: simple
-    connectorIdPathParam:
-      description: unique ID of a connector
+    connectorEntityTypeParam:
+      description: type of the entity
       explode: false
       in: path
-      name: connectorID
+      name: entityType
+      required: true
+      schema:
+        $ref: '#/components/schemas/ConnectorEntity'
+      style: simple
+    connectorNameParam:
+      description: Name of the connector
+      explode: false
+      in: path
+      name: name
+      required: true
+      schema:
+        type: string
+      style: simple
+    connectorQueryIDParam:
+      description: ID of the query
+      explode: false
+      in: path
+      name: queryID
       required: true
       schema:
         type: string
@@ -12758,6 +12802,20 @@ components:
       required:
       - ping_time
       - sync_time
+      type: object
+    LogRequest:
+      description: "Log messages, comming from the connector."
+      example:
+        logs:
+        - logs
+        - logs
+      properties:
+        logs:
+          description: An array of messages to log.
+          items:
+            description: The messages to log.
+            type: string
+          type: array
       type: object
     ConnectorEntityStats:
       example:

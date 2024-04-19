@@ -4441,7 +4441,7 @@ func (r ApiDeleteConnectorCredentialsRequest) Execute() (*http.Response, error) 
 DeleteConnectorCredentials Delete the connector credentials for the current account
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param apiKey ID of the api key to be deleted
+	@param apiKey unique generated ID of an api key
 	@return ApiDeleteConnectorCredentialsRequest
 */
 func (a *DefaultAPIService) DeleteConnectorCredentials(ctx context.Context, apiKey string) ApiDeleteConnectorCredentialsRequest {
@@ -4521,7 +4521,7 @@ type ApiDeleteConnectorEntityRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
 	name       string
-	entityType string
+	entityType ConnectorEntity
 }
 
 func (r ApiDeleteConnectorEntityRequest) Execute() (*http.Response, error) {
@@ -4536,7 +4536,7 @@ DeleteConnectorEntity Delete all the entities of a certain type.
 	@param entityType type of the entity
 	@return ApiDeleteConnectorEntityRequest
 */
-func (a *DefaultAPIService) DeleteConnectorEntity(ctx context.Context, name string, entityType string) ApiDeleteConnectorEntityRequest {
+func (a *DefaultAPIService) DeleteConnectorEntity(ctx context.Context, name string, entityType ConnectorEntity) ApiDeleteConnectorEntityRequest {
 	return ApiDeleteConnectorEntityRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -4649,7 +4649,7 @@ func (a *DefaultAPIService) DeleteConnectorQueryExecute(r ApiDeleteConnectorQuer
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/connector/{queryID}/query"
+	localVarPath := localBasePath + "/connector/query/{queryID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"queryID"+"}", url.PathEscape(parameterValueToString(r.queryID, "queryID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -9176,7 +9176,7 @@ func (a *DefaultAPIService) GetConnectorQueryExecute(r ApiGetConnectorQueryReque
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/connector/{queryID}/query"
+	localVarPath := localBasePath + "/connector/query/{queryID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"queryID"+"}", url.PathEscape(parameterValueToString(r.queryID, "queryID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -15863,6 +15863,107 @@ func (a *DefaultAPIService) PublicValidateUserEmailExecute(r ApiPublicValidateUs
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiPushConnectorLogRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	name       string
+	logRequest *LogRequest
+}
+
+func (r ApiPushConnectorLogRequest) LogRequest(logRequest LogRequest) ApiPushConnectorLogRequest {
+	r.logRequest = &logRequest
+	return r
+}
+
+func (r ApiPushConnectorLogRequest) Execute() (*http.Response, error) {
+	return r.ApiService.PushConnectorLogExecute(r)
+}
+
+/*
+PushConnectorLog Push logs from the connector
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param name Name of the connector
+	@return ApiPushConnectorLogRequest
+*/
+func (a *DefaultAPIService) PushConnectorLog(ctx context.Context, name string) ApiPushConnectorLogRequest {
+	return ApiPushConnectorLogRequest{
+		ApiService: a,
+		ctx:        ctx,
+		name:       name,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) PushConnectorLogExecute(r ApiPushConnectorLogRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod = http.MethodPost
+		localVarPostBody   interface{}
+		formFiles          []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.PushConnectorLog")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/connector/{name}/log"
+	localVarPath = strings.Replace(localVarPath, "{"+"name"+"}", url.PathEscape(parameterValueToString(r.name, "name")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.logRequest == nil {
+		return nil, reportError("logRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.logRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
 type ApiQueryAppointmentSchedulesRequest struct {
 	ctx                              context.Context
 	ApiService                       *DefaultAPIService
@@ -18068,7 +18169,7 @@ func (a *DefaultAPIService) ResetConnectorQueryExecute(r ApiResetConnectorQueryR
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/connector/{queryID}/query/reset"
+	localVarPath := localBasePath + "/connector/query/{queryID}/reset"
 	localVarPath = strings.Replace(localVarPath, "{"+"queryID"+"}", url.PathEscape(parameterValueToString(r.queryID, "queryID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -19614,7 +19715,7 @@ func (a *DefaultAPIService) UpdateConnectorQueryExecute(r ApiUpdateConnectorQuer
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/connector/{queryID}/query"
+	localVarPath := localBasePath + "/connector/query/{queryID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"queryID"+"}", url.PathEscape(parameterValueToString(r.queryID, "queryID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
