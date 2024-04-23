@@ -173,13 +173,6 @@ func (r *AppointmentSchedule) Update(ctx context.Context, req resource.UpdateReq
 		return
 	}
 
-	var state AppointmentScheduleModel
-	diags = req.State.Get(ctx, &state)
-	resp.Diagnostics.Append(diags...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
 	appReq := plan.toAPIRequest()
 	id := plan.ID.ValueString()
 
