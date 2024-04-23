@@ -253,7 +253,7 @@ func customFormValidationNestedSchema() schema.NestedAttributeObject {
 	}
 }
 
-func (form *CustomFormModel) toApiRequest() *v1.CustomForm {
+func (form *CustomFormModel) toApiRequest() v1.CustomForm {
 
 	layout := make([]v1.FormItem, len(form.Layout))
 	for i := range form.Layout {
@@ -275,7 +275,7 @@ func (form *CustomFormModel) toApiRequest() *v1.CustomForm {
 		validations[i] = *form.Validation[i].toApiRequest()
 	}
 
-	return &v1.CustomForm{
+	return v1.CustomForm{
 		Layout:      layout,
 		Groups:      groups,
 		Inputs:      inputs,
