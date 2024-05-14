@@ -4343,6 +4343,308 @@ paths:
       security:
       - bearerAuth: []
       summary: Get the tenancy history for the property
+  /property-handovers/template:
+    post:
+      operationId: createPropertyHandoverTemplate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrUpdatePropertyHandoverTemplateRequest'
+        description: Property handover template that will be created
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertyHandoverTemplate'
+          description: Successfully created property handover template
+        default:
+          content: {}
+          description: |
+            Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
+      security:
+      - bearerAuth: []
+      summary: Create a new property handover template
+  /property-handovers/templates:
+    post:
+      operationId: queryPropertyHandoverTemplates
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/PropertyHandoverTemplate'
+                type: array
+          description: Successfully created property handover templates
+        default:
+          content: {}
+          description: |
+            Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
+      security:
+      - bearerAuth: []
+      summary: Query property handover templates
+  /property-handovers/template/{templateID}:
+    delete:
+      operationId: deletePropertyHandoverTemplate
+      parameters:
+      - description: unique generated ID of a property handover template
+        explode: false
+        in: path
+        name: templateID
+        required: true
+        schema:
+          pattern: "^ht-[2-9A-HJ-NP-Za-km-z]{19,22}$"
+          type: string
+        style: simple
+      responses:
+        default:
+          content: {}
+          description: |
+            Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
+      security:
+      - bearerAuth: []
+      summary: Delete property handover template
+    get:
+      operationId: getPropertyHandoverTemplate
+      parameters:
+      - description: unique generated ID of a property handover template
+        explode: false
+        in: path
+        name: templateID
+        required: true
+        schema:
+          pattern: "^ht-[2-9A-HJ-NP-Za-km-z]{19,22}$"
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertyHandoverTemplate'
+          description: Successful operation
+        default:
+          content: {}
+          description: |
+            Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
+      security:
+      - bearerAuth: []
+      summary: Get property handover template
+    put:
+      operationId: updatePropertyHandoverTemplate
+      parameters:
+      - description: unique generated ID of a property handover template
+        explode: false
+        in: path
+        name: templateID
+        required: true
+        schema:
+          pattern: "^ht-[2-9A-HJ-NP-Za-km-z]{19,22}$"
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrUpdatePropertyHandoverTemplateRequest'
+        description: Updated property handover template object
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertyHandoverTemplate'
+          description: Successfully updated property handover template
+        default:
+          content: {}
+          description: |
+            Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
+      security:
+      - bearerAuth: []
+      summary: Update property handover template
+  /property-handovers/handover:
+    post:
+      operationId: createPropertyHandover
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrUpdatePropertyHandoverRequest'
+        description: Property handover that will be created
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertyHandover'
+          description: Successfully created property handover
+        default:
+          content: {}
+          description: |
+            Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
+      security:
+      - bearerAuth: []
+      summary: Create a new property handover
+  /property-handovers/handovers:
+    post:
+      operationId: queryPropertyHandovers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryPropertyHandoversRequest'
+        description: Query parameters
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/PropertyHandover'
+                type: array
+          description: Successfully created property handovers
+        default:
+          content: {}
+          description: |
+            Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
+      security:
+      - bearerAuth: []
+      summary: Query property handovers
+  /property-handovers/handovers/{handoverID}:
+    delete:
+      operationId: deletePropertyHandover
+      parameters:
+      - description: unique generated ID of a property handover
+        explode: false
+        in: path
+        name: handoverID
+        required: true
+        schema:
+          pattern: "^ho-[2-9A-HJ-NP-Za-km-z]{19,22}$"
+          type: string
+        style: simple
+      responses:
+        default:
+          content: {}
+          description: |
+            Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
+      security:
+      - bearerAuth: []
+      summary: Delete property handover
+    get:
+      operationId: getPropertyHandover
+      parameters:
+      - description: unique generated ID of a property handover
+        explode: false
+        in: path
+        name: handoverID
+        required: true
+        schema:
+          pattern: "^ho-[2-9A-HJ-NP-Za-km-z]{19,22}$"
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertyHandover'
+          description: Successful operation
+        default:
+          content: {}
+          description: |
+            Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
+      security:
+      - bearerAuth: []
+      summary: Get property handover
+    put:
+      operationId: updatePropertyHandover
+      parameters:
+      - description: unique generated ID of a property handover
+        explode: false
+        in: path
+        name: handoverID
+        required: true
+        schema:
+          pattern: "^ho-[2-9A-HJ-NP-Za-km-z]{19,22}$"
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrUpdatePropertyHandoverRequest'
+        description: Updated property handover object
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertyHandover'
+          description: Successfully updated property handover
+        default:
+          content: {}
+          description: |
+            Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
+      security:
+      - bearerAuth: []
+      summary: Update property handover
+  /property-handovers/handovers/{handoverID}/submit:
+    put:
+      operationId: submitPropertyHandover
+      parameters:
+      - description: unique generated ID of a property handover
+        explode: false
+        in: path
+        name: handoverID
+        required: true
+        schema:
+          pattern: "^ho-[2-9A-HJ-NP-Za-km-z]{19,22}$"
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubmitPropertyHandoverRequest'
+        description: Property handover that will be submitted
+        required: true
+      responses:
+        default:
+          content: {}
+          description: |
+            Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
+      security:
+      - bearerAuth: []
+      summary: Submit the data for a property handover
+  /property-handovers/handovers/{handoverID}/archive:
+    put:
+      operationId: archivePropertyHandover
+      parameters:
+      - description: unique generated ID of a property handover
+        explode: false
+        in: path
+        name: handoverID
+        required: true
+        schema:
+          pattern: "^ho-[2-9A-HJ-NP-Za-km-z]{19,22}$"
+          type: string
+        style: simple
+      responses:
+        default:
+          content: {}
+          description: |
+            Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
+      security:
+      - bearerAuth: []
+      summary: Archive a property handover
   /reports:
     get:
       description: |
@@ -5970,6 +6272,26 @@ components:
         pattern: "^p-[2-9A-HJ-NP-Za-km-z]{19,22}$"
         type: string
       style: simple
+    propertyHandoverTemplateIdPathParam:
+      description: unique generated ID of a property handover template
+      explode: false
+      in: path
+      name: templateID
+      required: true
+      schema:
+        pattern: "^ht-[2-9A-HJ-NP-Za-km-z]{19,22}$"
+        type: string
+      style: simple
+    propertyHandoverIdPathParam:
+      description: unique generated ID of a property handover
+      explode: false
+      in: path
+      name: handoverID
+      required: true
+      schema:
+        pattern: "^ho-[2-9A-HJ-NP-Za-km-z]{19,22}$"
+        type: string
+      style: simple
     propertyOwnerIdPathParam:
       description: unique generate ID of a property owner
       explode: false
@@ -7411,9 +7733,8 @@ components:
           type: object
       type: object
     CaseStatusEnum:
-      description: "The list of statuses that a case can be in as a result of a status\
-        \ change. Each status is a result of a action, where some statuses can be\
-        \ reached from multiple actions being triggered. \n"
+      description: |
+        The list of statuses that a case can be in as a result of a status change. Each status is a result of a action, where some statuses can be reached from multiple actions being triggered.
       enum:
       - ACKNOWLEDGED
       - ANY
@@ -7710,18 +8031,21 @@ components:
           access:
           - null
           - null
-          updated_at: 6
           name_expression: name_expression
-          info_text:
-            key: info_text
-          name: name
           icon: icon
           created_at: 0
           description:
             key: description
-          id: id
           label:
             key: label
+          updated_at: 6
+          info_text:
+            key: info_text
+          ad_categories:
+          - null
+          - null
+          name: name
+          id: id
           custom_inputs:
             layout:
             - ref_id: ref_id
@@ -8580,18 +8904,21 @@ components:
         access:
         - null
         - null
-        updated_at: 6
         name_expression: name_expression
-        info_text:
-          key: info_text
-        name: name
         icon: icon
         created_at: 0
         description:
           key: description
-        id: id
         label:
           key: label
+        updated_at: 6
+        info_text:
+          key: info_text
+        ad_categories:
+        - null
+        - null
+        name: name
+        id: id
         custom_inputs:
           layout:
           - ref_id: ref_id
@@ -9141,6 +9468,10 @@ components:
           $ref: '#/components/schemas/CustomForm'
         config:
           $ref: '#/components/schemas/CaseConfig'
+        ad_categories:
+          items:
+            $ref: '#/components/schemas/CaseTemplateAdCategoryEnum'
+          type: array
       required:
       - created_at
       - custom_inputs
@@ -9992,6 +10323,15 @@ components:
             JSON script of the action that should be executed, if the schedule and execution check are successful.
           type: string
       type: object
+    CaseTemplateAdCategoryEnum:
+      description: |
+        The list of ad categories that can be displayed for a case template
+      enum:
+      - ELECTRICITY_PROVIDERS
+      - INTERNET_PROVIDERS
+      - GAS_PROVIDERS
+      - HOME_INSURANCE
+      type: string
     UpdateCaseStatusRequest:
       description: All the information required for updating the status of a case
       example:
@@ -10158,18 +10498,21 @@ components:
         - access:
           - null
           - null
-          updated_at: 6
           name_expression: name_expression
-          info_text:
-            key: info_text
-          name: name
           icon: icon
           created_at: 0
           description:
             key: description
-          id: id
           label:
             key: label
+          updated_at: 6
+          info_text:
+            key: info_text
+          ad_categories:
+          - null
+          - null
+          name: name
+          id: id
           custom_inputs:
             layout:
             - ref_id: ref_id
@@ -10672,18 +11015,21 @@ components:
         - access:
           - null
           - null
-          updated_at: 6
           name_expression: name_expression
-          info_text:
-            key: info_text
-          name: name
           icon: icon
           created_at: 0
           description:
             key: description
-          id: id
           label:
             key: label
+          updated_at: 6
+          info_text:
+            key: info_text
+          ad_categories:
+          - null
+          - null
+          name: name
+          id: id
           custom_inputs:
             layout:
             - ref_id: ref_id
@@ -12109,6 +12455,9 @@ components:
         name_expression: name_expression
         info_text:
           key: info_text
+        ad_categories:
+        - null
+        - null
         name: name
         icon: icon
         description:
@@ -12652,6 +13001,10 @@ components:
           $ref: '#/components/schemas/CustomForm'
         config:
           $ref: '#/components/schemas/CaseConfig'
+        ad_categories:
+          items:
+            $ref: '#/components/schemas/CaseTemplateAdCategoryEnum'
+          type: array
       required:
       - access
       - custom_inputs
@@ -16021,6 +16374,406 @@ components:
         invite_tenants:
           description: "If true, directly send invitation to new tenants to join Udoma"
           type: boolean
+      type: object
+    CreateOrUpdatePropertyHandoverTemplateRequest:
+      example:
+        custom_form:
+          layout:
+          - ref_id: ref_id
+            ref_type: ref_type
+          - ref_id: ref_id
+            ref_type: ref_type
+          inputs:
+          - propagate_changes: true
+            view_label:
+              key: view_label
+            ephemeral: true
+            default_value: default_value
+            attributes:
+              key: attributes
+            id: id
+            label:
+              key: label
+            placeholder:
+              key: placeholder
+            type: type
+            items:
+            - items
+            - items
+            required: true
+            target: target
+          - propagate_changes: true
+            view_label:
+              key: view_label
+            ephemeral: true
+            default_value: default_value
+            attributes:
+              key: attributes
+            id: id
+            label:
+              key: label
+            placeholder:
+              key: placeholder
+            type: type
+            items:
+            - items
+            - items
+            required: true
+            target: target
+          groups:
+          - use_item_group: true
+            bottom_divider: true
+            top_divider: true
+            min_size: 6
+            id: id
+            label:
+              key: label
+            type: type
+            items:
+            - ref_id: ref_id
+              ref_type: ref_type
+            - ref_id: ref_id
+              ref_type: ref_type
+            info:
+              key: info
+            target: target
+          - use_item_group: true
+            bottom_divider: true
+            top_divider: true
+            min_size: 6
+            id: id
+            label:
+              key: label
+            type: type
+            items:
+            - ref_id: ref_id
+              ref_type: ref_type
+            - ref_id: ref_id
+              ref_type: ref_type
+            info:
+              key: info
+            target: target
+          validations:
+          - expression: expression
+            id: id
+            message:
+              key: message
+            target: target
+          - expression: expression
+            id: id
+            message:
+              key: message
+            target: target
+        name: name
+        description: description
+      properties:
+        name:
+          description: |
+            The name of the property handover template.
+          type: string
+        description:
+          description: |
+            The description of the property handover template.
+          type: string
+        custom_form:
+          $ref: '#/components/schemas/CustomForm'
+      required:
+      - custom_form
+      - name
+      type: object
+    PropertyHandoverTemplate:
+      example:
+        custom_form:
+          layout:
+          - ref_id: ref_id
+            ref_type: ref_type
+          - ref_id: ref_id
+            ref_type: ref_type
+          inputs:
+          - propagate_changes: true
+            view_label:
+              key: view_label
+            ephemeral: true
+            default_value: default_value
+            attributes:
+              key: attributes
+            id: id
+            label:
+              key: label
+            placeholder:
+              key: placeholder
+            type: type
+            items:
+            - items
+            - items
+            required: true
+            target: target
+          - propagate_changes: true
+            view_label:
+              key: view_label
+            ephemeral: true
+            default_value: default_value
+            attributes:
+              key: attributes
+            id: id
+            label:
+              key: label
+            placeholder:
+              key: placeholder
+            type: type
+            items:
+            - items
+            - items
+            required: true
+            target: target
+          groups:
+          - use_item_group: true
+            bottom_divider: true
+            top_divider: true
+            min_size: 6
+            id: id
+            label:
+              key: label
+            type: type
+            items:
+            - ref_id: ref_id
+              ref_type: ref_type
+            - ref_id: ref_id
+              ref_type: ref_type
+            info:
+              key: info
+            target: target
+          - use_item_group: true
+            bottom_divider: true
+            top_divider: true
+            min_size: 6
+            id: id
+            label:
+              key: label
+            type: type
+            items:
+            - ref_id: ref_id
+              ref_type: ref_type
+            - ref_id: ref_id
+              ref_type: ref_type
+            info:
+              key: info
+            target: target
+          validations:
+          - expression: expression
+            id: id
+            message:
+              key: message
+            target: target
+          - expression: expression
+            id: id
+            message:
+              key: message
+            target: target
+        name: name
+        description: description
+        id: id
+      properties:
+        id:
+          description: |
+            The ID of the property handover template. This ID is unique within the system.
+          type: string
+        name:
+          description: |
+            The name of the property handover template.
+          type: string
+        description:
+          description: |
+            The description of the property handover template.
+          type: string
+        custom_form:
+          $ref: '#/components/schemas/CustomForm'
+      required:
+      - custom_form
+      - id
+      - name
+      type: object
+    CreateOrUpdatePropertyHandoverRequest:
+      example:
+        tenants:
+        - address:
+            line1: 1 ZestLabs Blvd
+            line2: CSS District
+            city: Mannheim
+            postcode: 680001
+            province: Baden-Wuerttemberg
+            country: Germany
+          last_name: last_name
+          company: company
+          phone_number: phone_number
+          id: id
+          title: title
+          first_name: first_name
+          email: email
+        - address:
+            line1: 1 ZestLabs Blvd
+            line2: CSS District
+            city: Mannheim
+            postcode: 680001
+            province: Baden-Wuerttemberg
+            country: Germany
+          last_name: last_name
+          company: company
+          phone_number: phone_number
+          id: id
+          title: title
+          first_name: first_name
+          email: email
+        property_address:
+          line1: 1 ZestLabs Blvd
+          line2: CSS District
+          city: Mannheim
+          postcode: 680001
+          province: Baden-Wuerttemberg
+          country: Germany
+        property_ref: property_ref
+        template_ref: template_ref
+        handover_time: 0
+      properties:
+        template_ref:
+          description: |
+            The ID of the property handover template.
+          type: string
+        property_ref:
+          type: string
+        property_address:
+          $ref: '#/components/schemas/Address'
+        handover_time:
+          description: |
+            The time of the property handover.
+          format: int64
+          type: integer
+        tenants:
+          items:
+            $ref: '#/components/schemas/ContactData'
+          type: array
+      required:
+      - handover_time
+      - template_ref
+      - tenants
+      type: object
+    PropertyHandover:
+      example:
+        tenants:
+        - address:
+            line1: 1 ZestLabs Blvd
+            line2: CSS District
+            city: Mannheim
+            postcode: 680001
+            province: Baden-Wuerttemberg
+            country: Germany
+          last_name: last_name
+          company: company
+          phone_number: phone_number
+          id: id
+          title: title
+          first_name: first_name
+          email: email
+        - address:
+            line1: 1 ZestLabs Blvd
+            line2: CSS District
+            city: Mannheim
+            postcode: 680001
+            province: Baden-Wuerttemberg
+            country: Germany
+          last_name: last_name
+          company: company
+          phone_number: phone_number
+          id: id
+          title: title
+          first_name: first_name
+          email: email
+        archived: true
+        property_address:
+          line1: 1 ZestLabs Blvd
+          line2: CSS District
+          city: Mannheim
+          postcode: 680001
+          province: Baden-Wuerttemberg
+          country: Germany
+        property_ref: property_ref
+        data: "{}"
+        template_ref: template_ref
+        id: id
+        handover_time: 0
+        status: null
+      properties:
+        id:
+          description: |
+            The ID of the property handover schedule. This ID is unique within the system.
+          type: string
+        property_ref:
+          type: string
+        property_address:
+          $ref: '#/components/schemas/Address'
+        template_ref:
+          description: |
+            The ID of the property handover template.
+          type: string
+        handover_time:
+          description: |
+            The time of the property handover.
+          format: int64
+          type: integer
+        tenants:
+          items:
+            $ref: '#/components/schemas/ContactData'
+          type: array
+        status:
+          $ref: '#/components/schemas/PropertyHandoverStatusEnum'
+        archived:
+          description: Whether the property handover has been archived or not.
+          type: boolean
+        data:
+          description: |
+            The data captured by of the property handover.
+          type: object
+      required:
+      - handover_time
+      - id
+      - status
+      - template_ref
+      - tenants
+      type: object
+    PropertyHandoverStatusEnum:
+      description: The allowed values for a property handover status.
+      enum:
+      - PENDING
+      - DONE
+      type: string
+    QueryPropertyHandoversRequest:
+      example:
+        archived: null
+        offset: 6
+        limit: 0
+        status: null
+      properties:
+        limit:
+          format: int32
+          type: integer
+        offset:
+          format: int32
+          type: integer
+        status:
+          $ref: '#/components/schemas/PropertyHandoverStatusEnum'
+        archived:
+          $ref: '#/components/schemas/QueryBooleanParameter'
+      type: object
+    SubmitPropertyHandoverRequest:
+      example:
+        data: "{}"
+      properties:
+        data:
+          description: |
+            The data captured by of the property handover.
+          type: object
+      required:
+      - data
       type: object
     ReportDefinition:
       example:
@@ -19708,6 +20461,12 @@ components:
       - INDEXED
       - STAGGERED
       type: string
+    QueryBooleanParameter:
+      enum:
+      - IS_TRUE
+      - IS_FALSE
+      - ANY
+      type: string
     ServiceCategoryEnum:
       enum:
       - OTHERS
@@ -19735,12 +20494,6 @@ components:
       - SOLAR_PANELS
       - TILER
       - VENTILATION_AND_AIR_CONDITIONING
-      type: string
-    QueryBooleanParameter:
-      enum:
-      - IS_TRUE
-      - IS_FALSE
-      - ANY
       type: string
     publicUploadAttachment_request:
       properties:

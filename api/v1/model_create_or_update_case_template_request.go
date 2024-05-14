@@ -34,9 +34,10 @@ type CreateOrUpdateCaseTemplateRequest struct {
 	// a map of values, where the key and values are strings
 	InfoText *map[string]string `json:"info_text,omitempty"`
 	// The font-awesome icon to use for this template
-	Icon         *string     `json:"icon,omitempty"`
-	CustomInputs CustomForm  `json:"custom_inputs"`
-	Config       *CaseConfig `json:"config,omitempty"`
+	Icon         *string                      `json:"icon,omitempty"`
+	CustomInputs CustomForm                   `json:"custom_inputs"`
+	Config       *CaseConfig                  `json:"config,omitempty"`
+	AdCategories []CaseTemplateAdCategoryEnum `json:"ad_categories,omitempty"`
 }
 
 type _CreateOrUpdateCaseTemplateRequest CreateOrUpdateCaseTemplateRequest
@@ -325,6 +326,38 @@ func (o *CreateOrUpdateCaseTemplateRequest) SetConfig(v CaseConfig) {
 	o.Config = &v
 }
 
+// GetAdCategories returns the AdCategories field value if set, zero value otherwise.
+func (o *CreateOrUpdateCaseTemplateRequest) GetAdCategories() []CaseTemplateAdCategoryEnum {
+	if o == nil || IsNil(o.AdCategories) {
+		var ret []CaseTemplateAdCategoryEnum
+		return ret
+	}
+	return o.AdCategories
+}
+
+// GetAdCategoriesOk returns a tuple with the AdCategories field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateCaseTemplateRequest) GetAdCategoriesOk() ([]CaseTemplateAdCategoryEnum, bool) {
+	if o == nil || IsNil(o.AdCategories) {
+		return nil, false
+	}
+	return o.AdCategories, true
+}
+
+// HasAdCategories returns a boolean if a field has been set.
+func (o *CreateOrUpdateCaseTemplateRequest) HasAdCategories() bool {
+	if o != nil && !IsNil(o.AdCategories) {
+		return true
+	}
+
+	return false
+}
+
+// SetAdCategories gets a reference to the given []CaseTemplateAdCategoryEnum and assigns it to the AdCategories field.
+func (o *CreateOrUpdateCaseTemplateRequest) SetAdCategories(v []CaseTemplateAdCategoryEnum) {
+	o.AdCategories = v
+}
+
 func (o CreateOrUpdateCaseTemplateRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -355,6 +388,9 @@ func (o CreateOrUpdateCaseTemplateRequest) ToMap() (map[string]interface{}, erro
 	toSerialize["custom_inputs"] = o.CustomInputs
 	if !IsNil(o.Config) {
 		toSerialize["config"] = o.Config
+	}
+	if !IsNil(o.AdCategories) {
+		toSerialize["ad_categories"] = o.AdCategories
 	}
 	return toSerialize, nil
 }

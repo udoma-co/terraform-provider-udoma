@@ -40,9 +40,10 @@ type CaseTemplate struct {
 	// a map of values, where the key and values are strings
 	InfoText *map[string]string `json:"info_text,omitempty"`
 	// The font-awesome icon to use for this template
-	Icon         *string     `json:"icon,omitempty"`
-	CustomInputs CustomForm  `json:"custom_inputs"`
-	Config       *CaseConfig `json:"config,omitempty"`
+	Icon         *string                      `json:"icon,omitempty"`
+	CustomInputs CustomForm                   `json:"custom_inputs"`
+	Config       *CaseConfig                  `json:"config,omitempty"`
+	AdCategories []CaseTemplateAdCategoryEnum `json:"ad_categories,omitempty"`
 }
 
 type _CaseTemplate CaseTemplate
@@ -413,6 +414,38 @@ func (o *CaseTemplate) SetConfig(v CaseConfig) {
 	o.Config = &v
 }
 
+// GetAdCategories returns the AdCategories field value if set, zero value otherwise.
+func (o *CaseTemplate) GetAdCategories() []CaseTemplateAdCategoryEnum {
+	if o == nil || IsNil(o.AdCategories) {
+		var ret []CaseTemplateAdCategoryEnum
+		return ret
+	}
+	return o.AdCategories
+}
+
+// GetAdCategoriesOk returns a tuple with the AdCategories field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CaseTemplate) GetAdCategoriesOk() ([]CaseTemplateAdCategoryEnum, bool) {
+	if o == nil || IsNil(o.AdCategories) {
+		return nil, false
+	}
+	return o.AdCategories, true
+}
+
+// HasAdCategories returns a boolean if a field has been set.
+func (o *CaseTemplate) HasAdCategories() bool {
+	if o != nil && !IsNil(o.AdCategories) {
+		return true
+	}
+
+	return false
+}
+
+// SetAdCategories gets a reference to the given []CaseTemplateAdCategoryEnum and assigns it to the AdCategories field.
+func (o *CaseTemplate) SetAdCategories(v []CaseTemplateAdCategoryEnum) {
+	o.AdCategories = v
+}
+
 func (o CaseTemplate) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -448,6 +481,9 @@ func (o CaseTemplate) ToMap() (map[string]interface{}, error) {
 	toSerialize["custom_inputs"] = o.CustomInputs
 	if !IsNil(o.Config) {
 		toSerialize["config"] = o.Config
+	}
+	if !IsNil(o.AdCategories) {
+		toSerialize["ad_categories"] = o.AdCategories
 	}
 	return toSerialize, nil
 }
