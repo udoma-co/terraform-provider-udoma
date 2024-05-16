@@ -38,20 +38,21 @@ type CaseTemplate struct {
 
 // CaseTemplateModel describes the resource data model.
 type CaseTemplateModel struct {
-	ID             types.String       `tfsdk:"id"`
-	LastUpdated    types.String       `tfsdk:"last_updated"`
-	CreatedAt      types.Int64        `tfsdk:"created_at"`
-	UpdatedAt      types.Int64        `tfsdk:"updated_at"`
-	Name           types.String       `tfsdk:"name"`
-	Access         []types.String     `tfsdk:"access"`
-	NameExpression types.String       `tfsdk:"name_expression"`
-	Label          types.Map          `tfsdk:"label"`
-	Description    types.Map          `tfsdk:"description"`
-	InfoText       types.Map          `tfsdk:"info_text"`
-	Icon           types.String       `tfsdk:"icon"`
-	CustomInputs   tf.JsonObjectValue `tfsdk:"custom_inputs"`
-	Config         *CaseConfigModel   `tfsdk:"config"`
-	AdCategories   []types.String     `tfsdk:"ad_categories"`
+	ID               types.String       `tfsdk:"id"`
+	LastUpdated      types.String       `tfsdk:"last_updated"`
+	CreatedAt        types.Int64        `tfsdk:"created_at"`
+	UpdatedAt        types.Int64        `tfsdk:"updated_at"`
+	Name             types.String       `tfsdk:"name"`
+	Access           []types.String     `tfsdk:"access"`
+	NameExpression   types.String       `tfsdk:"name_expression"`
+	Label            types.Map          `tfsdk:"label"`
+	Description      types.Map          `tfsdk:"description"`
+	InfoText         types.Map          `tfsdk:"info_text"`
+	Icon             types.String       `tfsdk:"icon"`
+	CustomInputs     tf.JsonObjectValue `tfsdk:"custom_inputs"`
+	Config           *CaseConfigModel   `tfsdk:"config"`
+	AdCategories     []types.String     `tfsdk:"ad_categories"`
+	ConfirmationText types.Map          `tfsdk:"confirmation_text"`
 }
 
 func (r *CaseTemplate) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -146,6 +147,11 @@ func (r *CaseTemplate) Schema(ctx context.Context, req resource.SchemaRequest, r
 						string(api.CASETEMPLATEADCATEGORYENUM_INTERNET_PROVIDERS),
 					)),
 				},
+			},
+			"confirmation_text": schema.MapAttribute{
+				Optional:    true,
+				Description: "Text for the confirmation window before submiting case",
+				ElementType: types.StringType,
 			},
 		},
 	}
@@ -349,9 +355,15 @@ func (model *CaseTemplateModel) fromAPI(template *api.CaseTemplate) error {
 		model.Access[i] = types.StringValue(string(template.Access[i]))
 	}
 
-	model.AdCategories = make([]types.String, len(template.AdCategories))
-	for i := range template.AdCategories {
-		model.AdCategories[i] = types.StringValue(string(template.AdCategories[i]))
+	if len(template.AdCategories) > 0 {
+		model.AdCategories = make([]types.String, len(template.AdCategories))
+		for i := range template.AdCategories {
+			model.AdCategories[i] = types.StringValue(string(template.AdCategories[i]))
+		}
+	} else {
+		if model.AdCategories != nil {
+			model.AdCategories = make([]types.String, 0)
+		}
 	}
 
 	if template.Label != nil {
@@ -381,6 +393,15 @@ func (model *CaseTemplateModel) fromAPI(template *api.CaseTemplate) error {
 		model.InfoText = modelValue
 	}
 
+	if template.ConfirmationText != nil {
+		in := stringMapToValueMap(*template.ConfirmationText)
+		modelValue, diags := types.MapValue(types.StringType, in)
+		if diags.HasError() {
+			return fmt.Errorf("error converting confirmation text to map: %v", diags)
+		}
+		model.ConfirmationText = modelValue
+	}
+
 	customInputs, err := json.Marshal(template.CustomInputs)
 	if err != nil {
 		return fmt.Errorf("failed to marshal custom inputs: %w", err)
@@ -401,12 +422,13 @@ func (model *CaseTemplateModel) fromAPI(template *api.CaseTemplate) error {
 func (model *CaseTemplateModel) toAPIRequest() (api.CreateOrUpdateCaseTemplateRequest, error) {
 
 	template := api.CreateOrUpdateCaseTemplateRequest{
-		Name:           model.Name.ValueString(),
-		NameExpression: model.NameExpression.ValueStringPointer(),
-		Label:          modelMapToStringMap(model.Label),
-		Description:    modelMapToStringMap(model.Description),
-		InfoText:       modelMapToStringMap(model.InfoText),
-		Icon:           model.Icon.ValueStringPointer(),
+		Name:             model.Name.ValueString(),
+		NameExpression:   model.NameExpression.ValueStringPointer(),
+		Label:            modelMapToStringMap(model.Label),
+		Description:      modelMapToStringMap(model.Description),
+		InfoText:         modelMapToStringMap(model.InfoText),
+		Icon:             model.Icon.ValueStringPointer(),
+		ConfirmationText: modelMapToStringMap(model.ConfirmationText),
 	}
 
 	template.Access = make([]api.CaseTemplateAccessibility, len(model.Access))
