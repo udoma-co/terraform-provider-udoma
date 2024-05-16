@@ -8038,6 +8038,8 @@ components:
             key: description
           label:
             key: label
+          confirmation_text:
+            key: confirmation_text
           updated_at: 6
           info_text:
             key: info_text
@@ -8911,6 +8913,8 @@ components:
           key: description
         label:
           key: label
+        confirmation_text:
+          key: confirmation_text
         updated_at: 6
         info_text:
           key: info_text
@@ -9472,6 +9476,11 @@ components:
           items:
             $ref: '#/components/schemas/CaseTemplateAdCategoryEnum'
           type: array
+        confirmation_text:
+          additionalProperties:
+            type: string
+          description: "a map of values, where the key and values are strings"
+          type: object
       required:
       - created_at
       - custom_inputs
@@ -10505,6 +10514,8 @@ components:
             key: description
           label:
             key: label
+          confirmation_text:
+            key: confirmation_text
           updated_at: 6
           info_text:
             key: info_text
@@ -11022,6 +11033,8 @@ components:
             key: description
           label:
             key: label
+          confirmation_text:
+            key: confirmation_text
           updated_at: 6
           info_text:
             key: info_text
@@ -12963,6 +12976,8 @@ components:
             notify:
             - null
             - null
+        confirmation_text:
+          key: confirmation_text
       properties:
         name:
           description: |
@@ -13005,6 +13020,11 @@ components:
           items:
             $ref: '#/components/schemas/CaseTemplateAdCategoryEnum'
           type: array
+        confirmation_text:
+          additionalProperties:
+            type: string
+          description: "a map of values, where the key and values are strings"
+          type: object
       required:
       - access
       - custom_inputs

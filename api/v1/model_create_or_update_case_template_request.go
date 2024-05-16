@@ -38,6 +38,8 @@ type CreateOrUpdateCaseTemplateRequest struct {
 	CustomInputs CustomForm                   `json:"custom_inputs"`
 	Config       *CaseConfig                  `json:"config,omitempty"`
 	AdCategories []CaseTemplateAdCategoryEnum `json:"ad_categories,omitempty"`
+	// a map of values, where the key and values are strings
+	ConfirmationText *map[string]string `json:"confirmation_text,omitempty"`
 }
 
 type _CreateOrUpdateCaseTemplateRequest CreateOrUpdateCaseTemplateRequest
@@ -358,6 +360,38 @@ func (o *CreateOrUpdateCaseTemplateRequest) SetAdCategories(v []CaseTemplateAdCa
 	o.AdCategories = v
 }
 
+// GetConfirmationText returns the ConfirmationText field value if set, zero value otherwise.
+func (o *CreateOrUpdateCaseTemplateRequest) GetConfirmationText() map[string]string {
+	if o == nil || IsNil(o.ConfirmationText) {
+		var ret map[string]string
+		return ret
+	}
+	return *o.ConfirmationText
+}
+
+// GetConfirmationTextOk returns a tuple with the ConfirmationText field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateCaseTemplateRequest) GetConfirmationTextOk() (*map[string]string, bool) {
+	if o == nil || IsNil(o.ConfirmationText) {
+		return nil, false
+	}
+	return o.ConfirmationText, true
+}
+
+// HasConfirmationText returns a boolean if a field has been set.
+func (o *CreateOrUpdateCaseTemplateRequest) HasConfirmationText() bool {
+	if o != nil && !IsNil(o.ConfirmationText) {
+		return true
+	}
+
+	return false
+}
+
+// SetConfirmationText gets a reference to the given map[string]string and assigns it to the ConfirmationText field.
+func (o *CreateOrUpdateCaseTemplateRequest) SetConfirmationText(v map[string]string) {
+	o.ConfirmationText = &v
+}
+
 func (o CreateOrUpdateCaseTemplateRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -391,6 +425,9 @@ func (o CreateOrUpdateCaseTemplateRequest) ToMap() (map[string]interface{}, erro
 	}
 	if !IsNil(o.AdCategories) {
 		toSerialize["ad_categories"] = o.AdCategories
+	}
+	if !IsNil(o.ConfirmationText) {
+		toSerialize["confirmation_text"] = o.ConfirmationText
 	}
 	return toSerialize, nil
 }

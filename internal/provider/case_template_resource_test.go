@@ -29,6 +29,7 @@ func TestAccCaseTemplateResource(t *testing.T) {
 
 					resource.TestCheckResourceAttr("udoma_case_template.test", "info_text.de", "Test Info Text"),
 					resource.TestCheckResourceAttr("udoma_case_template.test", "info_text.en", "Test info text"),
+					resource.TestCheckResourceAttr("udoma_case_template.test", "confirmation_text.en", "Confirmation Text"),
 
 					// Verify custom_inputs
 					// TODO
@@ -117,6 +118,10 @@ func resourceDefinitionCaseTemplate(name, nameExpression string) string {
 		}
 
 		ad_categories = ["ELECTRICITY_PROVIDERS"]	
+
+		confirmation_text = {
+			en = "Confirmation text"
+		}
 	}
 	`
 }
