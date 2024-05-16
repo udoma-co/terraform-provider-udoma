@@ -318,6 +318,96 @@ func (a *DefaultAPIService) ArchiveDocumentGenerationExecute(r ApiArchiveDocumen
 	return localVarHTTPResponse, nil
 }
 
+type ApiArchivePropertyHandoverRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	handoverID string
+}
+
+func (r ApiArchivePropertyHandoverRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ArchivePropertyHandoverExecute(r)
+}
+
+/*
+ArchivePropertyHandover Archive a property handover
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param handoverID unique generated ID of a property handover
+	@return ApiArchivePropertyHandoverRequest
+*/
+func (a *DefaultAPIService) ArchivePropertyHandover(ctx context.Context, handoverID string) ApiArchivePropertyHandoverRequest {
+	return ApiArchivePropertyHandoverRequest{
+		ApiService: a,
+		ctx:        ctx,
+		handoverID: handoverID,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ArchivePropertyHandoverExecute(r ApiArchivePropertyHandoverRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod = http.MethodPut
+		localVarPostBody   interface{}
+		formFiles          []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ArchivePropertyHandover")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/property-handovers/handovers/{handoverID}/archive"
+	localVarPath = strings.Replace(localVarPath, "{"+"handoverID"+"}", url.PathEscape(parameterValueToString(r.handoverID, "handoverID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
 type ApiAssignCaseRequest struct {
 	ctx               context.Context
 	ApiService        *DefaultAPIService
@@ -2584,6 +2674,226 @@ func (a *DefaultAPIService) CreatePropertyExecute(r ApiCreatePropertyRequest) (*
 	}
 	// body params
 	localVarPostBody = r.createPropertyRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiCreatePropertyHandoverRequest struct {
+	ctx                                   context.Context
+	ApiService                            *DefaultAPIService
+	createOrUpdatePropertyHandoverRequest *CreateOrUpdatePropertyHandoverRequest
+}
+
+// Property handover that will be created
+func (r ApiCreatePropertyHandoverRequest) CreateOrUpdatePropertyHandoverRequest(createOrUpdatePropertyHandoverRequest CreateOrUpdatePropertyHandoverRequest) ApiCreatePropertyHandoverRequest {
+	r.createOrUpdatePropertyHandoverRequest = &createOrUpdatePropertyHandoverRequest
+	return r
+}
+
+func (r ApiCreatePropertyHandoverRequest) Execute() (*PropertyHandover, *http.Response, error) {
+	return r.ApiService.CreatePropertyHandoverExecute(r)
+}
+
+/*
+CreatePropertyHandover Create a new property handover
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiCreatePropertyHandoverRequest
+*/
+func (a *DefaultAPIService) CreatePropertyHandover(ctx context.Context) ApiCreatePropertyHandoverRequest {
+	return ApiCreatePropertyHandoverRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return PropertyHandover
+func (a *DefaultAPIService) CreatePropertyHandoverExecute(r ApiCreatePropertyHandoverRequest) (*PropertyHandover, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *PropertyHandover
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreatePropertyHandover")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/property-handovers/handover"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createOrUpdatePropertyHandoverRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdatePropertyHandoverRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrUpdatePropertyHandoverRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiCreatePropertyHandoverTemplateRequest struct {
+	ctx                                           context.Context
+	ApiService                                    *DefaultAPIService
+	createOrUpdatePropertyHandoverTemplateRequest *CreateOrUpdatePropertyHandoverTemplateRequest
+}
+
+// Property handover template that will be created
+func (r ApiCreatePropertyHandoverTemplateRequest) CreateOrUpdatePropertyHandoverTemplateRequest(createOrUpdatePropertyHandoverTemplateRequest CreateOrUpdatePropertyHandoverTemplateRequest) ApiCreatePropertyHandoverTemplateRequest {
+	r.createOrUpdatePropertyHandoverTemplateRequest = &createOrUpdatePropertyHandoverTemplateRequest
+	return r
+}
+
+func (r ApiCreatePropertyHandoverTemplateRequest) Execute() (*PropertyHandoverTemplate, *http.Response, error) {
+	return r.ApiService.CreatePropertyHandoverTemplateExecute(r)
+}
+
+/*
+CreatePropertyHandoverTemplate Create a new property handover template
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiCreatePropertyHandoverTemplateRequest
+*/
+func (a *DefaultAPIService) CreatePropertyHandoverTemplate(ctx context.Context) ApiCreatePropertyHandoverTemplateRequest {
+	return ApiCreatePropertyHandoverTemplateRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return PropertyHandoverTemplate
+func (a *DefaultAPIService) CreatePropertyHandoverTemplateExecute(r ApiCreatePropertyHandoverTemplateRequest) (*PropertyHandoverTemplate, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *PropertyHandoverTemplate
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreatePropertyHandoverTemplate")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/property-handovers/template"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createOrUpdatePropertyHandoverTemplateRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdatePropertyHandoverTemplateRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrUpdatePropertyHandoverTemplateRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -5471,6 +5781,186 @@ func (a *DefaultAPIService) DeletePropertyExecute(r ApiDeletePropertyRequest) (*
 
 	localVarPath := localBasePath + "/properties/{propID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"propID"+"}", url.PathEscape(parameterValueToString(r.propID, "propID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDeletePropertyHandoverRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	handoverID string
+}
+
+func (r ApiDeletePropertyHandoverRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeletePropertyHandoverExecute(r)
+}
+
+/*
+DeletePropertyHandover Delete property handover
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param handoverID unique generated ID of a property handover
+	@return ApiDeletePropertyHandoverRequest
+*/
+func (a *DefaultAPIService) DeletePropertyHandover(ctx context.Context, handoverID string) ApiDeletePropertyHandoverRequest {
+	return ApiDeletePropertyHandoverRequest{
+		ApiService: a,
+		ctx:        ctx,
+		handoverID: handoverID,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DeletePropertyHandoverExecute(r ApiDeletePropertyHandoverRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeletePropertyHandover")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/property-handovers/handovers/{handoverID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"handoverID"+"}", url.PathEscape(parameterValueToString(r.handoverID, "handoverID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDeletePropertyHandoverTemplateRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	templateID string
+}
+
+func (r ApiDeletePropertyHandoverTemplateRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeletePropertyHandoverTemplateExecute(r)
+}
+
+/*
+DeletePropertyHandoverTemplate Delete property handover template
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param templateID unique generated ID of a property handover template
+	@return ApiDeletePropertyHandoverTemplateRequest
+*/
+func (a *DefaultAPIService) DeletePropertyHandoverTemplate(ctx context.Context, templateID string) ApiDeletePropertyHandoverTemplateRequest {
+	return ApiDeletePropertyHandoverTemplateRequest{
+		ApiService: a,
+		ctx:        ctx,
+		templateID: templateID,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DeletePropertyHandoverTemplateExecute(r ApiDeletePropertyHandoverTemplateRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeletePropertyHandoverTemplate")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/property-handovers/template/{templateID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"templateID"+"}", url.PathEscape(parameterValueToString(r.templateID, "templateID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -11488,6 +11978,210 @@ func (a *DefaultAPIService) GetPropertyCasesExecute(r ApiGetPropertyCasesRequest
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetPropertyHandoverRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	handoverID string
+}
+
+func (r ApiGetPropertyHandoverRequest) Execute() (*PropertyHandover, *http.Response, error) {
+	return r.ApiService.GetPropertyHandoverExecute(r)
+}
+
+/*
+GetPropertyHandover Get property handover
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param handoverID unique generated ID of a property handover
+	@return ApiGetPropertyHandoverRequest
+*/
+func (a *DefaultAPIService) GetPropertyHandover(ctx context.Context, handoverID string) ApiGetPropertyHandoverRequest {
+	return ApiGetPropertyHandoverRequest{
+		ApiService: a,
+		ctx:        ctx,
+		handoverID: handoverID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return PropertyHandover
+func (a *DefaultAPIService) GetPropertyHandoverExecute(r ApiGetPropertyHandoverRequest) (*PropertyHandover, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *PropertyHandover
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetPropertyHandover")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/property-handovers/handovers/{handoverID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"handoverID"+"}", url.PathEscape(parameterValueToString(r.handoverID, "handoverID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetPropertyHandoverTemplateRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	templateID string
+}
+
+func (r ApiGetPropertyHandoverTemplateRequest) Execute() (*PropertyHandoverTemplate, *http.Response, error) {
+	return r.ApiService.GetPropertyHandoverTemplateExecute(r)
+}
+
+/*
+GetPropertyHandoverTemplate Get property handover template
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param templateID unique generated ID of a property handover template
+	@return ApiGetPropertyHandoverTemplateRequest
+*/
+func (a *DefaultAPIService) GetPropertyHandoverTemplate(ctx context.Context, templateID string) ApiGetPropertyHandoverTemplateRequest {
+	return ApiGetPropertyHandoverTemplateRequest{
+		ApiService: a,
+		ctx:        ctx,
+		templateID: templateID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return PropertyHandoverTemplate
+func (a *DefaultAPIService) GetPropertyHandoverTemplateExecute(r ApiGetPropertyHandoverTemplateRequest) (*PropertyHandoverTemplate, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *PropertyHandoverTemplate
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetPropertyHandoverTemplate")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/property-handovers/template/{templateID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"templateID"+"}", url.PathEscape(parameterValueToString(r.templateID, "templateID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetPropertyOwnerRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
@@ -17364,6 +18058,214 @@ func (a *DefaultAPIService) QueryPropertiesExecute(r ApiQueryPropertiesRequest) 
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiQueryPropertyHandoverTemplatesRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+}
+
+func (r ApiQueryPropertyHandoverTemplatesRequest) Execute() ([]PropertyHandoverTemplate, *http.Response, error) {
+	return r.ApiService.QueryPropertyHandoverTemplatesExecute(r)
+}
+
+/*
+QueryPropertyHandoverTemplates Query property handover templates
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiQueryPropertyHandoverTemplatesRequest
+*/
+func (a *DefaultAPIService) QueryPropertyHandoverTemplates(ctx context.Context) ApiQueryPropertyHandoverTemplatesRequest {
+	return ApiQueryPropertyHandoverTemplatesRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return []PropertyHandoverTemplate
+func (a *DefaultAPIService) QueryPropertyHandoverTemplatesExecute(r ApiQueryPropertyHandoverTemplatesRequest) ([]PropertyHandoverTemplate, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []PropertyHandoverTemplate
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.QueryPropertyHandoverTemplates")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/property-handovers/templates"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiQueryPropertyHandoversRequest struct {
+	ctx                           context.Context
+	ApiService                    *DefaultAPIService
+	queryPropertyHandoversRequest *QueryPropertyHandoversRequest
+}
+
+// Query parameters
+func (r ApiQueryPropertyHandoversRequest) QueryPropertyHandoversRequest(queryPropertyHandoversRequest QueryPropertyHandoversRequest) ApiQueryPropertyHandoversRequest {
+	r.queryPropertyHandoversRequest = &queryPropertyHandoversRequest
+	return r
+}
+
+func (r ApiQueryPropertyHandoversRequest) Execute() ([]PropertyHandover, *http.Response, error) {
+	return r.ApiService.QueryPropertyHandoversExecute(r)
+}
+
+/*
+QueryPropertyHandovers Query property handovers
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiQueryPropertyHandoversRequest
+*/
+func (a *DefaultAPIService) QueryPropertyHandovers(ctx context.Context) ApiQueryPropertyHandoversRequest {
+	return ApiQueryPropertyHandoversRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return []PropertyHandover
+func (a *DefaultAPIService) QueryPropertyHandoversExecute(r ApiQueryPropertyHandoversRequest) ([]PropertyHandover, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []PropertyHandover
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.QueryPropertyHandovers")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/property-handovers/handovers"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.queryPropertyHandoversRequest == nil {
+		return localVarReturnValue, nil, reportError("queryPropertyHandoversRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.queryPropertyHandoversRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiQueryPropertyOwnersRequest struct {
 	ctx                        context.Context
 	ApiService                 *DefaultAPIService
@@ -18329,6 +19231,108 @@ func (a *DefaultAPIService) StartWorkflowExecutionExecute(r ApiStartWorkflowExec
 	}
 
 	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiSubmitPropertyHandoverRequest struct {
+	ctx                           context.Context
+	ApiService                    *DefaultAPIService
+	handoverID                    string
+	submitPropertyHandoverRequest *SubmitPropertyHandoverRequest
+}
+
+// Property handover that will be submitted
+func (r ApiSubmitPropertyHandoverRequest) SubmitPropertyHandoverRequest(submitPropertyHandoverRequest SubmitPropertyHandoverRequest) ApiSubmitPropertyHandoverRequest {
+	r.submitPropertyHandoverRequest = &submitPropertyHandoverRequest
+	return r
+}
+
+func (r ApiSubmitPropertyHandoverRequest) Execute() (*http.Response, error) {
+	return r.ApiService.SubmitPropertyHandoverExecute(r)
+}
+
+/*
+SubmitPropertyHandover Submit the data for a property handover
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param handoverID unique generated ID of a property handover
+	@return ApiSubmitPropertyHandoverRequest
+*/
+func (a *DefaultAPIService) SubmitPropertyHandover(ctx context.Context, handoverID string) ApiSubmitPropertyHandoverRequest {
+	return ApiSubmitPropertyHandoverRequest{
+		ApiService: a,
+		ctx:        ctx,
+		handoverID: handoverID,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) SubmitPropertyHandoverExecute(r ApiSubmitPropertyHandoverRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod = http.MethodPut
+		localVarPostBody   interface{}
+		formFiles          []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.SubmitPropertyHandover")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/property-handovers/handovers/{handoverID}/submit"
+	localVarPath = strings.Replace(localVarPath, "{"+"handoverID"+"}", url.PathEscape(parameterValueToString(r.handoverID, "handoverID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.submitPropertyHandoverRequest == nil {
+		return nil, reportError("submitPropertyHandoverRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.submitPropertyHandoverRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
 }
 
 type ApiSyncConnectorDataRequest struct {
@@ -20764,6 +21768,234 @@ func (a *DefaultAPIService) UpdatePropertyExecute(r ApiUpdatePropertyRequest) (*
 	}
 	// body params
 	localVarPostBody = r.updatePropertyRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdatePropertyHandoverRequest struct {
+	ctx                                   context.Context
+	ApiService                            *DefaultAPIService
+	handoverID                            string
+	createOrUpdatePropertyHandoverRequest *CreateOrUpdatePropertyHandoverRequest
+}
+
+// Updated property handover object
+func (r ApiUpdatePropertyHandoverRequest) CreateOrUpdatePropertyHandoverRequest(createOrUpdatePropertyHandoverRequest CreateOrUpdatePropertyHandoverRequest) ApiUpdatePropertyHandoverRequest {
+	r.createOrUpdatePropertyHandoverRequest = &createOrUpdatePropertyHandoverRequest
+	return r
+}
+
+func (r ApiUpdatePropertyHandoverRequest) Execute() (*PropertyHandover, *http.Response, error) {
+	return r.ApiService.UpdatePropertyHandoverExecute(r)
+}
+
+/*
+UpdatePropertyHandover Update property handover
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param handoverID unique generated ID of a property handover
+	@return ApiUpdatePropertyHandoverRequest
+*/
+func (a *DefaultAPIService) UpdatePropertyHandover(ctx context.Context, handoverID string) ApiUpdatePropertyHandoverRequest {
+	return ApiUpdatePropertyHandoverRequest{
+		ApiService: a,
+		ctx:        ctx,
+		handoverID: handoverID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return PropertyHandover
+func (a *DefaultAPIService) UpdatePropertyHandoverExecute(r ApiUpdatePropertyHandoverRequest) (*PropertyHandover, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *PropertyHandover
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdatePropertyHandover")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/property-handovers/handovers/{handoverID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"handoverID"+"}", url.PathEscape(parameterValueToString(r.handoverID, "handoverID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createOrUpdatePropertyHandoverRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdatePropertyHandoverRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrUpdatePropertyHandoverRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdatePropertyHandoverTemplateRequest struct {
+	ctx                                           context.Context
+	ApiService                                    *DefaultAPIService
+	templateID                                    string
+	createOrUpdatePropertyHandoverTemplateRequest *CreateOrUpdatePropertyHandoverTemplateRequest
+}
+
+// Updated property handover template object
+func (r ApiUpdatePropertyHandoverTemplateRequest) CreateOrUpdatePropertyHandoverTemplateRequest(createOrUpdatePropertyHandoverTemplateRequest CreateOrUpdatePropertyHandoverTemplateRequest) ApiUpdatePropertyHandoverTemplateRequest {
+	r.createOrUpdatePropertyHandoverTemplateRequest = &createOrUpdatePropertyHandoverTemplateRequest
+	return r
+}
+
+func (r ApiUpdatePropertyHandoverTemplateRequest) Execute() (*PropertyHandoverTemplate, *http.Response, error) {
+	return r.ApiService.UpdatePropertyHandoverTemplateExecute(r)
+}
+
+/*
+UpdatePropertyHandoverTemplate Update property handover template
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param templateID unique generated ID of a property handover template
+	@return ApiUpdatePropertyHandoverTemplateRequest
+*/
+func (a *DefaultAPIService) UpdatePropertyHandoverTemplate(ctx context.Context, templateID string) ApiUpdatePropertyHandoverTemplateRequest {
+	return ApiUpdatePropertyHandoverTemplateRequest{
+		ApiService: a,
+		ctx:        ctx,
+		templateID: templateID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return PropertyHandoverTemplate
+func (a *DefaultAPIService) UpdatePropertyHandoverTemplateExecute(r ApiUpdatePropertyHandoverTemplateRequest) (*PropertyHandoverTemplate, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *PropertyHandoverTemplate
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdatePropertyHandoverTemplate")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/property-handovers/template/{templateID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"templateID"+"}", url.PathEscape(parameterValueToString(r.templateID, "templateID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createOrUpdatePropertyHandoverTemplateRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdatePropertyHandoverTemplateRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrUpdatePropertyHandoverTemplateRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

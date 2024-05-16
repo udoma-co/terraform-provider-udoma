@@ -18,6 +18,7 @@ func TestAccCaseTemplateResource(t *testing.T) {
 					resource.TestCheckResourceAttr("udoma_case_template.test", "name", "basic template"),
 					resource.TestCheckResourceAttr("udoma_case_template.test", "name_expression", "\"Basic case\""),
 					resource.TestCheckResourceAttr("udoma_case_template.test", "icon", "fa fa-bug"),
+					resource.TestCheckResourceAttr("udoma_case_template.test", "ad_categories.0", "ELECTRICITY_PROVIDERS"),
 
 					// Verify map attributes
 					resource.TestCheckResourceAttr("udoma_case_template.test", "label.de", "Einfache Meldung"),
@@ -69,6 +70,7 @@ func resourceDefinitionCaseTemplate(name, nameExpression string) string {
 	return `
 	resource udoma_case_template "test" {
 		name 							= "` + name + `"
+		access = ["PROPERTY_MANAGER"]
 		name_expression 	= "\"` + nameExpression + `\""
 		icon 							= "fa fa-bug"
 	
@@ -86,6 +88,7 @@ func resourceDefinitionCaseTemplate(name, nameExpression string) string {
 			de = "Test Info Text"
 			en = "Test info text"
 		}
+
 	
 		custom_inputs = <<EOF
 		{
@@ -112,6 +115,8 @@ func resourceDefinitionCaseTemplate(name, nameExpression string) string {
 			base_config = "SIMPLE",
 			extend_default_status_config = true
 		}
+
+		ad_categories = ["ELECTRICITY_PROVIDERS"]	
 	}
 	`
 }

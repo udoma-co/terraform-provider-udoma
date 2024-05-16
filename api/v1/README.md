@@ -80,6 +80,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**AddCaseComment**](docs/DefaultAPI.md#addcasecomment) | **Post** /case/{caseID}/comment | Add new case comment
 *DefaultAPI* | [**ArchiveCase**](docs/DefaultAPI.md#archivecase) | **Post** /case/{caseID}/archive | Mark the case as archived
 *DefaultAPI* | [**ArchiveDocumentGeneration**](docs/DefaultAPI.md#archivedocumentgeneration) | **Post** /document-generation/documents/{docID}/archive | Move the document generation to the archive
+*DefaultAPI* | [**ArchivePropertyHandover**](docs/DefaultAPI.md#archivepropertyhandover) | **Put** /property-handovers/handovers/{handoverID}/archive | Archive a property handover
 *DefaultAPI* | [**AssignCase**](docs/DefaultAPI.md#assigncase) | **Post** /case/{caseID}/assign | Assign case to a service provider
 *DefaultAPI* | [**CancelSignaturesForDocument**](docs/DefaultAPI.md#cancelsignaturesfordocument) | **Delete** /document-generation/documents/{docID}/esignature | Cancel a signature request for a document
 *DefaultAPI* | [**CreateAppointment**](docs/DefaultAPI.md#createappointment) | **Post** /calendar/appointments/schedule/{scheduleID}/appointment | Create new appointment for a given schedule
@@ -101,6 +102,8 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateMeter**](docs/DefaultAPI.md#createmeter) | **Post** /meters | Create a new meter for a property
 *DefaultAPI* | [**CreateMeterReading**](docs/DefaultAPI.md#createmeterreading) | **Post** /meter/{meterID}/readings | Create a new meter reading for a meter
 *DefaultAPI* | [**CreateProperty**](docs/DefaultAPI.md#createproperty) | **Post** /property | Create property
+*DefaultAPI* | [**CreatePropertyHandover**](docs/DefaultAPI.md#createpropertyhandover) | **Post** /property-handovers/handover | Create a new property handover
+*DefaultAPI* | [**CreatePropertyHandoverTemplate**](docs/DefaultAPI.md#createpropertyhandovertemplate) | **Post** /property-handovers/template | Create a new property handover template
 *DefaultAPI* | [**CreatePropertyOwner**](docs/DefaultAPI.md#createpropertyowner) | **Post** /owner | Create a new property owner
 *DefaultAPI* | [**CreateReportDefinition**](docs/DefaultAPI.md#createreportdefinition) | **Post** /report | Create a new report definition
 *DefaultAPI* | [**CreateServiceProvider**](docs/DefaultAPI.md#createserviceprovider) | **Post** /service-provider | Create a new service provider for the current account
@@ -131,6 +134,8 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteMeter**](docs/DefaultAPI.md#deletemeter) | **Delete** /meter/{meterID} | Delete meter
 *DefaultAPI* | [**DeleteMeterReading**](docs/DefaultAPI.md#deletemeterreading) | **Delete** /meter/{meterID}/reading/{readingID} | Delete meter reading
 *DefaultAPI* | [**DeleteProperty**](docs/DefaultAPI.md#deleteproperty) | **Delete** /properties/{propID} | Delete property
+*DefaultAPI* | [**DeletePropertyHandover**](docs/DefaultAPI.md#deletepropertyhandover) | **Delete** /property-handovers/handovers/{handoverID} | Delete property handover
+*DefaultAPI* | [**DeletePropertyHandoverTemplate**](docs/DefaultAPI.md#deletepropertyhandovertemplate) | **Delete** /property-handovers/template/{templateID} | Delete property handover template
 *DefaultAPI* | [**DeletePropertyOwner**](docs/DefaultAPI.md#deletepropertyowner) | **Delete** /owner/{ownerID} | Delete property owner
 *DefaultAPI* | [**DeleteReportDefinition**](docs/DefaultAPI.md#deletereportdefinition) | **Delete** /report/{definitionID} | 
 *DefaultAPI* | [**DeleteReportExecution**](docs/DefaultAPI.md#deletereportexecution) | **Delete** /report/executions/{executionID} | 
@@ -190,6 +195,8 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetPriceIndexPoint**](docs/DefaultAPI.md#getpriceindexpoint) | **Post** /price-index | Get the PriceIndexPoint
 *DefaultAPI* | [**GetProperty**](docs/DefaultAPI.md#getproperty) | **Get** /properties/{propID} | Get property details
 *DefaultAPI* | [**GetPropertyCases**](docs/DefaultAPI.md#getpropertycases) | **Post** /property/{propID}/cases | Get property cases
+*DefaultAPI* | [**GetPropertyHandover**](docs/DefaultAPI.md#getpropertyhandover) | **Get** /property-handovers/handovers/{handoverID} | Get property handover
+*DefaultAPI* | [**GetPropertyHandoverTemplate**](docs/DefaultAPI.md#getpropertyhandovertemplate) | **Get** /property-handovers/template/{templateID} | Get property handover template
 *DefaultAPI* | [**GetPropertyOwner**](docs/DefaultAPI.md#getpropertyowner) | **Get** /owner/{ownerID} | Get property owner details
 *DefaultAPI* | [**GetPropertyTenancy**](docs/DefaultAPI.md#getpropertytenancy) | **Get** /property/{propID}/tenancy | Get the current tenancy for the property
 *DefaultAPI* | [**GetReportDefinition**](docs/DefaultAPI.md#getreportdefinition) | **Get** /report/{definitionID} | 
@@ -244,6 +251,8 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryExternalUserCases**](docs/DefaultAPI.md#queryexternalusercases) | **Get** /external-users/{userID}/cases | Get the cases the the given user has opened
 *DefaultAPI* | [**QueryExternalUsers**](docs/DefaultAPI.md#queryexternalusers) | **Get** /external-users | Get a list of external users who reported to the current manager
 *DefaultAPI* | [**QueryProperties**](docs/DefaultAPI.md#queryproperties) | **Post** /properties | Query properties
+*DefaultAPI* | [**QueryPropertyHandoverTemplates**](docs/DefaultAPI.md#querypropertyhandovertemplates) | **Post** /property-handovers/templates | Query property handover templates
+*DefaultAPI* | [**QueryPropertyHandovers**](docs/DefaultAPI.md#querypropertyhandovers) | **Post** /property-handovers/handovers | Query property handovers
 *DefaultAPI* | [**QueryPropertyOwners**](docs/DefaultAPI.md#querypropertyowners) | **Post** /owners | Query property owners
 *DefaultAPI* | [**QueryServiceProviderCases**](docs/DefaultAPI.md#queryserviceprovidercases) | **Get** /service-provider/{serviceProviderID}/cases | Get the cases the the given service provider has access to
 *DefaultAPI* | [**QueryServiceProviders**](docs/DefaultAPI.md#queryserviceproviders) | **Post** /service-providers | Query all service providers for certain criteria
@@ -253,6 +262,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**RequestESignaturesForDocument**](docs/DefaultAPI.md#requestesignaturesfordocument) | **Post** /document-generation/documents/{docID}/esignature | Trigger a signing request for a document
 *DefaultAPI* | [**ResetConnectorQuery**](docs/DefaultAPI.md#resetconnectorquery) | **Put** /connector/query/{queryID}/reset | Get the query for the current account
 *DefaultAPI* | [**StartWorkflowExecution**](docs/DefaultAPI.md#startworkflowexecution) | **Post** /workflows/execution | Start a new workflow execution
+*DefaultAPI* | [**SubmitPropertyHandover**](docs/DefaultAPI.md#submitpropertyhandover) | **Put** /property-handovers/handovers/{handoverID}/submit | Submit the data for a property handover
 *DefaultAPI* | [**SyncConnectorData**](docs/DefaultAPI.md#syncconnectordata) | **Post** /connector/sync | Sync the next batch of connector data.
 *DefaultAPI* | [**UnassignCase**](docs/DefaultAPI.md#unassigncase) | **Post** /case/{caseID}/unassign | Remove access from case
 *DefaultAPI* | [**UpdateAppointment**](docs/DefaultAPI.md#updateappointment) | **Put** /calendar/appointments/entry/{entryID} | Update appointment
@@ -275,6 +285,8 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateMeter**](docs/DefaultAPI.md#updatemeter) | **Put** /meter/{meterID} | Update meter
 *DefaultAPI* | [**UpdateMeterReading**](docs/DefaultAPI.md#updatemeterreading) | **Put** /meter/{meterID}/reading/{readingID} | Update meter reading
 *DefaultAPI* | [**UpdateProperty**](docs/DefaultAPI.md#updateproperty) | **Put** /properties/{propID} | Update property
+*DefaultAPI* | [**UpdatePropertyHandover**](docs/DefaultAPI.md#updatepropertyhandover) | **Put** /property-handovers/handovers/{handoverID} | Update property handover
+*DefaultAPI* | [**UpdatePropertyHandoverTemplate**](docs/DefaultAPI.md#updatepropertyhandovertemplate) | **Put** /property-handovers/template/{templateID} | Update property handover template
 *DefaultAPI* | [**UpdatePropertyOwner**](docs/DefaultAPI.md#updatepropertyowner) | **Put** /owner/{ownerID} | Update property owner
 *DefaultAPI* | [**UpdateReportDefinition**](docs/DefaultAPI.md#updatereportdefinition) | **Put** /report/{definitionID} | 
 *DefaultAPI* | [**UpdateServiceProvider**](docs/DefaultAPI.md#updateserviceprovider) | **Put** /service-provider/{serviceProviderID} | Update the attributes of the service provider
@@ -323,6 +335,7 @@ Class | Method | HTTP request | Description
  - [CaseStatusEnum](docs/CaseStatusEnum.md)
  - [CaseTemplate](docs/CaseTemplate.md)
  - [CaseTemplateAccessibility](docs/CaseTemplateAccessibility.md)
+ - [CaseTemplateAdCategoryEnum](docs/CaseTemplateAdCategoryEnum.md)
  - [CompanyProfile](docs/CompanyProfile.md)
  - [ConnectorConfig](docs/ConnectorConfig.md)
  - [ConnectorCredentials](docs/ConnectorCredentials.md)
@@ -351,6 +364,8 @@ Class | Method | HTTP request | Description
  - [CreateOrUpdateFAQEntryRequest](docs/CreateOrUpdateFAQEntryRequest.md)
  - [CreateOrUpdateMeterReadingRequest](docs/CreateOrUpdateMeterReadingRequest.md)
  - [CreateOrUpdateMeterRequest](docs/CreateOrUpdateMeterRequest.md)
+ - [CreateOrUpdatePropertyHandoverRequest](docs/CreateOrUpdatePropertyHandoverRequest.md)
+ - [CreateOrUpdatePropertyHandoverTemplateRequest](docs/CreateOrUpdatePropertyHandoverTemplateRequest.md)
  - [CreateOrUpdatePropertyOwnerRequest](docs/CreateOrUpdatePropertyOwnerRequest.md)
  - [CreateOrUpdateReportDefinitionRequest](docs/CreateOrUpdateReportDefinitionRequest.md)
  - [CreateOrUpdateServiceProvider](docs/CreateOrUpdateServiceProvider.md)
@@ -413,6 +428,9 @@ Class | Method | HTTP request | Description
  - [PropertyDetails](docs/PropertyDetails.md)
  - [PropertyFloorTypeEnum](docs/PropertyFloorTypeEnum.md)
  - [PropertyFurnishingEnum](docs/PropertyFurnishingEnum.md)
+ - [PropertyHandover](docs/PropertyHandover.md)
+ - [PropertyHandoverStatusEnum](docs/PropertyHandoverStatusEnum.md)
+ - [PropertyHandoverTemplate](docs/PropertyHandoverTemplate.md)
  - [PropertyHeatingTypeEnum](docs/PropertyHeatingTypeEnum.md)
  - [PropertyOwner](docs/PropertyOwner.md)
  - [PropertyParkingTypeEnum](docs/PropertyParkingTypeEnum.md)
@@ -434,6 +452,7 @@ Class | Method | HTTP request | Description
  - [QueryExternalUsersResponse](docs/QueryExternalUsersResponse.md)
  - [QueryPropertiesRequest](docs/QueryPropertiesRequest.md)
  - [QueryPropertiesResponse](docs/QueryPropertiesResponse.md)
+ - [QueryPropertyHandoversRequest](docs/QueryPropertyHandoversRequest.md)
  - [QueryPropertyOwnersRequest](docs/QueryPropertyOwnersRequest.md)
  - [QueryPropertyOwnersResponse](docs/QueryPropertyOwnersResponse.md)
  - [QueryReportExecutionsRequest](docs/QueryReportExecutionsRequest.md)
@@ -457,6 +476,7 @@ Class | Method | HTTP request | Description
  - [ServiceCategoryEnum](docs/ServiceCategoryEnum.md)
  - [ServiceProvider](docs/ServiceProvider.md)
  - [StartWorkflowExecutionRequest](docs/StartWorkflowExecutionRequest.md)
+ - [SubmitPropertyHandoverRequest](docs/SubmitPropertyHandoverRequest.md)
  - [Tenancy](docs/Tenancy.md)
  - [TenancyContractTypeEnum](docs/TenancyContractTypeEnum.md)
  - [TenancyUpdate](docs/TenancyUpdate.md)

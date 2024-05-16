@@ -51,6 +51,7 @@ type CaseTemplateModel struct {
 	Icon           types.String       `tfsdk:"icon"`
 	CustomInputs   tf.JsonObjectValue `tfsdk:"custom_inputs"`
 	Config         *CaseConfigModel   `tfsdk:"config"`
+	AdCategories   []types.String     `tfsdk:"ad_categories"`
 }
 
 func (r *CaseTemplate) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -131,6 +132,20 @@ func (r *CaseTemplate) Schema(ctx context.Context, req resource.SchemaRequest, r
 				Description: "Defines custom behaviour of a case, based on the case template that was " +
 					"used to create it",
 				Attributes: CaseConfigModelNestedSchema(),
+			},
+			"ad_categories": schema.ListAttribute{
+				Optional:    true,
+				Description: "The list of ad categories for the case template",
+				ElementType: types.StringType,
+				Validators: []validator.List{
+					listvalidator.UniqueValues(),
+					listvalidator.ValueStringsAre(stringvalidator.OneOf(
+						string(api.CASETEMPLATEADCATEGORYENUM_ELECTRICITY_PROVIDERS),
+						string(api.CASETEMPLATEADCATEGORYENUM_GAS_PROVIDERS),
+						string(api.CASETEMPLATEADCATEGORYENUM_HOME_INSURANCE),
+						string(api.CASETEMPLATEADCATEGORYENUM_INTERNET_PROVIDERS),
+					)),
+				},
 			},
 		},
 	}
@@ -334,6 +349,11 @@ func (model *CaseTemplateModel) fromAPI(template *api.CaseTemplate) error {
 		model.Access[i] = types.StringValue(string(template.Access[i]))
 	}
 
+	model.AdCategories = make([]types.String, len(template.AdCategories))
+	for i := range template.AdCategories {
+		model.AdCategories[i] = types.StringValue(string(template.AdCategories[i]))
+	}
+
 	if template.Label != nil {
 		in := stringMapToValueMap(*template.Label)
 		modelValue, diags := types.MapValue(types.StringType, in)
@@ -392,6 +412,11 @@ func (model *CaseTemplateModel) toAPIRequest() (api.CreateOrUpdateCaseTemplateRe
 	template.Access = make([]api.CaseTemplateAccessibility, len(model.Access))
 	for i := range model.Access {
 		template.Access[i] = api.CaseTemplateAccessibility(model.Access[i].ValueString())
+	}
+
+	template.AdCategories = make([]api.CaseTemplateAdCategoryEnum, len(model.AdCategories))
+	for i := range model.AdCategories {
+		template.AdCategories[i] = api.CaseTemplateAdCategoryEnum(model.AdCategories[i].ValueString())
 	}
 
 	if !model.CustomInputs.IsNull() && !model.CustomInputs.IsUnknown() {
