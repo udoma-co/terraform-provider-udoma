@@ -23,7 +23,9 @@ Resource represents a template for raising cases
 
 ### Optional
 
+- `ad_categories` (List of String) The list of ad categories for the case template
 - `config` (Attributes) Defines custom behaviour of a case, based on the case template that was used to create it (see [below for nested schema](#nestedatt--config))
+- `confirmation_text` (Map of String) Text for the confirmation window before submiting case
 - `description` (Map of String) The description of the case template, shown in the reporting page
 - `icon` (String) The icon to be displayed on the reporting page
 - `info_text` (Map of String) A longer introduction text, shown in the case specific reporting page
@@ -59,7 +61,7 @@ Optional:
 
 Required:
 
-- `action` (String) JSON script of the action that should be executed, if the schedule and execution
+- `action` (String) JS script of the action that should be executed, if the schedule and execution
         check are successful.
 - `schedule` (Number) The number of days after which the status change should be triggered. The 
         schedule is reset, whenever the case is updated. 0 means that the action

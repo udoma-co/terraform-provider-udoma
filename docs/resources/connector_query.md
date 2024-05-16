@@ -27,6 +27,7 @@ Resource represents a connector query
 ### Optional
 
 - `description` (String) The display name of the connector query
+- `priority` (Number) The priority of the query, higher values are executed first
 
 ### Read-Only
 

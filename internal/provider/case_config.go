@@ -417,7 +417,7 @@ func caseAutomaticStatusChangeConfigModelNestedSchema() schema.NestedAttributeOb
 			},
 			"action": schema.StringAttribute{
 				Required: true,
-				Description: `JSON script of the action that should be executed, if the schedule and execution
+				Description: `JS script of the action that should be executed, if the schedule and execution
         check are successful.`,
 			},
 		},
