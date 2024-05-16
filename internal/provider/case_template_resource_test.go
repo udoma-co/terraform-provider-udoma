@@ -29,7 +29,7 @@ func TestAccCaseTemplateResource(t *testing.T) {
 
 					resource.TestCheckResourceAttr("udoma_case_template.test", "info_text.de", "Test Info Text"),
 					resource.TestCheckResourceAttr("udoma_case_template.test", "info_text.en", "Test info text"),
-					resource.TestCheckResourceAttr("udoma_case_template.test", "confirmation_text.en", "Confirmation Text"),
+					resource.TestCheckResourceAttr("udoma_case_template.test", "confirmation_text.en", "Confirmation text"),
 
 					// Verify custom_inputs
 					// TODO
