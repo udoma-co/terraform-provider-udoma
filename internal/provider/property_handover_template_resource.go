@@ -132,7 +132,7 @@ func (r *PropertyHandoverTemplate) Read(ctx context.Context, req resource.ReadRe
 		return
 	} else if err != nil {
 		resp.Diagnostics.AddError(
-			"Error Reading PropertyHandover Schedule",
+			"Error Reading Property Handover Template",
 			fmt.Sprintf("Could not read entity in Udoma, unexpected error: %s", getApiErrorMessage(err)),
 		)
 		return
@@ -164,7 +164,7 @@ func (r *PropertyHandoverTemplate) Update(ctx context.Context, req resource.Upda
 	newTemplate, _, err := r.client.GetApi().UpdatePropertyHandoverTemplate(ctx, id).CreateOrUpdatePropertyHandoverTemplateRequest(*templateReq).Execute()
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Error Updating PropertyHandover Schedule",
+			"Error Updating PropertyHandover Template",
 			fmt.Sprintf("Could not update entity in Udoma, unexpected error: %s", getApiErrorMessage(err)),
 		)
 		return
@@ -192,7 +192,7 @@ func (r *PropertyHandoverTemplate) Delete(ctx context.Context, req resource.Dele
 	_, err := r.client.GetApi().DeletePropertyHandoverTemplate(ctx, state.ID.ValueString()).Execute()
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Error Deleting PropertyHandover Schedule",
+			"Error Deleting Property Handover Template",
 			fmt.Sprintf("Could not delete entity in Udoma, unexpected error: %s", getApiErrorMessage(err)),
 		)
 		return
