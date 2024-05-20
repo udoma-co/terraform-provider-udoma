@@ -185,7 +185,7 @@ func (c *ConnectorConfig) Delete(ctx context.Context, req resource.DeleteRequest
 }
 
 func (r *ConnectorConfig) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	resource.ImportStatePassthroughID(ctx, path.Root("name"), req, resp)
 }
 
 func (c *ConnectorConfigModel) fromApiResponse(config *api.ConnectorConfig) {
