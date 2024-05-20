@@ -209,11 +209,12 @@ func (r *AppointmentTemplate) ImportState(ctx context.Context, req resource.Impo
 }
 
 func (template *AppointmentTemplateModel) toApiRequest() *v1.CreateOrUpdateAppointmentTemplateRequest {
+	form := template.Inputs.toApiRequest()
 	return &v1.CreateOrUpdateAppointmentTemplateRequest{
 		Name:           template.Name.ValueStringPointer(),
 		NameExpression: template.NameExpression.ValueStringPointer(),
 		Description:    template.Description.ValueStringPointer(),
-		Form:           template.Inputs.toApiRequest(),
+		Form:           &form,
 	}
 }
 

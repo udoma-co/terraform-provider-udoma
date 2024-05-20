@@ -287,7 +287,8 @@ func (cfg *CaseFeedbackConfigModel) toApiRequest() *v1.CaseFeedbackConfig {
 	}
 
 	if cfg.Form != nil {
-		ret.Form = cfg.Form.toApiRequest()
+		form := cfg.Form.toApiRequest()
+		ret.Form = &form
 	} else {
 		ret.Form = nil
 	}

@@ -31,11 +31,10 @@ type PropertyHandoverTemplate struct {
 
 // PropertyTemplateTemplateModel describes the resource data model
 type PropertyHandoverTemplateModel struct {
-	ID             types.String     `tfsdk:"id"`
-	Name           types.String     `tfsdk:"name"`
-	NameExpression types.String     `tfsdk:"name_expression"`
-	Description    types.String     `tfsdk:"description"`
-	Inputs         *CustomFormModel `tfsdk:"inputs"`
+	ID          types.String     `tfsdk:"id"`
+	Name        types.String     `tfsdk:"name"`
+	Description types.String     `tfsdk:"description"`
+	Inputs      *CustomFormModel `tfsdk:"inputs"`
 }
 
 func (r *PropertyHandoverTemplate) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -55,10 +54,6 @@ func (r *PropertyHandoverTemplate) Schema(ctx context.Context, req resource.Sche
 			"name": schema.StringAttribute{
 				Required:    true,
 				Description: "The name of the property handover template.",
-			},
-			"name_expression": schema.StringAttribute{
-				Optional:    true,
-				Description: "Optional JS expression used to generate the name of property handovers.",
 			},
 			"description": schema.StringAttribute{
 				Optional:    true,
