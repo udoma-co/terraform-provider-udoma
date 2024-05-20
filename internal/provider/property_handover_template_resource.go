@@ -16,53 +16,48 @@ import (
 )
 
 var (
-	_ resource.ResourceWithConfigure   = &AppointmentTemplate{}
-	_ resource.ResourceWithImportState = &AppointmentTemplate{}
+	_ resource.ResourceWithConfigure   = &PropertyHandoverTemplate{}
+	_ resource.ResourceWithImportState = &PropertyHandoverTemplate{}
 )
 
-func NewAppointmentTemplate() resource.Resource {
-	return &AppointmentTemplate{}
+func NewPropertyHandoverTemplate() resource.Resource {
+	return &PropertyHandoverTemplate{}
 }
 
-// AppointmentTemplate defines the resource implementation
-type AppointmentTemplate struct {
+// PropertyHandoverTemplate defines the resource implementation
+type PropertyHandoverTemplate struct {
 	client *client.UdomaClient
 }
 
-// AppointmentTemplateModel describes the resource data model
-type AppointmentTemplateModel struct {
-	ID             types.String     `tfsdk:"id"`
-	Name           types.String     `tfsdk:"name"`
-	NameExpression types.String     `tfsdk:"name_expression"`
-	Description    types.String     `tfsdk:"description"`
-	Inputs         *CustomFormModel `tfsdk:"inputs"`
+// PropertyTemplateTemplateModel describes the resource data model
+type PropertyHandoverTemplateModel struct {
+	ID          types.String     `tfsdk:"id"`
+	Name        types.String     `tfsdk:"name"`
+	Description types.String     `tfsdk:"description"`
+	Inputs      *CustomFormModel `tfsdk:"inputs"`
 }
 
-func (r *AppointmentTemplate) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_appointment_template"
+func (r *PropertyHandoverTemplate) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_property_handover_template"
 }
 
-func (r *AppointmentTemplate) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+func (r *PropertyHandoverTemplate) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				Computed:    true,
-				Description: "The ID of the appointment template.",
+				Description: "The ID of the property handover template.",
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"name": schema.StringAttribute{
 				Required:    true,
-				Description: "The name of the appointment template.",
-			},
-			"name_expression": schema.StringAttribute{
-				Optional:    true,
-				Description: "Optional JS expression used to generate the name of appointments.",
+				Description: "The name of the property handover template.",
 			},
 			"description": schema.StringAttribute{
 				Optional:    true,
-				Description: "The description of the appointment template.",
+				Description: "The description of the property handover template.",
 			},
 			"inputs": schema.SingleNestedAttribute{
 				Required:    true,
@@ -73,7 +68,7 @@ func (r *AppointmentTemplate) Schema(ctx context.Context, req resource.SchemaReq
 	}
 }
 
-func (r *AppointmentTemplate) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
+func (r *PropertyHandoverTemplate) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
 
 	if req.ProviderData == nil {
 		return
@@ -93,9 +88,9 @@ func (r *AppointmentTemplate) Configure(ctx context.Context, req resource.Config
 	r.client = cl
 }
 
-func (r *AppointmentTemplate) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+func (r *PropertyHandoverTemplate) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 
-	var plan AppointmentTemplateModel
+	var plan PropertyHandoverTemplateModel
 	diags := req.Plan.Get(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
@@ -103,10 +98,10 @@ func (r *AppointmentTemplate) Create(ctx context.Context, req resource.CreateReq
 	}
 
 	templateReq := plan.toApiRequest()
-	newTemplate, _, err := r.client.GetApi().CreateAppointmentTemplate(ctx).CreateOrUpdateAppointmentTemplateRequest(*templateReq).Execute()
+	newTemplate, _, err := r.client.GetApi().CreatePropertyHandoverTemplate(ctx).CreateOrUpdatePropertyHandoverTemplateRequest(*templateReq).Execute()
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Failed to create appointment template",
+			"Failed to create property handover template",
 			err.Error(),
 		)
 		return
@@ -122,22 +117,22 @@ func (r *AppointmentTemplate) Create(ctx context.Context, req resource.CreateReq
 	resp.Diagnostics.Append(diags...)
 }
 
-func (r *AppointmentTemplate) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+func (r *PropertyHandoverTemplate) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
 
-	var state AppointmentTemplateModel
+	var state PropertyHandoverTemplateModel
 	diags := req.State.Get(ctx, &state)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	newTemplate, httpResp, err := r.client.GetApi().GetAppointmentTemplate(ctx, state.ID.ValueString()).Execute()
+	newTemplate, httpResp, err := r.client.GetApi().GetPropertyHandoverTemplate(ctx, state.ID.ValueString()).Execute()
 	if httpResp != nil && httpResp.StatusCode == 404 {
 		resp.State.RemoveResource(ctx)
 		return
 	} else if err != nil {
 		resp.Diagnostics.AddError(
-			"Error Reading Appointment Schedule",
+			"Error Reading Property Handover Template",
 			fmt.Sprintf("Could not read entity in Udoma, unexpected error: %s", getApiErrorMessage(err)),
 		)
 		return
@@ -153,10 +148,10 @@ func (r *AppointmentTemplate) Read(ctx context.Context, req resource.ReadRequest
 	resp.Diagnostics.Append(diags...)
 }
 
-func (r *AppointmentTemplate) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+func (r *PropertyHandoverTemplate) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 
 	// Retrieve values from plan
-	var plan AppointmentTemplateModel
+	var plan PropertyHandoverTemplateModel
 	diags := req.Plan.Get(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
@@ -166,10 +161,10 @@ func (r *AppointmentTemplate) Update(ctx context.Context, req resource.UpdateReq
 	templateReq := plan.toApiRequest()
 	id := plan.ID.ValueString()
 
-	newTemplate, _, err := r.client.GetApi().UpdateAppointmentTemplate(ctx, id).CreateOrUpdateAppointmentTemplateRequest(*templateReq).Execute()
+	newTemplate, _, err := r.client.GetApi().UpdatePropertyHandoverTemplate(ctx, id).CreateOrUpdatePropertyHandoverTemplateRequest(*templateReq).Execute()
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Error Updating Appointment Schedule",
+			"Error Updating PropertyHandover Template",
 			fmt.Sprintf("Could not update entity in Udoma, unexpected error: %s", getApiErrorMessage(err)),
 		)
 		return
@@ -185,49 +180,46 @@ func (r *AppointmentTemplate) Update(ctx context.Context, req resource.UpdateReq
 	resp.Diagnostics.Append(diags...)
 }
 
-func (r *AppointmentTemplate) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+func (r *PropertyHandoverTemplate) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
 
-	var state AppointmentTemplateModel
+	var state PropertyHandoverTemplateModel
 	diags := req.State.Get(ctx, &state)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	_, err := r.client.GetApi().DeleteAppointmentTemplate(ctx, state.ID.ValueString()).Execute()
+	_, err := r.client.GetApi().DeletePropertyHandoverTemplate(ctx, state.ID.ValueString()).Execute()
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Error Deleting Appointment Schedule",
+			"Error Deleting Property Handover Template",
 			fmt.Sprintf("Could not delete entity in Udoma, unexpected error: %s", getApiErrorMessage(err)),
 		)
 		return
 	}
 }
 
-func (r *AppointmentTemplate) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+func (r *PropertyHandoverTemplate) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
 
-func (template *AppointmentTemplateModel) toApiRequest() *v1.CreateOrUpdateAppointmentTemplateRequest {
-	form := template.Inputs.toApiRequest()
-	return &v1.CreateOrUpdateAppointmentTemplateRequest{
-		Name:           template.Name.ValueStringPointer(),
-		NameExpression: template.NameExpression.ValueStringPointer(),
-		Description:    template.Description.ValueStringPointer(),
-		Form:           &form,
+func (template *PropertyHandoverTemplateModel) toApiRequest() *v1.CreateOrUpdatePropertyHandoverTemplateRequest {
+	return &v1.CreateOrUpdatePropertyHandoverTemplateRequest{
+		Name:        template.Name.ValueString(),
+		Description: template.Description.ValueStringPointer(),
+		CustomForm:  template.Inputs.toApiRequest(),
 	}
 }
 
-func (template *AppointmentTemplateModel) fromApiResponse(resp *v1.AppointmentTemplate) (diags diag.Diagnostics) {
+func (template *PropertyHandoverTemplateModel) fromApiResponse(resp *v1.PropertyHandoverTemplate) (diags diag.Diagnostics) {
 	template.ID = types.StringValue(resp.Id)
 	template.Name = types.StringValue(resp.Name)
-	template.NameExpression = omittableStringValue(resp.NameExpression, template.NameExpression)
 	template.Description = omittableStringValue(resp.Description, template.Description)
 
 	if template.Inputs == nil {
 		template.Inputs = &CustomFormModel{}
 	}
-	diags = template.Inputs.fromApiResponse(&resp.Form)
+	diags = template.Inputs.fromApiResponse(&resp.CustomForm)
 
 	return
 }
