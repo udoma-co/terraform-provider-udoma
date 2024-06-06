@@ -3041,6 +3041,120 @@ func (a *DefaultAPIService) CreatePropertyOwnerExecute(r ApiCreatePropertyOwnerR
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiCreateRentUpdateRequest struct {
+	ctx                             context.Context
+	ApiService                      *DefaultAPIService
+	tenancyID                       string
+	createOrUpdateRentUpdateRequest *CreateOrUpdateRentUpdateRequest
+}
+
+// Rent update to add to the tenancy
+func (r ApiCreateRentUpdateRequest) CreateOrUpdateRentUpdateRequest(createOrUpdateRentUpdateRequest CreateOrUpdateRentUpdateRequest) ApiCreateRentUpdateRequest {
+	r.createOrUpdateRentUpdateRequest = &createOrUpdateRentUpdateRequest
+	return r
+}
+
+func (r ApiCreateRentUpdateRequest) Execute() (*RentUpdate, *http.Response, error) {
+	return r.ApiService.CreateRentUpdateExecute(r)
+}
+
+/*
+CreateRentUpdate Create new rent update for the tenancy
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param tenancyID unique generated ID of a tenancy
+	@return ApiCreateRentUpdateRequest
+*/
+func (a *DefaultAPIService) CreateRentUpdate(ctx context.Context, tenancyID string) ApiCreateRentUpdateRequest {
+	return ApiCreateRentUpdateRequest{
+		ApiService: a,
+		ctx:        ctx,
+		tenancyID:  tenancyID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return RentUpdate
+func (a *DefaultAPIService) CreateRentUpdateExecute(r ApiCreateRentUpdateRequest) (*RentUpdate, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *RentUpdate
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateRentUpdate")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/tenancy/{tenancyID}/rent-updates"
+	localVarPath = strings.Replace(localVarPath, "{"+"tenancyID"+"}", url.PathEscape(parameterValueToString(r.tenancyID, "tenancyID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createOrUpdateRentUpdateRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdateRentUpdateRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrUpdateRentUpdateRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiCreateReportDefinitionRequest struct {
 	ctx                                   context.Context
 	ApiService                            *DefaultAPIService
@@ -3374,128 +3488,14 @@ func (a *DefaultAPIService) CreateTenancyExecute(r ApiCreateTenancyRequest) (*Te
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiCreateTenancyUpdateRequest struct {
-	ctx                        context.Context
-	ApiService                 *DefaultAPIService
-	tenancyID                  string
-	createTenancyUpdateRequest *CreateTenancyUpdateRequest
-}
-
-// Tenancy update to add to the tenancy
-func (r ApiCreateTenancyUpdateRequest) CreateTenancyUpdateRequest(createTenancyUpdateRequest CreateTenancyUpdateRequest) ApiCreateTenancyUpdateRequest {
-	r.createTenancyUpdateRequest = &createTenancyUpdateRequest
-	return r
-}
-
-func (r ApiCreateTenancyUpdateRequest) Execute() (*TenancyUpdate, *http.Response, error) {
-	return r.ApiService.CreateTenancyUpdateExecute(r)
-}
-
-/*
-CreateTenancyUpdate Create new tenancy update for the tenancy
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param tenancyID unique generated ID of a tenancy
-	@return ApiCreateTenancyUpdateRequest
-*/
-func (a *DefaultAPIService) CreateTenancyUpdate(ctx context.Context, tenancyID string) ApiCreateTenancyUpdateRequest {
-	return ApiCreateTenancyUpdateRequest{
-		ApiService: a,
-		ctx:        ctx,
-		tenancyID:  tenancyID,
-	}
-}
-
-// Execute executes the request
-//
-//	@return TenancyUpdate
-func (a *DefaultAPIService) CreateTenancyUpdateExecute(r ApiCreateTenancyUpdateRequest) (*TenancyUpdate, *http.Response, error) {
-	var (
-		localVarHTTPMethod  = http.MethodPost
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *TenancyUpdate
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateTenancyUpdate")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/tenancy/{tenancyID}/updates"
-	localVarPath = strings.Replace(localVarPath, "{"+"tenancyID"+"}", url.PathEscape(parameterValueToString(r.tenancyID, "tenancyID")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.createTenancyUpdateRequest == nil {
-		return localVarReturnValue, nil, reportError("createTenancyUpdateRequest is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.createTenancyUpdateRequest
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
 type ApiCreateTenantRequest struct {
-	ctx                 context.Context
-	ApiService          *DefaultAPIService
-	createTenantRequest *CreateTenantRequest
+	ctx                         context.Context
+	ApiService                  *DefaultAPIService
+	createOrUpdateTenantRequest *CreateOrUpdateTenantRequest
 }
 
-func (r ApiCreateTenantRequest) CreateTenantRequest(createTenantRequest CreateTenantRequest) ApiCreateTenantRequest {
-	r.createTenantRequest = &createTenantRequest
+func (r ApiCreateTenantRequest) CreateOrUpdateTenantRequest(createOrUpdateTenantRequest CreateOrUpdateTenantRequest) ApiCreateTenantRequest {
+	r.createOrUpdateTenantRequest = &createOrUpdateTenantRequest
 	return r
 }
 
@@ -3537,8 +3537,8 @@ func (a *DefaultAPIService) CreateTenantExecute(r ApiCreateTenantRequest) (*Tena
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.createTenantRequest == nil {
-		return localVarReturnValue, nil, reportError("createTenantRequest is required and must be specified")
+	if r.createOrUpdateTenantRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdateTenantRequest is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -3559,7 +3559,122 @@ func (a *DefaultAPIService) CreateTenantExecute(r ApiCreateTenantRequest) (*Tena
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.createTenantRequest
+	localVarPostBody = r.createOrUpdateTenantRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiCreateTenantChangesRequest struct {
+	ctx                       context.Context
+	ApiService                *DefaultAPIService
+	tenancyID                 string
+	createTenantChangeRequest *CreateTenantChangeRequest
+}
+
+func (r ApiCreateTenantChangesRequest) CreateTenantChangeRequest(createTenantChangeRequest CreateTenantChangeRequest) ApiCreateTenantChangesRequest {
+	r.createTenantChangeRequest = &createTenantChangeRequest
+	return r
+}
+
+func (r ApiCreateTenantChangesRequest) Execute() ([]TenantChange, *http.Response, error) {
+	return r.ApiService.CreateTenantChangesExecute(r)
+}
+
+/*
+CreateTenantChanges Change the tenants in a tenancy.
+
+Create a tenancy tenant change which will change the tenants of a tenancy.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param tenancyID unique generated ID of a tenancy
+	@return ApiCreateTenantChangesRequest
+*/
+func (a *DefaultAPIService) CreateTenantChanges(ctx context.Context, tenancyID string) ApiCreateTenantChangesRequest {
+	return ApiCreateTenantChangesRequest{
+		ApiService: a,
+		ctx:        ctx,
+		tenancyID:  tenancyID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return []TenantChange
+func (a *DefaultAPIService) CreateTenantChangesExecute(r ApiCreateTenantChangesRequest) ([]TenantChange, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []TenantChange
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateTenantChanges")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/tenancy/{tenancyID}/tenant-changes"
+	localVarPath = strings.Replace(localVarPath, "{"+"tenancyID"+"}", url.PathEscape(parameterValueToString(r.tenancyID, "tenancyID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createTenantChangeRequest == nil {
+		return localVarReturnValue, nil, reportError("createTenantChangeRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createTenantChangeRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -6103,6 +6218,96 @@ func (a *DefaultAPIService) DeletePropertyOwnerExecute(r ApiDeletePropertyOwnerR
 	return localVarHTTPResponse, nil
 }
 
+type ApiDeleteRentUpdateRequest struct {
+	ctx          context.Context
+	ApiService   *DefaultAPIService
+	rentUpdateID string
+}
+
+func (r ApiDeleteRentUpdateRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteRentUpdateExecute(r)
+}
+
+/*
+DeleteRentUpdate Delete the rent update with the given ID
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param rentUpdateID unique generated ID of a tenancy rent update
+	@return ApiDeleteRentUpdateRequest
+*/
+func (a *DefaultAPIService) DeleteRentUpdate(ctx context.Context, rentUpdateID string) ApiDeleteRentUpdateRequest {
+	return ApiDeleteRentUpdateRequest{
+		ApiService:   a,
+		ctx:          ctx,
+		rentUpdateID: rentUpdateID,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DeleteRentUpdateExecute(r ApiDeleteRentUpdateRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteRentUpdate")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/tenancy/rent-update/{rentUpdateID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"rentUpdateID"+"}", url.PathEscape(parameterValueToString(r.rentUpdateID, "rentUpdateID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
 type ApiDeleteReportDefinitionRequest struct {
 	ctx          context.Context
 	ApiService   *DefaultAPIService
@@ -6467,46 +6672,48 @@ func (a *DefaultAPIService) DeleteTenancyExecute(r ApiDeleteTenancyRequest) (*ht
 	return localVarHTTPResponse, nil
 }
 
-type ApiDeleteTenancyUpdateRequest struct {
-	ctx             context.Context
-	ApiService      *DefaultAPIService
-	tenancyUpdateID string
+type ApiDeleteTenantRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	tenantID   string
 }
 
-func (r ApiDeleteTenancyUpdateRequest) Execute() (*http.Response, error) {
-	return r.ApiService.DeleteTenancyUpdateExecute(r)
+func (r ApiDeleteTenantRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteTenantExecute(r)
 }
 
 /*
-DeleteTenancyUpdate Delete the tenancy update with the given ID
+DeleteTenant Remove tenant from property
+
+Delete a tenant, removing it from the property they were assigned to. If the tenant is a registered user, their account will remain active, however, they will not be able to access that property any longer.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param tenancyUpdateID unique generated ID of a tenancy update
-	@return ApiDeleteTenancyUpdateRequest
+	@param tenantID unique generated ID of a tenant
+	@return ApiDeleteTenantRequest
 */
-func (a *DefaultAPIService) DeleteTenancyUpdate(ctx context.Context, tenancyUpdateID string) ApiDeleteTenancyUpdateRequest {
-	return ApiDeleteTenancyUpdateRequest{
-		ApiService:      a,
-		ctx:             ctx,
-		tenancyUpdateID: tenancyUpdateID,
+func (a *DefaultAPIService) DeleteTenant(ctx context.Context, tenantID string) ApiDeleteTenantRequest {
+	return ApiDeleteTenantRequest{
+		ApiService: a,
+		ctx:        ctx,
+		tenantID:   tenantID,
 	}
 }
 
 // Execute executes the request
-func (a *DefaultAPIService) DeleteTenancyUpdateExecute(r ApiDeleteTenancyUpdateRequest) (*http.Response, error) {
+func (a *DefaultAPIService) DeleteTenantExecute(r ApiDeleteTenantRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteTenancyUpdate")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteTenant")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/tenancy-update/{tenancyUpdateID}"
-	localVarPath = strings.Replace(localVarPath, "{"+"tenancyUpdateID"+"}", url.PathEscape(parameterValueToString(r.tenancyUpdateID, "tenancyUpdateID")), -1)
+	localVarPath := localBasePath + "/tenant/{tenantID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"tenantID"+"}", url.PathEscape(parameterValueToString(r.tenantID, "tenantID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -6557,48 +6764,46 @@ func (a *DefaultAPIService) DeleteTenancyUpdateExecute(r ApiDeleteTenancyUpdateR
 	return localVarHTTPResponse, nil
 }
 
-type ApiDeleteTenantRequest struct {
-	ctx        context.Context
-	ApiService *DefaultAPIService
-	tenantID   string
+type ApiDeleteTenantChangeRequest struct {
+	ctx            context.Context
+	ApiService     *DefaultAPIService
+	tenantChangeID string
 }
 
-func (r ApiDeleteTenantRequest) Execute() (*http.Response, error) {
-	return r.ApiService.DeleteTenantExecute(r)
+func (r ApiDeleteTenantChangeRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteTenantChangeExecute(r)
 }
 
 /*
-DeleteTenant Remove tenant from property
-
-Delete a tenant, removing it from the property they were assigned to. If the tenant is a registered user, their account will remain active, however, they will not be able to access that property any longer.
+DeleteTenantChange Delete a tenant change
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param tenantID unique generated ID of a tenant
-	@return ApiDeleteTenantRequest
+	@param tenantChangeID unique generated ID of a tenant change
+	@return ApiDeleteTenantChangeRequest
 */
-func (a *DefaultAPIService) DeleteTenant(ctx context.Context, tenantID string) ApiDeleteTenantRequest {
-	return ApiDeleteTenantRequest{
-		ApiService: a,
-		ctx:        ctx,
-		tenantID:   tenantID,
+func (a *DefaultAPIService) DeleteTenantChange(ctx context.Context, tenantChangeID string) ApiDeleteTenantChangeRequest {
+	return ApiDeleteTenantChangeRequest{
+		ApiService:     a,
+		ctx:            ctx,
+		tenantChangeID: tenantChangeID,
 	}
 }
 
 // Execute executes the request
-func (a *DefaultAPIService) DeleteTenantExecute(r ApiDeleteTenantRequest) (*http.Response, error) {
+func (a *DefaultAPIService) DeleteTenantChangeExecute(r ApiDeleteTenantChangeRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteTenant")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteTenantChange")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/tenant/{tenantID}"
-	localVarPath = strings.Replace(localVarPath, "{"+"tenantID"+"}", url.PathEscape(parameterValueToString(r.tenantID, "tenantID")), -1)
+	localVarPath := localBasePath + "/tenancy/tenant-change/{tenantChangeID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"tenantChangeID"+"}", url.PathEscape(parameterValueToString(r.tenantChangeID, "tenantChangeID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -12388,6 +12593,210 @@ func (a *DefaultAPIService) GetPropertyTenancyExecute(r ApiGetPropertyTenancyReq
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetRentUpdateRequest struct {
+	ctx          context.Context
+	ApiService   *DefaultAPIService
+	rentUpdateID string
+}
+
+func (r ApiGetRentUpdateRequest) Execute() (*RentUpdate, *http.Response, error) {
+	return r.ApiService.GetRentUpdateExecute(r)
+}
+
+/*
+GetRentUpdate Get the rent update with the given ID
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param rentUpdateID unique generated ID of a tenancy rent update
+	@return ApiGetRentUpdateRequest
+*/
+func (a *DefaultAPIService) GetRentUpdate(ctx context.Context, rentUpdateID string) ApiGetRentUpdateRequest {
+	return ApiGetRentUpdateRequest{
+		ApiService:   a,
+		ctx:          ctx,
+		rentUpdateID: rentUpdateID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return RentUpdate
+func (a *DefaultAPIService) GetRentUpdateExecute(r ApiGetRentUpdateRequest) (*RentUpdate, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *RentUpdate
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetRentUpdate")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/tenancy/rent-update/{rentUpdateID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"rentUpdateID"+"}", url.PathEscape(parameterValueToString(r.rentUpdateID, "rentUpdateID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetRentUpdatesRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	tenancyID  string
+}
+
+func (r ApiGetRentUpdatesRequest) Execute() ([]RentUpdate, *http.Response, error) {
+	return r.ApiService.GetRentUpdatesExecute(r)
+}
+
+/*
+GetRentUpdates Get all tenancy rent updates
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param tenancyID unique generated ID of a tenancy
+	@return ApiGetRentUpdatesRequest
+*/
+func (a *DefaultAPIService) GetRentUpdates(ctx context.Context, tenancyID string) ApiGetRentUpdatesRequest {
+	return ApiGetRentUpdatesRequest{
+		ApiService: a,
+		ctx:        ctx,
+		tenancyID:  tenancyID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return []RentUpdate
+func (a *DefaultAPIService) GetRentUpdatesExecute(r ApiGetRentUpdatesRequest) ([]RentUpdate, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []RentUpdate
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetRentUpdates")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/tenancy/{tenancyID}/rent-updates"
+	localVarPath = strings.Replace(localVarPath, "{"+"tenancyID"+"}", url.PathEscape(parameterValueToString(r.tenancyID, "tenancyID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetReportDefinitionRequest struct {
 	ctx          context.Context
 	ApiService   *DefaultAPIService
@@ -13316,210 +13725,6 @@ func (a *DefaultAPIService) GetTenancyHistoryExecute(r ApiGetTenancyHistoryReque
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiGetTenancyUpdateRequest struct {
-	ctx             context.Context
-	ApiService      *DefaultAPIService
-	tenancyUpdateID string
-}
-
-func (r ApiGetTenancyUpdateRequest) Execute() (*TenancyUpdate, *http.Response, error) {
-	return r.ApiService.GetTenancyUpdateExecute(r)
-}
-
-/*
-GetTenancyUpdate Get the tenancy update with the given ID
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param tenancyUpdateID unique generated ID of a tenancy update
-	@return ApiGetTenancyUpdateRequest
-*/
-func (a *DefaultAPIService) GetTenancyUpdate(ctx context.Context, tenancyUpdateID string) ApiGetTenancyUpdateRequest {
-	return ApiGetTenancyUpdateRequest{
-		ApiService:      a,
-		ctx:             ctx,
-		tenancyUpdateID: tenancyUpdateID,
-	}
-}
-
-// Execute executes the request
-//
-//	@return TenancyUpdate
-func (a *DefaultAPIService) GetTenancyUpdateExecute(r ApiGetTenancyUpdateRequest) (*TenancyUpdate, *http.Response, error) {
-	var (
-		localVarHTTPMethod  = http.MethodGet
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *TenancyUpdate
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetTenancyUpdate")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/tenancy-update/{tenancyUpdateID}"
-	localVarPath = strings.Replace(localVarPath, "{"+"tenancyUpdateID"+"}", url.PathEscape(parameterValueToString(r.tenancyUpdateID, "tenancyUpdateID")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiGetTenancyUpdatesRequest struct {
-	ctx        context.Context
-	ApiService *DefaultAPIService
-	tenancyID  string
-}
-
-func (r ApiGetTenancyUpdatesRequest) Execute() ([]TenancyUpdate, *http.Response, error) {
-	return r.ApiService.GetTenancyUpdatesExecute(r)
-}
-
-/*
-GetTenancyUpdates Get the tenancy updates for the tenancy
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param tenancyID unique generated ID of a tenancy
-	@return ApiGetTenancyUpdatesRequest
-*/
-func (a *DefaultAPIService) GetTenancyUpdates(ctx context.Context, tenancyID string) ApiGetTenancyUpdatesRequest {
-	return ApiGetTenancyUpdatesRequest{
-		ApiService: a,
-		ctx:        ctx,
-		tenancyID:  tenancyID,
-	}
-}
-
-// Execute executes the request
-//
-//	@return []TenancyUpdate
-func (a *DefaultAPIService) GetTenancyUpdatesExecute(r ApiGetTenancyUpdatesRequest) ([]TenancyUpdate, *http.Response, error) {
-	var (
-		localVarHTTPMethod  = http.MethodGet
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue []TenancyUpdate
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetTenancyUpdates")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/tenancy/{tenancyID}/updates"
-	localVarPath = strings.Replace(localVarPath, "{"+"tenancyID"+"}", url.PathEscape(parameterValueToString(r.tenancyID, "tenancyID")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
 type ApiGetTenantRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
@@ -13565,6 +13770,210 @@ func (a *DefaultAPIService) GetTenantExecute(r ApiGetTenantRequest) (*Tenant, *h
 
 	localVarPath := localBasePath + "/tenant/{tenantID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"tenantID"+"}", url.PathEscape(parameterValueToString(r.tenantID, "tenantID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetTenantChangeRequest struct {
+	ctx            context.Context
+	ApiService     *DefaultAPIService
+	tenantChangeID string
+}
+
+func (r ApiGetTenantChangeRequest) Execute() (*TenantChange, *http.Response, error) {
+	return r.ApiService.GetTenantChangeExecute(r)
+}
+
+/*
+GetTenantChange Get a tenancy tenant change
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param tenantChangeID unique generated ID of a tenant change
+	@return ApiGetTenantChangeRequest
+*/
+func (a *DefaultAPIService) GetTenantChange(ctx context.Context, tenantChangeID string) ApiGetTenantChangeRequest {
+	return ApiGetTenantChangeRequest{
+		ApiService:     a,
+		ctx:            ctx,
+		tenantChangeID: tenantChangeID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return TenantChange
+func (a *DefaultAPIService) GetTenantChangeExecute(r ApiGetTenantChangeRequest) (*TenantChange, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *TenantChange
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetTenantChange")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/tenancy/tenant-change/{tenantChangeID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"tenantChangeID"+"}", url.PathEscape(parameterValueToString(r.tenantChangeID, "tenantChangeID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetTenantChangesRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	tenancyID  string
+}
+
+func (r ApiGetTenantChangesRequest) Execute() ([]TenantChange, *http.Response, error) {
+	return r.ApiService.GetTenantChangesExecute(r)
+}
+
+/*
+GetTenantChanges Get all the tenant changes for a tenancy.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param tenancyID unique generated ID of a tenancy
+	@return ApiGetTenantChangesRequest
+*/
+func (a *DefaultAPIService) GetTenantChanges(ctx context.Context, tenancyID string) ApiGetTenantChangesRequest {
+	return ApiGetTenantChangesRequest{
+		ApiService: a,
+		ctx:        ctx,
+		tenancyID:  tenancyID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return []TenantChange
+func (a *DefaultAPIService) GetTenantChangesExecute(r ApiGetTenantChangesRequest) ([]TenantChange, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []TenantChange
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetTenantChanges")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/tenancy/{tenancyID}/tenant-changes"
+	localVarPath = strings.Replace(localVarPath, "{"+"tenancyID"+"}", url.PathEscape(parameterValueToString(r.tenancyID, "tenancyID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -15065,15 +15474,22 @@ func (a *DefaultAPIService) PublicCreateCaseExecute(r ApiPublicCreateCaseRequest
 }
 
 type ApiPublicDeleteAppointmentRequest struct {
-	ctx        context.Context
-	ApiService *DefaultAPIService
-	code       string
-	challenge  *string
+	ctx              context.Context
+	ApiService       *DefaultAPIService
+	code             string
+	challenge        *string
+	mandatoryMessage *MandatoryMessage
 }
 
 // A user challenge code (e.g. reCaptcha response), used for protection of public API endpoints against bots or other malicious actors. A challenge should only be used when posting data to the backend. For reading operations, the code parameter should be used. The content of the challenge can be one of reCaptcha, code, certificate and should be prefixed accordingly. The challenge can also be ommitted by registered users, as those will be validated against their session.
 func (r ApiPublicDeleteAppointmentRequest) Challenge(challenge string) ApiPublicDeleteAppointmentRequest {
 	r.challenge = &challenge
+	return r
+}
+
+// Mandatory message to admin for deleting the appointment
+func (r ApiPublicDeleteAppointmentRequest) MandatoryMessage(mandatoryMessage MandatoryMessage) ApiPublicDeleteAppointmentRequest {
+	r.mandatoryMessage = &mandatoryMessage
 	return r
 }
 
@@ -15118,10 +15534,13 @@ func (a *DefaultAPIService) PublicDeleteAppointmentExecute(r ApiPublicDeleteAppo
 	if r.challenge == nil {
 		return nil, reportError("challenge is required and must be specified")
 	}
+	if r.mandatoryMessage == nil {
+		return nil, reportError("mandatoryMessage is required and must be specified")
+	}
 
 	parameterAddToHeaderOrQuery(localVarQueryParams, "challenge", r.challenge, "")
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -15137,6 +15556,8 @@ func (a *DefaultAPIService) PublicDeleteAppointmentExecute(r ApiPublicDeleteAppo
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.mandatoryMessage
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -22149,6 +22570,119 @@ func (a *DefaultAPIService) UpdatePropertyOwnerExecute(r ApiUpdatePropertyOwnerR
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiUpdateRentUpdateRequest struct {
+	ctx                             context.Context
+	ApiService                      *DefaultAPIService
+	rentUpdateID                    string
+	createOrUpdateRentUpdateRequest *CreateOrUpdateRentUpdateRequest
+}
+
+func (r ApiUpdateRentUpdateRequest) CreateOrUpdateRentUpdateRequest(createOrUpdateRentUpdateRequest CreateOrUpdateRentUpdateRequest) ApiUpdateRentUpdateRequest {
+	r.createOrUpdateRentUpdateRequest = &createOrUpdateRentUpdateRequest
+	return r
+}
+
+func (r ApiUpdateRentUpdateRequest) Execute() (*RentUpdate, *http.Response, error) {
+	return r.ApiService.UpdateRentUpdateExecute(r)
+}
+
+/*
+UpdateRentUpdate Update the rent update with the given ID
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param rentUpdateID unique generated ID of a tenancy rent update
+	@return ApiUpdateRentUpdateRequest
+*/
+func (a *DefaultAPIService) UpdateRentUpdate(ctx context.Context, rentUpdateID string) ApiUpdateRentUpdateRequest {
+	return ApiUpdateRentUpdateRequest{
+		ApiService:   a,
+		ctx:          ctx,
+		rentUpdateID: rentUpdateID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return RentUpdate
+func (a *DefaultAPIService) UpdateRentUpdateExecute(r ApiUpdateRentUpdateRequest) (*RentUpdate, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *RentUpdate
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdateRentUpdate")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/tenancy/rent-update/{rentUpdateID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"rentUpdateID"+"}", url.PathEscape(parameterValueToString(r.rentUpdateID, "rentUpdateID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createOrUpdateRentUpdateRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdateRentUpdateRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrUpdateRentUpdateRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiUpdateReportDefinitionRequest struct {
 	ctx                                   context.Context
 	ApiService                            *DefaultAPIService
@@ -22492,129 +23026,16 @@ func (a *DefaultAPIService) UpdateTenancyExecute(r ApiUpdateTenancyRequest) (*Te
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiUpdateTenancyUpdateRequest struct {
-	ctx                        context.Context
-	ApiService                 *DefaultAPIService
-	tenancyUpdateID            string
-	updateTenancyUpdateRequest *UpdateTenancyUpdateRequest
-}
-
-func (r ApiUpdateTenancyUpdateRequest) UpdateTenancyUpdateRequest(updateTenancyUpdateRequest UpdateTenancyUpdateRequest) ApiUpdateTenancyUpdateRequest {
-	r.updateTenancyUpdateRequest = &updateTenancyUpdateRequest
-	return r
-}
-
-func (r ApiUpdateTenancyUpdateRequest) Execute() (*TenancyUpdate, *http.Response, error) {
-	return r.ApiService.UpdateTenancyUpdateExecute(r)
-}
-
-/*
-UpdateTenancyUpdate Update the tenancy update with the given ID
-
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param tenancyUpdateID unique generated ID of a tenancy update
-	@return ApiUpdateTenancyUpdateRequest
-*/
-func (a *DefaultAPIService) UpdateTenancyUpdate(ctx context.Context, tenancyUpdateID string) ApiUpdateTenancyUpdateRequest {
-	return ApiUpdateTenancyUpdateRequest{
-		ApiService:      a,
-		ctx:             ctx,
-		tenancyUpdateID: tenancyUpdateID,
-	}
-}
-
-// Execute executes the request
-//
-//	@return TenancyUpdate
-func (a *DefaultAPIService) UpdateTenancyUpdateExecute(r ApiUpdateTenancyUpdateRequest) (*TenancyUpdate, *http.Response, error) {
-	var (
-		localVarHTTPMethod  = http.MethodPut
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *TenancyUpdate
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdateTenancyUpdate")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/tenancy-update/{tenancyUpdateID}"
-	localVarPath = strings.Replace(localVarPath, "{"+"tenancyUpdateID"+"}", url.PathEscape(parameterValueToString(r.tenancyUpdateID, "tenancyUpdateID")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.updateTenancyUpdateRequest == nil {
-		return localVarReturnValue, nil, reportError("updateTenancyUpdateRequest is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.updateTenancyUpdateRequest
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
 type ApiUpdateTenantRequest struct {
-	ctx                 context.Context
-	ApiService          *DefaultAPIService
-	tenantID            string
-	updateTenantRequest *UpdateTenantRequest
+	ctx                         context.Context
+	ApiService                  *DefaultAPIService
+	tenantID                    string
+	createOrUpdateTenantRequest *CreateOrUpdateTenantRequest
 }
 
 // Tenant to be updated
-func (r ApiUpdateTenantRequest) UpdateTenantRequest(updateTenantRequest UpdateTenantRequest) ApiUpdateTenantRequest {
-	r.updateTenantRequest = &updateTenantRequest
+func (r ApiUpdateTenantRequest) CreateOrUpdateTenantRequest(createOrUpdateTenantRequest CreateOrUpdateTenantRequest) ApiUpdateTenantRequest {
+	r.createOrUpdateTenantRequest = &createOrUpdateTenantRequest
 	return r
 }
 
@@ -22661,8 +23082,8 @@ func (a *DefaultAPIService) UpdateTenantExecute(r ApiUpdateTenantRequest) (*Tena
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.updateTenantRequest == nil {
-		return localVarReturnValue, nil, reportError("updateTenantRequest is required and must be specified")
+	if r.createOrUpdateTenantRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdateTenantRequest is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -22683,7 +23104,7 @@ func (a *DefaultAPIService) UpdateTenantExecute(r ApiUpdateTenantRequest) (*Tena
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.updateTenantRequest
+	localVarPostBody = r.createOrUpdateTenantRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

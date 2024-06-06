@@ -46,12 +46,6 @@ Optional:
 
 - `automatic_actions` (Attributes List) The configuration for automatic status changes of a case. This is 
 			used to determine which status changes are allowed by which party at which time. (see [below for nested schema](#nestedatt--config--automatic_actions))
-- `base_config` (String) The ID of the base config that should be used for this case. If 
-			not set, the default config will be used.
-- `extend_default_status_config` (Boolean) Indicates if the default status configuration should be extended 
-			with the custom configuration. If false, the custom configuration will replace 
-			the default configuration. If true, only the actions that are defined in the 
-			custom configuration will override the default ones.
 - `reminders` (Attributes List) The configuration for sending out reminders for a case. (see [below for nested schema](#nestedatt--config--reminders))
 - `status_config` (Attributes List) The configuration for the status transition of a case. This is 
 			used to determine which status changes are allowed by which party at which time. (see [below for nested schema](#nestedatt--config--status_config))

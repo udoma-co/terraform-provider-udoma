@@ -25,6 +25,8 @@ type CreatePriceIndexPointRequest struct {
 	Date *int64 `json:"date,omitempty"`
 	// the country code the price index belongs to
 	Country *string `json:"country,omitempty"`
+	// year used as a base where the year's average is taken to be 100
+	BaseYear *int32 `json:"base_year,omitempty"`
 }
 
 // NewCreatePriceIndexPointRequest instantiates a new CreatePriceIndexPointRequest object
@@ -140,6 +142,38 @@ func (o *CreatePriceIndexPointRequest) SetCountry(v string) {
 	o.Country = &v
 }
 
+// GetBaseYear returns the BaseYear field value if set, zero value otherwise.
+func (o *CreatePriceIndexPointRequest) GetBaseYear() int32 {
+	if o == nil || IsNil(o.BaseYear) {
+		var ret int32
+		return ret
+	}
+	return *o.BaseYear
+}
+
+// GetBaseYearOk returns a tuple with the BaseYear field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreatePriceIndexPointRequest) GetBaseYearOk() (*int32, bool) {
+	if o == nil || IsNil(o.BaseYear) {
+		return nil, false
+	}
+	return o.BaseYear, true
+}
+
+// HasBaseYear returns a boolean if a field has been set.
+func (o *CreatePriceIndexPointRequest) HasBaseYear() bool {
+	if o != nil && !IsNil(o.BaseYear) {
+		return true
+	}
+
+	return false
+}
+
+// SetBaseYear gets a reference to the given int32 and assigns it to the BaseYear field.
+func (o *CreatePriceIndexPointRequest) SetBaseYear(v int32) {
+	o.BaseYear = &v
+}
+
 func (o CreatePriceIndexPointRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -158,6 +192,9 @@ func (o CreatePriceIndexPointRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Country) {
 		toSerialize["country"] = o.Country
+	}
+	if !IsNil(o.BaseYear) {
+		toSerialize["base_year"] = o.BaseYear
 	}
 	return toSerialize, nil
 }

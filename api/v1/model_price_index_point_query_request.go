@@ -20,8 +20,10 @@ var _ MappedNullable = &PriceIndexPointQueryRequest{}
 // PriceIndexPointQueryRequest The request used to query a price index point
 type PriceIndexPointQueryRequest struct {
 	CountryCode *string `json:"country_code,omitempty"`
-	// The date to look for.
+	// The date to look for
 	Date *int64 `json:"date,omitempty"`
+	// The base year to query for, not taken into account if empty
+	BaseYear *int32 `json:"base_year,omitempty"`
 }
 
 // NewPriceIndexPointQueryRequest instantiates a new PriceIndexPointQueryRequest object
@@ -105,6 +107,38 @@ func (o *PriceIndexPointQueryRequest) SetDate(v int64) {
 	o.Date = &v
 }
 
+// GetBaseYear returns the BaseYear field value if set, zero value otherwise.
+func (o *PriceIndexPointQueryRequest) GetBaseYear() int32 {
+	if o == nil || IsNil(o.BaseYear) {
+		var ret int32
+		return ret
+	}
+	return *o.BaseYear
+}
+
+// GetBaseYearOk returns a tuple with the BaseYear field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PriceIndexPointQueryRequest) GetBaseYearOk() (*int32, bool) {
+	if o == nil || IsNil(o.BaseYear) {
+		return nil, false
+	}
+	return o.BaseYear, true
+}
+
+// HasBaseYear returns a boolean if a field has been set.
+func (o *PriceIndexPointQueryRequest) HasBaseYear() bool {
+	if o != nil && !IsNil(o.BaseYear) {
+		return true
+	}
+
+	return false
+}
+
+// SetBaseYear gets a reference to the given int32 and assigns it to the BaseYear field.
+func (o *PriceIndexPointQueryRequest) SetBaseYear(v int32) {
+	o.BaseYear = &v
+}
+
 func (o PriceIndexPointQueryRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -120,6 +154,9 @@ func (o PriceIndexPointQueryRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Date) {
 		toSerialize["date"] = o.Date
+	}
+	if !IsNil(o.BaseYear) {
+		toSerialize["base_year"] = o.BaseYear
 	}
 	return toSerialize, nil
 }
