@@ -217,6 +217,13 @@ paths:
         schema:
           type: string
         style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MandatoryMessage'
+        description: Mandatory message to admin for deleting the appointment
+        required: true
       responses:
         default:
           content: {}
@@ -5134,9 +5141,9 @@ paths:
       security:
       - bearerAuth: []
       summary: Update the tenancy with the given ID
-  /tenancy/{tenancyID}/updates:
+  /tenancy/{tenancyID}/rent-updates:
     get:
-      operationId: getTenancyUpdates
+      operationId: getRentUpdates
       parameters:
       - description: unique generated ID of a tenancy
         explode: false
@@ -5153,7 +5160,7 @@ paths:
             application/json:
               schema:
                 items:
-                  $ref: '#/components/schemas/TenancyUpdate'
+                  $ref: '#/components/schemas/RentUpdate'
                 type: array
           description: successful operation
         default:
@@ -5162,9 +5169,9 @@ paths:
             Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
       security:
       - bearerAuth: []
-      summary: Get the tenancy updates for the tenancy
+      summary: Get all tenancy rent updates
     post:
-      operationId: createTenancyUpdate
+      operationId: createRentUpdate
       parameters:
       - description: unique generated ID of a tenancy
         explode: false
@@ -5179,15 +5186,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateTenancyUpdateRequest'
-        description: Tenancy update to add to the tenancy
+              $ref: '#/components/schemas/CreateOrUpdateRentUpdateRequest'
+        description: Rent update to add to the tenancy
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TenancyUpdate'
+                $ref: '#/components/schemas/RentUpdate'
           description: successful operation
         default:
           content: {}
@@ -5195,38 +5202,18 @@ paths:
             Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
       security:
       - bearerAuth: []
-      summary: Create new tenancy update for the tenancy
-  /tenancy-update/{tenancyUpdateID}:
-    delete:
-      operationId: deleteTenancyUpdate
-      parameters:
-      - description: unique generated ID of a tenancy update
-        explode: false
-        in: path
-        name: tenancyUpdateID
-        required: true
-        schema:
-          pattern: "^tu-[2-9A-HJ-NP-Za-km-z]{19,22}$"
-          type: string
-        style: simple
-      responses:
-        default:
-          content: {}
-          description: |
-            Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
-      security:
-      - bearerAuth: []
-      summary: Delete the tenancy update with the given ID
+      summary: Create new rent update for the tenancy
+  /tenancy/{tenancyID}/tenant-changes:
     get:
-      operationId: getTenancyUpdate
+      operationId: getTenantChanges
       parameters:
-      - description: unique generated ID of a tenancy update
+      - description: unique generated ID of a tenancy
         explode: false
         in: path
-        name: tenancyUpdateID
+        name: tenancyID
         required: true
         schema:
-          pattern: "^tu-[2-9A-HJ-NP-Za-km-z]{19,22}$"
+          pattern: "^ty-[2-9A-HJ-NP-Za-km-z]{19,22}$"
           type: string
         style: simple
       responses:
@@ -5234,7 +5221,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TenancyUpdate'
+                description: |
+                  A list of the created tenant changes
+                items:
+                  $ref: '#/components/schemas/TenantChange'
+                type: array
           description: successful operation
         default:
           content: {}
@@ -5242,31 +5233,37 @@ paths:
             Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
       security:
       - bearerAuth: []
-      summary: Get the tenancy update with the given ID
-    put:
-      operationId: updateTenancyUpdate
+      summary: Get all the tenant changes for a tenancy.
+    post:
+      description: |
+        Create a tenancy tenant change which will change the tenants of a tenancy.
+      operationId: createTenantChanges
       parameters:
-      - description: unique generated ID of a tenancy update
+      - description: unique generated ID of a tenancy
         explode: false
         in: path
-        name: tenancyUpdateID
+        name: tenancyID
         required: true
         schema:
-          pattern: "^tu-[2-9A-HJ-NP-Za-km-z]{19,22}$"
+          pattern: "^ty-[2-9A-HJ-NP-Za-km-z]{19,22}$"
           type: string
         style: simple
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateTenancyUpdateRequest'
+              $ref: '#/components/schemas/CreateTenantChangeRequest'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TenancyUpdate'
+                description: |
+                  A list of the created tenant changes
+                items:
+                  $ref: '#/components/schemas/TenantChange'
+                type: array
           description: successful operation
         default:
           content: {}
@@ -5274,7 +5271,133 @@ paths:
             Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
       security:
       - bearerAuth: []
-      summary: Update the tenancy update with the given ID
+      summary: Change the tenants in a tenancy.
+  /tenancy/rent-update/{rentUpdateID}:
+    delete:
+      operationId: deleteRentUpdate
+      parameters:
+      - description: unique generated ID of a tenancy rent update
+        explode: false
+        in: path
+        name: rentUpdateID
+        required: true
+        schema:
+          pattern: "^ru-[2-9A-HJ-NP-Za-km-z]{19,22}$"
+          type: string
+        style: simple
+      responses:
+        default:
+          content: {}
+          description: |
+            Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
+      security:
+      - bearerAuth: []
+      summary: Delete the rent update with the given ID
+    get:
+      operationId: getRentUpdate
+      parameters:
+      - description: unique generated ID of a tenancy rent update
+        explode: false
+        in: path
+        name: rentUpdateID
+        required: true
+        schema:
+          pattern: "^ru-[2-9A-HJ-NP-Za-km-z]{19,22}$"
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RentUpdate'
+          description: successful operation
+        default:
+          content: {}
+          description: |
+            Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
+      security:
+      - bearerAuth: []
+      summary: Get the rent update with the given ID
+    put:
+      operationId: updateRentUpdate
+      parameters:
+      - description: unique generated ID of a tenancy rent update
+        explode: false
+        in: path
+        name: rentUpdateID
+        required: true
+        schema:
+          pattern: "^ru-[2-9A-HJ-NP-Za-km-z]{19,22}$"
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrUpdateRentUpdateRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RentUpdate'
+          description: successful operation
+        default:
+          content: {}
+          description: |
+            Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
+      security:
+      - bearerAuth: []
+      summary: Update the rent update with the given ID
+  /tenancy/tenant-change/{tenantChangeID}:
+    delete:
+      operationId: deleteTenantChange
+      parameters:
+      - description: unique generated ID of a tenant change
+        explode: false
+        in: path
+        name: tenantChangeID
+        required: true
+        schema:
+          pattern: "^tc-[2-9A-HJ-NP-Za-km-z]{19,22}$"
+          type: string
+        style: simple
+      responses:
+        default:
+          content: {}
+          description: |
+            Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
+      security:
+      - bearerAuth: []
+      summary: Delete a tenant change
+    get:
+      operationId: getTenantChange
+      parameters:
+      - description: unique generated ID of a tenant change
+        explode: false
+        in: path
+        name: tenantChangeID
+        required: true
+        schema:
+          pattern: "^tc-[2-9A-HJ-NP-Za-km-z]{19,22}$"
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenantChange'
+          description: successful operation
+        default:
+          content: {}
+          description: |
+            Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
+      security:
+      - bearerAuth: []
+      summary: Get a tenancy tenant change
   /tenants:
     post:
       description: Query the tenants belonging to properties of the account
@@ -5307,7 +5430,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateTenantRequest'
+              $ref: '#/components/schemas/CreateOrUpdateTenantRequest'
         required: true
       responses:
         "200":
@@ -5391,7 +5514,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateTenantRequest'
+              $ref: '#/components/schemas/CreateOrUpdateTenantRequest'
         description: Tenant to be updated
         required: true
       responses:
@@ -6302,6 +6425,16 @@ components:
         pattern: "^o-[2-9A-HJ-NP-Za-km-z]{19,22}$"
         type: string
       style: simple
+    rentUpdateIdPathParam:
+      description: unique generated ID of a tenancy rent update
+      explode: false
+      in: path
+      name: rentUpdateID
+      required: true
+      schema:
+        pattern: "^ru-[2-9A-HJ-NP-Za-km-z]{19,22}$"
+        type: string
+      style: simple
     reportDefinitionIdPathParam:
       description: unique generated ID of a report definition
       explode: false
@@ -6362,14 +6495,14 @@ components:
         pattern: "^ty-[2-9A-HJ-NP-Za-km-z]{19,22}$"
         type: string
       style: simple
-    tenancyUpdateIdPathParam:
-      description: unique generated ID of a tenancy update
+    tenantChangeIdPathParam:
+      description: unique generated ID of a tenant change
       explode: false
       in: path
-      name: tenancyUpdateID
+      name: tenantChangeID
       required: true
       schema:
-        pattern: "^tu-[2-9A-HJ-NP-Za-km-z]{19,22}$"
+        pattern: "^tc-[2-9A-HJ-NP-Za-km-z]{19,22}$"
         type: string
       style: simple
     tenantIdPathParam:
@@ -6439,6 +6572,27 @@ components:
         back:
           $ref: '#/components/schemas/Attachment'
       type: object
+    RentDetailsAndData:
+      allOf:
+      - $ref: '#/components/schemas/RentData'
+      - $ref: '#/components/schemas/RentDetails'
+      description: Complete information about the contract regarding the rent.
+      type: object
+    RentUpdateMask:
+      enum:
+      - 1
+      - 2
+      - 4
+      - 8
+      - 16
+      format: int64
+      type: integer
+      x-enum-varnames:
+      - ADDITIONAL_COSTS
+      - RENT
+      - INCIDENTALS
+      - INDEX_MONTH
+      - INDEX_POINTS
     Attachment:
       description: |
         A file uploaded and attached to an entity (e.g. case, property, etc.)
@@ -7078,6 +7232,15 @@ components:
           additionalProperties: true
           description: The data that the user has entered when booking the appointment
           type: object
+      type: object
+    MandatoryMessage:
+      example:
+        message: message
+      properties:
+        message:
+          description: The message that should sent to the admin when deleting an
+            appointment
+          type: string
       type: object
     CreateCaseRequest:
       description: All the information required for raising a new case
@@ -8147,8 +8310,6 @@ components:
               - 5
               - 10
               status: null
-            base_config: null
-            extend_default_status_config: true
             automatic_actions:
             - schedule: 1
               action: action
@@ -9022,8 +9183,6 @@ components:
             - 5
             - 10
             status: null
-          base_config: null
-          extend_default_status_config: true
           automatic_actions:
           - schedule: 1
             action: action
@@ -9511,8 +9670,6 @@ components:
           - 5
           - 10
           status: null
-        base_config: null
-        extend_default_status_config: true
         automatic_actions:
         - schedule: 1
           action: action
@@ -9912,12 +10069,6 @@ components:
           - null
           - null
       properties:
-        base_config:
-          $ref: '#/components/schemas/BaseCaseConfig'
-        extend_default_status_config:
-          description: |
-            Indicates if the default status configuration should be extended with  the custom configuration. If false, the custom configuration will  replace the default configuration. If true, only the actions that are  defined in the custom configuration will override the default ones.
-          type: boolean
         status_config:
           description: |
             The configuration for the status transition of a case. This is used to  determine which status changes are allowed by which party at which time.
@@ -9937,14 +10088,6 @@ components:
             $ref: '#/components/schemas/CaseAutomaticActionConfig'
           type: array
       type: object
-    BaseCaseConfig:
-      description: |
-        The list of base case configs that can be used to define the behaviour of a case.
-      enum:
-      - DEFAULT
-      - SIMPLE
-      - FULL
-      type: string
     CaseStatusConfig:
       description: |
         Contains the configuration for the status of a case. This is used to  determine which status changes are allowed.
@@ -10623,8 +10766,6 @@ components:
               - 5
               - 10
               status: null
-            base_config: null
-            extend_default_status_config: true
             automatic_actions:
             - schedule: 1
               action: action
@@ -11142,8 +11283,6 @@ components:
               - 5
               - 10
               status: null
-            base_config: null
-            extend_default_status_config: true
             automatic_actions:
             - schedule: 1
               action: action
@@ -12576,8 +12715,6 @@ components:
             - 5
             - 10
             status: null
-          base_config: null
-          extend_default_status_config: true
           automatic_actions:
           - schedule: 1
             action: action
@@ -15597,6 +15734,7 @@ components:
       example:
         date: 0
         country: country
+        base_year: 6
         value: ""
       properties:
         value:
@@ -15609,6 +15747,11 @@ components:
         country:
           description: the country code the price index belongs to
           type: string
+        base_year:
+          description: |
+            year used as a base where the year's average is taken to be 100
+          format: int32
+          type: integer
       type: object
     PriceIndexPoint:
       description: |
@@ -15616,6 +15759,7 @@ components:
       example:
         date: 6
         country: country
+        base_year: 1
         created_at: 0
         id: id
         value: ""
@@ -15637,18 +15781,29 @@ components:
         country:
           description: the country code the price index belongs to
           type: string
+        base_year:
+          description: |
+            year used as a base where the year's average is taken to be 100
+          format: int32
+          type: integer
       type: object
     PriceIndexPointQueryRequest:
       description: The request used to query a price index point
       example:
         date: 0
         country_code: country_code
+        base_year: 6
       properties:
         country_code:
           type: string
         date:
-          description: The date to look for.
+          description: The date to look for
           format: int64
+          type: integer
+        base_year:
+          description: |
+            The base year to query for, not taken into account if empty
+          format: int32
           type: integer
       type: object
     QueryPropertiesRequest:
@@ -16149,14 +16304,13 @@ components:
       - type
       type: object
     Tenancy:
-      description: "A tenancy is a contract between a tenant and a property manager.\
-        \ \n"
+      description: |
+        A tenancy is a contract between a tenant and a property manager.
       example:
         end_date: 5
-        contract_type: null
         tenants:
-        - updated_at: 4
-          created_at: 2
+        - updated_at: 6
+          created_at: 1
           last_name: last_name
           external_id: external_id
           company: company
@@ -16166,8 +16320,8 @@ components:
           first_name: first_name
           email: email
           external_source: external_source
-        - updated_at: 4
-          created_at: 2
+        - updated_at: 6
+          created_at: 1
           last_name: last_name
           external_id: external_id
           company: company
@@ -16177,19 +16331,34 @@ components:
           first_name: first_name
           email: email
           external_source: external_source
-        rent_information:
+        duration_type: null
+        created_at: 0
+        external_id: external_id
+        extension_options:
+        - 5
+        - 5
+        rent_details:
           rent_type: null
-          monthly_rent:
-            rent: 5.637376656633329
-            incidentals: 2.3021358869347655
-          deposit: 7.061401241503109
-          index_month: 9
-          index_points: 3.616076749251911
+          taxable: true
+          graduated_updates:
+          - date: 9
+            value: 3.616076749251911
+          - date: 9
+            value: 3.616076749251911
+          deposit: 2.3021358869347655
+          graduated_length: 7
+        current_rent:
+          additional_costs:
+          - amount: 1.0246457001441578
+            name: name
+          - amount: 1.0246457001441578
+            name: name
+          index_month: 7
+          index_points: 1.2315135367772556
+          rent: 2.027123023002322
+          incidentals: 4.145608029883936
         updated_at: 6
         property_ref: property_ref
-        created_at: 0
-        active: true
-        external_id: external_id
         id: id
         external_source: external_source
         start_date: 1
@@ -16198,12 +16367,12 @@ components:
           description: generated unique ID
           type: string
         external_id:
-          description: "optional external ID, in case tenancy was created via backend\
-            \ integration"
+          description: |
+            optional external ID, in case tenancy was created via backend integration
           type: string
         external_source:
-          description: "optional external source, in case tenancy was created via\
-            \ backend integration"
+          description: |
+            optional external source, in case tenancy was created via backend integration
           type: string
         created_at:
           description: The timestamp of when the tenant was created
@@ -16216,112 +16385,181 @@ components:
         property_ref:
           description: The ID of the property that is being rented out
           type: string
-        active:
-          description: |
-            Indicates whether the tenancy is active. Active tenancies indicate the current contract between the tenants and the property manager.
-          type: boolean
         start_date:
           description: The timestamp of when the tenancy has started
           format: int64
           type: integer
         end_date:
-          description: The timestamp of when the tenancy has ended or is scheduled
-            to end (optional)
+          description: |
+            The timestamp of when the tenancy has ended or is scheduled to end (optional)
           format: int64
           type: integer
-        contract_type:
-          $ref: '#/components/schemas/TenancyContractTypeEnum'
-        rent_information:
-          $ref: '#/components/schemas/RentInformation'
+        duration_type:
+          $ref: '#/components/schemas/TenancyDurationEnum'
+        extension_options:
+          description: Options to extend the contract if it's fixed term.
+          items:
+            description: Duration in months to extend the length of the tenancy by.
+            format: int64
+            type: integer
+          type: array
+        rent_details:
+          $ref: '#/components/schemas/RentDetails'
+        current_rent:
+          $ref: '#/components/schemas/RentData'
         tenants:
           description: The IDs of the tenants
           items:
             $ref: '#/components/schemas/Tenant'
           type: array
+      required:
+      - created_at
+      - current_rent
+      - duration_type
+      - id
+      - property_ref
+      - rent_details
+      - start_date
+      - tenants
+      - updated_at
       type: object
-    TenancyContractTypeEnum:
+    TenancyDurationEnum:
       description: |
-        The type of tenancy contract. This is used to determine which fields are required for the tenancy contract.
+        The duration of the tenancy. This is used to determine which fields are required for the tenancy contract.
       enum:
-      - STANDARD
+      - OPEN_ENDED
       - FIXED_TERM
-      - COMMERCIAL_LEASE
-      - GRADUATED_RENT
-      - INDEXED_RENT
+      type: string
+    RentDetails:
+      description: Contract terms about the rent
+      example:
+        rent_type: null
+        taxable: true
+        graduated_updates:
+        - date: 9
+          value: 3.616076749251911
+        - date: 9
+          value: 3.616076749251911
+        deposit: 2.3021358869347655
+        graduated_length: 7
+      properties:
+        taxable:
+          description: Whether the tenancy is taxed or not
+          type: boolean
+        rent_type:
+          $ref: '#/components/schemas/RentTypeEnum'
+        deposit:
+          description: the deposit amount
+          format: double
+          type: number
+        graduated_length:
+          description: the date the graduated rent expires at
+          format: int64
+          type: integer
+        graduated_updates:
+          description: |
+            A list of date-value pairs, representing a map, since the generator doesn't allow for maps that don't have strings as keys.
+          items:
+            $ref: '#/components/schemas/GraduatedUpdate'
+          type: array
+      type: object
+    RentTypeEnum:
+      enum:
+      - REGULAR
+      - INDEXED
+      - GRADUATED
       - GRATUITOUS_TRANSFER
       type: string
-    Tenant:
-      description: "A person or company, renting a particular property. \n"
+    GraduatedUpdate:
+      description: |
+        A date-value pair, which is used to indicate a future change in the rent amount, as part of a graduated rent contract.
       example:
-        updated_at: 4
-        created_at: 2
-        last_name: last_name
-        external_id: external_id
-        company: company
-        phone_number: phone_number
-        id: id
-        title: title
-        first_name: first_name
-        email: email
-        external_source: external_source
+        date: 9
+        value: 3.616076749251911
       properties:
-        id:
-          description: generated unique ID
-          type: string
-        external_id:
-          description: "optional external ID, in case tenant was created via backend\
-            \ integration"
-          type: string
-        external_source:
-          description: "optional external source, in case tenant was created via backend\
-            \ integration"
-          type: string
-        created_at:
-          description: The timestamp of when the tenant was created
+        date:
           format: int64
           type: integer
-        updated_at:
-          description: The timestamp of when the tenant was last updated
+        value:
+          format: double
+          type: number
+      type: object
+    RentData:
+      description: Information about the rent of a property
+      example:
+        additional_costs:
+        - amount: 1.0246457001441578
+          name: name
+        - amount: 1.0246457001441578
+          name: name
+        index_month: 7
+        index_points: 1.2315135367772556
+        rent: 2.027123023002322
+        incidentals: 4.145608029883936
+      properties:
+        rent:
+          description: the monthly rent amount
+          format: double
+          type: number
+        incidentals:
+          description: the amount of incidentals paid monthly
+          format: double
+          type: number
+        index_month:
+          description: |
+            In case the rent type is INDEXED, this contains the timestamp of the last published index value at the time of the rent change.
           format: int64
           type: integer
-        title:
-          description: "The salutation to be used for the tenant (Miss, Mister, Family)"
-          type: string
-        first_name:
+        index_points:
           description: |
-            First name(s) of the tenant. In case of a company, this is the first name of the contact person within the company.
-          type: string
-        last_name:
+            In case the rent type is INDEXED, this contains the index value published at `index_month` and valid for the current rent.
+          format: double
+          type: number
+        additional_costs:
           description: |
-            Last name of the tenant. In case of a company, this is the last name of the contact person within the company.
+            Additional costs that are not part of the rent, but are paid by the tenant, e.g. garage rent, parking space rent, etc.
+          items:
+            $ref: '#/components/schemas/AdditionalRentCost'
+          type: array
+      type: object
+    AdditionalRentCost:
+      description: |
+        Additional costs that are not part of the rent, but are paid by the tenant, e.g. garage rent, parking space rent, etc.
+      example:
+        amount: 1.0246457001441578
+        name: name
+      properties:
+        name:
+          description: "The name of the cost, e.g. \"garage\""
           type: string
-        company:
-          description: |
-            Name of the company. Only used in case tenancy is between lessor and a company,  otherwise this field is empty.
-          type: string
-        email:
-          description: |
-            The email address of the tenant. Used for sending communication to them, as well as used for invitations.
-          type: string
-        phone_number:
-          description: |
-            The phone number of the tenant. Not directly used by the system, but can be used by managers and service providers to contact the tenant.
-          type: string
-      required:
-      - email
-      - first_name
-      - id
-      - last_name
-      - phone_number
-      - registered
-      - title
+        amount:
+          description: The monthly amount due
+          format: double
+          type: number
       type: object
     CreateTenancyRequest:
-      description: |
-        Request issued by a property manager to create a new tenancy for a property
+      allOf:
+      - $ref: '#/components/schemas/UpdateTenancyRequest'
+      - description: |
+          Request issued by a property manager to create a new tenancy for a property
+        properties:
+          initial_rent:
+            $ref: '#/components/schemas/RentData'
+          tenants:
+            description: |
+              The list of tenants that are part of this tenancy. Can be empty, or include new or existing tenants.
+            items:
+              $ref: '#/components/schemas/ContactData'
+            type: array
+        required:
+        - initial_rent
+        - tenants
+        type: object
       example:
         end_date: 6
-        contract_type: null
+        extension_options:
+        - 1
+        - 1
         tenants:
         - address:
             line1: 1 ZestLabs Blvd
@@ -16351,49 +16589,70 @@ components:
           title: title
           first_name: first_name
           email: email
-        end_previous_tenancy: true
-        invite_tenants: true
-        rent_information:
+        initial_rent:
+          additional_costs:
+          - amount: 1.0246457001441578
+            name: name
+          - amount: 1.0246457001441578
+            name: name
+          index_month: 7
+          index_points: 1.2315135367772556
+          rent: 2.027123023002322
+          incidentals: 4.145608029883936
+        rent_details:
           rent_type: null
-          monthly_rent:
-            rent: 5.637376656633329
-            incidentals: 2.3021358869347655
-          deposit: 7.061401241503109
-          index_month: 9
-          index_points: 3.616076749251911
-        active: true
+          taxable: true
+          graduated_updates:
+          - date: 9
+            value: 3.616076749251911
+          - date: 9
+            value: 3.616076749251911
+          deposit: 2.3021358869347655
+          graduated_length: 7
+        start_date: 0
+    UpdateTenancyRequest:
+      description: |
+        Request issued by a property manager to update the initial tenancy infomation for a property (the contract data).
+      example:
+        end_date: 6
+        extension_options:
+        - 1
+        - 1
+        rent_details:
+          rent_type: null
+          taxable: true
+          graduated_updates:
+          - date: 9
+            value: 3.616076749251911
+          - date: 9
+            value: 3.616076749251911
+          deposit: 2.3021358869347655
+          graduated_length: 7
         start_date: 0
       properties:
-        active:
-          description: |
-            Indicates whether the tenancy is active. Active tenancies indicate the current contract between the tenants and the property manager. Per default, new tenancies are active. This just provides a way to add past tenancies.
-          type: boolean
         start_date:
           description: The timestamp of when the tenancy has started
           format: int64
           type: integer
         end_date:
-          description: The timestamp of when the tenancy has ended or is scheduled
-            to end (optional)
+          description: |
+            The timestamp of when the tenancy has ended or is scheduled to end (required depending on the duration_type)
           format: int64
           type: integer
-        contract_type:
-          $ref: '#/components/schemas/TenancyContractTypeEnum'
-        rent_information:
-          $ref: '#/components/schemas/RentInformation'
-        tenants:
-          description: |
-            The list of tenants that are part of this tenancy. Can be empty, or include  new or existing tenants.
+        rent_details:
+          $ref: '#/components/schemas/RentDetails'
+        extension_options:
+          description: Options to extend the contract if it's fixed term.
           items:
-            $ref: '#/components/schemas/ContactData'
+            description: Duration in months to extend the length of the tenancy by.
+            format: int64
+            type: integer
           type: array
-        end_previous_tenancy:
-          description: |
-            Indicates whether the previous tenancy should be ended. If set to true, the previous tenancy will be marked inactive. If set to false, the call will fail if there is an active tenancy for the property.
-          type: boolean
-        invite_tenants:
-          description: "If true, directly send invitation to new tenants to join Udoma"
-          type: boolean
+      required:
+      - duration_type
+      - rent_details
+      - rent_type
+      - start_date
       type: object
     CreateOrUpdatePropertyHandoverTemplateRequest:
       example:
@@ -17933,82 +18192,28 @@ components:
           format: int64
           type: integer
       type: object
-    UpdateTenancyRequest:
+    RentUpdate:
       description: |
-        Request issued by a property manager to update a tenancy for a property
+        A rent update is a change to the monthly amount due for a rent of a property.
       example:
-        end_date: 6
-        contract_type: null
-        rent_information:
-          rent_type: null
-          monthly_rent:
-            rent: 5.637376656633329
-            incidentals: 2.3021358869347655
-          deposit: 7.061401241503109
-          index_month: 9
-          index_points: 3.616076749251911
-        active: true
-        start_date: 0
-      properties:
-        active:
-          description: |
-            Indicates whether the tenancy is active. Active tenancies indicate the current contract between the tenants and the property manager.
-          type: boolean
-        start_date:
-          description: The timestamp of when the tenancy has started
-          format: int64
-          type: integer
-        end_date:
-          description: The timestamp of when the tenancy has ended or is scheduled
-            to end (optional)
-          format: int64
-          type: integer
-        contract_type:
-          $ref: '#/components/schemas/TenancyContractTypeEnum'
-        rent_information:
-          $ref: '#/components/schemas/RentInformation'
-      type: object
-    TenancyUpdate:
-      description: |
-        A tenancy update is a change to a tenancy contract between one or more tenants and a property manager.
-      example:
+        tenancy_ref: tenancy_ref
         updated_at: 6
-        tenant_changes:
-        - action: null
-          entry_into_force: 5
-          tenant:
-            updated_at: 4
-            created_at: 2
-            last_name: last_name
-            external_id: external_id
-            company: company
-            phone_number: phone_number
-            id: id
-            title: title
-            first_name: first_name
-            email: email
-            external_source: external_source
-        - action: null
-          entry_into_force: 5
-          tenant:
-            updated_at: 4
-            created_at: 2
-            last_name: last_name
-            external_id: external_id
-            company: company
-            phone_number: phone_number
-            id: id
-            title: title
-            first_name: first_name
-            email: email
-            external_source: external_source
         created_at: 0
+        external_id: external_id
         id: id
         entry_into_force: 1
-        tenancy_id: tenancy_id
-        new_rent:
-          rent: 5.637376656633329
-          incidentals: 2.3021358869347655
+        rent:
+          additional_costs:
+          - amount: 1.0246457001441578
+            name: name
+          - amount: 1.0246457001441578
+            name: name
+          index_month: 7
+          index_points: 1.2315135367772556
+          rent: 2.027123023002322
+          incidentals: 4.145608029883936
+        external_source: external_source
+        mask: 5
       properties:
         id:
           description: generated unique ID
@@ -18021,31 +18226,81 @@ components:
           description: The timestamp of when the tenant was last updated
           format: int64
           type: integer
-        tenancy_id:
+        external_id:
+          description: |
+            optional external ID, in case tenancy was created via backend integration
+          type: string
+        external_source:
+          description: |
+            optional external source, in case tenancy was created via backend integration
+          type: string
+        tenancy_ref:
           description: The ID of the tenancy that this update is for
           type: string
         entry_into_force:
           description: The date when the update will enter into force
           format: int64
           type: integer
-        new_rent:
+        rent:
           $ref: '#/components/schemas/RentData'
-        tenant_changes:
+        mask:
           description: |
-            Optional changes to the tenants.
-          items:
-            $ref: '#/components/schemas/TenantChange'
-          type: array
+            A mask on which fields of rent to update. We cannot leave them empty because the generator doesn't differentiate between 0 and empty.
+          type: integer
+      required:
+      - created_at
+      - entry_into_force
+      - id
+      - rent
+      - tenancy_ref
+      - updated_at
+      type: object
+    CreateOrUpdateRentUpdateRequest:
+      description: |
+        Request issued by a property manager to create a new update for a tenancy
+      example:
+        entry_into_force: 0
+        rent:
+          additional_costs:
+          - amount: 1.0246457001441578
+            name: name
+          - amount: 1.0246457001441578
+            name: name
+          index_month: 7
+          index_points: 1.2315135367772556
+          rent: 2.027123023002322
+          incidentals: 4.145608029883936
+        mask: 6
+      properties:
+        entry_into_force:
+          description: |
+            The date when the update will enter into force
+          format: int64
+          type: integer
+        rent:
+          $ref: '#/components/schemas/RentData'
+        mask:
+          description: |
+            A mask on which fields of rent to update. We cannot leave them empty because the generator doesn't differentiate between 0 and empty.
+          type: integer
+      required:
+      - entry_into_force
+      - rent
       type: object
     TenantChange:
       description: |
         A change to the tenants of a property. This is used to indicate that a tenant has moved out or moved in. To be able to know whe stayed in the property, we also provide the list of tenants that remained.
       example:
+        tenancy_ref: tenancy_ref
+        updated_at: 6
+        created_at: 0
         action: null
-        entry_into_force: 5
+        external_id: external_id
+        id: id
+        entry_into_force: 1
         tenant:
-          updated_at: 4
-          created_at: 2
+          updated_at: 6
+          created_at: 1
           last_name: last_name
           external_id: external_id
           company: company
@@ -18055,15 +18310,46 @@ components:
           first_name: first_name
           email: email
           external_source: external_source
+        external_source: external_source
       properties:
+        id:
+          description: generated unique ID
+          type: string
         tenant:
           $ref: '#/components/schemas/Tenant'
+        created_at:
+          description: The timestamp of when the tenant was created
+          format: int64
+          type: integer
+        updated_at:
+          description: The timestamp of when the tenant was last updated
+          format: int64
+          type: integer
+        external_id:
+          description: |
+            optional external ID, in case tenancy was created via backend integration
+          type: string
+        external_source:
+          description: |
+            optional external source, in case tenancy was created via backend integration
+          type: string
+        tenancy_ref:
+          description: The ID of the tenancy that this update is for
+          type: string
         entry_into_force:
-          description: Optional date when the change will enter into force
+          description: The date when the update will enter into force
           format: int64
           type: integer
         action:
           $ref: '#/components/schemas/TenantChangeActionEnum'
+      required:
+      - action
+      - created_at
+      - entry_into_force
+      - id
+      - tenancy_ref
+      - tenant
+      - updated_at
       type: object
     TenantChangeActionEnum:
       description: Indication whether the tenant is moving in or moving out
@@ -18072,13 +18358,11 @@ components:
       - MOVE_OUT
       - REMAIN
       type: string
-    CreateTenancyUpdateRequest:
-      description: |
-        Request issued by a property manager to create a new update for a tenancy
+    CreateTenantChangeRequest:
+      description: A list of changes to the tenants.
       example:
         tenant_changes:
         - action: null
-          entry_into_force: 6
           tenant:
             address:
               line1: 1 ZestLabs Blvd
@@ -18095,7 +18379,6 @@ components:
             first_name: first_name
             email: email
         - action: null
-          entry_into_force: 6
           tenant:
             address:
               line1: 1 ZestLabs Blvd
@@ -18112,111 +18395,28 @@ components:
             first_name: first_name
             email: email
         entry_into_force: 0
-        new_rent:
-          rent: 5.637376656633329
-          incidentals: 2.3021358869347655
       properties:
         entry_into_force:
-          description: The date when the update will enter into force
+          description: |
+            The date when the change will enter into force
           format: int64
           type: integer
-        new_rent:
-          $ref: '#/components/schemas/RentData'
         tenant_changes:
           description: |
-            Optional change to the tenants.
+            The list of changes to the tenants.
           items:
-            $ref: '#/components/schemas/TenantChangeRequest'
+            $ref: '#/components/schemas/TenantChanges_inner'
           type: array
+      required:
+      - entry_into_force
+      - tenant_changes
       type: object
-    TenantChangeRequest:
+    TenantChanges:
       description: |
-        A change to the tenants of a property. This is used to indicate that a tenant has moved out or moved in.
-      example:
-        action: null
-        entry_into_force: 6
-        tenant:
-          address:
-            line1: 1 ZestLabs Blvd
-            line2: CSS District
-            city: Mannheim
-            postcode: 680001
-            province: Baden-Wuerttemberg
-            country: Germany
-          last_name: last_name
-          company: company
-          phone_number: phone_number
-          id: id
-          title: title
-          first_name: first_name
-          email: email
-      properties:
-        tenant:
-          $ref: '#/components/schemas/ContactData'
-        entry_into_force:
-          description: Optional date when the change will enter into force
-          format: int64
-          type: integer
-        action:
-          $ref: '#/components/schemas/TenantChangeActionEnum'
-      type: object
-    UpdateTenancyUpdateRequest:
-      description: |
-        Request issued by a property manager to update an existing update for a tenancy
-      example:
-        tenant_changes:
-        - action: null
-          entry_into_force: 6
-          tenant:
-            address:
-              line1: 1 ZestLabs Blvd
-              line2: CSS District
-              city: Mannheim
-              postcode: 680001
-              province: Baden-Wuerttemberg
-              country: Germany
-            last_name: last_name
-            company: company
-            phone_number: phone_number
-            id: id
-            title: title
-            first_name: first_name
-            email: email
-        - action: null
-          entry_into_force: 6
-          tenant:
-            address:
-              line1: 1 ZestLabs Blvd
-              line2: CSS District
-              city: Mannheim
-              postcode: 680001
-              province: Baden-Wuerttemberg
-              country: Germany
-            last_name: last_name
-            company: company
-            phone_number: phone_number
-            id: id
-            title: title
-            first_name: first_name
-            email: email
-        entry_into_force: 0
-        new_rent:
-          rent: 5.637376656633329
-          incidentals: 2.3021358869347655
-      properties:
-        entry_into_force:
-          description: The date when the update will enter into force
-          format: int64
-          type: integer
-        new_rent:
-          $ref: '#/components/schemas/RentData'
-        tenant_changes:
-          description: |
-            Optional change to the tenants.
-          items:
-            $ref: '#/components/schemas/TenantChangeRequest'
-          type: array
-      type: object
+        The list of changes to the tenants.
+      items:
+        $ref: '#/components/schemas/TenantChanges_inner'
+      type: array
     QueryTenantsRequest:
       description: Search criteria for querying tenants
       example:
@@ -18234,8 +18434,8 @@ components:
       description: Result of a tenants query
       example:
         tenants:
-        - updated_at: 4
-          created_at: 2
+        - updated_at: 6
+          created_at: 1
           last_name: last_name
           external_id: external_id
           company: company
@@ -18245,8 +18445,8 @@ components:
           first_name: first_name
           email: email
           external_source: external_source
-        - updated_at: 4
-          created_at: 2
+        - updated_at: 6
+          created_at: 1
           last_name: last_name
           external_id: external_id
           company: company
@@ -18270,19 +18470,44 @@ components:
             $ref: '#/components/schemas/Tenant'
           type: array
       type: object
-    CreateTenantRequest:
+    Tenant:
       description: |
-        Request issued by a property manager to create a new tenant, who is not yet  assigned to a property
+        A person or company, renting a particular property.
       example:
+        updated_at: 6
+        created_at: 1
         last_name: last_name
+        external_id: external_id
         company: company
         phone_number: phone_number
+        id: id
         title: title
         first_name: first_name
         email: email
+        external_source: external_source
       properties:
+        id:
+          description: generated unique ID
+          type: string
+        external_id:
+          description: |
+            optional external ID, in case tenant was created via backend integration
+          type: string
+        external_source:
+          description: |
+            optional external source, in case tenant was created via backend integration
+          type: string
+        created_at:
+          description: The timestamp of when the tenant was created
+          format: int64
+          type: integer
+        updated_at:
+          description: The timestamp of when the tenant was last updated
+          format: int64
+          type: integer
         title:
-          description: "The salutation to be used for the tenant (Miss, Mister, Family)"
+          description: |
+            The salutation to be used for the tenant (Miss, Mister, Family)
           type: string
         first_name:
           description: |
@@ -18294,7 +18519,7 @@ components:
           type: string
         company:
           description: |
-            Name of the company. Only used in case tenancy is between lessor and a company,  otherwise this field is empty.
+            Name of the company. Only used in case tenancy is between lessor and a company, otherwise this field is empty.
           type: string
         email:
           description: |
@@ -18304,10 +18529,18 @@ components:
           description: |
             The phone number of the tenant. Not directly used by the system, but can be used by managers and service providers to contact the tenant.
           type: string
+      required:
+      - email
+      - first_name
+      - id
+      - last_name
+      - phone_number
+      - registered
+      - title
       type: object
-    UpdateTenantRequest:
+    CreateOrUpdateTenantRequest:
       description: |
-        Request issued by a property manager to add a new tenant to an existing property
+        Request issued by a property manager to create a new tenant, who is not yet assigned to a property
       example:
         last_name: last_name
         company: company
@@ -18317,7 +18550,8 @@ components:
         email: email
       properties:
         title:
-          description: "The salutation to be used for the tenant (Miss, Mister, Family)"
+          description: |
+            The salutation to be used for the tenant (Miss, Mister, Family)
           type: string
         first_name:
           description: |
@@ -18329,7 +18563,7 @@ components:
           type: string
         company:
           description: |
-            Name of the company. Only used in case tenancy is between lessor and a company,  otherwise this field is empty.
+            Name of the company. Only used in case tenancy is between lessor and a company, otherwise this field is empty.
           type: string
         email:
           description: |
@@ -20432,55 +20666,6 @@ components:
           format: int32
           type: integer
       type: object
-    RentInformation:
-      description: the rent information for a property
-      example:
-        rent_type: null
-        monthly_rent:
-          rent: 5.637376656633329
-          incidentals: 2.3021358869347655
-        deposit: 7.061401241503109
-        index_month: 9
-        index_points: 3.616076749251911
-      properties:
-        monthly_rent:
-          $ref: '#/components/schemas/RentData'
-        deposit:
-          description: the deposit amount
-          format: double
-          type: number
-        rent_type:
-          $ref: '#/components/schemas/RentTypeEnum'
-        index_month:
-          description: the month of the year when the rent index is applied
-          format: int64
-          type: integer
-        index_points:
-          description: the number of points that the rent index is increased by
-          format: double
-          type: number
-      type: object
-    RentData:
-      description: Information about the rent of a property
-      example:
-        rent: 5.637376656633329
-        incidentals: 2.3021358869347655
-      properties:
-        rent:
-          description: the monthly rent amount
-          format: double
-          type: number
-        incidentals:
-          description: the amount of incidentals paid monthly
-          format: double
-          type: number
-      type: object
-    RentTypeEnum:
-      enum:
-      - REGULAR
-      - INDEXED
-      - STAGGERED
-      type: string
     QueryBooleanParameter:
       enum:
       - IS_TRUE
@@ -20535,6 +20720,30 @@ components:
             The priority of the Template, used to decide the order in which to display the tempaltes in the category.
           format: int32
           type: integer
+      type: object
+    TenantChanges_inner:
+      example:
+        action: null
+        tenant:
+          address:
+            line1: 1 ZestLabs Blvd
+            line2: CSS District
+            city: Mannheim
+            postcode: 680001
+            province: Baden-Wuerttemberg
+            country: Germany
+          last_name: last_name
+          company: company
+          phone_number: phone_number
+          id: id
+          title: title
+          first_name: first_name
+          email: email
+      properties:
+        tenant:
+          $ref: '#/components/schemas/ContactData'
+        action:
+          $ref: '#/components/schemas/TenantChangeActionEnum'
       type: object
   securitySchemes:
     bearerAuth:

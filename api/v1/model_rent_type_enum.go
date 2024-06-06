@@ -20,16 +20,18 @@ type RentTypeEnum string
 
 // List of RentTypeEnum
 const (
-	RENTTYPEENUM_REGULAR   RentTypeEnum = "REGULAR"
-	RENTTYPEENUM_INDEXED   RentTypeEnum = "INDEXED"
-	RENTTYPEENUM_STAGGERED RentTypeEnum = "STAGGERED"
+	RENTTYPEENUM_REGULAR             RentTypeEnum = "REGULAR"
+	RENTTYPEENUM_INDEXED             RentTypeEnum = "INDEXED"
+	RENTTYPEENUM_GRADUATED           RentTypeEnum = "GRADUATED"
+	RENTTYPEENUM_GRATUITOUS_TRANSFER RentTypeEnum = "GRATUITOUS_TRANSFER"
 )
 
 // All allowed values of RentTypeEnum enum
 var AllowedRentTypeEnumEnumValues = []RentTypeEnum{
 	"REGULAR",
 	"INDEXED",
-	"STAGGERED",
+	"GRADUATED",
+	"GRATUITOUS_TRANSFER",
 }
 
 func (v *RentTypeEnum) UnmarshalJSON(src []byte) error {

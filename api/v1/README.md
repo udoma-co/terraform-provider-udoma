@@ -105,11 +105,12 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreatePropertyHandover**](docs/DefaultAPI.md#createpropertyhandover) | **Post** /property-handovers/handover | Create a new property handover
 *DefaultAPI* | [**CreatePropertyHandoverTemplate**](docs/DefaultAPI.md#createpropertyhandovertemplate) | **Post** /property-handovers/template | Create a new property handover template
 *DefaultAPI* | [**CreatePropertyOwner**](docs/DefaultAPI.md#createpropertyowner) | **Post** /owner | Create a new property owner
+*DefaultAPI* | [**CreateRentUpdate**](docs/DefaultAPI.md#createrentupdate) | **Post** /tenancy/{tenancyID}/rent-updates | Create new rent update for the tenancy
 *DefaultAPI* | [**CreateReportDefinition**](docs/DefaultAPI.md#createreportdefinition) | **Post** /report | Create a new report definition
 *DefaultAPI* | [**CreateServiceProvider**](docs/DefaultAPI.md#createserviceprovider) | **Post** /service-provider | Create a new service provider for the current account
 *DefaultAPI* | [**CreateTenancy**](docs/DefaultAPI.md#createtenancy) | **Post** /property/{propID}/tenancy | Create new tenancy for the property
-*DefaultAPI* | [**CreateTenancyUpdate**](docs/DefaultAPI.md#createtenancyupdate) | **Post** /tenancy/{tenancyID}/updates | Create new tenancy update for the tenancy
 *DefaultAPI* | [**CreateTenant**](docs/DefaultAPI.md#createtenant) | **Post** /tenant | Create a new tenant and optionally invites them to join the platform 
+*DefaultAPI* | [**CreateTenantChanges**](docs/DefaultAPI.md#createtenantchanges) | **Post** /tenancy/{tenancyID}/tenant-changes | Change the tenants in a tenancy.
 *DefaultAPI* | [**CreateWorkflowDefinition**](docs/DefaultAPI.md#createworkflowdefinition) | **Post** /workflows/definition | Create a new workflow definition
 *DefaultAPI* | [**CreateWorkflowEntrypoint**](docs/DefaultAPI.md#createworkflowentrypoint) | **Post** /workflows/definition/{definitionID}/entrypoint | Create a new workflow entry point for the workflow definition
 *DefaultAPI* | [**DeleteAppointment**](docs/DefaultAPI.md#deleteappointment) | **Delete** /calendar/appointments/entry/{entryID} | Delete an appointment
@@ -137,12 +138,13 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeletePropertyHandover**](docs/DefaultAPI.md#deletepropertyhandover) | **Delete** /property-handovers/handovers/{handoverID} | Delete property handover
 *DefaultAPI* | [**DeletePropertyHandoverTemplate**](docs/DefaultAPI.md#deletepropertyhandovertemplate) | **Delete** /property-handovers/template/{templateID} | Delete property handover template
 *DefaultAPI* | [**DeletePropertyOwner**](docs/DefaultAPI.md#deletepropertyowner) | **Delete** /owner/{ownerID} | Delete property owner
+*DefaultAPI* | [**DeleteRentUpdate**](docs/DefaultAPI.md#deleterentupdate) | **Delete** /tenancy/rent-update/{rentUpdateID} | Delete the rent update with the given ID
 *DefaultAPI* | [**DeleteReportDefinition**](docs/DefaultAPI.md#deletereportdefinition) | **Delete** /report/{definitionID} | 
 *DefaultAPI* | [**DeleteReportExecution**](docs/DefaultAPI.md#deletereportexecution) | **Delete** /report/executions/{executionID} | 
 *DefaultAPI* | [**DeleteServiceProvider**](docs/DefaultAPI.md#deleteserviceprovider) | **Delete** /service-provider/{serviceProviderID} | Delete the service provider
 *DefaultAPI* | [**DeleteTenancy**](docs/DefaultAPI.md#deletetenancy) | **Delete** /tenancy/{tenancyID} | Delete the tenancy with the given ID
-*DefaultAPI* | [**DeleteTenancyUpdate**](docs/DefaultAPI.md#deletetenancyupdate) | **Delete** /tenancy-update/{tenancyUpdateID} | Delete the tenancy update with the given ID
 *DefaultAPI* | [**DeleteTenant**](docs/DefaultAPI.md#deletetenant) | **Delete** /tenant/{tenantID} | Remove tenant from property
+*DefaultAPI* | [**DeleteTenantChange**](docs/DefaultAPI.md#deletetenantchange) | **Delete** /tenancy/tenant-change/{tenantChangeID} | Delete a tenant change
 *DefaultAPI* | [**DeleteWorkflowDefinition**](docs/DefaultAPI.md#deleteworkflowdefinition) | **Delete** /workflows/definition/{definitionID} | Delete workflow definition
 *DefaultAPI* | [**DeleteWorkflowEntrypoint**](docs/DefaultAPI.md#deleteworkflowentrypoint) | **Delete** /workflows/entrypoint/{entrypointID} | Delete workflow entry point
 *DefaultAPI* | [**DeleteWorkflowExecution**](docs/DefaultAPI.md#deleteworkflowexecution) | **Delete** /workflows/execution/{executionID} | Delete workflow execution
@@ -199,6 +201,8 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetPropertyHandoverTemplate**](docs/DefaultAPI.md#getpropertyhandovertemplate) | **Get** /property-handovers/template/{templateID} | Get property handover template
 *DefaultAPI* | [**GetPropertyOwner**](docs/DefaultAPI.md#getpropertyowner) | **Get** /owner/{ownerID} | Get property owner details
 *DefaultAPI* | [**GetPropertyTenancy**](docs/DefaultAPI.md#getpropertytenancy) | **Get** /property/{propID}/tenancy | Get the current tenancy for the property
+*DefaultAPI* | [**GetRentUpdate**](docs/DefaultAPI.md#getrentupdate) | **Get** /tenancy/rent-update/{rentUpdateID} | Get the rent update with the given ID
+*DefaultAPI* | [**GetRentUpdates**](docs/DefaultAPI.md#getrentupdates) | **Get** /tenancy/{tenancyID}/rent-updates | Get all tenancy rent updates
 *DefaultAPI* | [**GetReportDefinition**](docs/DefaultAPI.md#getreportdefinition) | **Get** /report/{definitionID} | 
 *DefaultAPI* | [**GetReportDefinitions**](docs/DefaultAPI.md#getreportdefinitions) | **Get** /reports | 
 *DefaultAPI* | [**GetReportExecution**](docs/DefaultAPI.md#getreportexecution) | **Get** /report/executions/{executionID} | Get report execution details
@@ -208,9 +212,9 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetSignedDocumentDownload**](docs/DefaultAPI.md#getsigneddocumentdownload) | **Get** /document-generation/documents/{docID}/esignature/download-document | Get the signed document
 *DefaultAPI* | [**GetTenancy**](docs/DefaultAPI.md#gettenancy) | **Get** /tenancy/{tenancyID} | Get the tenancy with the given ID
 *DefaultAPI* | [**GetTenancyHistory**](docs/DefaultAPI.md#gettenancyhistory) | **Get** /property/{propID}/tenancy/history | Get the tenancy history for the property
-*DefaultAPI* | [**GetTenancyUpdate**](docs/DefaultAPI.md#gettenancyupdate) | **Get** /tenancy-update/{tenancyUpdateID} | Get the tenancy update with the given ID
-*DefaultAPI* | [**GetTenancyUpdates**](docs/DefaultAPI.md#gettenancyupdates) | **Get** /tenancy/{tenancyID}/updates | Get the tenancy updates for the tenancy
 *DefaultAPI* | [**GetTenant**](docs/DefaultAPI.md#gettenant) | **Get** /tenant/{tenantID} | Get tenant details
+*DefaultAPI* | [**GetTenantChange**](docs/DefaultAPI.md#gettenantchange) | **Get** /tenancy/tenant-change/{tenantChangeID} | Get a tenancy tenant change
+*DefaultAPI* | [**GetTenantChanges**](docs/DefaultAPI.md#gettenantchanges) | **Get** /tenancy/{tenancyID}/tenant-changes | Get all the tenant changes for a tenancy.
 *DefaultAPI* | [**GetTenantTenancies**](docs/DefaultAPI.md#gettenanttenancies) | **Get** /tenant/{tenantID}/tenancies | Get all tenancies for the tenant
 *DefaultAPI* | [**GetUserPreferences**](docs/DefaultAPI.md#getuserpreferences) | **Get** /preferences | Get the user preferences details
 *DefaultAPI* | [**GetWorkflowDefinition**](docs/DefaultAPI.md#getworkflowdefinition) | **Get** /workflows/definition/{definitionID} | Get workflow definition details
@@ -288,10 +292,10 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdatePropertyHandover**](docs/DefaultAPI.md#updatepropertyhandover) | **Put** /property-handovers/handovers/{handoverID} | Update property handover
 *DefaultAPI* | [**UpdatePropertyHandoverTemplate**](docs/DefaultAPI.md#updatepropertyhandovertemplate) | **Put** /property-handovers/template/{templateID} | Update property handover template
 *DefaultAPI* | [**UpdatePropertyOwner**](docs/DefaultAPI.md#updatepropertyowner) | **Put** /owner/{ownerID} | Update property owner
+*DefaultAPI* | [**UpdateRentUpdate**](docs/DefaultAPI.md#updaterentupdate) | **Put** /tenancy/rent-update/{rentUpdateID} | Update the rent update with the given ID
 *DefaultAPI* | [**UpdateReportDefinition**](docs/DefaultAPI.md#updatereportdefinition) | **Put** /report/{definitionID} | 
 *DefaultAPI* | [**UpdateServiceProvider**](docs/DefaultAPI.md#updateserviceprovider) | **Put** /service-provider/{serviceProviderID} | Update the attributes of the service provider
 *DefaultAPI* | [**UpdateTenancy**](docs/DefaultAPI.md#updatetenancy) | **Put** /tenancy/{tenancyID} | Update the tenancy with the given ID
-*DefaultAPI* | [**UpdateTenancyUpdate**](docs/DefaultAPI.md#updatetenancyupdate) | **Put** /tenancy-update/{tenancyUpdateID} | Update the tenancy update with the given ID
 *DefaultAPI* | [**UpdateTenant**](docs/DefaultAPI.md#updatetenant) | **Put** /tenant/{tenantID} | Update tenant information
 *DefaultAPI* | [**UpdateUserPreferences**](docs/DefaultAPI.md#updateuserpreferences) | **Put** /preferences | Update the user preferences
 *DefaultAPI* | [**UpdateWorkflowDefinition**](docs/DefaultAPI.md#updateworkflowdefinition) | **Put** /workflows/definition/{definitionID} | Update workflow definition
@@ -303,6 +307,7 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
+ - [AdditionalRentCost](docs/AdditionalRentCost.md)
  - [Address](docs/Address.md)
  - [Appointment](docs/Appointment.md)
  - [AppointmentSchedule](docs/AppointmentSchedule.md)
@@ -312,7 +317,6 @@ Class | Method | HTTP request | Description
  - [AssignCaseRequest](docs/AssignCaseRequest.md)
  - [Attachment](docs/Attachment.md)
  - [BankAccount](docs/BankAccount.md)
- - [BaseCaseConfig](docs/BaseCaseConfig.md)
  - [Case](docs/Case.md)
  - [CaseActionEnum](docs/CaseActionEnum.md)
  - [CaseAssignee](docs/CaseAssignee.md)
@@ -367,15 +371,16 @@ Class | Method | HTTP request | Description
  - [CreateOrUpdatePropertyHandoverRequest](docs/CreateOrUpdatePropertyHandoverRequest.md)
  - [CreateOrUpdatePropertyHandoverTemplateRequest](docs/CreateOrUpdatePropertyHandoverTemplateRequest.md)
  - [CreateOrUpdatePropertyOwnerRequest](docs/CreateOrUpdatePropertyOwnerRequest.md)
+ - [CreateOrUpdateRentUpdateRequest](docs/CreateOrUpdateRentUpdateRequest.md)
  - [CreateOrUpdateReportDefinitionRequest](docs/CreateOrUpdateReportDefinitionRequest.md)
  - [CreateOrUpdateServiceProvider](docs/CreateOrUpdateServiceProvider.md)
+ - [CreateOrUpdateTenantRequest](docs/CreateOrUpdateTenantRequest.md)
  - [CreateOrUpdateWorkflowDefinitionRequest](docs/CreateOrUpdateWorkflowDefinitionRequest.md)
  - [CreateOrUpdateWorkflowEntrypointRequest](docs/CreateOrUpdateWorkflowEntrypointRequest.md)
  - [CreatePriceIndexPointRequest](docs/CreatePriceIndexPointRequest.md)
  - [CreatePropertyRequest](docs/CreatePropertyRequest.md)
  - [CreateTenancyRequest](docs/CreateTenancyRequest.md)
- - [CreateTenancyUpdateRequest](docs/CreateTenancyUpdateRequest.md)
- - [CreateTenantRequest](docs/CreateTenantRequest.md)
+ - [CreateTenantChangeRequest](docs/CreateTenantChangeRequest.md)
  - [CustomForm](docs/CustomForm.md)
  - [CustomIDGenerator](docs/CustomIDGenerator.md)
  - [CustomerScript](docs/CustomerScript.md)
@@ -416,8 +421,10 @@ Class | Method | HTTP request | Description
  - [GetExternalUserCasesCountResponse](docs/GetExternalUserCasesCountResponse.md)
  - [GetSummaryRequest](docs/GetSummaryRequest.md)
  - [GetSummaryResponse](docs/GetSummaryResponse.md)
+ - [GraduatedUpdate](docs/GraduatedUpdate.md)
  - [IDUpload](docs/IDUpload.md)
  - [LogRequest](docs/LogRequest.md)
+ - [MandatoryMessage](docs/MandatoryMessage.md)
  - [Meter](docs/Meter.md)
  - [MeterReading](docs/MeterReading.md)
  - [MeterTypeEnum](docs/MeterTypeEnum.md)
@@ -466,8 +473,11 @@ Class | Method | HTTP request | Description
  - [QueryWorkflowExecutionsRequest](docs/QueryWorkflowExecutionsRequest.md)
  - [QueryWorkflowExecutionsResponse](docs/QueryWorkflowExecutionsResponse.md)
  - [RentData](docs/RentData.md)
- - [RentInformation](docs/RentInformation.md)
+ - [RentDetails](docs/RentDetails.md)
+ - [RentDetailsAndData](docs/RentDetailsAndData.md)
  - [RentTypeEnum](docs/RentTypeEnum.md)
+ - [RentUpdate](docs/RentUpdate.md)
+ - [RentUpdateMask](docs/RentUpdateMask.md)
  - [ReportDefinition](docs/ReportDefinition.md)
  - [ReportExecution](docs/ReportExecution.md)
  - [ReportExecutionStatusEnum](docs/ReportExecutionStatusEnum.md)
@@ -478,12 +488,11 @@ Class | Method | HTTP request | Description
  - [StartWorkflowExecutionRequest](docs/StartWorkflowExecutionRequest.md)
  - [SubmitPropertyHandoverRequest](docs/SubmitPropertyHandoverRequest.md)
  - [Tenancy](docs/Tenancy.md)
- - [TenancyContractTypeEnum](docs/TenancyContractTypeEnum.md)
- - [TenancyUpdate](docs/TenancyUpdate.md)
+ - [TenancyDurationEnum](docs/TenancyDurationEnum.md)
  - [Tenant](docs/Tenant.md)
  - [TenantChange](docs/TenantChange.md)
  - [TenantChangeActionEnum](docs/TenantChangeActionEnum.md)
- - [TenantChangeRequest](docs/TenantChangeRequest.md)
+ - [TenantChangesInner](docs/TenantChangesInner.md)
  - [TipTapDocument](docs/TipTapDocument.md)
  - [UnssignCaseRequest](docs/UnssignCaseRequest.md)
  - [UpdateCaseRequest](docs/UpdateCaseRequest.md)
@@ -493,8 +502,6 @@ Class | Method | HTTP request | Description
  - [UpdateDocumentRequest](docs/UpdateDocumentRequest.md)
  - [UpdatePropertyRequest](docs/UpdatePropertyRequest.md)
  - [UpdateTenancyRequest](docs/UpdateTenancyRequest.md)
- - [UpdateTenancyUpdateRequest](docs/UpdateTenancyUpdateRequest.md)
- - [UpdateTenantRequest](docs/UpdateTenantRequest.md)
  - [UpdateUserPreferencesRequest](docs/UpdateUserPreferencesRequest.md)
  - [UpdateWorkflowExecutionRequest](docs/UpdateWorkflowExecutionRequest.md)
  - [UserPreferences](docs/UserPreferences.md)

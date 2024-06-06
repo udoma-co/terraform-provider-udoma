@@ -93,8 +93,8 @@ func modelListToStringSlice(in basetypes.ListValue) []string {
 }
 
 type EnumType interface {
-	api.CaseStatusEnum | api.CaseActionEnum | api.UserTypeEnum |
-		api.BaseCaseConfig | api.CaseFeedbackModeEnum
+	api.CaseStatusEnum | api.CaseActionEnum |
+		api.UserTypeEnum | api.CaseFeedbackModeEnum
 }
 
 func modelListToEnumSlice[T EnumType](in basetypes.ListValue) []T {

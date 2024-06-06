@@ -16,14 +16,13 @@ import (
 	"fmt"
 )
 
-// checks if the TenantChange type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &TenantChange{}
+// checks if the RentUpdate type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &RentUpdate{}
 
-// TenantChange A change to the tenants of a property. This is used to indicate that a tenant has moved out or moved in. To be able to know whe stayed in the property, we also provide the list of tenants that remained.
-type TenantChange struct {
+// RentUpdate A rent update is a change to the monthly amount due for a rent of a property.
+type RentUpdate struct {
 	// generated unique ID
-	Id     string `json:"id"`
-	Tenant Tenant `json:"tenant"`
+	Id string `json:"id"`
 	// The timestamp of when the tenant was created
 	CreatedAt int64 `json:"created_at"`
 	// The timestamp of when the tenant was last updated
@@ -35,38 +34,39 @@ type TenantChange struct {
 	// The ID of the tenancy that this update is for
 	TenancyRef string `json:"tenancy_ref"`
 	// The date when the update will enter into force
-	EntryIntoForce int64                  `json:"entry_into_force"`
-	Action         TenantChangeActionEnum `json:"action"`
+	EntryIntoForce int64    `json:"entry_into_force"`
+	Rent           RentData `json:"rent"`
+	// A mask on which fields of rent to update. We cannot leave them empty because the generator doesn't differentiate between 0 and empty.
+	Mask *int32 `json:"mask,omitempty"`
 }
 
-type _TenantChange TenantChange
+type _RentUpdate RentUpdate
 
-// NewTenantChange instantiates a new TenantChange object
+// NewRentUpdate instantiates a new RentUpdate object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTenantChange(id string, tenant Tenant, createdAt int64, updatedAt int64, tenancyRef string, entryIntoForce int64, action TenantChangeActionEnum) *TenantChange {
-	this := TenantChange{}
+func NewRentUpdate(id string, createdAt int64, updatedAt int64, tenancyRef string, entryIntoForce int64, rent RentData) *RentUpdate {
+	this := RentUpdate{}
 	this.Id = id
-	this.Tenant = tenant
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
 	this.TenancyRef = tenancyRef
 	this.EntryIntoForce = entryIntoForce
-	this.Action = action
+	this.Rent = rent
 	return &this
 }
 
-// NewTenantChangeWithDefaults instantiates a new TenantChange object
+// NewRentUpdateWithDefaults instantiates a new RentUpdate object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewTenantChangeWithDefaults() *TenantChange {
-	this := TenantChange{}
+func NewRentUpdateWithDefaults() *RentUpdate {
+	this := RentUpdate{}
 	return &this
 }
 
 // GetId returns the Id field value
-func (o *TenantChange) GetId() string {
+func (o *RentUpdate) GetId() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -77,7 +77,7 @@ func (o *TenantChange) GetId() string {
 
 // GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
-func (o *TenantChange) GetIdOk() (*string, bool) {
+func (o *RentUpdate) GetIdOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -85,36 +85,12 @@ func (o *TenantChange) GetIdOk() (*string, bool) {
 }
 
 // SetId sets field value
-func (o *TenantChange) SetId(v string) {
+func (o *RentUpdate) SetId(v string) {
 	o.Id = v
 }
 
-// GetTenant returns the Tenant field value
-func (o *TenantChange) GetTenant() Tenant {
-	if o == nil {
-		var ret Tenant
-		return ret
-	}
-
-	return o.Tenant
-}
-
-// GetTenantOk returns a tuple with the Tenant field value
-// and a boolean to check if the value has been set.
-func (o *TenantChange) GetTenantOk() (*Tenant, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Tenant, true
-}
-
-// SetTenant sets field value
-func (o *TenantChange) SetTenant(v Tenant) {
-	o.Tenant = v
-}
-
 // GetCreatedAt returns the CreatedAt field value
-func (o *TenantChange) GetCreatedAt() int64 {
+func (o *RentUpdate) GetCreatedAt() int64 {
 	if o == nil {
 		var ret int64
 		return ret
@@ -125,7 +101,7 @@ func (o *TenantChange) GetCreatedAt() int64 {
 
 // GetCreatedAtOk returns a tuple with the CreatedAt field value
 // and a boolean to check if the value has been set.
-func (o *TenantChange) GetCreatedAtOk() (*int64, bool) {
+func (o *RentUpdate) GetCreatedAtOk() (*int64, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -133,12 +109,12 @@ func (o *TenantChange) GetCreatedAtOk() (*int64, bool) {
 }
 
 // SetCreatedAt sets field value
-func (o *TenantChange) SetCreatedAt(v int64) {
+func (o *RentUpdate) SetCreatedAt(v int64) {
 	o.CreatedAt = v
 }
 
 // GetUpdatedAt returns the UpdatedAt field value
-func (o *TenantChange) GetUpdatedAt() int64 {
+func (o *RentUpdate) GetUpdatedAt() int64 {
 	if o == nil {
 		var ret int64
 		return ret
@@ -149,7 +125,7 @@ func (o *TenantChange) GetUpdatedAt() int64 {
 
 // GetUpdatedAtOk returns a tuple with the UpdatedAt field value
 // and a boolean to check if the value has been set.
-func (o *TenantChange) GetUpdatedAtOk() (*int64, bool) {
+func (o *RentUpdate) GetUpdatedAtOk() (*int64, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -157,12 +133,12 @@ func (o *TenantChange) GetUpdatedAtOk() (*int64, bool) {
 }
 
 // SetUpdatedAt sets field value
-func (o *TenantChange) SetUpdatedAt(v int64) {
+func (o *RentUpdate) SetUpdatedAt(v int64) {
 	o.UpdatedAt = v
 }
 
 // GetExternalId returns the ExternalId field value if set, zero value otherwise.
-func (o *TenantChange) GetExternalId() string {
+func (o *RentUpdate) GetExternalId() string {
 	if o == nil || IsNil(o.ExternalId) {
 		var ret string
 		return ret
@@ -172,7 +148,7 @@ func (o *TenantChange) GetExternalId() string {
 
 // GetExternalIdOk returns a tuple with the ExternalId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TenantChange) GetExternalIdOk() (*string, bool) {
+func (o *RentUpdate) GetExternalIdOk() (*string, bool) {
 	if o == nil || IsNil(o.ExternalId) {
 		return nil, false
 	}
@@ -180,7 +156,7 @@ func (o *TenantChange) GetExternalIdOk() (*string, bool) {
 }
 
 // HasExternalId returns a boolean if a field has been set.
-func (o *TenantChange) HasExternalId() bool {
+func (o *RentUpdate) HasExternalId() bool {
 	if o != nil && !IsNil(o.ExternalId) {
 		return true
 	}
@@ -189,12 +165,12 @@ func (o *TenantChange) HasExternalId() bool {
 }
 
 // SetExternalId gets a reference to the given string and assigns it to the ExternalId field.
-func (o *TenantChange) SetExternalId(v string) {
+func (o *RentUpdate) SetExternalId(v string) {
 	o.ExternalId = &v
 }
 
 // GetExternalSource returns the ExternalSource field value if set, zero value otherwise.
-func (o *TenantChange) GetExternalSource() string {
+func (o *RentUpdate) GetExternalSource() string {
 	if o == nil || IsNil(o.ExternalSource) {
 		var ret string
 		return ret
@@ -204,7 +180,7 @@ func (o *TenantChange) GetExternalSource() string {
 
 // GetExternalSourceOk returns a tuple with the ExternalSource field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TenantChange) GetExternalSourceOk() (*string, bool) {
+func (o *RentUpdate) GetExternalSourceOk() (*string, bool) {
 	if o == nil || IsNil(o.ExternalSource) {
 		return nil, false
 	}
@@ -212,7 +188,7 @@ func (o *TenantChange) GetExternalSourceOk() (*string, bool) {
 }
 
 // HasExternalSource returns a boolean if a field has been set.
-func (o *TenantChange) HasExternalSource() bool {
+func (o *RentUpdate) HasExternalSource() bool {
 	if o != nil && !IsNil(o.ExternalSource) {
 		return true
 	}
@@ -221,12 +197,12 @@ func (o *TenantChange) HasExternalSource() bool {
 }
 
 // SetExternalSource gets a reference to the given string and assigns it to the ExternalSource field.
-func (o *TenantChange) SetExternalSource(v string) {
+func (o *RentUpdate) SetExternalSource(v string) {
 	o.ExternalSource = &v
 }
 
 // GetTenancyRef returns the TenancyRef field value
-func (o *TenantChange) GetTenancyRef() string {
+func (o *RentUpdate) GetTenancyRef() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -237,7 +213,7 @@ func (o *TenantChange) GetTenancyRef() string {
 
 // GetTenancyRefOk returns a tuple with the TenancyRef field value
 // and a boolean to check if the value has been set.
-func (o *TenantChange) GetTenancyRefOk() (*string, bool) {
+func (o *RentUpdate) GetTenancyRefOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -245,12 +221,12 @@ func (o *TenantChange) GetTenancyRefOk() (*string, bool) {
 }
 
 // SetTenancyRef sets field value
-func (o *TenantChange) SetTenancyRef(v string) {
+func (o *RentUpdate) SetTenancyRef(v string) {
 	o.TenancyRef = v
 }
 
 // GetEntryIntoForce returns the EntryIntoForce field value
-func (o *TenantChange) GetEntryIntoForce() int64 {
+func (o *RentUpdate) GetEntryIntoForce() int64 {
 	if o == nil {
 		var ret int64
 		return ret
@@ -261,7 +237,7 @@ func (o *TenantChange) GetEntryIntoForce() int64 {
 
 // GetEntryIntoForceOk returns a tuple with the EntryIntoForce field value
 // and a boolean to check if the value has been set.
-func (o *TenantChange) GetEntryIntoForceOk() (*int64, bool) {
+func (o *RentUpdate) GetEntryIntoForceOk() (*int64, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -269,35 +245,67 @@ func (o *TenantChange) GetEntryIntoForceOk() (*int64, bool) {
 }
 
 // SetEntryIntoForce sets field value
-func (o *TenantChange) SetEntryIntoForce(v int64) {
+func (o *RentUpdate) SetEntryIntoForce(v int64) {
 	o.EntryIntoForce = v
 }
 
-// GetAction returns the Action field value
-func (o *TenantChange) GetAction() TenantChangeActionEnum {
+// GetRent returns the Rent field value
+func (o *RentUpdate) GetRent() RentData {
 	if o == nil {
-		var ret TenantChangeActionEnum
+		var ret RentData
 		return ret
 	}
 
-	return o.Action
+	return o.Rent
 }
 
-// GetActionOk returns a tuple with the Action field value
+// GetRentOk returns a tuple with the Rent field value
 // and a boolean to check if the value has been set.
-func (o *TenantChange) GetActionOk() (*TenantChangeActionEnum, bool) {
+func (o *RentUpdate) GetRentOk() (*RentData, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Action, true
+	return &o.Rent, true
 }
 
-// SetAction sets field value
-func (o *TenantChange) SetAction(v TenantChangeActionEnum) {
-	o.Action = v
+// SetRent sets field value
+func (o *RentUpdate) SetRent(v RentData) {
+	o.Rent = v
 }
 
-func (o TenantChange) MarshalJSON() ([]byte, error) {
+// GetMask returns the Mask field value if set, zero value otherwise.
+func (o *RentUpdate) GetMask() int32 {
+	if o == nil || IsNil(o.Mask) {
+		var ret int32
+		return ret
+	}
+	return *o.Mask
+}
+
+// GetMaskOk returns a tuple with the Mask field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RentUpdate) GetMaskOk() (*int32, bool) {
+	if o == nil || IsNil(o.Mask) {
+		return nil, false
+	}
+	return o.Mask, true
+}
+
+// HasMask returns a boolean if a field has been set.
+func (o *RentUpdate) HasMask() bool {
+	if o != nil && !IsNil(o.Mask) {
+		return true
+	}
+
+	return false
+}
+
+// SetMask gets a reference to the given int32 and assigns it to the Mask field.
+func (o *RentUpdate) SetMask(v int32) {
+	o.Mask = &v
+}
+
+func (o RentUpdate) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -305,10 +313,9 @@ func (o TenantChange) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o TenantChange) ToMap() (map[string]interface{}, error) {
+func (o RentUpdate) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["id"] = o.Id
-	toSerialize["tenant"] = o.Tenant
 	toSerialize["created_at"] = o.CreatedAt
 	toSerialize["updated_at"] = o.UpdatedAt
 	if !IsNil(o.ExternalId) {
@@ -319,22 +326,24 @@ func (o TenantChange) ToMap() (map[string]interface{}, error) {
 	}
 	toSerialize["tenancy_ref"] = o.TenancyRef
 	toSerialize["entry_into_force"] = o.EntryIntoForce
-	toSerialize["action"] = o.Action
+	toSerialize["rent"] = o.Rent
+	if !IsNil(o.Mask) {
+		toSerialize["mask"] = o.Mask
+	}
 	return toSerialize, nil
 }
 
-func (o *TenantChange) UnmarshalJSON(data []byte) (err error) {
+func (o *RentUpdate) UnmarshalJSON(data []byte) (err error) {
 	// This validates that all required properties are included in the JSON object
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"id",
-		"tenant",
 		"created_at",
 		"updated_at",
 		"tenancy_ref",
 		"entry_into_force",
-		"action",
+		"rent",
 	}
 
 	allProperties := make(map[string]interface{})
@@ -351,53 +360,53 @@ func (o *TenantChange) UnmarshalJSON(data []byte) (err error) {
 		}
 	}
 
-	varTenantChange := _TenantChange{}
+	varRentUpdate := _RentUpdate{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varTenantChange)
+	err = decoder.Decode(&varRentUpdate)
 
 	if err != nil {
 		return err
 	}
 
-	*o = TenantChange(varTenantChange)
+	*o = RentUpdate(varRentUpdate)
 
 	return err
 }
 
-type NullableTenantChange struct {
-	value *TenantChange
+type NullableRentUpdate struct {
+	value *RentUpdate
 	isSet bool
 }
 
-func (v NullableTenantChange) Get() *TenantChange {
+func (v NullableRentUpdate) Get() *RentUpdate {
 	return v.value
 }
 
-func (v *NullableTenantChange) Set(val *TenantChange) {
+func (v *NullableRentUpdate) Set(val *RentUpdate) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableTenantChange) IsSet() bool {
+func (v NullableRentUpdate) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableTenantChange) Unset() {
+func (v *NullableRentUpdate) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableTenantChange(val *TenantChange) *NullableTenantChange {
-	return &NullableTenantChange{value: val, isSet: true}
+func NewNullableRentUpdate(val *RentUpdate) *NullableRentUpdate {
+	return &NullableRentUpdate{value: val, isSet: true}
 }
 
-func (v NullableTenantChange) MarshalJSON() ([]byte, error) {
+func (v NullableRentUpdate) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableTenantChange) UnmarshalJSON(src []byte) error {
+func (v *NullableRentUpdate) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

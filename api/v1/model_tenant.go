@@ -37,7 +37,7 @@ type Tenant struct {
 	FirstName string `json:"first_name"`
 	// Last name of the tenant. In case of a company, this is the last name of the contact person within the company.
 	LastName string `json:"last_name"`
-	// Name of the company. Only used in case tenancy is between lessor and a company,  otherwise this field is empty.
+	// Name of the company. Only used in case tenancy is between lessor and a company, otherwise this field is empty.
 	Company *string `json:"company,omitempty"`
 	// The email address of the tenant. Used for sending communication to them, as well as used for invitations.
 	Email string `json:"email"`

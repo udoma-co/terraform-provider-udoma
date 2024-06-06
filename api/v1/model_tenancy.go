@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the Tenancy type satisfies the MappedNullable interface at compile time
@@ -20,35 +22,47 @@ var _ MappedNullable = &Tenancy{}
 // Tenancy A tenancy is a contract between a tenant and a property manager.
 type Tenancy struct {
 	// generated unique ID
-	Id *string `json:"id,omitempty"`
+	Id string `json:"id"`
 	// optional external ID, in case tenancy was created via backend integration
 	ExternalId *string `json:"external_id,omitempty"`
 	// optional external source, in case tenancy was created via backend integration
 	ExternalSource *string `json:"external_source,omitempty"`
 	// The timestamp of when the tenant was created
-	CreatedAt *int64 `json:"created_at,omitempty"`
+	CreatedAt int64 `json:"created_at"`
 	// The timestamp of when the tenant was last updated
-	UpdatedAt *int64 `json:"updated_at,omitempty"`
+	UpdatedAt int64 `json:"updated_at"`
 	// The ID of the property that is being rented out
-	PropertyRef *string `json:"property_ref,omitempty"`
-	// Indicates whether the tenancy is active. Active tenancies indicate the current contract between the tenants and the property manager.
-	Active *bool `json:"active,omitempty"`
+	PropertyRef string `json:"property_ref"`
 	// The timestamp of when the tenancy has started
-	StartDate *int64 `json:"start_date,omitempty"`
+	StartDate int64 `json:"start_date"`
 	// The timestamp of when the tenancy has ended or is scheduled to end (optional)
-	EndDate         *int64                   `json:"end_date,omitempty"`
-	ContractType    *TenancyContractTypeEnum `json:"contract_type,omitempty"`
-	RentInformation *RentInformation         `json:"rent_information,omitempty"`
+	EndDate      *int64              `json:"end_date,omitempty"`
+	DurationType TenancyDurationEnum `json:"duration_type"`
+	// Options to extend the contract if it's fixed term.
+	ExtensionOptions []int64     `json:"extension_options,omitempty"`
+	RentDetails      RentDetails `json:"rent_details"`
+	CurrentRent      RentData    `json:"current_rent"`
 	// The IDs of the tenants
-	Tenants []Tenant `json:"tenants,omitempty"`
+	Tenants []Tenant `json:"tenants"`
 }
+
+type _Tenancy Tenancy
 
 // NewTenancy instantiates a new Tenancy object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTenancy() *Tenancy {
+func NewTenancy(id string, createdAt int64, updatedAt int64, propertyRef string, startDate int64, durationType TenancyDurationEnum, rentDetails RentDetails, currentRent RentData, tenants []Tenant) *Tenancy {
 	this := Tenancy{}
+	this.Id = id
+	this.CreatedAt = createdAt
+	this.UpdatedAt = updatedAt
+	this.PropertyRef = propertyRef
+	this.StartDate = startDate
+	this.DurationType = durationType
+	this.RentDetails = rentDetails
+	this.CurrentRent = currentRent
+	this.Tenants = tenants
 	return &this
 }
 
@@ -60,36 +74,28 @@ func NewTenancyWithDefaults() *Tenancy {
 	return &this
 }
 
-// GetId returns the Id field value if set, zero value otherwise.
+// GetId returns the Id field value
 func (o *Tenancy) GetId() string {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Id
+
+	return o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
 func (o *Tenancy) GetIdOk() (*string, bool) {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Id, true
+	return &o.Id, true
 }
 
-// HasId returns a boolean if a field has been set.
-func (o *Tenancy) HasId() bool {
-	if o != nil && !IsNil(o.Id) {
-		return true
-	}
-
-	return false
-}
-
-// SetId gets a reference to the given string and assigns it to the Id field.
+// SetId sets field value
 func (o *Tenancy) SetId(v string) {
-	o.Id = &v
+	o.Id = v
 }
 
 // GetExternalId returns the ExternalId field value if set, zero value otherwise.
@@ -156,164 +162,100 @@ func (o *Tenancy) SetExternalSource(v string) {
 	o.ExternalSource = &v
 }
 
-// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
+// GetCreatedAt returns the CreatedAt field value
 func (o *Tenancy) GetCreatedAt() int64 {
-	if o == nil || IsNil(o.CreatedAt) {
+	if o == nil {
 		var ret int64
 		return ret
 	}
-	return *o.CreatedAt
+
+	return o.CreatedAt
 }
 
-// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
+// GetCreatedAtOk returns a tuple with the CreatedAt field value
 // and a boolean to check if the value has been set.
 func (o *Tenancy) GetCreatedAtOk() (*int64, bool) {
-	if o == nil || IsNil(o.CreatedAt) {
+	if o == nil {
 		return nil, false
 	}
-	return o.CreatedAt, true
+	return &o.CreatedAt, true
 }
 
-// HasCreatedAt returns a boolean if a field has been set.
-func (o *Tenancy) HasCreatedAt() bool {
-	if o != nil && !IsNil(o.CreatedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetCreatedAt gets a reference to the given int64 and assigns it to the CreatedAt field.
+// SetCreatedAt sets field value
 func (o *Tenancy) SetCreatedAt(v int64) {
-	o.CreatedAt = &v
+	o.CreatedAt = v
 }
 
-// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
+// GetUpdatedAt returns the UpdatedAt field value
 func (o *Tenancy) GetUpdatedAt() int64 {
-	if o == nil || IsNil(o.UpdatedAt) {
+	if o == nil {
 		var ret int64
 		return ret
 	}
-	return *o.UpdatedAt
+
+	return o.UpdatedAt
 }
 
-// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
 // and a boolean to check if the value has been set.
 func (o *Tenancy) GetUpdatedAtOk() (*int64, bool) {
-	if o == nil || IsNil(o.UpdatedAt) {
+	if o == nil {
 		return nil, false
 	}
-	return o.UpdatedAt, true
+	return &o.UpdatedAt, true
 }
 
-// HasUpdatedAt returns a boolean if a field has been set.
-func (o *Tenancy) HasUpdatedAt() bool {
-	if o != nil && !IsNil(o.UpdatedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetUpdatedAt gets a reference to the given int64 and assigns it to the UpdatedAt field.
+// SetUpdatedAt sets field value
 func (o *Tenancy) SetUpdatedAt(v int64) {
-	o.UpdatedAt = &v
+	o.UpdatedAt = v
 }
 
-// GetPropertyRef returns the PropertyRef field value if set, zero value otherwise.
+// GetPropertyRef returns the PropertyRef field value
 func (o *Tenancy) GetPropertyRef() string {
-	if o == nil || IsNil(o.PropertyRef) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.PropertyRef
+
+	return o.PropertyRef
 }
 
-// GetPropertyRefOk returns a tuple with the PropertyRef field value if set, nil otherwise
+// GetPropertyRefOk returns a tuple with the PropertyRef field value
 // and a boolean to check if the value has been set.
 func (o *Tenancy) GetPropertyRefOk() (*string, bool) {
-	if o == nil || IsNil(o.PropertyRef) {
+	if o == nil {
 		return nil, false
 	}
-	return o.PropertyRef, true
+	return &o.PropertyRef, true
 }
 
-// HasPropertyRef returns a boolean if a field has been set.
-func (o *Tenancy) HasPropertyRef() bool {
-	if o != nil && !IsNil(o.PropertyRef) {
-		return true
-	}
-
-	return false
-}
-
-// SetPropertyRef gets a reference to the given string and assigns it to the PropertyRef field.
+// SetPropertyRef sets field value
 func (o *Tenancy) SetPropertyRef(v string) {
-	o.PropertyRef = &v
+	o.PropertyRef = v
 }
 
-// GetActive returns the Active field value if set, zero value otherwise.
-func (o *Tenancy) GetActive() bool {
-	if o == nil || IsNil(o.Active) {
-		var ret bool
-		return ret
-	}
-	return *o.Active
-}
-
-// GetActiveOk returns a tuple with the Active field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Tenancy) GetActiveOk() (*bool, bool) {
-	if o == nil || IsNil(o.Active) {
-		return nil, false
-	}
-	return o.Active, true
-}
-
-// HasActive returns a boolean if a field has been set.
-func (o *Tenancy) HasActive() bool {
-	if o != nil && !IsNil(o.Active) {
-		return true
-	}
-
-	return false
-}
-
-// SetActive gets a reference to the given bool and assigns it to the Active field.
-func (o *Tenancy) SetActive(v bool) {
-	o.Active = &v
-}
-
-// GetStartDate returns the StartDate field value if set, zero value otherwise.
+// GetStartDate returns the StartDate field value
 func (o *Tenancy) GetStartDate() int64 {
-	if o == nil || IsNil(o.StartDate) {
+	if o == nil {
 		var ret int64
 		return ret
 	}
-	return *o.StartDate
+
+	return o.StartDate
 }
 
-// GetStartDateOk returns a tuple with the StartDate field value if set, nil otherwise
+// GetStartDateOk returns a tuple with the StartDate field value
 // and a boolean to check if the value has been set.
 func (o *Tenancy) GetStartDateOk() (*int64, bool) {
-	if o == nil || IsNil(o.StartDate) {
+	if o == nil {
 		return nil, false
 	}
-	return o.StartDate, true
+	return &o.StartDate, true
 }
 
-// HasStartDate returns a boolean if a field has been set.
-func (o *Tenancy) HasStartDate() bool {
-	if o != nil && !IsNil(o.StartDate) {
-		return true
-	}
-
-	return false
-}
-
-// SetStartDate gets a reference to the given int64 and assigns it to the StartDate field.
+// SetStartDate sets field value
 func (o *Tenancy) SetStartDate(v int64) {
-	o.StartDate = &v
+	o.StartDate = v
 }
 
 // GetEndDate returns the EndDate field value if set, zero value otherwise.
@@ -348,98 +290,130 @@ func (o *Tenancy) SetEndDate(v int64) {
 	o.EndDate = &v
 }
 
-// GetContractType returns the ContractType field value if set, zero value otherwise.
-func (o *Tenancy) GetContractType() TenancyContractTypeEnum {
-	if o == nil || IsNil(o.ContractType) {
-		var ret TenancyContractTypeEnum
+// GetDurationType returns the DurationType field value
+func (o *Tenancy) GetDurationType() TenancyDurationEnum {
+	if o == nil {
+		var ret TenancyDurationEnum
 		return ret
 	}
-	return *o.ContractType
+
+	return o.DurationType
 }
 
-// GetContractTypeOk returns a tuple with the ContractType field value if set, nil otherwise
+// GetDurationTypeOk returns a tuple with the DurationType field value
 // and a boolean to check if the value has been set.
-func (o *Tenancy) GetContractTypeOk() (*TenancyContractTypeEnum, bool) {
-	if o == nil || IsNil(o.ContractType) {
+func (o *Tenancy) GetDurationTypeOk() (*TenancyDurationEnum, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.ContractType, true
+	return &o.DurationType, true
 }
 
-// HasContractType returns a boolean if a field has been set.
-func (o *Tenancy) HasContractType() bool {
-	if o != nil && !IsNil(o.ContractType) {
+// SetDurationType sets field value
+func (o *Tenancy) SetDurationType(v TenancyDurationEnum) {
+	o.DurationType = v
+}
+
+// GetExtensionOptions returns the ExtensionOptions field value if set, zero value otherwise.
+func (o *Tenancy) GetExtensionOptions() []int64 {
+	if o == nil || IsNil(o.ExtensionOptions) {
+		var ret []int64
+		return ret
+	}
+	return o.ExtensionOptions
+}
+
+// GetExtensionOptionsOk returns a tuple with the ExtensionOptions field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Tenancy) GetExtensionOptionsOk() ([]int64, bool) {
+	if o == nil || IsNil(o.ExtensionOptions) {
+		return nil, false
+	}
+	return o.ExtensionOptions, true
+}
+
+// HasExtensionOptions returns a boolean if a field has been set.
+func (o *Tenancy) HasExtensionOptions() bool {
+	if o != nil && !IsNil(o.ExtensionOptions) {
 		return true
 	}
 
 	return false
 }
 
-// SetContractType gets a reference to the given TenancyContractTypeEnum and assigns it to the ContractType field.
-func (o *Tenancy) SetContractType(v TenancyContractTypeEnum) {
-	o.ContractType = &v
+// SetExtensionOptions gets a reference to the given []int64 and assigns it to the ExtensionOptions field.
+func (o *Tenancy) SetExtensionOptions(v []int64) {
+	o.ExtensionOptions = v
 }
 
-// GetRentInformation returns the RentInformation field value if set, zero value otherwise.
-func (o *Tenancy) GetRentInformation() RentInformation {
-	if o == nil || IsNil(o.RentInformation) {
-		var ret RentInformation
+// GetRentDetails returns the RentDetails field value
+func (o *Tenancy) GetRentDetails() RentDetails {
+	if o == nil {
+		var ret RentDetails
 		return ret
 	}
-	return *o.RentInformation
+
+	return o.RentDetails
 }
 
-// GetRentInformationOk returns a tuple with the RentInformation field value if set, nil otherwise
+// GetRentDetailsOk returns a tuple with the RentDetails field value
 // and a boolean to check if the value has been set.
-func (o *Tenancy) GetRentInformationOk() (*RentInformation, bool) {
-	if o == nil || IsNil(o.RentInformation) {
+func (o *Tenancy) GetRentDetailsOk() (*RentDetails, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.RentInformation, true
+	return &o.RentDetails, true
 }
 
-// HasRentInformation returns a boolean if a field has been set.
-func (o *Tenancy) HasRentInformation() bool {
-	if o != nil && !IsNil(o.RentInformation) {
-		return true
+// SetRentDetails sets field value
+func (o *Tenancy) SetRentDetails(v RentDetails) {
+	o.RentDetails = v
+}
+
+// GetCurrentRent returns the CurrentRent field value
+func (o *Tenancy) GetCurrentRent() RentData {
+	if o == nil {
+		var ret RentData
+		return ret
 	}
 
-	return false
+	return o.CurrentRent
 }
 
-// SetRentInformation gets a reference to the given RentInformation and assigns it to the RentInformation field.
-func (o *Tenancy) SetRentInformation(v RentInformation) {
-	o.RentInformation = &v
+// GetCurrentRentOk returns a tuple with the CurrentRent field value
+// and a boolean to check if the value has been set.
+func (o *Tenancy) GetCurrentRentOk() (*RentData, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.CurrentRent, true
 }
 
-// GetTenants returns the Tenants field value if set, zero value otherwise.
+// SetCurrentRent sets field value
+func (o *Tenancy) SetCurrentRent(v RentData) {
+	o.CurrentRent = v
+}
+
+// GetTenants returns the Tenants field value
 func (o *Tenancy) GetTenants() []Tenant {
-	if o == nil || IsNil(o.Tenants) {
+	if o == nil {
 		var ret []Tenant
 		return ret
 	}
+
 	return o.Tenants
 }
 
-// GetTenantsOk returns a tuple with the Tenants field value if set, nil otherwise
+// GetTenantsOk returns a tuple with the Tenants field value
 // and a boolean to check if the value has been set.
 func (o *Tenancy) GetTenantsOk() ([]Tenant, bool) {
-	if o == nil || IsNil(o.Tenants) {
+	if o == nil {
 		return nil, false
 	}
 	return o.Tenants, true
 }
 
-// HasTenants returns a boolean if a field has been set.
-func (o *Tenancy) HasTenants() bool {
-	if o != nil && !IsNil(o.Tenants) {
-		return true
-	}
-
-	return false
-}
-
-// SetTenants gets a reference to the given []Tenant and assigns it to the Tenants field.
+// SetTenants sets field value
 func (o *Tenancy) SetTenants(v []Tenant) {
 	o.Tenants = v
 }
@@ -454,43 +428,73 @@ func (o Tenancy) MarshalJSON() ([]byte, error) {
 
 func (o Tenancy) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Id) {
-		toSerialize["id"] = o.Id
-	}
+	toSerialize["id"] = o.Id
 	if !IsNil(o.ExternalId) {
 		toSerialize["external_id"] = o.ExternalId
 	}
 	if !IsNil(o.ExternalSource) {
 		toSerialize["external_source"] = o.ExternalSource
 	}
-	if !IsNil(o.CreatedAt) {
-		toSerialize["created_at"] = o.CreatedAt
-	}
-	if !IsNil(o.UpdatedAt) {
-		toSerialize["updated_at"] = o.UpdatedAt
-	}
-	if !IsNil(o.PropertyRef) {
-		toSerialize["property_ref"] = o.PropertyRef
-	}
-	if !IsNil(o.Active) {
-		toSerialize["active"] = o.Active
-	}
-	if !IsNil(o.StartDate) {
-		toSerialize["start_date"] = o.StartDate
-	}
+	toSerialize["created_at"] = o.CreatedAt
+	toSerialize["updated_at"] = o.UpdatedAt
+	toSerialize["property_ref"] = o.PropertyRef
+	toSerialize["start_date"] = o.StartDate
 	if !IsNil(o.EndDate) {
 		toSerialize["end_date"] = o.EndDate
 	}
-	if !IsNil(o.ContractType) {
-		toSerialize["contract_type"] = o.ContractType
+	toSerialize["duration_type"] = o.DurationType
+	if !IsNil(o.ExtensionOptions) {
+		toSerialize["extension_options"] = o.ExtensionOptions
 	}
-	if !IsNil(o.RentInformation) {
-		toSerialize["rent_information"] = o.RentInformation
-	}
-	if !IsNil(o.Tenants) {
-		toSerialize["tenants"] = o.Tenants
-	}
+	toSerialize["rent_details"] = o.RentDetails
+	toSerialize["current_rent"] = o.CurrentRent
+	toSerialize["tenants"] = o.Tenants
 	return toSerialize, nil
+}
+
+func (o *Tenancy) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"id",
+		"created_at",
+		"updated_at",
+		"property_ref",
+		"start_date",
+		"duration_type",
+		"rent_details",
+		"current_rent",
+		"tenants",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varTenancy := _Tenancy{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varTenancy)
+
+	if err != nil {
+		return err
+	}
+
+	*o = Tenancy(varTenancy)
+
+	return err
 }
 
 type NullableTenancy struct {

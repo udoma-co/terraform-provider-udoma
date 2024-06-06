@@ -23,6 +23,12 @@ type RentData struct {
 	Rent *float64 `json:"rent,omitempty"`
 	// the amount of incidentals paid monthly
 	Incidentals *float64 `json:"incidentals,omitempty"`
+	// In case the rent type is INDEXED, this contains the timestamp of the last published index value at the time of the rent change.
+	IndexMonth *int64 `json:"index_month,omitempty"`
+	// In case the rent type is INDEXED, this contains the index value published at `index_month` and valid for the current rent.
+	IndexPoints *float64 `json:"index_points,omitempty"`
+	// Additional costs that are not part of the rent, but are paid by the tenant, e.g. garage rent, parking space rent, etc.
+	AdditionalCosts []AdditionalRentCost `json:"additional_costs,omitempty"`
 }
 
 // NewRentData instantiates a new RentData object
@@ -106,6 +112,102 @@ func (o *RentData) SetIncidentals(v float64) {
 	o.Incidentals = &v
 }
 
+// GetIndexMonth returns the IndexMonth field value if set, zero value otherwise.
+func (o *RentData) GetIndexMonth() int64 {
+	if o == nil || IsNil(o.IndexMonth) {
+		var ret int64
+		return ret
+	}
+	return *o.IndexMonth
+}
+
+// GetIndexMonthOk returns a tuple with the IndexMonth field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RentData) GetIndexMonthOk() (*int64, bool) {
+	if o == nil || IsNil(o.IndexMonth) {
+		return nil, false
+	}
+	return o.IndexMonth, true
+}
+
+// HasIndexMonth returns a boolean if a field has been set.
+func (o *RentData) HasIndexMonth() bool {
+	if o != nil && !IsNil(o.IndexMonth) {
+		return true
+	}
+
+	return false
+}
+
+// SetIndexMonth gets a reference to the given int64 and assigns it to the IndexMonth field.
+func (o *RentData) SetIndexMonth(v int64) {
+	o.IndexMonth = &v
+}
+
+// GetIndexPoints returns the IndexPoints field value if set, zero value otherwise.
+func (o *RentData) GetIndexPoints() float64 {
+	if o == nil || IsNil(o.IndexPoints) {
+		var ret float64
+		return ret
+	}
+	return *o.IndexPoints
+}
+
+// GetIndexPointsOk returns a tuple with the IndexPoints field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RentData) GetIndexPointsOk() (*float64, bool) {
+	if o == nil || IsNil(o.IndexPoints) {
+		return nil, false
+	}
+	return o.IndexPoints, true
+}
+
+// HasIndexPoints returns a boolean if a field has been set.
+func (o *RentData) HasIndexPoints() bool {
+	if o != nil && !IsNil(o.IndexPoints) {
+		return true
+	}
+
+	return false
+}
+
+// SetIndexPoints gets a reference to the given float64 and assigns it to the IndexPoints field.
+func (o *RentData) SetIndexPoints(v float64) {
+	o.IndexPoints = &v
+}
+
+// GetAdditionalCosts returns the AdditionalCosts field value if set, zero value otherwise.
+func (o *RentData) GetAdditionalCosts() []AdditionalRentCost {
+	if o == nil || IsNil(o.AdditionalCosts) {
+		var ret []AdditionalRentCost
+		return ret
+	}
+	return o.AdditionalCosts
+}
+
+// GetAdditionalCostsOk returns a tuple with the AdditionalCosts field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RentData) GetAdditionalCostsOk() ([]AdditionalRentCost, bool) {
+	if o == nil || IsNil(o.AdditionalCosts) {
+		return nil, false
+	}
+	return o.AdditionalCosts, true
+}
+
+// HasAdditionalCosts returns a boolean if a field has been set.
+func (o *RentData) HasAdditionalCosts() bool {
+	if o != nil && !IsNil(o.AdditionalCosts) {
+		return true
+	}
+
+	return false
+}
+
+// SetAdditionalCosts gets a reference to the given []AdditionalRentCost and assigns it to the AdditionalCosts field.
+func (o *RentData) SetAdditionalCosts(v []AdditionalRentCost) {
+	o.AdditionalCosts = v
+}
+
 func (o RentData) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -121,6 +223,15 @@ func (o RentData) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Incidentals) {
 		toSerialize["incidentals"] = o.Incidentals
+	}
+	if !IsNil(o.IndexMonth) {
+		toSerialize["index_month"] = o.IndexMonth
+	}
+	if !IsNil(o.IndexPoints) {
+		toSerialize["index_points"] = o.IndexPoints
+	}
+	if !IsNil(o.AdditionalCosts) {
+		toSerialize["additional_costs"] = o.AdditionalCosts
 	}
 	return toSerialize, nil
 }

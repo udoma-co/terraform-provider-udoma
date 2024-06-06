@@ -19,9 +19,6 @@ var _ MappedNullable = &CaseConfig{}
 
 // CaseConfig Defines custom behaviour of a case, based on the case template that was  used to create it.
 type CaseConfig struct {
-	BaseConfig *BaseCaseConfig `json:"base_config,omitempty"`
-	// Indicates if the default status configuration should be extended with  the custom configuration. If false, the custom configuration will  replace the default configuration. If true, only the actions that are  defined in the custom configuration will override the default ones.
-	ExtendDefaultStatusConfig *bool `json:"extend_default_status_config,omitempty"`
 	// The configuration for the status transition of a case. This is used to  determine which status changes are allowed by which party at which time.
 	StatusConfig []CaseStatusConfig `json:"status_config,omitempty"`
 	// The configuration for sending out reminders for a case.
@@ -45,70 +42,6 @@ func NewCaseConfig() *CaseConfig {
 func NewCaseConfigWithDefaults() *CaseConfig {
 	this := CaseConfig{}
 	return &this
-}
-
-// GetBaseConfig returns the BaseConfig field value if set, zero value otherwise.
-func (o *CaseConfig) GetBaseConfig() BaseCaseConfig {
-	if o == nil || IsNil(o.BaseConfig) {
-		var ret BaseCaseConfig
-		return ret
-	}
-	return *o.BaseConfig
-}
-
-// GetBaseConfigOk returns a tuple with the BaseConfig field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CaseConfig) GetBaseConfigOk() (*BaseCaseConfig, bool) {
-	if o == nil || IsNil(o.BaseConfig) {
-		return nil, false
-	}
-	return o.BaseConfig, true
-}
-
-// HasBaseConfig returns a boolean if a field has been set.
-func (o *CaseConfig) HasBaseConfig() bool {
-	if o != nil && !IsNil(o.BaseConfig) {
-		return true
-	}
-
-	return false
-}
-
-// SetBaseConfig gets a reference to the given BaseCaseConfig and assigns it to the BaseConfig field.
-func (o *CaseConfig) SetBaseConfig(v BaseCaseConfig) {
-	o.BaseConfig = &v
-}
-
-// GetExtendDefaultStatusConfig returns the ExtendDefaultStatusConfig field value if set, zero value otherwise.
-func (o *CaseConfig) GetExtendDefaultStatusConfig() bool {
-	if o == nil || IsNil(o.ExtendDefaultStatusConfig) {
-		var ret bool
-		return ret
-	}
-	return *o.ExtendDefaultStatusConfig
-}
-
-// GetExtendDefaultStatusConfigOk returns a tuple with the ExtendDefaultStatusConfig field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CaseConfig) GetExtendDefaultStatusConfigOk() (*bool, bool) {
-	if o == nil || IsNil(o.ExtendDefaultStatusConfig) {
-		return nil, false
-	}
-	return o.ExtendDefaultStatusConfig, true
-}
-
-// HasExtendDefaultStatusConfig returns a boolean if a field has been set.
-func (o *CaseConfig) HasExtendDefaultStatusConfig() bool {
-	if o != nil && !IsNil(o.ExtendDefaultStatusConfig) {
-		return true
-	}
-
-	return false
-}
-
-// SetExtendDefaultStatusConfig gets a reference to the given bool and assigns it to the ExtendDefaultStatusConfig field.
-func (o *CaseConfig) SetExtendDefaultStatusConfig(v bool) {
-	o.ExtendDefaultStatusConfig = &v
 }
 
 // GetStatusConfig returns the StatusConfig field value if set, zero value otherwise.
@@ -217,12 +150,6 @@ func (o CaseConfig) MarshalJSON() ([]byte, error) {
 
 func (o CaseConfig) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.BaseConfig) {
-		toSerialize["base_config"] = o.BaseConfig
-	}
-	if !IsNil(o.ExtendDefaultStatusConfig) {
-		toSerialize["extend_default_status_config"] = o.ExtendDefaultStatusConfig
-	}
 	if !IsNil(o.StatusConfig) {
 		toSerialize["status_config"] = o.StatusConfig
 	}

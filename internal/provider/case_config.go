@@ -9,27 +9,13 @@ import (
 )
 
 type CaseConfigModel struct {
-	BaseConfig                types.String                     `tfsdk:"base_config"`
-	ExtendDefaultStatusConfig types.Bool                       `tfsdk:"extend_default_status_config"`
-	StatusConfig              []CaseStatusConfigModel          `tfsdk:"status_config"`
-	Reminders                 []CaseReminderConfigModel        `tfsdk:"reminders"`
-	AutomaticActions          []CaseAutomaticActionConfigModel `tfsdk:"automatic_actions"`
+	StatusConfig     []CaseStatusConfigModel          `tfsdk:"status_config"`
+	Reminders        []CaseReminderConfigModel        `tfsdk:"reminders"`
+	AutomaticActions []CaseAutomaticActionConfigModel `tfsdk:"automatic_actions"`
 }
 
 func CaseConfigModelNestedSchema() map[string]schema.Attribute {
 	return map[string]schema.Attribute{
-		"base_config": schema.StringAttribute{
-			Optional: true,
-			Description: `The ID of the base config that should be used for this case. If 
-			not set, the default config will be used.`,
-		},
-		"extend_default_status_config": schema.BoolAttribute{
-			Optional: true,
-			Description: `Indicates if the default status configuration should be extended 
-			with the custom configuration. If false, the custom configuration will replace 
-			the default configuration. If true, only the actions that are defined in the 
-			custom configuration will override the default ones.`,
-		},
 		"status_config": schema.ListNestedAttribute{
 			Optional:     true,
 			NestedObject: caseStatusConfigModelNestedSchema(),
@@ -67,33 +53,16 @@ func (cfg *CaseConfigModel) toApiRequest() *v1.CaseConfig {
 		automaticActions[i] = *cfg.AutomaticActions[i].toApiRequest()
 	}
 
-	baseConfig := v1.BaseCaseConfig(cfg.BaseConfig.ValueString())
-
 	return &v1.CaseConfig{
-		BaseConfig:                &baseConfig,
-		ExtendDefaultStatusConfig: cfg.ExtendDefaultStatusConfig.ValueBoolPointer(),
-		StatusConfig:              statusConfig,
-		Reminders:                 reminders,
-		AutomaticActions:          automaticActions,
+		StatusConfig:     statusConfig,
+		Reminders:        reminders,
+		AutomaticActions: automaticActions,
 	}
 }
 
 func (cfg *CaseConfigModel) fromApiResponse(resp *v1.CaseConfig) bool {
 
 	isEmpty := true
-	if !isEmptyEnum(resp.BaseConfig) {
-		cfg.BaseConfig = types.StringValue(string(*resp.BaseConfig))
-		isEmpty = false
-	} else {
-		cfg.BaseConfig = basetypes.NewStringNull()
-	}
-
-	if !isEmptyBool(resp.ExtendDefaultStatusConfig) {
-		cfg.ExtendDefaultStatusConfig = types.BoolValue(*resp.ExtendDefaultStatusConfig)
-		isEmpty = false
-	} else {
-		cfg.ExtendDefaultStatusConfig = basetypes.NewBoolNull()
-	}
 
 	if len(resp.StatusConfig) != 0 {
 		cfg.StatusConfig = make([]CaseStatusConfigModel, len(resp.StatusConfig))
