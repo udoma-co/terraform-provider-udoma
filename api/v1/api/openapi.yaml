@@ -13691,11 +13691,12 @@ components:
           type: string
         init_data:
           description: |
-            Optional initialisation data for the inputs of the template. If not set, the default values of the inputs will be used. To be provided as JSON serialised object, where the values are  NOT JSON serialised themselves.
+            Optional initialisation data for the inputs of the template. If not set, the default values of the inputs will be used. To be provided as JSON serialised object, where the values are NOT JSON serialised themselves.
           type: string
       type: object
     DocumentGeneration:
-      description: "The status and content of a document generation \n"
+      description: |
+        The status and content of a document generation
       example:
         template: template
         input_data: input_data
@@ -13728,15 +13729,15 @@ components:
             The ID of the template used to generate the document
           type: string
         name:
-          description: "The name of the document, as computed using the name expression\
-            \ of the template"
+          description: |
+            The name of the document, as computed using the name expression of the template
           type: string
         input_data:
           description: "The data from the template custom form, serialised as JSON"
           type: string
         data:
-          description: Optional EditorJS data used to generate the document (JSON
-            of the data object)
+          description: |
+            Optional EditorJS data used to generate the document (JSON of the data object)
           type: string
         pdf_url:
           description: The reference to the generated document
@@ -13936,18 +13937,19 @@ components:
             $ref: '#/components/schemas/DocumentSigner'
           type: array
         signed_doc_ref:
-          description: "The reference to the signed document, once all signatures\
-            \ are completed (link to attachment)"
+          description: |
+            The reference to the signed document, once all signatures are completed (link to attachment)
           type: string
         signed_doc_audit_ref:
-          description: "The reference to the signed document audit, once all signatures\
-            \ are completed (link to attachment)"
+          description: |
+            The reference to the signed document audit, once all signatures are completed (link to attachment)
           type: string
       type: object
     CreateOrUpdateDocumentTemplateRequest:
       description: |
         Create or update a document template
       example:
+        placeholders_script: placeholders_script
         name_expression: name_expression
         inputs:
           layout:
@@ -14041,19 +14043,6 @@ components:
           allow_text_edit: true
           include_page_numbers: true
           include_footer_branding: true
-        placeholders:
-        - repeat_tokens_expression: repeat_tokens_expression
-          value_expression: value_expression
-          value: value
-          repeated: true
-          repeat_values_expression: repeat_values_expression
-          token: token
-        - repeat_tokens_expression: repeat_tokens_expression
-          value_expression: value_expression
-          value: value
-          repeated: true
-          repeat_values_expression: repeat_values_expression
-          token: token
         description: description
         content: content
         signatures:
@@ -14113,11 +14102,9 @@ components:
           type: string
         inputs:
           $ref: '#/components/schemas/CustomForm'
-        placeholders:
-          description: The list of placeholders used in the template
-          items:
-            $ref: '#/components/schemas/DocumentPlaceholder'
-          type: array
+        placeholders_script:
+          description: The script we run to generate the object used in the template
+          type: string
         signatures:
           $ref: '#/components/schemas/DocumentTemplateSignatureConfguration'
       type: object
@@ -14133,47 +14120,12 @@ components:
           description: True if the generated document may be edited by the user
           type: boolean
         include_footer_branding:
-          description: True if the footer branding should be included in the document
-            PDF
+          description: |
+            True if the footer branding should be included in the document PDF
           type: boolean
         include_page_numbers:
           description: True if page numbers should be included in the document PDF
           type: boolean
-      type: object
-    DocumentPlaceholder:
-      description: |
-        A placeholder definition for a template
-      example:
-        repeat_tokens_expression: repeat_tokens_expression
-        value_expression: value_expression
-        value: value
-        repeated: true
-        repeat_values_expression: repeat_values_expression
-        token: token
-      properties:
-        token:
-          description: The placeholder token itself
-          type: string
-        value:
-          description: |
-            An optional initial value, either set directly, or computed using the value_expression.
-          type: string
-        value_expression:
-          description: |
-            An optional JS expression to be used to compute the initial value of the placeholder. This will  be used, if no value is set and will be ignored, if a placeholder is repeated.
-          type: string
-        repeated:
-          description: |
-            True if the placeholder can be set for multiple values, as defined in the repeat_values_expression
-          type: boolean
-        repeat_tokens_expression:
-          description: |
-            An optional JS expression to be used to compute the tokens of a repeated placeholder.  Must be set, if the placeholder is repeated.
-          type: string
-        repeat_values_expression:
-          description: |
-            An optional JS expression to be used to compute the values for the repeated placeholder. If set, must return an array of values.
-          type: string
       type: object
     DocumentTemplateSignatureConfguration:
       description: |
@@ -14228,12 +14180,12 @@ components:
           type: boolean
         expiration_days:
           description: |
-            The number of days after which the signature request expires. If not  specified, the default value is 7 days.
+            The number of days after which the signature request expires. If not specified, the default value is 7 days.
           format: int32
           type: integer
         custom_message:
           description: |
-            A custom message to be included in the signature request. If not  specified, the default message is used.
+            A custom message to be included in the signature request. If not specified, the default message is used.
           type: string
       type: object
     DocumentTemplateSignerDefinition:
@@ -14265,13 +14217,14 @@ components:
           type: string
         repeated:
           description: |
-            If set to true, the signer definition will be repeated for each value of the name and  contract data expressions.
+            If set to true, the signer definition will be repeated for each value of the name and contract data expressions.
           type: boolean
       type: object
     DocumentTemplate:
       description: |
         A template for generating documents
       example:
+        placeholders_script: placeholders_script
         name_expression: name_expression
         inputs:
           layout:
@@ -14365,19 +14318,6 @@ components:
           allow_text_edit: true
           include_page_numbers: true
           include_footer_branding: true
-        placeholders:
-        - repeat_tokens_expression: repeat_tokens_expression
-          value_expression: value_expression
-          value: value
-          repeated: true
-          repeat_values_expression: repeat_values_expression
-          token: token
-        - repeat_tokens_expression: repeat_tokens_expression
-          value_expression: value_expression
-          value: value
-          repeated: true
-          repeat_values_expression: repeat_values_expression
-          token: token
         description: description
         id: id
         content: content
@@ -14441,11 +14381,9 @@ components:
           type: string
         inputs:
           $ref: '#/components/schemas/CustomForm'
-        placeholders:
-          description: The list of placeholders used in the template
-          items:
-            $ref: '#/components/schemas/DocumentPlaceholder'
-          type: array
+        placeholders_script:
+          description: The script we run to generate the object used in the template
+          type: string
         signatures:
           $ref: '#/components/schemas/DocumentTemplateSignatureConfguration'
       type: object

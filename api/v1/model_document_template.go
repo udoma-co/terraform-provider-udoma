@@ -31,9 +31,9 @@ type DocumentTemplate struct {
 	// The source of the template, used to generate the document
 	Content *string     `json:"content,omitempty"`
 	Inputs  *CustomForm `json:"inputs,omitempty"`
-	// The list of placeholders used in the template
-	Placeholders []DocumentPlaceholder                  `json:"placeholders,omitempty"`
-	Signatures   *DocumentTemplateSignatureConfguration `json:"signatures,omitempty"`
+	// The script we run to generate the object used in the template
+	PlaceholdersScript *string                                `json:"placeholders_script,omitempty"`
+	Signatures         *DocumentTemplateSignatureConfguration `json:"signatures,omitempty"`
 }
 
 // NewDocumentTemplate instantiates a new DocumentTemplate object
@@ -277,36 +277,36 @@ func (o *DocumentTemplate) SetInputs(v CustomForm) {
 	o.Inputs = &v
 }
 
-// GetPlaceholders returns the Placeholders field value if set, zero value otherwise.
-func (o *DocumentTemplate) GetPlaceholders() []DocumentPlaceholder {
-	if o == nil || IsNil(o.Placeholders) {
-		var ret []DocumentPlaceholder
+// GetPlaceholdersScript returns the PlaceholdersScript field value if set, zero value otherwise.
+func (o *DocumentTemplate) GetPlaceholdersScript() string {
+	if o == nil || IsNil(o.PlaceholdersScript) {
+		var ret string
 		return ret
 	}
-	return o.Placeholders
+	return *o.PlaceholdersScript
 }
 
-// GetPlaceholdersOk returns a tuple with the Placeholders field value if set, nil otherwise
+// GetPlaceholdersScriptOk returns a tuple with the PlaceholdersScript field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DocumentTemplate) GetPlaceholdersOk() ([]DocumentPlaceholder, bool) {
-	if o == nil || IsNil(o.Placeholders) {
+func (o *DocumentTemplate) GetPlaceholdersScriptOk() (*string, bool) {
+	if o == nil || IsNil(o.PlaceholdersScript) {
 		return nil, false
 	}
-	return o.Placeholders, true
+	return o.PlaceholdersScript, true
 }
 
-// HasPlaceholders returns a boolean if a field has been set.
-func (o *DocumentTemplate) HasPlaceholders() bool {
-	if o != nil && !IsNil(o.Placeholders) {
+// HasPlaceholdersScript returns a boolean if a field has been set.
+func (o *DocumentTemplate) HasPlaceholdersScript() bool {
+	if o != nil && !IsNil(o.PlaceholdersScript) {
 		return true
 	}
 
 	return false
 }
 
-// SetPlaceholders gets a reference to the given []DocumentPlaceholder and assigns it to the Placeholders field.
-func (o *DocumentTemplate) SetPlaceholders(v []DocumentPlaceholder) {
-	o.Placeholders = v
+// SetPlaceholdersScript gets a reference to the given string and assigns it to the PlaceholdersScript field.
+func (o *DocumentTemplate) SetPlaceholdersScript(v string) {
+	o.PlaceholdersScript = &v
 }
 
 // GetSignatures returns the Signatures field value if set, zero value otherwise.
@@ -372,8 +372,8 @@ func (o DocumentTemplate) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Inputs) {
 		toSerialize["inputs"] = o.Inputs
 	}
-	if !IsNil(o.Placeholders) {
-		toSerialize["placeholders"] = o.Placeholders
+	if !IsNil(o.PlaceholdersScript) {
+		toSerialize["placeholders_script"] = o.PlaceholdersScript
 	}
 	if !IsNil(o.Signatures) {
 		toSerialize["signatures"] = o.Signatures
