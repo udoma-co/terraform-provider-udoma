@@ -51,6 +51,11 @@ func resourceDefinitionAppointmentTemplate(name, nameExpression string) string {
 		name_expression = "\"` + nameExpression + `\""
 		description = "Basic template description"
 
+		require_confirmation = true
+		confirmation_reminders = [
+			1, 2, 3, 1
+		]
+
 		inputs = {
 			"layout" = [
 				{

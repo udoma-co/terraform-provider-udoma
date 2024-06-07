@@ -66,6 +66,8 @@ func resourceDefinitionAppointmentSchedule(name, description string) string {
 		name_expression = "\"Hello appointment\""
 		description = "Basic template description"
 
+		require_confirmation = false
+
 		inputs = jsondecode(local.inputs)
 	}
 

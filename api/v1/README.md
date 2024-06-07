@@ -83,6 +83,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**ArchivePropertyHandover**](docs/DefaultAPI.md#archivepropertyhandover) | **Put** /property-handovers/handovers/{handoverID}/archive | Archive a property handover
 *DefaultAPI* | [**AssignCase**](docs/DefaultAPI.md#assigncase) | **Post** /case/{caseID}/assign | Assign case to a service provider
 *DefaultAPI* | [**CancelSignaturesForDocument**](docs/DefaultAPI.md#cancelsignaturesfordocument) | **Delete** /document-generation/documents/{docID}/esignature | Cancel a signature request for a document
+*DefaultAPI* | [**ConfirmAppointment**](docs/DefaultAPI.md#confirmappointment) | **Post** /calendar/appointments/entry/{entryID}/confirm | Confirm an appointment
 *DefaultAPI* | [**CreateAppointment**](docs/DefaultAPI.md#createappointment) | **Post** /calendar/appointments/schedule/{scheduleID}/appointment | Create new appointment for a given schedule
 *DefaultAPI* | [**CreateAppointmentSchedule**](docs/DefaultAPI.md#createappointmentschedule) | **Post** /calendar/appointments/schedule | Create new appointment schedule
 *DefaultAPI* | [**CreateAppointmentTemplate**](docs/DefaultAPI.md#createappointmenttemplate) | **Post** /calendar/appointments/template | Create new appointment template
@@ -148,6 +149,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteWorkflowDefinition**](docs/DefaultAPI.md#deleteworkflowdefinition) | **Delete** /workflows/definition/{definitionID} | Delete workflow definition
 *DefaultAPI* | [**DeleteWorkflowEntrypoint**](docs/DefaultAPI.md#deleteworkflowentrypoint) | **Delete** /workflows/entrypoint/{entrypointID} | Delete workflow entry point
 *DefaultAPI* | [**DeleteWorkflowExecution**](docs/DefaultAPI.md#deleteworkflowexecution) | **Delete** /workflows/execution/{executionID} | Delete workflow execution
+*DefaultAPI* | [**DenyAppointment**](docs/DefaultAPI.md#denyappointment) | **Post** /calendar/appointments/entry/{entryID}/deny | Deny an appointment
 *DefaultAPI* | [**ExecuteReport**](docs/DefaultAPI.md#executereport) | **Post** /report/{definitionID}/execute | 
 *DefaultAPI* | [**ExecuteWorkflowEntrypoint**](docs/DefaultAPI.md#executeworkflowentrypoint) | **Post** /workflows/entrypoint/{entrypointID}/execute | Execute the workflow entry point
 *DefaultAPI* | [**ExecuteWorkflowExecutionStep**](docs/DefaultAPI.md#executeworkflowexecutionstep) | **Post** /workflows/execution/{executionID} | Execute workflow execution step
@@ -385,6 +387,7 @@ Class | Method | HTTP request | Description
  - [CustomIDGenerator](docs/CustomIDGenerator.md)
  - [CustomerScript](docs/CustomerScript.md)
  - [CustomerScriptScope](docs/CustomerScriptScope.md)
+ - [DenyAppointmentRequest](docs/DenyAppointmentRequest.md)
  - [Document](docs/Document.md)
  - [DocumentESignatureRequest](docs/DocumentESignatureRequest.md)
  - [DocumentESignatureStatus](docs/DocumentESignatureStatus.md)

@@ -31,6 +31,8 @@ type Appointment struct {
 	StartTime *int64 `json:"start_time,omitempty"`
 	// The timestamp of the appointment, i.e. when it ends
 	EndTime *int64 `json:"end_time,omitempty"`
+	// Whether the appointment has been confirmed or not
+	Confirmed *bool `json:"confirmed,omitempty"`
 	// A descriptive name for the appointment, displayed on the calendar overview
 	Name    *string      `json:"name,omitempty"`
 	Contact *ContactData `json:"contact,omitempty"`
@@ -247,6 +249,38 @@ func (o *Appointment) SetEndTime(v int64) {
 	o.EndTime = &v
 }
 
+// GetConfirmed returns the Confirmed field value if set, zero value otherwise.
+func (o *Appointment) GetConfirmed() bool {
+	if o == nil || IsNil(o.Confirmed) {
+		var ret bool
+		return ret
+	}
+	return *o.Confirmed
+}
+
+// GetConfirmedOk returns a tuple with the Confirmed field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Appointment) GetConfirmedOk() (*bool, bool) {
+	if o == nil || IsNil(o.Confirmed) {
+		return nil, false
+	}
+	return o.Confirmed, true
+}
+
+// HasConfirmed returns a boolean if a field has been set.
+func (o *Appointment) HasConfirmed() bool {
+	if o != nil && !IsNil(o.Confirmed) {
+		return true
+	}
+
+	return false
+}
+
+// SetConfirmed gets a reference to the given bool and assigns it to the Confirmed field.
+func (o *Appointment) SetConfirmed(v bool) {
+	o.Confirmed = &v
+}
+
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *Appointment) GetName() string {
 	if o == nil || IsNil(o.Name) {
@@ -370,6 +404,9 @@ func (o Appointment) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.EndTime) {
 		toSerialize["end_time"] = o.EndTime
+	}
+	if !IsNil(o.Confirmed) {
+		toSerialize["confirmed"] = o.Confirmed
 	}
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
