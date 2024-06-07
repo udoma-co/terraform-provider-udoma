@@ -22,7 +22,7 @@ type DocumentTemplateSignerDefinition struct {
 	ContactData *ContactData `json:"contact_data,omitempty"`
 	// JS expression to compute the contact data of the signer
 	ContactDataExpression *string `json:"contact_data_expression,omitempty"`
-	// If set to true, the signer definition will be repeated for each value of the name and  contract data expressions.
+	// If set to true, the signer definition will be repeated for each value of the name and contract data expressions.
 	Repeated *bool `json:"repeated,omitempty"`
 }
 

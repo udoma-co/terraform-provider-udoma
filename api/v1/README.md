@@ -390,7 +390,6 @@ Class | Method | HTTP request | Description
  - [DocumentESignatureStatus](docs/DocumentESignatureStatus.md)
  - [DocumentGeneration](docs/DocumentGeneration.md)
  - [DocumentPDFResponse](docs/DocumentPDFResponse.md)
- - [DocumentPlaceholder](docs/DocumentPlaceholder.md)
  - [DocumentRefTypeEnum](docs/DocumentRefTypeEnum.md)
  - [DocumentSigner](docs/DocumentSigner.md)
  - [DocumentTemplate](docs/DocumentTemplate.md)

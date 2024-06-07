@@ -23,9 +23,9 @@ type DocumentTemplateSignatureConfguration struct {
 	Signers []DocumentTemplateSignerDefinition `json:"signers,omitempty"`
 	// True if electronic signatures are enabled for the template
 	EsignaturesEnabled *bool `json:"esignatures_enabled,omitempty"`
-	// The number of days after which the signature request expires. If not  specified, the default value is 7 days.
+	// The number of days after which the signature request expires. If not specified, the default value is 7 days.
 	ExpirationDays *int32 `json:"expiration_days,omitempty"`
-	// A custom message to be included in the signature request. If not  specified, the default message is used.
+	// A custom message to be included in the signature request. If not specified, the default message is used.
 	CustomMessage *string `json:"custom_message,omitempty"`
 }
 

@@ -41,16 +41,16 @@ type documentTemplateOptionsModel struct {
 
 // documentTemplateModel describes the resource data model.
 type documentTemplateModel struct {
-	ID             types.String                  `tfsdk:"id"`
-	LastUpdated    types.String                  `tfsdk:"last_updated"`
-	Name           types.String                  `tfsdk:"name"`
-	Description    types.String                  `tfsdk:"description"`
-	Options        *documentTemplateOptionsModel `tfsdk:"options"`
-	NameExpression types.String                  `tfsdk:"name_expression"`
-	Content        tf.JsonObjectValue            `tfsdk:"content"`
-	Inputs         tf.JsonObjectValue            `tfsdk:"inputs"`
-	Placeholders   tf.JsonObjectValue            `tfsdk:"placeholders"`
-	Signatures     tf.JsonObjectValue            `tfsdk:"signatures"`
+	ID                 types.String                  `tfsdk:"id"`
+	LastUpdated        types.String                  `tfsdk:"last_updated"`
+	Name               types.String                  `tfsdk:"name"`
+	Description        types.String                  `tfsdk:"description"`
+	Options            *documentTemplateOptionsModel `tfsdk:"options"`
+	NameExpression     types.String                  `tfsdk:"name_expression"`
+	Content            tf.JsonObjectValue            `tfsdk:"content"`
+	Inputs             tf.JsonObjectValue            `tfsdk:"inputs"`
+	PlaceholdersScript types.String                  `tfsdk:"placeholders_script"`
+	Signatures         tf.JsonObjectValue            `tfsdk:"signatures"`
 }
 
 func (r *documentTemplate) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -114,10 +114,9 @@ func (r *documentTemplate) Schema(ctx context.Context, req resource.SchemaReques
 				Optional:    true,
 				Description: "The JSON serialised form definition of the template",
 			},
-			"placeholders": schema.StringAttribute{
-				CustomType:  tf.JsonObjectType{},
+			"placeholders_script": schema.StringAttribute{
 				Optional:    true,
-				Description: "The JSON serialised placeholder definition of the template",
+				Description: "The script that has to be ran to generate the placeholders",
 			},
 			"signatures": schema.StringAttribute{
 				CustomType:  tf.JsonObjectType{},
@@ -317,6 +316,7 @@ func (model *documentTemplateModel) fromAPI(template *api.DocumentTemplate) erro
 	model.ID = types.StringPointerValue(template.Id)
 	model.Name = types.StringPointerValue(template.Name)
 	model.Description = omittableStringValue(template.Description, model.Description)
+	model.PlaceholdersScript = omittableStringValue(template.PlaceholdersScript, model.PlaceholdersScript)
 
 	if template.Options != nil {
 		if model.Options != nil {
@@ -349,18 +349,6 @@ func (model *documentTemplateModel) fromAPI(template *api.DocumentTemplate) erro
 		}
 	}
 
-	if template.Placeholders != nil {
-		jsonData, err := json.Marshal(template.Placeholders)
-		if err != nil {
-			return fmt.Errorf("failed to marshal placeholders: %w", err)
-		}
-		if string(jsonData) != "{}" {
-			// Placeholders are optional, but we need to set an empty object to avoid
-			// inconsistencies in the state because of server side serialization.
-			model.Placeholders = tf.NewJsonObjectValue(string(jsonData))
-		}
-	}
-
 	if template.Signatures != nil {
 		jsonData, err := json.Marshal(template.Signatures)
 		if err != nil {
@@ -379,10 +367,11 @@ func (model *documentTemplateModel) fromAPI(template *api.DocumentTemplate) erro
 func (model *documentTemplateModel) toAPIRequest() (api.CreateOrUpdateDocumentTemplateRequest, error) {
 
 	template := api.CreateOrUpdateDocumentTemplateRequest{
-		Name:           model.Name.ValueStringPointer(),
-		NameExpression: model.NameExpression.ValueStringPointer(),
-		Description:    model.Description.ValueStringPointer(),
-		Content:        model.Content.ValueStringPointer(),
+		Name:               model.Name.ValueStringPointer(),
+		NameExpression:     model.NameExpression.ValueStringPointer(),
+		Description:        model.Description.ValueStringPointer(),
+		Content:            model.Content.ValueStringPointer(),
+		PlaceholdersScript: model.PlaceholdersScript.ValueStringPointer(),
 	}
 	if model.Options != nil {
 		template.Options = &api.DocumentTemplateOptions{
@@ -403,19 +392,6 @@ func (model *documentTemplateModel) toAPIRequest() (api.CreateOrUpdateDocumentTe
 			return template, fmt.Errorf("failed to marshal inputs: %w", err)
 		}
 		model.Inputs = tf.NewJsonObjectValue(string(jsonData))
-	}
-
-	if !model.Placeholders.IsNull() && !model.Placeholders.IsUnknown() {
-		if diag := model.Placeholders.Unmarshal(&template.Placeholders); diag.HasError() {
-			return template, fmt.Errorf("failed to unmarshal placeholders: %v", diag)
-		}
-
-		// update model
-		jsonData, err := json.Marshal(template.Placeholders)
-		if err != nil {
-			return template, fmt.Errorf("failed to marshal placeholders: %w", err)
-		}
-		model.Placeholders = tf.NewJsonObjectValue(string(jsonData))
 	}
 
 	if !model.Signatures.IsNull() && !model.Signatures.IsUnknown() {

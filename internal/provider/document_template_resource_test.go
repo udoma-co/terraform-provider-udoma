@@ -43,12 +43,11 @@ resource udoma_document_template "test" {
 EOF
 
 	placeholders = <<EOF
-	[
-		{
-			"token": "PropertyAddress",
-			"value_expression": "shortAddress(propertyAddress)"
-		}
-	]
+const something = {
+	Key: "Value"
+};
+
+something
 EOF
 
 	signatures = <<EOF
@@ -141,12 +140,11 @@ resource "udoma_document_template" "test" {
 EOF
 
 	placeholders = <<EOF
-	[
-		{
-			"token": "PropertyAddress",
-			"value_expression": "shortAddress(propertyAddress)"
-		}
-	]
+const something = {
+	Key: "Value"
+};
+
+something
 EOF
 
 	inputs = <<EOF

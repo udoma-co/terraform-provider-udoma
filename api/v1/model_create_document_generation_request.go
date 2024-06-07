@@ -21,7 +21,7 @@ var _ MappedNullable = &CreateDocumentGenerationRequest{}
 type CreateDocumentGenerationRequest struct {
 	// The template based on which a document shall be generated
 	Template *string `json:"template,omitempty"`
-	// Optional initialisation data for the inputs of the template. If not set, the default values of the inputs will be used. To be provided as JSON serialised object, where the values are  NOT JSON serialised themselves.
+	// Optional initialisation data for the inputs of the template. If not set, the default values of the inputs will be used. To be provided as JSON serialised object, where the values are NOT JSON serialised themselves.
 	InitData *string `json:"init_data,omitempty"`
 }
 
