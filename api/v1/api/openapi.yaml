@@ -1184,6 +1184,61 @@ paths:
       security:
       - bearerAuth: []
       summary: Update appointment
+  /calendar/appointments/entry/{entryID}/confirm:
+    post:
+      description: Confirm the appointment
+      operationId: confirmAppointment
+      parameters:
+      - description: unique generate ID of an appointment entry
+        explode: false
+        in: path
+        name: entryID
+        required: true
+        schema:
+          pattern: "^ap-[2-9A-HJ-NP-Za-km-z]{19,22}$"
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: successful operation
+        default:
+          content: {}
+          description: |
+            Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
+      security:
+      - bearerAuth: []
+      summary: Confirm an appointment
+  /calendar/appointments/entry/{entryID}/deny:
+    post:
+      description: Deny the appointment
+      operationId: denyAppointment
+      parameters:
+      - description: unique generate ID of an appointment entry
+        explode: false
+        in: path
+        name: entryID
+        required: true
+        schema:
+          pattern: "^ap-[2-9A-HJ-NP-Za-km-z]{19,22}$"
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/denyAppointment_request'
+        description: The reason for the cancelation
+        required: true
+      responses:
+        "200":
+          description: successful operation
+        default:
+          content: {}
+          description: |
+            Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
+      security:
+      - bearerAuth: []
+      summary: Deny an appointment
   /calendar/appointments/entry/{entryID}/ical:
     get:
       operationId: getAppointmentInIcalFormat
@@ -6729,10 +6784,15 @@ components:
                 key: message
               target: target
           name_expression: name_expression
+          require_confirmation: true
           name: name
           description: description
           id: id
           schedule_before: 0
+          confirmation_reminders:
+          - 2
+          - 3
+          - 5
         gap_duration: 5
         slot_duration: 1
         color: color
@@ -6770,6 +6830,7 @@ components:
               name: name
               created_at: 3
               id: id
+              confirmed: true
           - start_time: 7
             end_time: 9
             appointment:
@@ -6797,6 +6858,7 @@ components:
               name: name
               created_at: 3
               id: id
+              confirmed: true
           end_time: 2
           id: id
         - start_time: 5
@@ -6828,6 +6890,7 @@ components:
               name: name
               created_at: 3
               id: id
+              confirmed: true
           - start_time: 7
             end_time: 9
             appointment:
@@ -6855,6 +6918,7 @@ components:
               name: name
               created_at: 3
               id: id
+              confirmed: true
           end_time: 2
           id: id
       properties:
@@ -6880,8 +6944,8 @@ components:
           format: int32
           type: integer
         color:
-          description: The color to use when displaying the appointment window in
-            a calendar view
+          description: |
+            The color to use when displaying the appointment window in a calendar view
           type: string
         windows:
           description: The appointment windows
@@ -6979,10 +7043,15 @@ components:
               key: message
             target: target
         name_expression: name_expression
+        require_confirmation: true
         name: name
         description: description
         id: id
         schedule_before: 0
+        confirmation_reminders:
+        - 2
+        - 3
+        - 5
       properties:
         id:
           description: The unique identifier of the appointment template
@@ -7002,6 +7071,19 @@ components:
             Constrain the minimum amount of time between the scheduling and the beginning of the appointment in minutes. Set this to 10 and people won't be able to schedule an appointment that's in less than 10 minutes.
           format: int32
           type: integer
+        require_confirmation:
+          description: Whether we should require confirmation or not.
+          type: boolean
+        confirmation_reminders:
+          description: |
+            The number of days after which a reminder should be sent out. The list is taken as provided and a reminder will be set for the amount of days as set in the first element of the list. Once that time has passed, the reminder will be rescheduled for the next element in the list. This is repeated until the list is empty. The values in the list are considered relative to the previous reminder. So [2, 2] will send out a reminder after 2 and 4 days. The reminders will, however, not be sent out on weekends. So if the first reminder is sent out on a Friday, the second reminder will be sent out on Tuesday. To disable this option, leave the list empty.
+          example:
+          - 2
+          - 3
+          - 5
+          items:
+            type: integer
+          type: array
         form:
           $ref: '#/components/schemas/CustomForm'
       required:
@@ -7009,6 +7091,16 @@ components:
       - id
       - name
       type: object
+    AppointmentConfirmationReminders:
+      description: |
+        The number of days after which a reminder should be sent out. The list is taken as provided and a reminder will be set for the amount of days as set in the first element of the list. Once that time has passed, the reminder will be rescheduled for the next element in the list. This is repeated until the list is empty. The values in the list are considered relative to the previous reminder. So [2, 2] will send out a reminder after 2 and 4 days. The reminders will, however, not be sent out on weekends. So if the first reminder is sent out on a Friday, the second reminder will be sent out on Tuesday. To disable this option, leave the list empty.
+      example:
+      - 2
+      - 3
+      - 5
+      items:
+        type: integer
+      type: array
     AppointmentWindow:
       example:
         start_time: 5
@@ -7040,6 +7132,7 @@ components:
             name: name
             created_at: 3
             id: id
+            confirmed: true
         - start_time: 7
           end_time: 9
           appointment:
@@ -7067,6 +7160,7 @@ components:
             name: name
             created_at: 3
             id: id
+            confirmed: true
         end_time: 2
         id: id
       properties:
@@ -7122,6 +7216,7 @@ components:
           name: name
           created_at: 3
           id: id
+          confirmed: true
       properties:
         start_time:
           description: The timestamp of the beginning of the appointment slot
@@ -7162,6 +7257,7 @@ components:
         name: name
         created_at: 3
         id: id
+        confirmed: true
       properties:
         id:
           description: The unique identifier of the appointment
@@ -7185,9 +7281,12 @@ components:
           description: "The timestamp of the appointment, i.e. when it ends"
           format: int64
           type: integer
+        confirmed:
+          description: Whether the appointment has been confirmed or not
+          type: boolean
         name:
-          description: "A descriptive name for the appointment, displayed on the calendar\
-            \ overview"
+          description: |
+            A descriptive name for the appointment, displayed on the calendar overview
           type: string
         contact:
           $ref: '#/components/schemas/ContactData'
@@ -7223,14 +7322,16 @@ components:
           description: The id of the appointment window that the user wants to book
           type: string
         slot_idx:
-          description: The offset within the appointment window which should be booked
+          description: |
+            The offset within the appointment window which should be booked
           format: int32
           type: integer
         contact:
           $ref: '#/components/schemas/ContactData'
         data:
           additionalProperties: true
-          description: The data that the user has entered when booking the appointment
+          description: |
+            The data that the user has entered when booking the appointment
           type: object
       type: object
     MandatoryMessage:
@@ -7238,8 +7339,8 @@ components:
         message: message
       properties:
         message:
-          description: The message that should sent to the admin when deleting an
-            appointment
+          description: |
+            The message that should sent to the admin when deleting an appointment
           type: string
       type: object
     CreateCaseRequest:
@@ -12196,9 +12297,14 @@ components:
               key: message
             target: target
         name_expression: name_expression
+        require_confirmation: true
         name: name
         description: description
         schedule_before: 0
+        confirmation_reminders:
+        - 2
+        - 3
+        - 5
       properties:
         name:
           description: The name of the appointment template
@@ -12215,6 +12321,19 @@ components:
             Constrain the minimum amount of time between the scheduling and the beginning of the appointment in minutes. Set this to 10 and people won't be able to schedule an appointment that's in less than 10 minutes.
           format: int32
           type: integer
+        require_confirmation:
+          description: Whether we should require confirmation or not.
+          type: boolean
+        confirmation_reminders:
+          description: |
+            The number of days after which a reminder should be sent out. The list is taken as provided and a reminder will be set for the amount of days as set in the first element of the list. Once that time has passed, the reminder will be rescheduled for the next element in the list. This is repeated until the list is empty. The values in the list are considered relative to the previous reminder. So [2, 2] will send out a reminder after 2 and 4 days. The reminders will, however, not be sent out on weekends. So if the first reminder is sent out on a Friday, the second reminder will be sent out on Tuesday. To disable this option, leave the list empty.
+          example:
+          - 2
+          - 3
+          - 5
+          items:
+            type: integer
+          type: array
         form:
           $ref: '#/components/schemas/CustomForm'
       type: object
@@ -12269,6 +12388,7 @@ components:
               name: name
               created_at: 3
               id: id
+              confirmed: true
           - start_time: 7
             end_time: 9
             appointment:
@@ -12296,6 +12416,7 @@ components:
               name: name
               created_at: 3
               id: id
+              confirmed: true
           end_time: 2
           id: id
         - start_time: 5
@@ -12327,6 +12448,7 @@ components:
               name: name
               created_at: 3
               id: id
+              confirmed: true
           - start_time: 7
             end_time: 9
             appointment:
@@ -12354,6 +12476,7 @@ components:
               name: name
               created_at: 3
               id: id
+              confirmed: true
           end_time: 2
           id: id
       properties:
@@ -12366,8 +12489,8 @@ components:
           description: "a map of values, where the key and values are strings"
           type: object
         template:
-          description: The reference to the appointment template that is used to determine
-            what data to collect when booking a slot.
+          description: |
+            The reference to the appointment template that is used to determine what data to collect when booking a slot.
           type: string
         slot_duration:
           description: The duration of the appointment window in minutes
@@ -12378,8 +12501,8 @@ components:
           format: int32
           type: integer
         color:
-          description: The color to use when displaying the appointment window in
-            a calendar view
+          description: |
+            The color to use when displaying the appointment window in a calendar view
           type: string
         windows:
           description: The appointment windows
@@ -20704,6 +20827,12 @@ components:
       properties:
         data:
           format: binary
+          type: string
+      type: object
+    denyAppointment_request:
+      description: The reason the appointment is being canceled
+      properties:
+        reason:
           type: string
       type: object
     CaseReportingEndpointCategory_templates_inner:

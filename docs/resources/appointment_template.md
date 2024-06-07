@@ -19,9 +19,21 @@ description: |-
 
 - `inputs` (Attributes) A custom form to collect data with (see [below for nested schema](#nestedatt--inputs))
 - `name` (String) The name of the appointment template.
+- `require_confirmation` (Boolean) Whether the appointment requires confirmation.
+				If set to true, the Appointment will not be scheduled until the
+				manager has confirmed it.
 
 ### Optional
 
+- `confirmation_reminders` (List of Number) The number of days after which a reminder should
+				be sent out. The list is taken as provided and a reminder will be set
+				for the amount of days as set in the first element of the list. Once
+				that time has passed, the reminder will be rescheduled for the next
+				element in the list. This is repeated until the list is empty. The
+				values in the list are considered relative to the previous reminder.
+				So [2, 2] will send out a reminder after 2 and 4 days. The reminders
+				will, however, not be sent out on weekends. So if the first reminder is
+				sent out on a Friday, the second reminder will be sent out on Tuesday.
 - `description` (String) The description of the appointment template.
 - `name_expression` (String) Optional JS expression used to generate the name of appointments.
 

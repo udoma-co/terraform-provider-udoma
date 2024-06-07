@@ -26,8 +26,12 @@ type CreateOrUpdateAppointmentTemplateRequest struct {
 	// The description of the appointment template
 	Description *string `json:"description,omitempty"`
 	// Constrain the minimum amount of time between the scheduling and the beginning of the appointment in minutes. Set this to 10 and people won't be able to schedule an appointment that's in less than 10 minutes.
-	ScheduleBefore *int32      `json:"schedule_before,omitempty"`
-	Form           *CustomForm `json:"form,omitempty"`
+	ScheduleBefore *int32 `json:"schedule_before,omitempty"`
+	// Whether we should require confirmation or not.
+	RequireConfirmation *bool `json:"require_confirmation,omitempty"`
+	// The number of days after which a reminder should be sent out. The list is taken as provided and a reminder will be set for the amount of days as set in the first element of the list. Once that time has passed, the reminder will be rescheduled for the next element in the list. This is repeated until the list is empty. The values in the list are considered relative to the previous reminder. So [2, 2] will send out a reminder after 2 and 4 days. The reminders will, however, not be sent out on weekends. So if the first reminder is sent out on a Friday, the second reminder will be sent out on Tuesday. To disable this option, leave the list empty.
+	ConfirmationReminders []int32     `json:"confirmation_reminders,omitempty"`
+	Form                  *CustomForm `json:"form,omitempty"`
 }
 
 // NewCreateOrUpdateAppointmentTemplateRequest instantiates a new CreateOrUpdateAppointmentTemplateRequest object
@@ -175,6 +179,70 @@ func (o *CreateOrUpdateAppointmentTemplateRequest) SetScheduleBefore(v int32) {
 	o.ScheduleBefore = &v
 }
 
+// GetRequireConfirmation returns the RequireConfirmation field value if set, zero value otherwise.
+func (o *CreateOrUpdateAppointmentTemplateRequest) GetRequireConfirmation() bool {
+	if o == nil || IsNil(o.RequireConfirmation) {
+		var ret bool
+		return ret
+	}
+	return *o.RequireConfirmation
+}
+
+// GetRequireConfirmationOk returns a tuple with the RequireConfirmation field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateAppointmentTemplateRequest) GetRequireConfirmationOk() (*bool, bool) {
+	if o == nil || IsNil(o.RequireConfirmation) {
+		return nil, false
+	}
+	return o.RequireConfirmation, true
+}
+
+// HasRequireConfirmation returns a boolean if a field has been set.
+func (o *CreateOrUpdateAppointmentTemplateRequest) HasRequireConfirmation() bool {
+	if o != nil && !IsNil(o.RequireConfirmation) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequireConfirmation gets a reference to the given bool and assigns it to the RequireConfirmation field.
+func (o *CreateOrUpdateAppointmentTemplateRequest) SetRequireConfirmation(v bool) {
+	o.RequireConfirmation = &v
+}
+
+// GetConfirmationReminders returns the ConfirmationReminders field value if set, zero value otherwise.
+func (o *CreateOrUpdateAppointmentTemplateRequest) GetConfirmationReminders() []int32 {
+	if o == nil || IsNil(o.ConfirmationReminders) {
+		var ret []int32
+		return ret
+	}
+	return o.ConfirmationReminders
+}
+
+// GetConfirmationRemindersOk returns a tuple with the ConfirmationReminders field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateAppointmentTemplateRequest) GetConfirmationRemindersOk() ([]int32, bool) {
+	if o == nil || IsNil(o.ConfirmationReminders) {
+		return nil, false
+	}
+	return o.ConfirmationReminders, true
+}
+
+// HasConfirmationReminders returns a boolean if a field has been set.
+func (o *CreateOrUpdateAppointmentTemplateRequest) HasConfirmationReminders() bool {
+	if o != nil && !IsNil(o.ConfirmationReminders) {
+		return true
+	}
+
+	return false
+}
+
+// SetConfirmationReminders gets a reference to the given []int32 and assigns it to the ConfirmationReminders field.
+func (o *CreateOrUpdateAppointmentTemplateRequest) SetConfirmationReminders(v []int32) {
+	o.ConfirmationReminders = v
+}
+
 // GetForm returns the Form field value if set, zero value otherwise.
 func (o *CreateOrUpdateAppointmentTemplateRequest) GetForm() CustomForm {
 	if o == nil || IsNil(o.Form) {
@@ -228,6 +296,12 @@ func (o CreateOrUpdateAppointmentTemplateRequest) ToMap() (map[string]interface{
 	}
 	if !IsNil(o.ScheduleBefore) {
 		toSerialize["schedule_before"] = o.ScheduleBefore
+	}
+	if !IsNil(o.RequireConfirmation) {
+		toSerialize["require_confirmation"] = o.RequireConfirmation
+	}
+	if !IsNil(o.ConfirmationReminders) {
+		toSerialize["confirmation_reminders"] = o.ConfirmationReminders
 	}
 	if !IsNil(o.Form) {
 		toSerialize["form"] = o.Form
