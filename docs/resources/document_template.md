@@ -27,7 +27,7 @@ Resource represents a template for generating documents
 - `name_expression` (String) An optional JS expression to be used to compute the name of 
 				the template. If not set, the name of the template will be used for new documents
 - `options` (Attributes) The options of the document template (see [below for nested schema](#nestedatt--options))
-- `placeholders` (String) The JSON serialised placeholder definition of the template
+- `placeholders_script` (String) The script that has to be ran to generate the placeholders
 - `signatures` (String) The JSON serialised signature configuration of the template
 
 ### Read-Only

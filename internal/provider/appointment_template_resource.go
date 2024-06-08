@@ -73,7 +73,7 @@ func (r *AppointmentTemplate) Schema(ctx context.Context, req resource.SchemaReq
 				Attributes:  CustomFormNestedSchema(),
 			},
 			"require_confirmation": schema.BoolAttribute{
-				Required:    true,
+				Optional:    true,
 				Description: "Whether the appointment requires confirmation.",
 				MarkdownDescription: `Whether the appointment requires confirmation.
 				If set to true, the Appointment will not be scheduled until the
