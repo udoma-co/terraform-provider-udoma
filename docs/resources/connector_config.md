@@ -17,6 +17,7 @@ Resource represents a connector config
 
 ### Required
 
+- `enable_logs` (Boolean) Whether to enable logs for the connector config
 - `enabled` (Boolean) Whether the connector config is enabled
 - `name` (String) The name of the connector config
 - `ping_time` (String) The ping time of the connector config

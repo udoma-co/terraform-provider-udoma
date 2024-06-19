@@ -22,7 +22,7 @@ type CaseAutomaticActionConfig struct {
 	Status *CaseStatusEnum `json:"status,omitempty"`
 	// The number of days after which the status change should be triggered. The  schedule is reset, whenever the case is updated. A negative value means that  the action should be triggered immediately.
 	Schedule *int32 `json:"schedule,omitempty"`
-	// JSON script of the action that should be executed, if the schedule and execution check are successful.
+	// JS script of the action that should be executed, if the schedule and execution check are successful.
 	Action *string `json:"action,omitempty"`
 }
 

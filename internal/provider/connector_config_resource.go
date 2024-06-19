@@ -28,8 +28,9 @@ type ConnectorConfig struct {
 
 type ConnectorConfigModel struct {
 	Name        types.String `tfsdk:"name"`
-	Description types.String `tfsdk:"description"`
 	Enabled     types.Bool   `tfsdk:"enabled"`
+	Description types.String `tfsdk:"description"`
+	EnableLogs  types.Bool   `tfsdk:"enable_logs"`
 	PingTime    types.String `tfsdk:"ping_time"`
 	SyncTime    types.String `tfsdk:"sync_time"`
 }
@@ -47,13 +48,17 @@ func (c *ConnectorConfig) Schema(ctx context.Context, req resource.SchemaRequest
 				Required:    true,
 				Description: "The name of the connector config",
 			},
+			"enabled": schema.BoolAttribute{
+				Required:    true,
+				Description: "Whether the connector config is enabled",
+			},
 			"description": schema.StringAttribute{
 				Optional:    true,
 				Description: "The description of the connector config",
 			},
-			"enabled": schema.BoolAttribute{
+			"enable_logs": schema.BoolAttribute{
 				Required:    true,
-				Description: "Whether the connector config is enabled",
+				Description: "Whether to enable logs for the connector config",
 			},
 			"ping_time": schema.StringAttribute{
 				Required:    true,
@@ -190,8 +195,9 @@ func (r *ConnectorConfig) ImportState(ctx context.Context, req resource.ImportSt
 
 func (c *ConnectorConfigModel) fromApiResponse(config *api.ConnectorConfig) {
 	c.Name = types.StringValue(config.Name)
-	c.Description = omittableStringValue(config.Description, c.Description)
 	c.Enabled = omittableBooleanValue(config.Enabled, c.Enabled)
+	c.Description = omittableStringValue(config.Description, c.Description)
+	c.EnableLogs = omittableBooleanValue(config.EnableLogs, c.EnableLogs)
 	c.PingTime = types.StringValue(config.PingTime)
 	c.SyncTime = types.StringValue(config.SyncTime)
 }
@@ -201,6 +207,7 @@ func (c *ConnectorConfigModel) toAPICreateRequest() api.CreateConnectorConfigReq
 		Name:        c.Name.ValueString(),
 		Enabled:     c.Enabled.ValueBoolPointer(),
 		Description: c.Description.ValueStringPointer(),
+		EnableLogs:  c.EnableLogs.ValueBoolPointer(),
 		SyncTime:    c.SyncTime.ValueString(),
 		PingTime:    c.PingTime.ValueString(),
 	}
@@ -210,6 +217,7 @@ func (c *ConnectorConfigModel) toAPIUpdateRequest() api.UpdateConnectorConfigReq
 	return api.UpdateConnectorConfigRequest{
 		Enabled:     c.Enabled.ValueBoolPointer(),
 		Description: c.Description.ValueStringPointer(),
+		EnableLogs:  c.EnableLogs.ValueBoolPointer(),
 		SyncTime:    c.SyncTime.ValueString(),
 		PingTime:    c.PingTime.ValueString(),
 	}
