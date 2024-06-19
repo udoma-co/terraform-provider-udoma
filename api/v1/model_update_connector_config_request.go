@@ -25,6 +25,8 @@ type UpdateConnectorConfigRequest struct {
 	Enabled *bool `json:"enabled,omitempty"`
 	// short description of the connector
 	Description *string `json:"description,omitempty"`
+	// Whether to print the logs in the backend or ignore the logs sent by the connector.
+	EnableLogs *bool `json:"enable_logs,omitempty"`
 	// cron expression that tells the connector how often to sync data
 	SyncTime string `json:"sync_time"`
 	// cron expression that tells the connector how often to ping the server and retrieve the config
@@ -116,6 +118,38 @@ func (o *UpdateConnectorConfigRequest) SetDescription(v string) {
 	o.Description = &v
 }
 
+// GetEnableLogs returns the EnableLogs field value if set, zero value otherwise.
+func (o *UpdateConnectorConfigRequest) GetEnableLogs() bool {
+	if o == nil || IsNil(o.EnableLogs) {
+		var ret bool
+		return ret
+	}
+	return *o.EnableLogs
+}
+
+// GetEnableLogsOk returns a tuple with the EnableLogs field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateConnectorConfigRequest) GetEnableLogsOk() (*bool, bool) {
+	if o == nil || IsNil(o.EnableLogs) {
+		return nil, false
+	}
+	return o.EnableLogs, true
+}
+
+// HasEnableLogs returns a boolean if a field has been set.
+func (o *UpdateConnectorConfigRequest) HasEnableLogs() bool {
+	if o != nil && !IsNil(o.EnableLogs) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnableLogs gets a reference to the given bool and assigns it to the EnableLogs field.
+func (o *UpdateConnectorConfigRequest) SetEnableLogs(v bool) {
+	o.EnableLogs = &v
+}
+
 // GetSyncTime returns the SyncTime field value
 func (o *UpdateConnectorConfigRequest) GetSyncTime() string {
 	if o == nil {
@@ -179,6 +213,9 @@ func (o UpdateConnectorConfigRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
+	}
+	if !IsNil(o.EnableLogs) {
+		toSerialize["enable_logs"] = o.EnableLogs
 	}
 	toSerialize["sync_time"] = o.SyncTime
 	toSerialize["ping_time"] = o.PingTime
