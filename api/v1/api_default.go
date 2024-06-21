@@ -6024,7 +6024,7 @@ func (a *DefaultAPIService) DeleteConnectorCredentialsExecute(r ApiDeleteConnect
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/connector/credentials/{apiKey}"
+	localVarPath := localBasePath + "/credentials/{apiKey}"
 	localVarPath = strings.Replace(localVarPath, "{"+"apiKey"+"}", url.PathEscape(parameterValueToString(r.apiKey, "apiKey")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -6208,7 +6208,7 @@ func (a *DefaultAPIService) DeleteConnectorQueryExecute(r ApiDeleteConnectorQuer
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/connector/query/{queryID}"
+	localVarPath := localBasePath + "/query/{queryID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"queryID"+"}", url.PathEscape(parameterValueToString(r.queryID, "queryID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -7480,7 +7480,7 @@ func (a *DefaultAPIService) DeleteRentUpdateExecute(r ApiDeleteRentUpdateRequest
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/tenancy/rent-update/{rentUpdateID}"
+	localVarPath := localBasePath + "/rent-update/{rentUpdateID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"rentUpdateID"+"}", url.PathEscape(parameterValueToString(r.rentUpdateID, "rentUpdateID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -8026,7 +8026,7 @@ func (a *DefaultAPIService) DeleteTenantChangeExecute(r ApiDeleteTenantChangeReq
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/tenancy/tenant-change/{tenantChangeID}"
+	localVarPath := localBasePath + "/tenant-change/{tenantChangeID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"tenantChangeID"+"}", url.PathEscape(parameterValueToString(r.tenantChangeID, "tenantChangeID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -11611,7 +11611,7 @@ func (a *DefaultAPIService) GetConnectorQueryExecute(r ApiGetConnectorQueryReque
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/connector/query/{queryID}"
+	localVarPath := localBasePath + "/query/{queryID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"queryID"+"}", url.PathEscape(parameterValueToString(r.queryID, "queryID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -14476,7 +14476,7 @@ func (a *DefaultAPIService) GetRentUpdateExecute(r ApiGetRentUpdateRequest) (*Re
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/tenancy/rent-update/{rentUpdateID}"
+	localVarPath := localBasePath + "/rent-update/{rentUpdateID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"rentUpdateID"+"}", url.PathEscape(parameterValueToString(r.rentUpdateID, "rentUpdateID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -15712,7 +15712,7 @@ func (a *DefaultAPIService) GetTenantChangeExecute(r ApiGetTenantChangeRequest) 
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/tenancy/tenant-change/{tenantChangeID}"
+	localVarPath := localBasePath + "/tenant-change/{tenantChangeID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"tenantChangeID"+"}", url.PathEscape(parameterValueToString(r.tenantChangeID, "tenantChangeID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -24446,7 +24446,7 @@ func (a *DefaultAPIService) UpdateConnectorQueryExecute(r ApiUpdateConnectorQuer
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/connector/query/{queryID}"
+	localVarPath := localBasePath + "/query/{queryID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"queryID"+"}", url.PathEscape(parameterValueToString(r.queryID, "queryID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -26036,7 +26036,7 @@ func (a *DefaultAPIService) UpdateRentUpdateExecute(r ApiUpdateRentUpdateRequest
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/tenancy/rent-update/{rentUpdateID}"
+	localVarPath := localBasePath + "/rent-update/{rentUpdateID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"rentUpdateID"+"}", url.PathEscape(parameterValueToString(r.rentUpdateID, "rentUpdateID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
