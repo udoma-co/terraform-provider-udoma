@@ -2067,7 +2067,7 @@ paths:
           description: |
             Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
       summary: Create new connector credentials
-  /connector/credentials/{apiKey}:
+  /credentials/{apiKey}:
     delete:
       operationId: deleteConnectorCredentials
       parameters:
@@ -2360,7 +2360,7 @@ paths:
       security:
       - bearerAuth: []
       summary: Get the query for the current account
-  /connector/query/{queryID}:
+  /query/{queryID}:
     delete:
       operationId: deleteConnectorQuery
       parameters:
@@ -6188,7 +6188,7 @@ paths:
       security:
       - bearerAuth: []
       summary: Change the tenants in a tenancy.
-  /tenancy/rent-update/{rentUpdateID}:
+  /rent-update/{rentUpdateID}:
     delete:
       operationId: deleteRentUpdate
       parameters:
@@ -6267,7 +6267,7 @@ paths:
       security:
       - bearerAuth: []
       summary: Update the rent update with the given ID
-  /tenancy/tenant-change/{tenantChangeID}:
+  /tenant-change/{tenantChangeID}:
     delete:
       operationId: deleteTenantChange
       parameters:

@@ -134,9 +134,9 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteCaseReportingEndpoint**](docs/DefaultAPI.md#deletecasereportingendpoint) | **Delete** /cases/endpoints/{endpointID} | Delete the case reporting endpoint by ID
 *DefaultAPI* | [**DeleteCaseTemplate**](docs/DefaultAPI.md#deletecasetemplate) | **Delete** /cases/template/{templateID} | Delete a case template
 *DefaultAPI* | [**DeleteConnectorConfig**](docs/DefaultAPI.md#deleteconnectorconfig) | **Delete** /connector/{name}/config | Delete the connector configuration
-*DefaultAPI* | [**DeleteConnectorCredentials**](docs/DefaultAPI.md#deleteconnectorcredentials) | **Delete** /connector/credentials/{apiKey} | Delete the connector credentials for the current account
+*DefaultAPI* | [**DeleteConnectorCredentials**](docs/DefaultAPI.md#deleteconnectorcredentials) | **Delete** /credentials/{apiKey} | Delete the connector credentials for the current account
 *DefaultAPI* | [**DeleteConnectorEntity**](docs/DefaultAPI.md#deleteconnectorentity) | **Delete** /connector/{name}/entity/{entityType} | Delete all the entities of a certain type.
-*DefaultAPI* | [**DeleteConnectorQuery**](docs/DefaultAPI.md#deleteconnectorquery) | **Delete** /connector/query/{queryID} | Delete the query
+*DefaultAPI* | [**DeleteConnectorQuery**](docs/DefaultAPI.md#deleteconnectorquery) | **Delete** /query/{queryID} | Delete the query
 *DefaultAPI* | [**DeleteCustomIDGenerator**](docs/DefaultAPI.md#deletecustomidgenerator) | **Delete** /id-generators/{generatorID} | Delete the custom ID generator with all its related data
 *DefaultAPI* | [**DeleteCustomerScript**](docs/DefaultAPI.md#deletecustomerscript) | **Delete** /customer-scripts/{scriptID} | Delete the script with all its related data
 *DefaultAPI* | [**DeleteDocument**](docs/DefaultAPI.md#deletedocument) | **Delete** /document-repository/entry/{documentID} | Delete a single document
@@ -150,13 +150,13 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeletePropertyHandover**](docs/DefaultAPI.md#deletepropertyhandover) | **Delete** /property-handovers/handovers/{handoverID} | Delete property handover
 *DefaultAPI* | [**DeletePropertyHandoverTemplate**](docs/DefaultAPI.md#deletepropertyhandovertemplate) | **Delete** /property-handovers/template/{templateID} | Delete property handover template
 *DefaultAPI* | [**DeletePropertyOwner**](docs/DefaultAPI.md#deletepropertyowner) | **Delete** /owner/{ownerID} | Delete property owner
-*DefaultAPI* | [**DeleteRentUpdate**](docs/DefaultAPI.md#deleterentupdate) | **Delete** /tenancy/rent-update/{rentUpdateID} | Delete the rent update with the given ID
+*DefaultAPI* | [**DeleteRentUpdate**](docs/DefaultAPI.md#deleterentupdate) | **Delete** /rent-update/{rentUpdateID} | Delete the rent update with the given ID
 *DefaultAPI* | [**DeleteReportDefinition**](docs/DefaultAPI.md#deletereportdefinition) | **Delete** /report/{definitionID} | 
 *DefaultAPI* | [**DeleteReportExecution**](docs/DefaultAPI.md#deletereportexecution) | **Delete** /report/executions/{executionID} | 
 *DefaultAPI* | [**DeleteServiceProvider**](docs/DefaultAPI.md#deleteserviceprovider) | **Delete** /service-provider/{serviceProviderID} | Delete the service provider
 *DefaultAPI* | [**DeleteTenancy**](docs/DefaultAPI.md#deletetenancy) | **Delete** /tenancy/{tenancyID} | Delete the tenancy with the given ID
 *DefaultAPI* | [**DeleteTenant**](docs/DefaultAPI.md#deletetenant) | **Delete** /tenant/{tenantID} | Remove tenant from property
-*DefaultAPI* | [**DeleteTenantChange**](docs/DefaultAPI.md#deletetenantchange) | **Delete** /tenancy/tenant-change/{tenantChangeID} | Delete a tenant change
+*DefaultAPI* | [**DeleteTenantChange**](docs/DefaultAPI.md#deletetenantchange) | **Delete** /tenant-change/{tenantChangeID} | Delete a tenant change
 *DefaultAPI* | [**DeleteWorkflowDefinition**](docs/DefaultAPI.md#deleteworkflowdefinition) | **Delete** /workflows/definition/{definitionID} | Delete workflow definition
 *DefaultAPI* | [**DeleteWorkflowEntrypoint**](docs/DefaultAPI.md#deleteworkflowentrypoint) | **Delete** /workflows/entrypoint/{entrypointID} | Delete workflow entry point
 *DefaultAPI* | [**DeleteWorkflowExecution**](docs/DefaultAPI.md#deleteworkflowexecution) | **Delete** /workflows/execution/{executionID} | Delete workflow execution
@@ -191,7 +191,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetConnectorCredentials**](docs/DefaultAPI.md#getconnectorcredentials) | **Get** /connector/credentials | Get the connector credentials for the current account
 *DefaultAPI* | [**GetConnectorEntityStats**](docs/DefaultAPI.md#getconnectorentitystats) | **Get** /connector/{name}/entity | Get stats for the connector
 *DefaultAPI* | [**GetConnectorQueries**](docs/DefaultAPI.md#getconnectorqueries) | **Get** /connector/{name}/queries | Get the queries that belong to the config.
-*DefaultAPI* | [**GetConnectorQuery**](docs/DefaultAPI.md#getconnectorquery) | **Get** /connector/query/{queryID} | Get the query for the current account
+*DefaultAPI* | [**GetConnectorQuery**](docs/DefaultAPI.md#getconnectorquery) | **Get** /query/{queryID} | Get the query for the current account
 *DefaultAPI* | [**GetCustomIDGenerator**](docs/DefaultAPI.md#getcustomidgenerator) | **Get** /id-generators/{generatorID} | Get the ID generator with all its attributes
 *DefaultAPI* | [**GetCustomIDGenerators**](docs/DefaultAPI.md#getcustomidgenerators) | **Get** /id-generators | Get all customer specific ID generators
 *DefaultAPI* | [**GetCustomerScript**](docs/DefaultAPI.md#getcustomerscript) | **Get** /customer-scripts/{scriptID} | Get the script with all its attributes
@@ -219,7 +219,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetPropertyHandoverTemplate**](docs/DefaultAPI.md#getpropertyhandovertemplate) | **Get** /property-handovers/template/{templateID} | Get property handover template
 *DefaultAPI* | [**GetPropertyOwner**](docs/DefaultAPI.md#getpropertyowner) | **Get** /owner/{ownerID} | Get property owner details
 *DefaultAPI* | [**GetPropertyTenancy**](docs/DefaultAPI.md#getpropertytenancy) | **Get** /property/{propID}/tenancy | Get the current tenancy for the property
-*DefaultAPI* | [**GetRentUpdate**](docs/DefaultAPI.md#getrentupdate) | **Get** /tenancy/rent-update/{rentUpdateID} | Get the rent update with the given ID
+*DefaultAPI* | [**GetRentUpdate**](docs/DefaultAPI.md#getrentupdate) | **Get** /rent-update/{rentUpdateID} | Get the rent update with the given ID
 *DefaultAPI* | [**GetRentUpdates**](docs/DefaultAPI.md#getrentupdates) | **Get** /tenancy/{tenancyID}/rent-updates | Get all tenancy rent updates
 *DefaultAPI* | [**GetReportDefinition**](docs/DefaultAPI.md#getreportdefinition) | **Get** /report/{definitionID} | 
 *DefaultAPI* | [**GetReportDefinitions**](docs/DefaultAPI.md#getreportdefinitions) | **Get** /reports | 
@@ -231,7 +231,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetTenancy**](docs/DefaultAPI.md#gettenancy) | **Get** /tenancy/{tenancyID} | Get the tenancy with the given ID
 *DefaultAPI* | [**GetTenancyHistory**](docs/DefaultAPI.md#gettenancyhistory) | **Get** /property/{propID}/tenancy/history | Get the tenancy history for the property
 *DefaultAPI* | [**GetTenant**](docs/DefaultAPI.md#gettenant) | **Get** /tenant/{tenantID} | Get tenant details
-*DefaultAPI* | [**GetTenantChange**](docs/DefaultAPI.md#gettenantchange) | **Get** /tenancy/tenant-change/{tenantChangeID} | Get a tenancy tenant change
+*DefaultAPI* | [**GetTenantChange**](docs/DefaultAPI.md#gettenantchange) | **Get** /tenant-change/{tenantChangeID} | Get a tenancy tenant change
 *DefaultAPI* | [**GetTenantChanges**](docs/DefaultAPI.md#gettenantchanges) | **Get** /tenancy/{tenancyID}/tenant-changes | Get all the tenant changes for a tenancy.
 *DefaultAPI* | [**GetTenantTenancies**](docs/DefaultAPI.md#gettenanttenancies) | **Get** /tenant/{tenantID}/tenancies | Get all tenancies for the tenant
 *DefaultAPI* | [**GetUserPreferences**](docs/DefaultAPI.md#getuserpreferences) | **Get** /preferences | Get the user preferences details
@@ -310,7 +310,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateCaseTemplate**](docs/DefaultAPI.md#updatecasetemplate) | **Put** /cases/template/{templateID} | Update case template
 *DefaultAPI* | [**UpdateCompanyProfile**](docs/DefaultAPI.md#updatecompanyprofile) | **Put** /profile/company | Update company profile
 *DefaultAPI* | [**UpdateConnectorConfig**](docs/DefaultAPI.md#updateconnectorconfig) | **Put** /connector/{name}/config | Update the connector configuration
-*DefaultAPI* | [**UpdateConnectorQuery**](docs/DefaultAPI.md#updateconnectorquery) | **Put** /connector/query/{queryID} | Update the connector Query
+*DefaultAPI* | [**UpdateConnectorQuery**](docs/DefaultAPI.md#updateconnectorquery) | **Put** /query/{queryID} | Update the connector Query
 *DefaultAPI* | [**UpdateCustomIDGenerator**](docs/DefaultAPI.md#updatecustomidgenerator) | **Put** /id-generators/{generatorID} | Update an already existing ID generator
 *DefaultAPI* | [**UpdateCustomerScript**](docs/DefaultAPI.md#updatecustomerscript) | **Put** /customer-scripts/{scriptID} | Update an already existing script
 *DefaultAPI* | [**UpdateDocument**](docs/DefaultAPI.md#updatedocument) | **Put** /document-repository/entry/{documentID} | Update an already existing document
@@ -324,7 +324,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdatePropertyHandover**](docs/DefaultAPI.md#updatepropertyhandover) | **Put** /property-handovers/handovers/{handoverID} | Update property handover
 *DefaultAPI* | [**UpdatePropertyHandoverTemplate**](docs/DefaultAPI.md#updatepropertyhandovertemplate) | **Put** /property-handovers/template/{templateID} | Update property handover template
 *DefaultAPI* | [**UpdatePropertyOwner**](docs/DefaultAPI.md#updatepropertyowner) | **Put** /owner/{ownerID} | Update property owner
-*DefaultAPI* | [**UpdateRentUpdate**](docs/DefaultAPI.md#updaterentupdate) | **Put** /tenancy/rent-update/{rentUpdateID} | Update the rent update with the given ID
+*DefaultAPI* | [**UpdateRentUpdate**](docs/DefaultAPI.md#updaterentupdate) | **Put** /rent-update/{rentUpdateID} | Update the rent update with the given ID
 *DefaultAPI* | [**UpdateReportDefinition**](docs/DefaultAPI.md#updatereportdefinition) | **Put** /report/{definitionID} | 
 *DefaultAPI* | [**UpdateServiceProvider**](docs/DefaultAPI.md#updateserviceprovider) | **Put** /service-provider/{serviceProviderID} | Update the attributes of the service provider
 *DefaultAPI* | [**UpdateTenancy**](docs/DefaultAPI.md#updatetenancy) | **Put** /tenancy/{tenancyID} | Update the tenancy with the given ID
