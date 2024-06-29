@@ -22,8 +22,8 @@ type UpdateCaseRequest struct {
 	// Reference to property
 	PropertyRef     *string  `json:"property_ref,omitempty"`
 	PropertyAddress *Address `json:"property_address,omitempty"`
-	// Input provided by the user when raising the case as a key-value map, serialized as JSON.
-	Data *string `json:"data,omitempty"`
+	// Input provided by the user when updating the case as a key-value map
+	Data map[string]interface{} `json:"data,omitempty"`
 }
 
 // NewUpdateCaseRequest instantiates a new UpdateCaseRequest object
@@ -108,19 +108,19 @@ func (o *UpdateCaseRequest) SetPropertyAddress(v Address) {
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *UpdateCaseRequest) GetData() string {
+func (o *UpdateCaseRequest) GetData() map[string]interface{} {
 	if o == nil || IsNil(o.Data) {
-		var ret string
+		var ret map[string]interface{}
 		return ret
 	}
-	return *o.Data
+	return o.Data
 }
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UpdateCaseRequest) GetDataOk() (*string, bool) {
+func (o *UpdateCaseRequest) GetDataOk() (map[string]interface{}, bool) {
 	if o == nil || IsNil(o.Data) {
-		return nil, false
+		return map[string]interface{}{}, false
 	}
 	return o.Data, true
 }
@@ -134,9 +134,9 @@ func (o *UpdateCaseRequest) HasData() bool {
 	return false
 }
 
-// SetData gets a reference to the given string and assigns it to the Data field.
-func (o *UpdateCaseRequest) SetData(v string) {
-	o.Data = &v
+// SetData gets a reference to the given map[string]interface{} and assigns it to the Data field.
+func (o *UpdateCaseRequest) SetData(v map[string]interface{}) {
+	o.Data = v
 }
 
 func (o UpdateCaseRequest) MarshalJSON() ([]byte, error) {
