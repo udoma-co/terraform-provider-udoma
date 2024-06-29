@@ -280,6 +280,31 @@ paths:
             Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
       summary: Get appointment in ical format
   /public/case:
+    get:
+      description: Get the case with all its attributes and comments
+      operationId: publicGetCase
+      parameters:
+      - description: |
+          A unique code that grants access to public users to the requested resource. Depending on the context, the code can have a different format and be validated in a different way. The parameter can be either provided in a path or as a query parameter
+        explode: true
+        in: query
+        name: code
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaseDetails'
+          description: Successful operation
+        default:
+          content: {}
+          description: |
+            Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
+      summary: Get case details
     post:
       operationId: publicCreateCase
       parameters:
@@ -328,20 +353,10 @@ paths:
           description: |
             Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
       summary: Raise a new case from a public endpoint.
-  /public/case/{caseID}:
-    get:
-      description: Get the case with all its attributes and comments
-      operationId: publicGetCase
+    put:
+      description: Update the base attributes of a case and reporter info
+      operationId: publicUpdateCase
       parameters:
-      - description: unique generated ID of a case
-        explode: false
-        in: path
-        name: caseID
-        required: true
-        schema:
-          pattern: "^c-[2-9A-HJ-NP-Za-km-z]{19,22}$"
-          type: string
-        style: simple
       - description: |
           A unique code that grants access to public users to the requested resource. Depending on the context, the code can have a different format and be validated in a different way. The parameter can be either provided in a path or as a query parameter
         explode: true
@@ -351,18 +366,25 @@ paths:
         schema:
           type: string
         style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCaseRequest'
+        description: Case that can be updated by the user
+        required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CaseDetails'
-          description: Successful operation
+                $ref: '#/components/schemas/Case'
+          description: Successfully updated case
         default:
           content: {}
           description: |
             Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
-      summary: Get case details
+      summary: Update case data
   /public/case/{caseID}/status:
     post:
       description: Add new status change to the case
@@ -4725,6 +4747,135 @@ paths:
       security:
       - bearerAuth: []
       summary: Update meter reading
+  /notification:
+    post:
+      operationId: createNotification
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateNotificationRequest'
+        description: Notification to be created
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+          description: Successfully created notification
+        default:
+          content: {}
+          description: |
+            Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
+      security:
+      - bearerAuth: []
+      summary: Create a new notification
+  /notification/{notificationName}:
+    delete:
+      operationId: DeleteNotification
+      parameters:
+      - description: "unique, descriptive, short notification identifier name"
+        explode: false
+        in: path
+        name: notificationName
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        default:
+          content: {}
+          description: |
+            Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
+      security:
+      - bearerAuth: []
+      summary: Delete notification
+    get:
+      operationId: getNotification
+      parameters:
+      - description: "unique, descriptive, short notification identifier name"
+        explode: false
+        in: path
+        name: notificationName
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+          description: Successfully updated notification
+        default:
+          content: {}
+          description: |
+            Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
+      security:
+      - bearerAuth: []
+      summary: Get notification
+    put:
+      operationId: updateNotification
+      parameters:
+      - description: "unique, descriptive, short notification identifier name"
+        explode: false
+        in: path
+        name: notificationName
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateNotificationRequest'
+        description: Notification to be updated
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+          description: Successfully updated notification
+        default:
+          content: {}
+          description: |
+            Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
+      security:
+      - bearerAuth: []
+      summary: Update notification
+  /notification/{notificationName}/send:
+    post:
+      operationId: sendNotification
+      parameters:
+      - description: "unique, descriptive, short notification identifier name"
+        explode: false
+        in: path
+        name: notificationName
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendNotificationRequest'
+        description: |
+          Data to be used when running the script that sends the notfication.
+        required: true
+      responses:
+        default:
+          content: {}
+          description: |
+            Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
+      security:
+      - bearerAuth: []
+      summary: Send notification
   /owner:
     post:
       operationId: createPropertyOwner
@@ -7341,6 +7492,15 @@ components:
         pattern: "^mr-[2-9A-HJ-NP-Za-km-z]{19,22}$"
         type: string
       style: simple
+    notificationNamePathParam:
+      description: "unique, descriptive, short notification identifier name"
+      explode: false
+      in: path
+      name: notificationName
+      required: true
+      schema:
+        type: string
+      style: simple
     propertyIdPathParam:
       description: unique generated ID of a property
       explode: false
@@ -8254,21 +8414,535 @@ components:
             The message that should sent to the admin when deleting an appointment
           type: string
       type: object
-    CreateCaseRequest:
-      description: All the information required for raising a new case
+    CaseDetails:
+      description: "All details of a case, raised via a case report endpoint"
       example:
-        property_address:
-          line1: 1 ZestLabs Blvd
-          line2: CSS District
-          city: Mannheim
-          postcode: 680001
-          province: Baden-Wuerttemberg
-          country: Germany
-        property_ref: property_ref
-        data:
-          key: ""
-        template_ref: template_ref
-        reporter_info:
+        template:
+          access:
+          - null
+          - null
+          name_expression: name_expression
+          icon: icon
+          created_at: 9
+          description:
+            key: description
+          label:
+            key: label
+          confirmation_text:
+            key: confirmation_text
+          updated_at: 3
+          info_text:
+            key: info_text
+          ad_categories:
+          - null
+          - null
+          name: name
+          id: id
+          custom_inputs:
+            layout:
+            - ref_id: ref_id
+              ref_type: ref_type
+            - ref_id: ref_id
+              ref_type: ref_type
+            inputs:
+            - propagate_changes: true
+              view_label:
+                key: view_label
+              ephemeral: true
+              default_value: default_value
+              attributes:
+                key: attributes
+              id: id
+              label:
+                key: label
+              placeholder:
+                key: placeholder
+              type: type
+              items:
+              - items
+              - items
+              required: true
+              target: target
+            - propagate_changes: true
+              view_label:
+                key: view_label
+              ephemeral: true
+              default_value: default_value
+              attributes:
+                key: attributes
+              id: id
+              label:
+                key: label
+              placeholder:
+                key: placeholder
+              type: type
+              items:
+              - items
+              - items
+              required: true
+              target: target
+            groups:
+            - use_item_group: true
+              bottom_divider: true
+              top_divider: true
+              min_size: 6
+              id: id
+              label:
+                key: label
+              type: type
+              items:
+              - ref_id: ref_id
+                ref_type: ref_type
+              - ref_id: ref_id
+                ref_type: ref_type
+              info:
+                key: info
+              target: target
+            - use_item_group: true
+              bottom_divider: true
+              top_divider: true
+              min_size: 6
+              id: id
+              label:
+                key: label
+              type: type
+              items:
+              - ref_id: ref_id
+                ref_type: ref_type
+              - ref_id: ref_id
+                ref_type: ref_type
+              info:
+                key: info
+              target: target
+            validations:
+            - expression: expression
+              id: id
+              message:
+                key: message
+              target: target
+            - expression: expression
+              id: id
+              message:
+                key: message
+              target: target
+          config:
+            reminders:
+            - schedule:
+              - 2
+              - 5
+              - 10
+              status: null
+            - schedule:
+              - 2
+              - 5
+              - 10
+              status: null
+            automatic_actions:
+            - schedule: 2
+              action: action
+              status: null
+            - schedule: 2
+              action: action
+              status: null
+            status_config:
+            - feedback:
+              - mode: null
+                visibility:
+                - null
+                - null
+                form:
+                  layout:
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  inputs:
+                  - propagate_changes: true
+                    view_label:
+                      key: view_label
+                    ephemeral: true
+                    default_value: default_value
+                    attributes:
+                      key: attributes
+                    id: id
+                    label:
+                      key: label
+                    placeholder:
+                      key: placeholder
+                    type: type
+                    items:
+                    - items
+                    - items
+                    required: true
+                    target: target
+                  - propagate_changes: true
+                    view_label:
+                      key: view_label
+                    ephemeral: true
+                    default_value: default_value
+                    attributes:
+                      key: attributes
+                    id: id
+                    label:
+                      key: label
+                    placeholder:
+                      key: placeholder
+                    type: type
+                    items:
+                    - items
+                    - items
+                    required: true
+                    target: target
+                  groups:
+                  - use_item_group: true
+                    bottom_divider: true
+                    top_divider: true
+                    min_size: 6
+                    id: id
+                    label:
+                      key: label
+                    type: type
+                    items:
+                    - ref_id: ref_id
+                      ref_type: ref_type
+                    - ref_id: ref_id
+                      ref_type: ref_type
+                    info:
+                      key: info
+                    target: target
+                  - use_item_group: true
+                    bottom_divider: true
+                    top_divider: true
+                    min_size: 6
+                    id: id
+                    label:
+                      key: label
+                    type: type
+                    items:
+                    - ref_id: ref_id
+                      ref_type: ref_type
+                    - ref_id: ref_id
+                      ref_type: ref_type
+                    info:
+                      key: info
+                    target: target
+                  validations:
+                  - expression: expression
+                    id: id
+                    message:
+                      key: message
+                    target: target
+                  - expression: expression
+                    id: id
+                    message:
+                      key: message
+                    target: target
+                id: id
+              - mode: null
+                visibility:
+                - null
+                - null
+                form:
+                  layout:
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  inputs:
+                  - propagate_changes: true
+                    view_label:
+                      key: view_label
+                    ephemeral: true
+                    default_value: default_value
+                    attributes:
+                      key: attributes
+                    id: id
+                    label:
+                      key: label
+                    placeholder:
+                      key: placeholder
+                    type: type
+                    items:
+                    - items
+                    - items
+                    required: true
+                    target: target
+                  - propagate_changes: true
+                    view_label:
+                      key: view_label
+                    ephemeral: true
+                    default_value: default_value
+                    attributes:
+                      key: attributes
+                    id: id
+                    label:
+                      key: label
+                    placeholder:
+                      key: placeholder
+                    type: type
+                    items:
+                    - items
+                    - items
+                    required: true
+                    target: target
+                  groups:
+                  - use_item_group: true
+                    bottom_divider: true
+                    top_divider: true
+                    min_size: 6
+                    id: id
+                    label:
+                      key: label
+                    type: type
+                    items:
+                    - ref_id: ref_id
+                      ref_type: ref_type
+                    - ref_id: ref_id
+                      ref_type: ref_type
+                    info:
+                      key: info
+                    target: target
+                  - use_item_group: true
+                    bottom_divider: true
+                    top_divider: true
+                    min_size: 6
+                    id: id
+                    label:
+                      key: label
+                    type: type
+                    items:
+                    - ref_id: ref_id
+                      ref_type: ref_type
+                    - ref_id: ref_id
+                      ref_type: ref_type
+                    info:
+                      key: info
+                    target: target
+                  validations:
+                  - expression: expression
+                    id: id
+                    message:
+                      key: message
+                    target: target
+                  - expression: expression
+                    id: id
+                    message:
+                      key: message
+                    target: target
+                id: id
+              parties:
+              - null
+              - null
+              action: null
+              source_status:
+              - null
+              - null
+              notify:
+              - null
+              - null
+            - feedback:
+              - mode: null
+                visibility:
+                - null
+                - null
+                form:
+                  layout:
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  inputs:
+                  - propagate_changes: true
+                    view_label:
+                      key: view_label
+                    ephemeral: true
+                    default_value: default_value
+                    attributes:
+                      key: attributes
+                    id: id
+                    label:
+                      key: label
+                    placeholder:
+                      key: placeholder
+                    type: type
+                    items:
+                    - items
+                    - items
+                    required: true
+                    target: target
+                  - propagate_changes: true
+                    view_label:
+                      key: view_label
+                    ephemeral: true
+                    default_value: default_value
+                    attributes:
+                      key: attributes
+                    id: id
+                    label:
+                      key: label
+                    placeholder:
+                      key: placeholder
+                    type: type
+                    items:
+                    - items
+                    - items
+                    required: true
+                    target: target
+                  groups:
+                  - use_item_group: true
+                    bottom_divider: true
+                    top_divider: true
+                    min_size: 6
+                    id: id
+                    label:
+                      key: label
+                    type: type
+                    items:
+                    - ref_id: ref_id
+                      ref_type: ref_type
+                    - ref_id: ref_id
+                      ref_type: ref_type
+                    info:
+                      key: info
+                    target: target
+                  - use_item_group: true
+                    bottom_divider: true
+                    top_divider: true
+                    min_size: 6
+                    id: id
+                    label:
+                      key: label
+                    type: type
+                    items:
+                    - ref_id: ref_id
+                      ref_type: ref_type
+                    - ref_id: ref_id
+                      ref_type: ref_type
+                    info:
+                      key: info
+                    target: target
+                  validations:
+                  - expression: expression
+                    id: id
+                    message:
+                      key: message
+                    target: target
+                  - expression: expression
+                    id: id
+                    message:
+                      key: message
+                    target: target
+                id: id
+              - mode: null
+                visibility:
+                - null
+                - null
+                form:
+                  layout:
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  - ref_id: ref_id
+                    ref_type: ref_type
+                  inputs:
+                  - propagate_changes: true
+                    view_label:
+                      key: view_label
+                    ephemeral: true
+                    default_value: default_value
+                    attributes:
+                      key: attributes
+                    id: id
+                    label:
+                      key: label
+                    placeholder:
+                      key: placeholder
+                    type: type
+                    items:
+                    - items
+                    - items
+                    required: true
+                    target: target
+                  - propagate_changes: true
+                    view_label:
+                      key: view_label
+                    ephemeral: true
+                    default_value: default_value
+                    attributes:
+                      key: attributes
+                    id: id
+                    label:
+                      key: label
+                    placeholder:
+                      key: placeholder
+                    type: type
+                    items:
+                    - items
+                    - items
+                    required: true
+                    target: target
+                  groups:
+                  - use_item_group: true
+                    bottom_divider: true
+                    top_divider: true
+                    min_size: 6
+                    id: id
+                    label:
+                      key: label
+                    type: type
+                    items:
+                    - ref_id: ref_id
+                      ref_type: ref_type
+                    - ref_id: ref_id
+                      ref_type: ref_type
+                    info:
+                      key: info
+                    target: target
+                  - use_item_group: true
+                    bottom_divider: true
+                    top_divider: true
+                    min_size: 6
+                    id: id
+                    label:
+                      key: label
+                    type: type
+                    items:
+                    - ref_id: ref_id
+                      ref_type: ref_type
+                    - ref_id: ref_id
+                      ref_type: ref_type
+                    info:
+                      key: info
+                    target: target
+                  validations:
+                  - expression: expression
+                    id: id
+                    message:
+                      key: message
+                    target: target
+                  - expression: expression
+                    id: id
+                    message:
+                      key: message
+                    target: target
+                id: id
+              parties:
+              - null
+              - null
+              action: null
+              source_status:
+              - null
+              - null
+              notify:
+              - null
+              - null
+        case_party:
+          ref: ref
+          role: null
+          name: name
+          ref_type: ref_type
+        property:
+          parent_name: parent_name
+          bank_account_ref: bank_account_ref
           address:
             line1: 1 ZestLabs Blvd
             line2: CSS District
@@ -8276,36 +8950,63 @@ components:
             postcode: 680001
             province: Baden-Wuerttemberg
             country: Germany
-          last_name: last_name
-          company: company
-          phone_number: phone_number
+          parent_address:
+            line1: 1 ZestLabs Blvd
+            line2: CSS District
+            city: Mannheim
+            postcode: 680001
+            province: Baden-Wuerttemberg
+            country: Germany
+          created_at: 4
+          external_id: external_id
+          type: null
+          parent_ref: parent_ref
+          updated_at: 7
+          owner_ref: owner_ref
+          name: name
+          details:
+            floor: 3A
+            area: 120
+            rooms: 6
+            bedrooms: 2
+            bathrooms: 1
+            balcony: 1
+            construction_year: 2018
+            parking: PARKING_SPOT
+            floor_type:
+            - LAMINATE
+            - TILES
+            heating_type:
+            - CENTRAL_HEATING
+            - FLOOR_HEATING
+            - AC
+            window_type:
+            - TRIPLE_PANE
+            - DOUBLE_SASH
+            furnishing: FULL_FURNISHING
+            historic_property: false
+            rent: 750
+            running_costs: 150
           id: id
-          title: title
-          first_name: first_name
-          email: email
-      properties:
-        property_ref:
-          description: Reference to either property or building for which case is
-            rased
-          type: string
-        property_address:
-          $ref: '#/components/schemas/Address'
-        reporter_info:
-          $ref: '#/components/schemas/ContactData'
-        template_ref:
-          description: |
-            The ID of the case template used to create this case
-          type: string
-        data:
-          additionalProperties: true
-          description: |
-            Input provided by the user when raising the case as a key-value map
-          type: object
-      type: object
-    CreateCaseResponse:
-      description: The data generated based on a new case requests
-      example:
-        access_code: access_code
+          external_source: external_source
+        reporter:
+          user_role: null
+          user_id: user_id
+          contact_data:
+            address:
+              line1: 1 ZestLabs Blvd
+              line2: CSS District
+              city: Mannheim
+              postcode: 680001
+              province: Baden-Wuerttemberg
+              country: Germany
+            last_name: last_name
+            company: company
+            phone_number: phone_number
+            id: id
+            title: title
+            first_name: first_name
+            email: email
         case:
           template: template
           comments:
@@ -8577,8 +9278,14 @@ components:
       properties:
         case:
           $ref: '#/components/schemas/Case'
-        access_code:
-          type: string
+        reporter:
+          $ref: '#/components/schemas/UserReference'
+        case_party:
+          $ref: '#/components/schemas/CaseParty'
+        template:
+          $ref: '#/components/schemas/CaseTemplate'
+        property:
+          $ref: '#/components/schemas/Property'
       type: object
     Case:
       description: "Case represents a single case, typically raised by a tenant"
@@ -9199,879 +9906,6 @@ components:
             Form data that was provided by the party executing the action.
           type: object
       type: object
-    CaseDetails:
-      description: "All details of a case, raised via a case report endpoint"
-      example:
-        template:
-          access:
-          - null
-          - null
-          name_expression: name_expression
-          icon: icon
-          created_at: 0
-          description:
-            key: description
-          label:
-            key: label
-          confirmation_text:
-            key: confirmation_text
-          updated_at: 6
-          info_text:
-            key: info_text
-          ad_categories:
-          - null
-          - null
-          name: name
-          id: id
-          custom_inputs:
-            layout:
-            - ref_id: ref_id
-              ref_type: ref_type
-            - ref_id: ref_id
-              ref_type: ref_type
-            inputs:
-            - propagate_changes: true
-              view_label:
-                key: view_label
-              ephemeral: true
-              default_value: default_value
-              attributes:
-                key: attributes
-              id: id
-              label:
-                key: label
-              placeholder:
-                key: placeholder
-              type: type
-              items:
-              - items
-              - items
-              required: true
-              target: target
-            - propagate_changes: true
-              view_label:
-                key: view_label
-              ephemeral: true
-              default_value: default_value
-              attributes:
-                key: attributes
-              id: id
-              label:
-                key: label
-              placeholder:
-                key: placeholder
-              type: type
-              items:
-              - items
-              - items
-              required: true
-              target: target
-            groups:
-            - use_item_group: true
-              bottom_divider: true
-              top_divider: true
-              min_size: 6
-              id: id
-              label:
-                key: label
-              type: type
-              items:
-              - ref_id: ref_id
-                ref_type: ref_type
-              - ref_id: ref_id
-                ref_type: ref_type
-              info:
-                key: info
-              target: target
-            - use_item_group: true
-              bottom_divider: true
-              top_divider: true
-              min_size: 6
-              id: id
-              label:
-                key: label
-              type: type
-              items:
-              - ref_id: ref_id
-                ref_type: ref_type
-              - ref_id: ref_id
-                ref_type: ref_type
-              info:
-                key: info
-              target: target
-            validations:
-            - expression: expression
-              id: id
-              message:
-                key: message
-              target: target
-            - expression: expression
-              id: id
-              message:
-                key: message
-              target: target
-          config:
-            reminders:
-            - schedule:
-              - 2
-              - 5
-              - 10
-              status: null
-            - schedule:
-              - 2
-              - 5
-              - 10
-              status: null
-            automatic_actions:
-            - schedule: 1
-              action: action
-              status: null
-            - schedule: 1
-              action: action
-              status: null
-            status_config:
-            - feedback:
-              - mode: null
-                visibility:
-                - null
-                - null
-                form:
-                  layout:
-                  - ref_id: ref_id
-                    ref_type: ref_type
-                  - ref_id: ref_id
-                    ref_type: ref_type
-                  inputs:
-                  - propagate_changes: true
-                    view_label:
-                      key: view_label
-                    ephemeral: true
-                    default_value: default_value
-                    attributes:
-                      key: attributes
-                    id: id
-                    label:
-                      key: label
-                    placeholder:
-                      key: placeholder
-                    type: type
-                    items:
-                    - items
-                    - items
-                    required: true
-                    target: target
-                  - propagate_changes: true
-                    view_label:
-                      key: view_label
-                    ephemeral: true
-                    default_value: default_value
-                    attributes:
-                      key: attributes
-                    id: id
-                    label:
-                      key: label
-                    placeholder:
-                      key: placeholder
-                    type: type
-                    items:
-                    - items
-                    - items
-                    required: true
-                    target: target
-                  groups:
-                  - use_item_group: true
-                    bottom_divider: true
-                    top_divider: true
-                    min_size: 6
-                    id: id
-                    label:
-                      key: label
-                    type: type
-                    items:
-                    - ref_id: ref_id
-                      ref_type: ref_type
-                    - ref_id: ref_id
-                      ref_type: ref_type
-                    info:
-                      key: info
-                    target: target
-                  - use_item_group: true
-                    bottom_divider: true
-                    top_divider: true
-                    min_size: 6
-                    id: id
-                    label:
-                      key: label
-                    type: type
-                    items:
-                    - ref_id: ref_id
-                      ref_type: ref_type
-                    - ref_id: ref_id
-                      ref_type: ref_type
-                    info:
-                      key: info
-                    target: target
-                  validations:
-                  - expression: expression
-                    id: id
-                    message:
-                      key: message
-                    target: target
-                  - expression: expression
-                    id: id
-                    message:
-                      key: message
-                    target: target
-                id: id
-              - mode: null
-                visibility:
-                - null
-                - null
-                form:
-                  layout:
-                  - ref_id: ref_id
-                    ref_type: ref_type
-                  - ref_id: ref_id
-                    ref_type: ref_type
-                  inputs:
-                  - propagate_changes: true
-                    view_label:
-                      key: view_label
-                    ephemeral: true
-                    default_value: default_value
-                    attributes:
-                      key: attributes
-                    id: id
-                    label:
-                      key: label
-                    placeholder:
-                      key: placeholder
-                    type: type
-                    items:
-                    - items
-                    - items
-                    required: true
-                    target: target
-                  - propagate_changes: true
-                    view_label:
-                      key: view_label
-                    ephemeral: true
-                    default_value: default_value
-                    attributes:
-                      key: attributes
-                    id: id
-                    label:
-                      key: label
-                    placeholder:
-                      key: placeholder
-                    type: type
-                    items:
-                    - items
-                    - items
-                    required: true
-                    target: target
-                  groups:
-                  - use_item_group: true
-                    bottom_divider: true
-                    top_divider: true
-                    min_size: 6
-                    id: id
-                    label:
-                      key: label
-                    type: type
-                    items:
-                    - ref_id: ref_id
-                      ref_type: ref_type
-                    - ref_id: ref_id
-                      ref_type: ref_type
-                    info:
-                      key: info
-                    target: target
-                  - use_item_group: true
-                    bottom_divider: true
-                    top_divider: true
-                    min_size: 6
-                    id: id
-                    label:
-                      key: label
-                    type: type
-                    items:
-                    - ref_id: ref_id
-                      ref_type: ref_type
-                    - ref_id: ref_id
-                      ref_type: ref_type
-                    info:
-                      key: info
-                    target: target
-                  validations:
-                  - expression: expression
-                    id: id
-                    message:
-                      key: message
-                    target: target
-                  - expression: expression
-                    id: id
-                    message:
-                      key: message
-                    target: target
-                id: id
-              parties:
-              - null
-              - null
-              action: null
-              source_status:
-              - null
-              - null
-              notify:
-              - null
-              - null
-            - feedback:
-              - mode: null
-                visibility:
-                - null
-                - null
-                form:
-                  layout:
-                  - ref_id: ref_id
-                    ref_type: ref_type
-                  - ref_id: ref_id
-                    ref_type: ref_type
-                  inputs:
-                  - propagate_changes: true
-                    view_label:
-                      key: view_label
-                    ephemeral: true
-                    default_value: default_value
-                    attributes:
-                      key: attributes
-                    id: id
-                    label:
-                      key: label
-                    placeholder:
-                      key: placeholder
-                    type: type
-                    items:
-                    - items
-                    - items
-                    required: true
-                    target: target
-                  - propagate_changes: true
-                    view_label:
-                      key: view_label
-                    ephemeral: true
-                    default_value: default_value
-                    attributes:
-                      key: attributes
-                    id: id
-                    label:
-                      key: label
-                    placeholder:
-                      key: placeholder
-                    type: type
-                    items:
-                    - items
-                    - items
-                    required: true
-                    target: target
-                  groups:
-                  - use_item_group: true
-                    bottom_divider: true
-                    top_divider: true
-                    min_size: 6
-                    id: id
-                    label:
-                      key: label
-                    type: type
-                    items:
-                    - ref_id: ref_id
-                      ref_type: ref_type
-                    - ref_id: ref_id
-                      ref_type: ref_type
-                    info:
-                      key: info
-                    target: target
-                  - use_item_group: true
-                    bottom_divider: true
-                    top_divider: true
-                    min_size: 6
-                    id: id
-                    label:
-                      key: label
-                    type: type
-                    items:
-                    - ref_id: ref_id
-                      ref_type: ref_type
-                    - ref_id: ref_id
-                      ref_type: ref_type
-                    info:
-                      key: info
-                    target: target
-                  validations:
-                  - expression: expression
-                    id: id
-                    message:
-                      key: message
-                    target: target
-                  - expression: expression
-                    id: id
-                    message:
-                      key: message
-                    target: target
-                id: id
-              - mode: null
-                visibility:
-                - null
-                - null
-                form:
-                  layout:
-                  - ref_id: ref_id
-                    ref_type: ref_type
-                  - ref_id: ref_id
-                    ref_type: ref_type
-                  inputs:
-                  - propagate_changes: true
-                    view_label:
-                      key: view_label
-                    ephemeral: true
-                    default_value: default_value
-                    attributes:
-                      key: attributes
-                    id: id
-                    label:
-                      key: label
-                    placeholder:
-                      key: placeholder
-                    type: type
-                    items:
-                    - items
-                    - items
-                    required: true
-                    target: target
-                  - propagate_changes: true
-                    view_label:
-                      key: view_label
-                    ephemeral: true
-                    default_value: default_value
-                    attributes:
-                      key: attributes
-                    id: id
-                    label:
-                      key: label
-                    placeholder:
-                      key: placeholder
-                    type: type
-                    items:
-                    - items
-                    - items
-                    required: true
-                    target: target
-                  groups:
-                  - use_item_group: true
-                    bottom_divider: true
-                    top_divider: true
-                    min_size: 6
-                    id: id
-                    label:
-                      key: label
-                    type: type
-                    items:
-                    - ref_id: ref_id
-                      ref_type: ref_type
-                    - ref_id: ref_id
-                      ref_type: ref_type
-                    info:
-                      key: info
-                    target: target
-                  - use_item_group: true
-                    bottom_divider: true
-                    top_divider: true
-                    min_size: 6
-                    id: id
-                    label:
-                      key: label
-                    type: type
-                    items:
-                    - ref_id: ref_id
-                      ref_type: ref_type
-                    - ref_id: ref_id
-                      ref_type: ref_type
-                    info:
-                      key: info
-                    target: target
-                  validations:
-                  - expression: expression
-                    id: id
-                    message:
-                      key: message
-                    target: target
-                  - expression: expression
-                    id: id
-                    message:
-                      key: message
-                    target: target
-                id: id
-              parties:
-              - null
-              - null
-              action: null
-              source_status:
-              - null
-              - null
-              notify:
-              - null
-              - null
-        case_party:
-          ref: ref
-          role: null
-          name: name
-          ref_type: ref_type
-        property:
-          parent_name: parent_name
-          bank_account_ref: bank_account_ref
-          address:
-            line1: 1 ZestLabs Blvd
-            line2: CSS District
-            city: Mannheim
-            postcode: 680001
-            province: Baden-Wuerttemberg
-            country: Germany
-          parent_address:
-            line1: 1 ZestLabs Blvd
-            line2: CSS District
-            city: Mannheim
-            postcode: 680001
-            province: Baden-Wuerttemberg
-            country: Germany
-          created_at: 5
-          external_id: external_id
-          type: null
-          parent_ref: parent_ref
-          updated_at: 5
-          owner_ref: owner_ref
-          name: name
-          details:
-            floor: 3A
-            area: 120
-            rooms: 6
-            bedrooms: 2
-            bathrooms: 1
-            balcony: 1
-            construction_year: 2018
-            parking: PARKING_SPOT
-            floor_type:
-            - LAMINATE
-            - TILES
-            heating_type:
-            - CENTRAL_HEATING
-            - FLOOR_HEATING
-            - AC
-            window_type:
-            - TRIPLE_PANE
-            - DOUBLE_SASH
-            furnishing: FULL_FURNISHING
-            historic_property: false
-            rent: 750
-            running_costs: 150
-          id: id
-          external_source: external_source
-        reporter:
-          user_role: null
-          user_id: user_id
-          contact_data:
-            address:
-              line1: 1 ZestLabs Blvd
-              line2: CSS District
-              city: Mannheim
-              postcode: 680001
-              province: Baden-Wuerttemberg
-              country: Germany
-            last_name: last_name
-            company: company
-            phone_number: phone_number
-            id: id
-            title: title
-            first_name: first_name
-            email: email
-        case:
-          template: template
-          comments:
-          - deleted: true
-            attachments:
-            - ref: ref
-              thumbnail: thumbnail
-              created: 0
-              file_type: file_type
-              file_name: file_name
-              id: id
-              file_sha256: file_sha256
-              file_size: 6
-              url: url
-            - ref: ref
-              thumbnail: thumbnail
-              created: 0
-              file_type: file_type
-              file_name: file_name
-              id: id
-              file_sha256: file_sha256
-              file_size: 6
-              url: url
-            updated_at: 2
-            visibility:
-            - ref: ref
-              role: null
-              name: name
-              ref_type: ref_type
-            - ref: ref
-              role: null
-              name: name
-              ref_type: ref_type
-            author_ref:
-              user_role: null
-              user_id: user_id
-              contact_data:
-                address:
-                  line1: 1 ZestLabs Blvd
-                  line2: CSS District
-                  city: Mannheim
-                  postcode: 680001
-                  province: Baden-Wuerttemberg
-                  country: Germany
-                last_name: last_name
-                company: company
-                phone_number: phone_number
-                id: id
-                title: title
-                first_name: first_name
-                email: email
-            created_at: 5
-            id: id
-            content: content
-          - deleted: true
-            attachments:
-            - ref: ref
-              thumbnail: thumbnail
-              created: 0
-              file_type: file_type
-              file_name: file_name
-              id: id
-              file_sha256: file_sha256
-              file_size: 6
-              url: url
-            - ref: ref
-              thumbnail: thumbnail
-              created: 0
-              file_type: file_type
-              file_name: file_name
-              id: id
-              file_sha256: file_sha256
-              file_size: 6
-              url: url
-            updated_at: 2
-            visibility:
-            - ref: ref
-              role: null
-              name: name
-              ref_type: ref_type
-            - ref: ref
-              role: null
-              name: name
-              ref_type: ref_type
-            author_ref:
-              user_role: null
-              user_id: user_id
-              contact_data:
-                address:
-                  line1: 1 ZestLabs Blvd
-                  line2: CSS District
-                  city: Mannheim
-                  postcode: 680001
-                  province: Baden-Wuerttemberg
-                  country: Germany
-                last_name: last_name
-                company: company
-                phone_number: phone_number
-                id: id
-                title: title
-                first_name: first_name
-                email: email
-            created_at: 5
-            id: id
-            content: content
-          data:
-            key: ""
-          status_history:
-          - author_ref:
-              user_role: null
-              user_id: user_id
-              contact_data:
-                address:
-                  line1: 1 ZestLabs Blvd
-                  line2: CSS District
-                  city: Mannheim
-                  postcode: 680001
-                  province: Baden-Wuerttemberg
-                  country: Germany
-                last_name: last_name
-                company: company
-                phone_number: phone_number
-                id: id
-                title: title
-                first_name: first_name
-                email: email
-            action: null
-            id: id
-            assignee:
-              contact_ref: contact_ref
-              account_ref: 1
-            timestamp: 5
-            status: null
-          - author_ref:
-              user_role: null
-              user_id: user_id
-              contact_data:
-                address:
-                  line1: 1 ZestLabs Blvd
-                  line2: CSS District
-                  city: Mannheim
-                  postcode: 680001
-                  province: Baden-Wuerttemberg
-                  country: Germany
-                last_name: last_name
-                company: company
-                phone_number: phone_number
-                id: id
-                title: title
-                first_name: first_name
-                email: email
-            action: null
-            id: id
-            assignee:
-              contact_ref: contact_ref
-              account_ref: 1
-            timestamp: 5
-            status: null
-          created_at: 0
-          reporter:
-            address:
-              line1: 1 ZestLabs Blvd
-              line2: CSS District
-              city: Mannheim
-              postcode: 680001
-              province: Baden-Wuerttemberg
-              country: Germany
-            last_name: last_name
-            company: company
-            phone_number: phone_number
-            id: id
-            title: title
-            first_name: first_name
-            email: email
-          feedback:
-          - form_data:
-              key: ""
-            visibility:
-            - ref: ref
-              role: null
-              name: name
-              ref_type: ref_type
-            - ref: ref
-              role: null
-              name: name
-              ref_type: ref_type
-            author_ref:
-              user_role: null
-              user_id: user_id
-              contact_data:
-                address:
-                  line1: 1 ZestLabs Blvd
-                  line2: CSS District
-                  city: Mannheim
-                  postcode: 680001
-                  province: Baden-Wuerttemberg
-                  country: Germany
-                last_name: last_name
-                company: company
-                phone_number: phone_number
-                id: id
-                title: title
-                first_name: first_name
-                email: email
-            created_at: 7
-            action: null
-            feedback_id: feedback_id
-            id: id
-            source_status: null
-          - form_data:
-              key: ""
-            visibility:
-            - ref: ref
-              role: null
-              name: name
-              ref_type: ref_type
-            - ref: ref
-              role: null
-              name: name
-              ref_type: ref_type
-            author_ref:
-              user_role: null
-              user_id: user_id
-              contact_data:
-                address:
-                  line1: 1 ZestLabs Blvd
-                  line2: CSS District
-                  city: Mannheim
-                  postcode: 680001
-                  province: Baden-Wuerttemberg
-                  country: Germany
-                last_name: last_name
-                company: company
-                phone_number: phone_number
-                id: id
-                title: title
-                first_name: first_name
-                email: email
-            created_at: 7
-            action: null
-            feedback_id: feedback_id
-            id: id
-            source_status: null
-          archived: true
-          property_address:
-            line1: 1 ZestLabs Blvd
-            line2: CSS District
-            city: Mannheim
-            postcode: 680001
-            province: Baden-Wuerttemberg
-            country: Germany
-          updated_at: 6
-          property_ref: property_ref
-          name: name
-          parties:
-          - ref: ref
-            role: null
-            name: name
-            ref_type: ref_type
-          - ref: ref
-            role: null
-            name: name
-            ref_type: ref_type
-          id: id
-          assignee:
-            contact_ref: contact_ref
-            account_ref: 1
-          status: null
-      properties:
-        case:
-          $ref: '#/components/schemas/Case'
-        reporter:
-          $ref: '#/components/schemas/UserReference'
-        case_party:
-          $ref: '#/components/schemas/CaseParty'
-        template:
-          $ref: '#/components/schemas/CaseTemplate'
-        property:
-          $ref: '#/components/schemas/Property'
-      type: object
     CaseTemplate:
       description: |
         Contains the information necessary to create a report of a certain  type from a report endpoint.
@@ -10081,14 +9915,14 @@ components:
         - null
         name_expression: name_expression
         icon: icon
-        created_at: 0
+        created_at: 9
         description:
           key: description
         label:
           key: label
         confirmation_text:
           key: confirmation_text
-        updated_at: 6
+        updated_at: 3
         info_text:
           key: info_text
         ad_categories:
@@ -10196,10 +10030,10 @@ components:
             - 10
             status: null
           automatic_actions:
-          - schedule: 1
+          - schedule: 2
             action: action
             status: null
-          - schedule: 1
+          - schedule: 2
             action: action
             status: null
           status_config:
@@ -10683,10 +10517,10 @@ components:
           - 10
           status: null
         automatic_actions:
-        - schedule: 1
+        - schedule: 2
           action: action
           status: null
-        - schedule: 1
+        - schedule: 2
           action: action
           status: null
         status_config:
@@ -11472,7 +11306,7 @@ components:
       description: |
         Defines the configuration for an automatic action a case.
       example:
-        schedule: 1
+        schedule: 2
         action: action
         status: null
       properties:
@@ -11496,6 +11330,357 @@ components:
       - GAS_PROVIDERS
       - HOME_INSURANCE
       type: string
+    UpdateCaseRequest:
+      description: All attributes of a case that can be updated
+      example:
+        property_address:
+          line1: 1 ZestLabs Blvd
+          line2: CSS District
+          city: Mannheim
+          postcode: 680001
+          province: Baden-Wuerttemberg
+          country: Germany
+        property_ref: property_ref
+        data:
+          key: ""
+      properties:
+        property_ref:
+          description: Reference to property
+          type: string
+        property_address:
+          $ref: '#/components/schemas/Address'
+        data:
+          additionalProperties: true
+          description: |
+            Input provided by the user when updating the case as a key-value map
+          type: object
+      type: object
+    CreateCaseRequest:
+      description: All the information required for raising a new case
+      example:
+        property_address:
+          line1: 1 ZestLabs Blvd
+          line2: CSS District
+          city: Mannheim
+          postcode: 680001
+          province: Baden-Wuerttemberg
+          country: Germany
+        property_ref: property_ref
+        data:
+          key: ""
+        template_ref: template_ref
+        reporter_info:
+          address:
+            line1: 1 ZestLabs Blvd
+            line2: CSS District
+            city: Mannheim
+            postcode: 680001
+            province: Baden-Wuerttemberg
+            country: Germany
+          last_name: last_name
+          company: company
+          phone_number: phone_number
+          id: id
+          title: title
+          first_name: first_name
+          email: email
+      properties:
+        property_ref:
+          description: Reference to either property or building for which case is
+            rased
+          type: string
+        property_address:
+          $ref: '#/components/schemas/Address'
+        reporter_info:
+          $ref: '#/components/schemas/ContactData'
+        template_ref:
+          description: |
+            The ID of the case template used to create this case
+          type: string
+        data:
+          additionalProperties: true
+          description: |
+            Input provided by the user when raising the case as a key-value map
+          type: object
+      type: object
+    CreateCaseResponse:
+      description: The data generated based on a new case requests
+      example:
+        access_code: access_code
+        case:
+          template: template
+          comments:
+          - deleted: true
+            attachments:
+            - ref: ref
+              thumbnail: thumbnail
+              created: 0
+              file_type: file_type
+              file_name: file_name
+              id: id
+              file_sha256: file_sha256
+              file_size: 6
+              url: url
+            - ref: ref
+              thumbnail: thumbnail
+              created: 0
+              file_type: file_type
+              file_name: file_name
+              id: id
+              file_sha256: file_sha256
+              file_size: 6
+              url: url
+            updated_at: 2
+            visibility:
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            author_ref:
+              user_role: null
+              user_id: user_id
+              contact_data:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+            created_at: 5
+            id: id
+            content: content
+          - deleted: true
+            attachments:
+            - ref: ref
+              thumbnail: thumbnail
+              created: 0
+              file_type: file_type
+              file_name: file_name
+              id: id
+              file_sha256: file_sha256
+              file_size: 6
+              url: url
+            - ref: ref
+              thumbnail: thumbnail
+              created: 0
+              file_type: file_type
+              file_name: file_name
+              id: id
+              file_sha256: file_sha256
+              file_size: 6
+              url: url
+            updated_at: 2
+            visibility:
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            author_ref:
+              user_role: null
+              user_id: user_id
+              contact_data:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+            created_at: 5
+            id: id
+            content: content
+          data:
+            key: ""
+          status_history:
+          - author_ref:
+              user_role: null
+              user_id: user_id
+              contact_data:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+            action: null
+            id: id
+            assignee:
+              contact_ref: contact_ref
+              account_ref: 1
+            timestamp: 5
+            status: null
+          - author_ref:
+              user_role: null
+              user_id: user_id
+              contact_data:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+            action: null
+            id: id
+            assignee:
+              contact_ref: contact_ref
+              account_ref: 1
+            timestamp: 5
+            status: null
+          created_at: 0
+          reporter:
+            address:
+              line1: 1 ZestLabs Blvd
+              line2: CSS District
+              city: Mannheim
+              postcode: 680001
+              province: Baden-Wuerttemberg
+              country: Germany
+            last_name: last_name
+            company: company
+            phone_number: phone_number
+            id: id
+            title: title
+            first_name: first_name
+            email: email
+          feedback:
+          - form_data:
+              key: ""
+            visibility:
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            author_ref:
+              user_role: null
+              user_id: user_id
+              contact_data:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+            created_at: 7
+            action: null
+            feedback_id: feedback_id
+            id: id
+            source_status: null
+          - form_data:
+              key: ""
+            visibility:
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            - ref: ref
+              role: null
+              name: name
+              ref_type: ref_type
+            author_ref:
+              user_role: null
+              user_id: user_id
+              contact_data:
+                address:
+                  line1: 1 ZestLabs Blvd
+                  line2: CSS District
+                  city: Mannheim
+                  postcode: 680001
+                  province: Baden-Wuerttemberg
+                  country: Germany
+                last_name: last_name
+                company: company
+                phone_number: phone_number
+                id: id
+                title: title
+                first_name: first_name
+                email: email
+            created_at: 7
+            action: null
+            feedback_id: feedback_id
+            id: id
+            source_status: null
+          archived: true
+          property_address:
+            line1: 1 ZestLabs Blvd
+            line2: CSS District
+            city: Mannheim
+            postcode: 680001
+            province: Baden-Wuerttemberg
+            country: Germany
+          updated_at: 6
+          property_ref: property_ref
+          name: name
+          parties:
+          - ref: ref
+            role: null
+            name: name
+            ref_type: ref_type
+          - ref: ref
+            role: null
+            name: name
+            ref_type: ref_type
+          id: id
+          assignee:
+            contact_ref: contact_ref
+            account_ref: 1
+          status: null
+      properties:
+        case:
+          $ref: '#/components/schemas/Case'
+        access_code:
+          type: string
+      type: object
     UpdateCaseStatusRequest:
       description: All the information required for updating the status of a case
       example:
@@ -11664,14 +11849,14 @@ components:
           - null
           name_expression: name_expression
           icon: icon
-          created_at: 0
+          created_at: 9
           description:
             key: description
           label:
             key: label
           confirmation_text:
             key: confirmation_text
-          updated_at: 6
+          updated_at: 3
           info_text:
             key: info_text
           ad_categories:
@@ -11779,10 +11964,10 @@ components:
               - 10
               status: null
             automatic_actions:
-            - schedule: 1
+            - schedule: 2
               action: action
               status: null
-            - schedule: 1
+            - schedule: 2
               action: action
               status: null
             status_config:
@@ -12181,14 +12366,14 @@ components:
           - null
           name_expression: name_expression
           icon: icon
-          created_at: 0
+          created_at: 9
           description:
             key: description
           label:
             key: label
           confirmation_text:
             key: confirmation_text
-          updated_at: 6
+          updated_at: 3
           info_text:
             key: info_text
           ad_categories:
@@ -12296,10 +12481,10 @@ components:
               - 10
               status: null
             automatic_actions:
-            - schedule: 1
+            - schedule: 2
               action: action
               status: null
-            - schedule: 1
+            - schedule: 2
               action: action
               status: null
             status_config:
@@ -12710,11 +12895,11 @@ components:
             postcode: 680001
             province: Baden-Wuerttemberg
             country: Germany
-          created_at: 5
+          created_at: 4
           external_id: external_id
           type: null
           parent_ref: parent_ref
-          updated_at: 5
+          updated_at: 7
           owner_ref: owner_ref
           name: name
           details:
@@ -12758,11 +12943,11 @@ components:
             postcode: 680001
             province: Baden-Wuerttemberg
             country: Germany
-          created_at: 5
+          created_at: 4
           external_id: external_id
           type: null
           parent_ref: parent_ref
-          updated_at: 5
+          updated_at: 7
           owner_ref: owner_ref
           name: name
           details:
@@ -13501,29 +13686,6 @@ components:
           format: int32
           type: integer
       type: object
-    UpdateCaseRequest:
-      description: All attributes of a case that can be updated
-      example:
-        property_address:
-          line1: 1 ZestLabs Blvd
-          line2: CSS District
-          city: Mannheim
-          postcode: 680001
-          province: Baden-Wuerttemberg
-          country: Germany
-        property_ref: property_ref
-        data: data
-      properties:
-        property_ref:
-          description: Reference to property
-          type: string
-        property_address:
-          $ref: '#/components/schemas/Address'
-        data:
-          description: |
-            Input provided by the user when raising the case as a key-value map, serialized as JSON.
-          type: string
-      type: object
     AssignCaseRequest:
       description: input used to send out case information to service provider
       example:
@@ -13813,10 +13975,10 @@ components:
             - 10
             status: null
           automatic_actions:
-          - schedule: 1
+          - schedule: 2
             action: action
             status: null
-          - schedule: 1
+          - schedule: 2
             action: action
             status: null
           status_config:
@@ -17307,6 +17469,101 @@ components:
         attachment_ref:
           type: string
       type: object
+    CreateNotificationRequest:
+      allOf:
+      - description: Create request for a notification.
+        properties:
+          name:
+            description: "A unique, descriptive, and short identifier name."
+            type: string
+        required:
+        - name
+        type: object
+      - $ref: '#/components/schemas/UpdateNotificationRequest'
+      example:
+        template_text: template_text
+        name: name
+        description: description
+        script: script
+        template_html: template_html
+    UpdateNotificationRequest:
+      description: Update request for a notification.
+      example:
+        template_text: template_text
+        description: description
+        script: script
+        template_html: template_html
+      properties:
+        description:
+          description: A short description of the notification.
+          type: string
+        script:
+          description: |
+            A script that can run the notification given some initial data.
+          type: string
+        template_html:
+          description: The golang html template to use for the notification.
+          type: string
+        template_text:
+          description: The golang text template to use for the notification.
+          type: string
+      required:
+      - script
+      - template_html
+      - template_text
+      type: object
+    Notification:
+      description: A notification template that can be sent to a user.
+      example:
+        updated_at: 6
+        template_text: template_text
+        name: name
+        description: description
+        created_at: 0
+        script: script
+        template_html: template_html
+      properties:
+        name:
+          description: "A unique, descriptive, and short identifier name."
+          type: string
+        description:
+          description: A short description of the notification.
+          type: string
+        created_at:
+          description: The timestamp of when the notification was created.
+          format: int64
+          type: integer
+        updated_at:
+          description: The timestamp of when the notification was last updated.
+          format: int64
+          type: integer
+        script:
+          description: |
+            A script that can run the notification given some initial data.
+          type: string
+        template_html:
+          description: The golang html template to use for the notification.
+          type: string
+        template_text:
+          description: The golang text template to use for the notification.
+          type: string
+      required:
+      - created_at
+      - name
+      - script
+      - template_html
+      - template_text
+      - updated_at
+      type: object
+    SendNotificationRequest:
+      description: A request that sends a notification.
+      example:
+        data: "{}"
+      properties:
+        data:
+          description: The data to use when running the notification script.
+          type: object
+      type: object
     CreateOrUpdatePropertyOwnerRequest:
       description: Request used to create a new property owner
       example:
@@ -17743,11 +18000,11 @@ components:
             postcode: 680001
             province: Baden-Wuerttemberg
             country: Germany
-          created_at: 5
+          created_at: 4
           external_id: external_id
           type: null
           parent_ref: parent_ref
-          updated_at: 5
+          updated_at: 7
           owner_ref: owner_ref
           name: name
           details:
@@ -17791,11 +18048,11 @@ components:
             postcode: 680001
             province: Baden-Wuerttemberg
             country: Germany
-          created_at: 5
+          created_at: 4
           external_id: external_id
           type: null
           parent_ref: parent_ref
-          updated_at: 5
+          updated_at: 7
           owner_ref: owner_ref
           name: name
           details:
@@ -17858,11 +18115,11 @@ components:
           postcode: 680001
           province: Baden-Wuerttemberg
           country: Germany
-        created_at: 5
+        created_at: 4
         external_id: external_id
         type: null
         parent_ref: parent_ref
-        updated_at: 5
+        updated_at: 7
         owner_ref: owner_ref
         name: name
         details:
