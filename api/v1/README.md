@@ -96,6 +96,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateCase**](docs/DefaultAPI.md#createcase) | **Post** /case | Create a new case
 *DefaultAPI* | [**CreateCaseReportingEndpoint**](docs/DefaultAPI.md#createcasereportingendpoint) | **Post** /cases/endpoint | Create new case reporting endpoint
 *DefaultAPI* | [**CreateCaseTemplate**](docs/DefaultAPI.md#createcasetemplate) | **Post** /cases/template | Create new case template
+*DefaultAPI* | [**CreateCommentTemplate**](docs/DefaultAPI.md#createcommenttemplate) | **Post** /comment-template | Create a comment template
 *DefaultAPI* | [**CreateConnectorConfig**](docs/DefaultAPI.md#createconnectorconfig) | **Post** /connector/config | Create a new connector configuration
 *DefaultAPI* | [**CreateConnectorCredentials**](docs/DefaultAPI.md#createconnectorcredentials) | **Post** /connector/credentials | Create new connector credentials
 *DefaultAPI* | [**CreateConnectorQuery**](docs/DefaultAPI.md#createconnectorquery) | **Post** /connector/query | Create a new connector query
@@ -133,6 +134,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteCaseComment**](docs/DefaultAPI.md#deletecasecomment) | **Delete** /case/{caseID}/comment/{commentID} | Mark a case comment as deleted
 *DefaultAPI* | [**DeleteCaseReportingEndpoint**](docs/DefaultAPI.md#deletecasereportingendpoint) | **Delete** /cases/endpoints/{endpointID} | Delete the case reporting endpoint by ID
 *DefaultAPI* | [**DeleteCaseTemplate**](docs/DefaultAPI.md#deletecasetemplate) | **Delete** /cases/template/{templateID} | Delete a case template
+*DefaultAPI* | [**DeleteCommentTemplate**](docs/DefaultAPI.md#deletecommenttemplate) | **Delete** /comment-template/{commentTemplateID} | Delete comment template
 *DefaultAPI* | [**DeleteConnectorConfig**](docs/DefaultAPI.md#deleteconnectorconfig) | **Delete** /connector/{name}/config | Delete the connector configuration
 *DefaultAPI* | [**DeleteConnectorCredentials**](docs/DefaultAPI.md#deleteconnectorcredentials) | **Delete** /credentials/{apiKey} | Delete the connector credentials for the current account
 *DefaultAPI* | [**DeleteConnectorEntity**](docs/DefaultAPI.md#deleteconnectorentity) | **Delete** /connector/{name}/entity/{entityType} | Delete all the entities of a certain type.
@@ -161,6 +163,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteWorkflowEntrypoint**](docs/DefaultAPI.md#deleteworkflowentrypoint) | **Delete** /workflows/entrypoint/{entrypointID} | Delete workflow entry point
 *DefaultAPI* | [**DeleteWorkflowExecution**](docs/DefaultAPI.md#deleteworkflowexecution) | **Delete** /workflows/execution/{executionID} | Delete workflow execution
 *DefaultAPI* | [**DenyAppointment**](docs/DefaultAPI.md#denyappointment) | **Post** /calendar/appointments/entry/{entryID}/deny | Deny an appointment
+*DefaultAPI* | [**ExecuteCommentTemplate**](docs/DefaultAPI.md#executecommenttemplate) | **Post** /comment-template/{commentTemplateID}/execute | Execute a comment template returning the comment.
 *DefaultAPI* | [**ExecuteReport**](docs/DefaultAPI.md#executereport) | **Post** /report/{definitionID}/execute | 
 *DefaultAPI* | [**ExecuteWorkflowEntrypoint**](docs/DefaultAPI.md#executeworkflowentrypoint) | **Post** /workflows/entrypoint/{entrypointID}/execute | Execute the workflow entry point
 *DefaultAPI* | [**ExecuteWorkflowExecutionStep**](docs/DefaultAPI.md#executeworkflowexecutionstep) | **Post** /workflows/execution/{executionID} | Execute workflow execution step
@@ -185,6 +188,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetCaseReportingEndpoint**](docs/DefaultAPI.md#getcasereportingendpoint) | **Get** /cases/endpoints/{endpointID} | Get the case report endpoint by ID
 *DefaultAPI* | [**GetCaseReportingEndpointQRCode**](docs/DefaultAPI.md#getcasereportingendpointqrcode) | **Get** /cases/endpoints/{endpointID}/qr-code | Generates and returns a QR code of the URL of the case reporting endpoint 
 *DefaultAPI* | [**GetCaseTemplate**](docs/DefaultAPI.md#getcasetemplate) | **Get** /cases/template/{templateID} | Get the case template by ID
+*DefaultAPI* | [**GetCommentTemplate**](docs/DefaultAPI.md#getcommenttemplate) | **Get** /comment-template/{commentTemplateID} | Get comment template
 *DefaultAPI* | [**GetCompanyProfile**](docs/DefaultAPI.md#getcompanyprofile) | **Get** /profile/company | Get the company profile details
 *DefaultAPI* | [**GetConnectorConfig**](docs/DefaultAPI.md#getconnectorconfig) | **Get** /connector/{name}/config | Get the connector configuration for the current account
 *DefaultAPI* | [**GetConnectorConfigs**](docs/DefaultAPI.md#getconnectorconfigs) | **Get** /connector/configs | Get the connector configurations for the current account
@@ -201,6 +205,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetDocumentTemplate**](docs/DefaultAPI.md#getdocumenttemplate) | **Get** /document-generation/template/{templateID} | Get a document template
 *DefaultAPI* | [**GetDocumentTemplates**](docs/DefaultAPI.md#getdocumenttemplates) | **Get** /document-generation/templates | Get all available document templates
 *DefaultAPI* | [**GetESignatureStatusForDocument**](docs/DefaultAPI.md#getesignaturestatusfordocument) | **Get** /document-generation/documents/{docID}/esignature | Get the singing status for the document
+*DefaultAPI* | [**GetEmailStatus**](docs/DefaultAPI.md#getemailstatus) | **Get** /email/status/{email} | Get the status of the email
 *DefaultAPI* | [**GetExternalUser**](docs/DefaultAPI.md#getexternaluser) | **Get** /external-users/{userID} | Get information about external user
 *DefaultAPI* | [**GetExternalUserCasesCount**](docs/DefaultAPI.md#getexternalusercasescount) | **Get** /external-users/{userID}/cases/count | Get the number of cases the the given user has opened
 *DefaultAPI* | [**GetFAQEntries**](docs/DefaultAPI.md#getfaqentries) | **Get** /faqs/entries | Get all available FAQ entries
@@ -243,6 +248,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetWorkflowExecutionTrigger**](docs/DefaultAPI.md#getworkflowexecutiontrigger) | **Get** /workflows/triggers/{executionID} | Get workflow trigger for an execution
 *DefaultAPI* | [**GetWorkflowTriggersForSource**](docs/DefaultAPI.md#getworkflowtriggersforsource) | **Get** /workflows/trigger/source/{sourceID} | Get workflow triggers for a source
 *DefaultAPI* | [**InternalAddPriceIndexPoint**](docs/DefaultAPI.md#internaladdpriceindexpoint) | **Put** /price-index | Push a new value for the inflation index
+*DefaultAPI* | [**PreviewCommentTemplate**](docs/DefaultAPI.md#previewcommenttemplate) | **Post** /comment-template/{commentTemplateID}/preview | Preview a comment template returning an example comment.
 *DefaultAPI* | [**PublicAddCaseComment**](docs/DefaultAPI.md#publicaddcasecomment) | **Post** /public/case/{caseID}/comment | Add new case comment
 *DefaultAPI* | [**PublicCreateAppointment**](docs/DefaultAPI.md#publiccreateappointment) | **Post** /public/calendar/appointments/{scheduleID}/entry | Create a new appointment for the given schedule
 *DefaultAPI* | [**PublicCreateCase**](docs/DefaultAPI.md#publiccreatecase) | **Post** /public/case | Raise a new case from a public endpoint.
@@ -253,9 +259,10 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**PublicGetAppointmentInIcalFormat**](docs/DefaultAPI.md#publicgetappointmentinicalformat) | **Get** /public/calendar/appointments/entry/{code}/ical | Get appointment in ical format
 *DefaultAPI* | [**PublicGetAppointmentSchedule**](docs/DefaultAPI.md#publicgetappointmentschedule) | **Get** /public/calendar/appointments/schedules/{scheduleID} | Get appointment schedule details
 *DefaultAPI* | [**PublicGetAttachment**](docs/DefaultAPI.md#publicgetattachment) | **Get** /public/attachment/{attachmentID} | Get a file attachment
-*DefaultAPI* | [**PublicGetCase**](docs/DefaultAPI.md#publicgetcase) | **Get** /public/case/{caseID} | Get case details
+*DefaultAPI* | [**PublicGetCase**](docs/DefaultAPI.md#publicgetcase) | **Get** /public/case | Get case details
 *DefaultAPI* | [**PublicGetCaseReportingEndpointInfo**](docs/DefaultAPI.md#publicgetcasereportingendpointinfo) | **Get** /public/cases/endpoint/{endpointID}/info | Get the information for the case reporting endpoint with the given code 
 *DefaultAPI* | [**PublicGetExternalUser**](docs/DefaultAPI.md#publicgetexternaluser) | **Get** /public/external-users | Get external user data
+*DefaultAPI* | [**PublicUpdateCase**](docs/DefaultAPI.md#publicupdatecase) | **Put** /public/case | Update case data
 *DefaultAPI* | [**PublicUpdateCaseStatus**](docs/DefaultAPI.md#publicupdatecasestatus) | **Post** /public/case/{caseID}/status | Add new case status
 *DefaultAPI* | [**PublicUpdateExternalUser**](docs/DefaultAPI.md#publicupdateexternaluser) | **Put** /public/external-users | Update external user data
 *DefaultAPI* | [**PublicUploadAttachment**](docs/DefaultAPI.md#publicuploadattachment) | **Post** /public/attachment | Upload new file attachment
@@ -276,6 +283,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryCaseReportingEndpoints**](docs/DefaultAPI.md#querycasereportingendpoints) | **Post** /cases/endpoints | Query all case reporting endpoints for given criteria
 *DefaultAPI* | [**QueryCaseTemplates**](docs/DefaultAPI.md#querycasetemplates) | **Post** /cases/templates | Query all case templates for given criteria
 *DefaultAPI* | [**QueryCases**](docs/DefaultAPI.md#querycases) | **Post** /cases | Query cases for the current user
+*DefaultAPI* | [**QueryCommentTemplates**](docs/DefaultAPI.md#querycommenttemplates) | **Get** /comment-templates | Query all comment templates for the account
 *DefaultAPI* | [**QueryDocumentGenerations**](docs/DefaultAPI.md#querydocumentgenerations) | **Post** /document-generation/documents | Request a list of document generations
 *DefaultAPI* | [**QueryDocuments**](docs/DefaultAPI.md#querydocuments) | **Post** /document-repository/entries | Query all document for a certain ref type
 *DefaultAPI* | [**QueryExternalUserCases**](docs/DefaultAPI.md#queryexternalusercases) | **Get** /external-users/{userID}/cases | Get the cases the the given user has opened
@@ -308,6 +316,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateCaseReportingEndpoint**](docs/DefaultAPI.md#updatecasereportingendpoint) | **Put** /cases/endpoints/{endpointID} | Update the case reporting endpoint by ID
 *DefaultAPI* | [**UpdateCaseStatus**](docs/DefaultAPI.md#updatecasestatus) | **Post** /case/{caseID}/status | Add new case status
 *DefaultAPI* | [**UpdateCaseTemplate**](docs/DefaultAPI.md#updatecasetemplate) | **Put** /cases/template/{templateID} | Update case template
+*DefaultAPI* | [**UpdateCommentTemplate**](docs/DefaultAPI.md#updatecommenttemplate) | **Put** /comment-template/{commentTemplateID} | Update comment template
 *DefaultAPI* | [**UpdateCompanyProfile**](docs/DefaultAPI.md#updatecompanyprofile) | **Put** /profile/company | Update company profile
 *DefaultAPI* | [**UpdateConnectorConfig**](docs/DefaultAPI.md#updateconnectorconfig) | **Put** /connector/{name}/config | Update the connector configuration
 *DefaultAPI* | [**UpdateConnectorQuery**](docs/DefaultAPI.md#updateconnectorquery) | **Put** /query/{queryID} | Update the connector Query
@@ -379,6 +388,7 @@ Class | Method | HTTP request | Description
  - [CaseTemplate](docs/CaseTemplate.md)
  - [CaseTemplateAccessibility](docs/CaseTemplateAccessibility.md)
  - [CaseTemplateAdCategoryEnum](docs/CaseTemplateAdCategoryEnum.md)
+ - [CommentTemplate](docs/CommentTemplate.md)
  - [CompanyProfile](docs/CompanyProfile.md)
  - [ConnectorConfig](docs/ConnectorConfig.md)
  - [ConnectorCredentials](docs/ConnectorCredentials.md)
@@ -405,6 +415,7 @@ Class | Method | HTTP request | Description
  - [CreateOrUpdateBankTransactionRequest](docs/CreateOrUpdateBankTransactionRequest.md)
  - [CreateOrUpdateCaseReportingEndpointRequest](docs/CreateOrUpdateCaseReportingEndpointRequest.md)
  - [CreateOrUpdateCaseTemplateRequest](docs/CreateOrUpdateCaseTemplateRequest.md)
+ - [CreateOrUpdateCommentTemplateRequest](docs/CreateOrUpdateCommentTemplateRequest.md)
  - [CreateOrUpdateConnectorQueryRequest](docs/CreateOrUpdateConnectorQueryRequest.md)
  - [CreateOrUpdateCustomIDGeneratorRequest](docs/CreateOrUpdateCustomIDGeneratorRequest.md)
  - [CreateOrUpdateCustomerScriptRequest](docs/CreateOrUpdateCustomerScriptRequest.md)
@@ -441,8 +452,11 @@ Class | Method | HTTP request | Description
  - [DocumentTemplateOptions](docs/DocumentTemplateOptions.md)
  - [DocumentTemplateSignatureConfguration](docs/DocumentTemplateSignatureConfguration.md)
  - [DocumentTemplateSignerDefinition](docs/DocumentTemplateSignerDefinition.md)
+ - [EmailStatusResponse](docs/EmailStatusResponse.md)
  - [EmailValidationRequest](docs/EmailValidationRequest.md)
  - [EmailValidationResponse](docs/EmailValidationResponse.md)
+ - [ExecuteCommentTemplateRequest](docs/ExecuteCommentTemplateRequest.md)
+ - [ExecuteCommentTemplateResponse](docs/ExecuteCommentTemplateResponse.md)
  - [ExecuteReportRequest](docs/ExecuteReportRequest.md)
  - [ExecuteWorkflowEntrypointRequest](docs/ExecuteWorkflowEntrypointRequest.md)
  - [ExecuteWorkflowStepRequest](docs/ExecuteWorkflowStepRequest.md)
@@ -502,6 +516,7 @@ Class | Method | HTTP request | Description
  - [QueryCaseReportingEndpointsResponse](docs/QueryCaseReportingEndpointsResponse.md)
  - [QueryCaseTemplatesRequest](docs/QueryCaseTemplatesRequest.md)
  - [QueryCasesRequest](docs/QueryCasesRequest.md)
+ - [QueryCommentTemplatesRequest](docs/QueryCommentTemplatesRequest.md)
  - [QueryDocumentGenerationsRequest](docs/QueryDocumentGenerationsRequest.md)
  - [QueryDocumentGenerationsResponse](docs/QueryDocumentGenerationsResponse.md)
  - [QueryDocumentsRequest](docs/QueryDocumentsRequest.md)

@@ -44,6 +44,7 @@ func resourceDefinitionConnectorConfig(enabled bool) string {
 resource "udoma_connector_config" "connector" {
 	name = "test-connector"
 	enabled = "` + strconv.FormatBool(enabled) + `"
+	enable_logs = true
 	sync_time = "*/5 * * * *"
 	ping_time = "*/5 * * * *"
 }
