@@ -42,7 +42,7 @@ resource udoma_document_template "test" {
 }
 EOF
 
-	placeholders = <<EOF
+	placeholders_script = <<EOF
 const something = {
 	Key: "Value"
 };
@@ -105,7 +105,7 @@ EOF
 				// The last_updated attribute does not exist in the Udoma API,
 				// therefore there is no value for it during import. JSON types
 				// are matched literally, so we need to ignore them.
-				ImportStateVerifyIgnore: []string{"last_updated", "content", "placeholders", "signatures", "inputs"},
+				ImportStateVerifyIgnore: []string{"last_updated", "content", "placeholders_script", "signatures", "inputs"},
 			},
 			// Update and Read testing
 			{
@@ -139,7 +139,7 @@ resource "udoma_document_template" "test" {
 }
 EOF
 
-	placeholders = <<EOF
+	placeholders_script = <<EOF
 const something = {
 	Key: "Value"
 };
