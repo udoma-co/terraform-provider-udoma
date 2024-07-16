@@ -3466,6 +3466,116 @@ func (a *DefaultAPIService) CreateMeterReadingExecute(r ApiCreateMeterReadingReq
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiCreateNotificationRequest struct {
+	ctx                       context.Context
+	ApiService                *DefaultAPIService
+	createNotificationRequest *CreateNotificationRequest
+}
+
+// Notification to be created
+func (r ApiCreateNotificationRequest) CreateNotificationRequest(createNotificationRequest CreateNotificationRequest) ApiCreateNotificationRequest {
+	r.createNotificationRequest = &createNotificationRequest
+	return r
+}
+
+func (r ApiCreateNotificationRequest) Execute() (*Notification, *http.Response, error) {
+	return r.ApiService.CreateNotificationExecute(r)
+}
+
+/*
+CreateNotification Create a new notification
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiCreateNotificationRequest
+*/
+func (a *DefaultAPIService) CreateNotification(ctx context.Context) ApiCreateNotificationRequest {
+	return ApiCreateNotificationRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return Notification
+func (a *DefaultAPIService) CreateNotificationExecute(r ApiCreateNotificationRequest) (*Notification, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Notification
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateNotification")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/notification"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createNotificationRequest == nil {
+		return localVarReturnValue, nil, reportError("createNotificationRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createNotificationRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiCreatePropertyRequest struct {
 	ctx                   context.Context
 	ApiService            *DefaultAPIService
@@ -7227,6 +7337,96 @@ func (a *DefaultAPIService) DeleteMeterReadingExecute(r ApiDeleteMeterReadingReq
 	localVarPath := localBasePath + "/meter/{meterID}/reading/{readingID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"meterID"+"}", url.PathEscape(parameterValueToString(r.meterID, "meterID")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"readingID"+"}", url.PathEscape(parameterValueToString(r.readingID, "readingID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDeleteNotificationRequest struct {
+	ctx              context.Context
+	ApiService       *DefaultAPIService
+	notificationName string
+}
+
+func (r ApiDeleteNotificationRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteNotificationExecute(r)
+}
+
+/*
+DeleteNotification Delete notification
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param notificationName unique, descriptive, short notification identifier name
+	@return ApiDeleteNotificationRequest
+*/
+func (a *DefaultAPIService) DeleteNotification(ctx context.Context, notificationName string) ApiDeleteNotificationRequest {
+	return ApiDeleteNotificationRequest{
+		ApiService:       a,
+		ctx:              ctx,
+		notificationName: notificationName,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DeleteNotificationExecute(r ApiDeleteNotificationRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteNotification")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/notification/{notificationName}"
+	localVarPath = strings.Replace(localVarPath, "{"+"notificationName"+"}", url.PathEscape(parameterValueToString(r.notificationName, "notificationName")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -14163,6 +14363,108 @@ func (a *DefaultAPIService) GetMetersByPropertyExecute(r ApiGetMetersByPropertyR
 
 	localVarPath := localBasePath + "/meters/by-property/{propID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"propID"+"}", url.PathEscape(parameterValueToString(r.propID, "propID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetNotificationRequest struct {
+	ctx              context.Context
+	ApiService       *DefaultAPIService
+	notificationName string
+}
+
+func (r ApiGetNotificationRequest) Execute() (*Notification, *http.Response, error) {
+	return r.ApiService.GetNotificationExecute(r)
+}
+
+/*
+GetNotification Get notification
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param notificationName unique, descriptive, short notification identifier name
+	@return ApiGetNotificationRequest
+*/
+func (a *DefaultAPIService) GetNotification(ctx context.Context, notificationName string) ApiGetNotificationRequest {
+	return ApiGetNotificationRequest{
+		ApiService:       a,
+		ctx:              ctx,
+		notificationName: notificationName,
+	}
+}
+
+// Execute executes the request
+//
+//	@return Notification
+func (a *DefaultAPIService) GetNotificationExecute(r ApiGetNotificationRequest) (*Notification, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Notification
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetNotification")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/notification/{notificationName}"
+	localVarPath = strings.Replace(localVarPath, "{"+"notificationName"+"}", url.PathEscape(parameterValueToString(r.notificationName, "notificationName")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -23240,6 +23542,108 @@ func (a *DefaultAPIService) ResetConnectorQueryExecute(r ApiResetConnectorQueryR
 	return localVarHTTPResponse, nil
 }
 
+type ApiSendNotificationRequest struct {
+	ctx                     context.Context
+	ApiService              *DefaultAPIService
+	notificationName        string
+	sendNotificationRequest *SendNotificationRequest
+}
+
+// Data to be used when running the script that sends the notfication.
+func (r ApiSendNotificationRequest) SendNotificationRequest(sendNotificationRequest SendNotificationRequest) ApiSendNotificationRequest {
+	r.sendNotificationRequest = &sendNotificationRequest
+	return r
+}
+
+func (r ApiSendNotificationRequest) Execute() (*http.Response, error) {
+	return r.ApiService.SendNotificationExecute(r)
+}
+
+/*
+SendNotification Send notification
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param notificationName unique, descriptive, short notification identifier name
+	@return ApiSendNotificationRequest
+*/
+func (a *DefaultAPIService) SendNotification(ctx context.Context, notificationName string) ApiSendNotificationRequest {
+	return ApiSendNotificationRequest{
+		ApiService:       a,
+		ctx:              ctx,
+		notificationName: notificationName,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) SendNotificationExecute(r ApiSendNotificationRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod = http.MethodPost
+		localVarPostBody   interface{}
+		formFiles          []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.SendNotification")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/notification/{notificationName}/send"
+	localVarPath = strings.Replace(localVarPath, "{"+"notificationName"+"}", url.PathEscape(parameterValueToString(r.notificationName, "notificationName")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.sendNotificationRequest == nil {
+		return nil, reportError("sendNotificationRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.sendNotificationRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
 type ApiStartWorkflowExecutionRequest struct {
 	ctx                           context.Context
 	ApiService                    *DefaultAPIService
@@ -26451,6 +26855,120 @@ func (a *DefaultAPIService) UpdateMeterReadingExecute(r ApiUpdateMeterReadingReq
 	}
 	// body params
 	localVarPostBody = r.createOrUpdateMeterReadingRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdateNotificationRequest struct {
+	ctx                       context.Context
+	ApiService                *DefaultAPIService
+	notificationName          string
+	updateNotificationRequest *UpdateNotificationRequest
+}
+
+// Notification to be updated
+func (r ApiUpdateNotificationRequest) UpdateNotificationRequest(updateNotificationRequest UpdateNotificationRequest) ApiUpdateNotificationRequest {
+	r.updateNotificationRequest = &updateNotificationRequest
+	return r
+}
+
+func (r ApiUpdateNotificationRequest) Execute() (*Notification, *http.Response, error) {
+	return r.ApiService.UpdateNotificationExecute(r)
+}
+
+/*
+UpdateNotification Update notification
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param notificationName unique, descriptive, short notification identifier name
+	@return ApiUpdateNotificationRequest
+*/
+func (a *DefaultAPIService) UpdateNotification(ctx context.Context, notificationName string) ApiUpdateNotificationRequest {
+	return ApiUpdateNotificationRequest{
+		ApiService:       a,
+		ctx:              ctx,
+		notificationName: notificationName,
+	}
+}
+
+// Execute executes the request
+//
+//	@return Notification
+func (a *DefaultAPIService) UpdateNotificationExecute(r ApiUpdateNotificationRequest) (*Notification, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Notification
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdateNotification")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/notification/{notificationName}"
+	localVarPath = strings.Replace(localVarPath, "{"+"notificationName"+"}", url.PathEscape(parameterValueToString(r.notificationName, "notificationName")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.updateNotificationRequest == nil {
+		return localVarReturnValue, nil, reportError("updateNotificationRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.updateNotificationRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

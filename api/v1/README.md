@@ -109,6 +109,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateFinancialAccount**](docs/DefaultAPI.md#createfinancialaccount) | **Post** /financial/account | Create a new financial account
 *DefaultAPI* | [**CreateMeter**](docs/DefaultAPI.md#createmeter) | **Post** /meters | Create a new meter for a property
 *DefaultAPI* | [**CreateMeterReading**](docs/DefaultAPI.md#createmeterreading) | **Post** /meter/{meterID}/readings | Create a new meter reading for a meter
+*DefaultAPI* | [**CreateNotification**](docs/DefaultAPI.md#createnotification) | **Post** /notification | Create a new notification
 *DefaultAPI* | [**CreateProperty**](docs/DefaultAPI.md#createproperty) | **Post** /property | Create property
 *DefaultAPI* | [**CreatePropertyHandover**](docs/DefaultAPI.md#createpropertyhandover) | **Post** /property-handovers/handover | Create a new property handover
 *DefaultAPI* | [**CreatePropertyHandoverTemplate**](docs/DefaultAPI.md#createpropertyhandovertemplate) | **Post** /property-handovers/template | Create a new property handover template
@@ -148,6 +149,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteFinancialAccount**](docs/DefaultAPI.md#deletefinancialaccount) | **Delete** /financial/accounts/{accountID} | Delete the financial account with all its related data
 *DefaultAPI* | [**DeleteMeter**](docs/DefaultAPI.md#deletemeter) | **Delete** /meter/{meterID} | Delete meter
 *DefaultAPI* | [**DeleteMeterReading**](docs/DefaultAPI.md#deletemeterreading) | **Delete** /meter/{meterID}/reading/{readingID} | Delete meter reading
+*DefaultAPI* | [**DeleteNotification**](docs/DefaultAPI.md#deletenotification) | **Delete** /notification/{notificationName} | Delete notification
 *DefaultAPI* | [**DeleteProperty**](docs/DefaultAPI.md#deleteproperty) | **Delete** /properties/{propID} | Delete property
 *DefaultAPI* | [**DeletePropertyHandover**](docs/DefaultAPI.md#deletepropertyhandover) | **Delete** /property-handovers/handovers/{handoverID} | Delete property handover
 *DefaultAPI* | [**DeletePropertyHandoverTemplate**](docs/DefaultAPI.md#deletepropertyhandovertemplate) | **Delete** /property-handovers/template/{templateID} | Delete property handover template
@@ -217,6 +219,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetMeterReadings**](docs/DefaultAPI.md#getmeterreadings) | **Get** /meter/{meterID}/readings | List meter readings
 *DefaultAPI* | [**GetMeters**](docs/DefaultAPI.md#getmeters) | **Get** /meters | List meters
 *DefaultAPI* | [**GetMetersByProperty**](docs/DefaultAPI.md#getmetersbyproperty) | **Get** /meters/by-property/{propID} | List meters for a property
+*DefaultAPI* | [**GetNotification**](docs/DefaultAPI.md#getnotification) | **Get** /notification/{notificationName} | Get notification
 *DefaultAPI* | [**GetPriceIndexPoint**](docs/DefaultAPI.md#getpriceindexpoint) | **Post** /price-index | Get the PriceIndexPoint
 *DefaultAPI* | [**GetProperty**](docs/DefaultAPI.md#getproperty) | **Get** /properties/{propID} | Get property details
 *DefaultAPI* | [**GetPropertyCases**](docs/DefaultAPI.md#getpropertycases) | **Post** /property/{propID}/cases | Get property cases
@@ -300,6 +303,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryWorkflowExecutions**](docs/DefaultAPI.md#queryworkflowexecutions) | **Post** /workflows/executions | Get a list of all workflow executions, matching the criteria in the request 
 *DefaultAPI* | [**RequestESignaturesForDocument**](docs/DefaultAPI.md#requestesignaturesfordocument) | **Post** /document-generation/documents/{docID}/esignature | Trigger a signing request for a document
 *DefaultAPI* | [**ResetConnectorQuery**](docs/DefaultAPI.md#resetconnectorquery) | **Put** /connector/query/{queryID}/reset | Get the query for the current account
+*DefaultAPI* | [**SendNotification**](docs/DefaultAPI.md#sendnotification) | **Post** /notification/{notificationName}/send | Send notification
 *DefaultAPI* | [**StartWorkflowExecution**](docs/DefaultAPI.md#startworkflowexecution) | **Post** /workflows/execution | Start a new workflow execution
 *DefaultAPI* | [**SubmitPropertyHandover**](docs/DefaultAPI.md#submitpropertyhandover) | **Put** /property-handovers/handovers/{handoverID}/submit | Submit the data for a property handover
 *DefaultAPI* | [**SyncConnectorData**](docs/DefaultAPI.md#syncconnectordata) | **Post** /connector/sync | Sync the next batch of connector data.
@@ -329,6 +333,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateFinancialAccount**](docs/DefaultAPI.md#updatefinancialaccount) | **Put** /financial/accounts/{accountID} | Update an already existing financial account
 *DefaultAPI* | [**UpdateMeter**](docs/DefaultAPI.md#updatemeter) | **Put** /meter/{meterID} | Update meter
 *DefaultAPI* | [**UpdateMeterReading**](docs/DefaultAPI.md#updatemeterreading) | **Put** /meter/{meterID}/reading/{readingID} | Update meter reading
+*DefaultAPI* | [**UpdateNotification**](docs/DefaultAPI.md#updatenotification) | **Put** /notification/{notificationName} | Update notification
 *DefaultAPI* | [**UpdateProperty**](docs/DefaultAPI.md#updateproperty) | **Put** /properties/{propID} | Update property
 *DefaultAPI* | [**UpdatePropertyHandover**](docs/DefaultAPI.md#updatepropertyhandover) | **Put** /property-handovers/handovers/{handoverID} | Update property handover
 *DefaultAPI* | [**UpdatePropertyHandoverTemplate**](docs/DefaultAPI.md#updatepropertyhandovertemplate) | **Put** /property-handovers/template/{templateID} | Update property handover template
@@ -405,6 +410,7 @@ Class | Method | HTTP request | Description
  - [CreateConnectorCredentialsRequest](docs/CreateConnectorCredentialsRequest.md)
  - [CreateDocumentGenerationRequest](docs/CreateDocumentGenerationRequest.md)
  - [CreateDocumentRequest](docs/CreateDocumentRequest.md)
+ - [CreateNotificationRequest](docs/CreateNotificationRequest.md)
  - [CreateOrUpdateAccountBookingRequest](docs/CreateOrUpdateAccountBookingRequest.md)
  - [CreateOrUpdateAccountDimensionRequest](docs/CreateOrUpdateAccountDimensionRequest.md)
  - [CreateOrUpdateAccountDimensionValueRequest](docs/CreateOrUpdateAccountDimensionValueRequest.md)
@@ -488,6 +494,7 @@ Class | Method | HTTP request | Description
  - [Meter](docs/Meter.md)
  - [MeterReading](docs/MeterReading.md)
  - [MeterTypeEnum](docs/MeterTypeEnum.md)
+ - [Notification](docs/Notification.md)
  - [NotificationType](docs/NotificationType.md)
  - [PriceIndexPoint](docs/PriceIndexPoint.md)
  - [PriceIndexPointQueryRequest](docs/PriceIndexPointQueryRequest.md)
@@ -551,6 +558,7 @@ Class | Method | HTTP request | Description
  - [ReportExecutionStatusEnum](docs/ReportExecutionStatusEnum.md)
  - [ReportResultSchema](docs/ReportResultSchema.md)
  - [ReportResultSchemaProperty](docs/ReportResultSchemaProperty.md)
+ - [SendNotificationRequest](docs/SendNotificationRequest.md)
  - [ServiceCategoryEnum](docs/ServiceCategoryEnum.md)
  - [ServiceProvider](docs/ServiceProvider.md)
  - [StartWorkflowExecutionRequest](docs/StartWorkflowExecutionRequest.md)
@@ -569,6 +577,7 @@ Class | Method | HTTP request | Description
  - [UpdateConnectorConfigRequest](docs/UpdateConnectorConfigRequest.md)
  - [UpdateDocumentRequest](docs/UpdateDocumentRequest.md)
  - [UpdateExternalUserRequest](docs/UpdateExternalUserRequest.md)
+ - [UpdateNotificationRequest](docs/UpdateNotificationRequest.md)
  - [UpdatePropertyRequest](docs/UpdatePropertyRequest.md)
  - [UpdateTenancyRequest](docs/UpdateTenancyRequest.md)
  - [UpdateUserPreferencesRequest](docs/UpdateUserPreferencesRequest.md)

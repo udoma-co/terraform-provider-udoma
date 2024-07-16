@@ -4953,6 +4953,135 @@ paths:
       security:
       - bearerAuth: []
       summary: Update meter reading
+  /notification:
+    post:
+      operationId: createNotification
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateNotificationRequest'
+        description: Notification to be created
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+          description: Successfully created notification
+        default:
+          content: {}
+          description: |
+            Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
+      security:
+      - bearerAuth: []
+      summary: Create a new notification
+  /notification/{notificationName}:
+    delete:
+      operationId: DeleteNotification
+      parameters:
+      - description: "unique, descriptive, short notification identifier name"
+        explode: false
+        in: path
+        name: notificationName
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        default:
+          content: {}
+          description: |
+            Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
+      security:
+      - bearerAuth: []
+      summary: Delete notification
+    get:
+      operationId: getNotification
+      parameters:
+      - description: "unique, descriptive, short notification identifier name"
+        explode: false
+        in: path
+        name: notificationName
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+          description: Successfully updated notification
+        default:
+          content: {}
+          description: |
+            Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
+      security:
+      - bearerAuth: []
+      summary: Get notification
+    put:
+      operationId: updateNotification
+      parameters:
+      - description: "unique, descriptive, short notification identifier name"
+        explode: false
+        in: path
+        name: notificationName
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateNotificationRequest'
+        description: Notification to be updated
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+          description: Successfully updated notification
+        default:
+          content: {}
+          description: |
+            Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
+      security:
+      - bearerAuth: []
+      summary: Update notification
+  /notification/{notificationName}/send:
+    post:
+      operationId: sendNotification
+      parameters:
+      - description: "unique, descriptive, short notification identifier name"
+        explode: false
+        in: path
+        name: notificationName
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendNotificationRequest'
+        description: |
+          Data to be used when running the script that sends the notfication.
+        required: true
+      responses:
+        default:
+          content: {}
+          description: |
+            Empty response. This can be used for operations that do not return any data, such as delete operations. This is also used whenever an operation fails.
+      security:
+      - bearerAuth: []
+      summary: Send notification
   /owner:
     post:
       operationId: createPropertyOwner
@@ -7576,6 +7705,15 @@ components:
       required: true
       schema:
         pattern: "^mr-[2-9A-HJ-NP-Za-km-z]{19,22}$"
+        type: string
+      style: simple
+    notificationNamePathParam:
+      description: "unique, descriptive, short notification identifier name"
+      explode: false
+      in: path
+      name: notificationName
+      required: true
+      schema:
         type: string
       style: simple
     propertyIdPathParam:
@@ -17682,6 +17820,101 @@ components:
           $ref: '#/components/schemas/FloatNumber'
         attachment_ref:
           type: string
+      type: object
+    CreateNotificationRequest:
+      allOf:
+      - description: Create request for a notification.
+        properties:
+          name:
+            description: "A unique, descriptive, and short identifier name."
+            type: string
+        required:
+        - name
+        type: object
+      - $ref: '#/components/schemas/UpdateNotificationRequest'
+      example:
+        template_text: template_text
+        name: name
+        description: description
+        script: script
+        template_html: template_html
+    UpdateNotificationRequest:
+      description: Update request for a notification.
+      example:
+        template_text: template_text
+        description: description
+        script: script
+        template_html: template_html
+      properties:
+        description:
+          description: A short description of the notification.
+          type: string
+        script:
+          description: |
+            A script that can run the notification given some initial data.
+          type: string
+        template_html:
+          description: The golang html template to use for the notification.
+          type: string
+        template_text:
+          description: The golang text template to use for the notification.
+          type: string
+      required:
+      - script
+      - template_html
+      - template_text
+      type: object
+    Notification:
+      description: A notification template that can be sent to a user.
+      example:
+        updated_at: 6
+        template_text: template_text
+        name: name
+        description: description
+        created_at: 0
+        script: script
+        template_html: template_html
+      properties:
+        name:
+          description: "A unique, descriptive, and short identifier name."
+          type: string
+        description:
+          description: A short description of the notification.
+          type: string
+        created_at:
+          description: The timestamp of when the notification was created.
+          format: int64
+          type: integer
+        updated_at:
+          description: The timestamp of when the notification was last updated.
+          format: int64
+          type: integer
+        script:
+          description: |
+            A script that can run the notification given some initial data.
+          type: string
+        template_html:
+          description: The golang html template to use for the notification.
+          type: string
+        template_text:
+          description: The golang text template to use for the notification.
+          type: string
+      required:
+      - created_at
+      - name
+      - script
+      - template_html
+      - template_text
+      - updated_at
+      type: object
+    SendNotificationRequest:
+      description: A request that sends a notification.
+      example:
+        data: "{}"
+      properties:
+        data:
+          description: The data to use when running the notification script.
+          type: object
       type: object
     CreateOrUpdatePropertyOwnerRequest:
       description: Request used to create a new property owner
