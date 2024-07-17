@@ -341,8 +341,9 @@ func (model *CaseReportingEndpointModel) fromAPI(endpoint *api.CaseReportingEndp
 		}
 	}
 
+	model.FAQs = make([]types.String, len(endpoint.Faqs))
 	for i := range endpoint.Faqs {
-		model.FAQs = append(model.FAQs, types.StringValue(endpoint.Faqs[i]))
+		model.FAQs[i] = types.StringValue(endpoint.Faqs[i])
 	}
 
 	return
@@ -420,6 +421,7 @@ func (model *CaseReportingEndpointModel) toAPIRequest() (api.CreateOrUpdateCaseR
 		Name:           model.Name.ValueStringPointer(),
 		Active:         model.Active.ValueBoolPointer(),
 		CaseCategories: make([]api.CaseReportingEndpointCategory, len(model.CaseCategories)),
+		Faqs:           make([]string, len(model.FAQs)),
 	}
 
 	for i := range model.CaseCategories {
@@ -427,7 +429,7 @@ func (model *CaseReportingEndpointModel) toAPIRequest() (api.CreateOrUpdateCaseR
 	}
 
 	for i := range model.FAQs {
-		endpoint.Faqs = append(endpoint.Faqs, model.FAQs[i].ValueString())
+		endpoint.Faqs[i] = model.FAQs[i].ValueString()
 	}
 
 	return endpoint, nil
