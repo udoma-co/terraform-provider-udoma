@@ -24,7 +24,8 @@ type CaseReportingEndpointInfo struct {
 	// The case templates that can be used to raise a case from this endpoint
 	Templates []CaseTemplate `json:"templates,omitempty"`
 	// Optional list of FAQs that should be displayed on the endpoint
-	Faqs []FAQEntry `json:"faqs,omitempty"`
+	Faqs    []FAQEntry      `json:"faqs,omitempty"`
+	Company *CompanyProfile `json:"company,omitempty"`
 }
 
 // NewCaseReportingEndpointInfo instantiates a new CaseReportingEndpointInfo object
@@ -172,6 +173,38 @@ func (o *CaseReportingEndpointInfo) SetFaqs(v []FAQEntry) {
 	o.Faqs = v
 }
 
+// GetCompany returns the Company field value if set, zero value otherwise.
+func (o *CaseReportingEndpointInfo) GetCompany() CompanyProfile {
+	if o == nil || IsNil(o.Company) {
+		var ret CompanyProfile
+		return ret
+	}
+	return *o.Company
+}
+
+// GetCompanyOk returns a tuple with the Company field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CaseReportingEndpointInfo) GetCompanyOk() (*CompanyProfile, bool) {
+	if o == nil || IsNil(o.Company) {
+		return nil, false
+	}
+	return o.Company, true
+}
+
+// HasCompany returns a boolean if a field has been set.
+func (o *CaseReportingEndpointInfo) HasCompany() bool {
+	if o != nil && !IsNil(o.Company) {
+		return true
+	}
+
+	return false
+}
+
+// SetCompany gets a reference to the given CompanyProfile and assigns it to the Company field.
+func (o *CaseReportingEndpointInfo) SetCompany(v CompanyProfile) {
+	o.Company = &v
+}
+
 func (o CaseReportingEndpointInfo) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -193,6 +226,9 @@ func (o CaseReportingEndpointInfo) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Faqs) {
 		toSerialize["faqs"] = o.Faqs
+	}
+	if !IsNil(o.Company) {
+		toSerialize["company"] = o.Company
 	}
 	return toSerialize, nil
 }

@@ -3,8 +3,7 @@ info:
   title: Udoma
   version: "1.0"
 servers:
-- url: https://dev.udoma.cloud/api/udoma/v1/
-- url: http://localhost:8080/api/udoma/v1/
+- url: http://hostlocal/api/udoma/v1/
 paths:
   /public/attachment:
     post:
@@ -12033,6 +12032,9 @@ components:
             name:
               key: name
             priority: 1
+          faqs:
+          - faqs
+          - faqs
           code: code
           updated_at: 6
           property_refs:
@@ -13093,6 +13095,18 @@ components:
               notify:
               - null
               - null
+        company:
+          website: website
+          address:
+            line1: 1 ZestLabs Blvd
+            line2: CSS District
+            city: Mannheim
+            postcode: 680001
+            province: Baden-Wuerttemberg
+            country: Germany
+          name: name
+          phone_number: phone_number
+          email: email
         properties:
         - parent_name: parent_name
           bank_account_ref: bank_account_ref
@@ -13209,6 +13223,8 @@ components:
           items:
             $ref: '#/components/schemas/FAQEntry'
           type: array
+        company:
+          $ref: '#/components/schemas/CompanyProfile'
       type: object
     CaseReportingEndpoint:
       description: |
@@ -13231,6 +13247,9 @@ components:
           name:
             key: name
           priority: 1
+        faqs:
+        - faqs
+        - faqs
         code: code
         updated_at: 6
         property_refs:
@@ -13271,6 +13290,12 @@ components:
             Categories, used to group the templates, in order not to clutter the Case Reporting Endpoint page.
           items:
             $ref: '#/components/schemas/CaseReportingEndpointCategory'
+          type: array
+        faqs:
+          description: |
+            Optional list of FAQs that should be displayed on the endpoint
+          items:
+            type: string
           type: array
       type: object
     CaseReportingEndpointCategory:
@@ -13969,6 +13994,9 @@ components:
           name:
             key: name
           priority: 1
+        faqs:
+        - faqs
+        - faqs
         property_refs:
         - property_refs
         - property_refs
@@ -13994,6 +14022,12 @@ components:
             Categories, used to group the templates, in order not to clutter the Case Reporting Endpoint page.
           items:
             $ref: '#/components/schemas/CaseReportingEndpointCategory'
+          type: array
+        faqs:
+          description: |
+            Optional list of FAQs that should be displayed on the endpoint
+          items:
+            type: string
           type: array
       type: object
     QueryCaseReportingEndpointsRequest:
@@ -14025,6 +14059,9 @@ components:
             name:
               key: name
             priority: 1
+          faqs:
+          - faqs
+          - faqs
           code: code
           updated_at: 6
           property_refs:
@@ -14050,6 +14087,9 @@ components:
             name:
               key: name
             priority: 1
+          faqs:
+          - faqs
+          - faqs
           code: code
           updated_at: 6
           property_refs:
@@ -14688,7 +14728,6 @@ components:
       example:
         template: template
         updated_at: 6
-        account_ref: 1
         created_at: 0
         access_list:
         - access_list
@@ -14704,9 +14743,6 @@ components:
           format: int64
           type: integer
         updated_at:
-          format: int64
-          type: integer
-        account_ref:
           format: int64
           type: integer
         display_name:
@@ -14730,7 +14766,6 @@ components:
             A golang template, that'll be passed reporter as Data and should return a nicely formatted string to use as a comment.
           type: string
       required:
-      - account_ref
       - created_at
       - display_name
       - id
@@ -17828,6 +17863,10 @@ components:
           name:
             description: "A unique, descriptive, and short identifier name."
             type: string
+          is_intermediate:
+            description: |
+              Whether this template is used an intermediate template or not. If true it cannot be used as a regular template and must only be referenced by other templates.
+            type: boolean
         required:
         - name
         type: object
@@ -17837,6 +17876,8 @@ components:
         name: name
         description: description
         script: script
+        intermediate_ref: intermediate_ref
+        is_intermediate: true
         template_html: template_html
     UpdateNotificationRequest:
       description: Update request for a notification.
@@ -17844,6 +17885,7 @@ components:
         template_text: template_text
         description: description
         script: script
+        intermediate_ref: intermediate_ref
         template_html: template_html
       properties:
         description:
@@ -17852,6 +17894,10 @@ components:
         script:
           description: |
             A script that can run the notification given some initial data.
+          type: string
+        intermediate_ref:
+          description: |
+            A potential reference to an intermediate template. Empty if no intermediate used.
           type: string
         template_html:
           description: The golang html template to use for the notification.
@@ -17873,6 +17919,8 @@ components:
         description: description
         created_at: 0
         script: script
+        intermediate_ref: intermediate_ref
+        is_intermediate: true
         template_html: template_html
       properties:
         name:
@@ -17892,6 +17940,14 @@ components:
         script:
           description: |
             A script that can run the notification given some initial data.
+          type: string
+        is_intermediate:
+          description: |
+            Whether this template is used an intermediate template or not. If true it cannot be used as a regular template and must only be referenced by others.
+          type: boolean
+        intermediate_ref:
+          description: |
+            A potential reference to an intermediate template. Empty if no intermediate used.
           type: string
         template_html:
           description: The golang html template to use for the notification.

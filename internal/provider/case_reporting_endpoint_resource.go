@@ -54,6 +54,7 @@ type CaseReportingEndpointModel struct {
 	Active         types.Bool                           `tfsdk:"active"`
 	CaseCategories []CaseReportingEndpointCategoryModel `tfsdk:"case_categories"`
 	LastUpdated    types.String                         `tfsdk:"last_updated"`
+	FAQs           []types.String                       `tfsdk:"faqs"`
 }
 
 func (r *CaseReportingEndpoint) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -131,6 +132,11 @@ func (r *CaseReportingEndpoint) Schema(ctx context.Context, req resource.SchemaR
 						},
 					},
 				},
+			},
+			"faqs": schema.ListAttribute{
+				Optional:            true,
+				MarkdownDescription: "The faq by id that are linked to this endpoint",
+				ElementType:         types.StringType,
 			},
 		},
 	}
@@ -335,6 +341,10 @@ func (model *CaseReportingEndpointModel) fromAPI(endpoint *api.CaseReportingEndp
 		}
 	}
 
+	for i := range endpoint.Faqs {
+		model.FAQs = append(model.FAQs, types.StringValue(endpoint.Faqs[i]))
+	}
+
 	return
 }
 
@@ -414,6 +424,10 @@ func (model *CaseReportingEndpointModel) toAPIRequest() (api.CreateOrUpdateCaseR
 
 	for i := range model.CaseCategories {
 		endpoint.CaseCategories[i] = model.CaseCategories[i].toAPIRequest()
+	}
+
+	for i := range model.FAQs {
+		endpoint.Faqs = append(endpoint.Faqs, model.FAQs[i].ValueString())
 	}
 
 	return endpoint, nil

@@ -73,7 +73,7 @@ ctx = context.WithValue(context.Background(), v1.ContextOperationServerVariables
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://dev.udoma.cloud/api/udoma/v1*
+All URIs are relative to *http://hostlocal/api/udoma/v1*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
