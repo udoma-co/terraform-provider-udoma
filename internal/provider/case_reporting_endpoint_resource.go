@@ -341,9 +341,15 @@ func (model *CaseReportingEndpointModel) fromAPI(endpoint *api.CaseReportingEndp
 		}
 	}
 
-	model.FAQs = make([]types.String, len(endpoint.Faqs))
-	for i := range endpoint.Faqs {
-		model.FAQs[i] = types.StringValue(endpoint.Faqs[i])
+	if len(endpoint.Faqs) > 0 {
+		model.FAQs = make([]types.String, len(endpoint.Faqs))
+		for i := range endpoint.Faqs {
+			model.FAQs[i] = types.StringValue(endpoint.Faqs[i])
+		}
+	} else {
+		if model.FAQs != nil {
+			model.FAQs = make([]types.String, 0)
+		}
 	}
 
 	return
