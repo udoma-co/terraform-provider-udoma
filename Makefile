@@ -20,7 +20,7 @@ generate-client:
 		--additional-properties=packageName=v1
 	rm -rf gen/go.*  gen/git_push.sh gen/test gen/docs
 	cp -R gen/* api/v1
-	rm -rf gen api/v1/spec
+	rm -rf gen api/v1/spec api/v1/api
 	go fmt ./... && go vet ./...
 
 

@@ -34,6 +34,8 @@ type DocumentTemplate struct {
 	// The script we run to generate the object used in the template
 	PlaceholdersScript *string                                `json:"placeholders_script,omitempty"`
 	Signatures         *DocumentTemplateSignatureConfguration `json:"signatures,omitempty"`
+	// True if the template has been deleted
+	IsDeleted *bool `json:"is_deleted,omitempty"`
 }
 
 // NewDocumentTemplate instantiates a new DocumentTemplate object
@@ -341,6 +343,38 @@ func (o *DocumentTemplate) SetSignatures(v DocumentTemplateSignatureConfguration
 	o.Signatures = &v
 }
 
+// GetIsDeleted returns the IsDeleted field value if set, zero value otherwise.
+func (o *DocumentTemplate) GetIsDeleted() bool {
+	if o == nil || IsNil(o.IsDeleted) {
+		var ret bool
+		return ret
+	}
+	return *o.IsDeleted
+}
+
+// GetIsDeletedOk returns a tuple with the IsDeleted field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DocumentTemplate) GetIsDeletedOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsDeleted) {
+		return nil, false
+	}
+	return o.IsDeleted, true
+}
+
+// HasIsDeleted returns a boolean if a field has been set.
+func (o *DocumentTemplate) HasIsDeleted() bool {
+	if o != nil && !IsNil(o.IsDeleted) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsDeleted gets a reference to the given bool and assigns it to the IsDeleted field.
+func (o *DocumentTemplate) SetIsDeleted(v bool) {
+	o.IsDeleted = &v
+}
+
 func (o DocumentTemplate) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -377,6 +411,9 @@ func (o DocumentTemplate) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Signatures) {
 		toSerialize["signatures"] = o.Signatures
+	}
+	if !IsNil(o.IsDeleted) {
+		toSerialize["is_deleted"] = o.IsDeleted
 	}
 	return toSerialize, nil
 }

@@ -36,6 +36,8 @@ type AppointmentTemplate struct {
 	// The number of days after which a reminder should be sent out. The list is taken as provided and a reminder will be set for the amount of days as set in the first element of the list. Once that time has passed, the reminder will be rescheduled for the next element in the list. This is repeated until the list is empty. The values in the list are considered relative to the previous reminder. So [2, 2] will send out a reminder after 2 and 4 days. The reminders will, however, not be sent out on weekends. So if the first reminder is sent out on a Friday, the second reminder will be sent out on Tuesday. To disable this option, leave the list empty.
 	ConfirmationReminders []int32    `json:"confirmation_reminders,omitempty"`
 	Form                  CustomForm `json:"form"`
+	// Whether the template has been deleted or not
+	IsDeleted *bool `json:"is_deleted,omitempty"`
 }
 
 type _AppointmentTemplate AppointmentTemplate
@@ -292,6 +294,38 @@ func (o *AppointmentTemplate) SetForm(v CustomForm) {
 	o.Form = v
 }
 
+// GetIsDeleted returns the IsDeleted field value if set, zero value otherwise.
+func (o *AppointmentTemplate) GetIsDeleted() bool {
+	if o == nil || IsNil(o.IsDeleted) {
+		var ret bool
+		return ret
+	}
+	return *o.IsDeleted
+}
+
+// GetIsDeletedOk returns a tuple with the IsDeleted field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AppointmentTemplate) GetIsDeletedOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsDeleted) {
+		return nil, false
+	}
+	return o.IsDeleted, true
+}
+
+// HasIsDeleted returns a boolean if a field has been set.
+func (o *AppointmentTemplate) HasIsDeleted() bool {
+	if o != nil && !IsNil(o.IsDeleted) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsDeleted gets a reference to the given bool and assigns it to the IsDeleted field.
+func (o *AppointmentTemplate) SetIsDeleted(v bool) {
+	o.IsDeleted = &v
+}
+
 func (o AppointmentTemplate) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -320,6 +354,9 @@ func (o AppointmentTemplate) ToMap() (map[string]interface{}, error) {
 		toSerialize["confirmation_reminders"] = o.ConfirmationReminders
 	}
 	toSerialize["form"] = o.Form
+	if !IsNil(o.IsDeleted) {
+		toSerialize["is_deleted"] = o.IsDeleted
+	}
 	return toSerialize, nil
 }
 
