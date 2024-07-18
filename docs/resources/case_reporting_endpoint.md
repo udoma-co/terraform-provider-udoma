@@ -23,6 +23,7 @@ Resource represents an endpoint where tenants can raise cases
 ### Optional
 
 - `active` (Boolean) Whether the endpoint is active or not
+- `faqs` (List of String) The faq by id that are linked to this endpoint
 
 ### Read-Only
 
