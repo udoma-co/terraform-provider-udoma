@@ -220,6 +220,8 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetMeters**](docs/DefaultAPI.md#getmeters) | **Get** /meters | List meters
 *DefaultAPI* | [**GetMetersByProperty**](docs/DefaultAPI.md#getmetersbyproperty) | **Get** /meters/by-property/{propID} | List meters for a property
 *DefaultAPI* | [**GetNotification**](docs/DefaultAPI.md#getnotification) | **Get** /notification/{notificationName} | Get notification
+*DefaultAPI* | [**GetNumberOfCasesForActionAdndTimePeriod**](docs/DefaultAPI.md#getnumberofcasesforactionadndtimeperiod) | **Post** /cases/stats/action | Get number of cases for the given action and time period
+*DefaultAPI* | [**GetNumberOfInteractionsForCases**](docs/DefaultAPI.md#getnumberofinteractionsforcases) | **Post** /cases/stats/interactions | Query case interactions
 *DefaultAPI* | [**GetPriceIndexPoint**](docs/DefaultAPI.md#getpriceindexpoint) | **Post** /price-index | Get the PriceIndexPoint
 *DefaultAPI* | [**GetProperty**](docs/DefaultAPI.md#getproperty) | **Get** /properties/{propID} | Get property details
 *DefaultAPI* | [**GetPropertyCases**](docs/DefaultAPI.md#getpropertycases) | **Post** /property/{propID}/cases | Get property cases
@@ -485,6 +487,10 @@ Class | Method | HTTP request | Description
  - [FormValidationResponse](docs/FormValidationResponse.md)
  - [GenerateCaseReportingEndpointNoticeRequest](docs/GenerateCaseReportingEndpointNoticeRequest.md)
  - [GetExternalUserCasesCountResponse](docs/GetExternalUserCasesCountResponse.md)
+ - [GetNumberOfCasesForActionAndTimePeriodRequest](docs/GetNumberOfCasesForActionAndTimePeriodRequest.md)
+ - [GetNumberOfCasesForActionAndTimePeriodResponse](docs/GetNumberOfCasesForActionAndTimePeriodResponse.md)
+ - [GetNumberOfInteractionsForCasesRequest](docs/GetNumberOfInteractionsForCasesRequest.md)
+ - [GetNumberOfInteractionsForCasesResponse](docs/GetNumberOfInteractionsForCasesResponse.md)
  - [GetSummaryRequest](docs/GetSummaryRequest.md)
  - [GetSummaryResponse](docs/GetSummaryResponse.md)
  - [GraduatedUpdate](docs/GraduatedUpdate.md)

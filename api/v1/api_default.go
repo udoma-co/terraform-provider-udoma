@@ -14524,6 +14524,228 @@ func (a *DefaultAPIService) GetNotificationExecute(r ApiGetNotificationRequest) 
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetNumberOfCasesForActionAdndTimePeriodRequest struct {
+	ctx                                           context.Context
+	ApiService                                    *DefaultAPIService
+	getNumberOfCasesForActionAndTimePeriodRequest *GetNumberOfCasesForActionAndTimePeriodRequest
+}
+
+func (r ApiGetNumberOfCasesForActionAdndTimePeriodRequest) GetNumberOfCasesForActionAndTimePeriodRequest(getNumberOfCasesForActionAndTimePeriodRequest GetNumberOfCasesForActionAndTimePeriodRequest) ApiGetNumberOfCasesForActionAdndTimePeriodRequest {
+	r.getNumberOfCasesForActionAndTimePeriodRequest = &getNumberOfCasesForActionAndTimePeriodRequest
+	return r
+}
+
+func (r ApiGetNumberOfCasesForActionAdndTimePeriodRequest) Execute() (*GetNumberOfCasesForActionAndTimePeriodResponse, *http.Response, error) {
+	return r.ApiService.GetNumberOfCasesForActionAdndTimePeriodExecute(r)
+}
+
+/*
+GetNumberOfCasesForActionAdndTimePeriod Get number of cases for the given action and time period
+
+Get the number of cases for the given action and time period
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetNumberOfCasesForActionAdndTimePeriodRequest
+*/
+func (a *DefaultAPIService) GetNumberOfCasesForActionAdndTimePeriod(ctx context.Context) ApiGetNumberOfCasesForActionAdndTimePeriodRequest {
+	return ApiGetNumberOfCasesForActionAdndTimePeriodRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return GetNumberOfCasesForActionAndTimePeriodResponse
+func (a *DefaultAPIService) GetNumberOfCasesForActionAdndTimePeriodExecute(r ApiGetNumberOfCasesForActionAdndTimePeriodRequest) (*GetNumberOfCasesForActionAndTimePeriodResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetNumberOfCasesForActionAndTimePeriodResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetNumberOfCasesForActionAdndTimePeriod")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/cases/stats/action"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.getNumberOfCasesForActionAndTimePeriodRequest == nil {
+		return localVarReturnValue, nil, reportError("getNumberOfCasesForActionAndTimePeriodRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.getNumberOfCasesForActionAndTimePeriodRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetNumberOfInteractionsForCasesRequest struct {
+	ctx                                    context.Context
+	ApiService                             *DefaultAPIService
+	getNumberOfInteractionsForCasesRequest *GetNumberOfInteractionsForCasesRequest
+}
+
+func (r ApiGetNumberOfInteractionsForCasesRequest) GetNumberOfInteractionsForCasesRequest(getNumberOfInteractionsForCasesRequest GetNumberOfInteractionsForCasesRequest) ApiGetNumberOfInteractionsForCasesRequest {
+	r.getNumberOfInteractionsForCasesRequest = &getNumberOfInteractionsForCasesRequest
+	return r
+}
+
+func (r ApiGetNumberOfInteractionsForCasesRequest) Execute() (*GetNumberOfInteractionsForCasesResponse, *http.Response, error) {
+	return r.ApiService.GetNumberOfInteractionsForCasesExecute(r)
+}
+
+/*
+GetNumberOfInteractionsForCases Query case interactions
+
+Query the interactions of the cases for the current user
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetNumberOfInteractionsForCasesRequest
+*/
+func (a *DefaultAPIService) GetNumberOfInteractionsForCases(ctx context.Context) ApiGetNumberOfInteractionsForCasesRequest {
+	return ApiGetNumberOfInteractionsForCasesRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return GetNumberOfInteractionsForCasesResponse
+func (a *DefaultAPIService) GetNumberOfInteractionsForCasesExecute(r ApiGetNumberOfInteractionsForCasesRequest) (*GetNumberOfInteractionsForCasesResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetNumberOfInteractionsForCasesResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetNumberOfInteractionsForCases")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/cases/stats/interactions"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.getNumberOfInteractionsForCasesRequest == nil {
+		return localVarReturnValue, nil, reportError("getNumberOfInteractionsForCasesRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.getNumberOfInteractionsForCasesRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetPriceIndexPointRequest struct {
 	ctx                         context.Context
 	ApiService                  *DefaultAPIService

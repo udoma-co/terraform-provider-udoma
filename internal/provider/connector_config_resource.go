@@ -57,7 +57,7 @@ func (c *ConnectorConfig) Schema(ctx context.Context, req resource.SchemaRequest
 				Description: "The description of the connector config",
 			},
 			"enable_logs": schema.BoolAttribute{
-				Required:    true,
+				Optional:    true,
 				Description: "Whether to enable logs for the connector config",
 			},
 			"ping_time": schema.StringAttribute{
