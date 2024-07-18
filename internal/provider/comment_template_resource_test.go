@@ -17,7 +17,7 @@ func TestCommentTemplateResource(t *testing.T) {
 					resource.TestCheckResourceAttr("udoma_comment_template.test_comment_template", "access_list.#", "2"),
 					resource.TestCheckResourceAttr("udoma_comment_template.test_comment_template", "access_list.0", "ct-somethingsomething"),
 					resource.TestCheckResourceAttr("udoma_comment_template.test_comment_template", "access_list.1", "ct-somethingsomethinn"),
-					resource.TestCheckResourceAttr("udoma_comment_template.test_comment_template", "black_list", "true"),
+					resource.TestCheckResourceAttr("udoma_comment_template.test_comment_template", "is_deny_list", "true"),
 					resource.TestCheckResourceAttr("udoma_comment_template.test_comment_template", "template", "Hello, world!"),
 				),
 			},
@@ -33,7 +33,7 @@ func TestCommentTemplateResource(t *testing.T) {
 					resource.TestCheckResourceAttr("udoma_comment_template.test_comment_template", "access_list.#", "2"),
 					resource.TestCheckResourceAttr("udoma_comment_template.test_comment_template", "access_list.0", "ct-somethingsomething"),
 					resource.TestCheckResourceAttr("udoma_comment_template.test_comment_template", "access_list.1", "ct-somethingsomethinn"),
-					resource.TestCheckResourceAttr("udoma_comment_template.test_comment_template", "black_list", "true"),
+					resource.TestCheckResourceAttr("udoma_comment_template.test_comment_template", "is_deny_list", "true"),
 					resource.TestCheckResourceAttr("udoma_comment_template.test_comment_template", "template", "Hello, world!"),
 				),
 			},
@@ -46,7 +46,7 @@ func resourceDefinitionCommentTemplate(displayName string) string {
 resource "udoma_comment_template" "test_comment_template" {
 	display_name = "` + displayName + `"
 	access_list = ["ct-somethingsomething", "ct-somethingsomethinn"]
-	black_list = true
+	is_deny_list = true
 	template = "Hello, world!"
 }
 `

@@ -24,7 +24,6 @@ type CommentTemplate struct {
 	Id          string `json:"id"`
 	CreatedAt   int64  `json:"created_at"`
 	UpdatedAt   int64  `json:"updated_at"`
-	AccountRef  int64  `json:"account_ref"`
 	DisplayName string `json:"display_name"`
 	// A list of case template IDs that either gives or restricts access in cetain cases, based on is_deny_list property.
 	AccessList []string `json:"access_list,omitempty"`
@@ -42,12 +41,11 @@ type _CommentTemplate CommentTemplate
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCommentTemplate(id string, createdAt int64, updatedAt int64, accountRef int64, displayName string, template string) *CommentTemplate {
+func NewCommentTemplate(id string, createdAt int64, updatedAt int64, displayName string, template string) *CommentTemplate {
 	this := CommentTemplate{}
 	this.Id = id
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
-	this.AccountRef = accountRef
 	this.DisplayName = displayName
 	this.Template = template
 	return &this
@@ -131,30 +129,6 @@ func (o *CommentTemplate) GetUpdatedAtOk() (*int64, bool) {
 // SetUpdatedAt sets field value
 func (o *CommentTemplate) SetUpdatedAt(v int64) {
 	o.UpdatedAt = v
-}
-
-// GetAccountRef returns the AccountRef field value
-func (o *CommentTemplate) GetAccountRef() int64 {
-	if o == nil {
-		var ret int64
-		return ret
-	}
-
-	return o.AccountRef
-}
-
-// GetAccountRefOk returns a tuple with the AccountRef field value
-// and a boolean to check if the value has been set.
-func (o *CommentTemplate) GetAccountRefOk() (*int64, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.AccountRef, true
-}
-
-// SetAccountRef sets field value
-func (o *CommentTemplate) SetAccountRef(v int64) {
-	o.AccountRef = v
 }
 
 // GetDisplayName returns the DisplayName field value
@@ -314,7 +288,6 @@ func (o CommentTemplate) ToMap() (map[string]interface{}, error) {
 	toSerialize["id"] = o.Id
 	toSerialize["created_at"] = o.CreatedAt
 	toSerialize["updated_at"] = o.UpdatedAt
-	toSerialize["account_ref"] = o.AccountRef
 	toSerialize["display_name"] = o.DisplayName
 	if !IsNil(o.AccessList) {
 		toSerialize["access_list"] = o.AccessList
@@ -337,7 +310,6 @@ func (o *CommentTemplate) UnmarshalJSON(data []byte) (err error) {
 		"id",
 		"created_at",
 		"updated_at",
-		"account_ref",
 		"display_name",
 		"template",
 	}

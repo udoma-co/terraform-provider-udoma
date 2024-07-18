@@ -25,12 +25,16 @@ type CreateNotificationRequest struct {
 	Description *string `json:"description,omitempty"`
 	// A script that can run the notification given some initial data.
 	Script string `json:"script"`
+	// A potential reference to an intermediate template. Empty if no intermediate used.
+	IntermediateRef *string `json:"intermediate_ref,omitempty"`
 	// The golang html template to use for the notification.
 	TemplateHtml string `json:"template_html"`
 	// The golang text template to use for the notification.
 	TemplateText string `json:"template_text"`
 	// A unique, descriptive, and short identifier name.
 	Name string `json:"name"`
+	// Whether this template is used an intermediate template or not. If true it cannot be used as a regular template and must only be referenced by other templates.
+	IsIntermediate *bool `json:"is_intermediate,omitempty"`
 }
 
 type _CreateNotificationRequest CreateNotificationRequest
@@ -112,6 +116,38 @@ func (o *CreateNotificationRequest) SetScript(v string) {
 	o.Script = v
 }
 
+// GetIntermediateRef returns the IntermediateRef field value if set, zero value otherwise.
+func (o *CreateNotificationRequest) GetIntermediateRef() string {
+	if o == nil || IsNil(o.IntermediateRef) {
+		var ret string
+		return ret
+	}
+	return *o.IntermediateRef
+}
+
+// GetIntermediateRefOk returns a tuple with the IntermediateRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateNotificationRequest) GetIntermediateRefOk() (*string, bool) {
+	if o == nil || IsNil(o.IntermediateRef) {
+		return nil, false
+	}
+	return o.IntermediateRef, true
+}
+
+// HasIntermediateRef returns a boolean if a field has been set.
+func (o *CreateNotificationRequest) HasIntermediateRef() bool {
+	if o != nil && !IsNil(o.IntermediateRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetIntermediateRef gets a reference to the given string and assigns it to the IntermediateRef field.
+func (o *CreateNotificationRequest) SetIntermediateRef(v string) {
+	o.IntermediateRef = &v
+}
+
 // GetTemplateHtml returns the TemplateHtml field value
 func (o *CreateNotificationRequest) GetTemplateHtml() string {
 	if o == nil {
@@ -184,6 +220,38 @@ func (o *CreateNotificationRequest) SetName(v string) {
 	o.Name = v
 }
 
+// GetIsIntermediate returns the IsIntermediate field value if set, zero value otherwise.
+func (o *CreateNotificationRequest) GetIsIntermediate() bool {
+	if o == nil || IsNil(o.IsIntermediate) {
+		var ret bool
+		return ret
+	}
+	return *o.IsIntermediate
+}
+
+// GetIsIntermediateOk returns a tuple with the IsIntermediate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateNotificationRequest) GetIsIntermediateOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsIntermediate) {
+		return nil, false
+	}
+	return o.IsIntermediate, true
+}
+
+// HasIsIntermediate returns a boolean if a field has been set.
+func (o *CreateNotificationRequest) HasIsIntermediate() bool {
+	if o != nil && !IsNil(o.IsIntermediate) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsIntermediate gets a reference to the given bool and assigns it to the IsIntermediate field.
+func (o *CreateNotificationRequest) SetIsIntermediate(v bool) {
+	o.IsIntermediate = &v
+}
+
 func (o CreateNotificationRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -198,9 +266,15 @@ func (o CreateNotificationRequest) ToMap() (map[string]interface{}, error) {
 		toSerialize["description"] = o.Description
 	}
 	toSerialize["script"] = o.Script
+	if !IsNil(o.IntermediateRef) {
+		toSerialize["intermediate_ref"] = o.IntermediateRef
+	}
 	toSerialize["template_html"] = o.TemplateHtml
 	toSerialize["template_text"] = o.TemplateText
 	toSerialize["name"] = o.Name
+	if !IsNil(o.IsIntermediate) {
+		toSerialize["is_intermediate"] = o.IsIntermediate
+	}
 	return toSerialize, nil
 }
 

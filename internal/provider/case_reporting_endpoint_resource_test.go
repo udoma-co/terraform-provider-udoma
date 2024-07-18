@@ -12,7 +12,7 @@ func TestAccCaseReportingEndpointResource(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Create and Read testing
 			{
-				Config: resourceDefinitionCaseTemplate("example template", "A case") +
+				Config: resourceDefinitionCaseTemplate("example template", "A case") + resourceDefinitionFAQ() +
 					`
 resource udoma_case_reporting_endpoint "test" {
 	name 							= "test endpoint"
@@ -32,6 +32,7 @@ resource udoma_case_reporting_endpoint "test" {
 			]
 		}
 	]
+	faqs = [ udoma_faq.test.id ]
 }
 `,
 				Check: resource.ComposeAggregateTestCheckFunc(
@@ -42,6 +43,7 @@ resource udoma_case_reporting_endpoint "test" {
 					// Verify dynamic values have any value set in the state.
 					resource.TestCheckResourceAttrSet("udoma_case_reporting_endpoint.test", "id"),
 					resource.TestCheckResourceAttrSet("udoma_case_reporting_endpoint.test", "last_updated"),
+					resource.TestCheckResourceAttrSet("udoma_case_reporting_endpoint.test", "faqs.0"),
 				),
 			},
 			// ImportState testing
@@ -55,7 +57,7 @@ resource udoma_case_reporting_endpoint "test" {
 			},
 			// Update and Read testing
 			{
-				Config: resourceDefinitionCaseTemplate("example template", "A case") + `
+				Config: resourceDefinitionCaseTemplate("example template", "A case") + resourceDefinitionFAQ() + `
 resource "udoma_case_reporting_endpoint" "test" {
 	name 							= "updated endpoint"
 	active 						= false
@@ -74,6 +76,7 @@ resource "udoma_case_reporting_endpoint" "test" {
 			]
 		}
 	]
+	faqs = [ udoma_faq.test.id ]
 }
 `,
 
@@ -81,6 +84,7 @@ resource "udoma_case_reporting_endpoint" "test" {
 					// Verify attributes were updated
 					resource.TestCheckResourceAttr("udoma_case_reporting_endpoint.test", "name", "updated endpoint"),
 					resource.TestCheckResourceAttr("udoma_case_reporting_endpoint.test", "active", "false"),
+					resource.TestCheckResourceAttrSet("udoma_case_reporting_endpoint.test", "faqs.0"),
 				),
 			},
 

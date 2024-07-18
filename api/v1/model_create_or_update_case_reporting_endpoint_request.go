@@ -27,6 +27,8 @@ type CreateOrUpdateCaseReportingEndpointRequest struct {
 	PropertyRefs []string `json:"property_refs,omitempty"`
 	// Categories, used to group the templates, in order not to clutter the Case Reporting Endpoint page.
 	CaseCategories []CaseReportingEndpointCategory `json:"case_categories,omitempty"`
+	// Optional list of FAQs that should be displayed on the endpoint
+	Faqs []string `json:"faqs,omitempty"`
 }
 
 // NewCreateOrUpdateCaseReportingEndpointRequest instantiates a new CreateOrUpdateCaseReportingEndpointRequest object
@@ -174,6 +176,38 @@ func (o *CreateOrUpdateCaseReportingEndpointRequest) SetCaseCategories(v []CaseR
 	o.CaseCategories = v
 }
 
+// GetFaqs returns the Faqs field value if set, zero value otherwise.
+func (o *CreateOrUpdateCaseReportingEndpointRequest) GetFaqs() []string {
+	if o == nil || IsNil(o.Faqs) {
+		var ret []string
+		return ret
+	}
+	return o.Faqs
+}
+
+// GetFaqsOk returns a tuple with the Faqs field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateCaseReportingEndpointRequest) GetFaqsOk() ([]string, bool) {
+	if o == nil || IsNil(o.Faqs) {
+		return nil, false
+	}
+	return o.Faqs, true
+}
+
+// HasFaqs returns a boolean if a field has been set.
+func (o *CreateOrUpdateCaseReportingEndpointRequest) HasFaqs() bool {
+	if o != nil && !IsNil(o.Faqs) {
+		return true
+	}
+
+	return false
+}
+
+// SetFaqs gets a reference to the given []string and assigns it to the Faqs field.
+func (o *CreateOrUpdateCaseReportingEndpointRequest) SetFaqs(v []string) {
+	o.Faqs = v
+}
+
 func (o CreateOrUpdateCaseReportingEndpointRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -195,6 +229,9 @@ func (o CreateOrUpdateCaseReportingEndpointRequest) ToMap() (map[string]interfac
 	}
 	if !IsNil(o.CaseCategories) {
 		toSerialize["case_categories"] = o.CaseCategories
+	}
+	if !IsNil(o.Faqs) {
+		toSerialize["faqs"] = o.Faqs
 	}
 	return toSerialize, nil
 }

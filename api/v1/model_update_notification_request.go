@@ -25,6 +25,8 @@ type UpdateNotificationRequest struct {
 	Description *string `json:"description,omitempty"`
 	// A script that can run the notification given some initial data.
 	Script string `json:"script"`
+	// A potential reference to an intermediate template. Empty if no intermediate used.
+	IntermediateRef *string `json:"intermediate_ref,omitempty"`
 	// The golang html template to use for the notification.
 	TemplateHtml string `json:"template_html"`
 	// The golang text template to use for the notification.
@@ -109,6 +111,38 @@ func (o *UpdateNotificationRequest) SetScript(v string) {
 	o.Script = v
 }
 
+// GetIntermediateRef returns the IntermediateRef field value if set, zero value otherwise.
+func (o *UpdateNotificationRequest) GetIntermediateRef() string {
+	if o == nil || IsNil(o.IntermediateRef) {
+		var ret string
+		return ret
+	}
+	return *o.IntermediateRef
+}
+
+// GetIntermediateRefOk returns a tuple with the IntermediateRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateNotificationRequest) GetIntermediateRefOk() (*string, bool) {
+	if o == nil || IsNil(o.IntermediateRef) {
+		return nil, false
+	}
+	return o.IntermediateRef, true
+}
+
+// HasIntermediateRef returns a boolean if a field has been set.
+func (o *UpdateNotificationRequest) HasIntermediateRef() bool {
+	if o != nil && !IsNil(o.IntermediateRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetIntermediateRef gets a reference to the given string and assigns it to the IntermediateRef field.
+func (o *UpdateNotificationRequest) SetIntermediateRef(v string) {
+	o.IntermediateRef = &v
+}
+
 // GetTemplateHtml returns the TemplateHtml field value
 func (o *UpdateNotificationRequest) GetTemplateHtml() string {
 	if o == nil {
@@ -171,6 +205,9 @@ func (o UpdateNotificationRequest) ToMap() (map[string]interface{}, error) {
 		toSerialize["description"] = o.Description
 	}
 	toSerialize["script"] = o.Script
+	if !IsNil(o.IntermediateRef) {
+		toSerialize["intermediate_ref"] = o.IntermediateRef
+	}
 	toSerialize["template_html"] = o.TemplateHtml
 	toSerialize["template_text"] = o.TemplateText
 	return toSerialize, nil

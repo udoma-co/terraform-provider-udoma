@@ -93,11 +93,7 @@ func NewConfiguration() *Configuration {
 		Debug:         false,
 		Servers: ServerConfigurations{
 			{
-				URL:         "https://dev.udoma.cloud/api/udoma/v1",
-				Description: "No description provided",
-			},
-			{
-				URL:         "http://localhost:8080/api/udoma/v1",
+				URL:         "http://hostlocal/api/udoma/v1",
 				Description: "No description provided",
 			},
 		},
