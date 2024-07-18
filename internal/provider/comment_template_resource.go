@@ -76,7 +76,7 @@ func (c *CommentTemplate) Schema(ctx context.Context, req resource.SchemaRequest
 				ElementType: types.StringType,
 			},
 			"is_deny_list": schema.BoolAttribute{
-				Required:    true,
+				Optional:    true,
 				Description: "If set true the access list will act as a deny list instead of an allow list",
 			},
 			"script": schema.StringAttribute{
