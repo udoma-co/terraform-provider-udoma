@@ -34,6 +34,8 @@ type CaseReportingEndpoint struct {
 	CaseCategories []CaseReportingEndpointCategory `json:"case_categories,omitempty"`
 	// Optional list of FAQs that should be displayed on the endpoint
 	Faqs []string `json:"faqs,omitempty"`
+	// The full URL that can be used to access the endpoint
+	Url *string `json:"url,omitempty"`
 }
 
 // NewCaseReportingEndpoint instantiates a new CaseReportingEndpoint object
@@ -309,6 +311,38 @@ func (o *CaseReportingEndpoint) SetFaqs(v []string) {
 	o.Faqs = v
 }
 
+// GetUrl returns the Url field value if set, zero value otherwise.
+func (o *CaseReportingEndpoint) GetUrl() string {
+	if o == nil || IsNil(o.Url) {
+		var ret string
+		return ret
+	}
+	return *o.Url
+}
+
+// GetUrlOk returns a tuple with the Url field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CaseReportingEndpoint) GetUrlOk() (*string, bool) {
+	if o == nil || IsNil(o.Url) {
+		return nil, false
+	}
+	return o.Url, true
+}
+
+// HasUrl returns a boolean if a field has been set.
+func (o *CaseReportingEndpoint) HasUrl() bool {
+	if o != nil && !IsNil(o.Url) {
+		return true
+	}
+
+	return false
+}
+
+// SetUrl gets a reference to the given string and assigns it to the Url field.
+func (o *CaseReportingEndpoint) SetUrl(v string) {
+	o.Url = &v
+}
+
 func (o CaseReportingEndpoint) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -342,6 +376,9 @@ func (o CaseReportingEndpoint) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Faqs) {
 		toSerialize["faqs"] = o.Faqs
+	}
+	if !IsNil(o.Url) {
+		toSerialize["url"] = o.Url
 	}
 	return toSerialize, nil
 }

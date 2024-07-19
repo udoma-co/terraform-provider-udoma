@@ -55,6 +55,7 @@ type CaseReportingEndpointModel struct {
 	CaseCategories []CaseReportingEndpointCategoryModel `tfsdk:"case_categories"`
 	LastUpdated    types.String                         `tfsdk:"last_updated"`
 	FAQs           []types.String                       `tfsdk:"faqs"`
+	Url            types.String                         `tfsdk:"url"`
 }
 
 func (r *CaseReportingEndpoint) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -137,6 +138,10 @@ func (r *CaseReportingEndpoint) Schema(ctx context.Context, req resource.SchemaR
 				Optional:            true,
 				MarkdownDescription: "The faq by id that are linked to this endpoint",
 				ElementType:         types.StringType,
+			},
+			"url": schema.StringAttribute{
+				Computed:            true,
+				MarkdownDescription: "The URL to access the endpoint",
 			},
 		},
 	}
@@ -330,6 +335,7 @@ func (model *CaseReportingEndpointModel) fromAPI(endpoint *api.CaseReportingEndp
 	model.UpdatedAt = types.Int64PointerValue(endpoint.UpdatedAt)
 	model.Name = types.StringPointerValue(endpoint.Name)
 	model.Active = omittableBooleanValue(endpoint.Active, model.Active)
+	model.Url = types.StringPointerValue(endpoint.Url)
 	model.CaseCategories = make([]CaseReportingEndpointCategoryModel, len(endpoint.CaseCategories))
 
 	for i := range endpoint.CaseCategories {
