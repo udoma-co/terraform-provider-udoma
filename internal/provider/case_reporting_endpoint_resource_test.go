@@ -44,6 +44,7 @@ resource udoma_case_reporting_endpoint "test" {
 					resource.TestCheckResourceAttrSet("udoma_case_reporting_endpoint.test", "id"),
 					resource.TestCheckResourceAttrSet("udoma_case_reporting_endpoint.test", "last_updated"),
 					resource.TestCheckResourceAttrSet("udoma_case_reporting_endpoint.test", "faqs.0"),
+					resource.TestCheckResourceAttrSet("udoma_case_reporting_endpoint.test", "url"),
 				),
 			},
 			// ImportState testing

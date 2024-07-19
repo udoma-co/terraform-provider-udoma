@@ -12992,6 +12992,119 @@ func (a *DefaultAPIService) GetDocumentTemplateExecute(r ApiGetDocumentTemplateR
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetDocumentTemplatePlaceholdersRequest struct {
+	ctx                                    context.Context
+	ApiService                             *DefaultAPIService
+	templateID                             string
+	documentTemplateGetPlaceholdersRequest *DocumentTemplateGetPlaceholdersRequest
+}
+
+func (r ApiGetDocumentTemplatePlaceholdersRequest) DocumentTemplateGetPlaceholdersRequest(documentTemplateGetPlaceholdersRequest DocumentTemplateGetPlaceholdersRequest) ApiGetDocumentTemplatePlaceholdersRequest {
+	r.documentTemplateGetPlaceholdersRequest = &documentTemplateGetPlaceholdersRequest
+	return r
+}
+
+func (r ApiGetDocumentTemplatePlaceholdersRequest) Execute() (*DocumentTemplateGetPlaceholdersResponse, *http.Response, error) {
+	return r.ApiService.GetDocumentTemplatePlaceholdersExecute(r)
+}
+
+/*
+GetDocumentTemplatePlaceholders Test if placeholders are working for template
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param templateID unique generated ID of a document generation
+	@return ApiGetDocumentTemplatePlaceholdersRequest
+*/
+func (a *DefaultAPIService) GetDocumentTemplatePlaceholders(ctx context.Context, templateID string) ApiGetDocumentTemplatePlaceholdersRequest {
+	return ApiGetDocumentTemplatePlaceholdersRequest{
+		ApiService: a,
+		ctx:        ctx,
+		templateID: templateID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return DocumentTemplateGetPlaceholdersResponse
+func (a *DefaultAPIService) GetDocumentTemplatePlaceholdersExecute(r ApiGetDocumentTemplatePlaceholdersRequest) (*DocumentTemplateGetPlaceholdersResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *DocumentTemplateGetPlaceholdersResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetDocumentTemplatePlaceholders")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/document-generation/template/{templateID}/placeholders"
+	localVarPath = strings.Replace(localVarPath, "{"+"templateID"+"}", url.PathEscape(parameterValueToString(r.templateID, "templateID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.documentTemplateGetPlaceholdersRequest == nil {
+		return localVarReturnValue, nil, reportError("documentTemplateGetPlaceholdersRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.documentTemplateGetPlaceholdersRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetDocumentTemplatesRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService

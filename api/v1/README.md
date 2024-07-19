@@ -205,6 +205,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetDocument**](docs/DefaultAPI.md#getdocument) | **Get** /document-repository/entry/{documentID} | Get an already existing document
 *DefaultAPI* | [**GetDocumentGeneration**](docs/DefaultAPI.md#getdocumentgeneration) | **Get** /document-generation/documents/{docID} | Get a single document generation
 *DefaultAPI* | [**GetDocumentTemplate**](docs/DefaultAPI.md#getdocumenttemplate) | **Get** /document-generation/template/{templateID} | Get a document template
+*DefaultAPI* | [**GetDocumentTemplatePlaceholders**](docs/DefaultAPI.md#getdocumenttemplateplaceholders) | **Post** /document-generation/template/{templateID}/placeholders | Test if placeholders are working for template
 *DefaultAPI* | [**GetDocumentTemplates**](docs/DefaultAPI.md#getdocumenttemplates) | **Get** /document-generation/templates | Get all available document templates
 *DefaultAPI* | [**GetESignatureStatusForDocument**](docs/DefaultAPI.md#getesignaturestatusfordocument) | **Get** /document-generation/documents/{docID}/esignature | Get the singing status for the document
 *DefaultAPI* | [**GetEmailStatus**](docs/DefaultAPI.md#getemailstatus) | **Get** /email/status/{email} | Get the status of the email
@@ -457,6 +458,8 @@ Class | Method | HTTP request | Description
  - [DocumentRefTypeEnum](docs/DocumentRefTypeEnum.md)
  - [DocumentSigner](docs/DocumentSigner.md)
  - [DocumentTemplate](docs/DocumentTemplate.md)
+ - [DocumentTemplateGetPlaceholdersRequest](docs/DocumentTemplateGetPlaceholdersRequest.md)
+ - [DocumentTemplateGetPlaceholdersResponse](docs/DocumentTemplateGetPlaceholdersResponse.md)
  - [DocumentTemplateOptions](docs/DocumentTemplateOptions.md)
  - [DocumentTemplateSignatureConfguration](docs/DocumentTemplateSignatureConfguration.md)
  - [DocumentTemplateSignerDefinition](docs/DocumentTemplateSignerDefinition.md)
