@@ -19,7 +19,9 @@ var _ MappedNullable = &QueryDocumentGenerationsRequest{}
 
 // QueryDocumentGenerationsRequest Request a list of document generations
 type QueryDocumentGenerationsRequest struct {
-	Limit  *int32 `json:"limit,omitempty"`
+	// The maximum number of entities to return from the query
+	Limit *int32 `json:"limit,omitempty"`
+	// The number of entities to skip before returning the result
 	Offset *int32 `json:"offset,omitempty"`
 }
 

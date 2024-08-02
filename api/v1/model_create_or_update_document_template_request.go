@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the CreateOrUpdateDocumentTemplateRequest type satisfies the MappedNullable interface at compile time
@@ -20,26 +22,32 @@ var _ MappedNullable = &CreateOrUpdateDocumentTemplateRequest{}
 // CreateOrUpdateDocumentTemplateRequest Create or update a document template
 type CreateOrUpdateDocumentTemplateRequest struct {
 	// The name of the template
-	Name *string `json:"name,omitempty"`
+	Name string `json:"name"`
 	// A description of the template
-	Description *string                  `json:"description,omitempty"`
-	Options     *DocumentTemplateOptions `json:"options,omitempty"`
+	Description *string                 `json:"description,omitempty"`
+	Options     DocumentTemplateOptions `json:"options"`
 	// An optional JS expression to be used to compute the name of the template. If not set, the name of the template will be used for new documents.
 	NameExpression *string `json:"name_expression,omitempty"`
 	// The source of the template, used to generate the document
-	Content *string     `json:"content,omitempty"`
-	Inputs  *CustomForm `json:"inputs,omitempty"`
+	Content string             `json:"content"`
+	Inputs  NullableCustomForm `json:"inputs"`
 	// The script we run to generate the object used in the template
 	PlaceholdersScript *string                                `json:"placeholders_script,omitempty"`
 	Signatures         *DocumentTemplateSignatureConfguration `json:"signatures,omitempty"`
 }
 
+type _CreateOrUpdateDocumentTemplateRequest CreateOrUpdateDocumentTemplateRequest
+
 // NewCreateOrUpdateDocumentTemplateRequest instantiates a new CreateOrUpdateDocumentTemplateRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateOrUpdateDocumentTemplateRequest() *CreateOrUpdateDocumentTemplateRequest {
+func NewCreateOrUpdateDocumentTemplateRequest(name string, options DocumentTemplateOptions, content string, inputs NullableCustomForm) *CreateOrUpdateDocumentTemplateRequest {
 	this := CreateOrUpdateDocumentTemplateRequest{}
+	this.Name = name
+	this.Options = options
+	this.Content = content
+	this.Inputs = inputs
 	return &this
 }
 
@@ -51,36 +59,28 @@ func NewCreateOrUpdateDocumentTemplateRequestWithDefaults() *CreateOrUpdateDocum
 	return &this
 }
 
-// GetName returns the Name field value if set, zero value otherwise.
+// GetName returns the Name field value
 func (o *CreateOrUpdateDocumentTemplateRequest) GetName() string {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Name
+
+	return o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// GetNameOk returns a tuple with the Name field value
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateDocumentTemplateRequest) GetNameOk() (*string, bool) {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Name, true
+	return &o.Name, true
 }
 
-// HasName returns a boolean if a field has been set.
-func (o *CreateOrUpdateDocumentTemplateRequest) HasName() bool {
-	if o != nil && !IsNil(o.Name) {
-		return true
-	}
-
-	return false
-}
-
-// SetName gets a reference to the given string and assigns it to the Name field.
+// SetName sets field value
 func (o *CreateOrUpdateDocumentTemplateRequest) SetName(v string) {
-	o.Name = &v
+	o.Name = v
 }
 
 // GetDescription returns the Description field value if set, zero value otherwise.
@@ -115,36 +115,28 @@ func (o *CreateOrUpdateDocumentTemplateRequest) SetDescription(v string) {
 	o.Description = &v
 }
 
-// GetOptions returns the Options field value if set, zero value otherwise.
+// GetOptions returns the Options field value
 func (o *CreateOrUpdateDocumentTemplateRequest) GetOptions() DocumentTemplateOptions {
-	if o == nil || IsNil(o.Options) {
+	if o == nil {
 		var ret DocumentTemplateOptions
 		return ret
 	}
-	return *o.Options
+
+	return o.Options
 }
 
-// GetOptionsOk returns a tuple with the Options field value if set, nil otherwise
+// GetOptionsOk returns a tuple with the Options field value
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateDocumentTemplateRequest) GetOptionsOk() (*DocumentTemplateOptions, bool) {
-	if o == nil || IsNil(o.Options) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Options, true
+	return &o.Options, true
 }
 
-// HasOptions returns a boolean if a field has been set.
-func (o *CreateOrUpdateDocumentTemplateRequest) HasOptions() bool {
-	if o != nil && !IsNil(o.Options) {
-		return true
-	}
-
-	return false
-}
-
-// SetOptions gets a reference to the given DocumentTemplateOptions and assigns it to the Options field.
+// SetOptions sets field value
 func (o *CreateOrUpdateDocumentTemplateRequest) SetOptions(v DocumentTemplateOptions) {
-	o.Options = &v
+	o.Options = v
 }
 
 // GetNameExpression returns the NameExpression field value if set, zero value otherwise.
@@ -179,68 +171,54 @@ func (o *CreateOrUpdateDocumentTemplateRequest) SetNameExpression(v string) {
 	o.NameExpression = &v
 }
 
-// GetContent returns the Content field value if set, zero value otherwise.
+// GetContent returns the Content field value
 func (o *CreateOrUpdateDocumentTemplateRequest) GetContent() string {
-	if o == nil || IsNil(o.Content) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Content
+
+	return o.Content
 }
 
-// GetContentOk returns a tuple with the Content field value if set, nil otherwise
+// GetContentOk returns a tuple with the Content field value
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateDocumentTemplateRequest) GetContentOk() (*string, bool) {
-	if o == nil || IsNil(o.Content) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Content, true
+	return &o.Content, true
 }
 
-// HasContent returns a boolean if a field has been set.
-func (o *CreateOrUpdateDocumentTemplateRequest) HasContent() bool {
-	if o != nil && !IsNil(o.Content) {
-		return true
-	}
-
-	return false
-}
-
-// SetContent gets a reference to the given string and assigns it to the Content field.
+// SetContent sets field value
 func (o *CreateOrUpdateDocumentTemplateRequest) SetContent(v string) {
-	o.Content = &v
+	o.Content = v
 }
 
-// GetInputs returns the Inputs field value if set, zero value otherwise.
+// GetInputs returns the Inputs field value
+// If the value is explicit nil, the zero value for CustomForm will be returned
 func (o *CreateOrUpdateDocumentTemplateRequest) GetInputs() CustomForm {
-	if o == nil || IsNil(o.Inputs) {
+	if o == nil || o.Inputs.Get() == nil {
 		var ret CustomForm
 		return ret
 	}
-	return *o.Inputs
+
+	return *o.Inputs.Get()
 }
 
-// GetInputsOk returns a tuple with the Inputs field value if set, nil otherwise
+// GetInputsOk returns a tuple with the Inputs field value
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *CreateOrUpdateDocumentTemplateRequest) GetInputsOk() (*CustomForm, bool) {
-	if o == nil || IsNil(o.Inputs) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Inputs, true
+	return o.Inputs.Get(), o.Inputs.IsSet()
 }
 
-// HasInputs returns a boolean if a field has been set.
-func (o *CreateOrUpdateDocumentTemplateRequest) HasInputs() bool {
-	if o != nil && !IsNil(o.Inputs) {
-		return true
-	}
-
-	return false
-}
-
-// SetInputs gets a reference to the given CustomForm and assigns it to the Inputs field.
+// SetInputs sets field value
 func (o *CreateOrUpdateDocumentTemplateRequest) SetInputs(v CustomForm) {
-	o.Inputs = &v
+	o.Inputs.Set(&v)
 }
 
 // GetPlaceholdersScript returns the PlaceholdersScript field value if set, zero value otherwise.
@@ -317,24 +295,16 @@ func (o CreateOrUpdateDocumentTemplateRequest) MarshalJSON() ([]byte, error) {
 
 func (o CreateOrUpdateDocumentTemplateRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Name) {
-		toSerialize["name"] = o.Name
-	}
+	toSerialize["name"] = o.Name
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
 	}
-	if !IsNil(o.Options) {
-		toSerialize["options"] = o.Options
-	}
+	toSerialize["options"] = o.Options
 	if !IsNil(o.NameExpression) {
 		toSerialize["name_expression"] = o.NameExpression
 	}
-	if !IsNil(o.Content) {
-		toSerialize["content"] = o.Content
-	}
-	if !IsNil(o.Inputs) {
-		toSerialize["inputs"] = o.Inputs
-	}
+	toSerialize["content"] = o.Content
+	toSerialize["inputs"] = o.Inputs.Get()
 	if !IsNil(o.PlaceholdersScript) {
 		toSerialize["placeholders_script"] = o.PlaceholdersScript
 	}
@@ -342,6 +312,46 @@ func (o CreateOrUpdateDocumentTemplateRequest) ToMap() (map[string]interface{}, 
 		toSerialize["signatures"] = o.Signatures
 	}
 	return toSerialize, nil
+}
+
+func (o *CreateOrUpdateDocumentTemplateRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"options",
+		"content",
+		"inputs",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCreateOrUpdateDocumentTemplateRequest := _CreateOrUpdateDocumentTemplateRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCreateOrUpdateDocumentTemplateRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CreateOrUpdateDocumentTemplateRequest(varCreateOrUpdateDocumentTemplateRequest)
+
+	return err
 }
 
 type NullableCreateOrUpdateDocumentTemplateRequest struct {

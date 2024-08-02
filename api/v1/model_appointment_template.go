@@ -21,7 +21,7 @@ var _ MappedNullable = &AppointmentTemplate{}
 
 // AppointmentTemplate struct for AppointmentTemplate
 type AppointmentTemplate struct {
-	// The unique identifier of the appointment template
+	// Unique and immutable ID attribute of the entity that is generated when  the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities  or to retrieve it from the backend.
 	Id string `json:"id"`
 	// The name of the appointment template
 	Name string `json:"name"`
@@ -34,9 +34,9 @@ type AppointmentTemplate struct {
 	// Whether we should require confirmation or not.
 	RequireConfirmation *bool `json:"require_confirmation,omitempty"`
 	// The number of days after which a reminder should be sent out. The list is taken as provided and a reminder will be set for the amount of days as set in the first element of the list. Once that time has passed, the reminder will be rescheduled for the next element in the list. This is repeated until the list is empty. The values in the list are considered relative to the previous reminder. So [2, 2] will send out a reminder after 2 and 4 days. The reminders will, however, not be sent out on weekends. So if the first reminder is sent out on a Friday, the second reminder will be sent out on Tuesday. To disable this option, leave the list empty.
-	ConfirmationReminders []int32    `json:"confirmation_reminders,omitempty"`
-	Form                  CustomForm `json:"form"`
-	// Whether the template has been deleted or not
+	ConfirmationReminders []int32            `json:"confirmation_reminders,omitempty"`
+	Form                  NullableCustomForm `json:"form"`
+	// A flag indicating whether the entity is deleted. If the entity is deleted, it should not be returned in the results of a query, but it is still kept in the database as it is referenced by other entities.
 	IsDeleted *bool `json:"is_deleted,omitempty"`
 }
 
@@ -46,7 +46,7 @@ type _AppointmentTemplate AppointmentTemplate
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppointmentTemplate(id string, name string, form CustomForm) *AppointmentTemplate {
+func NewAppointmentTemplate(id string, name string, form NullableCustomForm) *AppointmentTemplate {
 	this := AppointmentTemplate{}
 	this.Id = id
 	this.Name = name
@@ -271,27 +271,29 @@ func (o *AppointmentTemplate) SetConfirmationReminders(v []int32) {
 }
 
 // GetForm returns the Form field value
+// If the value is explicit nil, the zero value for CustomForm will be returned
 func (o *AppointmentTemplate) GetForm() CustomForm {
-	if o == nil {
+	if o == nil || o.Form.Get() == nil {
 		var ret CustomForm
 		return ret
 	}
 
-	return o.Form
+	return *o.Form.Get()
 }
 
 // GetFormOk returns a tuple with the Form field value
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *AppointmentTemplate) GetFormOk() (*CustomForm, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Form, true
+	return o.Form.Get(), o.Form.IsSet()
 }
 
 // SetForm sets field value
 func (o *AppointmentTemplate) SetForm(v CustomForm) {
-	o.Form = v
+	o.Form.Set(&v)
 }
 
 // GetIsDeleted returns the IsDeleted field value if set, zero value otherwise.
@@ -353,7 +355,7 @@ func (o AppointmentTemplate) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.ConfirmationReminders) {
 		toSerialize["confirmation_reminders"] = o.ConfirmationReminders
 	}
-	toSerialize["form"] = o.Form
+	toSerialize["form"] = o.Form.Get()
 	if !IsNil(o.IsDeleted) {
 		toSerialize["is_deleted"] = o.IsDeleted
 	}

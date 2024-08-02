@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the WorkflowStepAction type satisfies the MappedNullable interface at compile time
@@ -20,25 +22,30 @@ var _ MappedNullable = &WorkflowStepAction{}
 // WorkflowStepAction an action that can be performed on a workflow execution step. This is derived from the step action definition, however, dynamic data is computed and populated by the backend, before the result is being sent to the client.
 type WorkflowStepAction struct {
 	// the ID of the action
-	Id *string `json:"id,omitempty"`
+	Id string `json:"id"`
 	// the icon of the action
 	Icon *string `json:"icon,omitempty"`
 	// the button label for the action
-	Label *string `json:"label,omitempty"`
+	Label string `json:"label"`
 	// optional button modifier of the action
 	ButtonModifier *string `json:"button_modifier,omitempty"`
 	// optional filter that can be used by the UI to show or hide the action
 	UiFilter *string `json:"ui_filter,omitempty"`
 	// the ID of the next step of the workflow
-	NextStepId *string `json:"next_step_id,omitempty"`
+	NextStepId string `json:"next_step_id"`
 }
+
+type _WorkflowStepAction WorkflowStepAction
 
 // NewWorkflowStepAction instantiates a new WorkflowStepAction object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewWorkflowStepAction() *WorkflowStepAction {
+func NewWorkflowStepAction(id string, label string, nextStepId string) *WorkflowStepAction {
 	this := WorkflowStepAction{}
+	this.Id = id
+	this.Label = label
+	this.NextStepId = nextStepId
 	return &this
 }
 
@@ -50,36 +57,28 @@ func NewWorkflowStepActionWithDefaults() *WorkflowStepAction {
 	return &this
 }
 
-// GetId returns the Id field value if set, zero value otherwise.
+// GetId returns the Id field value
 func (o *WorkflowStepAction) GetId() string {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Id
+
+	return o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepAction) GetIdOk() (*string, bool) {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Id, true
+	return &o.Id, true
 }
 
-// HasId returns a boolean if a field has been set.
-func (o *WorkflowStepAction) HasId() bool {
-	if o != nil && !IsNil(o.Id) {
-		return true
-	}
-
-	return false
-}
-
-// SetId gets a reference to the given string and assigns it to the Id field.
+// SetId sets field value
 func (o *WorkflowStepAction) SetId(v string) {
-	o.Id = &v
+	o.Id = v
 }
 
 // GetIcon returns the Icon field value if set, zero value otherwise.
@@ -114,36 +113,28 @@ func (o *WorkflowStepAction) SetIcon(v string) {
 	o.Icon = &v
 }
 
-// GetLabel returns the Label field value if set, zero value otherwise.
+// GetLabel returns the Label field value
 func (o *WorkflowStepAction) GetLabel() string {
-	if o == nil || IsNil(o.Label) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Label
+
+	return o.Label
 }
 
-// GetLabelOk returns a tuple with the Label field value if set, nil otherwise
+// GetLabelOk returns a tuple with the Label field value
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepAction) GetLabelOk() (*string, bool) {
-	if o == nil || IsNil(o.Label) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Label, true
+	return &o.Label, true
 }
 
-// HasLabel returns a boolean if a field has been set.
-func (o *WorkflowStepAction) HasLabel() bool {
-	if o != nil && !IsNil(o.Label) {
-		return true
-	}
-
-	return false
-}
-
-// SetLabel gets a reference to the given string and assigns it to the Label field.
+// SetLabel sets field value
 func (o *WorkflowStepAction) SetLabel(v string) {
-	o.Label = &v
+	o.Label = v
 }
 
 // GetButtonModifier returns the ButtonModifier field value if set, zero value otherwise.
@@ -210,36 +201,28 @@ func (o *WorkflowStepAction) SetUiFilter(v string) {
 	o.UiFilter = &v
 }
 
-// GetNextStepId returns the NextStepId field value if set, zero value otherwise.
+// GetNextStepId returns the NextStepId field value
 func (o *WorkflowStepAction) GetNextStepId() string {
-	if o == nil || IsNil(o.NextStepId) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.NextStepId
+
+	return o.NextStepId
 }
 
-// GetNextStepIdOk returns a tuple with the NextStepId field value if set, nil otherwise
+// GetNextStepIdOk returns a tuple with the NextStepId field value
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepAction) GetNextStepIdOk() (*string, bool) {
-	if o == nil || IsNil(o.NextStepId) {
+	if o == nil {
 		return nil, false
 	}
-	return o.NextStepId, true
+	return &o.NextStepId, true
 }
 
-// HasNextStepId returns a boolean if a field has been set.
-func (o *WorkflowStepAction) HasNextStepId() bool {
-	if o != nil && !IsNil(o.NextStepId) {
-		return true
-	}
-
-	return false
-}
-
-// SetNextStepId gets a reference to the given string and assigns it to the NextStepId field.
+// SetNextStepId sets field value
 func (o *WorkflowStepAction) SetNextStepId(v string) {
-	o.NextStepId = &v
+	o.NextStepId = v
 }
 
 func (o WorkflowStepAction) MarshalJSON() ([]byte, error) {
@@ -252,25 +235,58 @@ func (o WorkflowStepAction) MarshalJSON() ([]byte, error) {
 
 func (o WorkflowStepAction) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Id) {
-		toSerialize["id"] = o.Id
-	}
+	toSerialize["id"] = o.Id
 	if !IsNil(o.Icon) {
 		toSerialize["icon"] = o.Icon
 	}
-	if !IsNil(o.Label) {
-		toSerialize["label"] = o.Label
-	}
+	toSerialize["label"] = o.Label
 	if !IsNil(o.ButtonModifier) {
 		toSerialize["button_modifier"] = o.ButtonModifier
 	}
 	if !IsNil(o.UiFilter) {
 		toSerialize["ui_filter"] = o.UiFilter
 	}
-	if !IsNil(o.NextStepId) {
-		toSerialize["next_step_id"] = o.NextStepId
-	}
+	toSerialize["next_step_id"] = o.NextStepId
 	return toSerialize, nil
+}
+
+func (o *WorkflowStepAction) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"id",
+		"label",
+		"next_step_id",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varWorkflowStepAction := _WorkflowStepAction{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varWorkflowStepAction)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WorkflowStepAction(varWorkflowStepAction)
+
+	return err
 }
 
 type NullableWorkflowStepAction struct {

@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the DocumentGeneration type satisfies the MappedNullable interface at compile time
@@ -19,18 +21,18 @@ var _ MappedNullable = &DocumentGeneration{}
 
 // DocumentGeneration The status and content of a document generation
 type DocumentGeneration struct {
-	// The unique ID of the document generation
-	Id *string `json:"id,omitempty"`
-	// The date the document generation was created
-	CreatedAt *int64 `json:"created_at,omitempty"`
-	// The date the document generation was last updated
-	UpdatedAt *int64 `json:"updated_at,omitempty"`
+	// Unique and immutable ID attribute of the entity that is generated when  the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities  or to retrieve it from the backend.
+	Id string `json:"id"`
+	// The date and time the entity was created
+	CreatedAt int64 `json:"created_at"`
+	// The date and time the entity was last updated
+	UpdatedAt int64 `json:"updated_at"`
 	// True if the document generation has been archived
 	Archived *bool `json:"archived,omitempty"`
 	// The ID of the template used to generate the document
-	Template *string `json:"template,omitempty"`
+	TemplateRef string `json:"template_ref"`
 	// The name of the document, as computed using the name expression of the template
-	Name *string `json:"name,omitempty"`
+	Name string `json:"name"`
 	// The data from the template custom form, serialised as JSON
 	InputData *string `json:"input_data,omitempty"`
 	// Optional EditorJS data used to generate the document (JSON of the data object)
@@ -43,12 +45,19 @@ type DocumentGeneration struct {
 	EsignatureTriggered *bool `json:"esignature_triggered,omitempty"`
 }
 
+type _DocumentGeneration DocumentGeneration
+
 // NewDocumentGeneration instantiates a new DocumentGeneration object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDocumentGeneration() *DocumentGeneration {
+func NewDocumentGeneration(id string, createdAt int64, updatedAt int64, templateRef string, name string) *DocumentGeneration {
 	this := DocumentGeneration{}
+	this.Id = id
+	this.CreatedAt = createdAt
+	this.UpdatedAt = updatedAt
+	this.TemplateRef = templateRef
+	this.Name = name
 	return &this
 }
 
@@ -60,100 +69,76 @@ func NewDocumentGenerationWithDefaults() *DocumentGeneration {
 	return &this
 }
 
-// GetId returns the Id field value if set, zero value otherwise.
+// GetId returns the Id field value
 func (o *DocumentGeneration) GetId() string {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Id
+
+	return o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
 func (o *DocumentGeneration) GetIdOk() (*string, bool) {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Id, true
+	return &o.Id, true
 }
 
-// HasId returns a boolean if a field has been set.
-func (o *DocumentGeneration) HasId() bool {
-	if o != nil && !IsNil(o.Id) {
-		return true
-	}
-
-	return false
-}
-
-// SetId gets a reference to the given string and assigns it to the Id field.
+// SetId sets field value
 func (o *DocumentGeneration) SetId(v string) {
-	o.Id = &v
+	o.Id = v
 }
 
-// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
+// GetCreatedAt returns the CreatedAt field value
 func (o *DocumentGeneration) GetCreatedAt() int64 {
-	if o == nil || IsNil(o.CreatedAt) {
+	if o == nil {
 		var ret int64
 		return ret
 	}
-	return *o.CreatedAt
+
+	return o.CreatedAt
 }
 
-// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
+// GetCreatedAtOk returns a tuple with the CreatedAt field value
 // and a boolean to check if the value has been set.
 func (o *DocumentGeneration) GetCreatedAtOk() (*int64, bool) {
-	if o == nil || IsNil(o.CreatedAt) {
+	if o == nil {
 		return nil, false
 	}
-	return o.CreatedAt, true
+	return &o.CreatedAt, true
 }
 
-// HasCreatedAt returns a boolean if a field has been set.
-func (o *DocumentGeneration) HasCreatedAt() bool {
-	if o != nil && !IsNil(o.CreatedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetCreatedAt gets a reference to the given int64 and assigns it to the CreatedAt field.
+// SetCreatedAt sets field value
 func (o *DocumentGeneration) SetCreatedAt(v int64) {
-	o.CreatedAt = &v
+	o.CreatedAt = v
 }
 
-// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
+// GetUpdatedAt returns the UpdatedAt field value
 func (o *DocumentGeneration) GetUpdatedAt() int64 {
-	if o == nil || IsNil(o.UpdatedAt) {
+	if o == nil {
 		var ret int64
 		return ret
 	}
-	return *o.UpdatedAt
+
+	return o.UpdatedAt
 }
 
-// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
 // and a boolean to check if the value has been set.
 func (o *DocumentGeneration) GetUpdatedAtOk() (*int64, bool) {
-	if o == nil || IsNil(o.UpdatedAt) {
+	if o == nil {
 		return nil, false
 	}
-	return o.UpdatedAt, true
+	return &o.UpdatedAt, true
 }
 
-// HasUpdatedAt returns a boolean if a field has been set.
-func (o *DocumentGeneration) HasUpdatedAt() bool {
-	if o != nil && !IsNil(o.UpdatedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetUpdatedAt gets a reference to the given int64 and assigns it to the UpdatedAt field.
+// SetUpdatedAt sets field value
 func (o *DocumentGeneration) SetUpdatedAt(v int64) {
-	o.UpdatedAt = &v
+	o.UpdatedAt = v
 }
 
 // GetArchived returns the Archived field value if set, zero value otherwise.
@@ -188,68 +173,52 @@ func (o *DocumentGeneration) SetArchived(v bool) {
 	o.Archived = &v
 }
 
-// GetTemplate returns the Template field value if set, zero value otherwise.
-func (o *DocumentGeneration) GetTemplate() string {
-	if o == nil || IsNil(o.Template) {
+// GetTemplateRef returns the TemplateRef field value
+func (o *DocumentGeneration) GetTemplateRef() string {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Template
+
+	return o.TemplateRef
 }
 
-// GetTemplateOk returns a tuple with the Template field value if set, nil otherwise
+// GetTemplateRefOk returns a tuple with the TemplateRef field value
 // and a boolean to check if the value has been set.
-func (o *DocumentGeneration) GetTemplateOk() (*string, bool) {
-	if o == nil || IsNil(o.Template) {
+func (o *DocumentGeneration) GetTemplateRefOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Template, true
+	return &o.TemplateRef, true
 }
 
-// HasTemplate returns a boolean if a field has been set.
-func (o *DocumentGeneration) HasTemplate() bool {
-	if o != nil && !IsNil(o.Template) {
-		return true
-	}
-
-	return false
+// SetTemplateRef sets field value
+func (o *DocumentGeneration) SetTemplateRef(v string) {
+	o.TemplateRef = v
 }
 
-// SetTemplate gets a reference to the given string and assigns it to the Template field.
-func (o *DocumentGeneration) SetTemplate(v string) {
-	o.Template = &v
-}
-
-// GetName returns the Name field value if set, zero value otherwise.
+// GetName returns the Name field value
 func (o *DocumentGeneration) GetName() string {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Name
+
+	return o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// GetNameOk returns a tuple with the Name field value
 // and a boolean to check if the value has been set.
 func (o *DocumentGeneration) GetNameOk() (*string, bool) {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Name, true
+	return &o.Name, true
 }
 
-// HasName returns a boolean if a field has been set.
-func (o *DocumentGeneration) HasName() bool {
-	if o != nil && !IsNil(o.Name) {
-		return true
-	}
-
-	return false
-}
-
-// SetName gets a reference to the given string and assigns it to the Name field.
+// SetName sets field value
 func (o *DocumentGeneration) SetName(v string) {
-	o.Name = &v
+	o.Name = v
 }
 
 // GetInputData returns the InputData field value if set, zero value otherwise.
@@ -422,24 +391,14 @@ func (o DocumentGeneration) MarshalJSON() ([]byte, error) {
 
 func (o DocumentGeneration) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Id) {
-		toSerialize["id"] = o.Id
-	}
-	if !IsNil(o.CreatedAt) {
-		toSerialize["created_at"] = o.CreatedAt
-	}
-	if !IsNil(o.UpdatedAt) {
-		toSerialize["updated_at"] = o.UpdatedAt
-	}
+	toSerialize["id"] = o.Id
+	toSerialize["created_at"] = o.CreatedAt
+	toSerialize["updated_at"] = o.UpdatedAt
 	if !IsNil(o.Archived) {
 		toSerialize["archived"] = o.Archived
 	}
-	if !IsNil(o.Template) {
-		toSerialize["template"] = o.Template
-	}
-	if !IsNil(o.Name) {
-		toSerialize["name"] = o.Name
-	}
+	toSerialize["template_ref"] = o.TemplateRef
+	toSerialize["name"] = o.Name
 	if !IsNil(o.InputData) {
 		toSerialize["input_data"] = o.InputData
 	}
@@ -456,6 +415,47 @@ func (o DocumentGeneration) ToMap() (map[string]interface{}, error) {
 		toSerialize["esignature_triggered"] = o.EsignatureTriggered
 	}
 	return toSerialize, nil
+}
+
+func (o *DocumentGeneration) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"id",
+		"created_at",
+		"updated_at",
+		"template_ref",
+		"name",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varDocumentGeneration := _DocumentGeneration{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varDocumentGeneration)
+
+	if err != nil {
+		return err
+	}
+
+	*o = DocumentGeneration(varDocumentGeneration)
+
+	return err
 }
 
 type NullableDocumentGeneration struct {

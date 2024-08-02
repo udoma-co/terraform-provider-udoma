@@ -329,13 +329,13 @@ func (model *CaseReportingEndpointModel) fromAPI(endpoint *api.CaseReportingEndp
 		return
 	}
 
-	model.ID = types.StringPointerValue(endpoint.Code)
-	model.Code = types.StringPointerValue(endpoint.Code)
-	model.CreatedAt = types.Int64PointerValue(endpoint.CreatedAt)
-	model.UpdatedAt = types.Int64PointerValue(endpoint.UpdatedAt)
-	model.Name = types.StringPointerValue(endpoint.Name)
+	model.ID = types.StringValue(endpoint.Code)
+	model.Code = types.StringValue(endpoint.Code)
+	model.CreatedAt = types.Int64Value(endpoint.CreatedAt)
+	model.UpdatedAt = types.Int64Value(endpoint.UpdatedAt)
+	model.Name = types.StringValue(endpoint.Name)
 	model.Active = omittableBooleanValue(endpoint.Active, model.Active)
-	model.Url = types.StringPointerValue(endpoint.Url)
+	model.Url = types.StringValue(endpoint.Url)
 	model.CaseCategories = make([]CaseReportingEndpointCategoryModel, len(endpoint.CaseCategories))
 
 	for i := range endpoint.CaseCategories {
@@ -370,11 +370,9 @@ func (model *CaseReportingEndpointCategoryModel) fromAPIResponse(category *api.C
 		return
 	}
 
-	if category.Name != nil {
-		model.Name, diags = types.MapValue(types.StringType, stringMapToValueMap(*category.Name))
-		if diags.HasError() {
-			return
-		}
+	model.Name, diags = types.MapValue(types.StringType, stringMapToValueMap(category.Name))
+	if diags.HasError() {
+		return
 	}
 
 	model.Priority = types.Int64Value(int64(idp32(category.Priority)))
@@ -399,7 +397,7 @@ func (model *CaseReportingEndpointTemplateModel) fromAPIResponse(template *api.C
 		return
 	}
 
-	model.ID = types.StringPointerValue(template.Id)
+	model.ID = types.StringValue(template.Id)
 	model.Priority = types.Int64Value(int64(idp32(template.Priority)))
 
 	return
@@ -422,7 +420,7 @@ func (model *CaseReportingEndpointCategoryModel) toAPIRequest() api.CaseReportin
 
 func (model *CaseReportingEndpointTemplateModel) toAPIRequest() api.CaseReportingEndpointCategoryTemplatesInner {
 	return api.CaseReportingEndpointCategoryTemplatesInner{
-		Id:       model.ID.ValueStringPointer(),
+		Id:       model.ID.ValueString(),
 		Priority: i64ToI32Ptr(model.Priority.ValueInt64()),
 	}
 }
@@ -430,7 +428,7 @@ func (model *CaseReportingEndpointTemplateModel) toAPIRequest() api.CaseReportin
 func (model *CaseReportingEndpointModel) toAPIRequest() (api.CreateOrUpdateCaseReportingEndpointRequest, error) {
 
 	endpoint := api.CreateOrUpdateCaseReportingEndpointRequest{
-		Name:           model.Name.ValueStringPointer(),
+		Name:           model.Name.ValueString(),
 		Active:         model.Active.ValueBoolPointer(),
 		CaseCategories: make([]api.CaseReportingEndpointCategory, len(model.CaseCategories)),
 		Faqs:           make([]string, len(model.FAQs)),

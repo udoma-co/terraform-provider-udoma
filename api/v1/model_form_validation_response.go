@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the FormValidationResponse type satisfies the MappedNullable interface at compile time
@@ -20,17 +22,20 @@ var _ MappedNullable = &FormValidationResponse{}
 // FormValidationResponse struct for FormValidationResponse
 type FormValidationResponse struct {
 	// if true, the data provided by the user is valid
-	Valid *bool `json:"valid,omitempty"`
+	Valid bool `json:"valid"`
 	// the errors that were found in the data provided by the user
 	Errors []FormValidationError `json:"errors,omitempty"`
 }
+
+type _FormValidationResponse FormValidationResponse
 
 // NewFormValidationResponse instantiates a new FormValidationResponse object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewFormValidationResponse() *FormValidationResponse {
+func NewFormValidationResponse(valid bool) *FormValidationResponse {
 	this := FormValidationResponse{}
+	this.Valid = valid
 	return &this
 }
 
@@ -42,36 +47,28 @@ func NewFormValidationResponseWithDefaults() *FormValidationResponse {
 	return &this
 }
 
-// GetValid returns the Valid field value if set, zero value otherwise.
+// GetValid returns the Valid field value
 func (o *FormValidationResponse) GetValid() bool {
-	if o == nil || IsNil(o.Valid) {
+	if o == nil {
 		var ret bool
 		return ret
 	}
-	return *o.Valid
+
+	return o.Valid
 }
 
-// GetValidOk returns a tuple with the Valid field value if set, nil otherwise
+// GetValidOk returns a tuple with the Valid field value
 // and a boolean to check if the value has been set.
 func (o *FormValidationResponse) GetValidOk() (*bool, bool) {
-	if o == nil || IsNil(o.Valid) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Valid, true
+	return &o.Valid, true
 }
 
-// HasValid returns a boolean if a field has been set.
-func (o *FormValidationResponse) HasValid() bool {
-	if o != nil && !IsNil(o.Valid) {
-		return true
-	}
-
-	return false
-}
-
-// SetValid gets a reference to the given bool and assigns it to the Valid field.
+// SetValid sets field value
 func (o *FormValidationResponse) SetValid(v bool) {
-	o.Valid = &v
+	o.Valid = v
 }
 
 // GetErrors returns the Errors field value if set, zero value otherwise.
@@ -116,13 +113,48 @@ func (o FormValidationResponse) MarshalJSON() ([]byte, error) {
 
 func (o FormValidationResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Valid) {
-		toSerialize["valid"] = o.Valid
-	}
+	toSerialize["valid"] = o.Valid
 	if !IsNil(o.Errors) {
 		toSerialize["errors"] = o.Errors
 	}
 	return toSerialize, nil
+}
+
+func (o *FormValidationResponse) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"valid",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varFormValidationResponse := _FormValidationResponse{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varFormValidationResponse)
+
+	if err != nil {
+		return err
+	}
+
+	*o = FormValidationResponse(varFormValidationResponse)
+
+	return err
 }
 
 type NullableFormValidationResponse struct {

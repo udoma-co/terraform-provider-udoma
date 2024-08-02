@@ -19,10 +19,10 @@ var _ MappedNullable = &QueryPropertiesRequest{}
 
 // QueryPropertiesRequest Request used to get a list of properties for the curent user
 type QueryPropertiesRequest struct {
-	// number of items to include in the result
-	Limit *int64 `json:"limit,omitempty"`
-	// number of items to skip from the result
-	Offset *int64 `json:"offset,omitempty"`
+	// The maximum number of entities to return from the query
+	Limit *int32 `json:"limit,omitempty"`
+	// The number of entities to skip before returning the result
+	Offset *int32 `json:"offset,omitempty"`
 	// like search for the name of the property
 	Name *string `json:"name,omitempty"`
 	// optional property ID, if set only properties that are children of the given  property are returned
@@ -49,9 +49,9 @@ func NewQueryPropertiesRequestWithDefaults() *QueryPropertiesRequest {
 }
 
 // GetLimit returns the Limit field value if set, zero value otherwise.
-func (o *QueryPropertiesRequest) GetLimit() int64 {
+func (o *QueryPropertiesRequest) GetLimit() int32 {
 	if o == nil || IsNil(o.Limit) {
-		var ret int64
+		var ret int32
 		return ret
 	}
 	return *o.Limit
@@ -59,7 +59,7 @@ func (o *QueryPropertiesRequest) GetLimit() int64 {
 
 // GetLimitOk returns a tuple with the Limit field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *QueryPropertiesRequest) GetLimitOk() (*int64, bool) {
+func (o *QueryPropertiesRequest) GetLimitOk() (*int32, bool) {
 	if o == nil || IsNil(o.Limit) {
 		return nil, false
 	}
@@ -75,15 +75,15 @@ func (o *QueryPropertiesRequest) HasLimit() bool {
 	return false
 }
 
-// SetLimit gets a reference to the given int64 and assigns it to the Limit field.
-func (o *QueryPropertiesRequest) SetLimit(v int64) {
+// SetLimit gets a reference to the given int32 and assigns it to the Limit field.
+func (o *QueryPropertiesRequest) SetLimit(v int32) {
 	o.Limit = &v
 }
 
 // GetOffset returns the Offset field value if set, zero value otherwise.
-func (o *QueryPropertiesRequest) GetOffset() int64 {
+func (o *QueryPropertiesRequest) GetOffset() int32 {
 	if o == nil || IsNil(o.Offset) {
-		var ret int64
+		var ret int32
 		return ret
 	}
 	return *o.Offset
@@ -91,7 +91,7 @@ func (o *QueryPropertiesRequest) GetOffset() int64 {
 
 // GetOffsetOk returns a tuple with the Offset field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *QueryPropertiesRequest) GetOffsetOk() (*int64, bool) {
+func (o *QueryPropertiesRequest) GetOffsetOk() (*int32, bool) {
 	if o == nil || IsNil(o.Offset) {
 		return nil, false
 	}
@@ -107,8 +107,8 @@ func (o *QueryPropertiesRequest) HasOffset() bool {
 	return false
 }
 
-// SetOffset gets a reference to the given int64 and assigns it to the Offset field.
-func (o *QueryPropertiesRequest) SetOffset(v int64) {
+// SetOffset gets a reference to the given int32 and assigns it to the Offset field.
+func (o *QueryPropertiesRequest) SetOffset(v int32) {
 	o.Offset = &v
 }
 

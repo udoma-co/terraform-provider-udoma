@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the CompanyProfile type satisfies the MappedNullable interface at compile time
@@ -19,7 +21,7 @@ var _ MappedNullable = &CompanyProfile{}
 
 // CompanyProfile Details about a company (property management, or service provider)
 type CompanyProfile struct {
-	Name    *string  `json:"name,omitempty"`
+	Name    string   `json:"name"`
 	Address *Address `json:"address,omitempty"`
 	// The default email address at which the company should be contacted. This information can potentially be visible to other users of the platform.
 	Email *string `json:"email,omitempty"`
@@ -29,12 +31,15 @@ type CompanyProfile struct {
 	Website *string `json:"website,omitempty"`
 }
 
+type _CompanyProfile CompanyProfile
+
 // NewCompanyProfile instantiates a new CompanyProfile object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCompanyProfile() *CompanyProfile {
+func NewCompanyProfile(name string) *CompanyProfile {
 	this := CompanyProfile{}
+	this.Name = name
 	return &this
 }
 
@@ -46,36 +51,28 @@ func NewCompanyProfileWithDefaults() *CompanyProfile {
 	return &this
 }
 
-// GetName returns the Name field value if set, zero value otherwise.
+// GetName returns the Name field value
 func (o *CompanyProfile) GetName() string {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Name
+
+	return o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// GetNameOk returns a tuple with the Name field value
 // and a boolean to check if the value has been set.
 func (o *CompanyProfile) GetNameOk() (*string, bool) {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Name, true
+	return &o.Name, true
 }
 
-// HasName returns a boolean if a field has been set.
-func (o *CompanyProfile) HasName() bool {
-	if o != nil && !IsNil(o.Name) {
-		return true
-	}
-
-	return false
-}
-
-// SetName gets a reference to the given string and assigns it to the Name field.
+// SetName sets field value
 func (o *CompanyProfile) SetName(v string) {
-	o.Name = &v
+	o.Name = v
 }
 
 // GetAddress returns the Address field value if set, zero value otherwise.
@@ -216,9 +213,7 @@ func (o CompanyProfile) MarshalJSON() ([]byte, error) {
 
 func (o CompanyProfile) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Name) {
-		toSerialize["name"] = o.Name
-	}
+	toSerialize["name"] = o.Name
 	if !IsNil(o.Address) {
 		toSerialize["address"] = o.Address
 	}
@@ -232,6 +227,43 @@ func (o CompanyProfile) ToMap() (map[string]interface{}, error) {
 		toSerialize["website"] = o.Website
 	}
 	return toSerialize, nil
+}
+
+func (o *CompanyProfile) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCompanyProfile := _CompanyProfile{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCompanyProfile)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CompanyProfile(varCompanyProfile)
+
+	return err
 }
 
 type NullableCompanyProfile struct {

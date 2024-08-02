@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the FormInput type satisfies the MappedNullable interface at compile time
@@ -20,14 +22,14 @@ var _ MappedNullable = &FormInput{}
 // FormInput a custom input that is used in dynamic forms to collect data from the user
 type FormInput struct {
 	// the ID of the input field, used to identify it and later access the data
-	Id *string `json:"id,omitempty"`
+	Id string `json:"id"`
 	// a map of values, where the key and values are strings
 	Label *map[string]string `json:"label,omitempty"`
 	// a map of values, where the key and values are strings
 	ViewLabel *map[string]string `json:"view_label,omitempty"`
 	// a map of values, where the key and values are strings
 	Placeholder *map[string]string `json:"placeholder,omitempty"`
-	Type        *FormInputType     `json:"type,omitempty"`
+	Type        FormInputType      `json:"type"`
 	// optional default value for the input field (as a JSON string)
 	DefaultValue *string `json:"default_value,omitempty"`
 	// if true, the user will be required to provide a value
@@ -44,12 +46,16 @@ type FormInput struct {
 	Items []string `json:"items,omitempty"`
 }
 
+type _FormInput FormInput
+
 // NewFormInput instantiates a new FormInput object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewFormInput() *FormInput {
+func NewFormInput(id string, type_ FormInputType) *FormInput {
 	this := FormInput{}
+	this.Id = id
+	this.Type = type_
 	return &this
 }
 
@@ -61,36 +67,28 @@ func NewFormInputWithDefaults() *FormInput {
 	return &this
 }
 
-// GetId returns the Id field value if set, zero value otherwise.
+// GetId returns the Id field value
 func (o *FormInput) GetId() string {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Id
+
+	return o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
 func (o *FormInput) GetIdOk() (*string, bool) {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Id, true
+	return &o.Id, true
 }
 
-// HasId returns a boolean if a field has been set.
-func (o *FormInput) HasId() bool {
-	if o != nil && !IsNil(o.Id) {
-		return true
-	}
-
-	return false
-}
-
-// SetId gets a reference to the given string and assigns it to the Id field.
+// SetId sets field value
 func (o *FormInput) SetId(v string) {
-	o.Id = &v
+	o.Id = v
 }
 
 // GetLabel returns the Label field value if set, zero value otherwise.
@@ -189,36 +187,28 @@ func (o *FormInput) SetPlaceholder(v map[string]string) {
 	o.Placeholder = &v
 }
 
-// GetType returns the Type field value if set, zero value otherwise.
+// GetType returns the Type field value
 func (o *FormInput) GetType() FormInputType {
-	if o == nil || IsNil(o.Type) {
+	if o == nil {
 		var ret FormInputType
 		return ret
 	}
-	return *o.Type
+
+	return o.Type
 }
 
-// GetTypeOk returns a tuple with the Type field value if set, nil otherwise
+// GetTypeOk returns a tuple with the Type field value
 // and a boolean to check if the value has been set.
 func (o *FormInput) GetTypeOk() (*FormInputType, bool) {
-	if o == nil || IsNil(o.Type) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Type, true
+	return &o.Type, true
 }
 
-// HasType returns a boolean if a field has been set.
-func (o *FormInput) HasType() bool {
-	if o != nil && !IsNil(o.Type) {
-		return true
-	}
-
-	return false
-}
-
-// SetType gets a reference to the given FormInputType and assigns it to the Type field.
+// SetType sets field value
 func (o *FormInput) SetType(v FormInputType) {
-	o.Type = &v
+	o.Type = v
 }
 
 // GetDefaultValue returns the DefaultValue field value if set, zero value otherwise.
@@ -455,9 +445,7 @@ func (o FormInput) MarshalJSON() ([]byte, error) {
 
 func (o FormInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Id) {
-		toSerialize["id"] = o.Id
-	}
+	toSerialize["id"] = o.Id
 	if !IsNil(o.Label) {
 		toSerialize["label"] = o.Label
 	}
@@ -467,9 +455,7 @@ func (o FormInput) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Placeholder) {
 		toSerialize["placeholder"] = o.Placeholder
 	}
-	if !IsNil(o.Type) {
-		toSerialize["type"] = o.Type
-	}
+	toSerialize["type"] = o.Type
 	if !IsNil(o.DefaultValue) {
 		toSerialize["default_value"] = o.DefaultValue
 	}
@@ -492,6 +478,44 @@ func (o FormInput) ToMap() (map[string]interface{}, error) {
 		toSerialize["items"] = o.Items
 	}
 	return toSerialize, nil
+}
+
+func (o *FormInput) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"id",
+		"type",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varFormInput := _FormInput{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varFormInput)
+
+	if err != nil {
+		return err
+	}
+
+	*o = FormInput(varFormInput)
+
+	return err
 }
 
 type NullableFormInput struct {

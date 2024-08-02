@@ -21,9 +21,12 @@ var _ MappedNullable = &CaseComment{}
 
 // CaseComment Comment represents a single user comment on a case
 type CaseComment struct {
-	Id        string        `json:"id"`
-	CreatedAt int64         `json:"created_at"`
-	UpdatedAt *int64        `json:"updated_at,omitempty"`
+	// Unique and immutable ID attribute of the entity that is generated when  the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities  or to retrieve it from the backend.
+	Id string `json:"id"`
+	// The date and time the entity was created
+	CreatedAt int64 `json:"created_at"`
+	// The date and time the entity was last updated
+	UpdatedAt int64         `json:"updated_at"`
 	AuthorRef UserReference `json:"author_ref"`
 	// Indicates if the comment has been deleted
 	Deleted *bool `json:"deleted,omitempty"`
@@ -40,10 +43,11 @@ type _CaseComment CaseComment
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCaseComment(id string, createdAt int64, authorRef UserReference, content string) *CaseComment {
+func NewCaseComment(id string, createdAt int64, updatedAt int64, authorRef UserReference, content string) *CaseComment {
 	this := CaseComment{}
 	this.Id = id
 	this.CreatedAt = createdAt
+	this.UpdatedAt = updatedAt
 	this.AuthorRef = authorRef
 	this.Content = content
 	return &this
@@ -105,36 +109,28 @@ func (o *CaseComment) SetCreatedAt(v int64) {
 	o.CreatedAt = v
 }
 
-// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
+// GetUpdatedAt returns the UpdatedAt field value
 func (o *CaseComment) GetUpdatedAt() int64 {
-	if o == nil || IsNil(o.UpdatedAt) {
+	if o == nil {
 		var ret int64
 		return ret
 	}
-	return *o.UpdatedAt
+
+	return o.UpdatedAt
 }
 
-// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
 // and a boolean to check if the value has been set.
 func (o *CaseComment) GetUpdatedAtOk() (*int64, bool) {
-	if o == nil || IsNil(o.UpdatedAt) {
+	if o == nil {
 		return nil, false
 	}
-	return o.UpdatedAt, true
+	return &o.UpdatedAt, true
 }
 
-// HasUpdatedAt returns a boolean if a field has been set.
-func (o *CaseComment) HasUpdatedAt() bool {
-	if o != nil && !IsNil(o.UpdatedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetUpdatedAt gets a reference to the given int64 and assigns it to the UpdatedAt field.
+// SetUpdatedAt sets field value
 func (o *CaseComment) SetUpdatedAt(v int64) {
-	o.UpdatedAt = &v
+	o.UpdatedAt = v
 }
 
 // GetAuthorRef returns the AuthorRef field value
@@ -293,9 +289,7 @@ func (o CaseComment) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["id"] = o.Id
 	toSerialize["created_at"] = o.CreatedAt
-	if !IsNil(o.UpdatedAt) {
-		toSerialize["updated_at"] = o.UpdatedAt
-	}
+	toSerialize["updated_at"] = o.UpdatedAt
 	toSerialize["author_ref"] = o.AuthorRef
 	if !IsNil(o.Deleted) {
 		toSerialize["deleted"] = o.Deleted
@@ -317,6 +311,7 @@ func (o *CaseComment) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"id",
 		"created_at",
+		"updated_at",
 		"author_ref",
 		"content",
 	}

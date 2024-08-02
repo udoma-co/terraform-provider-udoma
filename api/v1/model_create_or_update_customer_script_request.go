@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the CreateOrUpdateCustomerScriptRequest type satisfies the MappedNullable interface at compile time
@@ -20,20 +22,24 @@ var _ MappedNullable = &CreateOrUpdateCustomerScriptRequest{}
 // CreateOrUpdateCustomerScriptRequest struct for CreateOrUpdateCustomerScriptRequest
 type CreateOrUpdateCustomerScriptRequest struct {
 	// The function name under which the script will be available in the scripting environment
-	Name *string `json:"name,omitempty"`
+	Name string `json:"name"`
 	// A description of the script
 	Description *string              `json:"description,omitempty"`
 	Scope       *CustomerScriptScope `json:"scope,omitempty"`
 	// The actual JS script code
-	Script *string `json:"script,omitempty"`
+	Script string `json:"script"`
 }
+
+type _CreateOrUpdateCustomerScriptRequest CreateOrUpdateCustomerScriptRequest
 
 // NewCreateOrUpdateCustomerScriptRequest instantiates a new CreateOrUpdateCustomerScriptRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateOrUpdateCustomerScriptRequest() *CreateOrUpdateCustomerScriptRequest {
+func NewCreateOrUpdateCustomerScriptRequest(name string, script string) *CreateOrUpdateCustomerScriptRequest {
 	this := CreateOrUpdateCustomerScriptRequest{}
+	this.Name = name
+	this.Script = script
 	return &this
 }
 
@@ -45,36 +51,28 @@ func NewCreateOrUpdateCustomerScriptRequestWithDefaults() *CreateOrUpdateCustome
 	return &this
 }
 
-// GetName returns the Name field value if set, zero value otherwise.
+// GetName returns the Name field value
 func (o *CreateOrUpdateCustomerScriptRequest) GetName() string {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Name
+
+	return o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// GetNameOk returns a tuple with the Name field value
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateCustomerScriptRequest) GetNameOk() (*string, bool) {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Name, true
+	return &o.Name, true
 }
 
-// HasName returns a boolean if a field has been set.
-func (o *CreateOrUpdateCustomerScriptRequest) HasName() bool {
-	if o != nil && !IsNil(o.Name) {
-		return true
-	}
-
-	return false
-}
-
-// SetName gets a reference to the given string and assigns it to the Name field.
+// SetName sets field value
 func (o *CreateOrUpdateCustomerScriptRequest) SetName(v string) {
-	o.Name = &v
+	o.Name = v
 }
 
 // GetDescription returns the Description field value if set, zero value otherwise.
@@ -141,36 +139,28 @@ func (o *CreateOrUpdateCustomerScriptRequest) SetScope(v CustomerScriptScope) {
 	o.Scope = &v
 }
 
-// GetScript returns the Script field value if set, zero value otherwise.
+// GetScript returns the Script field value
 func (o *CreateOrUpdateCustomerScriptRequest) GetScript() string {
-	if o == nil || IsNil(o.Script) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Script
+
+	return o.Script
 }
 
-// GetScriptOk returns a tuple with the Script field value if set, nil otherwise
+// GetScriptOk returns a tuple with the Script field value
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateCustomerScriptRequest) GetScriptOk() (*string, bool) {
-	if o == nil || IsNil(o.Script) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Script, true
+	return &o.Script, true
 }
 
-// HasScript returns a boolean if a field has been set.
-func (o *CreateOrUpdateCustomerScriptRequest) HasScript() bool {
-	if o != nil && !IsNil(o.Script) {
-		return true
-	}
-
-	return false
-}
-
-// SetScript gets a reference to the given string and assigns it to the Script field.
+// SetScript sets field value
 func (o *CreateOrUpdateCustomerScriptRequest) SetScript(v string) {
-	o.Script = &v
+	o.Script = v
 }
 
 func (o CreateOrUpdateCustomerScriptRequest) MarshalJSON() ([]byte, error) {
@@ -183,19 +173,53 @@ func (o CreateOrUpdateCustomerScriptRequest) MarshalJSON() ([]byte, error) {
 
 func (o CreateOrUpdateCustomerScriptRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Name) {
-		toSerialize["name"] = o.Name
-	}
+	toSerialize["name"] = o.Name
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
 	}
 	if !IsNil(o.Scope) {
 		toSerialize["scope"] = o.Scope
 	}
-	if !IsNil(o.Script) {
-		toSerialize["script"] = o.Script
-	}
+	toSerialize["script"] = o.Script
 	return toSerialize, nil
+}
+
+func (o *CreateOrUpdateCustomerScriptRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"script",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCreateOrUpdateCustomerScriptRequest := _CreateOrUpdateCustomerScriptRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCreateOrUpdateCustomerScriptRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CreateOrUpdateCustomerScriptRequest(varCreateOrUpdateCustomerScriptRequest)
+
+	return err
 }
 
 type NullableCreateOrUpdateCustomerScriptRequest struct {

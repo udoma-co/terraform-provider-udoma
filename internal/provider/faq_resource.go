@@ -260,25 +260,21 @@ func (model *FAQModel) fromAPI(faq *api.FAQEntry) error {
 		return fmt.Errorf("faq entry is nil")
 	}
 
-	model.ID = types.StringPointerValue(faq.Id)
+	model.ID = types.StringValue(faq.Id)
 
-	if faq.Question != nil {
-		in := stringMapToValueMap(*faq.Question)
-		modelValue, diags := types.MapValue(types.StringType, in)
-		if diags.HasError() {
-			return fmt.Errorf("error converting question to map: %v", diags)
-		}
-		model.Question = modelValue
+	inQ := stringMapToValueMap(faq.Question)
+	modelValueQ, diags := types.MapValue(types.StringType, inQ)
+	if diags.HasError() {
+		return fmt.Errorf("error converting question to map: %v", diags)
 	}
+	model.Question = modelValueQ
 
-	if faq.Answer != nil {
-		in := stringMapToValueMap(*faq.Answer)
-		modelValue, diags := types.MapValue(types.StringType, in)
-		if diags.HasError() {
-			return fmt.Errorf("error converting answer to map: %v", diags)
-		}
-		model.Answer = modelValue
+	inA := stringMapToValueMap(faq.Answer)
+	modelValueA, diags := types.MapValue(types.StringType, inA)
+	if diags.HasError() {
+		return fmt.Errorf("error converting answer to map: %v", diags)
 	}
+	model.Answer = modelValueA
 
 	if len(faq.Keywords) > 0 {
 		model.Keywords = make([]types.String, len(faq.Keywords))

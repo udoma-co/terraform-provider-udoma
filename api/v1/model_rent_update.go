@@ -21,15 +21,15 @@ var _ MappedNullable = &RentUpdate{}
 
 // RentUpdate A rent update is a change to the monthly amount due for a rent of a property.
 type RentUpdate struct {
-	// generated unique ID
+	// Unique and immutable ID attribute of the entity that is generated when  the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities  or to retrieve it from the backend.
 	Id string `json:"id"`
-	// The timestamp of when the tenant was created
+	// The date and time the entity was created
 	CreatedAt int64 `json:"created_at"`
-	// The timestamp of when the tenant was last updated
+	// The date and time the entity was last updated
 	UpdatedAt int64 `json:"updated_at"`
-	// optional external ID, in case tenancy was created via backend integration
+	// Optional external ID, in case entity was created via backend integration
 	ExternalId *string `json:"external_id,omitempty"`
-	// optional external source, in case tenancy was created via backend integration
+	// Optional external source, in case entity was created via backend integration
 	ExternalSource *string `json:"external_source,omitempty"`
 	// The ID of the tenancy that this update is for
 	TenancyRef string `json:"tenancy_ref"`

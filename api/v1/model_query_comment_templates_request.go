@@ -19,10 +19,12 @@ var _ MappedNullable = &QueryCommentTemplatesRequest{}
 
 // QueryCommentTemplatesRequest struct for QueryCommentTemplatesRequest
 type QueryCommentTemplatesRequest struct {
-	// A case template to query for. If not empty the request will only return comments applicable to the template
+	// The maximum number of entities to return from the query
+	Limit *int32 `json:"limit,omitempty"`
+	// The number of entities to skip before returning the result
+	Offset *int32 `json:"offset,omitempty"`
+	// A case template to query for. If not empty the request will only return comments applicable to the template.
 	CaseTemplate *string `json:"case_template,omitempty"`
-	Limit        *int32  `json:"limit,omitempty"`
-	Offset       *int32  `json:"offset,omitempty"`
 }
 
 // NewQueryCommentTemplatesRequest instantiates a new QueryCommentTemplatesRequest object
@@ -40,38 +42,6 @@ func NewQueryCommentTemplatesRequest() *QueryCommentTemplatesRequest {
 func NewQueryCommentTemplatesRequestWithDefaults() *QueryCommentTemplatesRequest {
 	this := QueryCommentTemplatesRequest{}
 	return &this
-}
-
-// GetCaseTemplate returns the CaseTemplate field value if set, zero value otherwise.
-func (o *QueryCommentTemplatesRequest) GetCaseTemplate() string {
-	if o == nil || IsNil(o.CaseTemplate) {
-		var ret string
-		return ret
-	}
-	return *o.CaseTemplate
-}
-
-// GetCaseTemplateOk returns a tuple with the CaseTemplate field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *QueryCommentTemplatesRequest) GetCaseTemplateOk() (*string, bool) {
-	if o == nil || IsNil(o.CaseTemplate) {
-		return nil, false
-	}
-	return o.CaseTemplate, true
-}
-
-// HasCaseTemplate returns a boolean if a field has been set.
-func (o *QueryCommentTemplatesRequest) HasCaseTemplate() bool {
-	if o != nil && !IsNil(o.CaseTemplate) {
-		return true
-	}
-
-	return false
-}
-
-// SetCaseTemplate gets a reference to the given string and assigns it to the CaseTemplate field.
-func (o *QueryCommentTemplatesRequest) SetCaseTemplate(v string) {
-	o.CaseTemplate = &v
 }
 
 // GetLimit returns the Limit field value if set, zero value otherwise.
@@ -138,6 +108,38 @@ func (o *QueryCommentTemplatesRequest) SetOffset(v int32) {
 	o.Offset = &v
 }
 
+// GetCaseTemplate returns the CaseTemplate field value if set, zero value otherwise.
+func (o *QueryCommentTemplatesRequest) GetCaseTemplate() string {
+	if o == nil || IsNil(o.CaseTemplate) {
+		var ret string
+		return ret
+	}
+	return *o.CaseTemplate
+}
+
+// GetCaseTemplateOk returns a tuple with the CaseTemplate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryCommentTemplatesRequest) GetCaseTemplateOk() (*string, bool) {
+	if o == nil || IsNil(o.CaseTemplate) {
+		return nil, false
+	}
+	return o.CaseTemplate, true
+}
+
+// HasCaseTemplate returns a boolean if a field has been set.
+func (o *QueryCommentTemplatesRequest) HasCaseTemplate() bool {
+	if o != nil && !IsNil(o.CaseTemplate) {
+		return true
+	}
+
+	return false
+}
+
+// SetCaseTemplate gets a reference to the given string and assigns it to the CaseTemplate field.
+func (o *QueryCommentTemplatesRequest) SetCaseTemplate(v string) {
+	o.CaseTemplate = &v
+}
+
 func (o QueryCommentTemplatesRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -148,14 +150,14 @@ func (o QueryCommentTemplatesRequest) MarshalJSON() ([]byte, error) {
 
 func (o QueryCommentTemplatesRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.CaseTemplate) {
-		toSerialize["case_template"] = o.CaseTemplate
-	}
 	if !IsNil(o.Limit) {
 		toSerialize["limit"] = o.Limit
 	}
 	if !IsNil(o.Offset) {
 		toSerialize["offset"] = o.Offset
+	}
+	if !IsNil(o.CaseTemplate) {
+		toSerialize["case_template"] = o.CaseTemplate
 	}
 	return toSerialize, nil
 }

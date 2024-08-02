@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the ReportExecution type satisfies the MappedNullable interface at compile time
@@ -19,13 +21,14 @@ var _ MappedNullable = &ReportExecution{}
 
 // ReportExecution struct for ReportExecution
 type ReportExecution struct {
-	Id *string `json:"id,omitempty"`
-	// The timestamp of when the report execution was created
-	CreatedAt *int64 `json:"created_at,omitempty"`
-	// The timestamp of when the report execution was last updated
-	UpdatedAt *int64                     `json:"updated_at,omitempty"`
-	ReportRef *string                    `json:"report_ref,omitempty"`
-	Status    *ReportExecutionStatusEnum `json:"status,omitempty"`
+	// Unique and immutable ID attribute of the entity that is generated when  the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities  or to retrieve it from the backend.
+	Id string `json:"id"`
+	// The date and time the entity was created
+	CreatedAt int64 `json:"created_at"`
+	// The date and time the entity was last updated
+	UpdatedAt int64                     `json:"updated_at"`
+	ReportRef string                    `json:"report_ref"`
+	Status    ReportExecutionStatusEnum `json:"status"`
 	// The parameters used to execute the report as a data map
 	Parameters map[string]interface{} `json:"parameters,omitempty"`
 	// The result of the report execution as a JSON string
@@ -34,12 +37,19 @@ type ReportExecution struct {
 	Error *string `json:"error,omitempty"`
 }
 
+type _ReportExecution ReportExecution
+
 // NewReportExecution instantiates a new ReportExecution object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewReportExecution() *ReportExecution {
+func NewReportExecution(id string, createdAt int64, updatedAt int64, reportRef string, status ReportExecutionStatusEnum) *ReportExecution {
 	this := ReportExecution{}
+	this.Id = id
+	this.CreatedAt = createdAt
+	this.UpdatedAt = updatedAt
+	this.ReportRef = reportRef
+	this.Status = status
 	return &this
 }
 
@@ -51,164 +61,124 @@ func NewReportExecutionWithDefaults() *ReportExecution {
 	return &this
 }
 
-// GetId returns the Id field value if set, zero value otherwise.
+// GetId returns the Id field value
 func (o *ReportExecution) GetId() string {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Id
+
+	return o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
 func (o *ReportExecution) GetIdOk() (*string, bool) {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Id, true
+	return &o.Id, true
 }
 
-// HasId returns a boolean if a field has been set.
-func (o *ReportExecution) HasId() bool {
-	if o != nil && !IsNil(o.Id) {
-		return true
-	}
-
-	return false
-}
-
-// SetId gets a reference to the given string and assigns it to the Id field.
+// SetId sets field value
 func (o *ReportExecution) SetId(v string) {
-	o.Id = &v
+	o.Id = v
 }
 
-// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
+// GetCreatedAt returns the CreatedAt field value
 func (o *ReportExecution) GetCreatedAt() int64 {
-	if o == nil || IsNil(o.CreatedAt) {
+	if o == nil {
 		var ret int64
 		return ret
 	}
-	return *o.CreatedAt
+
+	return o.CreatedAt
 }
 
-// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
+// GetCreatedAtOk returns a tuple with the CreatedAt field value
 // and a boolean to check if the value has been set.
 func (o *ReportExecution) GetCreatedAtOk() (*int64, bool) {
-	if o == nil || IsNil(o.CreatedAt) {
+	if o == nil {
 		return nil, false
 	}
-	return o.CreatedAt, true
+	return &o.CreatedAt, true
 }
 
-// HasCreatedAt returns a boolean if a field has been set.
-func (o *ReportExecution) HasCreatedAt() bool {
-	if o != nil && !IsNil(o.CreatedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetCreatedAt gets a reference to the given int64 and assigns it to the CreatedAt field.
+// SetCreatedAt sets field value
 func (o *ReportExecution) SetCreatedAt(v int64) {
-	o.CreatedAt = &v
+	o.CreatedAt = v
 }
 
-// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
+// GetUpdatedAt returns the UpdatedAt field value
 func (o *ReportExecution) GetUpdatedAt() int64 {
-	if o == nil || IsNil(o.UpdatedAt) {
+	if o == nil {
 		var ret int64
 		return ret
 	}
-	return *o.UpdatedAt
+
+	return o.UpdatedAt
 }
 
-// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
 // and a boolean to check if the value has been set.
 func (o *ReportExecution) GetUpdatedAtOk() (*int64, bool) {
-	if o == nil || IsNil(o.UpdatedAt) {
+	if o == nil {
 		return nil, false
 	}
-	return o.UpdatedAt, true
+	return &o.UpdatedAt, true
 }
 
-// HasUpdatedAt returns a boolean if a field has been set.
-func (o *ReportExecution) HasUpdatedAt() bool {
-	if o != nil && !IsNil(o.UpdatedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetUpdatedAt gets a reference to the given int64 and assigns it to the UpdatedAt field.
+// SetUpdatedAt sets field value
 func (o *ReportExecution) SetUpdatedAt(v int64) {
-	o.UpdatedAt = &v
+	o.UpdatedAt = v
 }
 
-// GetReportRef returns the ReportRef field value if set, zero value otherwise.
+// GetReportRef returns the ReportRef field value
 func (o *ReportExecution) GetReportRef() string {
-	if o == nil || IsNil(o.ReportRef) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.ReportRef
+
+	return o.ReportRef
 }
 
-// GetReportRefOk returns a tuple with the ReportRef field value if set, nil otherwise
+// GetReportRefOk returns a tuple with the ReportRef field value
 // and a boolean to check if the value has been set.
 func (o *ReportExecution) GetReportRefOk() (*string, bool) {
-	if o == nil || IsNil(o.ReportRef) {
+	if o == nil {
 		return nil, false
 	}
-	return o.ReportRef, true
+	return &o.ReportRef, true
 }
 
-// HasReportRef returns a boolean if a field has been set.
-func (o *ReportExecution) HasReportRef() bool {
-	if o != nil && !IsNil(o.ReportRef) {
-		return true
-	}
-
-	return false
-}
-
-// SetReportRef gets a reference to the given string and assigns it to the ReportRef field.
+// SetReportRef sets field value
 func (o *ReportExecution) SetReportRef(v string) {
-	o.ReportRef = &v
+	o.ReportRef = v
 }
 
-// GetStatus returns the Status field value if set, zero value otherwise.
+// GetStatus returns the Status field value
 func (o *ReportExecution) GetStatus() ReportExecutionStatusEnum {
-	if o == nil || IsNil(o.Status) {
+	if o == nil {
 		var ret ReportExecutionStatusEnum
 		return ret
 	}
-	return *o.Status
+
+	return o.Status
 }
 
-// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
+// GetStatusOk returns a tuple with the Status field value
 // and a boolean to check if the value has been set.
 func (o *ReportExecution) GetStatusOk() (*ReportExecutionStatusEnum, bool) {
-	if o == nil || IsNil(o.Status) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Status, true
+	return &o.Status, true
 }
 
-// HasStatus returns a boolean if a field has been set.
-func (o *ReportExecution) HasStatus() bool {
-	if o != nil && !IsNil(o.Status) {
-		return true
-	}
-
-	return false
-}
-
-// SetStatus gets a reference to the given ReportExecutionStatusEnum and assigns it to the Status field.
+// SetStatus sets field value
 func (o *ReportExecution) SetStatus(v ReportExecutionStatusEnum) {
-	o.Status = &v
+	o.Status = v
 }
 
 // GetParameters returns the Parameters field value if set, zero value otherwise.
@@ -317,21 +287,11 @@ func (o ReportExecution) MarshalJSON() ([]byte, error) {
 
 func (o ReportExecution) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Id) {
-		toSerialize["id"] = o.Id
-	}
-	if !IsNil(o.CreatedAt) {
-		toSerialize["created_at"] = o.CreatedAt
-	}
-	if !IsNil(o.UpdatedAt) {
-		toSerialize["updated_at"] = o.UpdatedAt
-	}
-	if !IsNil(o.ReportRef) {
-		toSerialize["report_ref"] = o.ReportRef
-	}
-	if !IsNil(o.Status) {
-		toSerialize["status"] = o.Status
-	}
+	toSerialize["id"] = o.Id
+	toSerialize["created_at"] = o.CreatedAt
+	toSerialize["updated_at"] = o.UpdatedAt
+	toSerialize["report_ref"] = o.ReportRef
+	toSerialize["status"] = o.Status
 	if !IsNil(o.Parameters) {
 		toSerialize["parameters"] = o.Parameters
 	}
@@ -342,6 +302,47 @@ func (o ReportExecution) ToMap() (map[string]interface{}, error) {
 		toSerialize["error"] = o.Error
 	}
 	return toSerialize, nil
+}
+
+func (o *ReportExecution) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"id",
+		"created_at",
+		"updated_at",
+		"report_ref",
+		"status",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varReportExecution := _ReportExecution{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varReportExecution)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ReportExecution(varReportExecution)
+
+	return err
 }
 
 type NullableReportExecution struct {

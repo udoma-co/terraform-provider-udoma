@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the CaseParty type satisfies the MappedNullable interface at compile time
@@ -19,7 +21,7 @@ var _ MappedNullable = &CaseParty{}
 
 // CaseParty CaseParty indicates that the referenced account has access to the case.
 type CaseParty struct {
-	Role *UserTypeEnum `json:"role,omitempty"`
+	Role UserTypeEnum `json:"role"`
 	// The type of the reference. Can be either \"account\" or \"external_user\". If not set, it will be assumed to be \"account\"
 	RefType *string `json:"ref_type,omitempty"`
 	// the ID of the referenced entity (either string or int64)
@@ -28,12 +30,15 @@ type CaseParty struct {
 	Name *string `json:"name,omitempty"`
 }
 
+type _CaseParty CaseParty
+
 // NewCaseParty instantiates a new CaseParty object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCaseParty() *CaseParty {
+func NewCaseParty(role UserTypeEnum) *CaseParty {
 	this := CaseParty{}
+	this.Role = role
 	return &this
 }
 
@@ -45,36 +50,28 @@ func NewCasePartyWithDefaults() *CaseParty {
 	return &this
 }
 
-// GetRole returns the Role field value if set, zero value otherwise.
+// GetRole returns the Role field value
 func (o *CaseParty) GetRole() UserTypeEnum {
-	if o == nil || IsNil(o.Role) {
+	if o == nil {
 		var ret UserTypeEnum
 		return ret
 	}
-	return *o.Role
+
+	return o.Role
 }
 
-// GetRoleOk returns a tuple with the Role field value if set, nil otherwise
+// GetRoleOk returns a tuple with the Role field value
 // and a boolean to check if the value has been set.
 func (o *CaseParty) GetRoleOk() (*UserTypeEnum, bool) {
-	if o == nil || IsNil(o.Role) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Role, true
+	return &o.Role, true
 }
 
-// HasRole returns a boolean if a field has been set.
-func (o *CaseParty) HasRole() bool {
-	if o != nil && !IsNil(o.Role) {
-		return true
-	}
-
-	return false
-}
-
-// SetRole gets a reference to the given UserTypeEnum and assigns it to the Role field.
+// SetRole sets field value
 func (o *CaseParty) SetRole(v UserTypeEnum) {
-	o.Role = &v
+	o.Role = v
 }
 
 // GetRefType returns the RefType field value if set, zero value otherwise.
@@ -183,9 +180,7 @@ func (o CaseParty) MarshalJSON() ([]byte, error) {
 
 func (o CaseParty) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Role) {
-		toSerialize["role"] = o.Role
-	}
+	toSerialize["role"] = o.Role
 	if !IsNil(o.RefType) {
 		toSerialize["ref_type"] = o.RefType
 	}
@@ -196,6 +191,43 @@ func (o CaseParty) ToMap() (map[string]interface{}, error) {
 		toSerialize["name"] = o.Name
 	}
 	return toSerialize, nil
+}
+
+func (o *CaseParty) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"role",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCaseParty := _CaseParty{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCaseParty)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CaseParty(varCaseParty)
+
+	return err
 }
 
 type NullableCaseParty struct {

@@ -210,14 +210,13 @@ func (r *Document) ImportState(ctx context.Context, req resource.ImportStateRequ
 
 func (m *DocumentModel) toCreateAPIRequest() *v1.CreateDocumentRequest {
 
-	refType := v1.DocumentRefTypeEnum(m.RefType.ValueString())
 	req := &v1.CreateDocumentRequest{
-		Name:          m.Name.ValueStringPointer(),
+		Name:          m.Name.ValueString(),
 		Path:          m.Path.ValueStringPointer(),
 		Public:        m.Public.ValueBoolPointer(),
-		RefType:       &refType,
-		RefId:         m.RefID.ValueStringPointer(),
-		AttachmentRef: m.Attachment.ValueStringPointer(),
+		RefType:       v1.DocumentRefTypeEnum(m.RefType.ValueString()),
+		RefId:         m.RefID.ValueString(),
+		AttachmentRef: m.Attachment.ValueString(),
 	}
 
 	return req
@@ -226,7 +225,7 @@ func (m *DocumentModel) toCreateAPIRequest() *v1.CreateDocumentRequest {
 func (m *DocumentModel) toUpdateAPIRequest() *v1.UpdateDocumentRequest {
 
 	req := &v1.UpdateDocumentRequest{
-		Name:   m.Name.ValueStringPointer(),
+		Name:   m.Name.ValueString(),
 		Path:   m.Path.ValueStringPointer(),
 		Public: m.Public.ValueBoolPointer(),
 	}
@@ -235,11 +234,11 @@ func (m *DocumentModel) toUpdateAPIRequest() *v1.UpdateDocumentRequest {
 }
 
 func (m *DocumentModel) fromAPIResponse(document *v1.Document) {
-	m.ID = types.StringPointerValue(document.Id)
-	m.CreatedAt = types.Int64PointerValue(document.CreatedAt)
-	m.UpdatedAt = types.Int64PointerValue(document.UpdatedAt)
-	m.Name = types.StringPointerValue(document.Name)
+	m.ID = types.StringValue(document.Id)
+	m.CreatedAt = types.Int64Value(document.CreatedAt)
+	m.UpdatedAt = types.Int64Value(document.UpdatedAt)
+	m.Name = types.StringValue(document.Name)
 	m.Path = omittableStringValue(document.Path, m.Path)
 	m.Public = omittableBooleanValue(document.Public, m.Public)
-	m.Attachment = types.StringPointerValue(document.Attachment.Id)
+	m.Attachment = types.StringValue(document.Attachment.Id)
 }

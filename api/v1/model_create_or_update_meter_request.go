@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the CreateOrUpdateMeterRequest type satisfies the MappedNullable interface at compile time
@@ -19,22 +21,29 @@ var _ MappedNullable = &CreateOrUpdateMeterRequest{}
 
 // CreateOrUpdateMeterRequest All the information required for creating a new meter
 type CreateOrUpdateMeterRequest struct {
-	PropertyRef         *string        `json:"property_ref,omitempty"`
-	MeterType           *MeterTypeEnum `json:"meter_type,omitempty"`
-	Unit                *string        `json:"unit,omitempty"`
-	Name                *string        `json:"name,omitempty"`
-	Location            *string        `json:"location,omitempty"`
-	SerialNumber        *string        `json:"serial_number,omitempty"`
-	CalibrationDate     *int64         `json:"calibration_date,omitempty"`
-	CalibrationValidity *int64         `json:"calibration_validity,omitempty"`
+	PropertyRef         string        `json:"property_ref"`
+	MeterType           MeterTypeEnum `json:"meter_type"`
+	Unit                string        `json:"unit"`
+	Name                string        `json:"name"`
+	Location            *string       `json:"location,omitempty"`
+	SerialNumber        string        `json:"serial_number"`
+	CalibrationDate     *int64        `json:"calibration_date,omitempty"`
+	CalibrationValidity *int64        `json:"calibration_validity,omitempty"`
 }
+
+type _CreateOrUpdateMeterRequest CreateOrUpdateMeterRequest
 
 // NewCreateOrUpdateMeterRequest instantiates a new CreateOrUpdateMeterRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateOrUpdateMeterRequest() *CreateOrUpdateMeterRequest {
+func NewCreateOrUpdateMeterRequest(propertyRef string, meterType MeterTypeEnum, unit string, name string, serialNumber string) *CreateOrUpdateMeterRequest {
 	this := CreateOrUpdateMeterRequest{}
+	this.PropertyRef = propertyRef
+	this.MeterType = meterType
+	this.Unit = unit
+	this.Name = name
+	this.SerialNumber = serialNumber
 	return &this
 }
 
@@ -46,132 +55,100 @@ func NewCreateOrUpdateMeterRequestWithDefaults() *CreateOrUpdateMeterRequest {
 	return &this
 }
 
-// GetPropertyRef returns the PropertyRef field value if set, zero value otherwise.
+// GetPropertyRef returns the PropertyRef field value
 func (o *CreateOrUpdateMeterRequest) GetPropertyRef() string {
-	if o == nil || IsNil(o.PropertyRef) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.PropertyRef
+
+	return o.PropertyRef
 }
 
-// GetPropertyRefOk returns a tuple with the PropertyRef field value if set, nil otherwise
+// GetPropertyRefOk returns a tuple with the PropertyRef field value
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateMeterRequest) GetPropertyRefOk() (*string, bool) {
-	if o == nil || IsNil(o.PropertyRef) {
+	if o == nil {
 		return nil, false
 	}
-	return o.PropertyRef, true
+	return &o.PropertyRef, true
 }
 
-// HasPropertyRef returns a boolean if a field has been set.
-func (o *CreateOrUpdateMeterRequest) HasPropertyRef() bool {
-	if o != nil && !IsNil(o.PropertyRef) {
-		return true
-	}
-
-	return false
-}
-
-// SetPropertyRef gets a reference to the given string and assigns it to the PropertyRef field.
+// SetPropertyRef sets field value
 func (o *CreateOrUpdateMeterRequest) SetPropertyRef(v string) {
-	o.PropertyRef = &v
+	o.PropertyRef = v
 }
 
-// GetMeterType returns the MeterType field value if set, zero value otherwise.
+// GetMeterType returns the MeterType field value
 func (o *CreateOrUpdateMeterRequest) GetMeterType() MeterTypeEnum {
-	if o == nil || IsNil(o.MeterType) {
+	if o == nil {
 		var ret MeterTypeEnum
 		return ret
 	}
-	return *o.MeterType
+
+	return o.MeterType
 }
 
-// GetMeterTypeOk returns a tuple with the MeterType field value if set, nil otherwise
+// GetMeterTypeOk returns a tuple with the MeterType field value
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateMeterRequest) GetMeterTypeOk() (*MeterTypeEnum, bool) {
-	if o == nil || IsNil(o.MeterType) {
+	if o == nil {
 		return nil, false
 	}
-	return o.MeterType, true
+	return &o.MeterType, true
 }
 
-// HasMeterType returns a boolean if a field has been set.
-func (o *CreateOrUpdateMeterRequest) HasMeterType() bool {
-	if o != nil && !IsNil(o.MeterType) {
-		return true
-	}
-
-	return false
-}
-
-// SetMeterType gets a reference to the given MeterTypeEnum and assigns it to the MeterType field.
+// SetMeterType sets field value
 func (o *CreateOrUpdateMeterRequest) SetMeterType(v MeterTypeEnum) {
-	o.MeterType = &v
+	o.MeterType = v
 }
 
-// GetUnit returns the Unit field value if set, zero value otherwise.
+// GetUnit returns the Unit field value
 func (o *CreateOrUpdateMeterRequest) GetUnit() string {
-	if o == nil || IsNil(o.Unit) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Unit
+
+	return o.Unit
 }
 
-// GetUnitOk returns a tuple with the Unit field value if set, nil otherwise
+// GetUnitOk returns a tuple with the Unit field value
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateMeterRequest) GetUnitOk() (*string, bool) {
-	if o == nil || IsNil(o.Unit) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Unit, true
+	return &o.Unit, true
 }
 
-// HasUnit returns a boolean if a field has been set.
-func (o *CreateOrUpdateMeterRequest) HasUnit() bool {
-	if o != nil && !IsNil(o.Unit) {
-		return true
-	}
-
-	return false
-}
-
-// SetUnit gets a reference to the given string and assigns it to the Unit field.
+// SetUnit sets field value
 func (o *CreateOrUpdateMeterRequest) SetUnit(v string) {
-	o.Unit = &v
+	o.Unit = v
 }
 
-// GetName returns the Name field value if set, zero value otherwise.
+// GetName returns the Name field value
 func (o *CreateOrUpdateMeterRequest) GetName() string {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Name
+
+	return o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// GetNameOk returns a tuple with the Name field value
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateMeterRequest) GetNameOk() (*string, bool) {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Name, true
+	return &o.Name, true
 }
 
-// HasName returns a boolean if a field has been set.
-func (o *CreateOrUpdateMeterRequest) HasName() bool {
-	if o != nil && !IsNil(o.Name) {
-		return true
-	}
-
-	return false
-}
-
-// SetName gets a reference to the given string and assigns it to the Name field.
+// SetName sets field value
 func (o *CreateOrUpdateMeterRequest) SetName(v string) {
-	o.Name = &v
+	o.Name = v
 }
 
 // GetLocation returns the Location field value if set, zero value otherwise.
@@ -206,36 +183,28 @@ func (o *CreateOrUpdateMeterRequest) SetLocation(v string) {
 	o.Location = &v
 }
 
-// GetSerialNumber returns the SerialNumber field value if set, zero value otherwise.
+// GetSerialNumber returns the SerialNumber field value
 func (o *CreateOrUpdateMeterRequest) GetSerialNumber() string {
-	if o == nil || IsNil(o.SerialNumber) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.SerialNumber
+
+	return o.SerialNumber
 }
 
-// GetSerialNumberOk returns a tuple with the SerialNumber field value if set, nil otherwise
+// GetSerialNumberOk returns a tuple with the SerialNumber field value
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateMeterRequest) GetSerialNumberOk() (*string, bool) {
-	if o == nil || IsNil(o.SerialNumber) {
+	if o == nil {
 		return nil, false
 	}
-	return o.SerialNumber, true
+	return &o.SerialNumber, true
 }
 
-// HasSerialNumber returns a boolean if a field has been set.
-func (o *CreateOrUpdateMeterRequest) HasSerialNumber() bool {
-	if o != nil && !IsNil(o.SerialNumber) {
-		return true
-	}
-
-	return false
-}
-
-// SetSerialNumber gets a reference to the given string and assigns it to the SerialNumber field.
+// SetSerialNumber sets field value
 func (o *CreateOrUpdateMeterRequest) SetSerialNumber(v string) {
-	o.SerialNumber = &v
+	o.SerialNumber = v
 }
 
 // GetCalibrationDate returns the CalibrationDate field value if set, zero value otherwise.
@@ -312,24 +281,14 @@ func (o CreateOrUpdateMeterRequest) MarshalJSON() ([]byte, error) {
 
 func (o CreateOrUpdateMeterRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.PropertyRef) {
-		toSerialize["property_ref"] = o.PropertyRef
-	}
-	if !IsNil(o.MeterType) {
-		toSerialize["meter_type"] = o.MeterType
-	}
-	if !IsNil(o.Unit) {
-		toSerialize["unit"] = o.Unit
-	}
-	if !IsNil(o.Name) {
-		toSerialize["name"] = o.Name
-	}
+	toSerialize["property_ref"] = o.PropertyRef
+	toSerialize["meter_type"] = o.MeterType
+	toSerialize["unit"] = o.Unit
+	toSerialize["name"] = o.Name
 	if !IsNil(o.Location) {
 		toSerialize["location"] = o.Location
 	}
-	if !IsNil(o.SerialNumber) {
-		toSerialize["serial_number"] = o.SerialNumber
-	}
+	toSerialize["serial_number"] = o.SerialNumber
 	if !IsNil(o.CalibrationDate) {
 		toSerialize["calibration_date"] = o.CalibrationDate
 	}
@@ -337,6 +296,47 @@ func (o CreateOrUpdateMeterRequest) ToMap() (map[string]interface{}, error) {
 		toSerialize["calibration_validity"] = o.CalibrationValidity
 	}
 	return toSerialize, nil
+}
+
+func (o *CreateOrUpdateMeterRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"property_ref",
+		"meter_type",
+		"unit",
+		"name",
+		"serial_number",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCreateOrUpdateMeterRequest := _CreateOrUpdateMeterRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCreateOrUpdateMeterRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CreateOrUpdateMeterRequest(varCreateOrUpdateMeterRequest)
+
+	return err
 }
 
 type NullableCreateOrUpdateMeterRequest struct {

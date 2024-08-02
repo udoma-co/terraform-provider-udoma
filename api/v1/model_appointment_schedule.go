@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the AppointmentSchedule type satisfies the MappedNullable interface at compile time
@@ -19,29 +21,37 @@ var _ MappedNullable = &AppointmentSchedule{}
 
 // AppointmentSchedule struct for AppointmentSchedule
 type AppointmentSchedule struct {
-	// The unique identifier of the appointment window
-	Id *string `json:"id,omitempty"`
-	// The name of the appointment window
-	Name *string `json:"name,omitempty"`
+	// Unique and immutable ID attribute of the entity that is generated when  the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities  or to retrieve it from the backend.
+	Id string `json:"id"`
+	// The name of the appointment schedule
+	Name string `json:"name"`
 	// a map of values, where the key and values are strings
-	Description *map[string]string   `json:"description,omitempty"`
-	Template    *AppointmentTemplate `json:"template,omitempty"`
-	// The duration of the appointment slot in minutes
-	SlotDuration *int32 `json:"slot_duration,omitempty"`
+	Description *map[string]string `json:"description,omitempty"`
+	// The duration of the appointment slots in minutes
+	SlotDuration int32 `json:"slot_duration"`
 	// The duration of the gap between appointments in minutes
-	GapDuration *int32 `json:"gap_duration,omitempty"`
+	GapDuration int32 `json:"gap_duration"`
 	// The color to use when displaying the appointment window in a calendar view
 	Color *string `json:"color,omitempty"`
 	// The appointment windows
-	Windows []AppointmentWindow `json:"windows,omitempty"`
+	Windows  []AppointmentWindow `json:"windows"`
+	Template AppointmentTemplate `json:"template"`
 }
+
+type _AppointmentSchedule AppointmentSchedule
 
 // NewAppointmentSchedule instantiates a new AppointmentSchedule object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppointmentSchedule() *AppointmentSchedule {
+func NewAppointmentSchedule(id string, name string, slotDuration int32, gapDuration int32, windows []AppointmentWindow, template AppointmentTemplate) *AppointmentSchedule {
 	this := AppointmentSchedule{}
+	this.Id = id
+	this.Name = name
+	this.SlotDuration = slotDuration
+	this.GapDuration = gapDuration
+	this.Windows = windows
+	this.Template = template
 	return &this
 }
 
@@ -53,68 +63,52 @@ func NewAppointmentScheduleWithDefaults() *AppointmentSchedule {
 	return &this
 }
 
-// GetId returns the Id field value if set, zero value otherwise.
+// GetId returns the Id field value
 func (o *AppointmentSchedule) GetId() string {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Id
+
+	return o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
 func (o *AppointmentSchedule) GetIdOk() (*string, bool) {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Id, true
+	return &o.Id, true
 }
 
-// HasId returns a boolean if a field has been set.
-func (o *AppointmentSchedule) HasId() bool {
-	if o != nil && !IsNil(o.Id) {
-		return true
-	}
-
-	return false
-}
-
-// SetId gets a reference to the given string and assigns it to the Id field.
+// SetId sets field value
 func (o *AppointmentSchedule) SetId(v string) {
-	o.Id = &v
+	o.Id = v
 }
 
-// GetName returns the Name field value if set, zero value otherwise.
+// GetName returns the Name field value
 func (o *AppointmentSchedule) GetName() string {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Name
+
+	return o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// GetNameOk returns a tuple with the Name field value
 // and a boolean to check if the value has been set.
 func (o *AppointmentSchedule) GetNameOk() (*string, bool) {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Name, true
+	return &o.Name, true
 }
 
-// HasName returns a boolean if a field has been set.
-func (o *AppointmentSchedule) HasName() bool {
-	if o != nil && !IsNil(o.Name) {
-		return true
-	}
-
-	return false
-}
-
-// SetName gets a reference to the given string and assigns it to the Name field.
+// SetName sets field value
 func (o *AppointmentSchedule) SetName(v string) {
-	o.Name = &v
+	o.Name = v
 }
 
 // GetDescription returns the Description field value if set, zero value otherwise.
@@ -149,100 +143,52 @@ func (o *AppointmentSchedule) SetDescription(v map[string]string) {
 	o.Description = &v
 }
 
-// GetTemplate returns the Template field value if set, zero value otherwise.
-func (o *AppointmentSchedule) GetTemplate() AppointmentTemplate {
-	if o == nil || IsNil(o.Template) {
-		var ret AppointmentTemplate
-		return ret
-	}
-	return *o.Template
-}
-
-// GetTemplateOk returns a tuple with the Template field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *AppointmentSchedule) GetTemplateOk() (*AppointmentTemplate, bool) {
-	if o == nil || IsNil(o.Template) {
-		return nil, false
-	}
-	return o.Template, true
-}
-
-// HasTemplate returns a boolean if a field has been set.
-func (o *AppointmentSchedule) HasTemplate() bool {
-	if o != nil && !IsNil(o.Template) {
-		return true
-	}
-
-	return false
-}
-
-// SetTemplate gets a reference to the given AppointmentTemplate and assigns it to the Template field.
-func (o *AppointmentSchedule) SetTemplate(v AppointmentTemplate) {
-	o.Template = &v
-}
-
-// GetSlotDuration returns the SlotDuration field value if set, zero value otherwise.
+// GetSlotDuration returns the SlotDuration field value
 func (o *AppointmentSchedule) GetSlotDuration() int32 {
-	if o == nil || IsNil(o.SlotDuration) {
+	if o == nil {
 		var ret int32
 		return ret
 	}
-	return *o.SlotDuration
+
+	return o.SlotDuration
 }
 
-// GetSlotDurationOk returns a tuple with the SlotDuration field value if set, nil otherwise
+// GetSlotDurationOk returns a tuple with the SlotDuration field value
 // and a boolean to check if the value has been set.
 func (o *AppointmentSchedule) GetSlotDurationOk() (*int32, bool) {
-	if o == nil || IsNil(o.SlotDuration) {
+	if o == nil {
 		return nil, false
 	}
-	return o.SlotDuration, true
+	return &o.SlotDuration, true
 }
 
-// HasSlotDuration returns a boolean if a field has been set.
-func (o *AppointmentSchedule) HasSlotDuration() bool {
-	if o != nil && !IsNil(o.SlotDuration) {
-		return true
-	}
-
-	return false
-}
-
-// SetSlotDuration gets a reference to the given int32 and assigns it to the SlotDuration field.
+// SetSlotDuration sets field value
 func (o *AppointmentSchedule) SetSlotDuration(v int32) {
-	o.SlotDuration = &v
+	o.SlotDuration = v
 }
 
-// GetGapDuration returns the GapDuration field value if set, zero value otherwise.
+// GetGapDuration returns the GapDuration field value
 func (o *AppointmentSchedule) GetGapDuration() int32 {
-	if o == nil || IsNil(o.GapDuration) {
+	if o == nil {
 		var ret int32
 		return ret
 	}
-	return *o.GapDuration
+
+	return o.GapDuration
 }
 
-// GetGapDurationOk returns a tuple with the GapDuration field value if set, nil otherwise
+// GetGapDurationOk returns a tuple with the GapDuration field value
 // and a boolean to check if the value has been set.
 func (o *AppointmentSchedule) GetGapDurationOk() (*int32, bool) {
-	if o == nil || IsNil(o.GapDuration) {
+	if o == nil {
 		return nil, false
 	}
-	return o.GapDuration, true
+	return &o.GapDuration, true
 }
 
-// HasGapDuration returns a boolean if a field has been set.
-func (o *AppointmentSchedule) HasGapDuration() bool {
-	if o != nil && !IsNil(o.GapDuration) {
-		return true
-	}
-
-	return false
-}
-
-// SetGapDuration gets a reference to the given int32 and assigns it to the GapDuration field.
+// SetGapDuration sets field value
 func (o *AppointmentSchedule) SetGapDuration(v int32) {
-	o.GapDuration = &v
+	o.GapDuration = v
 }
 
 // GetColor returns the Color field value if set, zero value otherwise.
@@ -277,36 +223,52 @@ func (o *AppointmentSchedule) SetColor(v string) {
 	o.Color = &v
 }
 
-// GetWindows returns the Windows field value if set, zero value otherwise.
+// GetWindows returns the Windows field value
 func (o *AppointmentSchedule) GetWindows() []AppointmentWindow {
-	if o == nil || IsNil(o.Windows) {
+	if o == nil {
 		var ret []AppointmentWindow
 		return ret
 	}
+
 	return o.Windows
 }
 
-// GetWindowsOk returns a tuple with the Windows field value if set, nil otherwise
+// GetWindowsOk returns a tuple with the Windows field value
 // and a boolean to check if the value has been set.
 func (o *AppointmentSchedule) GetWindowsOk() ([]AppointmentWindow, bool) {
-	if o == nil || IsNil(o.Windows) {
+	if o == nil {
 		return nil, false
 	}
 	return o.Windows, true
 }
 
-// HasWindows returns a boolean if a field has been set.
-func (o *AppointmentSchedule) HasWindows() bool {
-	if o != nil && !IsNil(o.Windows) {
-		return true
-	}
-
-	return false
-}
-
-// SetWindows gets a reference to the given []AppointmentWindow and assigns it to the Windows field.
+// SetWindows sets field value
 func (o *AppointmentSchedule) SetWindows(v []AppointmentWindow) {
 	o.Windows = v
+}
+
+// GetTemplate returns the Template field value
+func (o *AppointmentSchedule) GetTemplate() AppointmentTemplate {
+	if o == nil {
+		var ret AppointmentTemplate
+		return ret
+	}
+
+	return o.Template
+}
+
+// GetTemplateOk returns a tuple with the Template field value
+// and a boolean to check if the value has been set.
+func (o *AppointmentSchedule) GetTemplateOk() (*AppointmentTemplate, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Template, true
+}
+
+// SetTemplate sets field value
+func (o *AppointmentSchedule) SetTemplate(v AppointmentTemplate) {
+	o.Template = v
 }
 
 func (o AppointmentSchedule) MarshalJSON() ([]byte, error) {
@@ -319,31 +281,61 @@ func (o AppointmentSchedule) MarshalJSON() ([]byte, error) {
 
 func (o AppointmentSchedule) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Id) {
-		toSerialize["id"] = o.Id
-	}
-	if !IsNil(o.Name) {
-		toSerialize["name"] = o.Name
-	}
+	toSerialize["id"] = o.Id
+	toSerialize["name"] = o.Name
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
 	}
-	if !IsNil(o.Template) {
-		toSerialize["template"] = o.Template
-	}
-	if !IsNil(o.SlotDuration) {
-		toSerialize["slot_duration"] = o.SlotDuration
-	}
-	if !IsNil(o.GapDuration) {
-		toSerialize["gap_duration"] = o.GapDuration
-	}
+	toSerialize["slot_duration"] = o.SlotDuration
+	toSerialize["gap_duration"] = o.GapDuration
 	if !IsNil(o.Color) {
 		toSerialize["color"] = o.Color
 	}
-	if !IsNil(o.Windows) {
-		toSerialize["windows"] = o.Windows
-	}
+	toSerialize["windows"] = o.Windows
+	toSerialize["template"] = o.Template
 	return toSerialize, nil
+}
+
+func (o *AppointmentSchedule) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"id",
+		"name",
+		"slot_duration",
+		"gap_duration",
+		"windows",
+		"template",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varAppointmentSchedule := _AppointmentSchedule{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varAppointmentSchedule)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AppointmentSchedule(varAppointmentSchedule)
+
+	return err
 }
 
 type NullableAppointmentSchedule struct {

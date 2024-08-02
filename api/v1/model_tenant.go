@@ -21,18 +21,18 @@ var _ MappedNullable = &Tenant{}
 
 // Tenant A person or company, renting a particular property.
 type Tenant struct {
-	// generated unique ID
+	// Unique and immutable ID attribute of the entity that is generated when  the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities  or to retrieve it from the backend.
 	Id string `json:"id"`
-	// optional external ID, in case tenant was created via backend integration
+	// The date and time the entity was created
+	CreatedAt int64 `json:"created_at"`
+	// The date and time the entity was last updated
+	UpdatedAt int64 `json:"updated_at"`
+	// Optional external ID, in case entity was created via backend integration
 	ExternalId *string `json:"external_id,omitempty"`
-	// optional external source, in case tenant was created via backend integration
+	// Optional external source, in case entity was created via backend integration
 	ExternalSource *string `json:"external_source,omitempty"`
-	// The timestamp of when the tenant was created
-	CreatedAt *int64 `json:"created_at,omitempty"`
-	// The timestamp of when the tenant was last updated
-	UpdatedAt *int64 `json:"updated_at,omitempty"`
 	// The salutation to be used for the tenant (Miss, Mister, Family)
-	Title string `json:"title"`
+	Title *string `json:"title,omitempty"`
 	// First name(s) of the tenant. In case of a company, this is the first name of the contact person within the company.
 	FirstName string `json:"first_name"`
 	// Last name of the tenant. In case of a company, this is the last name of the contact person within the company.
@@ -51,10 +51,11 @@ type _Tenant Tenant
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTenant(id string, title string, firstName string, lastName string, email string, phoneNumber string) *Tenant {
+func NewTenant(id string, createdAt int64, updatedAt int64, firstName string, lastName string, email string, phoneNumber string) *Tenant {
 	this := Tenant{}
 	this.Id = id
-	this.Title = title
+	this.CreatedAt = createdAt
+	this.UpdatedAt = updatedAt
 	this.FirstName = firstName
 	this.LastName = lastName
 	this.Email = email
@@ -92,6 +93,54 @@ func (o *Tenant) GetIdOk() (*string, bool) {
 // SetId sets field value
 func (o *Tenant) SetId(v string) {
 	o.Id = v
+}
+
+// GetCreatedAt returns the CreatedAt field value
+func (o *Tenant) GetCreatedAt() int64 {
+	if o == nil {
+		var ret int64
+		return ret
+	}
+
+	return o.CreatedAt
+}
+
+// GetCreatedAtOk returns a tuple with the CreatedAt field value
+// and a boolean to check if the value has been set.
+func (o *Tenant) GetCreatedAtOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.CreatedAt, true
+}
+
+// SetCreatedAt sets field value
+func (o *Tenant) SetCreatedAt(v int64) {
+	o.CreatedAt = v
+}
+
+// GetUpdatedAt returns the UpdatedAt field value
+func (o *Tenant) GetUpdatedAt() int64 {
+	if o == nil {
+		var ret int64
+		return ret
+	}
+
+	return o.UpdatedAt
+}
+
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
+// and a boolean to check if the value has been set.
+func (o *Tenant) GetUpdatedAtOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.UpdatedAt, true
+}
+
+// SetUpdatedAt sets field value
+func (o *Tenant) SetUpdatedAt(v int64) {
+	o.UpdatedAt = v
 }
 
 // GetExternalId returns the ExternalId field value if set, zero value otherwise.
@@ -158,92 +207,36 @@ func (o *Tenant) SetExternalSource(v string) {
 	o.ExternalSource = &v
 }
 
-// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
-func (o *Tenant) GetCreatedAt() int64 {
-	if o == nil || IsNil(o.CreatedAt) {
-		var ret int64
-		return ret
-	}
-	return *o.CreatedAt
-}
-
-// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Tenant) GetCreatedAtOk() (*int64, bool) {
-	if o == nil || IsNil(o.CreatedAt) {
-		return nil, false
-	}
-	return o.CreatedAt, true
-}
-
-// HasCreatedAt returns a boolean if a field has been set.
-func (o *Tenant) HasCreatedAt() bool {
-	if o != nil && !IsNil(o.CreatedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetCreatedAt gets a reference to the given int64 and assigns it to the CreatedAt field.
-func (o *Tenant) SetCreatedAt(v int64) {
-	o.CreatedAt = &v
-}
-
-// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
-func (o *Tenant) GetUpdatedAt() int64 {
-	if o == nil || IsNil(o.UpdatedAt) {
-		var ret int64
-		return ret
-	}
-	return *o.UpdatedAt
-}
-
-// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Tenant) GetUpdatedAtOk() (*int64, bool) {
-	if o == nil || IsNil(o.UpdatedAt) {
-		return nil, false
-	}
-	return o.UpdatedAt, true
-}
-
-// HasUpdatedAt returns a boolean if a field has been set.
-func (o *Tenant) HasUpdatedAt() bool {
-	if o != nil && !IsNil(o.UpdatedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetUpdatedAt gets a reference to the given int64 and assigns it to the UpdatedAt field.
-func (o *Tenant) SetUpdatedAt(v int64) {
-	o.UpdatedAt = &v
-}
-
-// GetTitle returns the Title field value
+// GetTitle returns the Title field value if set, zero value otherwise.
 func (o *Tenant) GetTitle() string {
-	if o == nil {
+	if o == nil || IsNil(o.Title) {
 		var ret string
 		return ret
 	}
-
-	return o.Title
+	return *o.Title
 }
 
-// GetTitleOk returns a tuple with the Title field value
+// GetTitleOk returns a tuple with the Title field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Tenant) GetTitleOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Title) {
 		return nil, false
 	}
-	return &o.Title, true
+	return o.Title, true
 }
 
-// SetTitle sets field value
+// HasTitle returns a boolean if a field has been set.
+func (o *Tenant) HasTitle() bool {
+	if o != nil && !IsNil(o.Title) {
+		return true
+	}
+
+	return false
+}
+
+// SetTitle gets a reference to the given string and assigns it to the Title field.
 func (o *Tenant) SetTitle(v string) {
-	o.Title = v
+	o.Title = &v
 }
 
 // GetFirstName returns the FirstName field value
@@ -385,19 +378,17 @@ func (o Tenant) MarshalJSON() ([]byte, error) {
 func (o Tenant) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["id"] = o.Id
+	toSerialize["created_at"] = o.CreatedAt
+	toSerialize["updated_at"] = o.UpdatedAt
 	if !IsNil(o.ExternalId) {
 		toSerialize["external_id"] = o.ExternalId
 	}
 	if !IsNil(o.ExternalSource) {
 		toSerialize["external_source"] = o.ExternalSource
 	}
-	if !IsNil(o.CreatedAt) {
-		toSerialize["created_at"] = o.CreatedAt
+	if !IsNil(o.Title) {
+		toSerialize["title"] = o.Title
 	}
-	if !IsNil(o.UpdatedAt) {
-		toSerialize["updated_at"] = o.UpdatedAt
-	}
-	toSerialize["title"] = o.Title
 	toSerialize["first_name"] = o.FirstName
 	toSerialize["last_name"] = o.LastName
 	if !IsNil(o.Company) {
@@ -414,7 +405,8 @@ func (o *Tenant) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"id",
-		"title",
+		"created_at",
+		"updated_at",
 		"first_name",
 		"last_name",
 		"email",

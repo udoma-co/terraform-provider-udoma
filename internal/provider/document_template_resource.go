@@ -41,16 +41,16 @@ type documentTemplateOptionsModel struct {
 
 // documentTemplateModel describes the resource data model.
 type documentTemplateModel struct {
-	ID                 types.String                  `tfsdk:"id"`
-	LastUpdated        types.String                  `tfsdk:"last_updated"`
-	Name               types.String                  `tfsdk:"name"`
-	Description        types.String                  `tfsdk:"description"`
-	Options            *documentTemplateOptionsModel `tfsdk:"options"`
-	NameExpression     types.String                  `tfsdk:"name_expression"`
-	Content            tf.JsonObjectValue            `tfsdk:"content"`
-	Inputs             tf.JsonObjectValue            `tfsdk:"inputs"`
-	PlaceholdersScript types.String                  `tfsdk:"placeholders_script"`
-	Signatures         tf.JsonObjectValue            `tfsdk:"signatures"`
+	ID                 types.String                 `tfsdk:"id"`
+	LastUpdated        types.String                 `tfsdk:"last_updated"`
+	Name               types.String                 `tfsdk:"name"`
+	Description        types.String                 `tfsdk:"description"`
+	Options            documentTemplateOptionsModel `tfsdk:"options"`
+	NameExpression     types.String                 `tfsdk:"name_expression"`
+	Content            tf.JsonObjectValue           `tfsdk:"content"`
+	Inputs             tf.JsonObjectValue           `tfsdk:"inputs"`
+	PlaceholdersScript types.String                 `tfsdk:"placeholders_script"`
+	Signatures         tf.JsonObjectValue           `tfsdk:"signatures"`
 }
 
 func (r *documentTemplate) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -111,7 +111,7 @@ func (r *documentTemplate) Schema(ctx context.Context, req resource.SchemaReques
 			},
 			"inputs": schema.StringAttribute{
 				CustomType:  tf.JsonObjectType{},
-				Optional:    true,
+				Required:    true,
 				Description: "The JSON serialised form definition of the template",
 			},
 			"placeholders_script": schema.StringAttribute{
@@ -313,40 +313,25 @@ func (model *documentTemplateModel) fromAPI(template *api.DocumentTemplate) erro
 		return fmt.Errorf("document template is nil")
 	}
 
-	model.ID = types.StringPointerValue(template.Id)
-	model.Name = types.StringPointerValue(template.Name)
+	model.ID = types.StringValue(template.Id)
+	model.Name = types.StringValue(template.Name)
 	model.Description = omittableStringValue(template.Description, model.Description)
 	model.PlaceholdersScript = omittableStringValue(template.PlaceholdersScript, model.PlaceholdersScript)
-
-	if template.Options != nil {
-		if model.Options != nil {
-			model.Options = &documentTemplateOptionsModel{
-				AllowTextEdit:         omittableBooleanValue(template.Options.AllowTextEdit, model.Options.AllowTextEdit),
-				IncludeFooterBranding: omittableBooleanValue(template.Options.IncludeFooterBranding, model.Options.IncludeFooterBranding),
-				IncludePageNumbers:    omittableBooleanValue(template.Options.IncludePageNumbers, model.Options.IncludePageNumbers),
-			}
-		} else {
-			model.Options = &documentTemplateOptionsModel{
-				AllowTextEdit:         types.BoolPointerValue(template.Options.AllowTextEdit),
-				IncludeFooterBranding: types.BoolPointerValue(template.Options.IncludeFooterBranding),
-				IncludePageNumbers:    types.BoolPointerValue(template.Options.IncludePageNumbers),
-			}
-		}
+	model.Options = documentTemplateOptionsModel{
+		AllowTextEdit:         omittableBooleanValue(template.Options.AllowTextEdit, model.Options.AllowTextEdit),
+		IncludeFooterBranding: omittableBooleanValue(template.Options.IncludeFooterBranding, model.Options.IncludeFooterBranding),
+		IncludePageNumbers:    omittableBooleanValue(template.Options.IncludePageNumbers, model.Options.IncludePageNumbers),
 	}
 
 	model.NameExpression = omittableStringValue(template.NameExpression, model.NameExpression)
-	model.Content = tf.NewJsonObjectPointerValue(template.Content)
+	model.Content = tf.NewJsonObjectValue(template.Content)
 
-	if template.Inputs != nil {
-		jsonData, err := json.Marshal(template.Inputs)
+	if template.Inputs.IsSet() {
+		jsonData, err := json.Marshal(template.Inputs.Get())
 		if err != nil {
 			return fmt.Errorf("failed to marshal inputs: %w", err)
 		}
-		if string(jsonData) != "{}" {
-			// Inputs are optional, but we need to set an empty object to avoid
-			// inconsistencies in the state because of server side serialization.
-			model.Inputs = tf.NewJsonObjectValue(string(jsonData))
-		}
+		model.Inputs = tf.NewJsonObjectValue(string(jsonData))
 	}
 
 	if template.Signatures != nil {
@@ -367,18 +352,16 @@ func (model *documentTemplateModel) fromAPI(template *api.DocumentTemplate) erro
 func (model *documentTemplateModel) toAPIRequest() (api.CreateOrUpdateDocumentTemplateRequest, error) {
 
 	template := api.CreateOrUpdateDocumentTemplateRequest{
-		Name:               model.Name.ValueStringPointer(),
+		Name:               model.Name.ValueString(),
 		NameExpression:     model.NameExpression.ValueStringPointer(),
 		Description:        model.Description.ValueStringPointer(),
-		Content:            model.Content.ValueStringPointer(),
+		Content:            model.Content.ValueString(),
 		PlaceholdersScript: model.PlaceholdersScript.ValueStringPointer(),
-	}
-	if model.Options != nil {
-		template.Options = &api.DocumentTemplateOptions{
+		Options: api.DocumentTemplateOptions{
 			AllowTextEdit:         model.Options.AllowTextEdit.ValueBoolPointer(),
 			IncludeFooterBranding: model.Options.IncludeFooterBranding.ValueBoolPointer(),
 			IncludePageNumbers:    model.Options.IncludePageNumbers.ValueBoolPointer(),
-		}
+		},
 	}
 
 	if !model.Inputs.IsNull() && !model.Inputs.IsUnknown() {

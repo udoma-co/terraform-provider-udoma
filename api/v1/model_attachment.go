@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the Attachment type satisfies the MappedNullable interface at compile time
@@ -20,31 +22,41 @@ var _ MappedNullable = &Attachment{}
 // Attachment A file uploaded and attached to an entity (e.g. case, property, etc.)
 type Attachment struct {
 	// the unique ID of the uploaded file
-	Id *string `json:"id,omitempty"`
+	Id string `json:"id"`
 	// timestamp indicating when the attachment was uploaded
-	Created *int64 `json:"created,omitempty"`
+	Created int64 `json:"created"`
 	// ID of the entity for which this file was uploaded (case, property, etc.)
-	Ref *string `json:"ref,omitempty"`
+	Ref string `json:"ref"`
 	// the content type of the attachment
-	FileType *string `json:"file_type,omitempty"`
+	FileType string `json:"file_type"`
 	// the size of the attachment in bytes
-	FileSize *int64 `json:"file_size,omitempty"`
+	FileSize int64 `json:"file_size"`
 	// the original file name
-	FileName *string `json:"file_name,omitempty"`
+	FileName string `json:"file_name"`
 	// the sha256 sum of the file
-	FileSha256 *string `json:"file_sha256,omitempty"`
+	FileSha256 string `json:"file_sha256"`
 	// optional link to thumbnail (only if file is an image)
 	Thumbnail *string `json:"thumbnail,omitempty"`
 	// link to the actual file, through whitch it can be downloaded
-	Url *string `json:"url,omitempty"`
+	Url string `json:"url"`
 }
+
+type _Attachment Attachment
 
 // NewAttachment instantiates a new Attachment object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAttachment() *Attachment {
+func NewAttachment(id string, created int64, ref string, fileType string, fileSize int64, fileName string, fileSha256 string, url string) *Attachment {
 	this := Attachment{}
+	this.Id = id
+	this.Created = created
+	this.Ref = ref
+	this.FileType = fileType
+	this.FileSize = fileSize
+	this.FileName = fileName
+	this.FileSha256 = fileSha256
+	this.Url = url
 	return &this
 }
 
@@ -56,228 +68,172 @@ func NewAttachmentWithDefaults() *Attachment {
 	return &this
 }
 
-// GetId returns the Id field value if set, zero value otherwise.
+// GetId returns the Id field value
 func (o *Attachment) GetId() string {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Id
+
+	return o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
 func (o *Attachment) GetIdOk() (*string, bool) {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Id, true
+	return &o.Id, true
 }
 
-// HasId returns a boolean if a field has been set.
-func (o *Attachment) HasId() bool {
-	if o != nil && !IsNil(o.Id) {
-		return true
-	}
-
-	return false
-}
-
-// SetId gets a reference to the given string and assigns it to the Id field.
+// SetId sets field value
 func (o *Attachment) SetId(v string) {
-	o.Id = &v
+	o.Id = v
 }
 
-// GetCreated returns the Created field value if set, zero value otherwise.
+// GetCreated returns the Created field value
 func (o *Attachment) GetCreated() int64 {
-	if o == nil || IsNil(o.Created) {
+	if o == nil {
 		var ret int64
 		return ret
 	}
-	return *o.Created
+
+	return o.Created
 }
 
-// GetCreatedOk returns a tuple with the Created field value if set, nil otherwise
+// GetCreatedOk returns a tuple with the Created field value
 // and a boolean to check if the value has been set.
 func (o *Attachment) GetCreatedOk() (*int64, bool) {
-	if o == nil || IsNil(o.Created) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Created, true
+	return &o.Created, true
 }
 
-// HasCreated returns a boolean if a field has been set.
-func (o *Attachment) HasCreated() bool {
-	if o != nil && !IsNil(o.Created) {
-		return true
-	}
-
-	return false
-}
-
-// SetCreated gets a reference to the given int64 and assigns it to the Created field.
+// SetCreated sets field value
 func (o *Attachment) SetCreated(v int64) {
-	o.Created = &v
+	o.Created = v
 }
 
-// GetRef returns the Ref field value if set, zero value otherwise.
+// GetRef returns the Ref field value
 func (o *Attachment) GetRef() string {
-	if o == nil || IsNil(o.Ref) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Ref
+
+	return o.Ref
 }
 
-// GetRefOk returns a tuple with the Ref field value if set, nil otherwise
+// GetRefOk returns a tuple with the Ref field value
 // and a boolean to check if the value has been set.
 func (o *Attachment) GetRefOk() (*string, bool) {
-	if o == nil || IsNil(o.Ref) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Ref, true
+	return &o.Ref, true
 }
 
-// HasRef returns a boolean if a field has been set.
-func (o *Attachment) HasRef() bool {
-	if o != nil && !IsNil(o.Ref) {
-		return true
-	}
-
-	return false
-}
-
-// SetRef gets a reference to the given string and assigns it to the Ref field.
+// SetRef sets field value
 func (o *Attachment) SetRef(v string) {
-	o.Ref = &v
+	o.Ref = v
 }
 
-// GetFileType returns the FileType field value if set, zero value otherwise.
+// GetFileType returns the FileType field value
 func (o *Attachment) GetFileType() string {
-	if o == nil || IsNil(o.FileType) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.FileType
+
+	return o.FileType
 }
 
-// GetFileTypeOk returns a tuple with the FileType field value if set, nil otherwise
+// GetFileTypeOk returns a tuple with the FileType field value
 // and a boolean to check if the value has been set.
 func (o *Attachment) GetFileTypeOk() (*string, bool) {
-	if o == nil || IsNil(o.FileType) {
+	if o == nil {
 		return nil, false
 	}
-	return o.FileType, true
+	return &o.FileType, true
 }
 
-// HasFileType returns a boolean if a field has been set.
-func (o *Attachment) HasFileType() bool {
-	if o != nil && !IsNil(o.FileType) {
-		return true
-	}
-
-	return false
-}
-
-// SetFileType gets a reference to the given string and assigns it to the FileType field.
+// SetFileType sets field value
 func (o *Attachment) SetFileType(v string) {
-	o.FileType = &v
+	o.FileType = v
 }
 
-// GetFileSize returns the FileSize field value if set, zero value otherwise.
+// GetFileSize returns the FileSize field value
 func (o *Attachment) GetFileSize() int64 {
-	if o == nil || IsNil(o.FileSize) {
+	if o == nil {
 		var ret int64
 		return ret
 	}
-	return *o.FileSize
+
+	return o.FileSize
 }
 
-// GetFileSizeOk returns a tuple with the FileSize field value if set, nil otherwise
+// GetFileSizeOk returns a tuple with the FileSize field value
 // and a boolean to check if the value has been set.
 func (o *Attachment) GetFileSizeOk() (*int64, bool) {
-	if o == nil || IsNil(o.FileSize) {
+	if o == nil {
 		return nil, false
 	}
-	return o.FileSize, true
+	return &o.FileSize, true
 }
 
-// HasFileSize returns a boolean if a field has been set.
-func (o *Attachment) HasFileSize() bool {
-	if o != nil && !IsNil(o.FileSize) {
-		return true
-	}
-
-	return false
-}
-
-// SetFileSize gets a reference to the given int64 and assigns it to the FileSize field.
+// SetFileSize sets field value
 func (o *Attachment) SetFileSize(v int64) {
-	o.FileSize = &v
+	o.FileSize = v
 }
 
-// GetFileName returns the FileName field value if set, zero value otherwise.
+// GetFileName returns the FileName field value
 func (o *Attachment) GetFileName() string {
-	if o == nil || IsNil(o.FileName) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.FileName
+
+	return o.FileName
 }
 
-// GetFileNameOk returns a tuple with the FileName field value if set, nil otherwise
+// GetFileNameOk returns a tuple with the FileName field value
 // and a boolean to check if the value has been set.
 func (o *Attachment) GetFileNameOk() (*string, bool) {
-	if o == nil || IsNil(o.FileName) {
+	if o == nil {
 		return nil, false
 	}
-	return o.FileName, true
+	return &o.FileName, true
 }
 
-// HasFileName returns a boolean if a field has been set.
-func (o *Attachment) HasFileName() bool {
-	if o != nil && !IsNil(o.FileName) {
-		return true
-	}
-
-	return false
-}
-
-// SetFileName gets a reference to the given string and assigns it to the FileName field.
+// SetFileName sets field value
 func (o *Attachment) SetFileName(v string) {
-	o.FileName = &v
+	o.FileName = v
 }
 
-// GetFileSha256 returns the FileSha256 field value if set, zero value otherwise.
+// GetFileSha256 returns the FileSha256 field value
 func (o *Attachment) GetFileSha256() string {
-	if o == nil || IsNil(o.FileSha256) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.FileSha256
+
+	return o.FileSha256
 }
 
-// GetFileSha256Ok returns a tuple with the FileSha256 field value if set, nil otherwise
+// GetFileSha256Ok returns a tuple with the FileSha256 field value
 // and a boolean to check if the value has been set.
 func (o *Attachment) GetFileSha256Ok() (*string, bool) {
-	if o == nil || IsNil(o.FileSha256) {
+	if o == nil {
 		return nil, false
 	}
-	return o.FileSha256, true
+	return &o.FileSha256, true
 }
 
-// HasFileSha256 returns a boolean if a field has been set.
-func (o *Attachment) HasFileSha256() bool {
-	if o != nil && !IsNil(o.FileSha256) {
-		return true
-	}
-
-	return false
-}
-
-// SetFileSha256 gets a reference to the given string and assigns it to the FileSha256 field.
+// SetFileSha256 sets field value
 func (o *Attachment) SetFileSha256(v string) {
-	o.FileSha256 = &v
+	o.FileSha256 = v
 }
 
 // GetThumbnail returns the Thumbnail field value if set, zero value otherwise.
@@ -312,36 +268,28 @@ func (o *Attachment) SetThumbnail(v string) {
 	o.Thumbnail = &v
 }
 
-// GetUrl returns the Url field value if set, zero value otherwise.
+// GetUrl returns the Url field value
 func (o *Attachment) GetUrl() string {
-	if o == nil || IsNil(o.Url) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Url
+
+	return o.Url
 }
 
-// GetUrlOk returns a tuple with the Url field value if set, nil otherwise
+// GetUrlOk returns a tuple with the Url field value
 // and a boolean to check if the value has been set.
 func (o *Attachment) GetUrlOk() (*string, bool) {
-	if o == nil || IsNil(o.Url) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Url, true
+	return &o.Url, true
 }
 
-// HasUrl returns a boolean if a field has been set.
-func (o *Attachment) HasUrl() bool {
-	if o != nil && !IsNil(o.Url) {
-		return true
-	}
-
-	return false
-}
-
-// SetUrl gets a reference to the given string and assigns it to the Url field.
+// SetUrl sets field value
 func (o *Attachment) SetUrl(v string) {
-	o.Url = &v
+	o.Url = v
 }
 
 func (o Attachment) MarshalJSON() ([]byte, error) {
@@ -354,34 +302,62 @@ func (o Attachment) MarshalJSON() ([]byte, error) {
 
 func (o Attachment) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Id) {
-		toSerialize["id"] = o.Id
-	}
-	if !IsNil(o.Created) {
-		toSerialize["created"] = o.Created
-	}
-	if !IsNil(o.Ref) {
-		toSerialize["ref"] = o.Ref
-	}
-	if !IsNil(o.FileType) {
-		toSerialize["file_type"] = o.FileType
-	}
-	if !IsNil(o.FileSize) {
-		toSerialize["file_size"] = o.FileSize
-	}
-	if !IsNil(o.FileName) {
-		toSerialize["file_name"] = o.FileName
-	}
-	if !IsNil(o.FileSha256) {
-		toSerialize["file_sha256"] = o.FileSha256
-	}
+	toSerialize["id"] = o.Id
+	toSerialize["created"] = o.Created
+	toSerialize["ref"] = o.Ref
+	toSerialize["file_type"] = o.FileType
+	toSerialize["file_size"] = o.FileSize
+	toSerialize["file_name"] = o.FileName
+	toSerialize["file_sha256"] = o.FileSha256
 	if !IsNil(o.Thumbnail) {
 		toSerialize["thumbnail"] = o.Thumbnail
 	}
-	if !IsNil(o.Url) {
-		toSerialize["url"] = o.Url
-	}
+	toSerialize["url"] = o.Url
 	return toSerialize, nil
+}
+
+func (o *Attachment) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"id",
+		"created",
+		"ref",
+		"file_type",
+		"file_size",
+		"file_name",
+		"file_sha256",
+		"url",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varAttachment := _Attachment{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varAttachment)
+
+	if err != nil {
+		return err
+	}
+
+	*o = Attachment(varAttachment)
+
+	return err
 }
 
 type NullableAttachment struct {

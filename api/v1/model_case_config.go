@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the CaseConfig type satisfies the MappedNullable interface at compile time
@@ -20,19 +22,22 @@ var _ MappedNullable = &CaseConfig{}
 // CaseConfig Defines custom behaviour of a case, based on the case template that was  used to create it.
 type CaseConfig struct {
 	// The configuration for the status transition of a case. This is used to  determine which status changes are allowed by which party at which time.
-	StatusConfig []CaseStatusConfig `json:"status_config,omitempty"`
+	StatusConfig []CaseStatusConfig `json:"status_config"`
 	// The configuration for sending out reminders for a case.
 	Reminders []CaseReminderConfig `json:"reminders,omitempty"`
 	// The configuration for automatic actions to be performed for case. This is used to perform complex actions, like changing the status of a case or adding an automatic comment.
 	AutomaticActions []CaseAutomaticActionConfig `json:"automatic_actions,omitempty"`
 }
 
+type _CaseConfig CaseConfig
+
 // NewCaseConfig instantiates a new CaseConfig object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCaseConfig() *CaseConfig {
+func NewCaseConfig(statusConfig []CaseStatusConfig) *CaseConfig {
 	this := CaseConfig{}
+	this.StatusConfig = statusConfig
 	return &this
 }
 
@@ -44,34 +49,26 @@ func NewCaseConfigWithDefaults() *CaseConfig {
 	return &this
 }
 
-// GetStatusConfig returns the StatusConfig field value if set, zero value otherwise.
+// GetStatusConfig returns the StatusConfig field value
 func (o *CaseConfig) GetStatusConfig() []CaseStatusConfig {
-	if o == nil || IsNil(o.StatusConfig) {
+	if o == nil {
 		var ret []CaseStatusConfig
 		return ret
 	}
+
 	return o.StatusConfig
 }
 
-// GetStatusConfigOk returns a tuple with the StatusConfig field value if set, nil otherwise
+// GetStatusConfigOk returns a tuple with the StatusConfig field value
 // and a boolean to check if the value has been set.
 func (o *CaseConfig) GetStatusConfigOk() ([]CaseStatusConfig, bool) {
-	if o == nil || IsNil(o.StatusConfig) {
+	if o == nil {
 		return nil, false
 	}
 	return o.StatusConfig, true
 }
 
-// HasStatusConfig returns a boolean if a field has been set.
-func (o *CaseConfig) HasStatusConfig() bool {
-	if o != nil && !IsNil(o.StatusConfig) {
-		return true
-	}
-
-	return false
-}
-
-// SetStatusConfig gets a reference to the given []CaseStatusConfig and assigns it to the StatusConfig field.
+// SetStatusConfig sets field value
 func (o *CaseConfig) SetStatusConfig(v []CaseStatusConfig) {
 	o.StatusConfig = v
 }
@@ -150,9 +147,7 @@ func (o CaseConfig) MarshalJSON() ([]byte, error) {
 
 func (o CaseConfig) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.StatusConfig) {
-		toSerialize["status_config"] = o.StatusConfig
-	}
+	toSerialize["status_config"] = o.StatusConfig
 	if !IsNil(o.Reminders) {
 		toSerialize["reminders"] = o.Reminders
 	}
@@ -160,6 +155,43 @@ func (o CaseConfig) ToMap() (map[string]interface{}, error) {
 		toSerialize["automatic_actions"] = o.AutomaticActions
 	}
 	return toSerialize, nil
+}
+
+func (o *CaseConfig) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"status_config",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCaseConfig := _CaseConfig{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCaseConfig)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CaseConfig(varCaseConfig)
+
+	return err
 }
 
 type NullableCaseConfig struct {

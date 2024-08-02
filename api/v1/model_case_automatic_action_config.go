@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the CaseAutomaticActionConfig type satisfies the MappedNullable interface at compile time
@@ -19,19 +21,24 @@ var _ MappedNullable = &CaseAutomaticActionConfig{}
 
 // CaseAutomaticActionConfig Defines the configuration for an automatic action a case.
 type CaseAutomaticActionConfig struct {
-	Status *CaseStatusEnum `json:"status,omitempty"`
+	Status CaseStatusEnum `json:"status"`
 	// The number of days after which the status change should be triggered. The  schedule is reset, whenever the case is updated. A negative value means that  the action should be triggered immediately.
-	Schedule *int32 `json:"schedule,omitempty"`
+	Schedule int32 `json:"schedule"`
 	// JS script of the action that should be executed, if the schedule and execution check are successful.
-	Action *string `json:"action,omitempty"`
+	Action string `json:"action"`
 }
+
+type _CaseAutomaticActionConfig CaseAutomaticActionConfig
 
 // NewCaseAutomaticActionConfig instantiates a new CaseAutomaticActionConfig object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCaseAutomaticActionConfig() *CaseAutomaticActionConfig {
+func NewCaseAutomaticActionConfig(status CaseStatusEnum, schedule int32, action string) *CaseAutomaticActionConfig {
 	this := CaseAutomaticActionConfig{}
+	this.Status = status
+	this.Schedule = schedule
+	this.Action = action
 	return &this
 }
 
@@ -43,100 +50,76 @@ func NewCaseAutomaticActionConfigWithDefaults() *CaseAutomaticActionConfig {
 	return &this
 }
 
-// GetStatus returns the Status field value if set, zero value otherwise.
+// GetStatus returns the Status field value
 func (o *CaseAutomaticActionConfig) GetStatus() CaseStatusEnum {
-	if o == nil || IsNil(o.Status) {
+	if o == nil {
 		var ret CaseStatusEnum
 		return ret
 	}
-	return *o.Status
+
+	return o.Status
 }
 
-// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
+// GetStatusOk returns a tuple with the Status field value
 // and a boolean to check if the value has been set.
 func (o *CaseAutomaticActionConfig) GetStatusOk() (*CaseStatusEnum, bool) {
-	if o == nil || IsNil(o.Status) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Status, true
+	return &o.Status, true
 }
 
-// HasStatus returns a boolean if a field has been set.
-func (o *CaseAutomaticActionConfig) HasStatus() bool {
-	if o != nil && !IsNil(o.Status) {
-		return true
-	}
-
-	return false
-}
-
-// SetStatus gets a reference to the given CaseStatusEnum and assigns it to the Status field.
+// SetStatus sets field value
 func (o *CaseAutomaticActionConfig) SetStatus(v CaseStatusEnum) {
-	o.Status = &v
+	o.Status = v
 }
 
-// GetSchedule returns the Schedule field value if set, zero value otherwise.
+// GetSchedule returns the Schedule field value
 func (o *CaseAutomaticActionConfig) GetSchedule() int32 {
-	if o == nil || IsNil(o.Schedule) {
+	if o == nil {
 		var ret int32
 		return ret
 	}
-	return *o.Schedule
+
+	return o.Schedule
 }
 
-// GetScheduleOk returns a tuple with the Schedule field value if set, nil otherwise
+// GetScheduleOk returns a tuple with the Schedule field value
 // and a boolean to check if the value has been set.
 func (o *CaseAutomaticActionConfig) GetScheduleOk() (*int32, bool) {
-	if o == nil || IsNil(o.Schedule) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Schedule, true
+	return &o.Schedule, true
 }
 
-// HasSchedule returns a boolean if a field has been set.
-func (o *CaseAutomaticActionConfig) HasSchedule() bool {
-	if o != nil && !IsNil(o.Schedule) {
-		return true
-	}
-
-	return false
-}
-
-// SetSchedule gets a reference to the given int32 and assigns it to the Schedule field.
+// SetSchedule sets field value
 func (o *CaseAutomaticActionConfig) SetSchedule(v int32) {
-	o.Schedule = &v
+	o.Schedule = v
 }
 
-// GetAction returns the Action field value if set, zero value otherwise.
+// GetAction returns the Action field value
 func (o *CaseAutomaticActionConfig) GetAction() string {
-	if o == nil || IsNil(o.Action) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Action
+
+	return o.Action
 }
 
-// GetActionOk returns a tuple with the Action field value if set, nil otherwise
+// GetActionOk returns a tuple with the Action field value
 // and a boolean to check if the value has been set.
 func (o *CaseAutomaticActionConfig) GetActionOk() (*string, bool) {
-	if o == nil || IsNil(o.Action) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Action, true
+	return &o.Action, true
 }
 
-// HasAction returns a boolean if a field has been set.
-func (o *CaseAutomaticActionConfig) HasAction() bool {
-	if o != nil && !IsNil(o.Action) {
-		return true
-	}
-
-	return false
-}
-
-// SetAction gets a reference to the given string and assigns it to the Action field.
+// SetAction sets field value
 func (o *CaseAutomaticActionConfig) SetAction(v string) {
-	o.Action = &v
+	o.Action = v
 }
 
 func (o CaseAutomaticActionConfig) MarshalJSON() ([]byte, error) {
@@ -149,16 +132,49 @@ func (o CaseAutomaticActionConfig) MarshalJSON() ([]byte, error) {
 
 func (o CaseAutomaticActionConfig) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Status) {
-		toSerialize["status"] = o.Status
-	}
-	if !IsNil(o.Schedule) {
-		toSerialize["schedule"] = o.Schedule
-	}
-	if !IsNil(o.Action) {
-		toSerialize["action"] = o.Action
-	}
+	toSerialize["status"] = o.Status
+	toSerialize["schedule"] = o.Schedule
+	toSerialize["action"] = o.Action
 	return toSerialize, nil
+}
+
+func (o *CaseAutomaticActionConfig) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"status",
+		"schedule",
+		"action",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCaseAutomaticActionConfig := _CaseAutomaticActionConfig{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCaseAutomaticActionConfig)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CaseAutomaticActionConfig(varCaseAutomaticActionConfig)
+
+	return err
 }
 
 type NullableCaseAutomaticActionConfig struct {

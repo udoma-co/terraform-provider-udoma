@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the WorkflowStepDefinition type satisfies the MappedNullable interface at compile time
@@ -19,32 +21,38 @@ var _ MappedNullable = &WorkflowStepDefinition{}
 
 // WorkflowStepDefinition the definition of a single step within a workflow
 type WorkflowStepDefinition struct {
-	// the ID of the step, unique within the workflow
-	Id *string `json:"id,omitempty"`
-	// the type of the step
-	Type *string `json:"type,omitempty"`
-	// The icon of the step (shown in the menu). If empty, the default icon  of the step type will be used.
-	Icon *string `json:"icon,omitempty"`
-	// The name of the step (shown as title and in the menu). If empty, the  default name of the step type will be used.
-	Name *string `json:"name,omitempty"`
-	// Optional name of the group of the step. If a group is provided, steps within the same group will be grouped together in the UI as a drawer.
-	GroupName *string `json:"group_name,omitempty"`
+	// the ID of the step, unique within the workflow. This is used to handle  the flow of the workflow execution.
+	Id string `json:"id"`
+	// the type of the step, which defines how it will be rendered in the UI and how it will be executed in the backend.
+	Type string `json:"type"`
 	// a parameter of a workflow step or step action. The value of the parameter is contextual and can vary in type and meaning depending on the step or action that uses it. If used in a step, the parameter will be available in the UI and will not be interpreted, i.e. JS expressions are not allowed. In actions however, the parameter might be interpreted as a JS expression, if the action type requires it.
 	Parameters map[string]interface{} `json:"parameters,omitempty"`
 	// a map of values, where the key and values are strings
-	DynamicParameters *map[string]string            `json:"dynamic_parameters,omitempty"`
-	PrerunAction      *WorkflowStepActionDefinition `json:"prerun_action,omitempty"`
+	DynamicParameters *map[string]string `json:"dynamic_parameters,omitempty"`
+	// The icon of the step (shown in the menu). If empty, the default icon  of the step type will be used.
+	Icon *string `json:"icon,omitempty"`
+	// The name of the step (shown as title and in the menu). If empty, the  default name of the step type will be used.
+	Name string `json:"name"`
+	// Optional name of the group of the step. If a group is provided, steps within the same group will be grouped together in the UI as a drawer.
+	GroupName    *string                                    `json:"group_name,omitempty"`
+	PrerunAction NullableWorkflowStepPrerunActionDefinition `json:"prerun_action,omitempty"`
 	// An optional JS expression that determines whether the step can be executed or  not. If not set, this will default to true, once the previous step has been  executed.
 	CanBeExecutedExpression *string                        `json:"can_be_executed_expression,omitempty"`
-	Actions                 []WorkflowStepActionDefinition `json:"actions,omitempty"`
+	Actions                 []WorkflowStepActionDefinition `json:"actions"`
 }
+
+type _WorkflowStepDefinition WorkflowStepDefinition
 
 // NewWorkflowStepDefinition instantiates a new WorkflowStepDefinition object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewWorkflowStepDefinition() *WorkflowStepDefinition {
+func NewWorkflowStepDefinition(id string, type_ string, name string, actions []WorkflowStepActionDefinition) *WorkflowStepDefinition {
 	this := WorkflowStepDefinition{}
+	this.Id = id
+	this.Type = type_
+	this.Name = name
+	this.Actions = actions
 	return &this
 }
 
@@ -56,164 +64,52 @@ func NewWorkflowStepDefinitionWithDefaults() *WorkflowStepDefinition {
 	return &this
 }
 
-// GetId returns the Id field value if set, zero value otherwise.
+// GetId returns the Id field value
 func (o *WorkflowStepDefinition) GetId() string {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Id
+
+	return o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepDefinition) GetIdOk() (*string, bool) {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Id, true
+	return &o.Id, true
 }
 
-// HasId returns a boolean if a field has been set.
-func (o *WorkflowStepDefinition) HasId() bool {
-	if o != nil && !IsNil(o.Id) {
-		return true
-	}
-
-	return false
-}
-
-// SetId gets a reference to the given string and assigns it to the Id field.
+// SetId sets field value
 func (o *WorkflowStepDefinition) SetId(v string) {
-	o.Id = &v
+	o.Id = v
 }
 
-// GetType returns the Type field value if set, zero value otherwise.
+// GetType returns the Type field value
 func (o *WorkflowStepDefinition) GetType() string {
-	if o == nil || IsNil(o.Type) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Type
+
+	return o.Type
 }
 
-// GetTypeOk returns a tuple with the Type field value if set, nil otherwise
+// GetTypeOk returns a tuple with the Type field value
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepDefinition) GetTypeOk() (*string, bool) {
-	if o == nil || IsNil(o.Type) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Type, true
+	return &o.Type, true
 }
 
-// HasType returns a boolean if a field has been set.
-func (o *WorkflowStepDefinition) HasType() bool {
-	if o != nil && !IsNil(o.Type) {
-		return true
-	}
-
-	return false
-}
-
-// SetType gets a reference to the given string and assigns it to the Type field.
+// SetType sets field value
 func (o *WorkflowStepDefinition) SetType(v string) {
-	o.Type = &v
-}
-
-// GetIcon returns the Icon field value if set, zero value otherwise.
-func (o *WorkflowStepDefinition) GetIcon() string {
-	if o == nil || IsNil(o.Icon) {
-		var ret string
-		return ret
-	}
-	return *o.Icon
-}
-
-// GetIconOk returns a tuple with the Icon field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *WorkflowStepDefinition) GetIconOk() (*string, bool) {
-	if o == nil || IsNil(o.Icon) {
-		return nil, false
-	}
-	return o.Icon, true
-}
-
-// HasIcon returns a boolean if a field has been set.
-func (o *WorkflowStepDefinition) HasIcon() bool {
-	if o != nil && !IsNil(o.Icon) {
-		return true
-	}
-
-	return false
-}
-
-// SetIcon gets a reference to the given string and assigns it to the Icon field.
-func (o *WorkflowStepDefinition) SetIcon(v string) {
-	o.Icon = &v
-}
-
-// GetName returns the Name field value if set, zero value otherwise.
-func (o *WorkflowStepDefinition) GetName() string {
-	if o == nil || IsNil(o.Name) {
-		var ret string
-		return ret
-	}
-	return *o.Name
-}
-
-// GetNameOk returns a tuple with the Name field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *WorkflowStepDefinition) GetNameOk() (*string, bool) {
-	if o == nil || IsNil(o.Name) {
-		return nil, false
-	}
-	return o.Name, true
-}
-
-// HasName returns a boolean if a field has been set.
-func (o *WorkflowStepDefinition) HasName() bool {
-	if o != nil && !IsNil(o.Name) {
-		return true
-	}
-
-	return false
-}
-
-// SetName gets a reference to the given string and assigns it to the Name field.
-func (o *WorkflowStepDefinition) SetName(v string) {
-	o.Name = &v
-}
-
-// GetGroupName returns the GroupName field value if set, zero value otherwise.
-func (o *WorkflowStepDefinition) GetGroupName() string {
-	if o == nil || IsNil(o.GroupName) {
-		var ret string
-		return ret
-	}
-	return *o.GroupName
-}
-
-// GetGroupNameOk returns a tuple with the GroupName field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *WorkflowStepDefinition) GetGroupNameOk() (*string, bool) {
-	if o == nil || IsNil(o.GroupName) {
-		return nil, false
-	}
-	return o.GroupName, true
-}
-
-// HasGroupName returns a boolean if a field has been set.
-func (o *WorkflowStepDefinition) HasGroupName() bool {
-	if o != nil && !IsNil(o.GroupName) {
-		return true
-	}
-
-	return false
-}
-
-// SetGroupName gets a reference to the given string and assigns it to the GroupName field.
-func (o *WorkflowStepDefinition) SetGroupName(v string) {
-	o.GroupName = &v
+	o.Type = v
 }
 
 // GetParameters returns the Parameters field value if set, zero value otherwise.
@@ -280,36 +176,135 @@ func (o *WorkflowStepDefinition) SetDynamicParameters(v map[string]string) {
 	o.DynamicParameters = &v
 }
 
-// GetPrerunAction returns the PrerunAction field value if set, zero value otherwise.
-func (o *WorkflowStepDefinition) GetPrerunAction() WorkflowStepActionDefinition {
-	if o == nil || IsNil(o.PrerunAction) {
-		var ret WorkflowStepActionDefinition
+// GetIcon returns the Icon field value if set, zero value otherwise.
+func (o *WorkflowStepDefinition) GetIcon() string {
+	if o == nil || IsNil(o.Icon) {
+		var ret string
 		return ret
 	}
-	return *o.PrerunAction
+	return *o.Icon
 }
 
-// GetPrerunActionOk returns a tuple with the PrerunAction field value if set, nil otherwise
+// GetIconOk returns a tuple with the Icon field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *WorkflowStepDefinition) GetPrerunActionOk() (*WorkflowStepActionDefinition, bool) {
-	if o == nil || IsNil(o.PrerunAction) {
+func (o *WorkflowStepDefinition) GetIconOk() (*string, bool) {
+	if o == nil || IsNil(o.Icon) {
 		return nil, false
 	}
-	return o.PrerunAction, true
+	return o.Icon, true
 }
 
-// HasPrerunAction returns a boolean if a field has been set.
-func (o *WorkflowStepDefinition) HasPrerunAction() bool {
-	if o != nil && !IsNil(o.PrerunAction) {
+// HasIcon returns a boolean if a field has been set.
+func (o *WorkflowStepDefinition) HasIcon() bool {
+	if o != nil && !IsNil(o.Icon) {
 		return true
 	}
 
 	return false
 }
 
-// SetPrerunAction gets a reference to the given WorkflowStepActionDefinition and assigns it to the PrerunAction field.
-func (o *WorkflowStepDefinition) SetPrerunAction(v WorkflowStepActionDefinition) {
-	o.PrerunAction = &v
+// SetIcon gets a reference to the given string and assigns it to the Icon field.
+func (o *WorkflowStepDefinition) SetIcon(v string) {
+	o.Icon = &v
+}
+
+// GetName returns the Name field value
+func (o *WorkflowStepDefinition) GetName() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.Name
+}
+
+// GetNameOk returns a tuple with the Name field value
+// and a boolean to check if the value has been set.
+func (o *WorkflowStepDefinition) GetNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Name, true
+}
+
+// SetName sets field value
+func (o *WorkflowStepDefinition) SetName(v string) {
+	o.Name = v
+}
+
+// GetGroupName returns the GroupName field value if set, zero value otherwise.
+func (o *WorkflowStepDefinition) GetGroupName() string {
+	if o == nil || IsNil(o.GroupName) {
+		var ret string
+		return ret
+	}
+	return *o.GroupName
+}
+
+// GetGroupNameOk returns a tuple with the GroupName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowStepDefinition) GetGroupNameOk() (*string, bool) {
+	if o == nil || IsNil(o.GroupName) {
+		return nil, false
+	}
+	return o.GroupName, true
+}
+
+// HasGroupName returns a boolean if a field has been set.
+func (o *WorkflowStepDefinition) HasGroupName() bool {
+	if o != nil && !IsNil(o.GroupName) {
+		return true
+	}
+
+	return false
+}
+
+// SetGroupName gets a reference to the given string and assigns it to the GroupName field.
+func (o *WorkflowStepDefinition) SetGroupName(v string) {
+	o.GroupName = &v
+}
+
+// GetPrerunAction returns the PrerunAction field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *WorkflowStepDefinition) GetPrerunAction() WorkflowStepPrerunActionDefinition {
+	if o == nil || IsNil(o.PrerunAction.Get()) {
+		var ret WorkflowStepPrerunActionDefinition
+		return ret
+	}
+	return *o.PrerunAction.Get()
+}
+
+// GetPrerunActionOk returns a tuple with the PrerunAction field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *WorkflowStepDefinition) GetPrerunActionOk() (*WorkflowStepPrerunActionDefinition, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.PrerunAction.Get(), o.PrerunAction.IsSet()
+}
+
+// HasPrerunAction returns a boolean if a field has been set.
+func (o *WorkflowStepDefinition) HasPrerunAction() bool {
+	if o != nil && o.PrerunAction.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetPrerunAction gets a reference to the given NullableWorkflowStepPrerunActionDefinition and assigns it to the PrerunAction field.
+func (o *WorkflowStepDefinition) SetPrerunAction(v WorkflowStepPrerunActionDefinition) {
+	o.PrerunAction.Set(&v)
+}
+
+// SetPrerunActionNil sets the value for PrerunAction to be an explicit nil
+func (o *WorkflowStepDefinition) SetPrerunActionNil() {
+	o.PrerunAction.Set(nil)
+}
+
+// UnsetPrerunAction ensures that no value is present for PrerunAction, not even an explicit nil
+func (o *WorkflowStepDefinition) UnsetPrerunAction() {
+	o.PrerunAction.Unset()
 }
 
 // GetCanBeExecutedExpression returns the CanBeExecutedExpression field value if set, zero value otherwise.
@@ -344,34 +339,26 @@ func (o *WorkflowStepDefinition) SetCanBeExecutedExpression(v string) {
 	o.CanBeExecutedExpression = &v
 }
 
-// GetActions returns the Actions field value if set, zero value otherwise.
+// GetActions returns the Actions field value
 func (o *WorkflowStepDefinition) GetActions() []WorkflowStepActionDefinition {
-	if o == nil || IsNil(o.Actions) {
+	if o == nil {
 		var ret []WorkflowStepActionDefinition
 		return ret
 	}
+
 	return o.Actions
 }
 
-// GetActionsOk returns a tuple with the Actions field value if set, nil otherwise
+// GetActionsOk returns a tuple with the Actions field value
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepDefinition) GetActionsOk() ([]WorkflowStepActionDefinition, bool) {
-	if o == nil || IsNil(o.Actions) {
+	if o == nil {
 		return nil, false
 	}
 	return o.Actions, true
 }
 
-// HasActions returns a boolean if a field has been set.
-func (o *WorkflowStepDefinition) HasActions() bool {
-	if o != nil && !IsNil(o.Actions) {
-		return true
-	}
-
-	return false
-}
-
-// SetActions gets a reference to the given []WorkflowStepActionDefinition and assigns it to the Actions field.
+// SetActions sets field value
 func (o *WorkflowStepDefinition) SetActions(v []WorkflowStepActionDefinition) {
 	o.Actions = v
 }
@@ -386,37 +373,69 @@ func (o WorkflowStepDefinition) MarshalJSON() ([]byte, error) {
 
 func (o WorkflowStepDefinition) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Id) {
-		toSerialize["id"] = o.Id
-	}
-	if !IsNil(o.Type) {
-		toSerialize["type"] = o.Type
-	}
-	if !IsNil(o.Icon) {
-		toSerialize["icon"] = o.Icon
-	}
-	if !IsNil(o.Name) {
-		toSerialize["name"] = o.Name
-	}
-	if !IsNil(o.GroupName) {
-		toSerialize["group_name"] = o.GroupName
-	}
+	toSerialize["id"] = o.Id
+	toSerialize["type"] = o.Type
 	if !IsNil(o.Parameters) {
 		toSerialize["parameters"] = o.Parameters
 	}
 	if !IsNil(o.DynamicParameters) {
 		toSerialize["dynamic_parameters"] = o.DynamicParameters
 	}
-	if !IsNil(o.PrerunAction) {
-		toSerialize["prerun_action"] = o.PrerunAction
+	if !IsNil(o.Icon) {
+		toSerialize["icon"] = o.Icon
+	}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.GroupName) {
+		toSerialize["group_name"] = o.GroupName
+	}
+	if o.PrerunAction.IsSet() {
+		toSerialize["prerun_action"] = o.PrerunAction.Get()
 	}
 	if !IsNil(o.CanBeExecutedExpression) {
 		toSerialize["can_be_executed_expression"] = o.CanBeExecutedExpression
 	}
-	if !IsNil(o.Actions) {
-		toSerialize["actions"] = o.Actions
-	}
+	toSerialize["actions"] = o.Actions
 	return toSerialize, nil
+}
+
+func (o *WorkflowStepDefinition) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"id",
+		"type",
+		"name",
+		"actions",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varWorkflowStepDefinition := _WorkflowStepDefinition{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varWorkflowStepDefinition)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WorkflowStepDefinition(varWorkflowStepDefinition)
+
+	return err
 }
 
 type NullableWorkflowStepDefinition struct {

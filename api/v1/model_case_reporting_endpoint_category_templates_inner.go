@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the CaseReportingEndpointCategoryTemplatesInner type satisfies the MappedNullable interface at compile time
@@ -19,18 +21,21 @@ var _ MappedNullable = &CaseReportingEndpointCategoryTemplatesInner{}
 
 // CaseReportingEndpointCategoryTemplatesInner struct for CaseReportingEndpointCategoryTemplatesInner
 type CaseReportingEndpointCategoryTemplatesInner struct {
-	// The ID of the Case Template
-	Id *string `json:"id,omitempty"`
-	// The priority of the Template, used to decide the order in which to display the tempaltes in the category.
+	// The ID of the referenced case template
+	Id string `json:"id"`
+	// The priority used to decide the order in which to display the  tempaltes in the category.
 	Priority *int32 `json:"priority,omitempty"`
 }
+
+type _CaseReportingEndpointCategoryTemplatesInner CaseReportingEndpointCategoryTemplatesInner
 
 // NewCaseReportingEndpointCategoryTemplatesInner instantiates a new CaseReportingEndpointCategoryTemplatesInner object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCaseReportingEndpointCategoryTemplatesInner() *CaseReportingEndpointCategoryTemplatesInner {
+func NewCaseReportingEndpointCategoryTemplatesInner(id string) *CaseReportingEndpointCategoryTemplatesInner {
 	this := CaseReportingEndpointCategoryTemplatesInner{}
+	this.Id = id
 	return &this
 }
 
@@ -42,36 +47,28 @@ func NewCaseReportingEndpointCategoryTemplatesInnerWithDefaults() *CaseReporting
 	return &this
 }
 
-// GetId returns the Id field value if set, zero value otherwise.
+// GetId returns the Id field value
 func (o *CaseReportingEndpointCategoryTemplatesInner) GetId() string {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Id
+
+	return o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
 func (o *CaseReportingEndpointCategoryTemplatesInner) GetIdOk() (*string, bool) {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Id, true
+	return &o.Id, true
 }
 
-// HasId returns a boolean if a field has been set.
-func (o *CaseReportingEndpointCategoryTemplatesInner) HasId() bool {
-	if o != nil && !IsNil(o.Id) {
-		return true
-	}
-
-	return false
-}
-
-// SetId gets a reference to the given string and assigns it to the Id field.
+// SetId sets field value
 func (o *CaseReportingEndpointCategoryTemplatesInner) SetId(v string) {
-	o.Id = &v
+	o.Id = v
 }
 
 // GetPriority returns the Priority field value if set, zero value otherwise.
@@ -116,13 +113,48 @@ func (o CaseReportingEndpointCategoryTemplatesInner) MarshalJSON() ([]byte, erro
 
 func (o CaseReportingEndpointCategoryTemplatesInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Id) {
-		toSerialize["id"] = o.Id
-	}
+	toSerialize["id"] = o.Id
 	if !IsNil(o.Priority) {
 		toSerialize["priority"] = o.Priority
 	}
 	return toSerialize, nil
+}
+
+func (o *CaseReportingEndpointCategoryTemplatesInner) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"id",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCaseReportingEndpointCategoryTemplatesInner := _CaseReportingEndpointCategoryTemplatesInner{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCaseReportingEndpointCategoryTemplatesInner)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CaseReportingEndpointCategoryTemplatesInner(varCaseReportingEndpointCategoryTemplatesInner)
+
+	return err
 }
 
 type NullableCaseReportingEndpointCategoryTemplatesInner struct {

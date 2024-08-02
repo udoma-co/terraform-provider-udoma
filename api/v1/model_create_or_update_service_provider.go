@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the CreateOrUpdateServiceProvider type satisfies the MappedNullable interface at compile time
@@ -28,19 +30,22 @@ type CreateOrUpdateServiceProvider struct {
 	// the name of the company
 	Company *string `json:"company,omitempty"`
 	// the email address at which the company can be contacted by the platform
-	Email *string `json:"email,omitempty"`
+	Email string `json:"email"`
 	// a phone number at which the company can be reached
 	PhoneNumber *string              `json:"phone_number,omitempty"`
 	Category    *ServiceCategoryEnum `json:"category,omitempty"`
 	Address     *Address             `json:"address,omitempty"`
 }
 
+type _CreateOrUpdateServiceProvider CreateOrUpdateServiceProvider
+
 // NewCreateOrUpdateServiceProvider instantiates a new CreateOrUpdateServiceProvider object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateOrUpdateServiceProvider() *CreateOrUpdateServiceProvider {
+func NewCreateOrUpdateServiceProvider(email string) *CreateOrUpdateServiceProvider {
 	this := CreateOrUpdateServiceProvider{}
+	this.Email = email
 	return &this
 }
 
@@ -180,36 +185,28 @@ func (o *CreateOrUpdateServiceProvider) SetCompany(v string) {
 	o.Company = &v
 }
 
-// GetEmail returns the Email field value if set, zero value otherwise.
+// GetEmail returns the Email field value
 func (o *CreateOrUpdateServiceProvider) GetEmail() string {
-	if o == nil || IsNil(o.Email) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Email
+
+	return o.Email
 }
 
-// GetEmailOk returns a tuple with the Email field value if set, nil otherwise
+// GetEmailOk returns a tuple with the Email field value
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateServiceProvider) GetEmailOk() (*string, bool) {
-	if o == nil || IsNil(o.Email) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Email, true
+	return &o.Email, true
 }
 
-// HasEmail returns a boolean if a field has been set.
-func (o *CreateOrUpdateServiceProvider) HasEmail() bool {
-	if o != nil && !IsNil(o.Email) {
-		return true
-	}
-
-	return false
-}
-
-// SetEmail gets a reference to the given string and assigns it to the Email field.
+// SetEmail sets field value
 func (o *CreateOrUpdateServiceProvider) SetEmail(v string) {
-	o.Email = &v
+	o.Email = v
 }
 
 // GetPhoneNumber returns the PhoneNumber field value if set, zero value otherwise.
@@ -330,9 +327,7 @@ func (o CreateOrUpdateServiceProvider) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Company) {
 		toSerialize["company"] = o.Company
 	}
-	if !IsNil(o.Email) {
-		toSerialize["email"] = o.Email
-	}
+	toSerialize["email"] = o.Email
 	if !IsNil(o.PhoneNumber) {
 		toSerialize["phone_number"] = o.PhoneNumber
 	}
@@ -343,6 +338,43 @@ func (o CreateOrUpdateServiceProvider) ToMap() (map[string]interface{}, error) {
 		toSerialize["address"] = o.Address
 	}
 	return toSerialize, nil
+}
+
+func (o *CreateOrUpdateServiceProvider) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"email",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCreateOrUpdateServiceProvider := _CreateOrUpdateServiceProvider{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCreateOrUpdateServiceProvider)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CreateOrUpdateServiceProvider(varCreateOrUpdateServiceProvider)
+
+	return err
 }
 
 type NullableCreateOrUpdateServiceProvider struct {

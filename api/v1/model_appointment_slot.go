@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the AppointmentSlot type satisfies the MappedNullable interface at compile time
@@ -19,19 +21,23 @@ var _ MappedNullable = &AppointmentSlot{}
 
 // AppointmentSlot An appointment slot is a time slot within a appointment window that is available for booking.
 type AppointmentSlot struct {
-	// The timestamp of the beginning of the appointment slot
-	StartTime *int64 `json:"start_time,omitempty"`
-	// The timestamp of the end of the appointment slot
-	EndTime     *int64       `json:"end_time,omitempty"`
+	// The timestamp of the beginning of the time slot
+	StartTime int64 `json:"start_time"`
+	// The timestamp of the end of the time slot
+	EndTime     int64        `json:"end_time"`
 	Appointment *Appointment `json:"appointment,omitempty"`
 }
+
+type _AppointmentSlot AppointmentSlot
 
 // NewAppointmentSlot instantiates a new AppointmentSlot object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppointmentSlot() *AppointmentSlot {
+func NewAppointmentSlot(startTime int64, endTime int64) *AppointmentSlot {
 	this := AppointmentSlot{}
+	this.StartTime = startTime
+	this.EndTime = endTime
 	return &this
 }
 
@@ -43,68 +49,52 @@ func NewAppointmentSlotWithDefaults() *AppointmentSlot {
 	return &this
 }
 
-// GetStartTime returns the StartTime field value if set, zero value otherwise.
+// GetStartTime returns the StartTime field value
 func (o *AppointmentSlot) GetStartTime() int64 {
-	if o == nil || IsNil(o.StartTime) {
+	if o == nil {
 		var ret int64
 		return ret
 	}
-	return *o.StartTime
+
+	return o.StartTime
 }
 
-// GetStartTimeOk returns a tuple with the StartTime field value if set, nil otherwise
+// GetStartTimeOk returns a tuple with the StartTime field value
 // and a boolean to check if the value has been set.
 func (o *AppointmentSlot) GetStartTimeOk() (*int64, bool) {
-	if o == nil || IsNil(o.StartTime) {
+	if o == nil {
 		return nil, false
 	}
-	return o.StartTime, true
+	return &o.StartTime, true
 }
 
-// HasStartTime returns a boolean if a field has been set.
-func (o *AppointmentSlot) HasStartTime() bool {
-	if o != nil && !IsNil(o.StartTime) {
-		return true
-	}
-
-	return false
-}
-
-// SetStartTime gets a reference to the given int64 and assigns it to the StartTime field.
+// SetStartTime sets field value
 func (o *AppointmentSlot) SetStartTime(v int64) {
-	o.StartTime = &v
+	o.StartTime = v
 }
 
-// GetEndTime returns the EndTime field value if set, zero value otherwise.
+// GetEndTime returns the EndTime field value
 func (o *AppointmentSlot) GetEndTime() int64 {
-	if o == nil || IsNil(o.EndTime) {
+	if o == nil {
 		var ret int64
 		return ret
 	}
-	return *o.EndTime
+
+	return o.EndTime
 }
 
-// GetEndTimeOk returns a tuple with the EndTime field value if set, nil otherwise
+// GetEndTimeOk returns a tuple with the EndTime field value
 // and a boolean to check if the value has been set.
 func (o *AppointmentSlot) GetEndTimeOk() (*int64, bool) {
-	if o == nil || IsNil(o.EndTime) {
+	if o == nil {
 		return nil, false
 	}
-	return o.EndTime, true
+	return &o.EndTime, true
 }
 
-// HasEndTime returns a boolean if a field has been set.
-func (o *AppointmentSlot) HasEndTime() bool {
-	if o != nil && !IsNil(o.EndTime) {
-		return true
-	}
-
-	return false
-}
-
-// SetEndTime gets a reference to the given int64 and assigns it to the EndTime field.
+// SetEndTime sets field value
 func (o *AppointmentSlot) SetEndTime(v int64) {
-	o.EndTime = &v
+	o.EndTime = v
 }
 
 // GetAppointment returns the Appointment field value if set, zero value otherwise.
@@ -149,16 +139,50 @@ func (o AppointmentSlot) MarshalJSON() ([]byte, error) {
 
 func (o AppointmentSlot) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.StartTime) {
-		toSerialize["start_time"] = o.StartTime
-	}
-	if !IsNil(o.EndTime) {
-		toSerialize["end_time"] = o.EndTime
-	}
+	toSerialize["start_time"] = o.StartTime
+	toSerialize["end_time"] = o.EndTime
 	if !IsNil(o.Appointment) {
 		toSerialize["appointment"] = o.Appointment
 	}
 	return toSerialize, nil
+}
+
+func (o *AppointmentSlot) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"start_time",
+		"end_time",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varAppointmentSlot := _AppointmentSlot{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varAppointmentSlot)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AppointmentSlot(varAppointmentSlot)
+
+	return err
 }
 
 type NullableAppointmentSlot struct {

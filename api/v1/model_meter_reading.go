@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the MeterReading type satisfies the MappedNullable interface at compile time
@@ -19,24 +21,32 @@ var _ MappedNullable = &MeterReading{}
 
 // MeterReading a single reading of a meter
 type MeterReading struct {
-	Id *string `json:"id,omitempty"`
-	// The timestamp of when the meter reading was created
-	CreatedAt *int64 `json:"created_at,omitempty"`
-	// The timestamp of when the meter reading was last updated
-	UpdatedAt     *int64       `json:"updated_at,omitempty"`
-	MeterRef      *string      `json:"meter_ref,omitempty"`
+	// Unique and immutable ID attribute of the entity that is generated when  the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities  or to retrieve it from the backend.
+	Id string `json:"id"`
+	// The date and time the entity was created
+	CreatedAt int64 `json:"created_at"`
+	// The date and time the entity was last updated
+	UpdatedAt     int64        `json:"updated_at"`
 	Date          *int64       `json:"date,omitempty"`
 	Value         *FloatNumber `json:"value,omitempty"`
-	ReporterRef   *string      `json:"reporter_ref,omitempty"`
 	AttachmentRef *string      `json:"attachment_ref,omitempty"`
+	MeterRef      string       `json:"meter_ref"`
+	ReporterRef   string       `json:"reporter_ref"`
 }
+
+type _MeterReading MeterReading
 
 // NewMeterReading instantiates a new MeterReading object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewMeterReading() *MeterReading {
+func NewMeterReading(id string, createdAt int64, updatedAt int64, meterRef string, reporterRef string) *MeterReading {
 	this := MeterReading{}
+	this.Id = id
+	this.CreatedAt = createdAt
+	this.UpdatedAt = updatedAt
+	this.MeterRef = meterRef
+	this.ReporterRef = reporterRef
 	return &this
 }
 
@@ -48,132 +58,76 @@ func NewMeterReadingWithDefaults() *MeterReading {
 	return &this
 }
 
-// GetId returns the Id field value if set, zero value otherwise.
+// GetId returns the Id field value
 func (o *MeterReading) GetId() string {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Id
+
+	return o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
 func (o *MeterReading) GetIdOk() (*string, bool) {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Id, true
+	return &o.Id, true
 }
 
-// HasId returns a boolean if a field has been set.
-func (o *MeterReading) HasId() bool {
-	if o != nil && !IsNil(o.Id) {
-		return true
-	}
-
-	return false
-}
-
-// SetId gets a reference to the given string and assigns it to the Id field.
+// SetId sets field value
 func (o *MeterReading) SetId(v string) {
-	o.Id = &v
+	o.Id = v
 }
 
-// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
+// GetCreatedAt returns the CreatedAt field value
 func (o *MeterReading) GetCreatedAt() int64 {
-	if o == nil || IsNil(o.CreatedAt) {
+	if o == nil {
 		var ret int64
 		return ret
 	}
-	return *o.CreatedAt
+
+	return o.CreatedAt
 }
 
-// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
+// GetCreatedAtOk returns a tuple with the CreatedAt field value
 // and a boolean to check if the value has been set.
 func (o *MeterReading) GetCreatedAtOk() (*int64, bool) {
-	if o == nil || IsNil(o.CreatedAt) {
+	if o == nil {
 		return nil, false
 	}
-	return o.CreatedAt, true
+	return &o.CreatedAt, true
 }
 
-// HasCreatedAt returns a boolean if a field has been set.
-func (o *MeterReading) HasCreatedAt() bool {
-	if o != nil && !IsNil(o.CreatedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetCreatedAt gets a reference to the given int64 and assigns it to the CreatedAt field.
+// SetCreatedAt sets field value
 func (o *MeterReading) SetCreatedAt(v int64) {
-	o.CreatedAt = &v
+	o.CreatedAt = v
 }
 
-// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
+// GetUpdatedAt returns the UpdatedAt field value
 func (o *MeterReading) GetUpdatedAt() int64 {
-	if o == nil || IsNil(o.UpdatedAt) {
+	if o == nil {
 		var ret int64
 		return ret
 	}
-	return *o.UpdatedAt
+
+	return o.UpdatedAt
 }
 
-// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
 // and a boolean to check if the value has been set.
 func (o *MeterReading) GetUpdatedAtOk() (*int64, bool) {
-	if o == nil || IsNil(o.UpdatedAt) {
+	if o == nil {
 		return nil, false
 	}
-	return o.UpdatedAt, true
+	return &o.UpdatedAt, true
 }
 
-// HasUpdatedAt returns a boolean if a field has been set.
-func (o *MeterReading) HasUpdatedAt() bool {
-	if o != nil && !IsNil(o.UpdatedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetUpdatedAt gets a reference to the given int64 and assigns it to the UpdatedAt field.
+// SetUpdatedAt sets field value
 func (o *MeterReading) SetUpdatedAt(v int64) {
-	o.UpdatedAt = &v
-}
-
-// GetMeterRef returns the MeterRef field value if set, zero value otherwise.
-func (o *MeterReading) GetMeterRef() string {
-	if o == nil || IsNil(o.MeterRef) {
-		var ret string
-		return ret
-	}
-	return *o.MeterRef
-}
-
-// GetMeterRefOk returns a tuple with the MeterRef field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *MeterReading) GetMeterRefOk() (*string, bool) {
-	if o == nil || IsNil(o.MeterRef) {
-		return nil, false
-	}
-	return o.MeterRef, true
-}
-
-// HasMeterRef returns a boolean if a field has been set.
-func (o *MeterReading) HasMeterRef() bool {
-	if o != nil && !IsNil(o.MeterRef) {
-		return true
-	}
-
-	return false
-}
-
-// SetMeterRef gets a reference to the given string and assigns it to the MeterRef field.
-func (o *MeterReading) SetMeterRef(v string) {
-	o.MeterRef = &v
+	o.UpdatedAt = v
 }
 
 // GetDate returns the Date field value if set, zero value otherwise.
@@ -240,38 +194,6 @@ func (o *MeterReading) SetValue(v FloatNumber) {
 	o.Value = &v
 }
 
-// GetReporterRef returns the ReporterRef field value if set, zero value otherwise.
-func (o *MeterReading) GetReporterRef() string {
-	if o == nil || IsNil(o.ReporterRef) {
-		var ret string
-		return ret
-	}
-	return *o.ReporterRef
-}
-
-// GetReporterRefOk returns a tuple with the ReporterRef field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *MeterReading) GetReporterRefOk() (*string, bool) {
-	if o == nil || IsNil(o.ReporterRef) {
-		return nil, false
-	}
-	return o.ReporterRef, true
-}
-
-// HasReporterRef returns a boolean if a field has been set.
-func (o *MeterReading) HasReporterRef() bool {
-	if o != nil && !IsNil(o.ReporterRef) {
-		return true
-	}
-
-	return false
-}
-
-// SetReporterRef gets a reference to the given string and assigns it to the ReporterRef field.
-func (o *MeterReading) SetReporterRef(v string) {
-	o.ReporterRef = &v
-}
-
 // GetAttachmentRef returns the AttachmentRef field value if set, zero value otherwise.
 func (o *MeterReading) GetAttachmentRef() string {
 	if o == nil || IsNil(o.AttachmentRef) {
@@ -304,6 +226,54 @@ func (o *MeterReading) SetAttachmentRef(v string) {
 	o.AttachmentRef = &v
 }
 
+// GetMeterRef returns the MeterRef field value
+func (o *MeterReading) GetMeterRef() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.MeterRef
+}
+
+// GetMeterRefOk returns a tuple with the MeterRef field value
+// and a boolean to check if the value has been set.
+func (o *MeterReading) GetMeterRefOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.MeterRef, true
+}
+
+// SetMeterRef sets field value
+func (o *MeterReading) SetMeterRef(v string) {
+	o.MeterRef = v
+}
+
+// GetReporterRef returns the ReporterRef field value
+func (o *MeterReading) GetReporterRef() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.ReporterRef
+}
+
+// GetReporterRefOk returns a tuple with the ReporterRef field value
+// and a boolean to check if the value has been set.
+func (o *MeterReading) GetReporterRefOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.ReporterRef, true
+}
+
+// SetReporterRef sets field value
+func (o *MeterReading) SetReporterRef(v string) {
+	o.ReporterRef = v
+}
+
 func (o MeterReading) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -314,31 +284,62 @@ func (o MeterReading) MarshalJSON() ([]byte, error) {
 
 func (o MeterReading) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Id) {
-		toSerialize["id"] = o.Id
-	}
-	if !IsNil(o.CreatedAt) {
-		toSerialize["created_at"] = o.CreatedAt
-	}
-	if !IsNil(o.UpdatedAt) {
-		toSerialize["updated_at"] = o.UpdatedAt
-	}
-	if !IsNil(o.MeterRef) {
-		toSerialize["meter_ref"] = o.MeterRef
-	}
+	toSerialize["id"] = o.Id
+	toSerialize["created_at"] = o.CreatedAt
+	toSerialize["updated_at"] = o.UpdatedAt
 	if !IsNil(o.Date) {
 		toSerialize["date"] = o.Date
 	}
 	if !IsNil(o.Value) {
 		toSerialize["value"] = o.Value
 	}
-	if !IsNil(o.ReporterRef) {
-		toSerialize["reporter_ref"] = o.ReporterRef
-	}
 	if !IsNil(o.AttachmentRef) {
 		toSerialize["attachment_ref"] = o.AttachmentRef
 	}
+	toSerialize["meter_ref"] = o.MeterRef
+	toSerialize["reporter_ref"] = o.ReporterRef
 	return toSerialize, nil
+}
+
+func (o *MeterReading) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"id",
+		"created_at",
+		"updated_at",
+		"meter_ref",
+		"reporter_ref",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varMeterReading := _MeterReading{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varMeterReading)
+
+	if err != nil {
+		return err
+	}
+
+	*o = MeterReading(varMeterReading)
+
+	return err
 }
 
 type NullableMeterReading struct {

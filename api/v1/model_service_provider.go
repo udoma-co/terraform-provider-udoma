@@ -11,24 +11,26 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the ServiceProvider type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ServiceProvider{}
 
-// ServiceProvider ServiceProvider is used by PMs to manage the list of service providers the work with in the respective category and subcategory
+// ServiceProvider Service providers are used by property managers to keep a reference of companies they work with in the respective category and subcategory
 type ServiceProvider struct {
-	// the unique ID of this entry
-	Id *string `json:"id,omitempty"`
-	// optional external ID, in case tenancy was created via backend integration
+	// Unique and immutable ID attribute of the entity that is generated when  the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities  or to retrieve it from the backend.
+	Id string `json:"id"`
+	// The date and time the entity was created
+	CreatedAt int64 `json:"created_at"`
+	// The date and time the entity was last updated
+	UpdatedAt int64 `json:"updated_at"`
+	// Optional external ID, in case entity was created via backend integration
 	ExternalId *string `json:"external_id,omitempty"`
-	// optional external source, in case tenancy was created via backend integration
+	// Optional external source, in case entity was created via backend integration
 	ExternalSource *string `json:"external_source,omitempty"`
-	// The timestamp of when the tenant was created
-	CreatedAt *int64 `json:"created_at,omitempty"`
-	// The timestamp of when the tenant was last updated
-	UpdatedAt *int64 `json:"updated_at,omitempty"`
 	// The salutation to be used for the contant person (Miss, Mister)
 	Title *string `json:"title,omitempty"`
 	// optional first name of contact person
@@ -38,21 +40,27 @@ type ServiceProvider struct {
 	// the name of the company
 	Company *string `json:"company,omitempty"`
 	// the email address at which the company can be contacted by the platform
-	Email *string `json:"email,omitempty"`
+	Email string `json:"email"`
 	// a phone number at which the company can be reached
 	PhoneNumber *string              `json:"phone_number,omitempty"`
 	Category    *ServiceCategoryEnum `json:"category,omitempty"`
+	Address     *Address             `json:"address,omitempty"`
 	// Indicates whether the service provider has an active account with Udoma. If so, it will be possible to assign cases directly to them.
-	Connected *bool    `json:"connected,omitempty"`
-	Address   *Address `json:"address,omitempty"`
+	Connected *bool `json:"connected,omitempty"`
 }
+
+type _ServiceProvider ServiceProvider
 
 // NewServiceProvider instantiates a new ServiceProvider object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewServiceProvider() *ServiceProvider {
+func NewServiceProvider(id string, createdAt int64, updatedAt int64, email string) *ServiceProvider {
 	this := ServiceProvider{}
+	this.Id = id
+	this.CreatedAt = createdAt
+	this.UpdatedAt = updatedAt
+	this.Email = email
 	return &this
 }
 
@@ -64,36 +72,76 @@ func NewServiceProviderWithDefaults() *ServiceProvider {
 	return &this
 }
 
-// GetId returns the Id field value if set, zero value otherwise.
+// GetId returns the Id field value
 func (o *ServiceProvider) GetId() string {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Id
+
+	return o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
 func (o *ServiceProvider) GetIdOk() (*string, bool) {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Id, true
+	return &o.Id, true
 }
 
-// HasId returns a boolean if a field has been set.
-func (o *ServiceProvider) HasId() bool {
-	if o != nil && !IsNil(o.Id) {
-		return true
+// SetId sets field value
+func (o *ServiceProvider) SetId(v string) {
+	o.Id = v
+}
+
+// GetCreatedAt returns the CreatedAt field value
+func (o *ServiceProvider) GetCreatedAt() int64 {
+	if o == nil {
+		var ret int64
+		return ret
 	}
 
-	return false
+	return o.CreatedAt
 }
 
-// SetId gets a reference to the given string and assigns it to the Id field.
-func (o *ServiceProvider) SetId(v string) {
-	o.Id = &v
+// GetCreatedAtOk returns a tuple with the CreatedAt field value
+// and a boolean to check if the value has been set.
+func (o *ServiceProvider) GetCreatedAtOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.CreatedAt, true
+}
+
+// SetCreatedAt sets field value
+func (o *ServiceProvider) SetCreatedAt(v int64) {
+	o.CreatedAt = v
+}
+
+// GetUpdatedAt returns the UpdatedAt field value
+func (o *ServiceProvider) GetUpdatedAt() int64 {
+	if o == nil {
+		var ret int64
+		return ret
+	}
+
+	return o.UpdatedAt
+}
+
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
+// and a boolean to check if the value has been set.
+func (o *ServiceProvider) GetUpdatedAtOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.UpdatedAt, true
+}
+
+// SetUpdatedAt sets field value
+func (o *ServiceProvider) SetUpdatedAt(v int64) {
+	o.UpdatedAt = v
 }
 
 // GetExternalId returns the ExternalId field value if set, zero value otherwise.
@@ -158,70 +206,6 @@ func (o *ServiceProvider) HasExternalSource() bool {
 // SetExternalSource gets a reference to the given string and assigns it to the ExternalSource field.
 func (o *ServiceProvider) SetExternalSource(v string) {
 	o.ExternalSource = &v
-}
-
-// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
-func (o *ServiceProvider) GetCreatedAt() int64 {
-	if o == nil || IsNil(o.CreatedAt) {
-		var ret int64
-		return ret
-	}
-	return *o.CreatedAt
-}
-
-// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *ServiceProvider) GetCreatedAtOk() (*int64, bool) {
-	if o == nil || IsNil(o.CreatedAt) {
-		return nil, false
-	}
-	return o.CreatedAt, true
-}
-
-// HasCreatedAt returns a boolean if a field has been set.
-func (o *ServiceProvider) HasCreatedAt() bool {
-	if o != nil && !IsNil(o.CreatedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetCreatedAt gets a reference to the given int64 and assigns it to the CreatedAt field.
-func (o *ServiceProvider) SetCreatedAt(v int64) {
-	o.CreatedAt = &v
-}
-
-// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
-func (o *ServiceProvider) GetUpdatedAt() int64 {
-	if o == nil || IsNil(o.UpdatedAt) {
-		var ret int64
-		return ret
-	}
-	return *o.UpdatedAt
-}
-
-// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *ServiceProvider) GetUpdatedAtOk() (*int64, bool) {
-	if o == nil || IsNil(o.UpdatedAt) {
-		return nil, false
-	}
-	return o.UpdatedAt, true
-}
-
-// HasUpdatedAt returns a boolean if a field has been set.
-func (o *ServiceProvider) HasUpdatedAt() bool {
-	if o != nil && !IsNil(o.UpdatedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetUpdatedAt gets a reference to the given int64 and assigns it to the UpdatedAt field.
-func (o *ServiceProvider) SetUpdatedAt(v int64) {
-	o.UpdatedAt = &v
 }
 
 // GetTitle returns the Title field value if set, zero value otherwise.
@@ -352,36 +336,28 @@ func (o *ServiceProvider) SetCompany(v string) {
 	o.Company = &v
 }
 
-// GetEmail returns the Email field value if set, zero value otherwise.
+// GetEmail returns the Email field value
 func (o *ServiceProvider) GetEmail() string {
-	if o == nil || IsNil(o.Email) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Email
+
+	return o.Email
 }
 
-// GetEmailOk returns a tuple with the Email field value if set, nil otherwise
+// GetEmailOk returns a tuple with the Email field value
 // and a boolean to check if the value has been set.
 func (o *ServiceProvider) GetEmailOk() (*string, bool) {
-	if o == nil || IsNil(o.Email) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Email, true
+	return &o.Email, true
 }
 
-// HasEmail returns a boolean if a field has been set.
-func (o *ServiceProvider) HasEmail() bool {
-	if o != nil && !IsNil(o.Email) {
-		return true
-	}
-
-	return false
-}
-
-// SetEmail gets a reference to the given string and assigns it to the Email field.
+// SetEmail sets field value
 func (o *ServiceProvider) SetEmail(v string) {
-	o.Email = &v
+	o.Email = v
 }
 
 // GetPhoneNumber returns the PhoneNumber field value if set, zero value otherwise.
@@ -448,38 +424,6 @@ func (o *ServiceProvider) SetCategory(v ServiceCategoryEnum) {
 	o.Category = &v
 }
 
-// GetConnected returns the Connected field value if set, zero value otherwise.
-func (o *ServiceProvider) GetConnected() bool {
-	if o == nil || IsNil(o.Connected) {
-		var ret bool
-		return ret
-	}
-	return *o.Connected
-}
-
-// GetConnectedOk returns a tuple with the Connected field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *ServiceProvider) GetConnectedOk() (*bool, bool) {
-	if o == nil || IsNil(o.Connected) {
-		return nil, false
-	}
-	return o.Connected, true
-}
-
-// HasConnected returns a boolean if a field has been set.
-func (o *ServiceProvider) HasConnected() bool {
-	if o != nil && !IsNil(o.Connected) {
-		return true
-	}
-
-	return false
-}
-
-// SetConnected gets a reference to the given bool and assigns it to the Connected field.
-func (o *ServiceProvider) SetConnected(v bool) {
-	o.Connected = &v
-}
-
 // GetAddress returns the Address field value if set, zero value otherwise.
 func (o *ServiceProvider) GetAddress() Address {
 	if o == nil || IsNil(o.Address) {
@@ -512,6 +456,38 @@ func (o *ServiceProvider) SetAddress(v Address) {
 	o.Address = &v
 }
 
+// GetConnected returns the Connected field value if set, zero value otherwise.
+func (o *ServiceProvider) GetConnected() bool {
+	if o == nil || IsNil(o.Connected) {
+		var ret bool
+		return ret
+	}
+	return *o.Connected
+}
+
+// GetConnectedOk returns a tuple with the Connected field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ServiceProvider) GetConnectedOk() (*bool, bool) {
+	if o == nil || IsNil(o.Connected) {
+		return nil, false
+	}
+	return o.Connected, true
+}
+
+// HasConnected returns a boolean if a field has been set.
+func (o *ServiceProvider) HasConnected() bool {
+	if o != nil && !IsNil(o.Connected) {
+		return true
+	}
+
+	return false
+}
+
+// SetConnected gets a reference to the given bool and assigns it to the Connected field.
+func (o *ServiceProvider) SetConnected(v bool) {
+	o.Connected = &v
+}
+
 func (o ServiceProvider) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -522,20 +498,14 @@ func (o ServiceProvider) MarshalJSON() ([]byte, error) {
 
 func (o ServiceProvider) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Id) {
-		toSerialize["id"] = o.Id
-	}
+	toSerialize["id"] = o.Id
+	toSerialize["created_at"] = o.CreatedAt
+	toSerialize["updated_at"] = o.UpdatedAt
 	if !IsNil(o.ExternalId) {
 		toSerialize["external_id"] = o.ExternalId
 	}
 	if !IsNil(o.ExternalSource) {
 		toSerialize["external_source"] = o.ExternalSource
-	}
-	if !IsNil(o.CreatedAt) {
-		toSerialize["created_at"] = o.CreatedAt
-	}
-	if !IsNil(o.UpdatedAt) {
-		toSerialize["updated_at"] = o.UpdatedAt
 	}
 	if !IsNil(o.Title) {
 		toSerialize["title"] = o.Title
@@ -549,22 +519,60 @@ func (o ServiceProvider) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Company) {
 		toSerialize["company"] = o.Company
 	}
-	if !IsNil(o.Email) {
-		toSerialize["email"] = o.Email
-	}
+	toSerialize["email"] = o.Email
 	if !IsNil(o.PhoneNumber) {
 		toSerialize["phone_number"] = o.PhoneNumber
 	}
 	if !IsNil(o.Category) {
 		toSerialize["category"] = o.Category
 	}
-	if !IsNil(o.Connected) {
-		toSerialize["connected"] = o.Connected
-	}
 	if !IsNil(o.Address) {
 		toSerialize["address"] = o.Address
 	}
+	if !IsNil(o.Connected) {
+		toSerialize["connected"] = o.Connected
+	}
 	return toSerialize, nil
+}
+
+func (o *ServiceProvider) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"id",
+		"created_at",
+		"updated_at",
+		"email",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varServiceProvider := _ServiceProvider{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varServiceProvider)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ServiceProvider(varServiceProvider)
+
+	return err
 }
 
 type NullableServiceProvider struct {

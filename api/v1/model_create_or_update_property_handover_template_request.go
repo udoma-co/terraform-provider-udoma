@@ -24,8 +24,8 @@ type CreateOrUpdatePropertyHandoverTemplateRequest struct {
 	// The name of the property handover template.
 	Name string `json:"name"`
 	// The description of the property handover template.
-	Description *string    `json:"description,omitempty"`
-	CustomForm  CustomForm `json:"custom_form"`
+	Description *string            `json:"description,omitempty"`
+	CustomForm  NullableCustomForm `json:"custom_form"`
 }
 
 type _CreateOrUpdatePropertyHandoverTemplateRequest CreateOrUpdatePropertyHandoverTemplateRequest
@@ -34,7 +34,7 @@ type _CreateOrUpdatePropertyHandoverTemplateRequest CreateOrUpdatePropertyHandov
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateOrUpdatePropertyHandoverTemplateRequest(name string, customForm CustomForm) *CreateOrUpdatePropertyHandoverTemplateRequest {
+func NewCreateOrUpdatePropertyHandoverTemplateRequest(name string, customForm NullableCustomForm) *CreateOrUpdatePropertyHandoverTemplateRequest {
 	this := CreateOrUpdatePropertyHandoverTemplateRequest{}
 	this.Name = name
 	this.CustomForm = customForm
@@ -106,27 +106,29 @@ func (o *CreateOrUpdatePropertyHandoverTemplateRequest) SetDescription(v string)
 }
 
 // GetCustomForm returns the CustomForm field value
+// If the value is explicit nil, the zero value for CustomForm will be returned
 func (o *CreateOrUpdatePropertyHandoverTemplateRequest) GetCustomForm() CustomForm {
-	if o == nil {
+	if o == nil || o.CustomForm.Get() == nil {
 		var ret CustomForm
 		return ret
 	}
 
-	return o.CustomForm
+	return *o.CustomForm.Get()
 }
 
 // GetCustomFormOk returns a tuple with the CustomForm field value
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *CreateOrUpdatePropertyHandoverTemplateRequest) GetCustomFormOk() (*CustomForm, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.CustomForm, true
+	return o.CustomForm.Get(), o.CustomForm.IsSet()
 }
 
 // SetCustomForm sets field value
 func (o *CreateOrUpdatePropertyHandoverTemplateRequest) SetCustomForm(v CustomForm) {
-	o.CustomForm = v
+	o.CustomForm.Set(&v)
 }
 
 func (o CreateOrUpdatePropertyHandoverTemplateRequest) MarshalJSON() ([]byte, error) {
@@ -143,7 +145,7 @@ func (o CreateOrUpdatePropertyHandoverTemplateRequest) ToMap() (map[string]inter
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
 	}
-	toSerialize["custom_form"] = o.CustomForm
+	toSerialize["custom_form"] = o.CustomForm.Get()
 	return toSerialize, nil
 }
 

@@ -272,16 +272,16 @@ func (model *BankAccountModel) fromAPI(bankAccount *api.BankAccount) error {
 		return fmt.Errorf("bank account is nil")
 	}
 
-	model.ID = types.StringPointerValue(bankAccount.Id)
+	model.ID = types.StringValue(bankAccount.Id)
 	model.ExternalID = types.StringPointerValue(bankAccount.ExternalId)
 	model.ExternalSource = types.StringPointerValue(bankAccount.ExternalSource)
-	model.AccountHolder = types.StringPointerValue(bankAccount.AccountHolder)
-	model.Iban = types.StringPointerValue(bankAccount.Iban)
+	model.AccountHolder = types.StringValue(bankAccount.AccountHolder)
+	model.Iban = types.StringValue(bankAccount.Iban)
 	model.Bic = omittableStringValue(bankAccount.Bic, model.Bic)
 	model.BankName = omittableStringValue(bankAccount.BankName, model.BankName)
 	model.Description = omittableStringValue(bankAccount.Description, model.Description)
-	model.CreatedAt = types.Int64PointerValue(bankAccount.CreatedAt)
-	model.UpdatedAt = types.Int64PointerValue(bankAccount.UpdatedAt)
+	model.CreatedAt = types.Int64Value(bankAccount.CreatedAt)
+	model.UpdatedAt = types.Int64Value(bankAccount.UpdatedAt)
 
 	return nil
 }

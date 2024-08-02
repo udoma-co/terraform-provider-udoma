@@ -21,8 +21,11 @@ var _ MappedNullable = &CommentTemplate{}
 
 // CommentTemplate struct for CommentTemplate
 type CommentTemplate struct {
-	Id          string `json:"id"`
-	CreatedAt   int64  `json:"created_at"`
+	// Unique and immutable ID attribute of the entity that is generated when  the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities  or to retrieve it from the backend.
+	Id string `json:"id"`
+	// The date and time the entity was created
+	CreatedAt int64 `json:"created_at"`
+	// The date and time the entity was last updated
 	UpdatedAt   int64  `json:"updated_at"`
 	DisplayName string `json:"display_name"`
 	// A list of case template IDs that either gives or restricts access in cetain cases, based on is_deny_list property.

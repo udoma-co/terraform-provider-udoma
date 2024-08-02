@@ -17,7 +17,7 @@ import (
 // checks if the UserPreferences type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &UserPreferences{}
 
-// UserPreferences Notification preferences for individual users
+// UserPreferences struct for UserPreferences
 type UserPreferences struct {
 	// Notify when a new case has been raised for the account. For property  managers or service providers, this will be triggered when a new case is raised for their company/any of the properties the company manages. For tenants it is triggered, when a case is raised for the property  they live in.
 	NotifyOnNewCase []NotificationType `json:"notify_on_new_case,omitempty"`

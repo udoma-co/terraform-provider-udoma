@@ -422,13 +422,25 @@ func (model *CaseTemplateModel) fromAPI(template *api.CaseTemplate) error {
 func (model *CaseTemplateModel) toAPIRequest() (api.CreateOrUpdateCaseTemplateRequest, error) {
 
 	template := api.CreateOrUpdateCaseTemplateRequest{
-		Name:             model.Name.ValueString(),
-		NameExpression:   model.NameExpression.ValueStringPointer(),
-		Label:            modelMapToStringMap(model.Label),
-		Description:      modelMapToStringMap(model.Description),
-		InfoText:         modelMapToStringMap(model.InfoText),
-		Icon:             model.Icon.ValueStringPointer(),
-		ConfirmationText: modelMapToStringMap(model.ConfirmationText),
+		Name:           model.Name.ValueString(),
+		NameExpression: model.NameExpression.ValueStringPointer(),
+		Icon:           model.Icon.ValueStringPointer(),
+	}
+
+	if description := modelMapToStringMap(model.Description); len(description) > 0 {
+		template.Description = &description
+	}
+
+	if label := modelMapToStringMap(model.Label); len(label) > 0 {
+		template.Label = &label
+	}
+
+	if infoText := modelMapToStringMap(model.InfoText); len(infoText) > 0 {
+		template.InfoText = &infoText
+	}
+
+	if confirmationText := modelMapToStringMap(model.ConfirmationText); len(confirmationText) > 0 {
+		template.ConfirmationText = &confirmationText
 	}
 
 	template.Access = make([]api.CaseTemplateAccessibility, len(model.Access))

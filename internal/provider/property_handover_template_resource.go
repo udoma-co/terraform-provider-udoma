@@ -204,10 +204,11 @@ func (r *PropertyHandoverTemplate) ImportState(ctx context.Context, req resource
 }
 
 func (template *PropertyHandoverTemplateModel) toApiRequest() *v1.CreateOrUpdatePropertyHandoverTemplateRequest {
+	form := template.Inputs.toApiRequest()
 	return &v1.CreateOrUpdatePropertyHandoverTemplateRequest{
 		Name:        template.Name.ValueString(),
 		Description: template.Description.ValueStringPointer(),
-		CustomForm:  template.Inputs.toApiRequest(),
+		CustomForm:  *v1.NewNullableCustomForm(&form),
 	}
 }
 
@@ -219,7 +220,7 @@ func (template *PropertyHandoverTemplateModel) fromApiResponse(resp *v1.Property
 	if template.Inputs == nil {
 		template.Inputs = &CustomFormModel{}
 	}
-	diags = template.Inputs.fromApiResponse(&resp.CustomForm)
+	diags = template.Inputs.fromApiResponse(resp.CustomForm.Get())
 
 	return
 }

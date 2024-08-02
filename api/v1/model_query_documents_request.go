@@ -19,15 +19,17 @@ var _ MappedNullable = &QueryDocumentsRequest{}
 
 // QueryDocumentsRequest Attributes needed for querying document repository entries
 type QueryDocumentsRequest struct {
+	// The maximum number of entities to return from the query
+	Limit *int32 `json:"limit,omitempty"`
+	// The number of entities to skip before returning the result
+	Offset *int32 `json:"offset,omitempty"`
 	// The ID of the entity for which the documents are uploaded
 	RefId   *string              `json:"ref_id,omitempty"`
 	RefType *DocumentRefTypeEnum `json:"ref_type,omitempty"`
 	// The name of the document for which to query
 	Name *string `json:"name,omitempty"`
 	// Indicator, controlling whether the document is visible to tenants
-	Public *bool  `json:"public,omitempty"`
-	Limit  *int32 `json:"limit,omitempty"`
-	Offset *int32 `json:"offset,omitempty"`
+	Public *bool `json:"public,omitempty"`
 }
 
 // NewQueryDocumentsRequest instantiates a new QueryDocumentsRequest object
@@ -45,6 +47,70 @@ func NewQueryDocumentsRequest() *QueryDocumentsRequest {
 func NewQueryDocumentsRequestWithDefaults() *QueryDocumentsRequest {
 	this := QueryDocumentsRequest{}
 	return &this
+}
+
+// GetLimit returns the Limit field value if set, zero value otherwise.
+func (o *QueryDocumentsRequest) GetLimit() int32 {
+	if o == nil || IsNil(o.Limit) {
+		var ret int32
+		return ret
+	}
+	return *o.Limit
+}
+
+// GetLimitOk returns a tuple with the Limit field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryDocumentsRequest) GetLimitOk() (*int32, bool) {
+	if o == nil || IsNil(o.Limit) {
+		return nil, false
+	}
+	return o.Limit, true
+}
+
+// HasLimit returns a boolean if a field has been set.
+func (o *QueryDocumentsRequest) HasLimit() bool {
+	if o != nil && !IsNil(o.Limit) {
+		return true
+	}
+
+	return false
+}
+
+// SetLimit gets a reference to the given int32 and assigns it to the Limit field.
+func (o *QueryDocumentsRequest) SetLimit(v int32) {
+	o.Limit = &v
+}
+
+// GetOffset returns the Offset field value if set, zero value otherwise.
+func (o *QueryDocumentsRequest) GetOffset() int32 {
+	if o == nil || IsNil(o.Offset) {
+		var ret int32
+		return ret
+	}
+	return *o.Offset
+}
+
+// GetOffsetOk returns a tuple with the Offset field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryDocumentsRequest) GetOffsetOk() (*int32, bool) {
+	if o == nil || IsNil(o.Offset) {
+		return nil, false
+	}
+	return o.Offset, true
+}
+
+// HasOffset returns a boolean if a field has been set.
+func (o *QueryDocumentsRequest) HasOffset() bool {
+	if o != nil && !IsNil(o.Offset) {
+		return true
+	}
+
+	return false
+}
+
+// SetOffset gets a reference to the given int32 and assigns it to the Offset field.
+func (o *QueryDocumentsRequest) SetOffset(v int32) {
+	o.Offset = &v
 }
 
 // GetRefId returns the RefId field value if set, zero value otherwise.
@@ -175,70 +241,6 @@ func (o *QueryDocumentsRequest) SetPublic(v bool) {
 	o.Public = &v
 }
 
-// GetLimit returns the Limit field value if set, zero value otherwise.
-func (o *QueryDocumentsRequest) GetLimit() int32 {
-	if o == nil || IsNil(o.Limit) {
-		var ret int32
-		return ret
-	}
-	return *o.Limit
-}
-
-// GetLimitOk returns a tuple with the Limit field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *QueryDocumentsRequest) GetLimitOk() (*int32, bool) {
-	if o == nil || IsNil(o.Limit) {
-		return nil, false
-	}
-	return o.Limit, true
-}
-
-// HasLimit returns a boolean if a field has been set.
-func (o *QueryDocumentsRequest) HasLimit() bool {
-	if o != nil && !IsNil(o.Limit) {
-		return true
-	}
-
-	return false
-}
-
-// SetLimit gets a reference to the given int32 and assigns it to the Limit field.
-func (o *QueryDocumentsRequest) SetLimit(v int32) {
-	o.Limit = &v
-}
-
-// GetOffset returns the Offset field value if set, zero value otherwise.
-func (o *QueryDocumentsRequest) GetOffset() int32 {
-	if o == nil || IsNil(o.Offset) {
-		var ret int32
-		return ret
-	}
-	return *o.Offset
-}
-
-// GetOffsetOk returns a tuple with the Offset field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *QueryDocumentsRequest) GetOffsetOk() (*int32, bool) {
-	if o == nil || IsNil(o.Offset) {
-		return nil, false
-	}
-	return o.Offset, true
-}
-
-// HasOffset returns a boolean if a field has been set.
-func (o *QueryDocumentsRequest) HasOffset() bool {
-	if o != nil && !IsNil(o.Offset) {
-		return true
-	}
-
-	return false
-}
-
-// SetOffset gets a reference to the given int32 and assigns it to the Offset field.
-func (o *QueryDocumentsRequest) SetOffset(v int32) {
-	o.Offset = &v
-}
-
 func (o QueryDocumentsRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -249,6 +251,12 @@ func (o QueryDocumentsRequest) MarshalJSON() ([]byte, error) {
 
 func (o QueryDocumentsRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Limit) {
+		toSerialize["limit"] = o.Limit
+	}
+	if !IsNil(o.Offset) {
+		toSerialize["offset"] = o.Offset
+	}
 	if !IsNil(o.RefId) {
 		toSerialize["ref_id"] = o.RefId
 	}
@@ -260,12 +268,6 @@ func (o QueryDocumentsRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Public) {
 		toSerialize["public"] = o.Public
-	}
-	if !IsNil(o.Limit) {
-		toSerialize["limit"] = o.Limit
-	}
-	if !IsNil(o.Offset) {
-		toSerialize["offset"] = o.Offset
 	}
 	return toSerialize, nil
 }

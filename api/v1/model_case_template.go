@@ -21,16 +21,16 @@ var _ MappedNullable = &CaseTemplate{}
 
 // CaseTemplate Contains the information necessary to create a report of a certain  type from a report endpoint.
 type CaseTemplate struct {
-	// The ID of the cases template
+	// Unique and immutable ID attribute of the entity that is generated when  the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities  or to retrieve it from the backend.
 	Id string `json:"id"`
-	// The timestamp of when the template was created
+	// The date and time the entity was created
 	CreatedAt int64 `json:"created_at"`
-	// The timestamp of when the template was last updated
+	// The date and time the entity was last updated
 	UpdatedAt int64 `json:"updated_at"`
-	// The name of the cases template (only used in admin pages). If not set, the name of the template will be used instead.
+	// The name of the case template
 	Name string `json:"name"`
 	// The list of access possibilities for the template. This is used to determine  in which parts of the webapp the template can be used.
-	Access []CaseTemplateAccessibility `json:"access,omitempty"`
+	Access []CaseTemplateAccessibility `json:"access"`
 	// Optional JS expression used to generate the name of the actual case
 	NameExpression *string `json:"name_expression,omitempty"`
 	// a map of values, where the key and values are strings
@@ -41,12 +41,12 @@ type CaseTemplate struct {
 	InfoText *map[string]string `json:"info_text,omitempty"`
 	// The font-awesome icon to use for this template
 	Icon         *string                      `json:"icon,omitempty"`
-	CustomInputs CustomForm                   `json:"custom_inputs"`
-	Config       *CaseConfig                  `json:"config,omitempty"`
+	CustomInputs NullableCustomForm           `json:"custom_inputs"`
+	Config       CaseConfig                   `json:"config"`
 	AdCategories []CaseTemplateAdCategoryEnum `json:"ad_categories,omitempty"`
 	// a map of values, where the key and values are strings
 	ConfirmationText *map[string]string `json:"confirmation_text,omitempty"`
-	// Indicates if the template has been deleted
+	// A flag indicating whether the entity is deleted. If the entity is deleted, it should not be returned in the results of a query, but it is still kept in the database as it is referenced by other entities.
 	IsDeleted *bool `json:"is_deleted,omitempty"`
 }
 
@@ -56,13 +56,15 @@ type _CaseTemplate CaseTemplate
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCaseTemplate(id string, createdAt int64, updatedAt int64, name string, customInputs CustomForm) *CaseTemplate {
+func NewCaseTemplate(id string, createdAt int64, updatedAt int64, name string, access []CaseTemplateAccessibility, customInputs NullableCustomForm, config CaseConfig) *CaseTemplate {
 	this := CaseTemplate{}
 	this.Id = id
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
 	this.Name = name
+	this.Access = access
 	this.CustomInputs = customInputs
+	this.Config = config
 	return &this
 }
 
@@ -170,34 +172,26 @@ func (o *CaseTemplate) SetName(v string) {
 	o.Name = v
 }
 
-// GetAccess returns the Access field value if set, zero value otherwise.
+// GetAccess returns the Access field value
 func (o *CaseTemplate) GetAccess() []CaseTemplateAccessibility {
-	if o == nil || IsNil(o.Access) {
+	if o == nil {
 		var ret []CaseTemplateAccessibility
 		return ret
 	}
+
 	return o.Access
 }
 
-// GetAccessOk returns a tuple with the Access field value if set, nil otherwise
+// GetAccessOk returns a tuple with the Access field value
 // and a boolean to check if the value has been set.
 func (o *CaseTemplate) GetAccessOk() ([]CaseTemplateAccessibility, bool) {
-	if o == nil || IsNil(o.Access) {
+	if o == nil {
 		return nil, false
 	}
 	return o.Access, true
 }
 
-// HasAccess returns a boolean if a field has been set.
-func (o *CaseTemplate) HasAccess() bool {
-	if o != nil && !IsNil(o.Access) {
-		return true
-	}
-
-	return false
-}
-
-// SetAccess gets a reference to the given []CaseTemplateAccessibility and assigns it to the Access field.
+// SetAccess sets field value
 func (o *CaseTemplate) SetAccess(v []CaseTemplateAccessibility) {
 	o.Access = v
 }
@@ -363,59 +357,53 @@ func (o *CaseTemplate) SetIcon(v string) {
 }
 
 // GetCustomInputs returns the CustomInputs field value
+// If the value is explicit nil, the zero value for CustomForm will be returned
 func (o *CaseTemplate) GetCustomInputs() CustomForm {
-	if o == nil {
+	if o == nil || o.CustomInputs.Get() == nil {
 		var ret CustomForm
 		return ret
 	}
 
-	return o.CustomInputs
+	return *o.CustomInputs.Get()
 }
 
 // GetCustomInputsOk returns a tuple with the CustomInputs field value
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *CaseTemplate) GetCustomInputsOk() (*CustomForm, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.CustomInputs, true
+	return o.CustomInputs.Get(), o.CustomInputs.IsSet()
 }
 
 // SetCustomInputs sets field value
 func (o *CaseTemplate) SetCustomInputs(v CustomForm) {
-	o.CustomInputs = v
+	o.CustomInputs.Set(&v)
 }
 
-// GetConfig returns the Config field value if set, zero value otherwise.
+// GetConfig returns the Config field value
 func (o *CaseTemplate) GetConfig() CaseConfig {
-	if o == nil || IsNil(o.Config) {
+	if o == nil {
 		var ret CaseConfig
 		return ret
 	}
-	return *o.Config
+
+	return o.Config
 }
 
-// GetConfigOk returns a tuple with the Config field value if set, nil otherwise
+// GetConfigOk returns a tuple with the Config field value
 // and a boolean to check if the value has been set.
 func (o *CaseTemplate) GetConfigOk() (*CaseConfig, bool) {
-	if o == nil || IsNil(o.Config) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Config, true
+	return &o.Config, true
 }
 
-// HasConfig returns a boolean if a field has been set.
-func (o *CaseTemplate) HasConfig() bool {
-	if o != nil && !IsNil(o.Config) {
-		return true
-	}
-
-	return false
-}
-
-// SetConfig gets a reference to the given CaseConfig and assigns it to the Config field.
+// SetConfig sets field value
 func (o *CaseTemplate) SetConfig(v CaseConfig) {
-	o.Config = &v
+	o.Config = v
 }
 
 // GetAdCategories returns the AdCategories field value if set, zero value otherwise.
@@ -528,9 +516,7 @@ func (o CaseTemplate) ToMap() (map[string]interface{}, error) {
 	toSerialize["created_at"] = o.CreatedAt
 	toSerialize["updated_at"] = o.UpdatedAt
 	toSerialize["name"] = o.Name
-	if !IsNil(o.Access) {
-		toSerialize["access"] = o.Access
-	}
+	toSerialize["access"] = o.Access
 	if !IsNil(o.NameExpression) {
 		toSerialize["name_expression"] = o.NameExpression
 	}
@@ -546,10 +532,8 @@ func (o CaseTemplate) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Icon) {
 		toSerialize["icon"] = o.Icon
 	}
-	toSerialize["custom_inputs"] = o.CustomInputs
-	if !IsNil(o.Config) {
-		toSerialize["config"] = o.Config
-	}
+	toSerialize["custom_inputs"] = o.CustomInputs.Get()
+	toSerialize["config"] = o.Config
 	if !IsNil(o.AdCategories) {
 		toSerialize["ad_categories"] = o.AdCategories
 	}
@@ -571,7 +555,9 @@ func (o *CaseTemplate) UnmarshalJSON(data []byte) (err error) {
 		"created_at",
 		"updated_at",
 		"name",
+		"access",
 		"custom_inputs",
+		"config",
 	}
 
 	allProperties := make(map[string]interface{})

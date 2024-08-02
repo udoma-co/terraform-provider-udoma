@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the WorkflowExecutionStep type satisfies the MappedNullable interface at compile time
@@ -20,30 +22,36 @@ var _ MappedNullable = &WorkflowExecutionStep{}
 // WorkflowExecutionStep a single step within a workflow execution. This is derived from the step definition, however, dynamic data is computed and populated by the backend, before the result is  being sent to the client.
 type WorkflowExecutionStep struct {
 	// the ID of the step, unique within the workflow
-	Id *string `json:"id,omitempty"`
+	Id string `json:"id"`
 	// the type of the step
-	Type *string `json:"type,omitempty"`
+	Type string `json:"type"`
 	// The icon of the step (shown in the menu). If empty, the default icon  of the step type will be used.
 	Icon *string `json:"icon,omitempty"`
 	// The name of the step (shown as title and in the menu). If empty, the  default name of the step type will be used.
-	Name *string `json:"name,omitempty"`
+	Name string `json:"name"`
 	// a parameter of a workflow step or step action. The value of the parameter is contextual and can vary in type and meaning depending on the step or action that uses it. If used in a step, the parameter will be available in the UI and will not be interpreted, i.e. JS expressions are not allowed. In actions however, the parameter might be interpreted as a JS expression, if the action type requires it.
 	Parameters map[string]interface{} `json:"parameters,omitempty"`
 	// Optional name of the group of the step. If a group is provided, steps within the same group will be grouped together in the UI as a drawer.
 	GroupName *string              `json:"group_name,omitempty"`
-	Actions   []WorkflowStepAction `json:"actions,omitempty"`
+	Actions   []WorkflowStepAction `json:"actions"`
 	// Indicates whether the step has been completed or not.
 	IsCompleted *bool `json:"is_completed,omitempty"`
 	// Indicates whether the step can be executed or not.
 	CanBeExecuted *bool `json:"can_be_executed,omitempty"`
 }
 
+type _WorkflowExecutionStep WorkflowExecutionStep
+
 // NewWorkflowExecutionStep instantiates a new WorkflowExecutionStep object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewWorkflowExecutionStep() *WorkflowExecutionStep {
+func NewWorkflowExecutionStep(id string, type_ string, name string, actions []WorkflowStepAction) *WorkflowExecutionStep {
 	this := WorkflowExecutionStep{}
+	this.Id = id
+	this.Type = type_
+	this.Name = name
+	this.Actions = actions
 	return &this
 }
 
@@ -55,68 +63,52 @@ func NewWorkflowExecutionStepWithDefaults() *WorkflowExecutionStep {
 	return &this
 }
 
-// GetId returns the Id field value if set, zero value otherwise.
+// GetId returns the Id field value
 func (o *WorkflowExecutionStep) GetId() string {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Id
+
+	return o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecutionStep) GetIdOk() (*string, bool) {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Id, true
+	return &o.Id, true
 }
 
-// HasId returns a boolean if a field has been set.
-func (o *WorkflowExecutionStep) HasId() bool {
-	if o != nil && !IsNil(o.Id) {
-		return true
-	}
-
-	return false
-}
-
-// SetId gets a reference to the given string and assigns it to the Id field.
+// SetId sets field value
 func (o *WorkflowExecutionStep) SetId(v string) {
-	o.Id = &v
+	o.Id = v
 }
 
-// GetType returns the Type field value if set, zero value otherwise.
+// GetType returns the Type field value
 func (o *WorkflowExecutionStep) GetType() string {
-	if o == nil || IsNil(o.Type) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Type
+
+	return o.Type
 }
 
-// GetTypeOk returns a tuple with the Type field value if set, nil otherwise
+// GetTypeOk returns a tuple with the Type field value
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecutionStep) GetTypeOk() (*string, bool) {
-	if o == nil || IsNil(o.Type) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Type, true
+	return &o.Type, true
 }
 
-// HasType returns a boolean if a field has been set.
-func (o *WorkflowExecutionStep) HasType() bool {
-	if o != nil && !IsNil(o.Type) {
-		return true
-	}
-
-	return false
-}
-
-// SetType gets a reference to the given string and assigns it to the Type field.
+// SetType sets field value
 func (o *WorkflowExecutionStep) SetType(v string) {
-	o.Type = &v
+	o.Type = v
 }
 
 // GetIcon returns the Icon field value if set, zero value otherwise.
@@ -151,36 +143,28 @@ func (o *WorkflowExecutionStep) SetIcon(v string) {
 	o.Icon = &v
 }
 
-// GetName returns the Name field value if set, zero value otherwise.
+// GetName returns the Name field value
 func (o *WorkflowExecutionStep) GetName() string {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Name
+
+	return o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// GetNameOk returns a tuple with the Name field value
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecutionStep) GetNameOk() (*string, bool) {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Name, true
+	return &o.Name, true
 }
 
-// HasName returns a boolean if a field has been set.
-func (o *WorkflowExecutionStep) HasName() bool {
-	if o != nil && !IsNil(o.Name) {
-		return true
-	}
-
-	return false
-}
-
-// SetName gets a reference to the given string and assigns it to the Name field.
+// SetName sets field value
 func (o *WorkflowExecutionStep) SetName(v string) {
-	o.Name = &v
+	o.Name = v
 }
 
 // GetParameters returns the Parameters field value if set, zero value otherwise.
@@ -247,34 +231,26 @@ func (o *WorkflowExecutionStep) SetGroupName(v string) {
 	o.GroupName = &v
 }
 
-// GetActions returns the Actions field value if set, zero value otherwise.
+// GetActions returns the Actions field value
 func (o *WorkflowExecutionStep) GetActions() []WorkflowStepAction {
-	if o == nil || IsNil(o.Actions) {
+	if o == nil {
 		var ret []WorkflowStepAction
 		return ret
 	}
+
 	return o.Actions
 }
 
-// GetActionsOk returns a tuple with the Actions field value if set, nil otherwise
+// GetActionsOk returns a tuple with the Actions field value
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecutionStep) GetActionsOk() ([]WorkflowStepAction, bool) {
-	if o == nil || IsNil(o.Actions) {
+	if o == nil {
 		return nil, false
 	}
 	return o.Actions, true
 }
 
-// HasActions returns a boolean if a field has been set.
-func (o *WorkflowExecutionStep) HasActions() bool {
-	if o != nil && !IsNil(o.Actions) {
-		return true
-	}
-
-	return false
-}
-
-// SetActions gets a reference to the given []WorkflowStepAction and assigns it to the Actions field.
+// SetActions sets field value
 func (o *WorkflowExecutionStep) SetActions(v []WorkflowStepAction) {
 	o.Actions = v
 }
@@ -353,27 +329,19 @@ func (o WorkflowExecutionStep) MarshalJSON() ([]byte, error) {
 
 func (o WorkflowExecutionStep) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Id) {
-		toSerialize["id"] = o.Id
-	}
-	if !IsNil(o.Type) {
-		toSerialize["type"] = o.Type
-	}
+	toSerialize["id"] = o.Id
+	toSerialize["type"] = o.Type
 	if !IsNil(o.Icon) {
 		toSerialize["icon"] = o.Icon
 	}
-	if !IsNil(o.Name) {
-		toSerialize["name"] = o.Name
-	}
+	toSerialize["name"] = o.Name
 	if !IsNil(o.Parameters) {
 		toSerialize["parameters"] = o.Parameters
 	}
 	if !IsNil(o.GroupName) {
 		toSerialize["group_name"] = o.GroupName
 	}
-	if !IsNil(o.Actions) {
-		toSerialize["actions"] = o.Actions
-	}
+	toSerialize["actions"] = o.Actions
 	if !IsNil(o.IsCompleted) {
 		toSerialize["is_completed"] = o.IsCompleted
 	}
@@ -381,6 +349,46 @@ func (o WorkflowExecutionStep) ToMap() (map[string]interface{}, error) {
 		toSerialize["can_be_executed"] = o.CanBeExecuted
 	}
 	return toSerialize, nil
+}
+
+func (o *WorkflowExecutionStep) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"id",
+		"type",
+		"name",
+		"actions",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varWorkflowExecutionStep := _WorkflowExecutionStep{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varWorkflowExecutionStep)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WorkflowExecutionStep(varWorkflowExecutionStep)
+
+	return err
 }
 
 type NullableWorkflowExecutionStep struct {

@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the CaseDetails type satisfies the MappedNullable interface at compile time
@@ -19,19 +21,23 @@ var _ MappedNullable = &CaseDetails{}
 
 // CaseDetails All details of a case, raised via a case report endpoint
 type CaseDetails struct {
-	Case      *Case          `json:"case,omitempty"`
+	Case      Case           `json:"case"`
 	Reporter  *UserReference `json:"reporter,omitempty"`
 	CaseParty *CaseParty     `json:"case_party,omitempty"`
-	Template  *CaseTemplate  `json:"template,omitempty"`
+	Template  CaseTemplate   `json:"template"`
 	Property  *Property      `json:"property,omitempty"`
 }
+
+type _CaseDetails CaseDetails
 
 // NewCaseDetails instantiates a new CaseDetails object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCaseDetails() *CaseDetails {
+func NewCaseDetails(case_ Case, template CaseTemplate) *CaseDetails {
 	this := CaseDetails{}
+	this.Case = case_
+	this.Template = template
 	return &this
 }
 
@@ -43,36 +49,28 @@ func NewCaseDetailsWithDefaults() *CaseDetails {
 	return &this
 }
 
-// GetCase returns the Case field value if set, zero value otherwise.
+// GetCase returns the Case field value
 func (o *CaseDetails) GetCase() Case {
-	if o == nil || IsNil(o.Case) {
+	if o == nil {
 		var ret Case
 		return ret
 	}
-	return *o.Case
+
+	return o.Case
 }
 
-// GetCaseOk returns a tuple with the Case field value if set, nil otherwise
+// GetCaseOk returns a tuple with the Case field value
 // and a boolean to check if the value has been set.
 func (o *CaseDetails) GetCaseOk() (*Case, bool) {
-	if o == nil || IsNil(o.Case) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Case, true
+	return &o.Case, true
 }
 
-// HasCase returns a boolean if a field has been set.
-func (o *CaseDetails) HasCase() bool {
-	if o != nil && !IsNil(o.Case) {
-		return true
-	}
-
-	return false
-}
-
-// SetCase gets a reference to the given Case and assigns it to the Case field.
+// SetCase sets field value
 func (o *CaseDetails) SetCase(v Case) {
-	o.Case = &v
+	o.Case = v
 }
 
 // GetReporter returns the Reporter field value if set, zero value otherwise.
@@ -139,36 +137,28 @@ func (o *CaseDetails) SetCaseParty(v CaseParty) {
 	o.CaseParty = &v
 }
 
-// GetTemplate returns the Template field value if set, zero value otherwise.
+// GetTemplate returns the Template field value
 func (o *CaseDetails) GetTemplate() CaseTemplate {
-	if o == nil || IsNil(o.Template) {
+	if o == nil {
 		var ret CaseTemplate
 		return ret
 	}
-	return *o.Template
+
+	return o.Template
 }
 
-// GetTemplateOk returns a tuple with the Template field value if set, nil otherwise
+// GetTemplateOk returns a tuple with the Template field value
 // and a boolean to check if the value has been set.
 func (o *CaseDetails) GetTemplateOk() (*CaseTemplate, bool) {
-	if o == nil || IsNil(o.Template) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Template, true
+	return &o.Template, true
 }
 
-// HasTemplate returns a boolean if a field has been set.
-func (o *CaseDetails) HasTemplate() bool {
-	if o != nil && !IsNil(o.Template) {
-		return true
-	}
-
-	return false
-}
-
-// SetTemplate gets a reference to the given CaseTemplate and assigns it to the Template field.
+// SetTemplate sets field value
 func (o *CaseDetails) SetTemplate(v CaseTemplate) {
-	o.Template = &v
+	o.Template = v
 }
 
 // GetProperty returns the Property field value if set, zero value otherwise.
@@ -213,22 +203,56 @@ func (o CaseDetails) MarshalJSON() ([]byte, error) {
 
 func (o CaseDetails) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Case) {
-		toSerialize["case"] = o.Case
-	}
+	toSerialize["case"] = o.Case
 	if !IsNil(o.Reporter) {
 		toSerialize["reporter"] = o.Reporter
 	}
 	if !IsNil(o.CaseParty) {
 		toSerialize["case_party"] = o.CaseParty
 	}
-	if !IsNil(o.Template) {
-		toSerialize["template"] = o.Template
-	}
+	toSerialize["template"] = o.Template
 	if !IsNil(o.Property) {
 		toSerialize["property"] = o.Property
 	}
 	return toSerialize, nil
+}
+
+func (o *CaseDetails) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"case",
+		"template",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCaseDetails := _CaseDetails{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCaseDetails)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CaseDetails(varCaseDetails)
+
+	return err
 }
 
 type NullableCaseDetails struct {

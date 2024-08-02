@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the FormValidationError type satisfies the MappedNullable interface at compile time
@@ -20,17 +22,21 @@ var _ MappedNullable = &FormValidationError{}
 // FormValidationError a custom validation that is used to validate data provided by the user
 type FormValidationError struct {
 	// a map of values, where the key and values are strings
-	Message *map[string]string `json:"message,omitempty"`
+	Message map[string]string `json:"message"`
 	// the index of the input that failed validation (nesting is supported via dot notation)
-	Target *string `json:"target,omitempty"`
+	Target string `json:"target"`
 }
+
+type _FormValidationError FormValidationError
 
 // NewFormValidationError instantiates a new FormValidationError object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewFormValidationError() *FormValidationError {
+func NewFormValidationError(message map[string]string, target string) *FormValidationError {
 	this := FormValidationError{}
+	this.Message = message
+	this.Target = target
 	return &this
 }
 
@@ -42,68 +48,52 @@ func NewFormValidationErrorWithDefaults() *FormValidationError {
 	return &this
 }
 
-// GetMessage returns the Message field value if set, zero value otherwise.
+// GetMessage returns the Message field value
 func (o *FormValidationError) GetMessage() map[string]string {
-	if o == nil || IsNil(o.Message) {
+	if o == nil {
 		var ret map[string]string
 		return ret
 	}
-	return *o.Message
+
+	return o.Message
 }
 
-// GetMessageOk returns a tuple with the Message field value if set, nil otherwise
+// GetMessageOk returns a tuple with the Message field value
 // and a boolean to check if the value has been set.
 func (o *FormValidationError) GetMessageOk() (*map[string]string, bool) {
-	if o == nil || IsNil(o.Message) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Message, true
+	return &o.Message, true
 }
 
-// HasMessage returns a boolean if a field has been set.
-func (o *FormValidationError) HasMessage() bool {
-	if o != nil && !IsNil(o.Message) {
-		return true
-	}
-
-	return false
-}
-
-// SetMessage gets a reference to the given map[string]string and assigns it to the Message field.
+// SetMessage sets field value
 func (o *FormValidationError) SetMessage(v map[string]string) {
-	o.Message = &v
+	o.Message = v
 }
 
-// GetTarget returns the Target field value if set, zero value otherwise.
+// GetTarget returns the Target field value
 func (o *FormValidationError) GetTarget() string {
-	if o == nil || IsNil(o.Target) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Target
+
+	return o.Target
 }
 
-// GetTargetOk returns a tuple with the Target field value if set, nil otherwise
+// GetTargetOk returns a tuple with the Target field value
 // and a boolean to check if the value has been set.
 func (o *FormValidationError) GetTargetOk() (*string, bool) {
-	if o == nil || IsNil(o.Target) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Target, true
+	return &o.Target, true
 }
 
-// HasTarget returns a boolean if a field has been set.
-func (o *FormValidationError) HasTarget() bool {
-	if o != nil && !IsNil(o.Target) {
-		return true
-	}
-
-	return false
-}
-
-// SetTarget gets a reference to the given string and assigns it to the Target field.
+// SetTarget sets field value
 func (o *FormValidationError) SetTarget(v string) {
-	o.Target = &v
+	o.Target = v
 }
 
 func (o FormValidationError) MarshalJSON() ([]byte, error) {
@@ -116,13 +106,47 @@ func (o FormValidationError) MarshalJSON() ([]byte, error) {
 
 func (o FormValidationError) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Message) {
-		toSerialize["message"] = o.Message
-	}
-	if !IsNil(o.Target) {
-		toSerialize["target"] = o.Target
-	}
+	toSerialize["message"] = o.Message
+	toSerialize["target"] = o.Target
 	return toSerialize, nil
+}
+
+func (o *FormValidationError) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"message",
+		"target",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varFormValidationError := _FormValidationError{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varFormValidationError)
+
+	if err != nil {
+		return err
+	}
+
+	*o = FormValidationError(varFormValidationError)
+
+	return err
 }
 
 type NullableFormValidationError struct {

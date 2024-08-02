@@ -235,10 +235,10 @@ func (r *AppointmentTemplate) ImportState(ctx context.Context, req resource.Impo
 func (template *AppointmentTemplateModel) toApiRequest() *v1.CreateOrUpdateAppointmentTemplateRequest {
 	form := template.Inputs.toApiRequest()
 	return &v1.CreateOrUpdateAppointmentTemplateRequest{
-		Name:                  template.Name.ValueStringPointer(),
+		Name:                  template.Name.ValueString(),
 		NameExpression:        template.NameExpression.ValueStringPointer(),
 		Description:           template.Description.ValueStringPointer(),
-		Form:                  &form,
+		Form:                  *v1.NewNullableCustomForm(&form),
 		RequireConfirmation:   template.RequireConfirmation.ValueBoolPointer(),
 		ConfirmationReminders: modelListToInt32Slice(template.ConfirmationReminders),
 	}
@@ -263,7 +263,7 @@ func (template *AppointmentTemplateModel) fromApiResponse(resp *v1.AppointmentTe
 	if template.Inputs == nil {
 		template.Inputs = &CustomFormModel{}
 	}
-	diags = template.Inputs.fromApiResponse(&resp.Form)
+	diags = template.Inputs.fromApiResponse(resp.Form.Get())
 
 	return
 }

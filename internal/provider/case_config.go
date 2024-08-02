@@ -36,7 +36,7 @@ func CaseConfigModelNestedSchema() map[string]schema.Attribute {
 	}
 }
 
-func (cfg *CaseConfigModel) toApiRequest() *v1.CaseConfig {
+func (cfg *CaseConfigModel) toApiRequest() v1.CaseConfig {
 
 	statusConfig := make([]v1.CaseStatusConfig, len(cfg.StatusConfig))
 	for i := range cfg.StatusConfig {
@@ -53,14 +53,14 @@ func (cfg *CaseConfigModel) toApiRequest() *v1.CaseConfig {
 		automaticActions[i] = *cfg.AutomaticActions[i].toApiRequest()
 	}
 
-	return &v1.CaseConfig{
+	return v1.CaseConfig{
 		StatusConfig:     statusConfig,
 		Reminders:        reminders,
 		AutomaticActions: automaticActions,
 	}
 }
 
-func (cfg *CaseConfigModel) fromApiResponse(resp *v1.CaseConfig) bool {
+func (cfg *CaseConfigModel) fromApiResponse(resp v1.CaseConfig) bool {
 
 	isEmpty := true
 
@@ -144,8 +144,6 @@ func caseStatusConfigModelNestedSchema() schema.NestedAttributeObject {
 
 func (cfg *CaseStatusConfigModel) toApiRequest() *v1.CaseStatusConfig {
 
-	action := v1.CaseActionEnum(cfg.Action.ValueString())
-
 	feedback := make([]v1.CaseFeedbackConfig, len(cfg.Feedback))
 	for i := range cfg.Feedback {
 		pt := cfg.Feedback[i].toApiRequest()
@@ -156,7 +154,7 @@ func (cfg *CaseStatusConfigModel) toApiRequest() *v1.CaseStatusConfig {
 	}
 
 	return &v1.CaseStatusConfig{
-		Action:       &action,
+		Action:       v1.CaseActionEnum(cfg.Action.ValueString()),
 		SourceStatus: modelListToEnumSlice[v1.CaseStatusEnum](cfg.SourceStatus),
 		Parties:      modelListToEnumSlice[v1.UserTypeEnum](cfg.Parties),
 		Feedback:     feedback,
@@ -166,11 +164,7 @@ func (cfg *CaseStatusConfigModel) toApiRequest() *v1.CaseStatusConfig {
 
 func (cfg *CaseStatusConfigModel) fromApiResponse(resp *v1.CaseStatusConfig) (diags diag.Diagnostics) {
 
-	if resp.Action != nil {
-		cfg.Action = types.StringValue(string(*resp.Action))
-	} else {
-		cfg.Action = types.StringValue("")
-	}
+	cfg.Action = types.StringValue(string(resp.Action))
 
 	if len(resp.SourceStatus) != 0 {
 		cfg.SourceStatus, diags = types.ListValue(types.StringType, enumSliceToValueList(resp.SourceStatus))
@@ -247,19 +241,16 @@ func caseFeedbackConfigModelNestedSchema() schema.NestedAttributeObject {
 
 func (cfg *CaseFeedbackConfigModel) toApiRequest() *v1.CaseFeedbackConfig {
 
-	mode := v1.CaseFeedbackModeEnum(cfg.Mode.ValueString())
-
 	ret := &v1.CaseFeedbackConfig{
-		Id:         cfg.ID.ValueStringPointer(),
+		Id:         cfg.ID.ValueString(),
 		Visibility: modelListToEnumSlice[v1.UserTypeEnum](cfg.Visibility),
-		Mode:       &mode,
+		Mode:       v1.CaseFeedbackModeEnum(cfg.Mode.ValueString()),
 	}
 
+	ret.Form = v1.NullableCustomForm{}
 	if cfg.Form != nil {
 		form := cfg.Form.toApiRequest()
-		ret.Form = &form
-	} else {
-		ret.Form = nil
+		ret.Form.Set(&form)
 	}
 
 	return ret
@@ -267,11 +258,8 @@ func (cfg *CaseFeedbackConfigModel) toApiRequest() *v1.CaseFeedbackConfig {
 
 func (cfg *CaseFeedbackConfigModel) fromApiResponse(resp *v1.CaseFeedbackConfig) (diags diag.Diagnostics) {
 
-	if resp.Id != nil {
-		cfg.ID = types.StringValue(*resp.Id)
-	} else {
-		cfg.ID = types.StringValue("")
-	}
+	cfg.ID = types.StringValue(resp.Id)
+	cfg.Mode = types.StringValue(string(resp.Mode))
 
 	if len(resp.Visibility) != 0 {
 		cfg.Visibility, diags = types.ListValue(types.StringType, enumSliceToValueList[v1.UserTypeEnum](resp.Visibility))
@@ -282,15 +270,9 @@ func (cfg *CaseFeedbackConfigModel) fromApiResponse(resp *v1.CaseFeedbackConfig)
 		cfg.Visibility = basetypes.NewListNull(types.StringType)
 	}
 
-	if !isEmptyEnum(resp.Mode) {
-		cfg.Mode = types.StringValue(string(*resp.Mode))
-	} else {
-		cfg.Mode = basetypes.NewStringNull()
-	}
-
-	if !isEmptyCustomForm(resp.Form) {
+	if formDef := resp.Form.Get(); resp.Form.IsSet() && !isEmptyCustomForm(formDef) {
 		cfg.Form = &CustomFormModel{}
-		cfg.Form.fromApiResponse(resp.Form)
+		cfg.Form.fromApiResponse(formDef)
 	} else {
 		cfg.Form = nil
 	}
@@ -336,21 +318,15 @@ func caseReminderConfigModelNestedSchema() schema.NestedAttributeObject {
 }
 
 func (cfg *CaseReminderConfigModel) toApiRequest() *v1.CaseReminderConfig {
-	status := v1.CaseStatusEnum(cfg.Status.ValueString())
-
 	return &v1.CaseReminderConfig{
-		Status:   &status,
+		Status:   v1.CaseStatusEnum(cfg.Status.ValueString()),
 		Schedule: modelListToInt32Slice(cfg.Schedule),
 	}
 }
 
 func (cfg *CaseReminderConfigModel) fromApiResponse(resp *v1.CaseReminderConfig) (diags diag.Diagnostics) {
 
-	if !isEmptyEnum(resp.Status) {
-		cfg.Status = types.StringValue(string(*resp.Status))
-	} else {
-		cfg.Status = basetypes.NewStringNull()
-	}
+	cfg.Status = types.StringValue(string(resp.Status))
 
 	if len(resp.Schedule) != 0 {
 		cfg.Schedule, diags = types.ListValue(types.Int64Type, int32SliceToValueList(resp.Schedule))
@@ -395,41 +371,19 @@ func caseAutomaticStatusChangeConfigModelNestedSchema() schema.NestedAttributeOb
 }
 
 func (cfg *CaseAutomaticActionConfigModel) toApiRequest() *v1.CaseAutomaticActionConfig {
-	status := v1.CaseStatusEnum(cfg.Status.ValueString())
-
-	var schedule *int32
-	if val := int32(cfg.Schedule.ValueInt64()); val != 0 {
-		schedule = &val
-	} else {
-		schedule = nil
-	}
 
 	return &v1.CaseAutomaticActionConfig{
-		Status:   &status,
-		Schedule: schedule,
-		Action:   cfg.Action.ValueStringPointer(),
+		Status:   v1.CaseStatusEnum(cfg.Status.ValueString()),
+		Schedule: int32(cfg.Schedule.ValueInt64()),
+		Action:   cfg.Action.ValueString(),
 	}
 }
 
 func (cfg *CaseAutomaticActionConfigModel) fromApiResponse(resp *v1.CaseAutomaticActionConfig) (diags diag.Diagnostics) {
 
-	if resp.Status != nil {
-		cfg.Status = types.StringValue(string(*resp.Status))
-	} else {
-		cfg.Status = basetypes.NewStringNull()
-	}
-
-	if resp.Schedule != nil {
-		cfg.Schedule = types.Int64Value(int64(*resp.Schedule))
-	} else {
-		cfg.Schedule = basetypes.NewInt64Null()
-	}
-
-	if resp.Action != nil {
-		cfg.Action = types.StringValue(string(*resp.Action))
-	} else {
-		cfg.Action = basetypes.NewStringNull()
-	}
+	cfg.Status = types.StringValue(string(resp.Status))
+	cfg.Schedule = types.Int64Value(int64(resp.Schedule))
+	cfg.Action = types.StringValue(string(resp.Action))
 
 	return
 }
