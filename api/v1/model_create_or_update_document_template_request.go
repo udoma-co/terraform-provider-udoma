@@ -32,8 +32,8 @@ type CreateOrUpdateDocumentTemplateRequest struct {
 	Content string             `json:"content"`
 	Inputs  NullableCustomForm `json:"inputs"`
 	// The script we run to generate the object used in the template
-	PlaceholdersScript *string                                `json:"placeholders_script,omitempty"`
-	Signatures         *DocumentTemplateSignatureConfguration `json:"signatures,omitempty"`
+	PlaceholdersScript *string                                       `json:"placeholders_script,omitempty"`
+	Signatures         NullableDocumentTemplateSignatureConfguration `json:"signatures,omitempty"`
 }
 
 type _CreateOrUpdateDocumentTemplateRequest CreateOrUpdateDocumentTemplateRequest
@@ -253,36 +253,47 @@ func (o *CreateOrUpdateDocumentTemplateRequest) SetPlaceholdersScript(v string) 
 	o.PlaceholdersScript = &v
 }
 
-// GetSignatures returns the Signatures field value if set, zero value otherwise.
+// GetSignatures returns the Signatures field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *CreateOrUpdateDocumentTemplateRequest) GetSignatures() DocumentTemplateSignatureConfguration {
-	if o == nil || IsNil(o.Signatures) {
+	if o == nil || IsNil(o.Signatures.Get()) {
 		var ret DocumentTemplateSignatureConfguration
 		return ret
 	}
-	return *o.Signatures
+	return *o.Signatures.Get()
 }
 
 // GetSignaturesOk returns a tuple with the Signatures field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *CreateOrUpdateDocumentTemplateRequest) GetSignaturesOk() (*DocumentTemplateSignatureConfguration, bool) {
-	if o == nil || IsNil(o.Signatures) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Signatures, true
+	return o.Signatures.Get(), o.Signatures.IsSet()
 }
 
 // HasSignatures returns a boolean if a field has been set.
 func (o *CreateOrUpdateDocumentTemplateRequest) HasSignatures() bool {
-	if o != nil && !IsNil(o.Signatures) {
+	if o != nil && o.Signatures.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetSignatures gets a reference to the given DocumentTemplateSignatureConfguration and assigns it to the Signatures field.
+// SetSignatures gets a reference to the given NullableDocumentTemplateSignatureConfguration and assigns it to the Signatures field.
 func (o *CreateOrUpdateDocumentTemplateRequest) SetSignatures(v DocumentTemplateSignatureConfguration) {
-	o.Signatures = &v
+	o.Signatures.Set(&v)
+}
+
+// SetSignaturesNil sets the value for Signatures to be an explicit nil
+func (o *CreateOrUpdateDocumentTemplateRequest) SetSignaturesNil() {
+	o.Signatures.Set(nil)
+}
+
+// UnsetSignatures ensures that no value is present for Signatures, not even an explicit nil
+func (o *CreateOrUpdateDocumentTemplateRequest) UnsetSignatures() {
+	o.Signatures.Unset()
 }
 
 func (o CreateOrUpdateDocumentTemplateRequest) MarshalJSON() ([]byte, error) {
@@ -308,8 +319,8 @@ func (o CreateOrUpdateDocumentTemplateRequest) ToMap() (map[string]interface{}, 
 	if !IsNil(o.PlaceholdersScript) {
 		toSerialize["placeholders_script"] = o.PlaceholdersScript
 	}
-	if !IsNil(o.Signatures) {
-		toSerialize["signatures"] = o.Signatures
+	if o.Signatures.IsSet() {
+		toSerialize["signatures"] = o.Signatures.Get()
 	}
 	return toSerialize, nil
 }

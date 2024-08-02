@@ -34,7 +34,7 @@ type WorkflowStepActionDefinition struct {
 	// the icon of the action
 	Icon *string `json:"icon,omitempty"`
 	// the button label for the action
-	Label *string `json:"label,omitempty"`
+	Label string `json:"label"`
 	// optional button modifier of the action
 	ButtonModifier *string `json:"button_modifier,omitempty"`
 	// optional filter that can be used by the UI to show or hide the action
@@ -51,9 +51,10 @@ type _WorkflowStepActionDefinition WorkflowStepActionDefinition
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewWorkflowStepActionDefinition(id string) *WorkflowStepActionDefinition {
+func NewWorkflowStepActionDefinition(id string, label string) *WorkflowStepActionDefinition {
 	this := WorkflowStepActionDefinition{}
 	this.Id = id
+	this.Label = label
 	return &this
 }
 
@@ -249,36 +250,28 @@ func (o *WorkflowStepActionDefinition) SetIcon(v string) {
 	o.Icon = &v
 }
 
-// GetLabel returns the Label field value if set, zero value otherwise.
+// GetLabel returns the Label field value
 func (o *WorkflowStepActionDefinition) GetLabel() string {
-	if o == nil || IsNil(o.Label) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Label
+
+	return o.Label
 }
 
-// GetLabelOk returns a tuple with the Label field value if set, nil otherwise
+// GetLabelOk returns a tuple with the Label field value
 // and a boolean to check if the value has been set.
 func (o *WorkflowStepActionDefinition) GetLabelOk() (*string, bool) {
-	if o == nil || IsNil(o.Label) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Label, true
+	return &o.Label, true
 }
 
-// HasLabel returns a boolean if a field has been set.
-func (o *WorkflowStepActionDefinition) HasLabel() bool {
-	if o != nil && !IsNil(o.Label) {
-		return true
-	}
-
-	return false
-}
-
-// SetLabel gets a reference to the given string and assigns it to the Label field.
+// SetLabel sets field value
 func (o *WorkflowStepActionDefinition) SetLabel(v string) {
-	o.Label = &v
+	o.Label = v
 }
 
 // GetButtonModifier returns the ButtonModifier field value if set, zero value otherwise.
@@ -435,9 +428,7 @@ func (o WorkflowStepActionDefinition) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Icon) {
 		toSerialize["icon"] = o.Icon
 	}
-	if !IsNil(o.Label) {
-		toSerialize["label"] = o.Label
-	}
+	toSerialize["label"] = o.Label
 	if !IsNil(o.ButtonModifier) {
 		toSerialize["button_modifier"] = o.ButtonModifier
 	}
@@ -459,6 +450,7 @@ func (o *WorkflowStepActionDefinition) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"id",
+		"label",
 	}
 
 	allProperties := make(map[string]interface{})

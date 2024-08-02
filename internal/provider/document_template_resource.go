@@ -334,7 +334,7 @@ func (model *documentTemplateModel) fromAPI(template *api.DocumentTemplate) erro
 		model.Inputs = tf.NewJsonObjectValue(string(jsonData))
 	}
 
-	if template.Signatures != nil {
+	if template.Signatures.IsSet() {
 		jsonData, err := json.Marshal(template.Signatures)
 		if err != nil {
 			return fmt.Errorf("failed to marshal signatures: %w", err)
