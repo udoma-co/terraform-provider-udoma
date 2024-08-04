@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the Document type satisfies the MappedNullable interface at compile time
@@ -19,27 +21,34 @@ var _ MappedNullable = &Document{}
 
 // Document A single document uploaded in the document repository or for a specific property
 type Document struct {
-	// the unique ID of the document, generated upon upload
-	Id *string `json:"id,omitempty"`
-	// The date the document was created
-	CreatedAt *int64 `json:"created_at,omitempty"`
-	// The date the document was last updated
-	UpdatedAt *int64 `json:"updated_at,omitempty"`
-	// the name of the document, as displayed to the user
-	Name *string `json:"name,omitempty"`
-	// optional path that can be used to nest documents in folder like structures
+	// Unique and immutable ID attribute of the entity that is generated when  the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities  or to retrieve it from the backend.
+	Id string `json:"id"`
+	// The date and time the entity was created
+	CreatedAt int64 `json:"created_at"`
+	// The date and time the entity was last updated
+	UpdatedAt int64 `json:"updated_at"`
+	// The name of the document entry
+	Name string `json:"name"`
+	// Optional path that can be used to nest documents in folder like structures
 	Path *string `json:"path,omitempty"`
-	// depending on the reference type of a document, public can mean that it is  visible to tenants or service providers
-	Public     *bool       `json:"public,omitempty"`
-	Attachment *Attachment `json:"attachment,omitempty"`
+	// Indicator, controlling whether tenants can see the document
+	Public     *bool      `json:"public,omitempty"`
+	Attachment Attachment `json:"attachment"`
 }
+
+type _Document Document
 
 // NewDocument instantiates a new Document object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDocument() *Document {
+func NewDocument(id string, createdAt int64, updatedAt int64, name string, attachment Attachment) *Document {
 	this := Document{}
+	this.Id = id
+	this.CreatedAt = createdAt
+	this.UpdatedAt = updatedAt
+	this.Name = name
+	this.Attachment = attachment
 	return &this
 }
 
@@ -51,132 +60,100 @@ func NewDocumentWithDefaults() *Document {
 	return &this
 }
 
-// GetId returns the Id field value if set, zero value otherwise.
+// GetId returns the Id field value
 func (o *Document) GetId() string {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Id
+
+	return o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
 func (o *Document) GetIdOk() (*string, bool) {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Id, true
+	return &o.Id, true
 }
 
-// HasId returns a boolean if a field has been set.
-func (o *Document) HasId() bool {
-	if o != nil && !IsNil(o.Id) {
-		return true
-	}
-
-	return false
-}
-
-// SetId gets a reference to the given string and assigns it to the Id field.
+// SetId sets field value
 func (o *Document) SetId(v string) {
-	o.Id = &v
+	o.Id = v
 }
 
-// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
+// GetCreatedAt returns the CreatedAt field value
 func (o *Document) GetCreatedAt() int64 {
-	if o == nil || IsNil(o.CreatedAt) {
+	if o == nil {
 		var ret int64
 		return ret
 	}
-	return *o.CreatedAt
+
+	return o.CreatedAt
 }
 
-// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
+// GetCreatedAtOk returns a tuple with the CreatedAt field value
 // and a boolean to check if the value has been set.
 func (o *Document) GetCreatedAtOk() (*int64, bool) {
-	if o == nil || IsNil(o.CreatedAt) {
+	if o == nil {
 		return nil, false
 	}
-	return o.CreatedAt, true
+	return &o.CreatedAt, true
 }
 
-// HasCreatedAt returns a boolean if a field has been set.
-func (o *Document) HasCreatedAt() bool {
-	if o != nil && !IsNil(o.CreatedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetCreatedAt gets a reference to the given int64 and assigns it to the CreatedAt field.
+// SetCreatedAt sets field value
 func (o *Document) SetCreatedAt(v int64) {
-	o.CreatedAt = &v
+	o.CreatedAt = v
 }
 
-// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
+// GetUpdatedAt returns the UpdatedAt field value
 func (o *Document) GetUpdatedAt() int64 {
-	if o == nil || IsNil(o.UpdatedAt) {
+	if o == nil {
 		var ret int64
 		return ret
 	}
-	return *o.UpdatedAt
+
+	return o.UpdatedAt
 }
 
-// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
 // and a boolean to check if the value has been set.
 func (o *Document) GetUpdatedAtOk() (*int64, bool) {
-	if o == nil || IsNil(o.UpdatedAt) {
+	if o == nil {
 		return nil, false
 	}
-	return o.UpdatedAt, true
+	return &o.UpdatedAt, true
 }
 
-// HasUpdatedAt returns a boolean if a field has been set.
-func (o *Document) HasUpdatedAt() bool {
-	if o != nil && !IsNil(o.UpdatedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetUpdatedAt gets a reference to the given int64 and assigns it to the UpdatedAt field.
+// SetUpdatedAt sets field value
 func (o *Document) SetUpdatedAt(v int64) {
-	o.UpdatedAt = &v
+	o.UpdatedAt = v
 }
 
-// GetName returns the Name field value if set, zero value otherwise.
+// GetName returns the Name field value
 func (o *Document) GetName() string {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Name
+
+	return o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// GetNameOk returns a tuple with the Name field value
 // and a boolean to check if the value has been set.
 func (o *Document) GetNameOk() (*string, bool) {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Name, true
+	return &o.Name, true
 }
 
-// HasName returns a boolean if a field has been set.
-func (o *Document) HasName() bool {
-	if o != nil && !IsNil(o.Name) {
-		return true
-	}
-
-	return false
-}
-
-// SetName gets a reference to the given string and assigns it to the Name field.
+// SetName sets field value
 func (o *Document) SetName(v string) {
-	o.Name = &v
+	o.Name = v
 }
 
 // GetPath returns the Path field value if set, zero value otherwise.
@@ -243,36 +220,28 @@ func (o *Document) SetPublic(v bool) {
 	o.Public = &v
 }
 
-// GetAttachment returns the Attachment field value if set, zero value otherwise.
+// GetAttachment returns the Attachment field value
 func (o *Document) GetAttachment() Attachment {
-	if o == nil || IsNil(o.Attachment) {
+	if o == nil {
 		var ret Attachment
 		return ret
 	}
-	return *o.Attachment
+
+	return o.Attachment
 }
 
-// GetAttachmentOk returns a tuple with the Attachment field value if set, nil otherwise
+// GetAttachmentOk returns a tuple with the Attachment field value
 // and a boolean to check if the value has been set.
 func (o *Document) GetAttachmentOk() (*Attachment, bool) {
-	if o == nil || IsNil(o.Attachment) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Attachment, true
+	return &o.Attachment, true
 }
 
-// HasAttachment returns a boolean if a field has been set.
-func (o *Document) HasAttachment() bool {
-	if o != nil && !IsNil(o.Attachment) {
-		return true
-	}
-
-	return false
-}
-
-// SetAttachment gets a reference to the given Attachment and assigns it to the Attachment field.
+// SetAttachment sets field value
 func (o *Document) SetAttachment(v Attachment) {
-	o.Attachment = &v
+	o.Attachment = v
 }
 
 func (o Document) MarshalJSON() ([]byte, error) {
@@ -285,28 +254,59 @@ func (o Document) MarshalJSON() ([]byte, error) {
 
 func (o Document) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Id) {
-		toSerialize["id"] = o.Id
-	}
-	if !IsNil(o.CreatedAt) {
-		toSerialize["created_at"] = o.CreatedAt
-	}
-	if !IsNil(o.UpdatedAt) {
-		toSerialize["updated_at"] = o.UpdatedAt
-	}
-	if !IsNil(o.Name) {
-		toSerialize["name"] = o.Name
-	}
+	toSerialize["id"] = o.Id
+	toSerialize["created_at"] = o.CreatedAt
+	toSerialize["updated_at"] = o.UpdatedAt
+	toSerialize["name"] = o.Name
 	if !IsNil(o.Path) {
 		toSerialize["path"] = o.Path
 	}
 	if !IsNil(o.Public) {
 		toSerialize["public"] = o.Public
 	}
-	if !IsNil(o.Attachment) {
-		toSerialize["attachment"] = o.Attachment
-	}
+	toSerialize["attachment"] = o.Attachment
 	return toSerialize, nil
+}
+
+func (o *Document) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"id",
+		"created_at",
+		"updated_at",
+		"name",
+		"attachment",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varDocument := _Document{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varDocument)
+
+	if err != nil {
+		return err
+	}
+
+	*o = Document(varDocument)
+
+	return err
 }
 
 type NullableDocument struct {

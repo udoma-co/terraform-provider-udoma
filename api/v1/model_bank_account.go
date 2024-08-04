@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the BankAccount type satisfies the MappedNullable interface at compile time
@@ -19,34 +21,41 @@ var _ MappedNullable = &BankAccount{}
 
 // BankAccount Detailed information about a bank account
 type BankAccount struct {
-	// The ID of the bank account (auto-generated)
-	Id *string `json:"id,omitempty"`
-	// optional external ID, in case acount was created via backend integration
+	// Unique and immutable ID attribute of the entity that is generated when  the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities  or to retrieve it from the backend.
+	Id string `json:"id"`
+	// The date and time the entity was created
+	CreatedAt int64 `json:"created_at"`
+	// The date and time the entity was last updated
+	UpdatedAt int64 `json:"updated_at"`
+	// Optional external ID, in case entity was created via backend integration
 	ExternalId *string `json:"external_id,omitempty"`
-	// optional external source, in case acount was created via backend integration
+	// Optional external source, in case entity was created via backend integration
 	ExternalSource *string `json:"external_source,omitempty"`
-	// The timestamp of when the account was created
-	CreatedAt *int64 `json:"created_at,omitempty"`
-	// The timestamp of when the account was last updated
-	UpdatedAt *int64 `json:"updated_at,omitempty"`
 	// The name of the account holder (required)
-	AccountHolder *string `json:"account_holder,omitempty"`
+	AccountHolder string `json:"account_holder"`
 	// The IBAN of the bank account (required)
-	Iban *string `json:"iban,omitempty"`
+	Iban string `json:"iban"`
 	// The BIC of the bank account (optional)
 	Bic *string `json:"bic,omitempty"`
 	// The name of the bank (optional)
 	BankName *string `json:"bank_name,omitempty"`
-	// An optional user friendly label, used to identify the account (optional)
+	// A user friendly label, used to identify the account (optional)
 	Description *string `json:"description,omitempty"`
 }
+
+type _BankAccount BankAccount
 
 // NewBankAccount instantiates a new BankAccount object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewBankAccount() *BankAccount {
+func NewBankAccount(id string, createdAt int64, updatedAt int64, accountHolder string, iban string) *BankAccount {
 	this := BankAccount{}
+	this.Id = id
+	this.CreatedAt = createdAt
+	this.UpdatedAt = updatedAt
+	this.AccountHolder = accountHolder
+	this.Iban = iban
 	return &this
 }
 
@@ -58,36 +67,76 @@ func NewBankAccountWithDefaults() *BankAccount {
 	return &this
 }
 
-// GetId returns the Id field value if set, zero value otherwise.
+// GetId returns the Id field value
 func (o *BankAccount) GetId() string {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Id
+
+	return o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
 func (o *BankAccount) GetIdOk() (*string, bool) {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Id, true
+	return &o.Id, true
 }
 
-// HasId returns a boolean if a field has been set.
-func (o *BankAccount) HasId() bool {
-	if o != nil && !IsNil(o.Id) {
-		return true
+// SetId sets field value
+func (o *BankAccount) SetId(v string) {
+	o.Id = v
+}
+
+// GetCreatedAt returns the CreatedAt field value
+func (o *BankAccount) GetCreatedAt() int64 {
+	if o == nil {
+		var ret int64
+		return ret
 	}
 
-	return false
+	return o.CreatedAt
 }
 
-// SetId gets a reference to the given string and assigns it to the Id field.
-func (o *BankAccount) SetId(v string) {
-	o.Id = &v
+// GetCreatedAtOk returns a tuple with the CreatedAt field value
+// and a boolean to check if the value has been set.
+func (o *BankAccount) GetCreatedAtOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.CreatedAt, true
+}
+
+// SetCreatedAt sets field value
+func (o *BankAccount) SetCreatedAt(v int64) {
+	o.CreatedAt = v
+}
+
+// GetUpdatedAt returns the UpdatedAt field value
+func (o *BankAccount) GetUpdatedAt() int64 {
+	if o == nil {
+		var ret int64
+		return ret
+	}
+
+	return o.UpdatedAt
+}
+
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
+// and a boolean to check if the value has been set.
+func (o *BankAccount) GetUpdatedAtOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.UpdatedAt, true
+}
+
+// SetUpdatedAt sets field value
+func (o *BankAccount) SetUpdatedAt(v int64) {
+	o.UpdatedAt = v
 }
 
 // GetExternalId returns the ExternalId field value if set, zero value otherwise.
@@ -154,132 +203,52 @@ func (o *BankAccount) SetExternalSource(v string) {
 	o.ExternalSource = &v
 }
 
-// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
-func (o *BankAccount) GetCreatedAt() int64 {
-	if o == nil || IsNil(o.CreatedAt) {
-		var ret int64
-		return ret
-	}
-	return *o.CreatedAt
-}
-
-// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *BankAccount) GetCreatedAtOk() (*int64, bool) {
-	if o == nil || IsNil(o.CreatedAt) {
-		return nil, false
-	}
-	return o.CreatedAt, true
-}
-
-// HasCreatedAt returns a boolean if a field has been set.
-func (o *BankAccount) HasCreatedAt() bool {
-	if o != nil && !IsNil(o.CreatedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetCreatedAt gets a reference to the given int64 and assigns it to the CreatedAt field.
-func (o *BankAccount) SetCreatedAt(v int64) {
-	o.CreatedAt = &v
-}
-
-// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
-func (o *BankAccount) GetUpdatedAt() int64 {
-	if o == nil || IsNil(o.UpdatedAt) {
-		var ret int64
-		return ret
-	}
-	return *o.UpdatedAt
-}
-
-// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *BankAccount) GetUpdatedAtOk() (*int64, bool) {
-	if o == nil || IsNil(o.UpdatedAt) {
-		return nil, false
-	}
-	return o.UpdatedAt, true
-}
-
-// HasUpdatedAt returns a boolean if a field has been set.
-func (o *BankAccount) HasUpdatedAt() bool {
-	if o != nil && !IsNil(o.UpdatedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetUpdatedAt gets a reference to the given int64 and assigns it to the UpdatedAt field.
-func (o *BankAccount) SetUpdatedAt(v int64) {
-	o.UpdatedAt = &v
-}
-
-// GetAccountHolder returns the AccountHolder field value if set, zero value otherwise.
+// GetAccountHolder returns the AccountHolder field value
 func (o *BankAccount) GetAccountHolder() string {
-	if o == nil || IsNil(o.AccountHolder) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.AccountHolder
+
+	return o.AccountHolder
 }
 
-// GetAccountHolderOk returns a tuple with the AccountHolder field value if set, nil otherwise
+// GetAccountHolderOk returns a tuple with the AccountHolder field value
 // and a boolean to check if the value has been set.
 func (o *BankAccount) GetAccountHolderOk() (*string, bool) {
-	if o == nil || IsNil(o.AccountHolder) {
+	if o == nil {
 		return nil, false
 	}
-	return o.AccountHolder, true
+	return &o.AccountHolder, true
 }
 
-// HasAccountHolder returns a boolean if a field has been set.
-func (o *BankAccount) HasAccountHolder() bool {
-	if o != nil && !IsNil(o.AccountHolder) {
-		return true
-	}
-
-	return false
-}
-
-// SetAccountHolder gets a reference to the given string and assigns it to the AccountHolder field.
+// SetAccountHolder sets field value
 func (o *BankAccount) SetAccountHolder(v string) {
-	o.AccountHolder = &v
+	o.AccountHolder = v
 }
 
-// GetIban returns the Iban field value if set, zero value otherwise.
+// GetIban returns the Iban field value
 func (o *BankAccount) GetIban() string {
-	if o == nil || IsNil(o.Iban) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Iban
+
+	return o.Iban
 }
 
-// GetIbanOk returns a tuple with the Iban field value if set, nil otherwise
+// GetIbanOk returns a tuple with the Iban field value
 // and a boolean to check if the value has been set.
 func (o *BankAccount) GetIbanOk() (*string, bool) {
-	if o == nil || IsNil(o.Iban) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Iban, true
+	return &o.Iban, true
 }
 
-// HasIban returns a boolean if a field has been set.
-func (o *BankAccount) HasIban() bool {
-	if o != nil && !IsNil(o.Iban) {
-		return true
-	}
-
-	return false
-}
-
-// SetIban gets a reference to the given string and assigns it to the Iban field.
+// SetIban sets field value
 func (o *BankAccount) SetIban(v string) {
-	o.Iban = &v
+	o.Iban = v
 }
 
 // GetBic returns the Bic field value if set, zero value otherwise.
@@ -388,27 +357,17 @@ func (o BankAccount) MarshalJSON() ([]byte, error) {
 
 func (o BankAccount) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Id) {
-		toSerialize["id"] = o.Id
-	}
+	toSerialize["id"] = o.Id
+	toSerialize["created_at"] = o.CreatedAt
+	toSerialize["updated_at"] = o.UpdatedAt
 	if !IsNil(o.ExternalId) {
 		toSerialize["external_id"] = o.ExternalId
 	}
 	if !IsNil(o.ExternalSource) {
 		toSerialize["external_source"] = o.ExternalSource
 	}
-	if !IsNil(o.CreatedAt) {
-		toSerialize["created_at"] = o.CreatedAt
-	}
-	if !IsNil(o.UpdatedAt) {
-		toSerialize["updated_at"] = o.UpdatedAt
-	}
-	if !IsNil(o.AccountHolder) {
-		toSerialize["account_holder"] = o.AccountHolder
-	}
-	if !IsNil(o.Iban) {
-		toSerialize["iban"] = o.Iban
-	}
+	toSerialize["account_holder"] = o.AccountHolder
+	toSerialize["iban"] = o.Iban
 	if !IsNil(o.Bic) {
 		toSerialize["bic"] = o.Bic
 	}
@@ -419,6 +378,47 @@ func (o BankAccount) ToMap() (map[string]interface{}, error) {
 		toSerialize["description"] = o.Description
 	}
 	return toSerialize, nil
+}
+
+func (o *BankAccount) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"id",
+		"created_at",
+		"updated_at",
+		"account_holder",
+		"iban",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varBankAccount := _BankAccount{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varBankAccount)
+
+	if err != nil {
+		return err
+	}
+
+	*o = BankAccount(varBankAccount)
+
+	return err
 }
 
 type NullableBankAccount struct {

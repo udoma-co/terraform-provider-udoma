@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the CreateOrUpdateAppointmentTemplateRequest type satisfies the MappedNullable interface at compile time
@@ -20,7 +22,7 @@ var _ MappedNullable = &CreateOrUpdateAppointmentTemplateRequest{}
 // CreateOrUpdateAppointmentTemplateRequest struct for CreateOrUpdateAppointmentTemplateRequest
 type CreateOrUpdateAppointmentTemplateRequest struct {
 	// The name of the appointment template
-	Name *string `json:"name,omitempty"`
+	Name string `json:"name"`
 	// The expression that is used to generate the name of the appointment from the data that the user has entered when booking the appointment
 	NameExpression *string `json:"name_expression,omitempty"`
 	// The description of the appointment template
@@ -30,16 +32,20 @@ type CreateOrUpdateAppointmentTemplateRequest struct {
 	// Whether we should require confirmation or not.
 	RequireConfirmation *bool `json:"require_confirmation,omitempty"`
 	// The number of days after which a reminder should be sent out. The list is taken as provided and a reminder will be set for the amount of days as set in the first element of the list. Once that time has passed, the reminder will be rescheduled for the next element in the list. This is repeated until the list is empty. The values in the list are considered relative to the previous reminder. So [2, 2] will send out a reminder after 2 and 4 days. The reminders will, however, not be sent out on weekends. So if the first reminder is sent out on a Friday, the second reminder will be sent out on Tuesday. To disable this option, leave the list empty.
-	ConfirmationReminders []int32     `json:"confirmation_reminders,omitempty"`
-	Form                  *CustomForm `json:"form,omitempty"`
+	ConfirmationReminders []int32            `json:"confirmation_reminders,omitempty"`
+	Form                  NullableCustomForm `json:"form"`
 }
+
+type _CreateOrUpdateAppointmentTemplateRequest CreateOrUpdateAppointmentTemplateRequest
 
 // NewCreateOrUpdateAppointmentTemplateRequest instantiates a new CreateOrUpdateAppointmentTemplateRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateOrUpdateAppointmentTemplateRequest() *CreateOrUpdateAppointmentTemplateRequest {
+func NewCreateOrUpdateAppointmentTemplateRequest(name string, form NullableCustomForm) *CreateOrUpdateAppointmentTemplateRequest {
 	this := CreateOrUpdateAppointmentTemplateRequest{}
+	this.Name = name
+	this.Form = form
 	return &this
 }
 
@@ -51,36 +57,28 @@ func NewCreateOrUpdateAppointmentTemplateRequestWithDefaults() *CreateOrUpdateAp
 	return &this
 }
 
-// GetName returns the Name field value if set, zero value otherwise.
+// GetName returns the Name field value
 func (o *CreateOrUpdateAppointmentTemplateRequest) GetName() string {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Name
+
+	return o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// GetNameOk returns a tuple with the Name field value
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateAppointmentTemplateRequest) GetNameOk() (*string, bool) {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Name, true
+	return &o.Name, true
 }
 
-// HasName returns a boolean if a field has been set.
-func (o *CreateOrUpdateAppointmentTemplateRequest) HasName() bool {
-	if o != nil && !IsNil(o.Name) {
-		return true
-	}
-
-	return false
-}
-
-// SetName gets a reference to the given string and assigns it to the Name field.
+// SetName sets field value
 func (o *CreateOrUpdateAppointmentTemplateRequest) SetName(v string) {
-	o.Name = &v
+	o.Name = v
 }
 
 // GetNameExpression returns the NameExpression field value if set, zero value otherwise.
@@ -243,36 +241,30 @@ func (o *CreateOrUpdateAppointmentTemplateRequest) SetConfirmationReminders(v []
 	o.ConfirmationReminders = v
 }
 
-// GetForm returns the Form field value if set, zero value otherwise.
+// GetForm returns the Form field value
+// If the value is explicit nil, the zero value for CustomForm will be returned
 func (o *CreateOrUpdateAppointmentTemplateRequest) GetForm() CustomForm {
-	if o == nil || IsNil(o.Form) {
+	if o == nil || o.Form.Get() == nil {
 		var ret CustomForm
 		return ret
 	}
-	return *o.Form
+
+	return *o.Form.Get()
 }
 
-// GetFormOk returns a tuple with the Form field value if set, nil otherwise
+// GetFormOk returns a tuple with the Form field value
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *CreateOrUpdateAppointmentTemplateRequest) GetFormOk() (*CustomForm, bool) {
-	if o == nil || IsNil(o.Form) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Form, true
+	return o.Form.Get(), o.Form.IsSet()
 }
 
-// HasForm returns a boolean if a field has been set.
-func (o *CreateOrUpdateAppointmentTemplateRequest) HasForm() bool {
-	if o != nil && !IsNil(o.Form) {
-		return true
-	}
-
-	return false
-}
-
-// SetForm gets a reference to the given CustomForm and assigns it to the Form field.
+// SetForm sets field value
 func (o *CreateOrUpdateAppointmentTemplateRequest) SetForm(v CustomForm) {
-	o.Form = &v
+	o.Form.Set(&v)
 }
 
 func (o CreateOrUpdateAppointmentTemplateRequest) MarshalJSON() ([]byte, error) {
@@ -285,9 +277,7 @@ func (o CreateOrUpdateAppointmentTemplateRequest) MarshalJSON() ([]byte, error) 
 
 func (o CreateOrUpdateAppointmentTemplateRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Name) {
-		toSerialize["name"] = o.Name
-	}
+	toSerialize["name"] = o.Name
 	if !IsNil(o.NameExpression) {
 		toSerialize["name_expression"] = o.NameExpression
 	}
@@ -303,10 +293,46 @@ func (o CreateOrUpdateAppointmentTemplateRequest) ToMap() (map[string]interface{
 	if !IsNil(o.ConfirmationReminders) {
 		toSerialize["confirmation_reminders"] = o.ConfirmationReminders
 	}
-	if !IsNil(o.Form) {
-		toSerialize["form"] = o.Form
-	}
+	toSerialize["form"] = o.Form.Get()
 	return toSerialize, nil
+}
+
+func (o *CreateOrUpdateAppointmentTemplateRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"form",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCreateOrUpdateAppointmentTemplateRequest := _CreateOrUpdateAppointmentTemplateRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCreateOrUpdateAppointmentTemplateRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CreateOrUpdateAppointmentTemplateRequest(varCreateOrUpdateAppointmentTemplateRequest)
+
+	return err
 }
 
 type NullableCreateOrUpdateAppointmentTemplateRequest struct {

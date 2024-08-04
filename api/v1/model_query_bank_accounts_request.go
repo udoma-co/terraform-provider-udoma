@@ -19,7 +19,9 @@ var _ MappedNullable = &QueryBankAccountsRequest{}
 
 // QueryBankAccountsRequest The data required to query bank accounts
 type QueryBankAccountsRequest struct {
-	Limit  *int32 `json:"limit,omitempty"`
+	// The maximum number of entities to return from the query
+	Limit *int32 `json:"limit,omitempty"`
+	// The number of entities to skip before returning the result
 	Offset *int32 `json:"offset,omitempty"`
 }
 

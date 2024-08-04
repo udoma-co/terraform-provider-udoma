@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the WorkflowExecutionResponse type satisfies the MappedNullable interface at compile time
@@ -19,20 +21,24 @@ var _ MappedNullable = &WorkflowExecutionResponse{}
 
 // WorkflowExecutionResponse a response for starting or executing a step in a workflow execution
 type WorkflowExecutionResponse struct {
-	Success *bool `json:"success,omitempty"`
+	Success bool `json:"success"`
 	// the result of the workflow execution as JSON
-	Result *string `json:"result,omitempty"`
+	Result string `json:"result"`
 	// the ID of the next step of the workflow execution
 	NextStep          *string            `json:"next_step,omitempty"`
 	WorkflowExecution *WorkflowExecution `json:"workflow_execution,omitempty"`
 }
 
+type _WorkflowExecutionResponse WorkflowExecutionResponse
+
 // NewWorkflowExecutionResponse instantiates a new WorkflowExecutionResponse object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewWorkflowExecutionResponse() *WorkflowExecutionResponse {
+func NewWorkflowExecutionResponse(success bool, result string) *WorkflowExecutionResponse {
 	this := WorkflowExecutionResponse{}
+	this.Success = success
+	this.Result = result
 	return &this
 }
 
@@ -44,68 +50,52 @@ func NewWorkflowExecutionResponseWithDefaults() *WorkflowExecutionResponse {
 	return &this
 }
 
-// GetSuccess returns the Success field value if set, zero value otherwise.
+// GetSuccess returns the Success field value
 func (o *WorkflowExecutionResponse) GetSuccess() bool {
-	if o == nil || IsNil(o.Success) {
+	if o == nil {
 		var ret bool
 		return ret
 	}
-	return *o.Success
+
+	return o.Success
 }
 
-// GetSuccessOk returns a tuple with the Success field value if set, nil otherwise
+// GetSuccessOk returns a tuple with the Success field value
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecutionResponse) GetSuccessOk() (*bool, bool) {
-	if o == nil || IsNil(o.Success) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Success, true
+	return &o.Success, true
 }
 
-// HasSuccess returns a boolean if a field has been set.
-func (o *WorkflowExecutionResponse) HasSuccess() bool {
-	if o != nil && !IsNil(o.Success) {
-		return true
-	}
-
-	return false
-}
-
-// SetSuccess gets a reference to the given bool and assigns it to the Success field.
+// SetSuccess sets field value
 func (o *WorkflowExecutionResponse) SetSuccess(v bool) {
-	o.Success = &v
+	o.Success = v
 }
 
-// GetResult returns the Result field value if set, zero value otherwise.
+// GetResult returns the Result field value
 func (o *WorkflowExecutionResponse) GetResult() string {
-	if o == nil || IsNil(o.Result) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Result
+
+	return o.Result
 }
 
-// GetResultOk returns a tuple with the Result field value if set, nil otherwise
+// GetResultOk returns a tuple with the Result field value
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecutionResponse) GetResultOk() (*string, bool) {
-	if o == nil || IsNil(o.Result) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Result, true
+	return &o.Result, true
 }
 
-// HasResult returns a boolean if a field has been set.
-func (o *WorkflowExecutionResponse) HasResult() bool {
-	if o != nil && !IsNil(o.Result) {
-		return true
-	}
-
-	return false
-}
-
-// SetResult gets a reference to the given string and assigns it to the Result field.
+// SetResult sets field value
 func (o *WorkflowExecutionResponse) SetResult(v string) {
-	o.Result = &v
+	o.Result = v
 }
 
 // GetNextStep returns the NextStep field value if set, zero value otherwise.
@@ -182,12 +172,8 @@ func (o WorkflowExecutionResponse) MarshalJSON() ([]byte, error) {
 
 func (o WorkflowExecutionResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Success) {
-		toSerialize["success"] = o.Success
-	}
-	if !IsNil(o.Result) {
-		toSerialize["result"] = o.Result
-	}
+	toSerialize["success"] = o.Success
+	toSerialize["result"] = o.Result
 	if !IsNil(o.NextStep) {
 		toSerialize["next_step"] = o.NextStep
 	}
@@ -195,6 +181,44 @@ func (o WorkflowExecutionResponse) ToMap() (map[string]interface{}, error) {
 		toSerialize["workflow_execution"] = o.WorkflowExecution
 	}
 	return toSerialize, nil
+}
+
+func (o *WorkflowExecutionResponse) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"success",
+		"result",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varWorkflowExecutionResponse := _WorkflowExecutionResponse{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varWorkflowExecutionResponse)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WorkflowExecutionResponse(varWorkflowExecutionResponse)
+
+	return err
 }
 
 type NullableWorkflowExecutionResponse struct {

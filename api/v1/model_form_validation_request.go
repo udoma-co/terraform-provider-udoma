@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the FormValidationRequest type satisfies the MappedNullable interface at compile time
@@ -19,19 +21,24 @@ var _ MappedNullable = &FormValidationRequest{}
 
 // FormValidationRequest struct for FormValidationRequest
 type FormValidationRequest struct {
-	SourceType *FormSourceType `json:"source_type,omitempty"`
+	SourceType FormSourceType `json:"source_type"`
 	// the ID of the source of the form that will be validated
-	SourceId *string `json:"source_id,omitempty"`
+	SourceId string `json:"source_id"`
 	// the data that will be validated
-	Data map[string]interface{} `json:"data,omitempty"`
+	Data map[string]interface{} `json:"data"`
 }
+
+type _FormValidationRequest FormValidationRequest
 
 // NewFormValidationRequest instantiates a new FormValidationRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewFormValidationRequest() *FormValidationRequest {
+func NewFormValidationRequest(sourceType FormSourceType, sourceId string, data map[string]interface{}) *FormValidationRequest {
 	this := FormValidationRequest{}
+	this.SourceType = sourceType
+	this.SourceId = sourceId
+	this.Data = data
 	return &this
 }
 
@@ -43,98 +50,74 @@ func NewFormValidationRequestWithDefaults() *FormValidationRequest {
 	return &this
 }
 
-// GetSourceType returns the SourceType field value if set, zero value otherwise.
+// GetSourceType returns the SourceType field value
 func (o *FormValidationRequest) GetSourceType() FormSourceType {
-	if o == nil || IsNil(o.SourceType) {
+	if o == nil {
 		var ret FormSourceType
 		return ret
 	}
-	return *o.SourceType
+
+	return o.SourceType
 }
 
-// GetSourceTypeOk returns a tuple with the SourceType field value if set, nil otherwise
+// GetSourceTypeOk returns a tuple with the SourceType field value
 // and a boolean to check if the value has been set.
 func (o *FormValidationRequest) GetSourceTypeOk() (*FormSourceType, bool) {
-	if o == nil || IsNil(o.SourceType) {
+	if o == nil {
 		return nil, false
 	}
-	return o.SourceType, true
+	return &o.SourceType, true
 }
 
-// HasSourceType returns a boolean if a field has been set.
-func (o *FormValidationRequest) HasSourceType() bool {
-	if o != nil && !IsNil(o.SourceType) {
-		return true
-	}
-
-	return false
-}
-
-// SetSourceType gets a reference to the given FormSourceType and assigns it to the SourceType field.
+// SetSourceType sets field value
 func (o *FormValidationRequest) SetSourceType(v FormSourceType) {
-	o.SourceType = &v
+	o.SourceType = v
 }
 
-// GetSourceId returns the SourceId field value if set, zero value otherwise.
+// GetSourceId returns the SourceId field value
 func (o *FormValidationRequest) GetSourceId() string {
-	if o == nil || IsNil(o.SourceId) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.SourceId
+
+	return o.SourceId
 }
 
-// GetSourceIdOk returns a tuple with the SourceId field value if set, nil otherwise
+// GetSourceIdOk returns a tuple with the SourceId field value
 // and a boolean to check if the value has been set.
 func (o *FormValidationRequest) GetSourceIdOk() (*string, bool) {
-	if o == nil || IsNil(o.SourceId) {
+	if o == nil {
 		return nil, false
 	}
-	return o.SourceId, true
+	return &o.SourceId, true
 }
 
-// HasSourceId returns a boolean if a field has been set.
-func (o *FormValidationRequest) HasSourceId() bool {
-	if o != nil && !IsNil(o.SourceId) {
-		return true
-	}
-
-	return false
-}
-
-// SetSourceId gets a reference to the given string and assigns it to the SourceId field.
+// SetSourceId sets field value
 func (o *FormValidationRequest) SetSourceId(v string) {
-	o.SourceId = &v
+	o.SourceId = v
 }
 
-// GetData returns the Data field value if set, zero value otherwise.
+// GetData returns the Data field value
 func (o *FormValidationRequest) GetData() map[string]interface{} {
-	if o == nil || IsNil(o.Data) {
+	if o == nil {
 		var ret map[string]interface{}
 		return ret
 	}
+
 	return o.Data
 }
 
-// GetDataOk returns a tuple with the Data field value if set, nil otherwise
+// GetDataOk returns a tuple with the Data field value
 // and a boolean to check if the value has been set.
 func (o *FormValidationRequest) GetDataOk() (map[string]interface{}, bool) {
-	if o == nil || IsNil(o.Data) {
+	if o == nil {
 		return map[string]interface{}{}, false
 	}
 	return o.Data, true
 }
 
-// HasData returns a boolean if a field has been set.
-func (o *FormValidationRequest) HasData() bool {
-	if o != nil && !IsNil(o.Data) {
-		return true
-	}
-
-	return false
-}
-
-// SetData gets a reference to the given map[string]interface{} and assigns it to the Data field.
+// SetData sets field value
 func (o *FormValidationRequest) SetData(v map[string]interface{}) {
 	o.Data = v
 }
@@ -149,16 +132,49 @@ func (o FormValidationRequest) MarshalJSON() ([]byte, error) {
 
 func (o FormValidationRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.SourceType) {
-		toSerialize["source_type"] = o.SourceType
-	}
-	if !IsNil(o.SourceId) {
-		toSerialize["source_id"] = o.SourceId
-	}
-	if !IsNil(o.Data) {
-		toSerialize["data"] = o.Data
-	}
+	toSerialize["source_type"] = o.SourceType
+	toSerialize["source_id"] = o.SourceId
+	toSerialize["data"] = o.Data
 	return toSerialize, nil
+}
+
+func (o *FormValidationRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"source_type",
+		"source_id",
+		"data",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varFormValidationRequest := _FormValidationRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varFormValidationRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = FormValidationRequest(varFormValidationRequest)
+
+	return err
 }
 
 type NullableFormValidationRequest struct {

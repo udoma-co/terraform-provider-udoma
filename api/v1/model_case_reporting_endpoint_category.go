@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the CaseReportingEndpointCategory type satisfies the MappedNullable interface at compile time
@@ -20,19 +22,23 @@ var _ MappedNullable = &CaseReportingEndpointCategory{}
 // CaseReportingEndpointCategory struct for CaseReportingEndpointCategory
 type CaseReportingEndpointCategory struct {
 	// a map of values, where the key and values are strings
-	Name *map[string]string `json:"name,omitempty"`
-	// The priority of the Category, used to decide the order in which to display the categories in the initial Case Reporting Endpoint page.
+	Name map[string]string `json:"name"`
+	// The priority of the category, used to decide the order in which to display the categories on the reporting endpoint page.
 	Priority *int32 `json:"priority,omitempty"`
 	// A list of Template objects, that contain the unique IDs of the template and priorities.
-	Templates []CaseReportingEndpointCategoryTemplatesInner `json:"templates,omitempty"`
+	Templates []CaseReportingEndpointCategoryTemplatesInner `json:"templates"`
 }
+
+type _CaseReportingEndpointCategory CaseReportingEndpointCategory
 
 // NewCaseReportingEndpointCategory instantiates a new CaseReportingEndpointCategory object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCaseReportingEndpointCategory() *CaseReportingEndpointCategory {
+func NewCaseReportingEndpointCategory(name map[string]string, templates []CaseReportingEndpointCategoryTemplatesInner) *CaseReportingEndpointCategory {
 	this := CaseReportingEndpointCategory{}
+	this.Name = name
+	this.Templates = templates
 	return &this
 }
 
@@ -44,36 +50,28 @@ func NewCaseReportingEndpointCategoryWithDefaults() *CaseReportingEndpointCatego
 	return &this
 }
 
-// GetName returns the Name field value if set, zero value otherwise.
+// GetName returns the Name field value
 func (o *CaseReportingEndpointCategory) GetName() map[string]string {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		var ret map[string]string
 		return ret
 	}
-	return *o.Name
+
+	return o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// GetNameOk returns a tuple with the Name field value
 // and a boolean to check if the value has been set.
 func (o *CaseReportingEndpointCategory) GetNameOk() (*map[string]string, bool) {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Name, true
+	return &o.Name, true
 }
 
-// HasName returns a boolean if a field has been set.
-func (o *CaseReportingEndpointCategory) HasName() bool {
-	if o != nil && !IsNil(o.Name) {
-		return true
-	}
-
-	return false
-}
-
-// SetName gets a reference to the given map[string]string and assigns it to the Name field.
+// SetName sets field value
 func (o *CaseReportingEndpointCategory) SetName(v map[string]string) {
-	o.Name = &v
+	o.Name = v
 }
 
 // GetPriority returns the Priority field value if set, zero value otherwise.
@@ -108,34 +106,26 @@ func (o *CaseReportingEndpointCategory) SetPriority(v int32) {
 	o.Priority = &v
 }
 
-// GetTemplates returns the Templates field value if set, zero value otherwise.
+// GetTemplates returns the Templates field value
 func (o *CaseReportingEndpointCategory) GetTemplates() []CaseReportingEndpointCategoryTemplatesInner {
-	if o == nil || IsNil(o.Templates) {
+	if o == nil {
 		var ret []CaseReportingEndpointCategoryTemplatesInner
 		return ret
 	}
+
 	return o.Templates
 }
 
-// GetTemplatesOk returns a tuple with the Templates field value if set, nil otherwise
+// GetTemplatesOk returns a tuple with the Templates field value
 // and a boolean to check if the value has been set.
 func (o *CaseReportingEndpointCategory) GetTemplatesOk() ([]CaseReportingEndpointCategoryTemplatesInner, bool) {
-	if o == nil || IsNil(o.Templates) {
+	if o == nil {
 		return nil, false
 	}
 	return o.Templates, true
 }
 
-// HasTemplates returns a boolean if a field has been set.
-func (o *CaseReportingEndpointCategory) HasTemplates() bool {
-	if o != nil && !IsNil(o.Templates) {
-		return true
-	}
-
-	return false
-}
-
-// SetTemplates gets a reference to the given []CaseReportingEndpointCategoryTemplatesInner and assigns it to the Templates field.
+// SetTemplates sets field value
 func (o *CaseReportingEndpointCategory) SetTemplates(v []CaseReportingEndpointCategoryTemplatesInner) {
 	o.Templates = v
 }
@@ -150,16 +140,50 @@ func (o CaseReportingEndpointCategory) MarshalJSON() ([]byte, error) {
 
 func (o CaseReportingEndpointCategory) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Name) {
-		toSerialize["name"] = o.Name
-	}
+	toSerialize["name"] = o.Name
 	if !IsNil(o.Priority) {
 		toSerialize["priority"] = o.Priority
 	}
-	if !IsNil(o.Templates) {
-		toSerialize["templates"] = o.Templates
-	}
+	toSerialize["templates"] = o.Templates
 	return toSerialize, nil
+}
+
+func (o *CaseReportingEndpointCategory) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"templates",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCaseReportingEndpointCategory := _CaseReportingEndpointCategory{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCaseReportingEndpointCategory)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CaseReportingEndpointCategory(varCaseReportingEndpointCategory)
+
+	return err
 }
 
 type NullableCaseReportingEndpointCategory struct {

@@ -11,33 +11,41 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the CreateDocumentRequest type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &CreateDocumentRequest{}
 
-// CreateDocumentRequest Attributes needed for creating a document uploaded in the system
+// CreateDocumentRequest Request used to create a new document that references a file previously uploaded in the system
 type CreateDocumentRequest struct {
-	RefType *DocumentRefTypeEnum `json:"ref_type,omitempty"`
+	RefType DocumentRefTypeEnum `json:"ref_type"`
 	// The ID of the entity for which the document is uploaded. Can be empty, if the  reference type is 'static'.
-	RefId *string `json:"ref_id,omitempty"`
+	RefId string `json:"ref_id"`
 	// The ID of the already uploaded attachment
-	AttachmentRef *string `json:"attachment_ref,omitempty"`
+	AttachmentRef string `json:"attachment_ref"`
 	// The name of the document entry
-	Name *string `json:"name,omitempty"`
+	Name string `json:"name"`
 	// Optional path that can be used to nest documents in folder like structures
 	Path *string `json:"path,omitempty"`
-	// Indicator, controlling whether tenants can see the document (only relevant for  reference type 'property')
+	// Indicator, controlling whether tenants can see the document
 	Public *bool `json:"public,omitempty"`
 }
+
+type _CreateDocumentRequest CreateDocumentRequest
 
 // NewCreateDocumentRequest instantiates a new CreateDocumentRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateDocumentRequest() *CreateDocumentRequest {
+func NewCreateDocumentRequest(refType DocumentRefTypeEnum, refId string, attachmentRef string, name string) *CreateDocumentRequest {
 	this := CreateDocumentRequest{}
+	this.RefType = refType
+	this.RefId = refId
+	this.AttachmentRef = attachmentRef
+	this.Name = name
 	return &this
 }
 
@@ -49,132 +57,100 @@ func NewCreateDocumentRequestWithDefaults() *CreateDocumentRequest {
 	return &this
 }
 
-// GetRefType returns the RefType field value if set, zero value otherwise.
+// GetRefType returns the RefType field value
 func (o *CreateDocumentRequest) GetRefType() DocumentRefTypeEnum {
-	if o == nil || IsNil(o.RefType) {
+	if o == nil {
 		var ret DocumentRefTypeEnum
 		return ret
 	}
-	return *o.RefType
+
+	return o.RefType
 }
 
-// GetRefTypeOk returns a tuple with the RefType field value if set, nil otherwise
+// GetRefTypeOk returns a tuple with the RefType field value
 // and a boolean to check if the value has been set.
 func (o *CreateDocumentRequest) GetRefTypeOk() (*DocumentRefTypeEnum, bool) {
-	if o == nil || IsNil(o.RefType) {
+	if o == nil {
 		return nil, false
 	}
-	return o.RefType, true
+	return &o.RefType, true
 }
 
-// HasRefType returns a boolean if a field has been set.
-func (o *CreateDocumentRequest) HasRefType() bool {
-	if o != nil && !IsNil(o.RefType) {
-		return true
-	}
-
-	return false
-}
-
-// SetRefType gets a reference to the given DocumentRefTypeEnum and assigns it to the RefType field.
+// SetRefType sets field value
 func (o *CreateDocumentRequest) SetRefType(v DocumentRefTypeEnum) {
-	o.RefType = &v
+	o.RefType = v
 }
 
-// GetRefId returns the RefId field value if set, zero value otherwise.
+// GetRefId returns the RefId field value
 func (o *CreateDocumentRequest) GetRefId() string {
-	if o == nil || IsNil(o.RefId) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.RefId
+
+	return o.RefId
 }
 
-// GetRefIdOk returns a tuple with the RefId field value if set, nil otherwise
+// GetRefIdOk returns a tuple with the RefId field value
 // and a boolean to check if the value has been set.
 func (o *CreateDocumentRequest) GetRefIdOk() (*string, bool) {
-	if o == nil || IsNil(o.RefId) {
+	if o == nil {
 		return nil, false
 	}
-	return o.RefId, true
+	return &o.RefId, true
 }
 
-// HasRefId returns a boolean if a field has been set.
-func (o *CreateDocumentRequest) HasRefId() bool {
-	if o != nil && !IsNil(o.RefId) {
-		return true
-	}
-
-	return false
-}
-
-// SetRefId gets a reference to the given string and assigns it to the RefId field.
+// SetRefId sets field value
 func (o *CreateDocumentRequest) SetRefId(v string) {
-	o.RefId = &v
+	o.RefId = v
 }
 
-// GetAttachmentRef returns the AttachmentRef field value if set, zero value otherwise.
+// GetAttachmentRef returns the AttachmentRef field value
 func (o *CreateDocumentRequest) GetAttachmentRef() string {
-	if o == nil || IsNil(o.AttachmentRef) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.AttachmentRef
+
+	return o.AttachmentRef
 }
 
-// GetAttachmentRefOk returns a tuple with the AttachmentRef field value if set, nil otherwise
+// GetAttachmentRefOk returns a tuple with the AttachmentRef field value
 // and a boolean to check if the value has been set.
 func (o *CreateDocumentRequest) GetAttachmentRefOk() (*string, bool) {
-	if o == nil || IsNil(o.AttachmentRef) {
+	if o == nil {
 		return nil, false
 	}
-	return o.AttachmentRef, true
+	return &o.AttachmentRef, true
 }
 
-// HasAttachmentRef returns a boolean if a field has been set.
-func (o *CreateDocumentRequest) HasAttachmentRef() bool {
-	if o != nil && !IsNil(o.AttachmentRef) {
-		return true
-	}
-
-	return false
-}
-
-// SetAttachmentRef gets a reference to the given string and assigns it to the AttachmentRef field.
+// SetAttachmentRef sets field value
 func (o *CreateDocumentRequest) SetAttachmentRef(v string) {
-	o.AttachmentRef = &v
+	o.AttachmentRef = v
 }
 
-// GetName returns the Name field value if set, zero value otherwise.
+// GetName returns the Name field value
 func (o *CreateDocumentRequest) GetName() string {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Name
+
+	return o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// GetNameOk returns a tuple with the Name field value
 // and a boolean to check if the value has been set.
 func (o *CreateDocumentRequest) GetNameOk() (*string, bool) {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Name, true
+	return &o.Name, true
 }
 
-// HasName returns a boolean if a field has been set.
-func (o *CreateDocumentRequest) HasName() bool {
-	if o != nil && !IsNil(o.Name) {
-		return true
-	}
-
-	return false
-}
-
-// SetName gets a reference to the given string and assigns it to the Name field.
+// SetName sets field value
 func (o *CreateDocumentRequest) SetName(v string) {
-	o.Name = &v
+	o.Name = v
 }
 
 // GetPath returns the Path field value if set, zero value otherwise.
@@ -251,18 +227,10 @@ func (o CreateDocumentRequest) MarshalJSON() ([]byte, error) {
 
 func (o CreateDocumentRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.RefType) {
-		toSerialize["ref_type"] = o.RefType
-	}
-	if !IsNil(o.RefId) {
-		toSerialize["ref_id"] = o.RefId
-	}
-	if !IsNil(o.AttachmentRef) {
-		toSerialize["attachment_ref"] = o.AttachmentRef
-	}
-	if !IsNil(o.Name) {
-		toSerialize["name"] = o.Name
-	}
+	toSerialize["ref_type"] = o.RefType
+	toSerialize["ref_id"] = o.RefId
+	toSerialize["attachment_ref"] = o.AttachmentRef
+	toSerialize["name"] = o.Name
 	if !IsNil(o.Path) {
 		toSerialize["path"] = o.Path
 	}
@@ -270,6 +238,46 @@ func (o CreateDocumentRequest) ToMap() (map[string]interface{}, error) {
 		toSerialize["public"] = o.Public
 	}
 	return toSerialize, nil
+}
+
+func (o *CreateDocumentRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"ref_type",
+		"ref_id",
+		"attachment_ref",
+		"name",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCreateDocumentRequest := _CreateDocumentRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCreateDocumentRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CreateDocumentRequest(varCreateDocumentRequest)
+
+	return err
 }
 
 type NullableCreateDocumentRequest struct {

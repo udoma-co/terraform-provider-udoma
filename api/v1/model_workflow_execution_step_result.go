@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the WorkflowExecutionStepResult type satisfies the MappedNullable interface at compile time
@@ -19,21 +21,26 @@ var _ MappedNullable = &WorkflowExecutionStepResult{}
 
 // WorkflowExecutionStepResult this holds the result of the execution of a single workflow step
 type WorkflowExecutionStepResult struct {
-	StepRef *string `json:"step_ref,omitempty"`
+	StepRef string `json:"step_ref"`
 	// the ID of the action that was executed
-	Action *string `json:"action,omitempty"`
+	Action string `json:"action"`
 	// The timestamp of when the workflow step execution was executed
-	ExecutedAt *int64 `json:"executed_at,omitempty"`
+	ExecutedAt int64 `json:"executed_at"`
 	// the result of the workflow step execution as JSON
 	Data *string `json:"data,omitempty"`
 }
+
+type _WorkflowExecutionStepResult WorkflowExecutionStepResult
 
 // NewWorkflowExecutionStepResult instantiates a new WorkflowExecutionStepResult object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewWorkflowExecutionStepResult() *WorkflowExecutionStepResult {
+func NewWorkflowExecutionStepResult(stepRef string, action string, executedAt int64) *WorkflowExecutionStepResult {
 	this := WorkflowExecutionStepResult{}
+	this.StepRef = stepRef
+	this.Action = action
+	this.ExecutedAt = executedAt
 	return &this
 }
 
@@ -45,100 +52,76 @@ func NewWorkflowExecutionStepResultWithDefaults() *WorkflowExecutionStepResult {
 	return &this
 }
 
-// GetStepRef returns the StepRef field value if set, zero value otherwise.
+// GetStepRef returns the StepRef field value
 func (o *WorkflowExecutionStepResult) GetStepRef() string {
-	if o == nil || IsNil(o.StepRef) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.StepRef
+
+	return o.StepRef
 }
 
-// GetStepRefOk returns a tuple with the StepRef field value if set, nil otherwise
+// GetStepRefOk returns a tuple with the StepRef field value
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecutionStepResult) GetStepRefOk() (*string, bool) {
-	if o == nil || IsNil(o.StepRef) {
+	if o == nil {
 		return nil, false
 	}
-	return o.StepRef, true
+	return &o.StepRef, true
 }
 
-// HasStepRef returns a boolean if a field has been set.
-func (o *WorkflowExecutionStepResult) HasStepRef() bool {
-	if o != nil && !IsNil(o.StepRef) {
-		return true
-	}
-
-	return false
-}
-
-// SetStepRef gets a reference to the given string and assigns it to the StepRef field.
+// SetStepRef sets field value
 func (o *WorkflowExecutionStepResult) SetStepRef(v string) {
-	o.StepRef = &v
+	o.StepRef = v
 }
 
-// GetAction returns the Action field value if set, zero value otherwise.
+// GetAction returns the Action field value
 func (o *WorkflowExecutionStepResult) GetAction() string {
-	if o == nil || IsNil(o.Action) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Action
+
+	return o.Action
 }
 
-// GetActionOk returns a tuple with the Action field value if set, nil otherwise
+// GetActionOk returns a tuple with the Action field value
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecutionStepResult) GetActionOk() (*string, bool) {
-	if o == nil || IsNil(o.Action) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Action, true
+	return &o.Action, true
 }
 
-// HasAction returns a boolean if a field has been set.
-func (o *WorkflowExecutionStepResult) HasAction() bool {
-	if o != nil && !IsNil(o.Action) {
-		return true
-	}
-
-	return false
-}
-
-// SetAction gets a reference to the given string and assigns it to the Action field.
+// SetAction sets field value
 func (o *WorkflowExecutionStepResult) SetAction(v string) {
-	o.Action = &v
+	o.Action = v
 }
 
-// GetExecutedAt returns the ExecutedAt field value if set, zero value otherwise.
+// GetExecutedAt returns the ExecutedAt field value
 func (o *WorkflowExecutionStepResult) GetExecutedAt() int64 {
-	if o == nil || IsNil(o.ExecutedAt) {
+	if o == nil {
 		var ret int64
 		return ret
 	}
-	return *o.ExecutedAt
+
+	return o.ExecutedAt
 }
 
-// GetExecutedAtOk returns a tuple with the ExecutedAt field value if set, nil otherwise
+// GetExecutedAtOk returns a tuple with the ExecutedAt field value
 // and a boolean to check if the value has been set.
 func (o *WorkflowExecutionStepResult) GetExecutedAtOk() (*int64, bool) {
-	if o == nil || IsNil(o.ExecutedAt) {
+	if o == nil {
 		return nil, false
 	}
-	return o.ExecutedAt, true
+	return &o.ExecutedAt, true
 }
 
-// HasExecutedAt returns a boolean if a field has been set.
-func (o *WorkflowExecutionStepResult) HasExecutedAt() bool {
-	if o != nil && !IsNil(o.ExecutedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetExecutedAt gets a reference to the given int64 and assigns it to the ExecutedAt field.
+// SetExecutedAt sets field value
 func (o *WorkflowExecutionStepResult) SetExecutedAt(v int64) {
-	o.ExecutedAt = &v
+	o.ExecutedAt = v
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
@@ -183,19 +166,52 @@ func (o WorkflowExecutionStepResult) MarshalJSON() ([]byte, error) {
 
 func (o WorkflowExecutionStepResult) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.StepRef) {
-		toSerialize["step_ref"] = o.StepRef
-	}
-	if !IsNil(o.Action) {
-		toSerialize["action"] = o.Action
-	}
-	if !IsNil(o.ExecutedAt) {
-		toSerialize["executed_at"] = o.ExecutedAt
-	}
+	toSerialize["step_ref"] = o.StepRef
+	toSerialize["action"] = o.Action
+	toSerialize["executed_at"] = o.ExecutedAt
 	if !IsNil(o.Data) {
 		toSerialize["data"] = o.Data
 	}
 	return toSerialize, nil
+}
+
+func (o *WorkflowExecutionStepResult) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"step_ref",
+		"action",
+		"executed_at",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varWorkflowExecutionStepResult := _WorkflowExecutionStepResult{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varWorkflowExecutionStepResult)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WorkflowExecutionStepResult(varWorkflowExecutionStepResult)
+
+	return err
 }
 
 type NullableWorkflowExecutionStepResult struct {

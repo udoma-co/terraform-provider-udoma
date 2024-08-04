@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the CreateOrUpdateWorkflowDefinitionRequest type satisfies the MappedNullable interface at compile time
@@ -19,7 +21,7 @@ var _ MappedNullable = &CreateOrUpdateWorkflowDefinitionRequest{}
 
 // CreateOrUpdateWorkflowDefinitionRequest a request for creating a new or updating an existing workflow
 type CreateOrUpdateWorkflowDefinitionRequest struct {
-	Name        *string `json:"name,omitempty"`
+	Name        string  `json:"name"`
 	Description *string `json:"description,omitempty"`
 	// a JS expression that determines the name of the workflow execution
 	NameExpression *string `json:"name_expression,omitempty"`
@@ -27,26 +29,23 @@ type CreateOrUpdateWorkflowDefinitionRequest struct {
 	Icon *string `json:"icon,omitempty"`
 	// a map of values, where the key and values are strings
 	EnvVars *map[string]string `json:"env_vars,omitempty"`
-	// The ID of the step that will cause billing to be triggered for an  execution of this workflow. If empty, billing will be triggered upon creation of the workflow execution.
-	BillingGate *string `json:"billing_gate,omitempty"`
-	// The ID of the billing plan that will be used for billing of this workflow. If empty, no billing will be triggered.
-	BillingId *string `json:"billing_id,omitempty"`
-	// a JS expression that determines the billing plan of the workflow execution. If set, this will override the billing_id.
-	BillingExpression *string `json:"billing_expression,omitempty"`
-	// whether the workflow is released or not
-	Released *bool `json:"released,omitempty"`
 	// ID of the first step of the workflow, which will be executed when the workflow is started
-	FirstStepId *string                        `json:"first_step_id,omitempty"`
-	InitStep    NullableWorkflowStepDefinition `json:"init_step,omitempty"`
-	Steps       []WorkflowStepDefinition       `json:"steps,omitempty"`
+	FirstStepId string                             `json:"first_step_id"`
+	InitStep    NullableWorkflowInitStepDefinition `json:"init_step,omitempty"`
+	Steps       []WorkflowStepDefinition           `json:"steps"`
 }
+
+type _CreateOrUpdateWorkflowDefinitionRequest CreateOrUpdateWorkflowDefinitionRequest
 
 // NewCreateOrUpdateWorkflowDefinitionRequest instantiates a new CreateOrUpdateWorkflowDefinitionRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateOrUpdateWorkflowDefinitionRequest() *CreateOrUpdateWorkflowDefinitionRequest {
+func NewCreateOrUpdateWorkflowDefinitionRequest(name string, firstStepId string, steps []WorkflowStepDefinition) *CreateOrUpdateWorkflowDefinitionRequest {
 	this := CreateOrUpdateWorkflowDefinitionRequest{}
+	this.Name = name
+	this.FirstStepId = firstStepId
+	this.Steps = steps
 	return &this
 }
 
@@ -58,36 +57,28 @@ func NewCreateOrUpdateWorkflowDefinitionRequestWithDefaults() *CreateOrUpdateWor
 	return &this
 }
 
-// GetName returns the Name field value if set, zero value otherwise.
+// GetName returns the Name field value
 func (o *CreateOrUpdateWorkflowDefinitionRequest) GetName() string {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Name
+
+	return o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// GetNameOk returns a tuple with the Name field value
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateWorkflowDefinitionRequest) GetNameOk() (*string, bool) {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Name, true
+	return &o.Name, true
 }
 
-// HasName returns a boolean if a field has been set.
-func (o *CreateOrUpdateWorkflowDefinitionRequest) HasName() bool {
-	if o != nil && !IsNil(o.Name) {
-		return true
-	}
-
-	return false
-}
-
-// SetName gets a reference to the given string and assigns it to the Name field.
+// SetName sets field value
 func (o *CreateOrUpdateWorkflowDefinitionRequest) SetName(v string) {
-	o.Name = &v
+	o.Name = v
 }
 
 // GetDescription returns the Description field value if set, zero value otherwise.
@@ -218,170 +209,34 @@ func (o *CreateOrUpdateWorkflowDefinitionRequest) SetEnvVars(v map[string]string
 	o.EnvVars = &v
 }
 
-// GetBillingGate returns the BillingGate field value if set, zero value otherwise.
-func (o *CreateOrUpdateWorkflowDefinitionRequest) GetBillingGate() string {
-	if o == nil || IsNil(o.BillingGate) {
-		var ret string
-		return ret
-	}
-	return *o.BillingGate
-}
-
-// GetBillingGateOk returns a tuple with the BillingGate field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateOrUpdateWorkflowDefinitionRequest) GetBillingGateOk() (*string, bool) {
-	if o == nil || IsNil(o.BillingGate) {
-		return nil, false
-	}
-	return o.BillingGate, true
-}
-
-// HasBillingGate returns a boolean if a field has been set.
-func (o *CreateOrUpdateWorkflowDefinitionRequest) HasBillingGate() bool {
-	if o != nil && !IsNil(o.BillingGate) {
-		return true
-	}
-
-	return false
-}
-
-// SetBillingGate gets a reference to the given string and assigns it to the BillingGate field.
-func (o *CreateOrUpdateWorkflowDefinitionRequest) SetBillingGate(v string) {
-	o.BillingGate = &v
-}
-
-// GetBillingId returns the BillingId field value if set, zero value otherwise.
-func (o *CreateOrUpdateWorkflowDefinitionRequest) GetBillingId() string {
-	if o == nil || IsNil(o.BillingId) {
-		var ret string
-		return ret
-	}
-	return *o.BillingId
-}
-
-// GetBillingIdOk returns a tuple with the BillingId field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateOrUpdateWorkflowDefinitionRequest) GetBillingIdOk() (*string, bool) {
-	if o == nil || IsNil(o.BillingId) {
-		return nil, false
-	}
-	return o.BillingId, true
-}
-
-// HasBillingId returns a boolean if a field has been set.
-func (o *CreateOrUpdateWorkflowDefinitionRequest) HasBillingId() bool {
-	if o != nil && !IsNil(o.BillingId) {
-		return true
-	}
-
-	return false
-}
-
-// SetBillingId gets a reference to the given string and assigns it to the BillingId field.
-func (o *CreateOrUpdateWorkflowDefinitionRequest) SetBillingId(v string) {
-	o.BillingId = &v
-}
-
-// GetBillingExpression returns the BillingExpression field value if set, zero value otherwise.
-func (o *CreateOrUpdateWorkflowDefinitionRequest) GetBillingExpression() string {
-	if o == nil || IsNil(o.BillingExpression) {
-		var ret string
-		return ret
-	}
-	return *o.BillingExpression
-}
-
-// GetBillingExpressionOk returns a tuple with the BillingExpression field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateOrUpdateWorkflowDefinitionRequest) GetBillingExpressionOk() (*string, bool) {
-	if o == nil || IsNil(o.BillingExpression) {
-		return nil, false
-	}
-	return o.BillingExpression, true
-}
-
-// HasBillingExpression returns a boolean if a field has been set.
-func (o *CreateOrUpdateWorkflowDefinitionRequest) HasBillingExpression() bool {
-	if o != nil && !IsNil(o.BillingExpression) {
-		return true
-	}
-
-	return false
-}
-
-// SetBillingExpression gets a reference to the given string and assigns it to the BillingExpression field.
-func (o *CreateOrUpdateWorkflowDefinitionRequest) SetBillingExpression(v string) {
-	o.BillingExpression = &v
-}
-
-// GetReleased returns the Released field value if set, zero value otherwise.
-func (o *CreateOrUpdateWorkflowDefinitionRequest) GetReleased() bool {
-	if o == nil || IsNil(o.Released) {
-		var ret bool
-		return ret
-	}
-	return *o.Released
-}
-
-// GetReleasedOk returns a tuple with the Released field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateOrUpdateWorkflowDefinitionRequest) GetReleasedOk() (*bool, bool) {
-	if o == nil || IsNil(o.Released) {
-		return nil, false
-	}
-	return o.Released, true
-}
-
-// HasReleased returns a boolean if a field has been set.
-func (o *CreateOrUpdateWorkflowDefinitionRequest) HasReleased() bool {
-	if o != nil && !IsNil(o.Released) {
-		return true
-	}
-
-	return false
-}
-
-// SetReleased gets a reference to the given bool and assigns it to the Released field.
-func (o *CreateOrUpdateWorkflowDefinitionRequest) SetReleased(v bool) {
-	o.Released = &v
-}
-
-// GetFirstStepId returns the FirstStepId field value if set, zero value otherwise.
+// GetFirstStepId returns the FirstStepId field value
 func (o *CreateOrUpdateWorkflowDefinitionRequest) GetFirstStepId() string {
-	if o == nil || IsNil(o.FirstStepId) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.FirstStepId
+
+	return o.FirstStepId
 }
 
-// GetFirstStepIdOk returns a tuple with the FirstStepId field value if set, nil otherwise
+// GetFirstStepIdOk returns a tuple with the FirstStepId field value
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateWorkflowDefinitionRequest) GetFirstStepIdOk() (*string, bool) {
-	if o == nil || IsNil(o.FirstStepId) {
+	if o == nil {
 		return nil, false
 	}
-	return o.FirstStepId, true
+	return &o.FirstStepId, true
 }
 
-// HasFirstStepId returns a boolean if a field has been set.
-func (o *CreateOrUpdateWorkflowDefinitionRequest) HasFirstStepId() bool {
-	if o != nil && !IsNil(o.FirstStepId) {
-		return true
-	}
-
-	return false
-}
-
-// SetFirstStepId gets a reference to the given string and assigns it to the FirstStepId field.
+// SetFirstStepId sets field value
 func (o *CreateOrUpdateWorkflowDefinitionRequest) SetFirstStepId(v string) {
-	o.FirstStepId = &v
+	o.FirstStepId = v
 }
 
 // GetInitStep returns the InitStep field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *CreateOrUpdateWorkflowDefinitionRequest) GetInitStep() WorkflowStepDefinition {
+func (o *CreateOrUpdateWorkflowDefinitionRequest) GetInitStep() WorkflowInitStepDefinition {
 	if o == nil || IsNil(o.InitStep.Get()) {
-		var ret WorkflowStepDefinition
+		var ret WorkflowInitStepDefinition
 		return ret
 	}
 	return *o.InitStep.Get()
@@ -390,7 +245,7 @@ func (o *CreateOrUpdateWorkflowDefinitionRequest) GetInitStep() WorkflowStepDefi
 // GetInitStepOk returns a tuple with the InitStep field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *CreateOrUpdateWorkflowDefinitionRequest) GetInitStepOk() (*WorkflowStepDefinition, bool) {
+func (o *CreateOrUpdateWorkflowDefinitionRequest) GetInitStepOk() (*WorkflowInitStepDefinition, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -406,8 +261,8 @@ func (o *CreateOrUpdateWorkflowDefinitionRequest) HasInitStep() bool {
 	return false
 }
 
-// SetInitStep gets a reference to the given NullableWorkflowStepDefinition and assigns it to the InitStep field.
-func (o *CreateOrUpdateWorkflowDefinitionRequest) SetInitStep(v WorkflowStepDefinition) {
+// SetInitStep gets a reference to the given NullableWorkflowInitStepDefinition and assigns it to the InitStep field.
+func (o *CreateOrUpdateWorkflowDefinitionRequest) SetInitStep(v WorkflowInitStepDefinition) {
 	o.InitStep.Set(&v)
 }
 
@@ -421,34 +276,26 @@ func (o *CreateOrUpdateWorkflowDefinitionRequest) UnsetInitStep() {
 	o.InitStep.Unset()
 }
 
-// GetSteps returns the Steps field value if set, zero value otherwise.
+// GetSteps returns the Steps field value
 func (o *CreateOrUpdateWorkflowDefinitionRequest) GetSteps() []WorkflowStepDefinition {
-	if o == nil || IsNil(o.Steps) {
+	if o == nil {
 		var ret []WorkflowStepDefinition
 		return ret
 	}
+
 	return o.Steps
 }
 
-// GetStepsOk returns a tuple with the Steps field value if set, nil otherwise
+// GetStepsOk returns a tuple with the Steps field value
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateWorkflowDefinitionRequest) GetStepsOk() ([]WorkflowStepDefinition, bool) {
-	if o == nil || IsNil(o.Steps) {
+	if o == nil {
 		return nil, false
 	}
 	return o.Steps, true
 }
 
-// HasSteps returns a boolean if a field has been set.
-func (o *CreateOrUpdateWorkflowDefinitionRequest) HasSteps() bool {
-	if o != nil && !IsNil(o.Steps) {
-		return true
-	}
-
-	return false
-}
-
-// SetSteps gets a reference to the given []WorkflowStepDefinition and assigns it to the Steps field.
+// SetSteps sets field value
 func (o *CreateOrUpdateWorkflowDefinitionRequest) SetSteps(v []WorkflowStepDefinition) {
 	o.Steps = v
 }
@@ -463,9 +310,7 @@ func (o CreateOrUpdateWorkflowDefinitionRequest) MarshalJSON() ([]byte, error) {
 
 func (o CreateOrUpdateWorkflowDefinitionRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Name) {
-		toSerialize["name"] = o.Name
-	}
+	toSerialize["name"] = o.Name
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
 	}
@@ -478,28 +323,51 @@ func (o CreateOrUpdateWorkflowDefinitionRequest) ToMap() (map[string]interface{}
 	if !IsNil(o.EnvVars) {
 		toSerialize["env_vars"] = o.EnvVars
 	}
-	if !IsNil(o.BillingGate) {
-		toSerialize["billing_gate"] = o.BillingGate
-	}
-	if !IsNil(o.BillingId) {
-		toSerialize["billing_id"] = o.BillingId
-	}
-	if !IsNil(o.BillingExpression) {
-		toSerialize["billing_expression"] = o.BillingExpression
-	}
-	if !IsNil(o.Released) {
-		toSerialize["released"] = o.Released
-	}
-	if !IsNil(o.FirstStepId) {
-		toSerialize["first_step_id"] = o.FirstStepId
-	}
+	toSerialize["first_step_id"] = o.FirstStepId
 	if o.InitStep.IsSet() {
 		toSerialize["init_step"] = o.InitStep.Get()
 	}
-	if !IsNil(o.Steps) {
-		toSerialize["steps"] = o.Steps
-	}
+	toSerialize["steps"] = o.Steps
 	return toSerialize, nil
+}
+
+func (o *CreateOrUpdateWorkflowDefinitionRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"first_step_id",
+		"steps",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCreateOrUpdateWorkflowDefinitionRequest := _CreateOrUpdateWorkflowDefinitionRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCreateOrUpdateWorkflowDefinitionRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CreateOrUpdateWorkflowDefinitionRequest(varCreateOrUpdateWorkflowDefinitionRequest)
+
+	return err
 }
 
 type NullableCreateOrUpdateWorkflowDefinitionRequest struct {

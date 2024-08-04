@@ -35,8 +35,8 @@ type CreateOrUpdateCaseTemplateRequest struct {
 	InfoText *map[string]string `json:"info_text,omitempty"`
 	// The font-awesome icon to use for this template
 	Icon         *string                      `json:"icon,omitempty"`
-	CustomInputs CustomForm                   `json:"custom_inputs"`
-	Config       *CaseConfig                  `json:"config,omitempty"`
+	CustomInputs NullableCustomForm           `json:"custom_inputs"`
+	Config       CaseConfig                   `json:"config"`
 	AdCategories []CaseTemplateAdCategoryEnum `json:"ad_categories,omitempty"`
 	// a map of values, where the key and values are strings
 	ConfirmationText *map[string]string `json:"confirmation_text,omitempty"`
@@ -48,11 +48,12 @@ type _CreateOrUpdateCaseTemplateRequest CreateOrUpdateCaseTemplateRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateOrUpdateCaseTemplateRequest(name string, access []CaseTemplateAccessibility, customInputs CustomForm) *CreateOrUpdateCaseTemplateRequest {
+func NewCreateOrUpdateCaseTemplateRequest(name string, access []CaseTemplateAccessibility, customInputs NullableCustomForm, config CaseConfig) *CreateOrUpdateCaseTemplateRequest {
 	this := CreateOrUpdateCaseTemplateRequest{}
 	this.Name = name
 	this.Access = access
 	this.CustomInputs = customInputs
+	this.Config = config
 	return &this
 }
 
@@ -273,59 +274,53 @@ func (o *CreateOrUpdateCaseTemplateRequest) SetIcon(v string) {
 }
 
 // GetCustomInputs returns the CustomInputs field value
+// If the value is explicit nil, the zero value for CustomForm will be returned
 func (o *CreateOrUpdateCaseTemplateRequest) GetCustomInputs() CustomForm {
-	if o == nil {
+	if o == nil || o.CustomInputs.Get() == nil {
 		var ret CustomForm
 		return ret
 	}
 
-	return o.CustomInputs
+	return *o.CustomInputs.Get()
 }
 
 // GetCustomInputsOk returns a tuple with the CustomInputs field value
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *CreateOrUpdateCaseTemplateRequest) GetCustomInputsOk() (*CustomForm, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.CustomInputs, true
+	return o.CustomInputs.Get(), o.CustomInputs.IsSet()
 }
 
 // SetCustomInputs sets field value
 func (o *CreateOrUpdateCaseTemplateRequest) SetCustomInputs(v CustomForm) {
-	o.CustomInputs = v
+	o.CustomInputs.Set(&v)
 }
 
-// GetConfig returns the Config field value if set, zero value otherwise.
+// GetConfig returns the Config field value
 func (o *CreateOrUpdateCaseTemplateRequest) GetConfig() CaseConfig {
-	if o == nil || IsNil(o.Config) {
+	if o == nil {
 		var ret CaseConfig
 		return ret
 	}
-	return *o.Config
+
+	return o.Config
 }
 
-// GetConfigOk returns a tuple with the Config field value if set, nil otherwise
+// GetConfigOk returns a tuple with the Config field value
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateCaseTemplateRequest) GetConfigOk() (*CaseConfig, bool) {
-	if o == nil || IsNil(o.Config) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Config, true
+	return &o.Config, true
 }
 
-// HasConfig returns a boolean if a field has been set.
-func (o *CreateOrUpdateCaseTemplateRequest) HasConfig() bool {
-	if o != nil && !IsNil(o.Config) {
-		return true
-	}
-
-	return false
-}
-
-// SetConfig gets a reference to the given CaseConfig and assigns it to the Config field.
+// SetConfig sets field value
 func (o *CreateOrUpdateCaseTemplateRequest) SetConfig(v CaseConfig) {
-	o.Config = &v
+	o.Config = v
 }
 
 // GetAdCategories returns the AdCategories field value if set, zero value otherwise.
@@ -419,10 +414,8 @@ func (o CreateOrUpdateCaseTemplateRequest) ToMap() (map[string]interface{}, erro
 	if !IsNil(o.Icon) {
 		toSerialize["icon"] = o.Icon
 	}
-	toSerialize["custom_inputs"] = o.CustomInputs
-	if !IsNil(o.Config) {
-		toSerialize["config"] = o.Config
-	}
+	toSerialize["custom_inputs"] = o.CustomInputs.Get()
+	toSerialize["config"] = o.Config
 	if !IsNil(o.AdCategories) {
 		toSerialize["ad_categories"] = o.AdCategories
 	}
@@ -440,6 +433,7 @@ func (o *CreateOrUpdateCaseTemplateRequest) UnmarshalJSON(data []byte) (err erro
 		"name",
 		"access",
 		"custom_inputs",
+		"config",
 	}
 
 	allProperties := make(map[string]interface{})

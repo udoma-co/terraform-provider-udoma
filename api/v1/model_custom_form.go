@@ -11,30 +11,36 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the CustomForm type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &CustomForm{}
 
-// CustomForm a custom form that is used to collect data from the user
+// CustomForm A custom form definition that is used to collect data from the user
 type CustomForm struct {
 	// the layout of the form, which groups and inputs will be displayed
-	Layout []FormItem `json:"layout,omitempty"`
+	Layout []FormItem `json:"layout"`
 	// the groups of inputs that will be displayed to the user
 	Groups []FormGroup `json:"groups,omitempty"`
 	// the inputs that will be displayed to the user
-	Inputs []FormInput `json:"inputs,omitempty"`
+	Inputs []FormInput `json:"inputs"`
 	// the validations that will be performed on the data provided by the user
 	Validations []FormValidation `json:"validations,omitempty"`
 }
+
+type _CustomForm CustomForm
 
 // NewCustomForm instantiates a new CustomForm object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCustomForm() *CustomForm {
+func NewCustomForm(layout []FormItem, inputs []FormInput) *CustomForm {
 	this := CustomForm{}
+	this.Layout = layout
+	this.Inputs = inputs
 	return &this
 }
 
@@ -46,34 +52,26 @@ func NewCustomFormWithDefaults() *CustomForm {
 	return &this
 }
 
-// GetLayout returns the Layout field value if set, zero value otherwise.
+// GetLayout returns the Layout field value
 func (o *CustomForm) GetLayout() []FormItem {
-	if o == nil || IsNil(o.Layout) {
+	if o == nil {
 		var ret []FormItem
 		return ret
 	}
+
 	return o.Layout
 }
 
-// GetLayoutOk returns a tuple with the Layout field value if set, nil otherwise
+// GetLayoutOk returns a tuple with the Layout field value
 // and a boolean to check if the value has been set.
 func (o *CustomForm) GetLayoutOk() ([]FormItem, bool) {
-	if o == nil || IsNil(o.Layout) {
+	if o == nil {
 		return nil, false
 	}
 	return o.Layout, true
 }
 
-// HasLayout returns a boolean if a field has been set.
-func (o *CustomForm) HasLayout() bool {
-	if o != nil && !IsNil(o.Layout) {
-		return true
-	}
-
-	return false
-}
-
-// SetLayout gets a reference to the given []FormItem and assigns it to the Layout field.
+// SetLayout sets field value
 func (o *CustomForm) SetLayout(v []FormItem) {
 	o.Layout = v
 }
@@ -110,34 +108,26 @@ func (o *CustomForm) SetGroups(v []FormGroup) {
 	o.Groups = v
 }
 
-// GetInputs returns the Inputs field value if set, zero value otherwise.
+// GetInputs returns the Inputs field value
 func (o *CustomForm) GetInputs() []FormInput {
-	if o == nil || IsNil(o.Inputs) {
+	if o == nil {
 		var ret []FormInput
 		return ret
 	}
+
 	return o.Inputs
 }
 
-// GetInputsOk returns a tuple with the Inputs field value if set, nil otherwise
+// GetInputsOk returns a tuple with the Inputs field value
 // and a boolean to check if the value has been set.
 func (o *CustomForm) GetInputsOk() ([]FormInput, bool) {
-	if o == nil || IsNil(o.Inputs) {
+	if o == nil {
 		return nil, false
 	}
 	return o.Inputs, true
 }
 
-// HasInputs returns a boolean if a field has been set.
-func (o *CustomForm) HasInputs() bool {
-	if o != nil && !IsNil(o.Inputs) {
-		return true
-	}
-
-	return false
-}
-
-// SetInputs gets a reference to the given []FormInput and assigns it to the Inputs field.
+// SetInputs sets field value
 func (o *CustomForm) SetInputs(v []FormInput) {
 	o.Inputs = v
 }
@@ -184,19 +174,53 @@ func (o CustomForm) MarshalJSON() ([]byte, error) {
 
 func (o CustomForm) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Layout) {
-		toSerialize["layout"] = o.Layout
-	}
+	toSerialize["layout"] = o.Layout
 	if !IsNil(o.Groups) {
 		toSerialize["groups"] = o.Groups
 	}
-	if !IsNil(o.Inputs) {
-		toSerialize["inputs"] = o.Inputs
-	}
+	toSerialize["inputs"] = o.Inputs
 	if !IsNil(o.Validations) {
 		toSerialize["validations"] = o.Validations
 	}
 	return toSerialize, nil
+}
+
+func (o *CustomForm) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"layout",
+		"inputs",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCustomForm := _CustomForm{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCustomForm)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CustomForm(varCustomForm)
+
+	return err
 }
 
 type NullableCustomForm struct {

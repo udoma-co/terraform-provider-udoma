@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the CreateOrUpdateWorkflowEntrypointRequest type satisfies the MappedNullable interface at compile time
@@ -20,26 +22,31 @@ var _ MappedNullable = &CreateOrUpdateWorkflowEntrypointRequest{}
 // CreateOrUpdateWorkflowEntrypointRequest an app entrypoint to a workflow execution
 type CreateOrUpdateWorkflowEntrypointRequest struct {
 	// the ID of the workflow definition
-	WorkflowDefinitionRef *string                     `json:"workflow_definition_ref,omitempty"`
-	AppLocation           *WorkflowEntrypointLocation `json:"app_location,omitempty"`
+	WorkflowDefinitionRef string                     `json:"workflow_definition_ref"`
+	AppLocation           WorkflowEntrypointLocation `json:"app_location"`
 	// optional filter that can be used to limit where the entrypoint is shown, e.g. for cases this can be the case template, for reports this can be the report  definition, etc.
 	LocationFilter *string `json:"location_filter,omitempty"`
 	// Optional icon of the entrypoint
 	Icon *string `json:"icon,omitempty"`
 	// a map of values, where the key and values are strings
-	Label *map[string]string `json:"label,omitempty"`
+	Label map[string]string `json:"label"`
 	// optional JS script to be executed before the workflow is started
 	InitScript *string `json:"init_script,omitempty"`
 	// whether the init step should be skipped or not
 	SkipInitStep *bool `json:"skip_init_step,omitempty"`
 }
 
+type _CreateOrUpdateWorkflowEntrypointRequest CreateOrUpdateWorkflowEntrypointRequest
+
 // NewCreateOrUpdateWorkflowEntrypointRequest instantiates a new CreateOrUpdateWorkflowEntrypointRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateOrUpdateWorkflowEntrypointRequest() *CreateOrUpdateWorkflowEntrypointRequest {
+func NewCreateOrUpdateWorkflowEntrypointRequest(workflowDefinitionRef string, appLocation WorkflowEntrypointLocation, label map[string]string) *CreateOrUpdateWorkflowEntrypointRequest {
 	this := CreateOrUpdateWorkflowEntrypointRequest{}
+	this.WorkflowDefinitionRef = workflowDefinitionRef
+	this.AppLocation = appLocation
+	this.Label = label
 	return &this
 }
 
@@ -51,68 +58,52 @@ func NewCreateOrUpdateWorkflowEntrypointRequestWithDefaults() *CreateOrUpdateWor
 	return &this
 }
 
-// GetWorkflowDefinitionRef returns the WorkflowDefinitionRef field value if set, zero value otherwise.
+// GetWorkflowDefinitionRef returns the WorkflowDefinitionRef field value
 func (o *CreateOrUpdateWorkflowEntrypointRequest) GetWorkflowDefinitionRef() string {
-	if o == nil || IsNil(o.WorkflowDefinitionRef) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.WorkflowDefinitionRef
+
+	return o.WorkflowDefinitionRef
 }
 
-// GetWorkflowDefinitionRefOk returns a tuple with the WorkflowDefinitionRef field value if set, nil otherwise
+// GetWorkflowDefinitionRefOk returns a tuple with the WorkflowDefinitionRef field value
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateWorkflowEntrypointRequest) GetWorkflowDefinitionRefOk() (*string, bool) {
-	if o == nil || IsNil(o.WorkflowDefinitionRef) {
+	if o == nil {
 		return nil, false
 	}
-	return o.WorkflowDefinitionRef, true
+	return &o.WorkflowDefinitionRef, true
 }
 
-// HasWorkflowDefinitionRef returns a boolean if a field has been set.
-func (o *CreateOrUpdateWorkflowEntrypointRequest) HasWorkflowDefinitionRef() bool {
-	if o != nil && !IsNil(o.WorkflowDefinitionRef) {
-		return true
-	}
-
-	return false
-}
-
-// SetWorkflowDefinitionRef gets a reference to the given string and assigns it to the WorkflowDefinitionRef field.
+// SetWorkflowDefinitionRef sets field value
 func (o *CreateOrUpdateWorkflowEntrypointRequest) SetWorkflowDefinitionRef(v string) {
-	o.WorkflowDefinitionRef = &v
+	o.WorkflowDefinitionRef = v
 }
 
-// GetAppLocation returns the AppLocation field value if set, zero value otherwise.
+// GetAppLocation returns the AppLocation field value
 func (o *CreateOrUpdateWorkflowEntrypointRequest) GetAppLocation() WorkflowEntrypointLocation {
-	if o == nil || IsNil(o.AppLocation) {
+	if o == nil {
 		var ret WorkflowEntrypointLocation
 		return ret
 	}
-	return *o.AppLocation
+
+	return o.AppLocation
 }
 
-// GetAppLocationOk returns a tuple with the AppLocation field value if set, nil otherwise
+// GetAppLocationOk returns a tuple with the AppLocation field value
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateWorkflowEntrypointRequest) GetAppLocationOk() (*WorkflowEntrypointLocation, bool) {
-	if o == nil || IsNil(o.AppLocation) {
+	if o == nil {
 		return nil, false
 	}
-	return o.AppLocation, true
+	return &o.AppLocation, true
 }
 
-// HasAppLocation returns a boolean if a field has been set.
-func (o *CreateOrUpdateWorkflowEntrypointRequest) HasAppLocation() bool {
-	if o != nil && !IsNil(o.AppLocation) {
-		return true
-	}
-
-	return false
-}
-
-// SetAppLocation gets a reference to the given WorkflowEntrypointLocation and assigns it to the AppLocation field.
+// SetAppLocation sets field value
 func (o *CreateOrUpdateWorkflowEntrypointRequest) SetAppLocation(v WorkflowEntrypointLocation) {
-	o.AppLocation = &v
+	o.AppLocation = v
 }
 
 // GetLocationFilter returns the LocationFilter field value if set, zero value otherwise.
@@ -179,36 +170,28 @@ func (o *CreateOrUpdateWorkflowEntrypointRequest) SetIcon(v string) {
 	o.Icon = &v
 }
 
-// GetLabel returns the Label field value if set, zero value otherwise.
+// GetLabel returns the Label field value
 func (o *CreateOrUpdateWorkflowEntrypointRequest) GetLabel() map[string]string {
-	if o == nil || IsNil(o.Label) {
+	if o == nil {
 		var ret map[string]string
 		return ret
 	}
-	return *o.Label
+
+	return o.Label
 }
 
-// GetLabelOk returns a tuple with the Label field value if set, nil otherwise
+// GetLabelOk returns a tuple with the Label field value
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateWorkflowEntrypointRequest) GetLabelOk() (*map[string]string, bool) {
-	if o == nil || IsNil(o.Label) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Label, true
+	return &o.Label, true
 }
 
-// HasLabel returns a boolean if a field has been set.
-func (o *CreateOrUpdateWorkflowEntrypointRequest) HasLabel() bool {
-	if o != nil && !IsNil(o.Label) {
-		return true
-	}
-
-	return false
-}
-
-// SetLabel gets a reference to the given map[string]string and assigns it to the Label field.
+// SetLabel sets field value
 func (o *CreateOrUpdateWorkflowEntrypointRequest) SetLabel(v map[string]string) {
-	o.Label = &v
+	o.Label = v
 }
 
 // GetInitScript returns the InitScript field value if set, zero value otherwise.
@@ -285,21 +268,15 @@ func (o CreateOrUpdateWorkflowEntrypointRequest) MarshalJSON() ([]byte, error) {
 
 func (o CreateOrUpdateWorkflowEntrypointRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.WorkflowDefinitionRef) {
-		toSerialize["workflow_definition_ref"] = o.WorkflowDefinitionRef
-	}
-	if !IsNil(o.AppLocation) {
-		toSerialize["app_location"] = o.AppLocation
-	}
+	toSerialize["workflow_definition_ref"] = o.WorkflowDefinitionRef
+	toSerialize["app_location"] = o.AppLocation
 	if !IsNil(o.LocationFilter) {
 		toSerialize["location_filter"] = o.LocationFilter
 	}
 	if !IsNil(o.Icon) {
 		toSerialize["icon"] = o.Icon
 	}
-	if !IsNil(o.Label) {
-		toSerialize["label"] = o.Label
-	}
+	toSerialize["label"] = o.Label
 	if !IsNil(o.InitScript) {
 		toSerialize["init_script"] = o.InitScript
 	}
@@ -307,6 +284,45 @@ func (o CreateOrUpdateWorkflowEntrypointRequest) ToMap() (map[string]interface{}
 		toSerialize["skip_init_step"] = o.SkipInitStep
 	}
 	return toSerialize, nil
+}
+
+func (o *CreateOrUpdateWorkflowEntrypointRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"workflow_definition_ref",
+		"app_location",
+		"label",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCreateOrUpdateWorkflowEntrypointRequest := _CreateOrUpdateWorkflowEntrypointRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCreateOrUpdateWorkflowEntrypointRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CreateOrUpdateWorkflowEntrypointRequest(varCreateOrUpdateWorkflowEntrypointRequest)
+
+	return err
 }
 
 type NullableCreateOrUpdateWorkflowEntrypointRequest struct {

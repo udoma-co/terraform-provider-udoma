@@ -144,7 +144,7 @@ func (r *workflowEntrypoint) Create(ctx context.Context, req resource.CreateRequ
 
 	createReq, _ := plan.toAPIRequest()
 
-	newEndpoint, _, err := r.client.GetApi().CreateWorkflowEntrypoint(ctx, *createReq.WorkflowDefinitionRef).CreateOrUpdateWorkflowEntrypointRequest(createReq).Execute()
+	newEndpoint, _, err := r.client.GetApi().CreateWorkflowEntrypoint(ctx, createReq.WorkflowDefinitionRef).CreateOrUpdateWorkflowEntrypointRequest(createReq).Execute()
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Creating Workflow Entrypoint",
@@ -284,30 +284,20 @@ func (model *workflowEntrypointModel) fromAPI(workflowEntrypoint *api.WorkflowEn
 		return fmt.Errorf("workflow entrypoint is nil")
 	}
 
-	model.ID = types.StringPointerValue(workflowEntrypoint.Id)
-	model.CreatedAt = types.Int64PointerValue(workflowEntrypoint.CreatedAt)
-	model.UpdatedAt = types.Int64PointerValue(workflowEntrypoint.UpdatedAt)
-	model.WorkflowDefinitionRef = types.StringPointerValue(workflowEntrypoint.WorkflowDefinitionRef)
-	if workflowEntrypoint.AppLocation != nil {
-		location := *workflowEntrypoint.AppLocation
-		model.AppLocation = types.StringValue(string(location))
-	}
-
+	model.ID = types.StringValue(workflowEntrypoint.Id)
+	model.CreatedAt = types.Int64Value(workflowEntrypoint.CreatedAt)
+	model.UpdatedAt = types.Int64Value(workflowEntrypoint.UpdatedAt)
+	model.WorkflowDefinitionRef = types.StringValue(workflowEntrypoint.WorkflowDefinitionRef)
+	model.AppLocation = types.StringValue(string(workflowEntrypoint.AppLocation))
 	model.LocationFilter = omittableStringValue(workflowEntrypoint.LocationFilter, model.LocationFilter)
 	model.Icon = omittableStringValue(workflowEntrypoint.Icon, model.Icon)
 
-	if workflowEntrypoint.Label != nil {
-		in := stringMapToValueMap(*workflowEntrypoint.Label)
-		modelValue, diags := types.MapValue(types.StringType, in)
-		if diags.HasError() {
-			return fmt.Errorf("error converting label to map: %v", diags)
-		}
-		model.Label = modelValue
-	} else {
-		if !model.Label.IsNull() {
-			model.Label = types.MapNull(types.StringType)
-		}
+	in := stringMapToValueMap(workflowEntrypoint.Label)
+	modelValue, diags := types.MapValue(types.StringType, in)
+	if diags.HasError() {
+		return fmt.Errorf("error converting label to map: %v", diags)
 	}
+	model.Label = modelValue
 
 	model.InitScript = omittableStringValue(workflowEntrypoint.InitScript, model.InitScript)
 	model.SkipInitStep = omittableBooleanValue(workflowEntrypoint.SkipInitStep, model.SkipInitStep)
@@ -318,7 +308,7 @@ func (model *workflowEntrypointModel) fromAPI(workflowEntrypoint *api.WorkflowEn
 func (model *workflowEntrypointModel) toAPIRequest() (api.CreateOrUpdateWorkflowEntrypointRequest, error) {
 
 	workflowEntrypoint := api.CreateOrUpdateWorkflowEntrypointRequest{
-		WorkflowDefinitionRef: model.WorkflowDefinitionRef.ValueStringPointer(),
+		WorkflowDefinitionRef: model.WorkflowDefinitionRef.ValueString(),
 		LocationFilter:        model.LocationFilter.ValueStringPointer(),
 		Icon:                  model.Icon.ValueStringPointer(),
 		Label:                 modelMapToStringMap(model.Label),
@@ -328,7 +318,7 @@ func (model *workflowEntrypointModel) toAPIRequest() (api.CreateOrUpdateWorkflow
 
 	if !model.AppLocation.IsNull() && !model.AppLocation.IsUnknown() {
 		location := api.WorkflowEntrypointLocation(model.AppLocation.ValueString())
-		workflowEntrypoint.AppLocation = &location
+		workflowEntrypoint.AppLocation = location
 	}
 
 	return workflowEntrypoint, nil

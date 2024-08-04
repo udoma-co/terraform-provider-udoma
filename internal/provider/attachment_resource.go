@@ -215,14 +215,14 @@ func (m *AttachmentModel) fromApiResponse(api *v1.Attachment) (diags diag.Diagno
 		return
 	}
 
-	m.ID = types.StringPointerValue(api.Id)
-	m.Created = types.Int64PointerValue(api.Created)
-	m.Ref = types.StringPointerValue(api.Ref)
-	m.FileType = types.StringPointerValue(api.FileType)
-	m.FileSize = types.Int64PointerValue(api.FileSize)
-	m.FileName = types.StringPointerValue(api.FileName)
-	m.FileSHA256 = types.StringPointerValue(api.FileSha256)
-	m.URL = types.StringPointerValue(api.Url)
+	m.ID = types.StringValue(api.Id)
+	m.Created = types.Int64Value(api.Created)
+	m.Ref = types.StringValue(api.Ref)
+	m.FileType = types.StringValue(api.FileType)
+	m.FileSize = types.Int64Value(api.FileSize)
+	m.FileName = types.StringValue(api.FileName)
+	m.FileSHA256 = types.StringValue(api.FileSha256)
+	m.URL = types.StringValue(api.Url)
 
 	return
 }

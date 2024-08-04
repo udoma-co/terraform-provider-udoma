@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the CaseStatusConfig type satisfies the MappedNullable interface at compile time
@@ -19,23 +21,28 @@ var _ MappedNullable = &CaseStatusConfig{}
 
 // CaseStatusConfig Contains the configuration for the status of a case. This is used to  determine which status changes are allowed.
 type CaseStatusConfig struct {
-	Action *CaseActionEnum `json:"action,omitempty"`
+	Action CaseActionEnum `json:"action"`
 	// A list of possible statuses in which the case must be, so that the configuration applies.
-	SourceStatus []CaseStatusEnum `json:"source_status,omitempty"`
+	SourceStatus []CaseStatusEnum `json:"source_status"`
 	// The parties for which the configuration applies, that is the parties that are allowed to  execute the action when the case is in onf of the source status.
-	Parties []UserTypeEnum `json:"parties,omitempty"`
+	Parties []UserTypeEnum `json:"parties"`
 	// Optional list of feedback that is requested from the party executing the action.
 	Feedback []CaseFeedbackConfig `json:"feedback,omitempty"`
 	// The list of parties that should be notified of the status change.
 	Notify []UserTypeEnum `json:"notify,omitempty"`
 }
 
+type _CaseStatusConfig CaseStatusConfig
+
 // NewCaseStatusConfig instantiates a new CaseStatusConfig object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCaseStatusConfig() *CaseStatusConfig {
+func NewCaseStatusConfig(action CaseActionEnum, sourceStatus []CaseStatusEnum, parties []UserTypeEnum) *CaseStatusConfig {
 	this := CaseStatusConfig{}
+	this.Action = action
+	this.SourceStatus = sourceStatus
+	this.Parties = parties
 	return &this
 }
 
@@ -47,98 +54,74 @@ func NewCaseStatusConfigWithDefaults() *CaseStatusConfig {
 	return &this
 }
 
-// GetAction returns the Action field value if set, zero value otherwise.
+// GetAction returns the Action field value
 func (o *CaseStatusConfig) GetAction() CaseActionEnum {
-	if o == nil || IsNil(o.Action) {
+	if o == nil {
 		var ret CaseActionEnum
 		return ret
 	}
-	return *o.Action
+
+	return o.Action
 }
 
-// GetActionOk returns a tuple with the Action field value if set, nil otherwise
+// GetActionOk returns a tuple with the Action field value
 // and a boolean to check if the value has been set.
 func (o *CaseStatusConfig) GetActionOk() (*CaseActionEnum, bool) {
-	if o == nil || IsNil(o.Action) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Action, true
+	return &o.Action, true
 }
 
-// HasAction returns a boolean if a field has been set.
-func (o *CaseStatusConfig) HasAction() bool {
-	if o != nil && !IsNil(o.Action) {
-		return true
-	}
-
-	return false
-}
-
-// SetAction gets a reference to the given CaseActionEnum and assigns it to the Action field.
+// SetAction sets field value
 func (o *CaseStatusConfig) SetAction(v CaseActionEnum) {
-	o.Action = &v
+	o.Action = v
 }
 
-// GetSourceStatus returns the SourceStatus field value if set, zero value otherwise.
+// GetSourceStatus returns the SourceStatus field value
 func (o *CaseStatusConfig) GetSourceStatus() []CaseStatusEnum {
-	if o == nil || IsNil(o.SourceStatus) {
+	if o == nil {
 		var ret []CaseStatusEnum
 		return ret
 	}
+
 	return o.SourceStatus
 }
 
-// GetSourceStatusOk returns a tuple with the SourceStatus field value if set, nil otherwise
+// GetSourceStatusOk returns a tuple with the SourceStatus field value
 // and a boolean to check if the value has been set.
 func (o *CaseStatusConfig) GetSourceStatusOk() ([]CaseStatusEnum, bool) {
-	if o == nil || IsNil(o.SourceStatus) {
+	if o == nil {
 		return nil, false
 	}
 	return o.SourceStatus, true
 }
 
-// HasSourceStatus returns a boolean if a field has been set.
-func (o *CaseStatusConfig) HasSourceStatus() bool {
-	if o != nil && !IsNil(o.SourceStatus) {
-		return true
-	}
-
-	return false
-}
-
-// SetSourceStatus gets a reference to the given []CaseStatusEnum and assigns it to the SourceStatus field.
+// SetSourceStatus sets field value
 func (o *CaseStatusConfig) SetSourceStatus(v []CaseStatusEnum) {
 	o.SourceStatus = v
 }
 
-// GetParties returns the Parties field value if set, zero value otherwise.
+// GetParties returns the Parties field value
 func (o *CaseStatusConfig) GetParties() []UserTypeEnum {
-	if o == nil || IsNil(o.Parties) {
+	if o == nil {
 		var ret []UserTypeEnum
 		return ret
 	}
+
 	return o.Parties
 }
 
-// GetPartiesOk returns a tuple with the Parties field value if set, nil otherwise
+// GetPartiesOk returns a tuple with the Parties field value
 // and a boolean to check if the value has been set.
 func (o *CaseStatusConfig) GetPartiesOk() ([]UserTypeEnum, bool) {
-	if o == nil || IsNil(o.Parties) {
+	if o == nil {
 		return nil, false
 	}
 	return o.Parties, true
 }
 
-// HasParties returns a boolean if a field has been set.
-func (o *CaseStatusConfig) HasParties() bool {
-	if o != nil && !IsNil(o.Parties) {
-		return true
-	}
-
-	return false
-}
-
-// SetParties gets a reference to the given []UserTypeEnum and assigns it to the Parties field.
+// SetParties sets field value
 func (o *CaseStatusConfig) SetParties(v []UserTypeEnum) {
 	o.Parties = v
 }
@@ -217,15 +200,9 @@ func (o CaseStatusConfig) MarshalJSON() ([]byte, error) {
 
 func (o CaseStatusConfig) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Action) {
-		toSerialize["action"] = o.Action
-	}
-	if !IsNil(o.SourceStatus) {
-		toSerialize["source_status"] = o.SourceStatus
-	}
-	if !IsNil(o.Parties) {
-		toSerialize["parties"] = o.Parties
-	}
+	toSerialize["action"] = o.Action
+	toSerialize["source_status"] = o.SourceStatus
+	toSerialize["parties"] = o.Parties
 	if !IsNil(o.Feedback) {
 		toSerialize["feedback"] = o.Feedback
 	}
@@ -233,6 +210,45 @@ func (o CaseStatusConfig) ToMap() (map[string]interface{}, error) {
 		toSerialize["notify"] = o.Notify
 	}
 	return toSerialize, nil
+}
+
+func (o *CaseStatusConfig) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"action",
+		"source_status",
+		"parties",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCaseStatusConfig := _CaseStatusConfig{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCaseStatusConfig)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CaseStatusConfig(varCaseStatusConfig)
+
+	return err
 }
 
 type NullableCaseStatusConfig struct {

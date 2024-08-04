@@ -21,8 +21,12 @@ var _ MappedNullable = &ConnectorQuery{}
 
 // ConnectorQuery This is the query that is sent to be ran by the client and return data from their database.
 type ConnectorQuery struct {
-	// The UID of the query
+	// Unique and immutable ID attribute of the entity that is generated when  the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities  or to retrieve it from the backend.
 	Id string `json:"id"`
+	// The date and time the entity was created
+	CreatedAt int64 `json:"created_at"`
+	// The date and time the entity was last updated
+	UpdatedAt int64 `json:"updated_at"`
 	// A unique and descriptive name given to the query.
 	Name string `json:"name"`
 	// The name to display in the webapp.
@@ -40,11 +44,7 @@ type ConnectorQuery struct {
 	// JavaScript code that processes the response into an object that can be understood by the backend code and upserted into the database.
 	ProcessScript string `json:"process_script"`
 	// A timestamp of the last updated object. This should be updated by the process script, to track the last update to an object we performed.
-	UpdatedLast int64 `json:"updated_last"`
-	// The moment of creation of this entity - unix timestamp
-	CreatedAt int64 `json:"created_at"`
-	// The moment this entity was last updated - unix timestamp
-	UpdatedAt int64 `json:"updated_at"`
+	UpdatedLast *int64 `json:"updated_last,omitempty"`
 }
 
 type _ConnectorQuery ConnectorQuery
@@ -53,18 +53,17 @@ type _ConnectorQuery ConnectorQuery
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewConnectorQuery(id string, name string, connectorRef string, priority int32, entityLimit int32, statement string, processScript string, updatedLast int64, createdAt int64, updatedAt int64) *ConnectorQuery {
+func NewConnectorQuery(id string, createdAt int64, updatedAt int64, name string, connectorRef string, priority int32, entityLimit int32, statement string, processScript string) *ConnectorQuery {
 	this := ConnectorQuery{}
 	this.Id = id
+	this.CreatedAt = createdAt
+	this.UpdatedAt = updatedAt
 	this.Name = name
 	this.ConnectorRef = connectorRef
 	this.Priority = priority
 	this.EntityLimit = entityLimit
 	this.Statement = statement
 	this.ProcessScript = processScript
-	this.UpdatedLast = updatedLast
-	this.CreatedAt = createdAt
-	this.UpdatedAt = updatedAt
 	return &this
 }
 
@@ -98,6 +97,54 @@ func (o *ConnectorQuery) GetIdOk() (*string, bool) {
 // SetId sets field value
 func (o *ConnectorQuery) SetId(v string) {
 	o.Id = v
+}
+
+// GetCreatedAt returns the CreatedAt field value
+func (o *ConnectorQuery) GetCreatedAt() int64 {
+	if o == nil {
+		var ret int64
+		return ret
+	}
+
+	return o.CreatedAt
+}
+
+// GetCreatedAtOk returns a tuple with the CreatedAt field value
+// and a boolean to check if the value has been set.
+func (o *ConnectorQuery) GetCreatedAtOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.CreatedAt, true
+}
+
+// SetCreatedAt sets field value
+func (o *ConnectorQuery) SetCreatedAt(v int64) {
+	o.CreatedAt = v
+}
+
+// GetUpdatedAt returns the UpdatedAt field value
+func (o *ConnectorQuery) GetUpdatedAt() int64 {
+	if o == nil {
+		var ret int64
+		return ret
+	}
+
+	return o.UpdatedAt
+}
+
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
+// and a boolean to check if the value has been set.
+func (o *ConnectorQuery) GetUpdatedAtOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.UpdatedAt, true
+}
+
+// SetUpdatedAt sets field value
+func (o *ConnectorQuery) SetUpdatedAt(v int64) {
+	o.UpdatedAt = v
 }
 
 // GetName returns the Name field value
@@ -308,76 +355,36 @@ func (o *ConnectorQuery) SetProcessScript(v string) {
 	o.ProcessScript = v
 }
 
-// GetUpdatedLast returns the UpdatedLast field value
+// GetUpdatedLast returns the UpdatedLast field value if set, zero value otherwise.
 func (o *ConnectorQuery) GetUpdatedLast() int64 {
-	if o == nil {
+	if o == nil || IsNil(o.UpdatedLast) {
 		var ret int64
 		return ret
 	}
-
-	return o.UpdatedLast
+	return *o.UpdatedLast
 }
 
-// GetUpdatedLastOk returns a tuple with the UpdatedLast field value
+// GetUpdatedLastOk returns a tuple with the UpdatedLast field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectorQuery) GetUpdatedLastOk() (*int64, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.UpdatedLast) {
 		return nil, false
 	}
-	return &o.UpdatedLast, true
+	return o.UpdatedLast, true
 }
 
-// SetUpdatedLast sets field value
+// HasUpdatedLast returns a boolean if a field has been set.
+func (o *ConnectorQuery) HasUpdatedLast() bool {
+	if o != nil && !IsNil(o.UpdatedLast) {
+		return true
+	}
+
+	return false
+}
+
+// SetUpdatedLast gets a reference to the given int64 and assigns it to the UpdatedLast field.
 func (o *ConnectorQuery) SetUpdatedLast(v int64) {
-	o.UpdatedLast = v
-}
-
-// GetCreatedAt returns the CreatedAt field value
-func (o *ConnectorQuery) GetCreatedAt() int64 {
-	if o == nil {
-		var ret int64
-		return ret
-	}
-
-	return o.CreatedAt
-}
-
-// GetCreatedAtOk returns a tuple with the CreatedAt field value
-// and a boolean to check if the value has been set.
-func (o *ConnectorQuery) GetCreatedAtOk() (*int64, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.CreatedAt, true
-}
-
-// SetCreatedAt sets field value
-func (o *ConnectorQuery) SetCreatedAt(v int64) {
-	o.CreatedAt = v
-}
-
-// GetUpdatedAt returns the UpdatedAt field value
-func (o *ConnectorQuery) GetUpdatedAt() int64 {
-	if o == nil {
-		var ret int64
-		return ret
-	}
-
-	return o.UpdatedAt
-}
-
-// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
-// and a boolean to check if the value has been set.
-func (o *ConnectorQuery) GetUpdatedAtOk() (*int64, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.UpdatedAt, true
-}
-
-// SetUpdatedAt sets field value
-func (o *ConnectorQuery) SetUpdatedAt(v int64) {
-	o.UpdatedAt = v
+	o.UpdatedLast = &v
 }
 
 func (o ConnectorQuery) MarshalJSON() ([]byte, error) {
@@ -391,6 +398,8 @@ func (o ConnectorQuery) MarshalJSON() ([]byte, error) {
 func (o ConnectorQuery) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["id"] = o.Id
+	toSerialize["created_at"] = o.CreatedAt
+	toSerialize["updated_at"] = o.UpdatedAt
 	toSerialize["name"] = o.Name
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
@@ -403,9 +412,9 @@ func (o ConnectorQuery) ToMap() (map[string]interface{}, error) {
 	toSerialize["entity_limit"] = o.EntityLimit
 	toSerialize["statement"] = o.Statement
 	toSerialize["process_script"] = o.ProcessScript
-	toSerialize["updated_last"] = o.UpdatedLast
-	toSerialize["created_at"] = o.CreatedAt
-	toSerialize["updated_at"] = o.UpdatedAt
+	if !IsNil(o.UpdatedLast) {
+		toSerialize["updated_last"] = o.UpdatedLast
+	}
 	return toSerialize, nil
 }
 
@@ -415,15 +424,14 @@ func (o *ConnectorQuery) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"id",
+		"created_at",
+		"updated_at",
 		"name",
 		"connector_ref",
 		"priority",
 		"entity_limit",
 		"statement",
 		"process_script",
-		"updated_last",
-		"created_at",
-		"updated_at",
 	}
 
 	allProperties := make(map[string]interface{})

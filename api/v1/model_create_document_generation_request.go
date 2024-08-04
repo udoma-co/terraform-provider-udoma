@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the CreateDocumentGenerationRequest type satisfies the MappedNullable interface at compile time
@@ -20,17 +22,20 @@ var _ MappedNullable = &CreateDocumentGenerationRequest{}
 // CreateDocumentGenerationRequest Start a new document generation based on the given template. This will also trigger the initialisation of the inputs, defined in the template and store the result in the new generation object.
 type CreateDocumentGenerationRequest struct {
 	// The template based on which a document shall be generated
-	Template *string `json:"template,omitempty"`
+	TemplateRef string `json:"template_ref"`
 	// Optional initialisation data for the inputs of the template. If not set, the default values of the inputs will be used. To be provided as JSON serialised object, where the values are NOT JSON serialised themselves.
 	InitData *string `json:"init_data,omitempty"`
 }
+
+type _CreateDocumentGenerationRequest CreateDocumentGenerationRequest
 
 // NewCreateDocumentGenerationRequest instantiates a new CreateDocumentGenerationRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateDocumentGenerationRequest() *CreateDocumentGenerationRequest {
+func NewCreateDocumentGenerationRequest(templateRef string) *CreateDocumentGenerationRequest {
 	this := CreateDocumentGenerationRequest{}
+	this.TemplateRef = templateRef
 	return &this
 }
 
@@ -42,36 +47,28 @@ func NewCreateDocumentGenerationRequestWithDefaults() *CreateDocumentGenerationR
 	return &this
 }
 
-// GetTemplate returns the Template field value if set, zero value otherwise.
-func (o *CreateDocumentGenerationRequest) GetTemplate() string {
-	if o == nil || IsNil(o.Template) {
+// GetTemplateRef returns the TemplateRef field value
+func (o *CreateDocumentGenerationRequest) GetTemplateRef() string {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Template
+
+	return o.TemplateRef
 }
 
-// GetTemplateOk returns a tuple with the Template field value if set, nil otherwise
+// GetTemplateRefOk returns a tuple with the TemplateRef field value
 // and a boolean to check if the value has been set.
-func (o *CreateDocumentGenerationRequest) GetTemplateOk() (*string, bool) {
-	if o == nil || IsNil(o.Template) {
+func (o *CreateDocumentGenerationRequest) GetTemplateRefOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Template, true
+	return &o.TemplateRef, true
 }
 
-// HasTemplate returns a boolean if a field has been set.
-func (o *CreateDocumentGenerationRequest) HasTemplate() bool {
-	if o != nil && !IsNil(o.Template) {
-		return true
-	}
-
-	return false
-}
-
-// SetTemplate gets a reference to the given string and assigns it to the Template field.
-func (o *CreateDocumentGenerationRequest) SetTemplate(v string) {
-	o.Template = &v
+// SetTemplateRef sets field value
+func (o *CreateDocumentGenerationRequest) SetTemplateRef(v string) {
+	o.TemplateRef = v
 }
 
 // GetInitData returns the InitData field value if set, zero value otherwise.
@@ -116,13 +113,48 @@ func (o CreateDocumentGenerationRequest) MarshalJSON() ([]byte, error) {
 
 func (o CreateDocumentGenerationRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Template) {
-		toSerialize["template"] = o.Template
-	}
+	toSerialize["template_ref"] = o.TemplateRef
 	if !IsNil(o.InitData) {
 		toSerialize["init_data"] = o.InitData
 	}
 	return toSerialize, nil
+}
+
+func (o *CreateDocumentGenerationRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"template_ref",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCreateDocumentGenerationRequest := _CreateDocumentGenerationRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCreateDocumentGenerationRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CreateDocumentGenerationRequest(varCreateDocumentGenerationRequest)
+
+	return err
 }
 
 type NullableCreateDocumentGenerationRequest struct {

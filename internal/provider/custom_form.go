@@ -329,28 +329,18 @@ func (form *CustomFormModel) fromApiResponse(resp *v1.CustomForm) (diags diag.Di
 }
 
 func (item *CustomFormItemModel) toApiRequest() *v1.FormItem {
-
-	refType := v1.FormItemType(item.RefType.ValueString())
-
 	return &v1.FormItem{
-		RefId:   item.RefID.ValueStringPointer(),
-		RefType: &refType,
+		RefId:   item.RefID.ValueString(),
+		RefType: v1.FormItemType(item.RefType.ValueString()),
 	}
 }
 
 func (item *CustomFormItemModel) fromApiResponse(resp *v1.FormItem) {
-
-	item.RefID = types.StringPointerValue(resp.RefId)
-	if resp.RefType != nil {
-		item.RefType = types.StringValue(string(*resp.RefType))
-	} else {
-		item.RefType = types.StringValue("")
-	}
+	item.RefID = types.StringValue(resp.RefId)
+	item.RefType = types.StringValue(string(resp.RefType))
 }
 
 func (group *CustomFormGroupModel) toApiRequest() *v1.FormGroup {
-
-	groupType := v1.FormGroupType(group.Type.ValueString())
 
 	items := make([]v1.FormItem, len(group.Items))
 	for i := range group.Items {
@@ -359,11 +349,14 @@ func (group *CustomFormGroupModel) toApiRequest() *v1.FormGroup {
 
 	minSize := int32(group.MinSize.ValueInt64())
 
+	label := modelMapToStringMap(group.Label)
+	info := modelMapToStringMap(group.Info)
+
 	return &v1.FormGroup{
-		Id:            group.ID.ValueStringPointer(),
-		Type:          &groupType,
-		Label:         modelMapToStringMap(group.Label),
-		Info:          modelMapToStringMap(group.Info),
+		Id:            group.ID.ValueString(),
+		Type:          v1.FormGroupType(group.Type.ValueString()),
+		Label:         &label,
+		Info:          &info,
 		Items:         items,
 		Target:        group.Target.ValueStringPointer(),
 		TopDivider:    group.TopDivider.ValueBoolPointer(),
@@ -375,12 +368,8 @@ func (group *CustomFormGroupModel) toApiRequest() *v1.FormGroup {
 
 func (group *CustomFormGroupModel) fromApiResponse(resp *v1.FormGroup) (diags diag.Diagnostics) {
 
-	groupType := ""
-	if resp.Type != nil {
-		groupType = string(*resp.Type)
-	}
-
-	minSize := int64(idp32(resp.MinSize))
+	group.ID = types.StringValue(resp.Id)
+	group.Type = types.StringValue(string(resp.Type))
 
 	if resp.Label != nil {
 		group.Label, diags = types.MapValue(types.StringType, stringMapToValueMap(*resp.Label))
@@ -403,10 +392,6 @@ func (group *CustomFormGroupModel) fromApiResponse(resp *v1.FormGroup) (diags di
 		group.Items[i].fromApiResponse(&resp.Items[i])
 	}
 
-	if resp.Id != nil {
-		group.ID = types.StringValue(*resp.Id)
-	}
-	group.Type = types.StringValue(groupType)
 	if resp.Target != nil {
 		group.Target = types.StringValue(*resp.Target)
 	}
@@ -420,7 +405,7 @@ func (group *CustomFormGroupModel) fromApiResponse(resp *v1.FormGroup) (diags di
 		group.UseItemGroup = types.BoolValue(*resp.UseItemGroup)
 	}
 	if resp.MinSize != nil {
-		group.MinSize = types.Int64Value(minSize)
+		group.MinSize = types.Int64Value(int64(idp32(resp.MinSize)))
 	}
 
 	return
@@ -428,32 +413,40 @@ func (group *CustomFormGroupModel) fromApiResponse(resp *v1.FormGroup) (diags di
 
 func (input *CustomFormInputModel) toApiRequest() *v1.FormInput {
 
-	inputType := v1.FormInputType(input.Type.ValueString())
-
-	return &v1.FormInput{
-		Id:               input.ID.ValueStringPointer(),
-		Label:            modelMapToStringMap(input.Label),
-		ViewLabel:        modelMapToStringMap(input.ViewLabel),
-		Placeholder:      modelMapToStringMap(input.Placeholder),
-		Type:             &inputType,
+	ret := &v1.FormInput{
+		Id:               input.ID.ValueString(),
+		Type:             v1.FormInputType(input.Type.ValueString()),
 		DefaultValue:     input.DefaultValue.ValueStringPointer(),
 		Required:         input.Required.ValueBoolPointer(),
 		Ephemeral:        input.Ephemeral.ValueBoolPointer(),
 		PropagateChanges: input.PropagateChanges.ValueBoolPointer(),
 		Target:           input.Target.ValueStringPointer(),
-		Attributes:       modelMapToStringMap(input.Attributes),
 		Items:            modelListToStringSlice(input.Items),
 	}
+
+	if label := modelMapToStringMap(input.Label); len(label) > 0 {
+		ret.Label = &label
+	}
+
+	if viewLabel := modelMapToStringMap(input.ViewLabel); len(viewLabel) > 0 {
+		ret.ViewLabel = &viewLabel
+	}
+
+	if placeholder := modelMapToStringMap(input.Placeholder); len(placeholder) > 0 {
+		ret.Placeholder = &placeholder
+	}
+
+	if attributes := modelMapToStringMap(input.Attributes); len(attributes) > 0 {
+		ret.Attributes = &attributes
+	}
+
+	return ret
 }
 
 func (input *CustomFormInputModel) fromApiResponse(resp *v1.FormInput) (diags diag.Diagnostics) {
 
-	if resp.Id != nil {
-		input.ID = types.StringValue(*resp.Id)
-	}
-	if resp.Type != nil {
-		input.Type = types.StringValue(string(*resp.Type))
-	}
+	input.ID = types.StringValue(resp.Id)
+	input.Type = types.StringValue(string(resp.Type))
 
 	if resp.Label != nil {
 		input.Label, diags = types.MapValue(types.StringType, stringMapToValueMap(*resp.Label))
@@ -514,9 +507,9 @@ func (input *CustomFormInputModel) fromApiResponse(resp *v1.FormInput) (diags di
 
 func (validation *CustomFormValidationModel) toApiRequest() *v1.FormValidation {
 	return &v1.FormValidation{
-		Id:         validation.ID.ValueStringPointer(),
-		Expression: validation.Expression.ValueStringPointer(),
-		Target:     validation.Target.ValueStringPointer(),
+		Id:         validation.ID.ValueString(),
+		Expression: validation.Expression.ValueString(),
+		Target:     validation.Target.ValueString(),
 		Message:    modelMapToStringMap(validation.Message),
 	}
 }
@@ -524,15 +517,13 @@ func (validation *CustomFormValidationModel) toApiRequest() *v1.FormValidation {
 func (validation *CustomFormValidationModel) fromApiResponse(resp *v1.FormValidation) (diags diag.Diagnostics) {
 
 	message := make(map[string]attr.Value)
-	if resp.Message != nil {
-		for key, value := range *resp.Message {
-			message[key] = types.StringValue(value)
-		}
+	for key, value := range resp.Message {
+		message[key] = types.StringValue(value)
 	}
 
-	validation.ID = types.StringPointerValue(resp.Id)
-	validation.Expression = types.StringPointerValue(resp.Expression)
-	validation.Target = types.StringPointerValue(resp.Target)
+	validation.ID = types.StringValue(resp.Id)
+	validation.Expression = types.StringValue(resp.Expression)
+	validation.Target = types.StringValue(resp.Target)
 	validation.Message, diags = types.MapValue(types.StringType, message)
 
 	return

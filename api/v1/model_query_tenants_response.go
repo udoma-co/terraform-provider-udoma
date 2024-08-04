@@ -19,7 +19,9 @@ var _ MappedNullable = &QueryTenantsResponse{}
 
 // QueryTenantsResponse Result of a tenants query
 type QueryTenantsResponse struct {
-	Limit   *int32   `json:"limit,omitempty"`
+	// The maximum number of entities to return from the query
+	Limit *int32 `json:"limit,omitempty"`
+	// The number of entities to skip before returning the result
 	Offset  *int32   `json:"offset,omitempty"`
 	Tenants []Tenant `json:"tenants,omitempty"`
 }

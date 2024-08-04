@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the CreateCaseRequest type satisfies the MappedNullable interface at compile time
@@ -19,22 +21,26 @@ var _ MappedNullable = &CreateCaseRequest{}
 
 // CreateCaseRequest All the information required for raising a new case
 type CreateCaseRequest struct {
-	// Reference to either property or building for which case is rased
-	PropertyRef     *string      `json:"property_ref,omitempty"`
-	PropertyAddress *Address     `json:"property_address,omitempty"`
-	ReporterInfo    *ContactData `json:"reporter_info,omitempty"`
+	// Reference to property
+	PropertyRef     *string  `json:"property_ref,omitempty"`
+	PropertyAddress *Address `json:"property_address,omitempty"`
+	// Input provided by the user when updating the case as a key-value map
+	Data         map[string]interface{} `json:"data"`
+	ReporterInfo *ContactData           `json:"reporter_info,omitempty"`
 	// The ID of the case template used to create this case
-	TemplateRef *string `json:"template_ref,omitempty"`
-	// Input provided by the user when raising the case as a key-value map
-	Data map[string]interface{} `json:"data,omitempty"`
+	TemplateRef string `json:"template_ref"`
 }
+
+type _CreateCaseRequest CreateCaseRequest
 
 // NewCreateCaseRequest instantiates a new CreateCaseRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateCaseRequest() *CreateCaseRequest {
+func NewCreateCaseRequest(data map[string]interface{}, templateRef string) *CreateCaseRequest {
 	this := CreateCaseRequest{}
+	this.Data = data
+	this.TemplateRef = templateRef
 	return &this
 }
 
@@ -110,6 +116,30 @@ func (o *CreateCaseRequest) SetPropertyAddress(v Address) {
 	o.PropertyAddress = &v
 }
 
+// GetData returns the Data field value
+func (o *CreateCaseRequest) GetData() map[string]interface{} {
+	if o == nil {
+		var ret map[string]interface{}
+		return ret
+	}
+
+	return o.Data
+}
+
+// GetDataOk returns a tuple with the Data field value
+// and a boolean to check if the value has been set.
+func (o *CreateCaseRequest) GetDataOk() (map[string]interface{}, bool) {
+	if o == nil {
+		return map[string]interface{}{}, false
+	}
+	return o.Data, true
+}
+
+// SetData sets field value
+func (o *CreateCaseRequest) SetData(v map[string]interface{}) {
+	o.Data = v
+}
+
 // GetReporterInfo returns the ReporterInfo field value if set, zero value otherwise.
 func (o *CreateCaseRequest) GetReporterInfo() ContactData {
 	if o == nil || IsNil(o.ReporterInfo) {
@@ -142,68 +172,28 @@ func (o *CreateCaseRequest) SetReporterInfo(v ContactData) {
 	o.ReporterInfo = &v
 }
 
-// GetTemplateRef returns the TemplateRef field value if set, zero value otherwise.
+// GetTemplateRef returns the TemplateRef field value
 func (o *CreateCaseRequest) GetTemplateRef() string {
-	if o == nil || IsNil(o.TemplateRef) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.TemplateRef
+
+	return o.TemplateRef
 }
 
-// GetTemplateRefOk returns a tuple with the TemplateRef field value if set, nil otherwise
+// GetTemplateRefOk returns a tuple with the TemplateRef field value
 // and a boolean to check if the value has been set.
 func (o *CreateCaseRequest) GetTemplateRefOk() (*string, bool) {
-	if o == nil || IsNil(o.TemplateRef) {
+	if o == nil {
 		return nil, false
 	}
-	return o.TemplateRef, true
+	return &o.TemplateRef, true
 }
 
-// HasTemplateRef returns a boolean if a field has been set.
-func (o *CreateCaseRequest) HasTemplateRef() bool {
-	if o != nil && !IsNil(o.TemplateRef) {
-		return true
-	}
-
-	return false
-}
-
-// SetTemplateRef gets a reference to the given string and assigns it to the TemplateRef field.
+// SetTemplateRef sets field value
 func (o *CreateCaseRequest) SetTemplateRef(v string) {
-	o.TemplateRef = &v
-}
-
-// GetData returns the Data field value if set, zero value otherwise.
-func (o *CreateCaseRequest) GetData() map[string]interface{} {
-	if o == nil || IsNil(o.Data) {
-		var ret map[string]interface{}
-		return ret
-	}
-	return o.Data
-}
-
-// GetDataOk returns a tuple with the Data field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateCaseRequest) GetDataOk() (map[string]interface{}, bool) {
-	if o == nil || IsNil(o.Data) {
-		return map[string]interface{}{}, false
-	}
-	return o.Data, true
-}
-
-// HasData returns a boolean if a field has been set.
-func (o *CreateCaseRequest) HasData() bool {
-	if o != nil && !IsNil(o.Data) {
-		return true
-	}
-
-	return false
-}
-
-// SetData gets a reference to the given map[string]interface{} and assigns it to the Data field.
-func (o *CreateCaseRequest) SetData(v map[string]interface{}) {
-	o.Data = v
+	o.TemplateRef = v
 }
 
 func (o CreateCaseRequest) MarshalJSON() ([]byte, error) {
@@ -222,16 +212,50 @@ func (o CreateCaseRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.PropertyAddress) {
 		toSerialize["property_address"] = o.PropertyAddress
 	}
+	toSerialize["data"] = o.Data
 	if !IsNil(o.ReporterInfo) {
 		toSerialize["reporter_info"] = o.ReporterInfo
 	}
-	if !IsNil(o.TemplateRef) {
-		toSerialize["template_ref"] = o.TemplateRef
-	}
-	if !IsNil(o.Data) {
-		toSerialize["data"] = o.Data
-	}
+	toSerialize["template_ref"] = o.TemplateRef
 	return toSerialize, nil
+}
+
+func (o *CreateCaseRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"data",
+		"template_ref",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCreateCaseRequest := _CreateCaseRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCreateCaseRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CreateCaseRequest(varCreateCaseRequest)
+
+	return err
 }
 
 type NullableCreateCaseRequest struct {

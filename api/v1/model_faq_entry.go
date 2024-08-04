@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the FAQEntry type satisfies the MappedNullable interface at compile time
@@ -19,20 +21,26 @@ var _ MappedNullable = &FAQEntry{}
 
 // FAQEntry struct for FAQEntry
 type FAQEntry struct {
-	Id *string `json:"id,omitempty"`
+	// Unique and immutable ID attribute of the entity that is generated when  the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities  or to retrieve it from the backend.
+	Id string `json:"id"`
 	// a map of values, where the key and values are strings
-	Question *map[string]string `json:"question,omitempty"`
+	Question map[string]string `json:"question"`
 	// a map of values, where the key and values are strings
-	Answer   *map[string]string `json:"answer,omitempty"`
-	Keywords []string           `json:"keywords,omitempty"`
+	Answer   map[string]string `json:"answer"`
+	Keywords []string          `json:"keywords,omitempty"`
 }
+
+type _FAQEntry FAQEntry
 
 // NewFAQEntry instantiates a new FAQEntry object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewFAQEntry() *FAQEntry {
+func NewFAQEntry(id string, question map[string]string, answer map[string]string) *FAQEntry {
 	this := FAQEntry{}
+	this.Id = id
+	this.Question = question
+	this.Answer = answer
 	return &this
 }
 
@@ -44,100 +52,76 @@ func NewFAQEntryWithDefaults() *FAQEntry {
 	return &this
 }
 
-// GetId returns the Id field value if set, zero value otherwise.
+// GetId returns the Id field value
 func (o *FAQEntry) GetId() string {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Id
+
+	return o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
 func (o *FAQEntry) GetIdOk() (*string, bool) {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Id, true
+	return &o.Id, true
 }
 
-// HasId returns a boolean if a field has been set.
-func (o *FAQEntry) HasId() bool {
-	if o != nil && !IsNil(o.Id) {
-		return true
-	}
-
-	return false
-}
-
-// SetId gets a reference to the given string and assigns it to the Id field.
+// SetId sets field value
 func (o *FAQEntry) SetId(v string) {
-	o.Id = &v
+	o.Id = v
 }
 
-// GetQuestion returns the Question field value if set, zero value otherwise.
+// GetQuestion returns the Question field value
 func (o *FAQEntry) GetQuestion() map[string]string {
-	if o == nil || IsNil(o.Question) {
+	if o == nil {
 		var ret map[string]string
 		return ret
 	}
-	return *o.Question
+
+	return o.Question
 }
 
-// GetQuestionOk returns a tuple with the Question field value if set, nil otherwise
+// GetQuestionOk returns a tuple with the Question field value
 // and a boolean to check if the value has been set.
 func (o *FAQEntry) GetQuestionOk() (*map[string]string, bool) {
-	if o == nil || IsNil(o.Question) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Question, true
+	return &o.Question, true
 }
 
-// HasQuestion returns a boolean if a field has been set.
-func (o *FAQEntry) HasQuestion() bool {
-	if o != nil && !IsNil(o.Question) {
-		return true
-	}
-
-	return false
-}
-
-// SetQuestion gets a reference to the given map[string]string and assigns it to the Question field.
+// SetQuestion sets field value
 func (o *FAQEntry) SetQuestion(v map[string]string) {
-	o.Question = &v
+	o.Question = v
 }
 
-// GetAnswer returns the Answer field value if set, zero value otherwise.
+// GetAnswer returns the Answer field value
 func (o *FAQEntry) GetAnswer() map[string]string {
-	if o == nil || IsNil(o.Answer) {
+	if o == nil {
 		var ret map[string]string
 		return ret
 	}
-	return *o.Answer
+
+	return o.Answer
 }
 
-// GetAnswerOk returns a tuple with the Answer field value if set, nil otherwise
+// GetAnswerOk returns a tuple with the Answer field value
 // and a boolean to check if the value has been set.
 func (o *FAQEntry) GetAnswerOk() (*map[string]string, bool) {
-	if o == nil || IsNil(o.Answer) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Answer, true
+	return &o.Answer, true
 }
 
-// HasAnswer returns a boolean if a field has been set.
-func (o *FAQEntry) HasAnswer() bool {
-	if o != nil && !IsNil(o.Answer) {
-		return true
-	}
-
-	return false
-}
-
-// SetAnswer gets a reference to the given map[string]string and assigns it to the Answer field.
+// SetAnswer sets field value
 func (o *FAQEntry) SetAnswer(v map[string]string) {
-	o.Answer = &v
+	o.Answer = v
 }
 
 // GetKeywords returns the Keywords field value if set, zero value otherwise.
@@ -182,19 +166,52 @@ func (o FAQEntry) MarshalJSON() ([]byte, error) {
 
 func (o FAQEntry) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Id) {
-		toSerialize["id"] = o.Id
-	}
-	if !IsNil(o.Question) {
-		toSerialize["question"] = o.Question
-	}
-	if !IsNil(o.Answer) {
-		toSerialize["answer"] = o.Answer
-	}
+	toSerialize["id"] = o.Id
+	toSerialize["question"] = o.Question
+	toSerialize["answer"] = o.Answer
 	if !IsNil(o.Keywords) {
 		toSerialize["keywords"] = o.Keywords
 	}
 	return toSerialize, nil
+}
+
+func (o *FAQEntry) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"id",
+		"question",
+		"answer",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varFAQEntry := _FAQEntry{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varFAQEntry)
+
+	if err != nil {
+		return err
+	}
+
+	*o = FAQEntry(varFAQEntry)
+
+	return err
 }
 
 type NullableFAQEntry struct {

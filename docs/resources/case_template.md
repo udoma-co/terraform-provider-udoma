@@ -174,7 +174,7 @@ Optional:
 - `use_item_group` (Boolean) if true, the inputs will be displayed in a group, otherwise they will be displayed in a row
 
 <a id="nestedatt--config--status_config--feedback--form--groups--items"></a>
-### Nested Schema for `config.status_config.feedback.form.groups.use_item_group`
+### Nested Schema for `config.status_config.feedback.form.groups.items`
 
 Required:
 

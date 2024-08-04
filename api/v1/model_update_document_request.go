@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the UpdateDocumentRequest type satisfies the MappedNullable interface at compile time
@@ -20,19 +22,22 @@ var _ MappedNullable = &UpdateDocumentRequest{}
 // UpdateDocumentRequest Attributes needed for creating or updating document repository entries
 type UpdateDocumentRequest struct {
 	// The name of the document entry
-	Name *string `json:"name,omitempty"`
-	// The relative folder path of the document
+	Name string `json:"name"`
+	// Optional path that can be used to nest documents in folder like structures
 	Path *string `json:"path,omitempty"`
 	// Indicator, controlling whether tenants can see the document
 	Public *bool `json:"public,omitempty"`
 }
 
+type _UpdateDocumentRequest UpdateDocumentRequest
+
 // NewUpdateDocumentRequest instantiates a new UpdateDocumentRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewUpdateDocumentRequest() *UpdateDocumentRequest {
+func NewUpdateDocumentRequest(name string) *UpdateDocumentRequest {
 	this := UpdateDocumentRequest{}
+	this.Name = name
 	return &this
 }
 
@@ -44,36 +49,28 @@ func NewUpdateDocumentRequestWithDefaults() *UpdateDocumentRequest {
 	return &this
 }
 
-// GetName returns the Name field value if set, zero value otherwise.
+// GetName returns the Name field value
 func (o *UpdateDocumentRequest) GetName() string {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Name
+
+	return o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// GetNameOk returns a tuple with the Name field value
 // and a boolean to check if the value has been set.
 func (o *UpdateDocumentRequest) GetNameOk() (*string, bool) {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Name, true
+	return &o.Name, true
 }
 
-// HasName returns a boolean if a field has been set.
-func (o *UpdateDocumentRequest) HasName() bool {
-	if o != nil && !IsNil(o.Name) {
-		return true
-	}
-
-	return false
-}
-
-// SetName gets a reference to the given string and assigns it to the Name field.
+// SetName sets field value
 func (o *UpdateDocumentRequest) SetName(v string) {
-	o.Name = &v
+	o.Name = v
 }
 
 // GetPath returns the Path field value if set, zero value otherwise.
@@ -150,9 +147,7 @@ func (o UpdateDocumentRequest) MarshalJSON() ([]byte, error) {
 
 func (o UpdateDocumentRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Name) {
-		toSerialize["name"] = o.Name
-	}
+	toSerialize["name"] = o.Name
 	if !IsNil(o.Path) {
 		toSerialize["path"] = o.Path
 	}
@@ -160,6 +155,43 @@ func (o UpdateDocumentRequest) ToMap() (map[string]interface{}, error) {
 		toSerialize["public"] = o.Public
 	}
 	return toSerialize, nil
+}
+
+func (o *UpdateDocumentRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varUpdateDocumentRequest := _UpdateDocumentRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varUpdateDocumentRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = UpdateDocumentRequest(varUpdateDocumentRequest)
+
+	return err
 }
 
 type NullableUpdateDocumentRequest struct {

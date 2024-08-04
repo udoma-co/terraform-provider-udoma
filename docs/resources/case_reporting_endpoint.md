@@ -32,6 +32,7 @@ Resource represents an endpoint where tenants can raise cases
 - `id` (String) The ID of this resource.
 - `last_updated` (String)
 - `updated_at` (Number) The date and time the endpoint was last modified
+- `url` (String) The URL to access the endpoint
 
 <a id="nestedatt--case_categories"></a>
 ### Nested Schema for `case_categories`

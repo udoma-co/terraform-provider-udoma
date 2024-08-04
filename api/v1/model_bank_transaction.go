@@ -21,11 +21,11 @@ var _ MappedNullable = &BankTransaction{}
 
 // BankTransaction A single transaction done on a bank account
 type BankTransaction struct {
-	// The unique identifier of the transaction
+	// Unique and immutable ID attribute of the entity that is generated when  the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities  or to retrieve it from the backend.
 	Id string `json:"id"`
-	// The timestamp of when the transaction was created
+	// The date and time the entity was created
 	CreatedAt int64 `json:"created_at"`
-	// The timestamp of when the transaction was last updated
+	// The date and time the entity was last updated
 	UpdatedAt int64 `json:"updated_at"`
 	// The timestamp of the transaction
 	Date int64 `json:"date"`

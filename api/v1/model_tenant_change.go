@@ -21,17 +21,17 @@ var _ MappedNullable = &TenantChange{}
 
 // TenantChange A change to the tenants of a property. This is used to indicate that a tenant has moved out or moved in. To be able to know whe stayed in the property, we also provide the list of tenants that remained.
 type TenantChange struct {
-	// generated unique ID
-	Id     string `json:"id"`
-	Tenant Tenant `json:"tenant"`
-	// The timestamp of when the tenant was created
+	// Unique and immutable ID attribute of the entity that is generated when  the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities  or to retrieve it from the backend.
+	Id string `json:"id"`
+	// The date and time the entity was created
 	CreatedAt int64 `json:"created_at"`
-	// The timestamp of when the tenant was last updated
+	// The date and time the entity was last updated
 	UpdatedAt int64 `json:"updated_at"`
-	// optional external ID, in case tenancy was created via backend integration
+	// Optional external ID, in case entity was created via backend integration
 	ExternalId *string `json:"external_id,omitempty"`
-	// optional external source, in case tenancy was created via backend integration
+	// Optional external source, in case entity was created via backend integration
 	ExternalSource *string `json:"external_source,omitempty"`
+	Tenant         Tenant  `json:"tenant"`
 	// The ID of the tenancy that this update is for
 	TenancyRef string `json:"tenancy_ref"`
 	// The date when the update will enter into force
@@ -45,12 +45,12 @@ type _TenantChange TenantChange
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTenantChange(id string, tenant Tenant, createdAt int64, updatedAt int64, tenancyRef string, entryIntoForce int64, action TenantChangeActionEnum) *TenantChange {
+func NewTenantChange(id string, createdAt int64, updatedAt int64, tenant Tenant, tenancyRef string, entryIntoForce int64, action TenantChangeActionEnum) *TenantChange {
 	this := TenantChange{}
 	this.Id = id
-	this.Tenant = tenant
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
+	this.Tenant = tenant
 	this.TenancyRef = tenancyRef
 	this.EntryIntoForce = entryIntoForce
 	this.Action = action
@@ -87,30 +87,6 @@ func (o *TenantChange) GetIdOk() (*string, bool) {
 // SetId sets field value
 func (o *TenantChange) SetId(v string) {
 	o.Id = v
-}
-
-// GetTenant returns the Tenant field value
-func (o *TenantChange) GetTenant() Tenant {
-	if o == nil {
-		var ret Tenant
-		return ret
-	}
-
-	return o.Tenant
-}
-
-// GetTenantOk returns a tuple with the Tenant field value
-// and a boolean to check if the value has been set.
-func (o *TenantChange) GetTenantOk() (*Tenant, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Tenant, true
-}
-
-// SetTenant sets field value
-func (o *TenantChange) SetTenant(v Tenant) {
-	o.Tenant = v
 }
 
 // GetCreatedAt returns the CreatedAt field value
@@ -225,6 +201,30 @@ func (o *TenantChange) SetExternalSource(v string) {
 	o.ExternalSource = &v
 }
 
+// GetTenant returns the Tenant field value
+func (o *TenantChange) GetTenant() Tenant {
+	if o == nil {
+		var ret Tenant
+		return ret
+	}
+
+	return o.Tenant
+}
+
+// GetTenantOk returns a tuple with the Tenant field value
+// and a boolean to check if the value has been set.
+func (o *TenantChange) GetTenantOk() (*Tenant, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Tenant, true
+}
+
+// SetTenant sets field value
+func (o *TenantChange) SetTenant(v Tenant) {
+	o.Tenant = v
+}
+
 // GetTenancyRef returns the TenancyRef field value
 func (o *TenantChange) GetTenancyRef() string {
 	if o == nil {
@@ -308,7 +308,6 @@ func (o TenantChange) MarshalJSON() ([]byte, error) {
 func (o TenantChange) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["id"] = o.Id
-	toSerialize["tenant"] = o.Tenant
 	toSerialize["created_at"] = o.CreatedAt
 	toSerialize["updated_at"] = o.UpdatedAt
 	if !IsNil(o.ExternalId) {
@@ -317,6 +316,7 @@ func (o TenantChange) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.ExternalSource) {
 		toSerialize["external_source"] = o.ExternalSource
 	}
+	toSerialize["tenant"] = o.Tenant
 	toSerialize["tenancy_ref"] = o.TenancyRef
 	toSerialize["entry_into_force"] = o.EntryIntoForce
 	toSerialize["action"] = o.Action
@@ -329,9 +329,9 @@ func (o *TenantChange) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"id",
-		"tenant",
 		"created_at",
 		"updated_at",
+		"tenant",
 		"tenancy_ref",
 		"entry_into_force",
 		"action",

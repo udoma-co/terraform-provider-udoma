@@ -11,25 +11,27 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the PropertyOwner type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &PropertyOwner{}
 
-// PropertyOwner Information about the owner of a property
+// PropertyOwner struct for PropertyOwner
 type PropertyOwner struct {
-	// the ID of the owner
-	Id *string `json:"id,omitempty"`
-	// optional external ID, in case acount was created via backend integration
+	// Unique and immutable ID attribute of the entity that is generated when  the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities  or to retrieve it from the backend.
+	Id string `json:"id"`
+	// The date and time the entity was created
+	CreatedAt int64 `json:"created_at"`
+	// The date and time the entity was last updated
+	UpdatedAt int64 `json:"updated_at"`
+	// Optional external ID, in case entity was created via backend integration
 	ExternalId *string `json:"external_id,omitempty"`
-	// optional external source, in case acount was created via backend integration
+	// Optional external source, in case entity was created via backend integration
 	ExternalSource *string `json:"external_source,omitempty"`
-	// The timestamp of when the property owners was created
-	CreatedAt *int64 `json:"created_at,omitempty"`
-	// The timestamp of when the property owners was last updated
-	UpdatedAt *int64 `json:"updated_at,omitempty"`
-	// The salutation to be used for the property owners (Miss, Mister, Family)
+	// the title of the owner
 	Title *string `json:"title,omitempty"`
 	// First name(s) of the property owners. In case of a company, this is the first name of the contact person within the company.
 	FirstName *string `json:"first_name,omitempty"`
@@ -46,12 +48,17 @@ type PropertyOwner struct {
 	BankAccountRef *string `json:"bank_account_ref,omitempty"`
 }
 
+type _PropertyOwner PropertyOwner
+
 // NewPropertyOwner instantiates a new PropertyOwner object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPropertyOwner() *PropertyOwner {
+func NewPropertyOwner(id string, createdAt int64, updatedAt int64) *PropertyOwner {
 	this := PropertyOwner{}
+	this.Id = id
+	this.CreatedAt = createdAt
+	this.UpdatedAt = updatedAt
 	return &this
 }
 
@@ -63,36 +70,76 @@ func NewPropertyOwnerWithDefaults() *PropertyOwner {
 	return &this
 }
 
-// GetId returns the Id field value if set, zero value otherwise.
+// GetId returns the Id field value
 func (o *PropertyOwner) GetId() string {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Id
+
+	return o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
 func (o *PropertyOwner) GetIdOk() (*string, bool) {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Id, true
+	return &o.Id, true
 }
 
-// HasId returns a boolean if a field has been set.
-func (o *PropertyOwner) HasId() bool {
-	if o != nil && !IsNil(o.Id) {
-		return true
+// SetId sets field value
+func (o *PropertyOwner) SetId(v string) {
+	o.Id = v
+}
+
+// GetCreatedAt returns the CreatedAt field value
+func (o *PropertyOwner) GetCreatedAt() int64 {
+	if o == nil {
+		var ret int64
+		return ret
 	}
 
-	return false
+	return o.CreatedAt
 }
 
-// SetId gets a reference to the given string and assigns it to the Id field.
-func (o *PropertyOwner) SetId(v string) {
-	o.Id = &v
+// GetCreatedAtOk returns a tuple with the CreatedAt field value
+// and a boolean to check if the value has been set.
+func (o *PropertyOwner) GetCreatedAtOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.CreatedAt, true
+}
+
+// SetCreatedAt sets field value
+func (o *PropertyOwner) SetCreatedAt(v int64) {
+	o.CreatedAt = v
+}
+
+// GetUpdatedAt returns the UpdatedAt field value
+func (o *PropertyOwner) GetUpdatedAt() int64 {
+	if o == nil {
+		var ret int64
+		return ret
+	}
+
+	return o.UpdatedAt
+}
+
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
+// and a boolean to check if the value has been set.
+func (o *PropertyOwner) GetUpdatedAtOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.UpdatedAt, true
+}
+
+// SetUpdatedAt sets field value
+func (o *PropertyOwner) SetUpdatedAt(v int64) {
+	o.UpdatedAt = v
 }
 
 // GetExternalId returns the ExternalId field value if set, zero value otherwise.
@@ -157,70 +204,6 @@ func (o *PropertyOwner) HasExternalSource() bool {
 // SetExternalSource gets a reference to the given string and assigns it to the ExternalSource field.
 func (o *PropertyOwner) SetExternalSource(v string) {
 	o.ExternalSource = &v
-}
-
-// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
-func (o *PropertyOwner) GetCreatedAt() int64 {
-	if o == nil || IsNil(o.CreatedAt) {
-		var ret int64
-		return ret
-	}
-	return *o.CreatedAt
-}
-
-// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *PropertyOwner) GetCreatedAtOk() (*int64, bool) {
-	if o == nil || IsNil(o.CreatedAt) {
-		return nil, false
-	}
-	return o.CreatedAt, true
-}
-
-// HasCreatedAt returns a boolean if a field has been set.
-func (o *PropertyOwner) HasCreatedAt() bool {
-	if o != nil && !IsNil(o.CreatedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetCreatedAt gets a reference to the given int64 and assigns it to the CreatedAt field.
-func (o *PropertyOwner) SetCreatedAt(v int64) {
-	o.CreatedAt = &v
-}
-
-// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
-func (o *PropertyOwner) GetUpdatedAt() int64 {
-	if o == nil || IsNil(o.UpdatedAt) {
-		var ret int64
-		return ret
-	}
-	return *o.UpdatedAt
-}
-
-// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *PropertyOwner) GetUpdatedAtOk() (*int64, bool) {
-	if o == nil || IsNil(o.UpdatedAt) {
-		return nil, false
-	}
-	return o.UpdatedAt, true
-}
-
-// HasUpdatedAt returns a boolean if a field has been set.
-func (o *PropertyOwner) HasUpdatedAt() bool {
-	if o != nil && !IsNil(o.UpdatedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetUpdatedAt gets a reference to the given int64 and assigns it to the UpdatedAt field.
-func (o *PropertyOwner) SetUpdatedAt(v int64) {
-	o.UpdatedAt = &v
 }
 
 // GetTitle returns the Title field value if set, zero value otherwise.
@@ -489,20 +472,14 @@ func (o PropertyOwner) MarshalJSON() ([]byte, error) {
 
 func (o PropertyOwner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Id) {
-		toSerialize["id"] = o.Id
-	}
+	toSerialize["id"] = o.Id
+	toSerialize["created_at"] = o.CreatedAt
+	toSerialize["updated_at"] = o.UpdatedAt
 	if !IsNil(o.ExternalId) {
 		toSerialize["external_id"] = o.ExternalId
 	}
 	if !IsNil(o.ExternalSource) {
 		toSerialize["external_source"] = o.ExternalSource
-	}
-	if !IsNil(o.CreatedAt) {
-		toSerialize["created_at"] = o.CreatedAt
-	}
-	if !IsNil(o.UpdatedAt) {
-		toSerialize["updated_at"] = o.UpdatedAt
 	}
 	if !IsNil(o.Title) {
 		toSerialize["title"] = o.Title
@@ -529,6 +506,45 @@ func (o PropertyOwner) ToMap() (map[string]interface{}, error) {
 		toSerialize["bank_account_ref"] = o.BankAccountRef
 	}
 	return toSerialize, nil
+}
+
+func (o *PropertyOwner) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"id",
+		"created_at",
+		"updated_at",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varPropertyOwner := _PropertyOwner{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varPropertyOwner)
+
+	if err != nil {
+		return err
+	}
+
+	*o = PropertyOwner(varPropertyOwner)
+
+	return err
 }
 
 type NullablePropertyOwner struct {

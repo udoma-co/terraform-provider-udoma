@@ -21,13 +21,17 @@ var _ MappedNullable = &PropertyHandoverTemplate{}
 
 // PropertyHandoverTemplate struct for PropertyHandoverTemplate
 type PropertyHandoverTemplate struct {
-	// The ID of the property handover template. This ID is unique within the system.
+	// Unique and immutable ID attribute of the entity that is generated when  the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities  or to retrieve it from the backend.
 	Id string `json:"id"`
+	// The date and time the entity was created
+	CreatedAt int64 `json:"created_at"`
+	// The date and time the entity was last updated
+	UpdatedAt int64 `json:"updated_at"`
 	// The name of the property handover template.
 	Name string `json:"name"`
 	// The description of the property handover template.
-	Description *string    `json:"description,omitempty"`
-	CustomForm  CustomForm `json:"custom_form"`
+	Description *string            `json:"description,omitempty"`
+	CustomForm  NullableCustomForm `json:"custom_form"`
 }
 
 type _PropertyHandoverTemplate PropertyHandoverTemplate
@@ -36,9 +40,11 @@ type _PropertyHandoverTemplate PropertyHandoverTemplate
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPropertyHandoverTemplate(id string, name string, customForm CustomForm) *PropertyHandoverTemplate {
+func NewPropertyHandoverTemplate(id string, createdAt int64, updatedAt int64, name string, customForm NullableCustomForm) *PropertyHandoverTemplate {
 	this := PropertyHandoverTemplate{}
 	this.Id = id
+	this.CreatedAt = createdAt
+	this.UpdatedAt = updatedAt
 	this.Name = name
 	this.CustomForm = customForm
 	return &this
@@ -74,6 +80,54 @@ func (o *PropertyHandoverTemplate) GetIdOk() (*string, bool) {
 // SetId sets field value
 func (o *PropertyHandoverTemplate) SetId(v string) {
 	o.Id = v
+}
+
+// GetCreatedAt returns the CreatedAt field value
+func (o *PropertyHandoverTemplate) GetCreatedAt() int64 {
+	if o == nil {
+		var ret int64
+		return ret
+	}
+
+	return o.CreatedAt
+}
+
+// GetCreatedAtOk returns a tuple with the CreatedAt field value
+// and a boolean to check if the value has been set.
+func (o *PropertyHandoverTemplate) GetCreatedAtOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.CreatedAt, true
+}
+
+// SetCreatedAt sets field value
+func (o *PropertyHandoverTemplate) SetCreatedAt(v int64) {
+	o.CreatedAt = v
+}
+
+// GetUpdatedAt returns the UpdatedAt field value
+func (o *PropertyHandoverTemplate) GetUpdatedAt() int64 {
+	if o == nil {
+		var ret int64
+		return ret
+	}
+
+	return o.UpdatedAt
+}
+
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
+// and a boolean to check if the value has been set.
+func (o *PropertyHandoverTemplate) GetUpdatedAtOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.UpdatedAt, true
+}
+
+// SetUpdatedAt sets field value
+func (o *PropertyHandoverTemplate) SetUpdatedAt(v int64) {
+	o.UpdatedAt = v
 }
 
 // GetName returns the Name field value
@@ -133,27 +187,29 @@ func (o *PropertyHandoverTemplate) SetDescription(v string) {
 }
 
 // GetCustomForm returns the CustomForm field value
+// If the value is explicit nil, the zero value for CustomForm will be returned
 func (o *PropertyHandoverTemplate) GetCustomForm() CustomForm {
-	if o == nil {
+	if o == nil || o.CustomForm.Get() == nil {
 		var ret CustomForm
 		return ret
 	}
 
-	return o.CustomForm
+	return *o.CustomForm.Get()
 }
 
 // GetCustomFormOk returns a tuple with the CustomForm field value
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *PropertyHandoverTemplate) GetCustomFormOk() (*CustomForm, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.CustomForm, true
+	return o.CustomForm.Get(), o.CustomForm.IsSet()
 }
 
 // SetCustomForm sets field value
 func (o *PropertyHandoverTemplate) SetCustomForm(v CustomForm) {
-	o.CustomForm = v
+	o.CustomForm.Set(&v)
 }
 
 func (o PropertyHandoverTemplate) MarshalJSON() ([]byte, error) {
@@ -167,11 +223,13 @@ func (o PropertyHandoverTemplate) MarshalJSON() ([]byte, error) {
 func (o PropertyHandoverTemplate) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["id"] = o.Id
+	toSerialize["created_at"] = o.CreatedAt
+	toSerialize["updated_at"] = o.UpdatedAt
 	toSerialize["name"] = o.Name
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
 	}
-	toSerialize["custom_form"] = o.CustomForm
+	toSerialize["custom_form"] = o.CustomForm.Get()
 	return toSerialize, nil
 }
 
@@ -181,6 +239,8 @@ func (o *PropertyHandoverTemplate) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"id",
+		"created_at",
+		"updated_at",
 		"name",
 		"custom_form",
 	}

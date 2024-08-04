@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the FormItem type satisfies the MappedNullable interface at compile time
@@ -20,16 +22,20 @@ var _ MappedNullable = &FormItem{}
 // FormItem an item in a form group, referencing another entity in the form
 type FormItem struct {
 	// the ID of the entity that will be referenced
-	RefId   *string       `json:"ref_id,omitempty"`
-	RefType *FormItemType `json:"ref_type,omitempty"`
+	RefId   string       `json:"ref_id"`
+	RefType FormItemType `json:"ref_type"`
 }
+
+type _FormItem FormItem
 
 // NewFormItem instantiates a new FormItem object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewFormItem() *FormItem {
+func NewFormItem(refId string, refType FormItemType) *FormItem {
 	this := FormItem{}
+	this.RefId = refId
+	this.RefType = refType
 	return &this
 }
 
@@ -41,68 +47,52 @@ func NewFormItemWithDefaults() *FormItem {
 	return &this
 }
 
-// GetRefId returns the RefId field value if set, zero value otherwise.
+// GetRefId returns the RefId field value
 func (o *FormItem) GetRefId() string {
-	if o == nil || IsNil(o.RefId) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.RefId
+
+	return o.RefId
 }
 
-// GetRefIdOk returns a tuple with the RefId field value if set, nil otherwise
+// GetRefIdOk returns a tuple with the RefId field value
 // and a boolean to check if the value has been set.
 func (o *FormItem) GetRefIdOk() (*string, bool) {
-	if o == nil || IsNil(o.RefId) {
+	if o == nil {
 		return nil, false
 	}
-	return o.RefId, true
+	return &o.RefId, true
 }
 
-// HasRefId returns a boolean if a field has been set.
-func (o *FormItem) HasRefId() bool {
-	if o != nil && !IsNil(o.RefId) {
-		return true
-	}
-
-	return false
-}
-
-// SetRefId gets a reference to the given string and assigns it to the RefId field.
+// SetRefId sets field value
 func (o *FormItem) SetRefId(v string) {
-	o.RefId = &v
+	o.RefId = v
 }
 
-// GetRefType returns the RefType field value if set, zero value otherwise.
+// GetRefType returns the RefType field value
 func (o *FormItem) GetRefType() FormItemType {
-	if o == nil || IsNil(o.RefType) {
+	if o == nil {
 		var ret FormItemType
 		return ret
 	}
-	return *o.RefType
+
+	return o.RefType
 }
 
-// GetRefTypeOk returns a tuple with the RefType field value if set, nil otherwise
+// GetRefTypeOk returns a tuple with the RefType field value
 // and a boolean to check if the value has been set.
 func (o *FormItem) GetRefTypeOk() (*FormItemType, bool) {
-	if o == nil || IsNil(o.RefType) {
+	if o == nil {
 		return nil, false
 	}
-	return o.RefType, true
+	return &o.RefType, true
 }
 
-// HasRefType returns a boolean if a field has been set.
-func (o *FormItem) HasRefType() bool {
-	if o != nil && !IsNil(o.RefType) {
-		return true
-	}
-
-	return false
-}
-
-// SetRefType gets a reference to the given FormItemType and assigns it to the RefType field.
+// SetRefType sets field value
 func (o *FormItem) SetRefType(v FormItemType) {
-	o.RefType = &v
+	o.RefType = v
 }
 
 func (o FormItem) MarshalJSON() ([]byte, error) {
@@ -115,13 +105,47 @@ func (o FormItem) MarshalJSON() ([]byte, error) {
 
 func (o FormItem) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.RefId) {
-		toSerialize["ref_id"] = o.RefId
-	}
-	if !IsNil(o.RefType) {
-		toSerialize["ref_type"] = o.RefType
-	}
+	toSerialize["ref_id"] = o.RefId
+	toSerialize["ref_type"] = o.RefType
 	return toSerialize, nil
+}
+
+func (o *FormItem) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"ref_id",
+		"ref_type",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varFormItem := _FormItem{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varFormItem)
+
+	if err != nil {
+		return err
+	}
+
+	*o = FormItem(varFormItem)
+
+	return err
 }
 
 type NullableFormItem struct {

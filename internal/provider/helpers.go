@@ -66,7 +66,7 @@ func stringMapToValueMap(in map[string]string) map[string]attr.Value {
 	return ret
 }
 
-func modelMapToStringMap(in basetypes.MapValue) *map[string]string {
+func modelMapToStringMap(in basetypes.MapValue) map[string]string {
 
 	if in.IsNull() || in.IsUnknown() {
 		return nil
@@ -76,7 +76,7 @@ func modelMapToStringMap(in basetypes.MapValue) *map[string]string {
 		ret[k] = (v.(types.String)).ValueString()
 	}
 
-	return &ret
+	return ret
 }
 
 func modelListToStringSlice(in basetypes.ListValue) []string {
@@ -154,14 +154,14 @@ func i64ToI32Ptr(val int64) *int32 {
 	return &res
 }
 
-func isEmptyBool(s *bool) bool {
-	return s == nil || !*s
-}
+// func isEmptyBool(s *bool) bool {
+// 	return s == nil || !*s
+// }
 
-func isEmptyEnum[T EnumType](e *T) bool {
-	if e == nil {
-		return true
-	}
-	strV := string(*e)
-	return strV == ""
-}
+// func isEmptyEnum[T EnumType](e *T) bool {
+// 	if e == nil {
+// 		return true
+// 	}
+// 	strV := string(*e)
+// 	return strV == ""
+// }

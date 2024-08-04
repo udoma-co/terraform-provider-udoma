@@ -266,11 +266,11 @@ func (model *customIDGeneratorModel) fromAPI(generator *api.CustomIDGenerator) e
 		return fmt.Errorf("custom ID generator is nil")
 	}
 
-	model.ID = types.StringPointerValue(generator.Id)
-	model.CreatedAt = types.Int64PointerValue(generator.CreatedAt)
-	model.UpdatedAt = types.Int64PointerValue(generator.UpdatedAt)
-	model.Name = types.StringPointerValue(generator.Name)
-	model.GenerationScript = types.StringPointerValue(generator.GenerationScript)
+	model.ID = types.StringValue(generator.Id)
+	model.CreatedAt = types.Int64Value(generator.CreatedAt)
+	model.UpdatedAt = types.Int64Value(generator.UpdatedAt)
+	model.Name = types.StringValue(generator.Name)
+	model.GenerationScript = types.StringValue(generator.GenerationScript)
 	model.LastGeneratedID = omittableStringValue(generator.LastGeneratedId, model.LastGeneratedID)
 
 	return nil
@@ -279,8 +279,8 @@ func (model *customIDGeneratorModel) fromAPI(generator *api.CustomIDGenerator) e
 func (model *customIDGeneratorModel) toAPIRequest() (api.CreateOrUpdateCustomIDGeneratorRequest, error) {
 
 	script := api.CreateOrUpdateCustomIDGeneratorRequest{
-		Name:             model.Name.ValueStringPointer(),
-		GenerationScript: model.GenerationScript.ValueStringPointer(),
+		Name:             model.Name.ValueString(),
+		GenerationScript: model.GenerationScript.ValueString(),
 		LastGeneratedId:  model.LastGeneratedID.ValueStringPointer(),
 	}
 

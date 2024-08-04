@@ -19,7 +19,9 @@ var _ MappedNullable = &QueryPropertyHandoversRequest{}
 
 // QueryPropertyHandoversRequest struct for QueryPropertyHandoversRequest
 type QueryPropertyHandoversRequest struct {
-	Limit    *int32                      `json:"limit,omitempty"`
+	// The maximum number of entities to return from the query
+	Limit *int32 `json:"limit,omitempty"`
+	// The number of entities to skip before returning the result
 	Offset   *int32                      `json:"offset,omitempty"`
 	Status   *PropertyHandoverStatusEnum `json:"status,omitempty"`
 	Archived *QueryBooleanParameter      `json:"archived,omitempty"`

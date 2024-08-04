@@ -311,14 +311,14 @@ func (model *workflowDefinitionModel) fromAPI(workflowDefinition *api.WorkflowDe
 		return fmt.Errorf("workflow definition is nil")
 	}
 
-	model.ID = types.StringPointerValue(workflowDefinition.Id)
-	model.CreatedAt = types.Int64PointerValue(workflowDefinition.CreatedAt)
-	model.UpdatedAt = types.Int64PointerValue(workflowDefinition.UpdatedAt)
-	model.Name = types.StringPointerValue(workflowDefinition.Name)
+	model.ID = types.StringValue(workflowDefinition.Id)
+	model.CreatedAt = types.Int64Value(workflowDefinition.CreatedAt)
+	model.UpdatedAt = types.Int64Value(workflowDefinition.UpdatedAt)
+	model.Name = types.StringValue(workflowDefinition.Name)
 	model.Description = omittableStringValue(workflowDefinition.Description, model.Description)
 	model.Icon = omittableStringValue(workflowDefinition.Icon, model.Icon)
 	model.NameExpression = omittableStringValue(workflowDefinition.NameExpression, model.NameExpression)
-	model.FirstStepID = types.StringPointerValue(workflowDefinition.FirstStepId)
+	model.FirstStepID = types.StringValue(workflowDefinition.FirstStepId)
 
 	if workflowDefinition.EnvVars != nil {
 		in := stringMapToValueMap(*workflowDefinition.EnvVars)
@@ -331,10 +331,6 @@ func (model *workflowDefinitionModel) fromAPI(workflowDefinition *api.WorkflowDe
 
 	if workflowDefinition.InitStep.IsSet() {
 		step := workflowDefinition.InitStep.Get()
-		// due to different way of handling empty values, we need to set empty structs to nil
-		if step.PrerunAction != nil && step.PrerunAction.Id == nil {
-			step.PrerunAction = nil
-		}
 		jsonData, err := json.Marshal(step)
 		if err != nil {
 			return fmt.Errorf("failed to marshal init step: %w", err)
@@ -342,13 +338,6 @@ func (model *workflowDefinitionModel) fromAPI(workflowDefinition *api.WorkflowDe
 		model.InitStep = tf.NewJsonObjectValue(string(jsonData))
 	}
 
-	for i := range workflowDefinition.Steps {
-		step := workflowDefinition.Steps[i]
-		// due to different way of handling empty values, we need to set empty structs to nil
-		if step.PrerunAction != nil && step.PrerunAction.Id == nil {
-			workflowDefinition.Steps[i].PrerunAction = nil
-		}
-	}
 	steps, err := json.Marshal(workflowDefinition.Steps)
 	if err != nil {
 		return fmt.Errorf("failed to marshal steps: %w", err)
@@ -361,22 +350,24 @@ func (model *workflowDefinitionModel) fromAPI(workflowDefinition *api.WorkflowDe
 func (model *workflowDefinitionModel) toAPIRequest() (api.CreateOrUpdateWorkflowDefinitionRequest, error) {
 
 	workflowDefinition := api.CreateOrUpdateWorkflowDefinitionRequest{
-		Name:           model.Name.ValueStringPointer(),
+		Name:           model.Name.ValueString(),
 		Description:    model.Description.ValueStringPointer(),
 		Icon:           model.Icon.ValueStringPointer(),
 		NameExpression: model.NameExpression.ValueStringPointer(),
-		FirstStepId:    model.FirstStepID.ValueStringPointer(),
+		FirstStepId:    model.FirstStepID.ValueString(),
 	}
 
-	workflowDefinition.EnvVars = modelMapToStringMap(model.EnvVars)
+	if envVars := modelMapToStringMap(model.EnvVars); len(envVars) > 0 {
+		workflowDefinition.EnvVars = &envVars
+	}
 
 	if !model.InitStep.IsNull() && !model.InitStep.IsUnknown() {
-		var jsonVal *api.WorkflowStepDefinition
+		var jsonVal *api.WorkflowInitStepDefinition
 		if diag := model.InitStep.Unmarshal(&jsonVal); diag.HasError() {
 			return workflowDefinition, fmt.Errorf("failed to unmarshal initial step: %v", diag)
 		}
 		if jsonVal != nil {
-			workflowDefinition.InitStep = *api.NewNullableWorkflowStepDefinition(jsonVal)
+			workflowDefinition.InitStep = *api.NewNullableWorkflowInitStepDefinition(jsonVal)
 		}
 	}
 

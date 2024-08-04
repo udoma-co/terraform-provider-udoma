@@ -21,13 +21,13 @@ var _ MappedNullable = &AccountBooking{}
 
 // AccountBooking A booking of a financial transaction
 type AccountBooking struct {
-	// The unique identifier of the booking
+	// Unique and immutable ID attribute of the entity that is generated when  the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities  or to retrieve it from the backend.
 	Id string `json:"id"`
-	// The timestamp of when the booking was created
+	// The date and time the entity was created
 	CreatedAt int64 `json:"created_at"`
-	// The timestamp of when the booking was last updated
+	// The date and time the entity was last updated
 	UpdatedAt int64 `json:"updated_at"`
-	// The total amount of the booking, accross all splits
+	// The total amount of the booking, accross all allocations
 	Amount float64 `json:"amount"`
 	// The timestamp of the booking
 	Date int64 `json:"date"`

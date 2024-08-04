@@ -19,7 +19,10 @@ var _ MappedNullable = &QueryWorkflowDefinitionsRequest{}
 
 // QueryWorkflowDefinitionsRequest a request for querying workflow definitions
 type QueryWorkflowDefinitionsRequest struct {
+	// The maximum number of entities to return from the query
 	Limit *int32 `json:"limit,omitempty"`
+	// The number of entities to skip before returning the result
+	Offset *int32 `json:"offset,omitempty"`
 }
 
 // NewQueryWorkflowDefinitionsRequest instantiates a new QueryWorkflowDefinitionsRequest object
@@ -71,6 +74,38 @@ func (o *QueryWorkflowDefinitionsRequest) SetLimit(v int32) {
 	o.Limit = &v
 }
 
+// GetOffset returns the Offset field value if set, zero value otherwise.
+func (o *QueryWorkflowDefinitionsRequest) GetOffset() int32 {
+	if o == nil || IsNil(o.Offset) {
+		var ret int32
+		return ret
+	}
+	return *o.Offset
+}
+
+// GetOffsetOk returns a tuple with the Offset field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryWorkflowDefinitionsRequest) GetOffsetOk() (*int32, bool) {
+	if o == nil || IsNil(o.Offset) {
+		return nil, false
+	}
+	return o.Offset, true
+}
+
+// HasOffset returns a boolean if a field has been set.
+func (o *QueryWorkflowDefinitionsRequest) HasOffset() bool {
+	if o != nil && !IsNil(o.Offset) {
+		return true
+	}
+
+	return false
+}
+
+// SetOffset gets a reference to the given int32 and assigns it to the Offset field.
+func (o *QueryWorkflowDefinitionsRequest) SetOffset(v int32) {
+	o.Offset = &v
+}
+
 func (o QueryWorkflowDefinitionsRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -83,6 +118,9 @@ func (o QueryWorkflowDefinitionsRequest) ToMap() (map[string]interface{}, error)
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Limit) {
 		toSerialize["limit"] = o.Limit
+	}
+	if !IsNil(o.Offset) {
+		toSerialize["offset"] = o.Offset
 	}
 	return toSerialize, nil
 }

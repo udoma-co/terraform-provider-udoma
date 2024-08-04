@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the UpdateCaseRequest type satisfies the MappedNullable interface at compile time
@@ -23,15 +25,18 @@ type UpdateCaseRequest struct {
 	PropertyRef     *string  `json:"property_ref,omitempty"`
 	PropertyAddress *Address `json:"property_address,omitempty"`
 	// Input provided by the user when updating the case as a key-value map
-	Data map[string]interface{} `json:"data,omitempty"`
+	Data map[string]interface{} `json:"data"`
 }
+
+type _UpdateCaseRequest UpdateCaseRequest
 
 // NewUpdateCaseRequest instantiates a new UpdateCaseRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewUpdateCaseRequest() *UpdateCaseRequest {
+func NewUpdateCaseRequest(data map[string]interface{}) *UpdateCaseRequest {
 	this := UpdateCaseRequest{}
+	this.Data = data
 	return &this
 }
 
@@ -107,34 +112,26 @@ func (o *UpdateCaseRequest) SetPropertyAddress(v Address) {
 	o.PropertyAddress = &v
 }
 
-// GetData returns the Data field value if set, zero value otherwise.
+// GetData returns the Data field value
 func (o *UpdateCaseRequest) GetData() map[string]interface{} {
-	if o == nil || IsNil(o.Data) {
+	if o == nil {
 		var ret map[string]interface{}
 		return ret
 	}
+
 	return o.Data
 }
 
-// GetDataOk returns a tuple with the Data field value if set, nil otherwise
+// GetDataOk returns a tuple with the Data field value
 // and a boolean to check if the value has been set.
 func (o *UpdateCaseRequest) GetDataOk() (map[string]interface{}, bool) {
-	if o == nil || IsNil(o.Data) {
+	if o == nil {
 		return map[string]interface{}{}, false
 	}
 	return o.Data, true
 }
 
-// HasData returns a boolean if a field has been set.
-func (o *UpdateCaseRequest) HasData() bool {
-	if o != nil && !IsNil(o.Data) {
-		return true
-	}
-
-	return false
-}
-
-// SetData gets a reference to the given map[string]interface{} and assigns it to the Data field.
+// SetData sets field value
 func (o *UpdateCaseRequest) SetData(v map[string]interface{}) {
 	o.Data = v
 }
@@ -155,10 +152,45 @@ func (o UpdateCaseRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.PropertyAddress) {
 		toSerialize["property_address"] = o.PropertyAddress
 	}
-	if !IsNil(o.Data) {
-		toSerialize["data"] = o.Data
-	}
+	toSerialize["data"] = o.Data
 	return toSerialize, nil
+}
+
+func (o *UpdateCaseRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"data",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varUpdateCaseRequest := _UpdateCaseRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varUpdateCaseRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = UpdateCaseRequest(varUpdateCaseRequest)
+
+	return err
 }
 
 type NullableUpdateCaseRequest struct {

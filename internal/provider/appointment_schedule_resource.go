@@ -220,12 +220,15 @@ func (r *AppointmentSchedule) ImportState(ctx context.Context, req resource.Impo
 
 func (app *AppointmentScheduleModel) toAPIRequest() v1.CreateOrUpdateAppointmentScheduleRequest {
 	schedule := v1.CreateOrUpdateAppointmentScheduleRequest{
-		Name:         app.Name.ValueStringPointer(),
-		Description:  modelMapToStringMap(app.Description),
-		Template:     app.TemplateRef.ValueStringPointer(),
-		SlotDuration: i64ToI32Ptr(app.SlotDuration.ValueInt64()),
-		GapDuration:  i64ToI32Ptr(app.GapDuration.ValueInt64()),
+		Name:         app.Name.ValueString(),
+		TemplateRef:  app.TemplateRef.ValueString(),
+		SlotDuration: int32(app.SlotDuration.ValueInt64()),
+		GapDuration:  int32(app.GapDuration.ValueInt64()),
 		Color:        app.Color.ValueStringPointer(),
+	}
+
+	if description := modelMapToStringMap(app.Description); len(description) > 0 {
+		schedule.Description = &description
 	}
 
 	return schedule
@@ -240,8 +243,8 @@ func (app *AppointmentScheduleModel) fromApiResponse(resp *v1.AppointmentSchedul
 		return
 	}
 
-	app.ID = types.StringPointerValue(resp.Id)
-	app.Name = types.StringPointerValue(resp.Name)
+	app.ID = types.StringValue(resp.Id)
+	app.Name = types.StringValue(resp.Name)
 
 	mappedDescription := make(map[string]attr.Value)
 	for key, value := range *resp.Description {
@@ -254,8 +257,8 @@ func (app *AppointmentScheduleModel) fromApiResponse(resp *v1.AppointmentSchedul
 	}
 
 	app.TemplateRef = types.StringValue(resp.Template.Id)
-	app.SlotDuration = types.Int64Value(int64(idp32(resp.SlotDuration)))
-	app.GapDuration = types.Int64Value(int64(idp32(resp.GapDuration)))
+	app.SlotDuration = types.Int64Value(int64(resp.SlotDuration))
+	app.GapDuration = types.Int64Value(int64(resp.GapDuration))
 	app.Color = types.StringPointerValue(resp.Color)
 
 	return

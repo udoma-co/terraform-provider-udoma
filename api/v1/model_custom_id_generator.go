@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the CustomIDGenerator type satisfies the MappedNullable interface at compile time
@@ -19,25 +21,33 @@ var _ MappedNullable = &CustomIDGenerator{}
 
 // CustomIDGenerator struct for CustomIDGenerator
 type CustomIDGenerator struct {
-	Id *string `json:"id,omitempty"`
-	// The timestamp of when the script was created
-	CreatedAt *int64 `json:"created_at,omitempty"`
-	// The timestamp of when the script was last updated
-	UpdatedAt *int64 `json:"updated_at,omitempty"`
+	// Unique and immutable ID attribute of the entity that is generated when  the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities  or to retrieve it from the backend.
+	Id string `json:"id"`
+	// The date and time the entity was created
+	CreatedAt int64 `json:"created_at"`
+	// The date and time the entity was last updated
+	UpdatedAt int64 `json:"updated_at"`
 	// The user friendly name of the ID generator.
-	Name *string `json:"name,omitempty"`
+	Name string `json:"name"`
 	// A JS script code that will be used to generate the ID.
-	GenerationScript *string `json:"generation_script,omitempty"`
+	GenerationScript string `json:"generation_script"`
 	// The last generated ID. This is used to keep track of the last generated ID.
 	LastGeneratedId *string `json:"last_generated_id,omitempty"`
 }
+
+type _CustomIDGenerator CustomIDGenerator
 
 // NewCustomIDGenerator instantiates a new CustomIDGenerator object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCustomIDGenerator() *CustomIDGenerator {
+func NewCustomIDGenerator(id string, createdAt int64, updatedAt int64, name string, generationScript string) *CustomIDGenerator {
 	this := CustomIDGenerator{}
+	this.Id = id
+	this.CreatedAt = createdAt
+	this.UpdatedAt = updatedAt
+	this.Name = name
+	this.GenerationScript = generationScript
 	return &this
 }
 
@@ -49,164 +59,124 @@ func NewCustomIDGeneratorWithDefaults() *CustomIDGenerator {
 	return &this
 }
 
-// GetId returns the Id field value if set, zero value otherwise.
+// GetId returns the Id field value
 func (o *CustomIDGenerator) GetId() string {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Id
+
+	return o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
 func (o *CustomIDGenerator) GetIdOk() (*string, bool) {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Id, true
+	return &o.Id, true
 }
 
-// HasId returns a boolean if a field has been set.
-func (o *CustomIDGenerator) HasId() bool {
-	if o != nil && !IsNil(o.Id) {
-		return true
-	}
-
-	return false
-}
-
-// SetId gets a reference to the given string and assigns it to the Id field.
+// SetId sets field value
 func (o *CustomIDGenerator) SetId(v string) {
-	o.Id = &v
+	o.Id = v
 }
 
-// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
+// GetCreatedAt returns the CreatedAt field value
 func (o *CustomIDGenerator) GetCreatedAt() int64 {
-	if o == nil || IsNil(o.CreatedAt) {
+	if o == nil {
 		var ret int64
 		return ret
 	}
-	return *o.CreatedAt
+
+	return o.CreatedAt
 }
 
-// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
+// GetCreatedAtOk returns a tuple with the CreatedAt field value
 // and a boolean to check if the value has been set.
 func (o *CustomIDGenerator) GetCreatedAtOk() (*int64, bool) {
-	if o == nil || IsNil(o.CreatedAt) {
+	if o == nil {
 		return nil, false
 	}
-	return o.CreatedAt, true
+	return &o.CreatedAt, true
 }
 
-// HasCreatedAt returns a boolean if a field has been set.
-func (o *CustomIDGenerator) HasCreatedAt() bool {
-	if o != nil && !IsNil(o.CreatedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetCreatedAt gets a reference to the given int64 and assigns it to the CreatedAt field.
+// SetCreatedAt sets field value
 func (o *CustomIDGenerator) SetCreatedAt(v int64) {
-	o.CreatedAt = &v
+	o.CreatedAt = v
 }
 
-// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
+// GetUpdatedAt returns the UpdatedAt field value
 func (o *CustomIDGenerator) GetUpdatedAt() int64 {
-	if o == nil || IsNil(o.UpdatedAt) {
+	if o == nil {
 		var ret int64
 		return ret
 	}
-	return *o.UpdatedAt
+
+	return o.UpdatedAt
 }
 
-// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
 // and a boolean to check if the value has been set.
 func (o *CustomIDGenerator) GetUpdatedAtOk() (*int64, bool) {
-	if o == nil || IsNil(o.UpdatedAt) {
+	if o == nil {
 		return nil, false
 	}
-	return o.UpdatedAt, true
+	return &o.UpdatedAt, true
 }
 
-// HasUpdatedAt returns a boolean if a field has been set.
-func (o *CustomIDGenerator) HasUpdatedAt() bool {
-	if o != nil && !IsNil(o.UpdatedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetUpdatedAt gets a reference to the given int64 and assigns it to the UpdatedAt field.
+// SetUpdatedAt sets field value
 func (o *CustomIDGenerator) SetUpdatedAt(v int64) {
-	o.UpdatedAt = &v
+	o.UpdatedAt = v
 }
 
-// GetName returns the Name field value if set, zero value otherwise.
+// GetName returns the Name field value
 func (o *CustomIDGenerator) GetName() string {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Name
+
+	return o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// GetNameOk returns a tuple with the Name field value
 // and a boolean to check if the value has been set.
 func (o *CustomIDGenerator) GetNameOk() (*string, bool) {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Name, true
+	return &o.Name, true
 }
 
-// HasName returns a boolean if a field has been set.
-func (o *CustomIDGenerator) HasName() bool {
-	if o != nil && !IsNil(o.Name) {
-		return true
-	}
-
-	return false
-}
-
-// SetName gets a reference to the given string and assigns it to the Name field.
+// SetName sets field value
 func (o *CustomIDGenerator) SetName(v string) {
-	o.Name = &v
+	o.Name = v
 }
 
-// GetGenerationScript returns the GenerationScript field value if set, zero value otherwise.
+// GetGenerationScript returns the GenerationScript field value
 func (o *CustomIDGenerator) GetGenerationScript() string {
-	if o == nil || IsNil(o.GenerationScript) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.GenerationScript
+
+	return o.GenerationScript
 }
 
-// GetGenerationScriptOk returns a tuple with the GenerationScript field value if set, nil otherwise
+// GetGenerationScriptOk returns a tuple with the GenerationScript field value
 // and a boolean to check if the value has been set.
 func (o *CustomIDGenerator) GetGenerationScriptOk() (*string, bool) {
-	if o == nil || IsNil(o.GenerationScript) {
+	if o == nil {
 		return nil, false
 	}
-	return o.GenerationScript, true
+	return &o.GenerationScript, true
 }
 
-// HasGenerationScript returns a boolean if a field has been set.
-func (o *CustomIDGenerator) HasGenerationScript() bool {
-	if o != nil && !IsNil(o.GenerationScript) {
-		return true
-	}
-
-	return false
-}
-
-// SetGenerationScript gets a reference to the given string and assigns it to the GenerationScript field.
+// SetGenerationScript sets field value
 func (o *CustomIDGenerator) SetGenerationScript(v string) {
-	o.GenerationScript = &v
+	o.GenerationScript = v
 }
 
 // GetLastGeneratedId returns the LastGeneratedId field value if set, zero value otherwise.
@@ -251,25 +221,56 @@ func (o CustomIDGenerator) MarshalJSON() ([]byte, error) {
 
 func (o CustomIDGenerator) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Id) {
-		toSerialize["id"] = o.Id
-	}
-	if !IsNil(o.CreatedAt) {
-		toSerialize["created_at"] = o.CreatedAt
-	}
-	if !IsNil(o.UpdatedAt) {
-		toSerialize["updated_at"] = o.UpdatedAt
-	}
-	if !IsNil(o.Name) {
-		toSerialize["name"] = o.Name
-	}
-	if !IsNil(o.GenerationScript) {
-		toSerialize["generation_script"] = o.GenerationScript
-	}
+	toSerialize["id"] = o.Id
+	toSerialize["created_at"] = o.CreatedAt
+	toSerialize["updated_at"] = o.UpdatedAt
+	toSerialize["name"] = o.Name
+	toSerialize["generation_script"] = o.GenerationScript
 	if !IsNil(o.LastGeneratedId) {
 		toSerialize["last_generated_id"] = o.LastGeneratedId
 	}
 	return toSerialize, nil
+}
+
+func (o *CustomIDGenerator) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"id",
+		"created_at",
+		"updated_at",
+		"name",
+		"generation_script",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCustomIDGenerator := _CustomIDGenerator{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCustomIDGenerator)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CustomIDGenerator(varCustomIDGenerator)
+
+	return err
 }
 
 type NullableCustomIDGenerator struct {

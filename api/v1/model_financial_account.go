@@ -21,11 +21,11 @@ var _ MappedNullable = &FinancialAccount{}
 
 // FinancialAccount A financial account that can be used to track financial transactions
 type FinancialAccount struct {
-	// The unique identifier of the account
+	// Unique and immutable ID attribute of the entity that is generated when  the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities  or to retrieve it from the backend.
 	Id string `json:"id"`
-	// The timestamp of when the account was created
+	// The date and time the entity was created
 	CreatedAt int64 `json:"created_at"`
-	// The timestamp of when the account was last updated
+	// The date and time the entity was last updated
 	UpdatedAt int64 `json:"updated_at"`
 	// The unique account number, manually set
 	Number int32 `json:"number"`

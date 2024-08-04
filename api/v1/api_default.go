@@ -2256,14 +2256,8 @@ func (a *DefaultAPIService) CreateConnectorConfigExecute(r ApiCreateConnectorCon
 }
 
 type ApiCreateConnectorCredentialsRequest struct {
-	ctx                               context.Context
-	ApiService                        *DefaultAPIService
-	createConnectorCredentialsRequest *CreateConnectorCredentialsRequest
-}
-
-func (r ApiCreateConnectorCredentialsRequest) CreateConnectorCredentialsRequest(createConnectorCredentialsRequest CreateConnectorCredentialsRequest) ApiCreateConnectorCredentialsRequest {
-	r.createConnectorCredentialsRequest = &createConnectorCredentialsRequest
-	return r
+	ctx        context.Context
+	ApiService *DefaultAPIService
 }
 
 func (r ApiCreateConnectorCredentialsRequest) Execute() (*ConnectorCredentials, *http.Response, error) {
@@ -2272,8 +2266,6 @@ func (r ApiCreateConnectorCredentialsRequest) Execute() (*ConnectorCredentials, 
 
 /*
 CreateConnectorCredentials Create new connector credentials
-
-Create new connector credentials
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiCreateConnectorCredentialsRequest
@@ -2306,12 +2298,9 @@ func (a *DefaultAPIService) CreateConnectorCredentialsExecute(r ApiCreateConnect
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.createConnectorCredentialsRequest == nil {
-		return localVarReturnValue, nil, reportError("createConnectorCredentialsRequest is required and must be specified")
-	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
+	localVarHTTPContentTypes := []string{}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -2327,8 +2316,6 @@ func (a *DefaultAPIService) CreateConnectorCredentialsExecute(r ApiCreateConnect
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	// body params
-	localVarPostBody = r.createConnectorCredentialsRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -3577,14 +3564,14 @@ func (a *DefaultAPIService) CreateNotificationExecute(r ApiCreateNotificationReq
 }
 
 type ApiCreatePropertyRequest struct {
-	ctx                   context.Context
-	ApiService            *DefaultAPIService
-	createPropertyRequest *CreatePropertyRequest
+	ctx                           context.Context
+	ApiService                    *DefaultAPIService
+	createOrUpdatePropertyRequest *CreateOrUpdatePropertyRequest
 }
 
 // Property that needs to be created
-func (r ApiCreatePropertyRequest) CreatePropertyRequest(createPropertyRequest CreatePropertyRequest) ApiCreatePropertyRequest {
-	r.createPropertyRequest = &createPropertyRequest
+func (r ApiCreatePropertyRequest) CreateOrUpdatePropertyRequest(createOrUpdatePropertyRequest CreateOrUpdatePropertyRequest) ApiCreatePropertyRequest {
+	r.createOrUpdatePropertyRequest = &createOrUpdatePropertyRequest
 	return r
 }
 
@@ -3628,8 +3615,8 @@ func (a *DefaultAPIService) CreatePropertyExecute(r ApiCreatePropertyRequest) (*
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.createPropertyRequest == nil {
-		return localVarReturnValue, nil, reportError("createPropertyRequest is required and must be specified")
+	if r.createOrUpdatePropertyRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdatePropertyRequest is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -3650,7 +3637,7 @@ func (a *DefaultAPIService) CreatePropertyExecute(r ApiCreatePropertyRequest) (*
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.createPropertyRequest
+	localVarPostBody = r.createOrUpdatePropertyRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -22098,7 +22085,7 @@ func (a *DefaultAPIService) QueryCommentTemplates(ctx context.Context) ApiQueryC
 //	@return []CommentTemplate
 func (a *DefaultAPIService) QueryCommentTemplatesExecute(r ApiQueryCommentTemplatesRequest) ([]CommentTemplate, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodGet
+		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
 		formFiles           []formFile
 		localVarReturnValue []CommentTemplate
@@ -27342,15 +27329,15 @@ func (a *DefaultAPIService) UpdateNotificationExecute(r ApiUpdateNotificationReq
 }
 
 type ApiUpdatePropertyRequest struct {
-	ctx                   context.Context
-	ApiService            *DefaultAPIService
-	propID                string
-	updatePropertyRequest *UpdatePropertyRequest
+	ctx                           context.Context
+	ApiService                    *DefaultAPIService
+	propID                        string
+	createOrUpdatePropertyRequest *CreateOrUpdatePropertyRequest
 }
 
 // Updated property object
-func (r ApiUpdatePropertyRequest) UpdatePropertyRequest(updatePropertyRequest UpdatePropertyRequest) ApiUpdatePropertyRequest {
-	r.updatePropertyRequest = &updatePropertyRequest
+func (r ApiUpdatePropertyRequest) CreateOrUpdatePropertyRequest(createOrUpdatePropertyRequest CreateOrUpdatePropertyRequest) ApiUpdatePropertyRequest {
+	r.createOrUpdatePropertyRequest = &createOrUpdatePropertyRequest
 	return r
 }
 
@@ -27397,8 +27384,8 @@ func (a *DefaultAPIService) UpdatePropertyExecute(r ApiUpdatePropertyRequest) (*
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.updatePropertyRequest == nil {
-		return localVarReturnValue, nil, reportError("updatePropertyRequest is required and must be specified")
+	if r.createOrUpdatePropertyRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdatePropertyRequest is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -27419,7 +27406,7 @@ func (a *DefaultAPIService) UpdatePropertyExecute(r ApiUpdatePropertyRequest) (*
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.updatePropertyRequest
+	localVarPostBody = r.createOrUpdatePropertyRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

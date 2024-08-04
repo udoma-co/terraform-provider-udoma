@@ -21,30 +21,28 @@ var _ MappedNullable = &Property{}
 
 // Property Property holds the information about a single accommodation unit (Wohneinheit).
 type Property struct {
-	// generated unique ID
+	// Unique and immutable ID attribute of the entity that is generated when  the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities  or to retrieve it from the backend.
 	Id string `json:"id"`
-	// optional external ID, in case property was created via backend integration
+	// The date and time the entity was created
+	CreatedAt int64 `json:"created_at"`
+	// The date and time the entity was last updated
+	UpdatedAt int64 `json:"updated_at"`
+	// Optional external ID, in case entity was created via backend integration
 	ExternalId *string `json:"external_id,omitempty"`
-	// optional external source, in case property was created via backend integration
+	// Optional external source, in case entity was created via backend integration
 	ExternalSource *string `json:"external_source,omitempty"`
-	// The timestamp of when the tenant was created
-	CreatedAt *int64 `json:"created_at,omitempty"`
-	// The timestamp of when the tenant was last updated
-	UpdatedAt *int64 `json:"updated_at,omitempty"`
-	// e.g. 'Whg 12', or 'Etage 2/Links'
+	// meaningful name of the property, e.g. 'Whg 12', or 'Etage 2/Links'
 	Name    string       `json:"name"`
 	Type    PropertyType `json:"type"`
 	Address *Address     `json:"address,omitempty"`
 	// Optional reference to the property owner
 	OwnerRef *string `json:"owner_ref,omitempty"`
 	// Optional reference to the parent property
-	ParentRef *string `json:"parent_ref,omitempty"`
+	ParentRef *string          `json:"parent_ref,omitempty"`
+	Details   *PropertyDetails `json:"details,omitempty"`
 	// Optional name of the parent property
 	ParentName    *string  `json:"parent_name,omitempty"`
 	ParentAddress *Address `json:"parent_address,omitempty"`
-	// Optional reference to the bank account associated with the property
-	BankAccountRef *string          `json:"bank_account_ref,omitempty"`
-	Details        *PropertyDetails `json:"details,omitempty"`
 }
 
 type _Property Property
@@ -53,9 +51,11 @@ type _Property Property
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewProperty(id string, name string, type_ PropertyType) *Property {
+func NewProperty(id string, createdAt int64, updatedAt int64, name string, type_ PropertyType) *Property {
 	this := Property{}
 	this.Id = id
+	this.CreatedAt = createdAt
+	this.UpdatedAt = updatedAt
 	this.Name = name
 	this.Type = type_
 	return &this
@@ -91,6 +91,54 @@ func (o *Property) GetIdOk() (*string, bool) {
 // SetId sets field value
 func (o *Property) SetId(v string) {
 	o.Id = v
+}
+
+// GetCreatedAt returns the CreatedAt field value
+func (o *Property) GetCreatedAt() int64 {
+	if o == nil {
+		var ret int64
+		return ret
+	}
+
+	return o.CreatedAt
+}
+
+// GetCreatedAtOk returns a tuple with the CreatedAt field value
+// and a boolean to check if the value has been set.
+func (o *Property) GetCreatedAtOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.CreatedAt, true
+}
+
+// SetCreatedAt sets field value
+func (o *Property) SetCreatedAt(v int64) {
+	o.CreatedAt = v
+}
+
+// GetUpdatedAt returns the UpdatedAt field value
+func (o *Property) GetUpdatedAt() int64 {
+	if o == nil {
+		var ret int64
+		return ret
+	}
+
+	return o.UpdatedAt
+}
+
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
+// and a boolean to check if the value has been set.
+func (o *Property) GetUpdatedAtOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.UpdatedAt, true
+}
+
+// SetUpdatedAt sets field value
+func (o *Property) SetUpdatedAt(v int64) {
+	o.UpdatedAt = v
 }
 
 // GetExternalId returns the ExternalId field value if set, zero value otherwise.
@@ -155,70 +203,6 @@ func (o *Property) HasExternalSource() bool {
 // SetExternalSource gets a reference to the given string and assigns it to the ExternalSource field.
 func (o *Property) SetExternalSource(v string) {
 	o.ExternalSource = &v
-}
-
-// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
-func (o *Property) GetCreatedAt() int64 {
-	if o == nil || IsNil(o.CreatedAt) {
-		var ret int64
-		return ret
-	}
-	return *o.CreatedAt
-}
-
-// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Property) GetCreatedAtOk() (*int64, bool) {
-	if o == nil || IsNil(o.CreatedAt) {
-		return nil, false
-	}
-	return o.CreatedAt, true
-}
-
-// HasCreatedAt returns a boolean if a field has been set.
-func (o *Property) HasCreatedAt() bool {
-	if o != nil && !IsNil(o.CreatedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetCreatedAt gets a reference to the given int64 and assigns it to the CreatedAt field.
-func (o *Property) SetCreatedAt(v int64) {
-	o.CreatedAt = &v
-}
-
-// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
-func (o *Property) GetUpdatedAt() int64 {
-	if o == nil || IsNil(o.UpdatedAt) {
-		var ret int64
-		return ret
-	}
-	return *o.UpdatedAt
-}
-
-// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Property) GetUpdatedAtOk() (*int64, bool) {
-	if o == nil || IsNil(o.UpdatedAt) {
-		return nil, false
-	}
-	return o.UpdatedAt, true
-}
-
-// HasUpdatedAt returns a boolean if a field has been set.
-func (o *Property) HasUpdatedAt() bool {
-	if o != nil && !IsNil(o.UpdatedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetUpdatedAt gets a reference to the given int64 and assigns it to the UpdatedAt field.
-func (o *Property) SetUpdatedAt(v int64) {
-	o.UpdatedAt = &v
 }
 
 // GetName returns the Name field value
@@ -365,6 +349,38 @@ func (o *Property) SetParentRef(v string) {
 	o.ParentRef = &v
 }
 
+// GetDetails returns the Details field value if set, zero value otherwise.
+func (o *Property) GetDetails() PropertyDetails {
+	if o == nil || IsNil(o.Details) {
+		var ret PropertyDetails
+		return ret
+	}
+	return *o.Details
+}
+
+// GetDetailsOk returns a tuple with the Details field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Property) GetDetailsOk() (*PropertyDetails, bool) {
+	if o == nil || IsNil(o.Details) {
+		return nil, false
+	}
+	return o.Details, true
+}
+
+// HasDetails returns a boolean if a field has been set.
+func (o *Property) HasDetails() bool {
+	if o != nil && !IsNil(o.Details) {
+		return true
+	}
+
+	return false
+}
+
+// SetDetails gets a reference to the given PropertyDetails and assigns it to the Details field.
+func (o *Property) SetDetails(v PropertyDetails) {
+	o.Details = &v
+}
+
 // GetParentName returns the ParentName field value if set, zero value otherwise.
 func (o *Property) GetParentName() string {
 	if o == nil || IsNil(o.ParentName) {
@@ -429,70 +445,6 @@ func (o *Property) SetParentAddress(v Address) {
 	o.ParentAddress = &v
 }
 
-// GetBankAccountRef returns the BankAccountRef field value if set, zero value otherwise.
-func (o *Property) GetBankAccountRef() string {
-	if o == nil || IsNil(o.BankAccountRef) {
-		var ret string
-		return ret
-	}
-	return *o.BankAccountRef
-}
-
-// GetBankAccountRefOk returns a tuple with the BankAccountRef field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Property) GetBankAccountRefOk() (*string, bool) {
-	if o == nil || IsNil(o.BankAccountRef) {
-		return nil, false
-	}
-	return o.BankAccountRef, true
-}
-
-// HasBankAccountRef returns a boolean if a field has been set.
-func (o *Property) HasBankAccountRef() bool {
-	if o != nil && !IsNil(o.BankAccountRef) {
-		return true
-	}
-
-	return false
-}
-
-// SetBankAccountRef gets a reference to the given string and assigns it to the BankAccountRef field.
-func (o *Property) SetBankAccountRef(v string) {
-	o.BankAccountRef = &v
-}
-
-// GetDetails returns the Details field value if set, zero value otherwise.
-func (o *Property) GetDetails() PropertyDetails {
-	if o == nil || IsNil(o.Details) {
-		var ret PropertyDetails
-		return ret
-	}
-	return *o.Details
-}
-
-// GetDetailsOk returns a tuple with the Details field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Property) GetDetailsOk() (*PropertyDetails, bool) {
-	if o == nil || IsNil(o.Details) {
-		return nil, false
-	}
-	return o.Details, true
-}
-
-// HasDetails returns a boolean if a field has been set.
-func (o *Property) HasDetails() bool {
-	if o != nil && !IsNil(o.Details) {
-		return true
-	}
-
-	return false
-}
-
-// SetDetails gets a reference to the given PropertyDetails and assigns it to the Details field.
-func (o *Property) SetDetails(v PropertyDetails) {
-	o.Details = &v
-}
-
 func (o Property) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -504,17 +456,13 @@ func (o Property) MarshalJSON() ([]byte, error) {
 func (o Property) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["id"] = o.Id
+	toSerialize["created_at"] = o.CreatedAt
+	toSerialize["updated_at"] = o.UpdatedAt
 	if !IsNil(o.ExternalId) {
 		toSerialize["external_id"] = o.ExternalId
 	}
 	if !IsNil(o.ExternalSource) {
 		toSerialize["external_source"] = o.ExternalSource
-	}
-	if !IsNil(o.CreatedAt) {
-		toSerialize["created_at"] = o.CreatedAt
-	}
-	if !IsNil(o.UpdatedAt) {
-		toSerialize["updated_at"] = o.UpdatedAt
 	}
 	toSerialize["name"] = o.Name
 	toSerialize["type"] = o.Type
@@ -527,17 +475,14 @@ func (o Property) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.ParentRef) {
 		toSerialize["parent_ref"] = o.ParentRef
 	}
+	if !IsNil(o.Details) {
+		toSerialize["details"] = o.Details
+	}
 	if !IsNil(o.ParentName) {
 		toSerialize["parent_name"] = o.ParentName
 	}
 	if !IsNil(o.ParentAddress) {
 		toSerialize["parent_address"] = o.ParentAddress
-	}
-	if !IsNil(o.BankAccountRef) {
-		toSerialize["bank_account_ref"] = o.BankAccountRef
-	}
-	if !IsNil(o.Details) {
-		toSerialize["details"] = o.Details
 	}
 	return toSerialize, nil
 }
@@ -548,6 +493,8 @@ func (o *Property) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"id",
+		"created_at",
+		"updated_at",
 		"name",
 		"type",
 	}

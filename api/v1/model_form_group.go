@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the FormGroup type satisfies the MappedNullable interface at compile time
@@ -20,14 +22,14 @@ var _ MappedNullable = &FormGroup{}
 // FormGroup a group of inputs that will be displayed together in the UI
 type FormGroup struct {
 	// the ID of the group
-	Id   *string        `json:"id,omitempty"`
-	Type *FormGroupType `json:"type,omitempty"`
+	Id   string        `json:"id"`
+	Type FormGroupType `json:"type"`
 	// a map of values, where the key and values are strings
 	Label *map[string]string `json:"label,omitempty"`
 	// a map of values, where the key and values are strings
 	Info *map[string]string `json:"info,omitempty"`
 	// the IDs of the inputs that will be displayed in the group
-	Items []FormItem `json:"items,omitempty"`
+	Items []FormItem `json:"items"`
 	// the attribute name to use when exporting the result of this group (only used for repeat groups)
 	Target *string `json:"target,omitempty"`
 	// if true, a divider will be displayed above the group
@@ -40,12 +42,17 @@ type FormGroup struct {
 	MinSize *int32 `json:"min_size,omitempty"`
 }
 
+type _FormGroup FormGroup
+
 // NewFormGroup instantiates a new FormGroup object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewFormGroup() *FormGroup {
+func NewFormGroup(id string, type_ FormGroupType, items []FormItem) *FormGroup {
 	this := FormGroup{}
+	this.Id = id
+	this.Type = type_
+	this.Items = items
 	return &this
 }
 
@@ -57,68 +64,52 @@ func NewFormGroupWithDefaults() *FormGroup {
 	return &this
 }
 
-// GetId returns the Id field value if set, zero value otherwise.
+// GetId returns the Id field value
 func (o *FormGroup) GetId() string {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Id
+
+	return o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
 func (o *FormGroup) GetIdOk() (*string, bool) {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Id, true
+	return &o.Id, true
 }
 
-// HasId returns a boolean if a field has been set.
-func (o *FormGroup) HasId() bool {
-	if o != nil && !IsNil(o.Id) {
-		return true
-	}
-
-	return false
-}
-
-// SetId gets a reference to the given string and assigns it to the Id field.
+// SetId sets field value
 func (o *FormGroup) SetId(v string) {
-	o.Id = &v
+	o.Id = v
 }
 
-// GetType returns the Type field value if set, zero value otherwise.
+// GetType returns the Type field value
 func (o *FormGroup) GetType() FormGroupType {
-	if o == nil || IsNil(o.Type) {
+	if o == nil {
 		var ret FormGroupType
 		return ret
 	}
-	return *o.Type
+
+	return o.Type
 }
 
-// GetTypeOk returns a tuple with the Type field value if set, nil otherwise
+// GetTypeOk returns a tuple with the Type field value
 // and a boolean to check if the value has been set.
 func (o *FormGroup) GetTypeOk() (*FormGroupType, bool) {
-	if o == nil || IsNil(o.Type) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Type, true
+	return &o.Type, true
 }
 
-// HasType returns a boolean if a field has been set.
-func (o *FormGroup) HasType() bool {
-	if o != nil && !IsNil(o.Type) {
-		return true
-	}
-
-	return false
-}
-
-// SetType gets a reference to the given FormGroupType and assigns it to the Type field.
+// SetType sets field value
 func (o *FormGroup) SetType(v FormGroupType) {
-	o.Type = &v
+	o.Type = v
 }
 
 // GetLabel returns the Label field value if set, zero value otherwise.
@@ -185,34 +176,26 @@ func (o *FormGroup) SetInfo(v map[string]string) {
 	o.Info = &v
 }
 
-// GetItems returns the Items field value if set, zero value otherwise.
+// GetItems returns the Items field value
 func (o *FormGroup) GetItems() []FormItem {
-	if o == nil || IsNil(o.Items) {
+	if o == nil {
 		var ret []FormItem
 		return ret
 	}
+
 	return o.Items
 }
 
-// GetItemsOk returns a tuple with the Items field value if set, nil otherwise
+// GetItemsOk returns a tuple with the Items field value
 // and a boolean to check if the value has been set.
 func (o *FormGroup) GetItemsOk() ([]FormItem, bool) {
-	if o == nil || IsNil(o.Items) {
+	if o == nil {
 		return nil, false
 	}
 	return o.Items, true
 }
 
-// HasItems returns a boolean if a field has been set.
-func (o *FormGroup) HasItems() bool {
-	if o != nil && !IsNil(o.Items) {
-		return true
-	}
-
-	return false
-}
-
-// SetItems gets a reference to the given []FormItem and assigns it to the Items field.
+// SetItems sets field value
 func (o *FormGroup) SetItems(v []FormItem) {
 	o.Items = v
 }
@@ -387,21 +370,15 @@ func (o FormGroup) MarshalJSON() ([]byte, error) {
 
 func (o FormGroup) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Id) {
-		toSerialize["id"] = o.Id
-	}
-	if !IsNil(o.Type) {
-		toSerialize["type"] = o.Type
-	}
+	toSerialize["id"] = o.Id
+	toSerialize["type"] = o.Type
 	if !IsNil(o.Label) {
 		toSerialize["label"] = o.Label
 	}
 	if !IsNil(o.Info) {
 		toSerialize["info"] = o.Info
 	}
-	if !IsNil(o.Items) {
-		toSerialize["items"] = o.Items
-	}
+	toSerialize["items"] = o.Items
 	if !IsNil(o.Target) {
 		toSerialize["target"] = o.Target
 	}
@@ -418,6 +395,45 @@ func (o FormGroup) ToMap() (map[string]interface{}, error) {
 		toSerialize["min_size"] = o.MinSize
 	}
 	return toSerialize, nil
+}
+
+func (o *FormGroup) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"id",
+		"type",
+		"items",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varFormGroup := _FormGroup{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varFormGroup)
+
+	if err != nil {
+		return err
+	}
+
+	*o = FormGroup(varFormGroup)
+
+	return err
 }
 
 type NullableFormGroup struct {

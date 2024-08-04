@@ -24,7 +24,7 @@ type CreateOrUpdateCommentTemplateRequest struct {
 	DisplayName string `json:"display_name"`
 	// A list of case template IDs that either gives or restricts access in cetain cases, based on is_deny_list property.
 	AccessList []string `json:"access_list,omitempty"`
-	// If true - access_list behaves as deny list, if false it behaves as allow list
+	// If true - access list behaves as deny list, if false it behaves as allow list
 	IsDenyList *bool `json:"is_deny_list,omitempty"`
 	// An optional script to process the reporter if needed. The script will have reporter under `reporter` and should return an object to be used in the template.
 	Script *string `json:"script,omitempty"`
