@@ -41,16 +41,16 @@ type documentTemplateOptionsModel struct {
 
 // documentTemplateModel describes the resource data model.
 type documentTemplateModel struct {
-	ID                 types.String                 `tfsdk:"id"`
-	LastUpdated        types.String                 `tfsdk:"last_updated"`
-	Name               types.String                 `tfsdk:"name"`
-	Description        types.String                 `tfsdk:"description"`
-	Options            documentTemplateOptionsModel `tfsdk:"options"`
-	NameExpression     types.String                 `tfsdk:"name_expression"`
-	Content            tf.JsonObjectValue           `tfsdk:"content"`
-	Inputs             tf.JsonObjectValue           `tfsdk:"inputs"`
-	PlaceholdersScript types.String                 `tfsdk:"placeholders_script"`
-	Signatures         tf.JsonObjectValue           `tfsdk:"signatures"`
+	ID                 types.String                  `tfsdk:"id"`
+	LastUpdated        types.String                  `tfsdk:"last_updated"`
+	Name               types.String                  `tfsdk:"name"`
+	Description        types.String                  `tfsdk:"description"`
+	Options            *documentTemplateOptionsModel `tfsdk:"options"`
+	NameExpression     types.String                  `tfsdk:"name_expression"`
+	Content            tf.JsonObjectValue            `tfsdk:"content"`
+	Inputs             tf.JsonObjectValue            `tfsdk:"inputs"`
+	PlaceholdersScript types.String                  `tfsdk:"placeholders_script"`
+	Signatures         tf.JsonObjectValue            `tfsdk:"signatures"`
 }
 
 func (r *documentTemplate) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -317,10 +317,14 @@ func (model *documentTemplateModel) fromAPI(template *api.DocumentTemplate) erro
 	model.Name = types.StringValue(template.Name)
 	model.Description = omittableStringValue(template.Description, model.Description)
 	model.PlaceholdersScript = omittableStringValue(template.PlaceholdersScript, model.PlaceholdersScript)
-	model.Options = documentTemplateOptionsModel{
-		AllowTextEdit:         omittableBooleanValue(template.Options.AllowTextEdit, model.Options.AllowTextEdit),
-		IncludeFooterBranding: omittableBooleanValue(template.Options.IncludeFooterBranding, model.Options.IncludeFooterBranding),
-		IncludePageNumbers:    omittableBooleanValue(template.Options.IncludePageNumbers, model.Options.IncludePageNumbers),
+
+	if template.Options.IsSet() {
+		opts := template.Options.Get()
+		model.Options = &documentTemplateOptionsModel{
+			AllowTextEdit:         omittableBooleanValue(opts.AllowTextEdit, model.Options.AllowTextEdit),
+			IncludeFooterBranding: omittableBooleanValue(opts.IncludeFooterBranding, model.Options.IncludeFooterBranding),
+			IncludePageNumbers:    omittableBooleanValue(opts.IncludePageNumbers, model.Options.IncludePageNumbers),
+		}
 	}
 
 	model.NameExpression = omittableStringValue(template.NameExpression, model.NameExpression)
@@ -357,11 +361,23 @@ func (model *documentTemplateModel) toAPIRequest() (api.CreateOrUpdateDocumentTe
 		Description:        model.Description.ValueStringPointer(),
 		Content:            model.Content.ValueString(),
 		PlaceholdersScript: model.PlaceholdersScript.ValueStringPointer(),
-		Options: api.DocumentTemplateOptions{
-			AllowTextEdit:         model.Options.AllowTextEdit.ValueBoolPointer(),
-			IncludeFooterBranding: model.Options.IncludeFooterBranding.ValueBoolPointer(),
-			IncludePageNumbers:    model.Options.IncludePageNumbers.ValueBoolPointer(),
-		},
+	}
+
+	if opts := model.Options; opts != nil {
+
+		if opts.AllowTextEdit.ValueBool() ||
+			opts.IncludeFooterBranding.ValueBool() ||
+			opts.IncludePageNumbers.ValueBool() {
+
+			// only set if any of the options are set
+
+			template.Options = *api.NewNullableDocumentTemplateOptions(
+				&api.DocumentTemplateOptions{
+					AllowTextEdit:         model.Options.AllowTextEdit.ValueBoolPointer(),
+					IncludeFooterBranding: model.Options.IncludeFooterBranding.ValueBoolPointer(),
+					IncludePageNumbers:    model.Options.IncludePageNumbers.ValueBoolPointer(),
+				})
+		}
 	}
 
 	if !model.Inputs.IsNull() && !model.Inputs.IsUnknown() {

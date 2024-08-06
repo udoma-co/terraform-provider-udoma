@@ -215,7 +215,7 @@ func (m *DocumentModel) toCreateAPIRequest() *v1.CreateDocumentRequest {
 		Path:          m.Path.ValueStringPointer(),
 		Public:        m.Public.ValueBoolPointer(),
 		RefType:       v1.DocumentRefTypeEnum(m.RefType.ValueString()),
-		RefId:         m.RefID.ValueString(),
+		RefId:         m.RefID.ValueStringPointer(),
 		AttachmentRef: m.Attachment.ValueString(),
 	}
 
