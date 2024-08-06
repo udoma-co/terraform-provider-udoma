@@ -71,6 +71,9 @@ func (c *ConnectorQuery) Schema(ctx context.Context, req resource.SchemaRequest,
 			"connector": schema.StringAttribute{
 				Required:    true,
 				Description: "The connector ID to link this query to",
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 			},
 			"priority": schema.Int64Attribute{
 				Optional:    true,
