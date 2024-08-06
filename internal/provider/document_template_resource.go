@@ -365,19 +365,12 @@ func (model *documentTemplateModel) toAPIRequest() (api.CreateOrUpdateDocumentTe
 
 	if opts := model.Options; opts != nil {
 
-		if opts.AllowTextEdit.ValueBool() ||
-			opts.IncludeFooterBranding.ValueBool() ||
-			opts.IncludePageNumbers.ValueBool() {
-
-			// only set if any of the options are set
-
-			template.Options = *api.NewNullableDocumentTemplateOptions(
-				&api.DocumentTemplateOptions{
-					AllowTextEdit:         model.Options.AllowTextEdit.ValueBoolPointer(),
-					IncludeFooterBranding: model.Options.IncludeFooterBranding.ValueBoolPointer(),
-					IncludePageNumbers:    model.Options.IncludePageNumbers.ValueBoolPointer(),
-				})
-		}
+		template.Options = *api.NewNullableDocumentTemplateOptions(
+			&api.DocumentTemplateOptions{
+				AllowTextEdit:         model.Options.AllowTextEdit.ValueBoolPointer(),
+				IncludeFooterBranding: model.Options.IncludeFooterBranding.ValueBoolPointer(),
+				IncludePageNumbers:    model.Options.IncludePageNumbers.ValueBoolPointer(),
+			})
 	}
 
 	if !model.Inputs.IsNull() && !model.Inputs.IsUnknown() {
