@@ -22,8 +22,8 @@ var _ MappedNullable = &CreateCaseCommentRequest{}
 // CreateCaseCommentRequest Request that will create a new comment for a case
 type CreateCaseCommentRequest struct {
 	Content string `json:"content"`
-	// list of attachments that should be linked to the comment
-	Attachments []Attachment `json:"attachments,omitempty"`
+	// list of IDs of attachments that should be linked to the comment
+	Attachments []string `json:"attachments,omitempty"`
 	// List of paries that should have access to the comment
 	Visibility []CaseParty `json:"visibility,omitempty"`
 }
@@ -73,9 +73,9 @@ func (o *CreateCaseCommentRequest) SetContent(v string) {
 }
 
 // GetAttachments returns the Attachments field value if set, zero value otherwise.
-func (o *CreateCaseCommentRequest) GetAttachments() []Attachment {
+func (o *CreateCaseCommentRequest) GetAttachments() []string {
 	if o == nil || IsNil(o.Attachments) {
-		var ret []Attachment
+		var ret []string
 		return ret
 	}
 	return o.Attachments
@@ -83,7 +83,7 @@ func (o *CreateCaseCommentRequest) GetAttachments() []Attachment {
 
 // GetAttachmentsOk returns a tuple with the Attachments field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CreateCaseCommentRequest) GetAttachmentsOk() ([]Attachment, bool) {
+func (o *CreateCaseCommentRequest) GetAttachmentsOk() ([]string, bool) {
 	if o == nil || IsNil(o.Attachments) {
 		return nil, false
 	}
@@ -99,8 +99,8 @@ func (o *CreateCaseCommentRequest) HasAttachments() bool {
 	return false
 }
 
-// SetAttachments gets a reference to the given []Attachment and assigns it to the Attachments field.
-func (o *CreateCaseCommentRequest) SetAttachments(v []Attachment) {
+// SetAttachments gets a reference to the given []string and assigns it to the Attachments field.
+func (o *CreateCaseCommentRequest) SetAttachments(v []string) {
 	o.Attachments = v
 }
 

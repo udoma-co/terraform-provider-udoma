@@ -2462,6 +2462,115 @@ func (a *DefaultAPIService) CreateConnectorQueryExecute(r ApiCreateConnectorQuer
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiCreateCorrespondenceRequest struct {
+	ctx                         context.Context
+	ApiService                  *DefaultAPIService
+	createCorrespondenceRequest *CreateCorrespondenceRequest
+}
+
+func (r ApiCreateCorrespondenceRequest) CreateCorrespondenceRequest(createCorrespondenceRequest CreateCorrespondenceRequest) ApiCreateCorrespondenceRequest {
+	r.createCorrespondenceRequest = &createCorrespondenceRequest
+	return r
+}
+
+func (r ApiCreateCorrespondenceRequest) Execute() ([]Correspondence, *http.Response, error) {
+	return r.ApiService.CreateCorrespondenceExecute(r)
+}
+
+/*
+CreateCorrespondence Create a new correspondence object for document generation.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiCreateCorrespondenceRequest
+*/
+func (a *DefaultAPIService) CreateCorrespondence(ctx context.Context) ApiCreateCorrespondenceRequest {
+	return ApiCreateCorrespondenceRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return []Correspondence
+func (a *DefaultAPIService) CreateCorrespondenceExecute(r ApiCreateCorrespondenceRequest) ([]Correspondence, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []Correspondence
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateCorrespondence")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/tenant-correspondence"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createCorrespondenceRequest == nil {
+		return localVarReturnValue, nil, reportError("createCorrespondenceRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createCorrespondenceRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiCreateCustomIDGeneratorRequest struct {
 	ctx                                    context.Context
 	ApiService                             *DefaultAPIService
@@ -6506,6 +6615,96 @@ func (a *DefaultAPIService) DeleteConnectorQueryExecute(r ApiDeleteConnectorQuer
 
 	localVarPath := localBasePath + "/query/{queryID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"queryID"+"}", url.PathEscape(parameterValueToString(r.queryID, "queryID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDeleteCorrespondenceRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	corrID     string
+}
+
+func (r ApiDeleteCorrespondenceRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteCorrespondenceExecute(r)
+}
+
+/*
+DeleteCorrespondence Delete a correspondence object via its ID
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param corrID unique generated ID of a correspondence
+	@return ApiDeleteCorrespondenceRequest
+*/
+func (a *DefaultAPIService) DeleteCorrespondence(ctx context.Context, corrID string) ApiDeleteCorrespondenceRequest {
+	return ApiDeleteCorrespondenceRequest{
+		ApiService: a,
+		ctx:        ctx,
+		corrID:     corrID,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DeleteCorrespondenceExecute(r ApiDeleteCorrespondenceRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteCorrespondence")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/tenant-correspondence/{corrID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"corrID"+"}", url.PathEscape(parameterValueToString(r.corrID, "corrID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -12214,6 +12413,210 @@ func (a *DefaultAPIService) GetConnectorQueryExecute(r ApiGetConnectorQueryReque
 
 	localVarPath := localBasePath + "/query/{queryID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"queryID"+"}", url.PathEscape(parameterValueToString(r.queryID, "queryID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetCorrespondenceRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	corrID     string
+}
+
+func (r ApiGetCorrespondenceRequest) Execute() (*Correspondence, *http.Response, error) {
+	return r.ApiService.GetCorrespondenceExecute(r)
+}
+
+/*
+GetCorrespondence Get a correspondence object via its ID
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param corrID unique generated ID of a correspondence
+	@return ApiGetCorrespondenceRequest
+*/
+func (a *DefaultAPIService) GetCorrespondence(ctx context.Context, corrID string) ApiGetCorrespondenceRequest {
+	return ApiGetCorrespondenceRequest{
+		ApiService: a,
+		ctx:        ctx,
+		corrID:     corrID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return Correspondence
+func (a *DefaultAPIService) GetCorrespondenceExecute(r ApiGetCorrespondenceRequest) (*Correspondence, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Correspondence
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetCorrespondence")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/tenant-correspondence/{corrID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"corrID"+"}", url.PathEscape(parameterValueToString(r.corrID, "corrID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetCorrespondenceAccessRecordRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	corrID     string
+}
+
+func (r ApiGetCorrespondenceAccessRecordRequest) Execute() (*AccessRecord, *http.Response, error) {
+	return r.ApiService.GetCorrespondenceAccessRecordExecute(r)
+}
+
+/*
+GetCorrespondenceAccessRecord Get the access record for the correspondence.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param corrID unique generated ID of a correspondence
+	@return ApiGetCorrespondenceAccessRecordRequest
+*/
+func (a *DefaultAPIService) GetCorrespondenceAccessRecord(ctx context.Context, corrID string) ApiGetCorrespondenceAccessRecordRequest {
+	return ApiGetCorrespondenceAccessRecordRequest{
+		ApiService: a,
+		ctx:        ctx,
+		corrID:     corrID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return AccessRecord
+func (a *DefaultAPIService) GetCorrespondenceAccessRecordExecute(r ApiGetCorrespondenceAccessRecordRequest) (*AccessRecord, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *AccessRecord
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetCorrespondenceAccessRecord")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/tenant-correspondence/{corrID}/access-record"
+	localVarPath = strings.Replace(localVarPath, "{"+"corrID"+"}", url.PathEscape(parameterValueToString(r.corrID, "corrID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -18278,6 +18681,115 @@ func (a *DefaultAPIService) PublicAddCaseCommentExecute(r ApiPublicAddCaseCommen
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiPublicCorrespondenceAccessRecordExistsRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	code       *string
+}
+
+// A unique code that grants access to public users to the requested resource. Depending on the context, the code can have a different format and be validated in a different way. The parameter can be either provided in a path or as a query parameter
+func (r ApiPublicCorrespondenceAccessRecordExistsRequest) Code(code string) ApiPublicCorrespondenceAccessRecordExistsRequest {
+	r.code = &code
+	return r
+}
+
+func (r ApiPublicCorrespondenceAccessRecordExistsRequest) Execute() (*BooleanResponse, *http.Response, error) {
+	return r.ApiService.PublicCorrespondenceAccessRecordExistsExecute(r)
+}
+
+/*
+PublicCorrespondenceAccessRecordExists Check whether an access record eixsts for the correspondence.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiPublicCorrespondenceAccessRecordExistsRequest
+*/
+func (a *DefaultAPIService) PublicCorrespondenceAccessRecordExists(ctx context.Context) ApiPublicCorrespondenceAccessRecordExistsRequest {
+	return ApiPublicCorrespondenceAccessRecordExistsRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return BooleanResponse
+func (a *DefaultAPIService) PublicCorrespondenceAccessRecordExistsExecute(r ApiPublicCorrespondenceAccessRecordExistsRequest) (*BooleanResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *BooleanResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.PublicCorrespondenceAccessRecordExists")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/public/tenant-correspondence/access-record/exists"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.code == nil {
+		return localVarReturnValue, nil, reportError("code is required and must be specified")
+	}
+
+	parameterAddToHeaderOrQuery(localVarQueryParams, "code", r.code, "")
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiPublicCreateAppointmentRequest struct {
 	ctx                              context.Context
 	ApiService                       *DefaultAPIService
@@ -19482,6 +19994,115 @@ func (a *DefaultAPIService) PublicGetCaseReportingEndpointInfoExecute(r ApiPubli
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiPublicGetCorrespondenceDocumentRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	code       *string
+}
+
+// A unique code that grants access to public users to the requested resource. Depending on the context, the code can have a different format and be validated in a different way. The parameter can be either provided in a path or as a query parameter
+func (r ApiPublicGetCorrespondenceDocumentRequest) Code(code string) ApiPublicGetCorrespondenceDocumentRequest {
+	r.code = &code
+	return r
+}
+
+func (r ApiPublicGetCorrespondenceDocumentRequest) Execute() (*GetCorrespondenceDocumentResponse, *http.Response, error) {
+	return r.ApiService.PublicGetCorrespondenceDocumentExecute(r)
+}
+
+/*
+PublicGetCorrespondenceDocument Get the document locked behind the given code
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiPublicGetCorrespondenceDocumentRequest
+*/
+func (a *DefaultAPIService) PublicGetCorrespondenceDocument(ctx context.Context) ApiPublicGetCorrespondenceDocumentRequest {
+	return ApiPublicGetCorrespondenceDocumentRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return GetCorrespondenceDocumentResponse
+func (a *DefaultAPIService) PublicGetCorrespondenceDocumentExecute(r ApiPublicGetCorrespondenceDocumentRequest) (*GetCorrespondenceDocumentResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetCorrespondenceDocumentResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.PublicGetCorrespondenceDocument")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/public/tenant-correspondence/document"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.code == nil {
+		return localVarReturnValue, nil, reportError("code is required and must be specified")
+	}
+
+	parameterAddToHeaderOrQuery(localVarQueryParams, "code", r.code, "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -22124,6 +22745,104 @@ func (a *DefaultAPIService) QueryCommentTemplatesExecute(r ApiQueryCommentTempla
 	}
 	// body params
 	localVarPostBody = r.queryCommentTemplatesRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiQueryCorrespondencesRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+}
+
+func (r ApiQueryCorrespondencesRequest) Execute() ([]Correspondence, *http.Response, error) {
+	return r.ApiService.QueryCorrespondencesExecute(r)
+}
+
+/*
+QueryCorrespondences Get all the correspondences
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiQueryCorrespondencesRequest
+*/
+func (a *DefaultAPIService) QueryCorrespondences(ctx context.Context) ApiQueryCorrespondencesRequest {
+	return ApiQueryCorrespondencesRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return []Correspondence
+func (a *DefaultAPIService) QueryCorrespondencesExecute(r ApiQueryCorrespondencesRequest) ([]Correspondence, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []Correspondence
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.QueryCorrespondences")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/tenant-correspondences"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

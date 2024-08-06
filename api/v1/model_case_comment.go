@@ -33,7 +33,7 @@ type CaseComment struct {
 	// List of paries that should have access to the comment
 	Visibility []CaseParty `json:"visibility,omitempty"`
 	Content    string      `json:"content"`
-	// list of attachments that should be linked to the comment
+	// list of attachments that were uploaded together with the comment
 	Attachments []Attachment `json:"attachments,omitempty"`
 }
 

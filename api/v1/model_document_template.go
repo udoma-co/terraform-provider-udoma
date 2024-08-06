@@ -26,8 +26,8 @@ type DocumentTemplate struct {
 	// The name of the template
 	Name string `json:"name"`
 	// A description of the template
-	Description *string                 `json:"description,omitempty"`
-	Options     DocumentTemplateOptions `json:"options"`
+	Description *string                         `json:"description,omitempty"`
+	Options     NullableDocumentTemplateOptions `json:"options,omitempty"`
 	// An optional JS expression to be used to compute the name of the template. If not set, the name of the template will be used for new documents.
 	NameExpression *string `json:"name_expression,omitempty"`
 	// The source of the template, used to generate the document
@@ -46,11 +46,10 @@ type _DocumentTemplate DocumentTemplate
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDocumentTemplate(id string, name string, options DocumentTemplateOptions, content string, inputs NullableCustomForm) *DocumentTemplate {
+func NewDocumentTemplate(id string, name string, content string, inputs NullableCustomForm) *DocumentTemplate {
 	this := DocumentTemplate{}
 	this.Id = id
 	this.Name = name
-	this.Options = options
 	this.Content = content
 	this.Inputs = inputs
 	return &this
@@ -144,28 +143,47 @@ func (o *DocumentTemplate) SetDescription(v string) {
 	o.Description = &v
 }
 
-// GetOptions returns the Options field value
+// GetOptions returns the Options field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *DocumentTemplate) GetOptions() DocumentTemplateOptions {
-	if o == nil {
+	if o == nil || IsNil(o.Options.Get()) {
 		var ret DocumentTemplateOptions
 		return ret
 	}
-
-	return o.Options
+	return *o.Options.Get()
 }
 
-// GetOptionsOk returns a tuple with the Options field value
+// GetOptionsOk returns a tuple with the Options field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *DocumentTemplate) GetOptionsOk() (*DocumentTemplateOptions, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Options, true
+	return o.Options.Get(), o.Options.IsSet()
 }
 
-// SetOptions sets field value
+// HasOptions returns a boolean if a field has been set.
+func (o *DocumentTemplate) HasOptions() bool {
+	if o != nil && o.Options.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetOptions gets a reference to the given NullableDocumentTemplateOptions and assigns it to the Options field.
 func (o *DocumentTemplate) SetOptions(v DocumentTemplateOptions) {
-	o.Options = v
+	o.Options.Set(&v)
+}
+
+// SetOptionsNil sets the value for Options to be an explicit nil
+func (o *DocumentTemplate) SetOptionsNil() {
+	o.Options.Set(nil)
+}
+
+// UnsetOptions ensures that no value is present for Options, not even an explicit nil
+func (o *DocumentTemplate) UnsetOptions() {
+	o.Options.Unset()
 }
 
 // GetNameExpression returns the NameExpression field value if set, zero value otherwise.
@@ -372,7 +390,9 @@ func (o DocumentTemplate) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
 	}
-	toSerialize["options"] = o.Options
+	if o.Options.IsSet() {
+		toSerialize["options"] = o.Options.Get()
+	}
 	if !IsNil(o.NameExpression) {
 		toSerialize["name_expression"] = o.NameExpression
 	}
@@ -397,7 +417,6 @@ func (o *DocumentTemplate) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"id",
 		"name",
-		"options",
 		"content",
 		"inputs",
 	}

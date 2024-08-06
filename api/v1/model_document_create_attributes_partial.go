@@ -23,7 +23,7 @@ var _ MappedNullable = &DocumentCreateAttributesPartial{}
 type DocumentCreateAttributesPartial struct {
 	RefType DocumentRefTypeEnum `json:"ref_type"`
 	// The ID of the entity for which the document is uploaded. Can be empty, if the  reference type is 'static'.
-	RefId string `json:"ref_id"`
+	RefId *string `json:"ref_id,omitempty"`
 	// The ID of the already uploaded attachment
 	AttachmentRef string `json:"attachment_ref"`
 }
@@ -34,10 +34,9 @@ type _DocumentCreateAttributesPartial DocumentCreateAttributesPartial
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDocumentCreateAttributesPartial(refType DocumentRefTypeEnum, refId string, attachmentRef string) *DocumentCreateAttributesPartial {
+func NewDocumentCreateAttributesPartial(refType DocumentRefTypeEnum, attachmentRef string) *DocumentCreateAttributesPartial {
 	this := DocumentCreateAttributesPartial{}
 	this.RefType = refType
-	this.RefId = refId
 	this.AttachmentRef = attachmentRef
 	return &this
 }
@@ -74,28 +73,36 @@ func (o *DocumentCreateAttributesPartial) SetRefType(v DocumentRefTypeEnum) {
 	o.RefType = v
 }
 
-// GetRefId returns the RefId field value
+// GetRefId returns the RefId field value if set, zero value otherwise.
 func (o *DocumentCreateAttributesPartial) GetRefId() string {
-	if o == nil {
+	if o == nil || IsNil(o.RefId) {
 		var ret string
 		return ret
 	}
-
-	return o.RefId
+	return *o.RefId
 }
 
-// GetRefIdOk returns a tuple with the RefId field value
+// GetRefIdOk returns a tuple with the RefId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DocumentCreateAttributesPartial) GetRefIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.RefId) {
 		return nil, false
 	}
-	return &o.RefId, true
+	return o.RefId, true
 }
 
-// SetRefId sets field value
+// HasRefId returns a boolean if a field has been set.
+func (o *DocumentCreateAttributesPartial) HasRefId() bool {
+	if o != nil && !IsNil(o.RefId) {
+		return true
+	}
+
+	return false
+}
+
+// SetRefId gets a reference to the given string and assigns it to the RefId field.
 func (o *DocumentCreateAttributesPartial) SetRefId(v string) {
-	o.RefId = v
+	o.RefId = &v
 }
 
 // GetAttachmentRef returns the AttachmentRef field value
@@ -133,7 +140,9 @@ func (o DocumentCreateAttributesPartial) MarshalJSON() ([]byte, error) {
 func (o DocumentCreateAttributesPartial) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["ref_type"] = o.RefType
-	toSerialize["ref_id"] = o.RefId
+	if !IsNil(o.RefId) {
+		toSerialize["ref_id"] = o.RefId
+	}
 	toSerialize["attachment_ref"] = o.AttachmentRef
 	return toSerialize, nil
 }
@@ -144,7 +153,6 @@ func (o *DocumentCreateAttributesPartial) UnmarshalJSON(data []byte) (err error)
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"ref_type",
-		"ref_id",
 		"attachment_ref",
 	}
 
