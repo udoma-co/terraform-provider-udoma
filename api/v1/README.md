@@ -79,9 +79,11 @@ Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *DefaultAPI* | [**AddCaseComment**](docs/DefaultAPI.md#addcasecomment) | **Post** /case/{caseID}/comment | Add new case comment
 *DefaultAPI* | [**ArchiveCase**](docs/DefaultAPI.md#archivecase) | **Post** /case/{caseID}/archive | Mark the case as archived
+*DefaultAPI* | [**ArchiveCorrespondence**](docs/DefaultAPI.md#archivecorrespondence) | **Post** /tenant-correspondence/{corrID}/archive | Archive a tenant correspondence.
 *DefaultAPI* | [**ArchiveDocumentGeneration**](docs/DefaultAPI.md#archivedocumentgeneration) | **Post** /document-generation/documents/{docID}/archive | Move the document generation to the archive
 *DefaultAPI* | [**ArchivePropertyHandover**](docs/DefaultAPI.md#archivepropertyhandover) | **Put** /property-handovers/handovers/{handoverID}/archive | Archive a property handover
 *DefaultAPI* | [**AssignCase**](docs/DefaultAPI.md#assigncase) | **Post** /case/{caseID}/assign | Assign case to a service provider
+*DefaultAPI* | [**CancelCorrespondence**](docs/DefaultAPI.md#cancelcorrespondence) | **Post** /tenant-correspondence/{corrID}/cancel | Cancel a tenant correspondence.
 *DefaultAPI* | [**CancelSignaturesForDocument**](docs/DefaultAPI.md#cancelsignaturesfordocument) | **Delete** /document-generation/documents/{docID}/esignature | Cancel a signature request for a document
 *DefaultAPI* | [**ConfirmAppointment**](docs/DefaultAPI.md#confirmappointment) | **Post** /calendar/appointments/entry/{entryID}/confirm | Confirm an appointment
 *DefaultAPI* | [**CreateAccountBooking**](docs/DefaultAPI.md#createaccountbooking) | **Post** /financial/booking | Create a new booking
@@ -209,7 +211,6 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetDocument**](docs/DefaultAPI.md#getdocument) | **Get** /document-repository/entry/{documentID} | Get an already existing document
 *DefaultAPI* | [**GetDocumentGeneration**](docs/DefaultAPI.md#getdocumentgeneration) | **Get** /document-generation/documents/{docID} | Get a single document generation
 *DefaultAPI* | [**GetDocumentTemplate**](docs/DefaultAPI.md#getdocumenttemplate) | **Get** /document-generation/template/{templateID} | Get a document template
-*DefaultAPI* | [**GetDocumentTemplatePlaceholders**](docs/DefaultAPI.md#getdocumenttemplateplaceholders) | **Post** /document-generation/template/{templateID}/placeholders | Test if placeholders are working for template
 *DefaultAPI* | [**GetDocumentTemplates**](docs/DefaultAPI.md#getdocumenttemplates) | **Get** /document-generation/templates | Get all available document templates
 *DefaultAPI* | [**GetESignatureStatusForDocument**](docs/DefaultAPI.md#getesignaturestatusfordocument) | **Get** /document-generation/documents/{docID}/esignature | Get the singing status for the document
 *DefaultAPI* | [**GetEmailStatus**](docs/DefaultAPI.md#getemailstatus) | **Get** /email/status/{email} | Get the status of the email
@@ -225,7 +226,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetMeters**](docs/DefaultAPI.md#getmeters) | **Get** /meters | List meters
 *DefaultAPI* | [**GetMetersByProperty**](docs/DefaultAPI.md#getmetersbyproperty) | **Get** /meters/by-property/{propID} | List meters for a property
 *DefaultAPI* | [**GetNotification**](docs/DefaultAPI.md#getnotification) | **Get** /notification/{notificationName} | Get notification
-*DefaultAPI* | [**GetNumberOfCasesForActionAdndTimePeriod**](docs/DefaultAPI.md#getnumberofcasesforactionadndtimeperiod) | **Post** /cases/stats/action | Get number of cases for the given action and time period
+*DefaultAPI* | [**GetNumberOfCasesForActionAndTimePeriod**](docs/DefaultAPI.md#getnumberofcasesforactionandtimeperiod) | **Post** /cases/stats/action | Get number of cases for the given action and time period
 *DefaultAPI* | [**GetNumberOfInteractionsForCases**](docs/DefaultAPI.md#getnumberofinteractionsforcases) | **Post** /cases/stats/interactions | Query case interactions
 *DefaultAPI* | [**GetPriceIndexPoint**](docs/DefaultAPI.md#getpriceindexpoint) | **Post** /price-index | Get the PriceIndexPoint
 *DefaultAPI* | [**GetProperty**](docs/DefaultAPI.md#getproperty) | **Get** /properties/{propID} | Get property details
@@ -260,7 +261,6 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**InternalAddPriceIndexPoint**](docs/DefaultAPI.md#internaladdpriceindexpoint) | **Put** /price-index | Push a new value for the inflation index
 *DefaultAPI* | [**PreviewCommentTemplate**](docs/DefaultAPI.md#previewcommenttemplate) | **Post** /comment-template/{commentTemplateID}/preview | Preview a comment template returning an example comment.
 *DefaultAPI* | [**PublicAddCaseComment**](docs/DefaultAPI.md#publicaddcasecomment) | **Post** /public/case/{caseID}/comment | Add new case comment
-*DefaultAPI* | [**PublicCorrespondenceAccessRecordExists**](docs/DefaultAPI.md#publiccorrespondenceaccessrecordexists) | **Get** /public/tenant-correspondence/access-record/exists | Check whether an access record eixsts for the correspondence.
 *DefaultAPI* | [**PublicCreateAppointment**](docs/DefaultAPI.md#publiccreateappointment) | **Post** /public/calendar/appointments/{scheduleID}/entry | Create a new appointment for the given schedule
 *DefaultAPI* | [**PublicCreateCase**](docs/DefaultAPI.md#publiccreatecase) | **Post** /public/case | Raise a new case from a public endpoint.
 *DefaultAPI* | [**PublicDeleteAppointment**](docs/DefaultAPI.md#publicdeleteappointment) | **Delete** /public/calendar/appointments/entry/{code} | Delete an appointment
@@ -273,7 +273,9 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**PublicGetCase**](docs/DefaultAPI.md#publicgetcase) | **Get** /public/case | Get case details
 *DefaultAPI* | [**PublicGetCaseReportingEndpointInfo**](docs/DefaultAPI.md#publicgetcasereportingendpointinfo) | **Get** /public/cases/endpoint/{endpointID}/info | Get the information for the case reporting endpoint with the given code 
 *DefaultAPI* | [**PublicGetCorrespondenceDocument**](docs/DefaultAPI.md#publicgetcorrespondencedocument) | **Post** /public/tenant-correspondence/document | Get the document locked behind the given code
+*DefaultAPI* | [**PublicGetCorrespondenceStatus**](docs/DefaultAPI.md#publicgetcorrespondencestatus) | **Get** /public/tenant-correspondence/status | Check whether an access record eixsts for the correspondence.
 *DefaultAPI* | [**PublicGetExternalUser**](docs/DefaultAPI.md#publicgetexternaluser) | **Get** /public/external-users | Get external user data
+*DefaultAPI* | [**PublicGetManagerCompanyProfile**](docs/DefaultAPI.md#publicgetmanagercompanyprofile) | **Get** /public/profile/company/manager | Get the manager company details
 *DefaultAPI* | [**PublicUpdateCase**](docs/DefaultAPI.md#publicupdatecase) | **Put** /public/case | Update case data
 *DefaultAPI* | [**PublicUpdateCaseStatus**](docs/DefaultAPI.md#publicupdatecasestatus) | **Post** /public/case/{caseID}/status | Add new case status
 *DefaultAPI* | [**PublicUpdateExternalUser**](docs/DefaultAPI.md#publicupdateexternaluser) | **Put** /public/external-users | Update external user data
@@ -317,6 +319,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**StartWorkflowExecution**](docs/DefaultAPI.md#startworkflowexecution) | **Post** /workflows/execution | Start a new workflow execution
 *DefaultAPI* | [**SubmitPropertyHandover**](docs/DefaultAPI.md#submitpropertyhandover) | **Put** /property-handovers/handovers/{handoverID}/submit | Submit the data for a property handover
 *DefaultAPI* | [**SyncConnectorData**](docs/DefaultAPI.md#syncconnectordata) | **Post** /connector/sync | Sync the next batch of connector data.
+*DefaultAPI* | [**TestDocumentTemplatePlaceholders**](docs/DefaultAPI.md#testdocumenttemplateplaceholders) | **Post** /document-generation/template/{templateID}/placeholders | Test placeholder generation for given template and data
 *DefaultAPI* | [**UnassignCase**](docs/DefaultAPI.md#unassigncase) | **Post** /case/{caseID}/unassign | Remove access from case
 *DefaultAPI* | [**UpdateAccountBooking**](docs/DefaultAPI.md#updateaccountbooking) | **Put** /financial/bookings/{bookingID} | Update an already existing booking
 *DefaultAPI* | [**UpdateAccountDimension**](docs/DefaultAPI.md#updateaccountdimension) | **Put** /financial/account-dimension/{dimensionID} | Update an already existing account dimension
@@ -389,7 +392,6 @@ Class | Method | HTTP request | Description
  - [BankAccountAttributesPartial](docs/BankAccountAttributesPartial.md)
  - [BankTransaction](docs/BankTransaction.md)
  - [BankTransactionAttributesPartial](docs/BankTransactionAttributesPartial.md)
- - [BooleanResponse](docs/BooleanResponse.md)
  - [Case](docs/Case.md)
  - [CaseActionEnum](docs/CaseActionEnum.md)
  - [CaseAssignee](docs/CaseAssignee.md)
@@ -432,6 +434,7 @@ Class | Method | HTTP request | Description
  - [Correspondence](docs/Correspondence.md)
  - [CorrespondenceAttributesPartial](docs/CorrespondenceAttributesPartial.md)
  - [CorrespondenceEmail](docs/CorrespondenceEmail.md)
+ - [CorrespondenceStatus](docs/CorrespondenceStatus.md)
  - [CreateBulkAccountDimensionValuesRequest](docs/CreateBulkAccountDimensionValuesRequest.md)
  - [CreateCaseCommentRequest](docs/CreateCaseCommentRequest.md)
  - [CreateCaseRequest](docs/CreateCaseRequest.md)
@@ -489,7 +492,6 @@ Class | Method | HTTP request | Description
  - [DocumentSigner](docs/DocumentSigner.md)
  - [DocumentTemplate](docs/DocumentTemplate.md)
  - [DocumentTemplateAttributesPartial](docs/DocumentTemplateAttributesPartial.md)
- - [DocumentTemplateGetPlaceholdersRequest](docs/DocumentTemplateGetPlaceholdersRequest.md)
  - [DocumentTemplateGetPlaceholdersResponse](docs/DocumentTemplateGetPlaceholdersResponse.md)
  - [DocumentTemplateOptions](docs/DocumentTemplateOptions.md)
  - [DocumentTemplateSignatureConfguration](docs/DocumentTemplateSignatureConfguration.md)
@@ -530,6 +532,7 @@ Class | Method | HTTP request | Description
  - [FormValidationResponse](docs/FormValidationResponse.md)
  - [GenerateCaseReportingEndpointNoticeRequest](docs/GenerateCaseReportingEndpointNoticeRequest.md)
  - [GetCorrespondenceDocumentResponse](docs/GetCorrespondenceDocumentResponse.md)
+ - [GetCorrespondenceStatusResponse](docs/GetCorrespondenceStatusResponse.md)
  - [GetExternalUserCasesCountResponse](docs/GetExternalUserCasesCountResponse.md)
  - [GetNumberOfCasesForActionAndTimePeriodRequest](docs/GetNumberOfCasesForActionAndTimePeriodRequest.md)
  - [GetNumberOfCasesForActionAndTimePeriodResponse](docs/GetNumberOfCasesForActionAndTimePeriodResponse.md)

@@ -37,6 +37,7 @@ const (
 	FORMINPUTTYPE_REPORTER             FormInputType = "reporter"
 	FORMINPUTTYPE_PROPERTY             FormInputType = "property"
 	FORMINPUTTYPE_CASE_PARTY           FormInputType = "case_party"
+	FORMINPUTTYPE_SIGNATURE            FormInputType = "signature"
 )
 
 // All allowed values of FormInputType enum
@@ -58,6 +59,7 @@ var AllowedFormInputTypeEnumValues = []FormInputType{
 	"reporter",
 	"property",
 	"case_party",
+	"signature",
 }
 
 func (v *FormInputType) UnmarshalJSON(src []byte) error {

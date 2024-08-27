@@ -21,12 +21,12 @@ var _ MappedNullable = &AppointmentWindow{}
 
 // AppointmentWindow struct for AppointmentWindow
 type AppointmentWindow struct {
-	// Unique and immutable ID attribute of the entity that is generated when  the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities  or to retrieve it from the backend.
-	Id string `json:"id"`
 	// The timestamp of the beginning of the time slot
 	StartTime int64 `json:"start_time"`
 	// The timestamp of the end of the time slot
 	EndTime int64 `json:"end_time"`
+	// Optional ID if the window was already created. Can be empty if a  new window is created.
+	Id *string `json:"id,omitempty"`
 	// List of slots that are available or booked
 	Slots []AppointmentSlot `json:"slots,omitempty"`
 }
@@ -37,9 +37,8 @@ type _AppointmentWindow AppointmentWindow
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppointmentWindow(id string, startTime int64, endTime int64) *AppointmentWindow {
+func NewAppointmentWindow(startTime int64, endTime int64) *AppointmentWindow {
 	this := AppointmentWindow{}
-	this.Id = id
 	this.StartTime = startTime
 	this.EndTime = endTime
 	return &this
@@ -51,30 +50,6 @@ func NewAppointmentWindow(id string, startTime int64, endTime int64) *Appointmen
 func NewAppointmentWindowWithDefaults() *AppointmentWindow {
 	this := AppointmentWindow{}
 	return &this
-}
-
-// GetId returns the Id field value
-func (o *AppointmentWindow) GetId() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Id
-}
-
-// GetIdOk returns a tuple with the Id field value
-// and a boolean to check if the value has been set.
-func (o *AppointmentWindow) GetIdOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Id, true
-}
-
-// SetId sets field value
-func (o *AppointmentWindow) SetId(v string) {
-	o.Id = v
 }
 
 // GetStartTime returns the StartTime field value
@@ -125,6 +100,38 @@ func (o *AppointmentWindow) SetEndTime(v int64) {
 	o.EndTime = v
 }
 
+// GetId returns the Id field value if set, zero value otherwise.
+func (o *AppointmentWindow) GetId() string {
+	if o == nil || IsNil(o.Id) {
+		var ret string
+		return ret
+	}
+	return *o.Id
+}
+
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AppointmentWindow) GetIdOk() (*string, bool) {
+	if o == nil || IsNil(o.Id) {
+		return nil, false
+	}
+	return o.Id, true
+}
+
+// HasId returns a boolean if a field has been set.
+func (o *AppointmentWindow) HasId() bool {
+	if o != nil && !IsNil(o.Id) {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given string and assigns it to the Id field.
+func (o *AppointmentWindow) SetId(v string) {
+	o.Id = &v
+}
+
 // GetSlots returns the Slots field value if set, zero value otherwise.
 func (o *AppointmentWindow) GetSlots() []AppointmentSlot {
 	if o == nil || IsNil(o.Slots) {
@@ -167,9 +174,11 @@ func (o AppointmentWindow) MarshalJSON() ([]byte, error) {
 
 func (o AppointmentWindow) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["id"] = o.Id
 	toSerialize["start_time"] = o.StartTime
 	toSerialize["end_time"] = o.EndTime
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
 	if !IsNil(o.Slots) {
 		toSerialize["slots"] = o.Slots
 	}
@@ -181,7 +190,6 @@ func (o *AppointmentWindow) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"id",
 		"start_time",
 		"end_time",
 	}

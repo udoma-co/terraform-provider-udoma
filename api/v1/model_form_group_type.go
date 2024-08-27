@@ -20,6 +20,7 @@ type FormGroupType string
 
 // List of FormGroupType
 const (
+	FORMGROUPTYPE_PAGE         FormGroupType = "page"
 	FORMGROUPTYPE_SECTION      FormGroupType = "section"
 	FORMGROUPTYPE_REPEAT_GROUP FormGroupType = "repeat_group"
 	FORMGROUPTYPE_ROW          FormGroupType = "row"
@@ -27,6 +28,7 @@ const (
 
 // All allowed values of FormGroupType enum
 var AllowedFormGroupTypeEnumValues = []FormGroupType{
+	"page",
 	"section",
 	"repeat_group",
 	"row",
