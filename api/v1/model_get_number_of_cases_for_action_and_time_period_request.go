@@ -19,9 +19,9 @@ var _ MappedNullable = &GetNumberOfCasesForActionAndTimePeriodRequest{}
 
 // GetNumberOfCasesForActionAndTimePeriodRequest struct for GetNumberOfCasesForActionAndTimePeriodRequest
 type GetNumberOfCasesForActionAndTimePeriodRequest struct {
-	Action   *CaseActionEnum `json:"action,omitempty"`
-	FromTime *int64          `json:"from_time,omitempty"`
-	TillTime *int64          `json:"till_time,omitempty"`
+	Actions  []CaseActionEnum `json:"actions,omitempty"`
+	FromTime *int64           `json:"from_time,omitempty"`
+	TillTime *int64           `json:"till_time,omitempty"`
 }
 
 // NewGetNumberOfCasesForActionAndTimePeriodRequest instantiates a new GetNumberOfCasesForActionAndTimePeriodRequest object
@@ -41,36 +41,36 @@ func NewGetNumberOfCasesForActionAndTimePeriodRequestWithDefaults() *GetNumberOf
 	return &this
 }
 
-// GetAction returns the Action field value if set, zero value otherwise.
-func (o *GetNumberOfCasesForActionAndTimePeriodRequest) GetAction() CaseActionEnum {
-	if o == nil || IsNil(o.Action) {
-		var ret CaseActionEnum
+// GetActions returns the Actions field value if set, zero value otherwise.
+func (o *GetNumberOfCasesForActionAndTimePeriodRequest) GetActions() []CaseActionEnum {
+	if o == nil || IsNil(o.Actions) {
+		var ret []CaseActionEnum
 		return ret
 	}
-	return *o.Action
+	return o.Actions
 }
 
-// GetActionOk returns a tuple with the Action field value if set, nil otherwise
+// GetActionsOk returns a tuple with the Actions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetNumberOfCasesForActionAndTimePeriodRequest) GetActionOk() (*CaseActionEnum, bool) {
-	if o == nil || IsNil(o.Action) {
+func (o *GetNumberOfCasesForActionAndTimePeriodRequest) GetActionsOk() ([]CaseActionEnum, bool) {
+	if o == nil || IsNil(o.Actions) {
 		return nil, false
 	}
-	return o.Action, true
+	return o.Actions, true
 }
 
-// HasAction returns a boolean if a field has been set.
-func (o *GetNumberOfCasesForActionAndTimePeriodRequest) HasAction() bool {
-	if o != nil && !IsNil(o.Action) {
+// HasActions returns a boolean if a field has been set.
+func (o *GetNumberOfCasesForActionAndTimePeriodRequest) HasActions() bool {
+	if o != nil && !IsNil(o.Actions) {
 		return true
 	}
 
 	return false
 }
 
-// SetAction gets a reference to the given CaseActionEnum and assigns it to the Action field.
-func (o *GetNumberOfCasesForActionAndTimePeriodRequest) SetAction(v CaseActionEnum) {
-	o.Action = &v
+// SetActions gets a reference to the given []CaseActionEnum and assigns it to the Actions field.
+func (o *GetNumberOfCasesForActionAndTimePeriodRequest) SetActions(v []CaseActionEnum) {
+	o.Actions = v
 }
 
 // GetFromTime returns the FromTime field value if set, zero value otherwise.
@@ -147,8 +147,8 @@ func (o GetNumberOfCasesForActionAndTimePeriodRequest) MarshalJSON() ([]byte, er
 
 func (o GetNumberOfCasesForActionAndTimePeriodRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Action) {
-		toSerialize["action"] = o.Action
+	if !IsNil(o.Actions) {
+		toSerialize["actions"] = o.Actions
 	}
 	if !IsNil(o.FromTime) {
 		toSerialize["from_time"] = o.FromTime

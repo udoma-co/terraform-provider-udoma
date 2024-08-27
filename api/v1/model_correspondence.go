@@ -36,8 +36,10 @@ type Correspondence struct {
 	Recipient   *ContactData `json:"recipient,omitempty"`
 	// Whether the document has been seen by the tenant or not(true if AccessRecord exists for the correspondence)
 	Seen bool `json:"seen"`
-	// Whether the LockedDocument has been archived and shouldn't appear in query requests
+	// Whether the Correspondence has been archived and shouldn't appear in query requests
 	Archived bool `json:"archived"`
+	// Whether the Correspondence has been cancelled
+	Cancelled *bool `json:"cancelled,omitempty"`
 }
 
 type _Correspondence Correspondence
@@ -291,6 +293,38 @@ func (o *Correspondence) SetArchived(v bool) {
 	o.Archived = v
 }
 
+// GetCancelled returns the Cancelled field value if set, zero value otherwise.
+func (o *Correspondence) GetCancelled() bool {
+	if o == nil || IsNil(o.Cancelled) {
+		var ret bool
+		return ret
+	}
+	return *o.Cancelled
+}
+
+// GetCancelledOk returns a tuple with the Cancelled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Correspondence) GetCancelledOk() (*bool, bool) {
+	if o == nil || IsNil(o.Cancelled) {
+		return nil, false
+	}
+	return o.Cancelled, true
+}
+
+// HasCancelled returns a boolean if a field has been set.
+func (o *Correspondence) HasCancelled() bool {
+	if o != nil && !IsNil(o.Cancelled) {
+		return true
+	}
+
+	return false
+}
+
+// SetCancelled gets a reference to the given bool and assigns it to the Cancelled field.
+func (o *Correspondence) SetCancelled(v bool) {
+	o.Cancelled = &v
+}
+
 func (o Correspondence) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -312,6 +346,9 @@ func (o Correspondence) ToMap() (map[string]interface{}, error) {
 	}
 	toSerialize["seen"] = o.Seen
 	toSerialize["archived"] = o.Archived
+	if !IsNil(o.Cancelled) {
+		toSerialize["cancelled"] = o.Cancelled
+	}
 	return toSerialize, nil
 }
 
