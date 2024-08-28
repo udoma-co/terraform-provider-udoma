@@ -624,6 +624,7 @@ Class | Method | HTTP request | Description
  - [ServiceCategoryEnum](docs/ServiceCategoryEnum.md)
  - [ServiceProvider](docs/ServiceProvider.md)
  - [ServiceProviderAttributesPartial](docs/ServiceProviderAttributesPartial.md)
+ - [SignatureData](docs/SignatureData.md)
  - [StartWorkflowExecutionRequest](docs/StartWorkflowExecutionRequest.md)
  - [SubmitPropertyHandoverRequest](docs/SubmitPropertyHandoverRequest.md)
  - [Tenancy](docs/Tenancy.md)
