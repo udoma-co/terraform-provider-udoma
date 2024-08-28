@@ -28,7 +28,7 @@ type AppointmentScheduleAttributesPartial struct {
 	// The duration of the appointment slots in minutes
 	SlotDuration int32 `json:"slot_duration"`
 	// The duration of the gap between appointments in minutes
-	GapDuration int32 `json:"gap_duration"`
+	GapDuration *int32 `json:"gap_duration,omitempty"`
 	// The color to use when displaying the appointment window in a calendar view
 	Color *string `json:"color,omitempty"`
 	// The appointment windows
@@ -41,11 +41,10 @@ type _AppointmentScheduleAttributesPartial AppointmentScheduleAttributesPartial
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppointmentScheduleAttributesPartial(name string, slotDuration int32, gapDuration int32, windows []AppointmentWindow) *AppointmentScheduleAttributesPartial {
+func NewAppointmentScheduleAttributesPartial(name string, slotDuration int32, windows []AppointmentWindow) *AppointmentScheduleAttributesPartial {
 	this := AppointmentScheduleAttributesPartial{}
 	this.Name = name
 	this.SlotDuration = slotDuration
-	this.GapDuration = gapDuration
 	this.Windows = windows
 	return &this
 }
@@ -138,28 +137,36 @@ func (o *AppointmentScheduleAttributesPartial) SetSlotDuration(v int32) {
 	o.SlotDuration = v
 }
 
-// GetGapDuration returns the GapDuration field value
+// GetGapDuration returns the GapDuration field value if set, zero value otherwise.
 func (o *AppointmentScheduleAttributesPartial) GetGapDuration() int32 {
-	if o == nil {
+	if o == nil || IsNil(o.GapDuration) {
 		var ret int32
 		return ret
 	}
-
-	return o.GapDuration
+	return *o.GapDuration
 }
 
-// GetGapDurationOk returns a tuple with the GapDuration field value
+// GetGapDurationOk returns a tuple with the GapDuration field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppointmentScheduleAttributesPartial) GetGapDurationOk() (*int32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.GapDuration) {
 		return nil, false
 	}
-	return &o.GapDuration, true
+	return o.GapDuration, true
 }
 
-// SetGapDuration sets field value
+// HasGapDuration returns a boolean if a field has been set.
+func (o *AppointmentScheduleAttributesPartial) HasGapDuration() bool {
+	if o != nil && !IsNil(o.GapDuration) {
+		return true
+	}
+
+	return false
+}
+
+// SetGapDuration gets a reference to the given int32 and assigns it to the GapDuration field.
 func (o *AppointmentScheduleAttributesPartial) SetGapDuration(v int32) {
-	o.GapDuration = v
+	o.GapDuration = &v
 }
 
 // GetColor returns the Color field value if set, zero value otherwise.
@@ -233,7 +240,9 @@ func (o AppointmentScheduleAttributesPartial) ToMap() (map[string]interface{}, e
 		toSerialize["description"] = o.Description
 	}
 	toSerialize["slot_duration"] = o.SlotDuration
-	toSerialize["gap_duration"] = o.GapDuration
+	if !IsNil(o.GapDuration) {
+		toSerialize["gap_duration"] = o.GapDuration
+	}
 	if !IsNil(o.Color) {
 		toSerialize["color"] = o.Color
 	}
@@ -248,7 +257,6 @@ func (o *AppointmentScheduleAttributesPartial) UnmarshalJSON(data []byte) (err e
 	requiredProperties := []string{
 		"name",
 		"slot_duration",
-		"gap_duration",
 		"windows",
 	}
 
