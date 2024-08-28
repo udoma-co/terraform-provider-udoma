@@ -223,7 +223,7 @@ func (app *AppointmentScheduleModel) toAPIRequest() v1.CreateOrUpdateAppointment
 		Name:         app.Name.ValueString(),
 		TemplateRef:  app.TemplateRef.ValueString(),
 		SlotDuration: int32(app.SlotDuration.ValueInt64()),
-		GapDuration:  int32(app.GapDuration.ValueInt64()),
+		GapDuration:  i64ToI32Ptr(app.GapDuration.ValueInt64()),
 		Color:        app.Color.ValueStringPointer(),
 	}
 
@@ -258,7 +258,7 @@ func (app *AppointmentScheduleModel) fromApiResponse(resp *v1.AppointmentSchedul
 
 	app.TemplateRef = types.StringValue(resp.Template.Id)
 	app.SlotDuration = types.Int64Value(int64(resp.SlotDuration))
-	app.GapDuration = types.Int64Value(int64(resp.GapDuration))
+	app.GapDuration = types.Int64Value(int64(idp32(resp.GapDuration)))
 	app.Color = types.StringPointerValue(resp.Color)
 
 	return
