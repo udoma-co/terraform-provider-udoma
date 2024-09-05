@@ -14,14 +14,14 @@ func TestAccDocumentTemplateResource(t *testing.T) {
 			{
 				Config: `
 resource udoma_document_template "test" {
-	name 							= "doc-template"
-	name_expression 	= "\"Document\""
-	description 			= "Test description"
+	name 			= "doc-template"
+	name_expression = "\"Document\""
+	description 	= "Test description"
 
 	options = {
-		allow_text_edit 				= true
+		allow_text_edit			= true
 		include_footer_branding = true
-		include_page_numbers 		= true
+		include_page_numbers	= true
 	}
 
 	content = <<EOF
@@ -111,14 +111,14 @@ EOF
 			{
 				Config: `
 resource "udoma_document_template" "test" {
-	name 							= "doc-template-updated"
-	name_expression 	= "\"Document name\""
-	description 			= "Test description"
+	name 			= "doc-template-updated"
+	name_expression = "\"Document name\""
+	description 	= "Test description"
 
 	options = {
-		allow_text_edit 				= true
+		allow_text_edit 		= true
 		include_footer_branding = true
-		include_page_numbers 		= true
+		include_page_numbers	= false
 	}
 
 	content = <<EOF
@@ -175,6 +175,7 @@ EOF
 					resource.TestCheckResourceAttr("udoma_document_template.test", "name", "doc-template-updated"),
 					resource.TestCheckResourceAttr("udoma_document_template.test", "name_expression", "\"Document name\""),
 					resource.TestCheckResourceAttr("udoma_document_template.test", "description", "Test description"),
+					resource.TestCheckResourceAttr("udoma_document_template.test", "options.include_page_numbers", "false"),
 				),
 			},
 

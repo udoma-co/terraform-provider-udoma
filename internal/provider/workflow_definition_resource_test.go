@@ -47,10 +47,10 @@ func TestAccWorkflowDefinitionResource(t *testing.T) {
 			{
 				Config: `
 resource "udoma_workflow_definition" "test" {
-	name 							= "basic updated workflow"
-	description 			= "Test updated description"
-	name_expression 	= "\"New workflow\""
-	icon 							= "fa-solid fa-file-alt"
+	name 			= "basic updated workflow"
+	description 	= "Test updated description"
+	name_expression = "\"New workflow\""
+	icon 			= "fa-solid fa-file-alt"
 
 	env_vars = {
 		var1 = "val1"
@@ -66,7 +66,8 @@ resource "udoma_workflow_definition" "test" {
 	steps = jsonencode([
 		{
 			id: "generate_document",
-			type: "generate_document"
+			type: "generate_document",
+			name: "Generate Document",
 			actions: [
 				{
 					id: "save",
@@ -78,10 +79,12 @@ resource "udoma_workflow_definition" "test" {
 
 		{
 			id: "finish",
-			type: "finish_execution"
+			type: "finish_execution",
+			name: "Finish",
 			actions: [
 				{
-					id: "finish"
+					id: "finish",
+					label: "Finish"
 				}
 			]
 		}
@@ -110,10 +113,10 @@ resource "udoma_workflow_definition" "test" {
 func resourceDefinitionWorkflowDefinition() string {
 	return `
 	resource udoma_workflow_definition "test" {
-		name 							= "basic workflow"
-		description 			= "Test description"
-		name_expression 	= "\"Workflow\""
-		icon 							= "fa-solid fa-file-alt"
+		name 			= "basic workflow"
+		description 	= "Test description"
+		name_expression = "\"Workflow\""
+		icon 			= "fa-solid fa-file-alt"
 	
 		env_vars = {
 			var1 = "val1"
@@ -124,7 +127,8 @@ func resourceDefinitionWorkflowDefinition() string {
 		steps = jsonencode([
 			{
 				id: "generate_document",
-				type: "generate_document"
+				type: "generate_document",
+				name: "Generate Document",
 				actions: [
 					{
 						id: "save",
@@ -136,10 +140,12 @@ func resourceDefinitionWorkflowDefinition() string {
 	
 			{
 				id: "finish",
-				type: "finish_execution"
+				type: "finish_execution",
+				name: "Finish",
 				actions: [
 					{
-						id: "finish"
+						id: "finish",
+						label: "Finish"
 					}
 				]
 			}

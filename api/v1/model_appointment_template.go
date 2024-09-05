@@ -36,6 +36,8 @@ type AppointmentTemplate struct {
 	// The number of days after which a reminder should be sent out. The list is taken as provided and a reminder will be set for the amount of days as set in the first element of the list. Once that time has passed, the reminder will be rescheduled for the next element in the list. This is repeated until the list is empty. The values in the list are considered relative to the previous reminder. So [2, 2] will send out a reminder after 2 and 4 days. The reminders will, however, not be sent out on weekends. So if the first reminder is sent out on a Friday, the second reminder will be sent out on Tuesday. To disable this option, leave the list empty.
 	ConfirmationReminders []int32            `json:"confirmation_reminders,omitempty"`
 	Form                  NullableCustomForm `json:"form"`
+	// a map of values, where the key and values are strings
+	DefaultScheduleDescription *map[string]string `json:"default_schedule_description,omitempty"`
 	// A flag indicating whether the entity is deleted. If the entity is deleted, it should not be returned in the results of a query, but it is still kept in the database as it is referenced by other entities.
 	IsDeleted *bool `json:"is_deleted,omitempty"`
 }
@@ -296,6 +298,38 @@ func (o *AppointmentTemplate) SetForm(v CustomForm) {
 	o.Form.Set(&v)
 }
 
+// GetDefaultScheduleDescription returns the DefaultScheduleDescription field value if set, zero value otherwise.
+func (o *AppointmentTemplate) GetDefaultScheduleDescription() map[string]string {
+	if o == nil || IsNil(o.DefaultScheduleDescription) {
+		var ret map[string]string
+		return ret
+	}
+	return *o.DefaultScheduleDescription
+}
+
+// GetDefaultScheduleDescriptionOk returns a tuple with the DefaultScheduleDescription field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AppointmentTemplate) GetDefaultScheduleDescriptionOk() (*map[string]string, bool) {
+	if o == nil || IsNil(o.DefaultScheduleDescription) {
+		return nil, false
+	}
+	return o.DefaultScheduleDescription, true
+}
+
+// HasDefaultScheduleDescription returns a boolean if a field has been set.
+func (o *AppointmentTemplate) HasDefaultScheduleDescription() bool {
+	if o != nil && !IsNil(o.DefaultScheduleDescription) {
+		return true
+	}
+
+	return false
+}
+
+// SetDefaultScheduleDescription gets a reference to the given map[string]string and assigns it to the DefaultScheduleDescription field.
+func (o *AppointmentTemplate) SetDefaultScheduleDescription(v map[string]string) {
+	o.DefaultScheduleDescription = &v
+}
+
 // GetIsDeleted returns the IsDeleted field value if set, zero value otherwise.
 func (o *AppointmentTemplate) GetIsDeleted() bool {
 	if o == nil || IsNil(o.IsDeleted) {
@@ -356,6 +390,9 @@ func (o AppointmentTemplate) ToMap() (map[string]interface{}, error) {
 		toSerialize["confirmation_reminders"] = o.ConfirmationReminders
 	}
 	toSerialize["form"] = o.Form.Get()
+	if !IsNil(o.DefaultScheduleDescription) {
+		toSerialize["default_schedule_description"] = o.DefaultScheduleDescription
+	}
 	if !IsNil(o.IsDeleted) {
 		toSerialize["is_deleted"] = o.IsDeleted
 	}

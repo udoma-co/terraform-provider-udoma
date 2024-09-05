@@ -319,11 +319,15 @@ func (model *documentTemplateModel) fromAPI(template *api.DocumentTemplate) erro
 	model.PlaceholdersScript = omittableStringValue(template.PlaceholdersScript, model.PlaceholdersScript)
 
 	if template.Options.IsSet() {
-		opts := template.Options.Get()
-		model.Options = &documentTemplateOptionsModel{
-			AllowTextEdit:         omittableBooleanValue(opts.AllowTextEdit, model.Options.AllowTextEdit),
-			IncludeFooterBranding: omittableBooleanValue(opts.IncludeFooterBranding, model.Options.IncludeFooterBranding),
-			IncludePageNumbers:    omittableBooleanValue(opts.IncludePageNumbers, model.Options.IncludePageNumbers),
+		if model.Options == nil {
+			model.Options = &documentTemplateOptionsModel{}
+		} else {
+			opts := template.Options.Get()
+			model.Options = &documentTemplateOptionsModel{
+				AllowTextEdit:         omittableBooleanValue(opts.AllowTextEdit, model.Options.AllowTextEdit),
+				IncludeFooterBranding: omittableBooleanValue(opts.IncludeFooterBranding, model.Options.IncludeFooterBranding),
+				IncludePageNumbers:    omittableBooleanValue(opts.IncludePageNumbers, model.Options.IncludePageNumbers),
+			}
 		}
 	}
 
