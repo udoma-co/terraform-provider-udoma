@@ -32,13 +32,14 @@ type AppointmentTemplate struct {
 
 // AppointmentTemplateModel describes the resource data model
 type AppointmentTemplateModel struct {
-	ID                    types.String     `tfsdk:"id"`
-	Name                  types.String     `tfsdk:"name"`
-	NameExpression        types.String     `tfsdk:"name_expression"`
-	Description           types.String     `tfsdk:"description"`
-	Inputs                *CustomFormModel `tfsdk:"inputs"`
-	RequireConfirmation   types.Bool       `tfsdk:"require_confirmation"`
-	ConfirmationReminders types.List       `tfsdk:"confirmation_reminders"`
+	ID                         types.String     `tfsdk:"id"`
+	Name                       types.String     `tfsdk:"name"`
+	NameExpression             types.String     `tfsdk:"name_expression"`
+	Description                types.String     `tfsdk:"description"`
+	Inputs                     *CustomFormModel `tfsdk:"inputs"`
+	RequireConfirmation        types.Bool       `tfsdk:"require_confirmation"`
+	ConfirmationReminders      types.List       `tfsdk:"confirmation_reminders"`
+	DefaultScheduleDescription types.Map        `tfsdk:"default_schedule_description"`
 }
 
 func (r *AppointmentTemplate) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -92,6 +93,11 @@ func (r *AppointmentTemplate) Schema(ctx context.Context, req resource.SchemaReq
 				So [2, 2] will send out a reminder after 2 and 4 days. The reminders
 				will, however, not be sent out on weekends. So if the first reminder is
 				sent out on a Friday, the second reminder will be sent out on Tuesday.`,
+			},
+			"default_schedule_description": schema.MapAttribute{
+				Optional:    true,
+				Description: "The default schedule description in all different languages.",
+				ElementType: types.StringType,
 			},
 		},
 	}
@@ -234,7 +240,7 @@ func (r *AppointmentTemplate) ImportState(ctx context.Context, req resource.Impo
 
 func (template *AppointmentTemplateModel) toApiRequest() *v1.CreateOrUpdateAppointmentTemplateRequest {
 	form := template.Inputs.toApiRequest()
-	return &v1.CreateOrUpdateAppointmentTemplateRequest{
+	ret := &v1.CreateOrUpdateAppointmentTemplateRequest{
 		Name:                  template.Name.ValueString(),
 		NameExpression:        template.NameExpression.ValueStringPointer(),
 		Description:           template.Description.ValueStringPointer(),
@@ -242,6 +248,12 @@ func (template *AppointmentTemplateModel) toApiRequest() *v1.CreateOrUpdateAppoi
 		RequireConfirmation:   template.RequireConfirmation.ValueBoolPointer(),
 		ConfirmationReminders: modelListToInt32Slice(template.ConfirmationReminders),
 	}
+
+	if description := modelMapToStringMap(template.DefaultScheduleDescription); len(description) > 0 {
+		ret.DefaultScheduleDescription = &description
+	}
+
+	return ret
 }
 
 func (template *AppointmentTemplateModel) fromApiResponse(resp *v1.AppointmentTemplate) (diags diag.Diagnostics) {
@@ -258,6 +270,15 @@ func (template *AppointmentTemplateModel) fromApiResponse(resp *v1.AppointmentTe
 		}
 	} else {
 		template.ConfirmationReminders = basetypes.NewListNull(types.Int64Type)
+	}
+
+	if resp.DefaultScheduleDescription != nil {
+		in := stringMapToValueMap(*resp.DefaultScheduleDescription)
+		modelValue, diags := types.MapValue(types.StringType, in)
+		if diags.HasError() {
+			return diags
+		}
+		template.DefaultScheduleDescription = modelValue
 	}
 
 	if template.Inputs == nil {
