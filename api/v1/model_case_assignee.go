@@ -21,7 +21,7 @@ var _ MappedNullable = &CaseAssignee{}
 type CaseAssignee struct {
 	// Set in case the assignee has an account within the plattform
 	AccountRef *int64 `json:"account_ref,omitempty"`
-	// Set in case the assignee is a service provider or tenant, without an  account on the plattform
+	// Set in case the assignee is a service provider or tenant, without an account on the plattform
 	ContactRef *string `json:"contact_ref,omitempty"`
 }
 

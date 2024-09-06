@@ -21,7 +21,7 @@ var _ MappedNullable = &FAQEntry{}
 
 // FAQEntry struct for FAQEntry
 type FAQEntry struct {
-	// Unique and immutable ID attribute of the entity that is generated when  the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities  or to retrieve it from the backend.
+	// Unique and immutable ID attribute of the entity that is generated when the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities or to retrieve it from the backend.
 	Id string `json:"id"`
 	// a map of values, where the key and values are strings
 	Question map[string]string `json:"question"`
