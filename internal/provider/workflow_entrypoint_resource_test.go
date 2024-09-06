@@ -8,50 +8,6 @@ import (
 
 func TestAccWorkflowEntrypointResource(t *testing.T) {
 
-	workflowDefinition := `resource udoma_workflow_definition "test" {
-		name 							= "basic workflow"
-		description 			= "Test description"
-		name_expression 	= "\"Workflow\""
-		icon 							= "fa-solid fa-file-alt"
-	
-		env_vars = {
-			var1 = "val1"
-		}
-	
-		first_step_id = "generate_document"
-	
-		init_step = jsonencode({
-			id: "init",
-			type: "select_property"
-		})
-	
-		steps = jsonencode([
-			{
-				id: "generate_document",
-				type: "generate_document"
-				actions: [
-					{
-						id: "save",
-						label: "Save",
-						next_step_id: "finish"
-					}
-				]
-			},
-	
-			{
-				id: "finish",
-				type: "finish_execution"
-				actions: [
-					{
-						id: "finish"
-					}
-				]
-			}
-		])
-	
-	}
-	`
-
 	resource.Test(t, resource.TestCase{
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
@@ -109,12 +65,12 @@ EOF
 			},
 			// Update and Read testing
 			{
-				Config: workflowDefinition + `
+				Config: resourceDefinitionWorkflowDefinition() + `
 resource "udoma_workflow_entrypoint" "test" {
 	workflow_definition_ref = udoma_workflow_definition.test.id
-	app_location 						= "manual"
-	icon 										= "fa-solid fa-file-alt"
-	skip_init_step 					= true
+	app_location 			= "manual"
+	icon 					= "fa-solid fa-file-alt"
+	skip_init_step 			= true
 
 	label = {
 		en = "Start workflow"

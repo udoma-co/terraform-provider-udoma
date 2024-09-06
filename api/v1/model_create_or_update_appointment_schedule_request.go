@@ -32,7 +32,7 @@ type CreateOrUpdateAppointmentScheduleRequest struct {
 	// The color to use when displaying the appointment window in a calendar view
 	Color *string `json:"color,omitempty"`
 	// The appointment windows
-	Windows []AppointmentWindow `json:"windows"`
+	Windows []AppointmentWindow `json:"windows,omitempty"`
 	// The reference to the appointment template that is used to determine what data to collect when booking a slot.
 	TemplateRef string `json:"template_ref"`
 }
@@ -43,11 +43,10 @@ type _CreateOrUpdateAppointmentScheduleRequest CreateOrUpdateAppointmentSchedule
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateOrUpdateAppointmentScheduleRequest(name string, slotDuration int32, windows []AppointmentWindow, templateRef string) *CreateOrUpdateAppointmentScheduleRequest {
+func NewCreateOrUpdateAppointmentScheduleRequest(name string, slotDuration int32, templateRef string) *CreateOrUpdateAppointmentScheduleRequest {
 	this := CreateOrUpdateAppointmentScheduleRequest{}
 	this.Name = name
 	this.SlotDuration = slotDuration
-	this.Windows = windows
 	this.TemplateRef = templateRef
 	return &this
 }
@@ -204,26 +203,34 @@ func (o *CreateOrUpdateAppointmentScheduleRequest) SetColor(v string) {
 	o.Color = &v
 }
 
-// GetWindows returns the Windows field value
+// GetWindows returns the Windows field value if set, zero value otherwise.
 func (o *CreateOrUpdateAppointmentScheduleRequest) GetWindows() []AppointmentWindow {
-	if o == nil {
+	if o == nil || IsNil(o.Windows) {
 		var ret []AppointmentWindow
 		return ret
 	}
-
 	return o.Windows
 }
 
-// GetWindowsOk returns a tuple with the Windows field value
+// GetWindowsOk returns a tuple with the Windows field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateAppointmentScheduleRequest) GetWindowsOk() ([]AppointmentWindow, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Windows) {
 		return nil, false
 	}
 	return o.Windows, true
 }
 
-// SetWindows sets field value
+// HasWindows returns a boolean if a field has been set.
+func (o *CreateOrUpdateAppointmentScheduleRequest) HasWindows() bool {
+	if o != nil && !IsNil(o.Windows) {
+		return true
+	}
+
+	return false
+}
+
+// SetWindows gets a reference to the given []AppointmentWindow and assigns it to the Windows field.
 func (o *CreateOrUpdateAppointmentScheduleRequest) SetWindows(v []AppointmentWindow) {
 	o.Windows = v
 }
@@ -273,7 +280,9 @@ func (o CreateOrUpdateAppointmentScheduleRequest) ToMap() (map[string]interface{
 	if !IsNil(o.Color) {
 		toSerialize["color"] = o.Color
 	}
-	toSerialize["windows"] = o.Windows
+	if !IsNil(o.Windows) {
+		toSerialize["windows"] = o.Windows
+	}
 	toSerialize["template_ref"] = o.TemplateRef
 	return toSerialize, nil
 }
@@ -285,7 +294,6 @@ func (o *CreateOrUpdateAppointmentScheduleRequest) UnmarshalJSON(data []byte) (e
 	requiredProperties := []string{
 		"name",
 		"slot_duration",
-		"windows",
 		"template_ref",
 	}
 

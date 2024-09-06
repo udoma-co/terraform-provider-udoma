@@ -12,6 +12,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 	api "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
 	"gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/internal/client"
 	"gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/internal/tf"
@@ -319,11 +320,20 @@ func (model *documentTemplateModel) fromAPI(template *api.DocumentTemplate) erro
 	model.PlaceholdersScript = omittableStringValue(template.PlaceholdersScript, model.PlaceholdersScript)
 
 	if template.Options.IsSet() {
-		opts := template.Options.Get()
-		model.Options = &documentTemplateOptionsModel{
-			AllowTextEdit:         omittableBooleanValue(opts.AllowTextEdit, model.Options.AllowTextEdit),
-			IncludeFooterBranding: omittableBooleanValue(opts.IncludeFooterBranding, model.Options.IncludeFooterBranding),
-			IncludePageNumbers:    omittableBooleanValue(opts.IncludePageNumbers, model.Options.IncludePageNumbers),
+		if model.Options == nil {
+			opts := template.Options.Get()
+			model.Options = &documentTemplateOptionsModel{
+				AllowTextEdit:         omittableBooleanValue(opts.AllowTextEdit, basetypes.NewBoolUnknown()),
+				IncludeFooterBranding: omittableBooleanValue(opts.IncludeFooterBranding, basetypes.NewBoolUnknown()),
+				IncludePageNumbers:    omittableBooleanValue(opts.IncludePageNumbers, basetypes.NewBoolUnknown()),
+			}
+		} else {
+			opts := template.Options.Get()
+			model.Options = &documentTemplateOptionsModel{
+				AllowTextEdit:         omittableBooleanValue(opts.AllowTextEdit, model.Options.AllowTextEdit),
+				IncludeFooterBranding: omittableBooleanValue(opts.IncludeFooterBranding, model.Options.IncludeFooterBranding),
+				IncludePageNumbers:    omittableBooleanValue(opts.IncludePageNumbers, model.Options.IncludePageNumbers),
+			}
 		}
 	}
 

@@ -22961,8 +22961,14 @@ func (a *DefaultAPIService) QueryCommentTemplatesExecute(r ApiQueryCommentTempla
 }
 
 type ApiQueryCorrespondencesRequest struct {
-	ctx        context.Context
-	ApiService *DefaultAPIService
+	ctx                        context.Context
+	ApiService                 *DefaultAPIService
+	queryCorrespondenceRequest *QueryCorrespondenceRequest
+}
+
+func (r ApiQueryCorrespondencesRequest) QueryCorrespondenceRequest(queryCorrespondenceRequest QueryCorrespondenceRequest) ApiQueryCorrespondencesRequest {
+	r.queryCorrespondenceRequest = &queryCorrespondenceRequest
+	return r
 }
 
 func (r ApiQueryCorrespondencesRequest) Execute() ([]Correspondence, *http.Response, error) {
@@ -23003,9 +23009,12 @@ func (a *DefaultAPIService) QueryCorrespondencesExecute(r ApiQueryCorrespondence
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.queryCorrespondenceRequest == nil {
+		return localVarReturnValue, nil, reportError("queryCorrespondenceRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -23021,6 +23030,8 @@ func (a *DefaultAPIService) QueryCorrespondencesExecute(r ApiQueryCorrespondence
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.queryCorrespondenceRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

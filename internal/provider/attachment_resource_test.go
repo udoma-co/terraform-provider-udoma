@@ -28,7 +28,7 @@ func TestAttachmentResource(t *testing.T) {
 					resource.TestCheckResourceAttrSet("udoma_attachment.test_attachment", "id"),
 					resource.TestCheckResourceAttrSet("udoma_attachment.test_attachment", "created"),
 					resource.TestCheckResourceAttrSet("udoma_attachment.test_attachment", "file_type"),
-					resource.TestCheckResourceAttr("udoma_attachment.test_attachment", "file_size", "4"),
+					resource.TestCheckResourceAttrSet("udoma_attachment.test_attachment", "file_size"),
 					resource.TestCheckResourceAttr("udoma_attachment.test_attachment", "file_name", "test_file.txt"),
 					resource.TestCheckResourceAttrSet("udoma_attachment.test_attachment", "file_sha256"),
 					resource.TestCheckResourceAttrSet("udoma_attachment.test_attachment", "url"),

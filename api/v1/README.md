@@ -584,6 +584,8 @@ Class | Method | HTTP request | Description
  - [QueryCaseTemplatesRequest](docs/QueryCaseTemplatesRequest.md)
  - [QueryCasesRequest](docs/QueryCasesRequest.md)
  - [QueryCommentTemplatesRequest](docs/QueryCommentTemplatesRequest.md)
+ - [QueryCorrespondenceRequest](docs/QueryCorrespondenceRequest.md)
+ - [QueryCorrespondenceType](docs/QueryCorrespondenceType.md)
  - [QueryDocumentGenerationsRequest](docs/QueryDocumentGenerationsRequest.md)
  - [QueryDocumentGenerationsResponse](docs/QueryDocumentGenerationsResponse.md)
  - [QueryDocumentsRequest](docs/QueryDocumentsRequest.md)
