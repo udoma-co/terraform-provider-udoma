@@ -25,9 +25,9 @@ type QueryPropertiesRequest struct {
 	Offset *int32 `json:"offset,omitempty"`
 	// like search for the name of the property
 	Name *string `json:"name,omitempty"`
-	// optional property ID, if set only properties that are children of the given  property are returned
+	// optional property ID, if set only properties that are children of the given property are returned
 	ParentRef *string `json:"parent_ref,omitempty"`
-	// optional property owner ID, if set only properties that are owned by the  given owner are returned
+	// optional property owner ID, if set only properties that are owned by the given owner are returned
 	OwnerRef *string `json:"owner_ref,omitempty"`
 }
 

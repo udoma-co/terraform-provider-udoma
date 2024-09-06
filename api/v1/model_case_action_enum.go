@@ -15,7 +15,7 @@ import (
 	"fmt"
 )
 
-// CaseActionEnum The list of actions that can be performed on a case. Each action has a  predetermined target status that is going to be set once the action is performed.
+// CaseActionEnum The list of actions that can be performed on a case. Each action has a predetermined target status that is going to be set once the action is performed.
 type CaseActionEnum string
 
 // List of CaseActionEnum

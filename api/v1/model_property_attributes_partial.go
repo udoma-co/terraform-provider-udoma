@@ -28,8 +28,10 @@ type PropertyAttributesPartial struct {
 	// Optional reference to the property owner
 	OwnerRef *string `json:"owner_ref,omitempty"`
 	// Optional reference to the parent property
-	ParentRef *string          `json:"parent_ref,omitempty"`
-	Details   *PropertyDetails `json:"details,omitempty"`
+	ParentRef *string `json:"parent_ref,omitempty"`
+	// Address of the suite.
+	Suite   *string          `json:"suite,omitempty"`
+	Details *PropertyDetails `json:"details,omitempty"`
 }
 
 type _PropertyAttributesPartial PropertyAttributesPartial
@@ -197,6 +199,38 @@ func (o *PropertyAttributesPartial) SetParentRef(v string) {
 	o.ParentRef = &v
 }
 
+// GetSuite returns the Suite field value if set, zero value otherwise.
+func (o *PropertyAttributesPartial) GetSuite() string {
+	if o == nil || IsNil(o.Suite) {
+		var ret string
+		return ret
+	}
+	return *o.Suite
+}
+
+// GetSuiteOk returns a tuple with the Suite field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PropertyAttributesPartial) GetSuiteOk() (*string, bool) {
+	if o == nil || IsNil(o.Suite) {
+		return nil, false
+	}
+	return o.Suite, true
+}
+
+// HasSuite returns a boolean if a field has been set.
+func (o *PropertyAttributesPartial) HasSuite() bool {
+	if o != nil && !IsNil(o.Suite) {
+		return true
+	}
+
+	return false
+}
+
+// SetSuite gets a reference to the given string and assigns it to the Suite field.
+func (o *PropertyAttributesPartial) SetSuite(v string) {
+	o.Suite = &v
+}
+
 // GetDetails returns the Details field value if set, zero value otherwise.
 func (o *PropertyAttributesPartial) GetDetails() PropertyDetails {
 	if o == nil || IsNil(o.Details) {
@@ -249,6 +283,9 @@ func (o PropertyAttributesPartial) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ParentRef) {
 		toSerialize["parent_ref"] = o.ParentRef
+	}
+	if !IsNil(o.Suite) {
+		toSerialize["suite"] = o.Suite
 	}
 	if !IsNil(o.Details) {
 		toSerialize["details"] = o.Details

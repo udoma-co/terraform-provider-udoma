@@ -18509,6 +18509,100 @@ func (a *DefaultAPIService) InternalAddPriceIndexPointExecute(r ApiInternalAddPr
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiLinkCasePropertyRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	caseID     string
+	propID     string
+}
+
+func (r ApiLinkCasePropertyRequest) Execute() (*http.Response, error) {
+	return r.ApiService.LinkCasePropertyExecute(r)
+}
+
+/*
+LinkCaseProperty Link a property to a case
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param caseID unique generated ID of a case
+	@param propID unique generated ID of a property
+	@return ApiLinkCasePropertyRequest
+*/
+func (a *DefaultAPIService) LinkCaseProperty(ctx context.Context, caseID string, propID string) ApiLinkCasePropertyRequest {
+	return ApiLinkCasePropertyRequest{
+		ApiService: a,
+		ctx:        ctx,
+		caseID:     caseID,
+		propID:     propID,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) LinkCasePropertyExecute(r ApiLinkCasePropertyRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod = http.MethodPost
+		localVarPostBody   interface{}
+		formFiles          []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.LinkCaseProperty")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/case/{caseID}/property/{propID}/link"
+	localVarPath = strings.Replace(localVarPath, "{"+"caseID"+"}", url.PathEscape(parameterValueToString(r.caseID, "caseID")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"propID"+"}", url.PathEscape(parameterValueToString(r.propID, "propID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
 type ApiPreviewCommentTemplateRequest struct {
 	ctx               context.Context
 	ApiService        *DefaultAPIService
@@ -24237,6 +24331,108 @@ func (a *DefaultAPIService) QueryServiceProvidersExecute(r ApiQueryServiceProvid
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiQuerySimilarCasePropertiesRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	caseID     string
+}
+
+func (r ApiQuerySimilarCasePropertiesRequest) Execute() ([]Property, *http.Response, error) {
+	return r.ApiService.QuerySimilarCasePropertiesExecute(r)
+}
+
+/*
+QuerySimilarCaseProperties Returns properties that match the address provided in the case
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param caseID unique generated ID of a case
+	@return ApiQuerySimilarCasePropertiesRequest
+*/
+func (a *DefaultAPIService) QuerySimilarCaseProperties(ctx context.Context, caseID string) ApiQuerySimilarCasePropertiesRequest {
+	return ApiQuerySimilarCasePropertiesRequest{
+		ApiService: a,
+		ctx:        ctx,
+		caseID:     caseID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return []Property
+func (a *DefaultAPIService) QuerySimilarCasePropertiesExecute(r ApiQuerySimilarCasePropertiesRequest) ([]Property, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []Property
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.QuerySimilarCaseProperties")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/case/{caseID}/property/similar"
+	localVarPath = strings.Replace(localVarPath, "{"+"caseID"+"}", url.PathEscape(parameterValueToString(r.caseID, "caseID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiQueryTenantsRequest struct {
 	ctx                 context.Context
 	ApiService          *DefaultAPIService
@@ -25369,6 +25565,96 @@ func (a *DefaultAPIService) UnassignCaseExecute(r ApiUnassignCaseRequest) (*http
 	}
 	// body params
 	localVarPostBody = r.unssignCaseRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiUnlinkCasePropertyRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	caseID     string
+}
+
+func (r ApiUnlinkCasePropertyRequest) Execute() (*http.Response, error) {
+	return r.ApiService.UnlinkCasePropertyExecute(r)
+}
+
+/*
+UnlinkCaseProperty Unlink a property from a case
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param caseID unique generated ID of a case
+	@return ApiUnlinkCasePropertyRequest
+*/
+func (a *DefaultAPIService) UnlinkCaseProperty(ctx context.Context, caseID string) ApiUnlinkCasePropertyRequest {
+	return ApiUnlinkCasePropertyRequest{
+		ApiService: a,
+		ctx:        ctx,
+		caseID:     caseID,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) UnlinkCasePropertyExecute(r ApiUnlinkCasePropertyRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod = http.MethodPost
+		localVarPostBody   interface{}
+		formFiles          []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UnlinkCaseProperty")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/case/{caseID}/property/unlink"
+	localVarPath = strings.Replace(localVarPath, "{"+"caseID"+"}", url.PathEscape(parameterValueToString(r.caseID, "caseID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err

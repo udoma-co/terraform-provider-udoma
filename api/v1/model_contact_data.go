@@ -27,7 +27,7 @@ type ContactData struct {
 	FirstName *string `json:"first_name,omitempty"`
 	// Last name of the contact. In case of a company, this is the last name of the contact person within the company.
 	LastName *string `json:"last_name,omitempty"`
-	// Name of the company. Only used in case contact is a company, otherwise this  field should be left empty.
+	// Name of the company. Only used in case contact is a company, otherwise this field should be left empty.
 	Company *string `json:"company,omitempty"`
 	// optional email of the party
 	Email *string `json:"email,omitempty"`

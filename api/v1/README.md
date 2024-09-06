@@ -259,6 +259,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetWorkflowExecutionTrigger**](docs/DefaultAPI.md#getworkflowexecutiontrigger) | **Get** /workflows/triggers/{executionID} | Get workflow trigger for an execution
 *DefaultAPI* | [**GetWorkflowTriggersForSource**](docs/DefaultAPI.md#getworkflowtriggersforsource) | **Get** /workflows/trigger/source/{sourceID} | Get workflow triggers for a source
 *DefaultAPI* | [**InternalAddPriceIndexPoint**](docs/DefaultAPI.md#internaladdpriceindexpoint) | **Put** /price-index | Push a new value for the inflation index
+*DefaultAPI* | [**LinkCaseProperty**](docs/DefaultAPI.md#linkcaseproperty) | **Post** /case/{caseID}/property/{propID}/link | Link a property to a case
 *DefaultAPI* | [**PreviewCommentTemplate**](docs/DefaultAPI.md#previewcommenttemplate) | **Post** /comment-template/{commentTemplateID}/preview | Preview a comment template returning an example comment.
 *DefaultAPI* | [**PublicAddCaseComment**](docs/DefaultAPI.md#publicaddcasecomment) | **Post** /public/case/{caseID}/comment | Add new case comment
 *DefaultAPI* | [**PublicCreateAppointment**](docs/DefaultAPI.md#publiccreateappointment) | **Post** /public/calendar/appointments/{scheduleID}/entry | Create a new appointment for the given schedule
@@ -310,6 +311,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryPropertyOwners**](docs/DefaultAPI.md#querypropertyowners) | **Post** /owners | Query property owners
 *DefaultAPI* | [**QueryServiceProviderCases**](docs/DefaultAPI.md#queryserviceprovidercases) | **Get** /service-provider/{serviceProviderID}/cases | Get the cases the the given service provider has access to
 *DefaultAPI* | [**QueryServiceProviders**](docs/DefaultAPI.md#queryserviceproviders) | **Post** /service-providers | Query all service providers for certain criteria
+*DefaultAPI* | [**QuerySimilarCaseProperties**](docs/DefaultAPI.md#querysimilarcaseproperties) | **Post** /case/{caseID}/property/similar | Returns properties that match the address provided in the case
 *DefaultAPI* | [**QueryTenants**](docs/DefaultAPI.md#querytenants) | **Post** /tenants | Query all tenants
 *DefaultAPI* | [**QueryWorkflowDefinitions**](docs/DefaultAPI.md#queryworkflowdefinitions) | **Post** /workflows/definitions | Query all workflow definitions
 *DefaultAPI* | [**QueryWorkflowExecutions**](docs/DefaultAPI.md#queryworkflowexecutions) | **Post** /workflows/executions | Get a list of all workflow executions, matching the criteria in the request 
@@ -321,6 +323,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**SyncConnectorData**](docs/DefaultAPI.md#syncconnectordata) | **Post** /connector/sync | Sync the next batch of connector data.
 *DefaultAPI* | [**TestDocumentTemplatePlaceholders**](docs/DefaultAPI.md#testdocumenttemplateplaceholders) | **Post** /document-generation/template/{templateID}/placeholders | Test placeholder generation for given template and data
 *DefaultAPI* | [**UnassignCase**](docs/DefaultAPI.md#unassigncase) | **Post** /case/{caseID}/unassign | Remove access from case
+*DefaultAPI* | [**UnlinkCaseProperty**](docs/DefaultAPI.md#unlinkcaseproperty) | **Post** /case/{caseID}/property/unlink | Unlink a property from a case
 *DefaultAPI* | [**UpdateAccountBooking**](docs/DefaultAPI.md#updateaccountbooking) | **Put** /financial/bookings/{bookingID} | Update an already existing booking
 *DefaultAPI* | [**UpdateAccountDimension**](docs/DefaultAPI.md#updateaccountdimension) | **Put** /financial/account-dimension/{dimensionID} | Update an already existing account dimension
 *DefaultAPI* | [**UpdateAccountDimensionValue**](docs/DefaultAPI.md#updateaccountdimensionvalue) | **Put** /financial/account-dimension/{dimensionID}/value/{refID} | Update an already existing account dimension value

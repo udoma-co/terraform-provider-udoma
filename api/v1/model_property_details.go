@@ -37,7 +37,7 @@ type PropertyDetails struct {
 	// List of window types present in a property
 	WindowType []PropertyWindowTypeEnum `json:"window_type,omitempty"`
 	Furnishing *PropertyFurnishingEnum  `json:"furnishing,omitempty"`
-	// A building with special architectural or historic interest,considered to be of national importance and therefor worth being preserved/protected
+	// \"A building with special architectural or historic interest, considered to be of national importance and therefor worth being preserved/protected\"
 	HistoricProperty *bool `json:"historic_property,omitempty"`
 }
 

@@ -21,7 +21,7 @@ var _ MappedNullable = &UpdateCaseStatusRequest{}
 type UpdateCaseStatusRequest struct {
 	Action   *CaseActionEnum `json:"action,omitempty"`
 	Assignee *CaseAssignee   `json:"assignee,omitempty"`
-	// Feedback that is provided from the party executing the action. This  information will be visible only to the property manager
+	// Feedback that is provided from the party executing the action. This information will be visible only to the property manager
 	Feedback []CaseFeedbackResponse `json:"feedback,omitempty"`
 }
 
