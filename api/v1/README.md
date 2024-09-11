@@ -317,6 +317,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryWorkflowExecutions**](docs/DefaultAPI.md#queryworkflowexecutions) | **Post** /workflows/executions | Get a list of all workflow executions, matching the criteria in the request 
 *DefaultAPI* | [**RequestESignaturesForDocument**](docs/DefaultAPI.md#requestesignaturesfordocument) | **Post** /document-generation/documents/{docID}/esignature | Trigger a signing request for a document
 *DefaultAPI* | [**ResetConnectorQuery**](docs/DefaultAPI.md#resetconnectorquery) | **Put** /connector/query/{queryID}/reset | Get the query for the current account
+*DefaultAPI* | [**SendAppointmentScheduleInvitation**](docs/DefaultAPI.md#sendappointmentscheduleinvitation) | **Post** /calendar/appointments/schedule/{scheduleID}/invitation | Send invitation to recepients after creating a new appointment schedule
 *DefaultAPI* | [**SendNotification**](docs/DefaultAPI.md#sendnotification) | **Post** /notification/{notificationName}/send | Send notification
 *DefaultAPI* | [**StartWorkflowExecution**](docs/DefaultAPI.md#startworkflowexecution) | **Post** /workflows/execution | Start a new workflow execution
 *DefaultAPI* | [**SubmitPropertyHandover**](docs/DefaultAPI.md#submitpropertyhandover) | **Put** /property-handovers/handovers/{handoverID}/submit | Submit the data for a property handover
@@ -385,6 +386,7 @@ Class | Method | HTTP request | Description
  - [Appointment](docs/Appointment.md)
  - [AppointmentSchedule](docs/AppointmentSchedule.md)
  - [AppointmentScheduleAttributesPartial](docs/AppointmentScheduleAttributesPartial.md)
+ - [AppointmentScheduleInvitationRequest](docs/AppointmentScheduleInvitationRequest.md)
  - [AppointmentSlot](docs/AppointmentSlot.md)
  - [AppointmentTemplate](docs/AppointmentTemplate.md)
  - [AppointmentTemplateAttributesPartial](docs/AppointmentTemplateAttributesPartial.md)
