@@ -23,6 +23,7 @@ const (
 	QUERYCORRESPONDENCETYPE_ALL       QueryCorrespondenceType = "ALL"
 	QUERYCORRESPONDENCETYPE_CANCELLED QueryCorrespondenceType = "CANCELLED"
 	QUERYCORRESPONDENCETYPE_ACTIVE    QueryCorrespondenceType = "ACTIVE"
+	QUERYCORRESPONDENCETYPE_ARCHIVED  QueryCorrespondenceType = "ARCHIVED"
 )
 
 // All allowed values of QueryCorrespondenceType enum
@@ -30,6 +31,7 @@ var AllowedQueryCorrespondenceTypeEnumValues = []QueryCorrespondenceType{
 	"ALL",
 	"CANCELLED",
 	"ACTIVE",
+	"ARCHIVED",
 }
 
 func (v *QueryCorrespondenceType) UnmarshalJSON(src []byte) error {

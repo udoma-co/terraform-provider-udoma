@@ -31,7 +31,10 @@ description: |-
 				So [2, 2] will send out a reminder after 2 and 4 days. The reminders
 				will, however, not be sent out on weekends. So if the first reminder is
 				sent out on a Friday, the second reminder will be sent out on Tuesday.
+- `default_schedule_description` (Map of String) The default schedule description in all different languages.
 - `description` (String) The description of the appointment template.
+- `icon` (String) The icon of the appointment template.
+- `invitation_text` (String) The invitation text for inviting users to book appointment.
 - `name_expression` (String) Optional JS expression used to generate the name of appointments.
 - `require_confirmation` (Boolean) Whether the appointment requires confirmation.
 				If set to true, the Appointment will not be scheduled until the

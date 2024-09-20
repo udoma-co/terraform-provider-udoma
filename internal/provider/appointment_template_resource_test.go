@@ -25,6 +25,7 @@ func TestAppointmentTemplateResource(t *testing.T) {
 					resource.TestCheckResourceAttr("udoma_appointment_template.test", "inputs.inputs.0.label.en", "Test input"),
 					resource.TestCheckResourceAttr("udoma_appointment_template.test", "default_schedule_description.en", "Hi"),
 					resource.TestCheckResourceAttr("udoma_appointment_template.test", "invitation_text", "Hello"),
+					resource.TestCheckResourceAttr("udoma_appointment_template.test", "icon", "https://example.com/icon.png"),
 				),
 			},
 			// ImportState testing
@@ -63,6 +64,7 @@ func resourceDefinitionAppointmentTemplate(name, nameExpression string) string {
 		}
 
 		invitation_text = "Hello"
+		icon = "https://example.com/icon.png"
 
 		inputs = {
 			"layout" = [

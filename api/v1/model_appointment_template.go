@@ -29,6 +29,8 @@ type AppointmentTemplate struct {
 	NameExpression *string `json:"name_expression,omitempty"`
 	// The description of the appointment template
 	Description *string `json:"description,omitempty"`
+	// The icon to use when displaying the appointment template in a calendar view
+	Icon *string `json:"icon,omitempty"`
 	// Constrain the minimum amount of time between the scheduling and the beginning of the appointment in minutes. Set this to 10 and people won't be able to schedule an appointment that's in less than 10 minutes.
 	ScheduleBefore *int32 `json:"schedule_before,omitempty"`
 	// Whether we should require confirmation or not.
@@ -176,6 +178,38 @@ func (o *AppointmentTemplate) HasDescription() bool {
 // SetDescription gets a reference to the given string and assigns it to the Description field.
 func (o *AppointmentTemplate) SetDescription(v string) {
 	o.Description = &v
+}
+
+// GetIcon returns the Icon field value if set, zero value otherwise.
+func (o *AppointmentTemplate) GetIcon() string {
+	if o == nil || IsNil(o.Icon) {
+		var ret string
+		return ret
+	}
+	return *o.Icon
+}
+
+// GetIconOk returns a tuple with the Icon field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AppointmentTemplate) GetIconOk() (*string, bool) {
+	if o == nil || IsNil(o.Icon) {
+		return nil, false
+	}
+	return o.Icon, true
+}
+
+// HasIcon returns a boolean if a field has been set.
+func (o *AppointmentTemplate) HasIcon() bool {
+	if o != nil && !IsNil(o.Icon) {
+		return true
+	}
+
+	return false
+}
+
+// SetIcon gets a reference to the given string and assigns it to the Icon field.
+func (o *AppointmentTemplate) SetIcon(v string) {
+	o.Icon = &v
 }
 
 // GetScheduleBefore returns the ScheduleBefore field value if set, zero value otherwise.
@@ -413,6 +447,9 @@ func (o AppointmentTemplate) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
+	}
+	if !IsNil(o.Icon) {
+		toSerialize["icon"] = o.Icon
 	}
 	if !IsNil(o.ScheduleBefore) {
 		toSerialize["schedule_before"] = o.ScheduleBefore
