@@ -36,6 +36,8 @@ type AppointmentTemplateAttributesPartial struct {
 	Form                  NullableCustomForm `json:"form"`
 	// a map of values, where the key and values are strings
 	DefaultScheduleDescription *map[string]string `json:"default_schedule_description,omitempty"`
+	// The text that is sent with the email to the recepients
+	InvitationText *string `json:"invitation_text,omitempty"`
 }
 
 type _AppointmentTemplateAttributesPartial AppointmentTemplateAttributesPartial
@@ -301,6 +303,38 @@ func (o *AppointmentTemplateAttributesPartial) SetDefaultScheduleDescription(v m
 	o.DefaultScheduleDescription = &v
 }
 
+// GetInvitationText returns the InvitationText field value if set, zero value otherwise.
+func (o *AppointmentTemplateAttributesPartial) GetInvitationText() string {
+	if o == nil || IsNil(o.InvitationText) {
+		var ret string
+		return ret
+	}
+	return *o.InvitationText
+}
+
+// GetInvitationTextOk returns a tuple with the InvitationText field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AppointmentTemplateAttributesPartial) GetInvitationTextOk() (*string, bool) {
+	if o == nil || IsNil(o.InvitationText) {
+		return nil, false
+	}
+	return o.InvitationText, true
+}
+
+// HasInvitationText returns a boolean if a field has been set.
+func (o *AppointmentTemplateAttributesPartial) HasInvitationText() bool {
+	if o != nil && !IsNil(o.InvitationText) {
+		return true
+	}
+
+	return false
+}
+
+// SetInvitationText gets a reference to the given string and assigns it to the InvitationText field.
+func (o *AppointmentTemplateAttributesPartial) SetInvitationText(v string) {
+	o.InvitationText = &v
+}
+
 func (o AppointmentTemplateAttributesPartial) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -330,6 +364,9 @@ func (o AppointmentTemplateAttributesPartial) ToMap() (map[string]interface{}, e
 	toSerialize["form"] = o.Form.Get()
 	if !IsNil(o.DefaultScheduleDescription) {
 		toSerialize["default_schedule_description"] = o.DefaultScheduleDescription
+	}
+	if !IsNil(o.InvitationText) {
+		toSerialize["invitation_text"] = o.InvitationText
 	}
 	return toSerialize, nil
 }

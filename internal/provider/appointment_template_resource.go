@@ -40,6 +40,7 @@ type AppointmentTemplateModel struct {
 	RequireConfirmation        types.Bool       `tfsdk:"require_confirmation"`
 	ConfirmationReminders      types.List       `tfsdk:"confirmation_reminders"`
 	DefaultScheduleDescription types.Map        `tfsdk:"default_schedule_description"`
+	InvitationText             types.String     `tfsdk:"invitation_text"`
 }
 
 func (r *AppointmentTemplate) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -98,6 +99,10 @@ func (r *AppointmentTemplate) Schema(ctx context.Context, req resource.SchemaReq
 				Optional:    true,
 				Description: "The default schedule description in all different languages.",
 				ElementType: types.StringType,
+			},
+			"invitation_text": schema.StringAttribute{
+				Optional:    true,
+				Description: "The invitation text for inviting users to book appointment.",
 			},
 		},
 	}
@@ -247,6 +252,7 @@ func (template *AppointmentTemplateModel) toApiRequest() *v1.CreateOrUpdateAppoi
 		Form:                  *v1.NewNullableCustomForm(&form),
 		RequireConfirmation:   template.RequireConfirmation.ValueBoolPointer(),
 		ConfirmationReminders: modelListToInt32Slice(template.ConfirmationReminders),
+		InvitationText:        template.InvitationText.ValueStringPointer(),
 	}
 
 	if description := modelMapToStringMap(template.DefaultScheduleDescription); len(description) > 0 {
@@ -261,6 +267,7 @@ func (template *AppointmentTemplateModel) fromApiResponse(resp *v1.AppointmentTe
 	template.Name = types.StringValue(resp.Name)
 	template.NameExpression = omittableStringValue(resp.NameExpression, template.NameExpression)
 	template.Description = omittableStringValue(resp.Description, template.Description)
+	template.InvitationText = omittableStringValue(resp.InvitationText, template.InvitationText)
 	template.RequireConfirmation = omittableBooleanValue(resp.RequireConfirmation, template.RequireConfirmation)
 
 	if len(resp.ConfirmationReminders) != 0 {
