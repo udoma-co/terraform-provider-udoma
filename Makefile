@@ -36,3 +36,7 @@ generate-docs:
 .PHONY: build
 build:
 	CGO_ENABLED=0 GOARCH=amd64 GOOS=linux go build -a -installsuffix cgo -ldflags "-X main.version=${VERSION} -X main.builddate=`date -u +.%Y%m%d.%H%M%S` -s -w" -o terraform-provider-udoma main.go
+
+.PHONY: build-arm64
+build-arm64:
+	CGO_ENABLED=0 GOARCH=arm64 GOOS=darwin go build -a -installsuffix cgo -ldflags "-X main.version=${VERSION} -X main.builddate=`date -u +.%Y%m%d.%H%M%S` -s -w" -o terraform-provider-udoma main.go

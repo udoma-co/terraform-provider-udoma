@@ -34,10 +34,12 @@ type WorkflowExecutionStep struct {
 	// Optional name of the group of the step. If a group is provided, steps within the same group will be grouped together in the UI as a drawer.
 	GroupName *string              `json:"group_name,omitempty"`
 	Actions   []WorkflowStepAction `json:"actions"`
-	// Indicates whether the step has been completed or not.
-	IsCompleted *bool `json:"is_completed,omitempty"`
-	// Indicates whether the step can be executed or not.
-	CanBeExecuted *bool `json:"can_be_executed,omitempty"`
+	// Indicates whether the step can be accessed or not. If false, the step will be greyed out in the UI and cannot be executed.
+	Enabled *bool `json:"enabled,omitempty"`
+	// Indicates whether the data in the step can be edited or not.
+	Readonly *bool `json:"readonly,omitempty"`
+	// Indicates whether the step has been completed or not. This will be set to true if at least one action has been executed successfully.
+	Completed *bool `json:"completed,omitempty"`
 }
 
 type _WorkflowExecutionStep WorkflowExecutionStep
@@ -255,68 +257,100 @@ func (o *WorkflowExecutionStep) SetActions(v []WorkflowStepAction) {
 	o.Actions = v
 }
 
-// GetIsCompleted returns the IsCompleted field value if set, zero value otherwise.
-func (o *WorkflowExecutionStep) GetIsCompleted() bool {
-	if o == nil || IsNil(o.IsCompleted) {
+// GetEnabled returns the Enabled field value if set, zero value otherwise.
+func (o *WorkflowExecutionStep) GetEnabled() bool {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
-	return *o.IsCompleted
+	return *o.Enabled
 }
 
-// GetIsCompletedOk returns a tuple with the IsCompleted field value if set, nil otherwise
+// GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *WorkflowExecutionStep) GetIsCompletedOk() (*bool, bool) {
-	if o == nil || IsNil(o.IsCompleted) {
+func (o *WorkflowExecutionStep) GetEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
-	return o.IsCompleted, true
+	return o.Enabled, true
 }
 
-// HasIsCompleted returns a boolean if a field has been set.
-func (o *WorkflowExecutionStep) HasIsCompleted() bool {
-	if o != nil && !IsNil(o.IsCompleted) {
+// HasEnabled returns a boolean if a field has been set.
+func (o *WorkflowExecutionStep) HasEnabled() bool {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
 	return false
 }
 
-// SetIsCompleted gets a reference to the given bool and assigns it to the IsCompleted field.
-func (o *WorkflowExecutionStep) SetIsCompleted(v bool) {
-	o.IsCompleted = &v
+// SetEnabled gets a reference to the given bool and assigns it to the Enabled field.
+func (o *WorkflowExecutionStep) SetEnabled(v bool) {
+	o.Enabled = &v
 }
 
-// GetCanBeExecuted returns the CanBeExecuted field value if set, zero value otherwise.
-func (o *WorkflowExecutionStep) GetCanBeExecuted() bool {
-	if o == nil || IsNil(o.CanBeExecuted) {
+// GetReadonly returns the Readonly field value if set, zero value otherwise.
+func (o *WorkflowExecutionStep) GetReadonly() bool {
+	if o == nil || IsNil(o.Readonly) {
 		var ret bool
 		return ret
 	}
-	return *o.CanBeExecuted
+	return *o.Readonly
 }
 
-// GetCanBeExecutedOk returns a tuple with the CanBeExecuted field value if set, nil otherwise
+// GetReadonlyOk returns a tuple with the Readonly field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *WorkflowExecutionStep) GetCanBeExecutedOk() (*bool, bool) {
-	if o == nil || IsNil(o.CanBeExecuted) {
+func (o *WorkflowExecutionStep) GetReadonlyOk() (*bool, bool) {
+	if o == nil || IsNil(o.Readonly) {
 		return nil, false
 	}
-	return o.CanBeExecuted, true
+	return o.Readonly, true
 }
 
-// HasCanBeExecuted returns a boolean if a field has been set.
-func (o *WorkflowExecutionStep) HasCanBeExecuted() bool {
-	if o != nil && !IsNil(o.CanBeExecuted) {
+// HasReadonly returns a boolean if a field has been set.
+func (o *WorkflowExecutionStep) HasReadonly() bool {
+	if o != nil && !IsNil(o.Readonly) {
 		return true
 	}
 
 	return false
 }
 
-// SetCanBeExecuted gets a reference to the given bool and assigns it to the CanBeExecuted field.
-func (o *WorkflowExecutionStep) SetCanBeExecuted(v bool) {
-	o.CanBeExecuted = &v
+// SetReadonly gets a reference to the given bool and assigns it to the Readonly field.
+func (o *WorkflowExecutionStep) SetReadonly(v bool) {
+	o.Readonly = &v
+}
+
+// GetCompleted returns the Completed field value if set, zero value otherwise.
+func (o *WorkflowExecutionStep) GetCompleted() bool {
+	if o == nil || IsNil(o.Completed) {
+		var ret bool
+		return ret
+	}
+	return *o.Completed
+}
+
+// GetCompletedOk returns a tuple with the Completed field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowExecutionStep) GetCompletedOk() (*bool, bool) {
+	if o == nil || IsNil(o.Completed) {
+		return nil, false
+	}
+	return o.Completed, true
+}
+
+// HasCompleted returns a boolean if a field has been set.
+func (o *WorkflowExecutionStep) HasCompleted() bool {
+	if o != nil && !IsNil(o.Completed) {
+		return true
+	}
+
+	return false
+}
+
+// SetCompleted gets a reference to the given bool and assigns it to the Completed field.
+func (o *WorkflowExecutionStep) SetCompleted(v bool) {
+	o.Completed = &v
 }
 
 func (o WorkflowExecutionStep) MarshalJSON() ([]byte, error) {
@@ -342,11 +376,14 @@ func (o WorkflowExecutionStep) ToMap() (map[string]interface{}, error) {
 		toSerialize["group_name"] = o.GroupName
 	}
 	toSerialize["actions"] = o.Actions
-	if !IsNil(o.IsCompleted) {
-		toSerialize["is_completed"] = o.IsCompleted
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
 	}
-	if !IsNil(o.CanBeExecuted) {
-		toSerialize["can_be_executed"] = o.CanBeExecuted
+	if !IsNil(o.Readonly) {
+		toSerialize["readonly"] = o.Readonly
+	}
+	if !IsNil(o.Completed) {
+		toSerialize["completed"] = o.Completed
 	}
 	return toSerialize, nil
 }

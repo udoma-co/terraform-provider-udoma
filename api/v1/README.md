@@ -82,6 +82,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**ArchiveCorrespondence**](docs/DefaultAPI.md#archivecorrespondence) | **Post** /tenant-correspondence/{corrID}/archive | Archive a tenant correspondence.
 *DefaultAPI* | [**ArchiveDocumentGeneration**](docs/DefaultAPI.md#archivedocumentgeneration) | **Post** /document-generation/documents/{docID}/archive | Move the document generation to the archive
 *DefaultAPI* | [**ArchivePropertyHandover**](docs/DefaultAPI.md#archivepropertyhandover) | **Put** /property-handovers/handovers/{handoverID}/archive | Archive a property handover
+*DefaultAPI* | [**ArchiveWorkflowExecution**](docs/DefaultAPI.md#archiveworkflowexecution) | **Put** /workflows/execution/{executionID}/archive | Archive a workflow execution
 *DefaultAPI* | [**AssignCase**](docs/DefaultAPI.md#assigncase) | **Post** /case/{caseID}/assign | Assign case to a service provider
 *DefaultAPI* | [**CancelCorrespondence**](docs/DefaultAPI.md#cancelcorrespondence) | **Post** /tenant-correspondence/{corrID}/cancel | Cancel a tenant correspondence.
 *DefaultAPI* | [**CancelSignaturesForDocument**](docs/DefaultAPI.md#cancelsignaturesfordocument) | **Delete** /document-generation/documents/{docID}/esignature | Cancel a signature request for a document
@@ -573,6 +574,7 @@ Class | Method | HTTP request | Description
  - [PropertyOwner](docs/PropertyOwner.md)
  - [PropertyOwnerAttributesPartial](docs/PropertyOwnerAttributesPartial.md)
  - [PropertyParkingTypeEnum](docs/PropertyParkingTypeEnum.md)
+ - [PropertySimiliarity](docs/PropertySimiliarity.md)
  - [PropertyType](docs/PropertyType.md)
  - [PropertyWindowTypeEnum](docs/PropertyWindowTypeEnum.md)
  - [QueryAccountDimensionValuesRequest](docs/QueryAccountDimensionValuesRequest.md)
@@ -609,6 +611,7 @@ Class | Method | HTTP request | Description
  - [QueryServiceProviderCasesResponse](docs/QueryServiceProviderCasesResponse.md)
  - [QueryServiceProvidersRequest](docs/QueryServiceProvidersRequest.md)
  - [QueryServiceProvidersResponse](docs/QueryServiceProvidersResponse.md)
+ - [QuerySimilarPropertiesResponse](docs/QuerySimilarPropertiesResponse.md)
  - [QueryTenantsRequest](docs/QueryTenantsRequest.md)
  - [QueryTenantsResponse](docs/QueryTenantsResponse.md)
  - [QueryWorkflowDefinitionsRequest](docs/QueryWorkflowDefinitionsRequest.md)

@@ -29,6 +29,12 @@ type CompanyProfile struct {
 	PhoneNumber *string `json:"phone_number,omitempty"`
 	// URL to the company website. This information can potentially be visible to other users of the platform.
 	Website *string `json:"website,omitempty"`
+	// The ID of the image that is used as the company logo.
+	LogoAttachmentRef *string `json:"logo_attachment_ref,omitempty"`
+	// Base64 of the company logo in base64 (only set when a logo is uploaded)
+	LogoData *string `json:"logo_data,omitempty"`
+	// The type of the image that is used as the company logo. This can be used by the client to determine how to display the image.
+	LogoFileType *string `json:"logo_file_type,omitempty"`
 }
 
 type _CompanyProfile CompanyProfile
@@ -203,6 +209,102 @@ func (o *CompanyProfile) SetWebsite(v string) {
 	o.Website = &v
 }
 
+// GetLogoAttachmentRef returns the LogoAttachmentRef field value if set, zero value otherwise.
+func (o *CompanyProfile) GetLogoAttachmentRef() string {
+	if o == nil || IsNil(o.LogoAttachmentRef) {
+		var ret string
+		return ret
+	}
+	return *o.LogoAttachmentRef
+}
+
+// GetLogoAttachmentRefOk returns a tuple with the LogoAttachmentRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CompanyProfile) GetLogoAttachmentRefOk() (*string, bool) {
+	if o == nil || IsNil(o.LogoAttachmentRef) {
+		return nil, false
+	}
+	return o.LogoAttachmentRef, true
+}
+
+// HasLogoAttachmentRef returns a boolean if a field has been set.
+func (o *CompanyProfile) HasLogoAttachmentRef() bool {
+	if o != nil && !IsNil(o.LogoAttachmentRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetLogoAttachmentRef gets a reference to the given string and assigns it to the LogoAttachmentRef field.
+func (o *CompanyProfile) SetLogoAttachmentRef(v string) {
+	o.LogoAttachmentRef = &v
+}
+
+// GetLogoData returns the LogoData field value if set, zero value otherwise.
+func (o *CompanyProfile) GetLogoData() string {
+	if o == nil || IsNil(o.LogoData) {
+		var ret string
+		return ret
+	}
+	return *o.LogoData
+}
+
+// GetLogoDataOk returns a tuple with the LogoData field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CompanyProfile) GetLogoDataOk() (*string, bool) {
+	if o == nil || IsNil(o.LogoData) {
+		return nil, false
+	}
+	return o.LogoData, true
+}
+
+// HasLogoData returns a boolean if a field has been set.
+func (o *CompanyProfile) HasLogoData() bool {
+	if o != nil && !IsNil(o.LogoData) {
+		return true
+	}
+
+	return false
+}
+
+// SetLogoData gets a reference to the given string and assigns it to the LogoData field.
+func (o *CompanyProfile) SetLogoData(v string) {
+	o.LogoData = &v
+}
+
+// GetLogoFileType returns the LogoFileType field value if set, zero value otherwise.
+func (o *CompanyProfile) GetLogoFileType() string {
+	if o == nil || IsNil(o.LogoFileType) {
+		var ret string
+		return ret
+	}
+	return *o.LogoFileType
+}
+
+// GetLogoFileTypeOk returns a tuple with the LogoFileType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CompanyProfile) GetLogoFileTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.LogoFileType) {
+		return nil, false
+	}
+	return o.LogoFileType, true
+}
+
+// HasLogoFileType returns a boolean if a field has been set.
+func (o *CompanyProfile) HasLogoFileType() bool {
+	if o != nil && !IsNil(o.LogoFileType) {
+		return true
+	}
+
+	return false
+}
+
+// SetLogoFileType gets a reference to the given string and assigns it to the LogoFileType field.
+func (o *CompanyProfile) SetLogoFileType(v string) {
+	o.LogoFileType = &v
+}
+
 func (o CompanyProfile) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -225,6 +327,15 @@ func (o CompanyProfile) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Website) {
 		toSerialize["website"] = o.Website
+	}
+	if !IsNil(o.LogoAttachmentRef) {
+		toSerialize["logo_attachment_ref"] = o.LogoAttachmentRef
+	}
+	if !IsNil(o.LogoData) {
+		toSerialize["logo_data"] = o.LogoData
+	}
+	if !IsNil(o.LogoFileType) {
+		toSerialize["logo_file_type"] = o.LogoFileType
 	}
 	return toSerialize, nil
 }
