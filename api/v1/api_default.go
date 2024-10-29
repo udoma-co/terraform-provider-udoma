@@ -498,6 +498,96 @@ func (a *DefaultAPIService) ArchivePropertyHandoverExecute(r ApiArchivePropertyH
 	return localVarHTTPResponse, nil
 }
 
+type ApiArchiveWorkflowExecutionRequest struct {
+	ctx         context.Context
+	ApiService  *DefaultAPIService
+	executionID string
+}
+
+func (r ApiArchiveWorkflowExecutionRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ArchiveWorkflowExecutionExecute(r)
+}
+
+/*
+ArchiveWorkflowExecution Archive a workflow execution
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param executionID unique generated ID of a workflow execution
+	@return ApiArchiveWorkflowExecutionRequest
+*/
+func (a *DefaultAPIService) ArchiveWorkflowExecution(ctx context.Context, executionID string) ApiArchiveWorkflowExecutionRequest {
+	return ApiArchiveWorkflowExecutionRequest{
+		ApiService:  a,
+		ctx:         ctx,
+		executionID: executionID,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ArchiveWorkflowExecutionExecute(r ApiArchiveWorkflowExecutionRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod = http.MethodPut
+		localVarPostBody   interface{}
+		formFiles          []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ArchiveWorkflowExecution")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/workflows/execution/{executionID}/archive"
+	localVarPath = strings.Replace(localVarPath, "{"+"executionID"+"}", url.PathEscape(parameterValueToString(r.executionID, "executionID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
 type ApiAssignCaseRequest struct {
 	ctx               context.Context
 	ApiService        *DefaultAPIService
@@ -24337,7 +24427,7 @@ type ApiQuerySimilarCasePropertiesRequest struct {
 	caseID     string
 }
 
-func (r ApiQuerySimilarCasePropertiesRequest) Execute() ([]Property, *http.Response, error) {
+func (r ApiQuerySimilarCasePropertiesRequest) Execute() (*QuerySimilarPropertiesResponse, *http.Response, error) {
 	return r.ApiService.QuerySimilarCasePropertiesExecute(r)
 }
 
@@ -24358,13 +24448,13 @@ func (a *DefaultAPIService) QuerySimilarCaseProperties(ctx context.Context, case
 
 // Execute executes the request
 //
-//	@return []Property
-func (a *DefaultAPIService) QuerySimilarCasePropertiesExecute(r ApiQuerySimilarCasePropertiesRequest) ([]Property, *http.Response, error) {
+//	@return QuerySimilarPropertiesResponse
+func (a *DefaultAPIService) QuerySimilarCasePropertiesExecute(r ApiQuerySimilarCasePropertiesRequest) (*QuerySimilarPropertiesResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue []Property
+		localVarReturnValue *QuerySimilarPropertiesResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.QuerySimilarCaseProperties")

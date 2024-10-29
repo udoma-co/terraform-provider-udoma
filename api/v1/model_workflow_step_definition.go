@@ -37,8 +37,10 @@ type WorkflowStepDefinition struct {
 	GroupName    *string                                    `json:"group_name,omitempty"`
 	PrerunAction NullableWorkflowStepPrerunActionDefinition `json:"prerun_action,omitempty"`
 	// An optional JS expression that determines whether the step can be executed or  not. If not set, this will default to true, once the previous step has been  executed.
-	CanBeExecutedExpression *string                        `json:"can_be_executed_expression,omitempty"`
-	Actions                 []WorkflowStepActionDefinition `json:"actions"`
+	EnabledExpression *string `json:"enabled_expression,omitempty"`
+	// An optional JS expression that determines whether the data in the step can be  edited or not. If not set, this will default to false.
+	ReadonlyExpression *string                        `json:"readonly_expression,omitempty"`
+	Actions            []WorkflowStepActionDefinition `json:"actions"`
 }
 
 type _WorkflowStepDefinition WorkflowStepDefinition
@@ -307,36 +309,68 @@ func (o *WorkflowStepDefinition) UnsetPrerunAction() {
 	o.PrerunAction.Unset()
 }
 
-// GetCanBeExecutedExpression returns the CanBeExecutedExpression field value if set, zero value otherwise.
-func (o *WorkflowStepDefinition) GetCanBeExecutedExpression() string {
-	if o == nil || IsNil(o.CanBeExecutedExpression) {
+// GetEnabledExpression returns the EnabledExpression field value if set, zero value otherwise.
+func (o *WorkflowStepDefinition) GetEnabledExpression() string {
+	if o == nil || IsNil(o.EnabledExpression) {
 		var ret string
 		return ret
 	}
-	return *o.CanBeExecutedExpression
+	return *o.EnabledExpression
 }
 
-// GetCanBeExecutedExpressionOk returns a tuple with the CanBeExecutedExpression field value if set, nil otherwise
+// GetEnabledExpressionOk returns a tuple with the EnabledExpression field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *WorkflowStepDefinition) GetCanBeExecutedExpressionOk() (*string, bool) {
-	if o == nil || IsNil(o.CanBeExecutedExpression) {
+func (o *WorkflowStepDefinition) GetEnabledExpressionOk() (*string, bool) {
+	if o == nil || IsNil(o.EnabledExpression) {
 		return nil, false
 	}
-	return o.CanBeExecutedExpression, true
+	return o.EnabledExpression, true
 }
 
-// HasCanBeExecutedExpression returns a boolean if a field has been set.
-func (o *WorkflowStepDefinition) HasCanBeExecutedExpression() bool {
-	if o != nil && !IsNil(o.CanBeExecutedExpression) {
+// HasEnabledExpression returns a boolean if a field has been set.
+func (o *WorkflowStepDefinition) HasEnabledExpression() bool {
+	if o != nil && !IsNil(o.EnabledExpression) {
 		return true
 	}
 
 	return false
 }
 
-// SetCanBeExecutedExpression gets a reference to the given string and assigns it to the CanBeExecutedExpression field.
-func (o *WorkflowStepDefinition) SetCanBeExecutedExpression(v string) {
-	o.CanBeExecutedExpression = &v
+// SetEnabledExpression gets a reference to the given string and assigns it to the EnabledExpression field.
+func (o *WorkflowStepDefinition) SetEnabledExpression(v string) {
+	o.EnabledExpression = &v
+}
+
+// GetReadonlyExpression returns the ReadonlyExpression field value if set, zero value otherwise.
+func (o *WorkflowStepDefinition) GetReadonlyExpression() string {
+	if o == nil || IsNil(o.ReadonlyExpression) {
+		var ret string
+		return ret
+	}
+	return *o.ReadonlyExpression
+}
+
+// GetReadonlyExpressionOk returns a tuple with the ReadonlyExpression field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowStepDefinition) GetReadonlyExpressionOk() (*string, bool) {
+	if o == nil || IsNil(o.ReadonlyExpression) {
+		return nil, false
+	}
+	return o.ReadonlyExpression, true
+}
+
+// HasReadonlyExpression returns a boolean if a field has been set.
+func (o *WorkflowStepDefinition) HasReadonlyExpression() bool {
+	if o != nil && !IsNil(o.ReadonlyExpression) {
+		return true
+	}
+
+	return false
+}
+
+// SetReadonlyExpression gets a reference to the given string and assigns it to the ReadonlyExpression field.
+func (o *WorkflowStepDefinition) SetReadonlyExpression(v string) {
+	o.ReadonlyExpression = &v
 }
 
 // GetActions returns the Actions field value
@@ -391,8 +425,11 @@ func (o WorkflowStepDefinition) ToMap() (map[string]interface{}, error) {
 	if o.PrerunAction.IsSet() {
 		toSerialize["prerun_action"] = o.PrerunAction.Get()
 	}
-	if !IsNil(o.CanBeExecutedExpression) {
-		toSerialize["can_be_executed_expression"] = o.CanBeExecutedExpression
+	if !IsNil(o.EnabledExpression) {
+		toSerialize["enabled_expression"] = o.EnabledExpression
+	}
+	if !IsNil(o.ReadonlyExpression) {
+		toSerialize["readonly_expression"] = o.ReadonlyExpression
 	}
 	toSerialize["actions"] = o.Actions
 	return toSerialize, nil

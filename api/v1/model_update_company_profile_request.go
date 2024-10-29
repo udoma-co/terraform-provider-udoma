@@ -29,6 +29,8 @@ type UpdateCompanyProfileRequest struct {
 	PhoneNumber *string `json:"phone_number,omitempty"`
 	// URL to the company website. This information can potentially be visible to other users of the platform.
 	Website *string `json:"website,omitempty"`
+	// The ID of the image that is used as the company logo.
+	LogoAttachmentRef *string `json:"logo_attachment_ref,omitempty"`
 }
 
 type _UpdateCompanyProfileRequest UpdateCompanyProfileRequest
@@ -203,6 +205,38 @@ func (o *UpdateCompanyProfileRequest) SetWebsite(v string) {
 	o.Website = &v
 }
 
+// GetLogoAttachmentRef returns the LogoAttachmentRef field value if set, zero value otherwise.
+func (o *UpdateCompanyProfileRequest) GetLogoAttachmentRef() string {
+	if o == nil || IsNil(o.LogoAttachmentRef) {
+		var ret string
+		return ret
+	}
+	return *o.LogoAttachmentRef
+}
+
+// GetLogoAttachmentRefOk returns a tuple with the LogoAttachmentRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateCompanyProfileRequest) GetLogoAttachmentRefOk() (*string, bool) {
+	if o == nil || IsNil(o.LogoAttachmentRef) {
+		return nil, false
+	}
+	return o.LogoAttachmentRef, true
+}
+
+// HasLogoAttachmentRef returns a boolean if a field has been set.
+func (o *UpdateCompanyProfileRequest) HasLogoAttachmentRef() bool {
+	if o != nil && !IsNil(o.LogoAttachmentRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetLogoAttachmentRef gets a reference to the given string and assigns it to the LogoAttachmentRef field.
+func (o *UpdateCompanyProfileRequest) SetLogoAttachmentRef(v string) {
+	o.LogoAttachmentRef = &v
+}
+
 func (o UpdateCompanyProfileRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -225,6 +259,9 @@ func (o UpdateCompanyProfileRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Website) {
 		toSerialize["website"] = o.Website
+	}
+	if !IsNil(o.LogoAttachmentRef) {
+		toSerialize["logo_attachment_ref"] = o.LogoAttachmentRef
 	}
 	return toSerialize, nil
 }

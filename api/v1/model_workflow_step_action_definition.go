@@ -37,8 +37,6 @@ type WorkflowStepActionDefinition struct {
 	Label string `json:"label"`
 	// optional button modifier of the action
 	ButtonModifier *string `json:"button_modifier,omitempty"`
-	// optional filter that can be used by the UI to show or hide the action
-	UiFilter *string `json:"ui_filter,omitempty"`
 	// An optional JS expression that determines whether the action can be executed or  not. If not set, this will default to true. If the expression returns false, the action will not show up in the UI.
 	CanBeExecutedExpression *string `json:"can_be_executed_expression,omitempty"`
 	// the ID of the next step of the workflow
@@ -306,38 +304,6 @@ func (o *WorkflowStepActionDefinition) SetButtonModifier(v string) {
 	o.ButtonModifier = &v
 }
 
-// GetUiFilter returns the UiFilter field value if set, zero value otherwise.
-func (o *WorkflowStepActionDefinition) GetUiFilter() string {
-	if o == nil || IsNil(o.UiFilter) {
-		var ret string
-		return ret
-	}
-	return *o.UiFilter
-}
-
-// GetUiFilterOk returns a tuple with the UiFilter field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *WorkflowStepActionDefinition) GetUiFilterOk() (*string, bool) {
-	if o == nil || IsNil(o.UiFilter) {
-		return nil, false
-	}
-	return o.UiFilter, true
-}
-
-// HasUiFilter returns a boolean if a field has been set.
-func (o *WorkflowStepActionDefinition) HasUiFilter() bool {
-	if o != nil && !IsNil(o.UiFilter) {
-		return true
-	}
-
-	return false
-}
-
-// SetUiFilter gets a reference to the given string and assigns it to the UiFilter field.
-func (o *WorkflowStepActionDefinition) SetUiFilter(v string) {
-	o.UiFilter = &v
-}
-
 // GetCanBeExecutedExpression returns the CanBeExecutedExpression field value if set, zero value otherwise.
 func (o *WorkflowStepActionDefinition) GetCanBeExecutedExpression() string {
 	if o == nil || IsNil(o.CanBeExecutedExpression) {
@@ -431,9 +397,6 @@ func (o WorkflowStepActionDefinition) ToMap() (map[string]interface{}, error) {
 	toSerialize["label"] = o.Label
 	if !IsNil(o.ButtonModifier) {
 		toSerialize["button_modifier"] = o.ButtonModifier
-	}
-	if !IsNil(o.UiFilter) {
-		toSerialize["ui_filter"] = o.UiFilter
 	}
 	if !IsNil(o.CanBeExecutedExpression) {
 		toSerialize["can_be_executed_expression"] = o.CanBeExecutedExpression
