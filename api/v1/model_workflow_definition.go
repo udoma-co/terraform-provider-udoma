@@ -35,7 +35,7 @@ type WorkflowDefinition struct {
 	Icon *string `json:"icon,omitempty"`
 	// a map of values, where the key and values are strings
 	EnvVars *map[string]string `json:"env_vars,omitempty"`
-	// ID of the first step of the workflow, which will be executed when the workflow is started
+	// ID of the first step of the workflow, which will be executed when the  workflow is started. If the workflow is started via a manual trigger, the init_step will be executed ahead of that.
 	FirstStepId string                             `json:"first_step_id"`
 	InitStep    NullableWorkflowInitStepDefinition `json:"init_step,omitempty"`
 	Steps       []WorkflowStepDefinition           `json:"steps"`

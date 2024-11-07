@@ -28,7 +28,8 @@ type WorkflowInitStepDefinition struct {
 	// a parameter of a workflow step or step action. The value of the parameter is contextual and can vary in type and meaning depending on the step or action that uses it. If used in a step, the parameter will be available in the UI and will not be interpreted, i.e. JS expressions are not allowed. In actions however, the parameter might be interpreted as a JS expression, if the action type requires it.
 	Parameters map[string]interface{} `json:"parameters,omitempty"`
 	// a map of values, where the key and values are strings
-	DynamicParameters *map[string]string `json:"dynamic_parameters,omitempty"`
+	DynamicParameters *map[string]string                         `json:"dynamic_parameters,omitempty"`
+	Action            NullableWorkflowStepPrerunActionDefinition `json:"action"`
 }
 
 type _WorkflowInitStepDefinition WorkflowInitStepDefinition
@@ -37,10 +38,11 @@ type _WorkflowInitStepDefinition WorkflowInitStepDefinition
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewWorkflowInitStepDefinition(id string, type_ string) *WorkflowInitStepDefinition {
+func NewWorkflowInitStepDefinition(id string, type_ string, action NullableWorkflowStepPrerunActionDefinition) *WorkflowInitStepDefinition {
 	this := WorkflowInitStepDefinition{}
 	this.Id = id
 	this.Type = type_
+	this.Action = action
 	return &this
 }
 
@@ -164,6 +166,32 @@ func (o *WorkflowInitStepDefinition) SetDynamicParameters(v map[string]string) {
 	o.DynamicParameters = &v
 }
 
+// GetAction returns the Action field value
+// If the value is explicit nil, the zero value for WorkflowStepPrerunActionDefinition will be returned
+func (o *WorkflowInitStepDefinition) GetAction() WorkflowStepPrerunActionDefinition {
+	if o == nil || o.Action.Get() == nil {
+		var ret WorkflowStepPrerunActionDefinition
+		return ret
+	}
+
+	return *o.Action.Get()
+}
+
+// GetActionOk returns a tuple with the Action field value
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *WorkflowInitStepDefinition) GetActionOk() (*WorkflowStepPrerunActionDefinition, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Action.Get(), o.Action.IsSet()
+}
+
+// SetAction sets field value
+func (o *WorkflowInitStepDefinition) SetAction(v WorkflowStepPrerunActionDefinition) {
+	o.Action.Set(&v)
+}
+
 func (o WorkflowInitStepDefinition) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -182,6 +210,7 @@ func (o WorkflowInitStepDefinition) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.DynamicParameters) {
 		toSerialize["dynamic_parameters"] = o.DynamicParameters
 	}
+	toSerialize["action"] = o.Action.Get()
 	return toSerialize, nil
 }
 
@@ -192,6 +221,7 @@ func (o *WorkflowInitStepDefinition) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"id",
 		"type",
+		"action",
 	}
 
 	allProperties := make(map[string]interface{})

@@ -28,7 +28,6 @@ Resource represents an entrypoint to a workflow
 - `location_filter` (String) Optional filter that can be used to limit where the entrypoint is shown, e.g.
         for cases this can be the case template, for reports this can be the report 
         definition, etc.
-- `skip_init_step` (Boolean) Whether the init step should be skipped or not
 
 ### Read-Only
 

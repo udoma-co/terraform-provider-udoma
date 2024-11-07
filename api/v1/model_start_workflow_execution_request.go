@@ -19,10 +19,9 @@ var _ MappedNullable = &StartWorkflowExecutionRequest{}
 
 // StartWorkflowExecutionRequest a request for starting a workflow execution
 type StartWorkflowExecutionRequest struct {
-	WorkflowRef                *string `json:"workflow_ref,omitempty"`
-	ParentWorkflowExecutionRef *string `json:"parent_workflow_execution_ref,omitempty"`
-	// the initial context of the workflow execution as JSON
-	Context *string `json:"context,omitempty"`
+	WorkflowRef                *string                     `json:"workflow_ref,omitempty"`
+	ParentWorkflowExecutionRef *string                     `json:"parent_workflow_execution_ref,omitempty"`
+	InitStepData               *ExecuteWorkflowStepRequest `json:"init_step_data,omitempty"`
 }
 
 // NewStartWorkflowExecutionRequest instantiates a new StartWorkflowExecutionRequest object
@@ -106,36 +105,36 @@ func (o *StartWorkflowExecutionRequest) SetParentWorkflowExecutionRef(v string) 
 	o.ParentWorkflowExecutionRef = &v
 }
 
-// GetContext returns the Context field value if set, zero value otherwise.
-func (o *StartWorkflowExecutionRequest) GetContext() string {
-	if o == nil || IsNil(o.Context) {
-		var ret string
+// GetInitStepData returns the InitStepData field value if set, zero value otherwise.
+func (o *StartWorkflowExecutionRequest) GetInitStepData() ExecuteWorkflowStepRequest {
+	if o == nil || IsNil(o.InitStepData) {
+		var ret ExecuteWorkflowStepRequest
 		return ret
 	}
-	return *o.Context
+	return *o.InitStepData
 }
 
-// GetContextOk returns a tuple with the Context field value if set, nil otherwise
+// GetInitStepDataOk returns a tuple with the InitStepData field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *StartWorkflowExecutionRequest) GetContextOk() (*string, bool) {
-	if o == nil || IsNil(o.Context) {
+func (o *StartWorkflowExecutionRequest) GetInitStepDataOk() (*ExecuteWorkflowStepRequest, bool) {
+	if o == nil || IsNil(o.InitStepData) {
 		return nil, false
 	}
-	return o.Context, true
+	return o.InitStepData, true
 }
 
-// HasContext returns a boolean if a field has been set.
-func (o *StartWorkflowExecutionRequest) HasContext() bool {
-	if o != nil && !IsNil(o.Context) {
+// HasInitStepData returns a boolean if a field has been set.
+func (o *StartWorkflowExecutionRequest) HasInitStepData() bool {
+	if o != nil && !IsNil(o.InitStepData) {
 		return true
 	}
 
 	return false
 }
 
-// SetContext gets a reference to the given string and assigns it to the Context field.
-func (o *StartWorkflowExecutionRequest) SetContext(v string) {
-	o.Context = &v
+// SetInitStepData gets a reference to the given ExecuteWorkflowStepRequest and assigns it to the InitStepData field.
+func (o *StartWorkflowExecutionRequest) SetInitStepData(v ExecuteWorkflowStepRequest) {
+	o.InitStepData = &v
 }
 
 func (o StartWorkflowExecutionRequest) MarshalJSON() ([]byte, error) {
@@ -154,8 +153,8 @@ func (o StartWorkflowExecutionRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.ParentWorkflowExecutionRef) {
 		toSerialize["parent_workflow_execution_ref"] = o.ParentWorkflowExecutionRef
 	}
-	if !IsNil(o.Context) {
-		toSerialize["context"] = o.Context
+	if !IsNil(o.InitStepData) {
+		toSerialize["init_step_data"] = o.InitStepData
 	}
 	return toSerialize, nil
 }

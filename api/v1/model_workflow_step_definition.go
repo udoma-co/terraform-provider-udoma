@@ -38,7 +38,7 @@ type WorkflowStepDefinition struct {
 	PrerunAction NullableWorkflowStepPrerunActionDefinition `json:"prerun_action,omitempty"`
 	// An optional JS expression that determines whether the step can be executed or  not. If not set, this will default to true, once the previous step has been  executed.
 	EnabledExpression *string `json:"enabled_expression,omitempty"`
-	// An optional JS expression that determines whether the data in the step can be  edited or not. If not set, this will default to false.
+	// An optional JS expression that determines whether the data in the step can be  edited or not. If not set, this will default to false, unless the workflow is completed, in which case it will default to true.
 	ReadonlyExpression *string                        `json:"readonly_expression,omitempty"`
 	Actions            []WorkflowStepActionDefinition `json:"actions"`
 }

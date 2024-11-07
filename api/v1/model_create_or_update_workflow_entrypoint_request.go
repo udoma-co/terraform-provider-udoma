@@ -32,8 +32,6 @@ type CreateOrUpdateWorkflowEntrypointRequest struct {
 	Label map[string]string `json:"label"`
 	// optional JS script to be executed before the workflow is started
 	InitScript *string `json:"init_script,omitempty"`
-	// whether the init step should be skipped or not
-	SkipInitStep *bool `json:"skip_init_step,omitempty"`
 }
 
 type _CreateOrUpdateWorkflowEntrypointRequest CreateOrUpdateWorkflowEntrypointRequest
@@ -226,38 +224,6 @@ func (o *CreateOrUpdateWorkflowEntrypointRequest) SetInitScript(v string) {
 	o.InitScript = &v
 }
 
-// GetSkipInitStep returns the SkipInitStep field value if set, zero value otherwise.
-func (o *CreateOrUpdateWorkflowEntrypointRequest) GetSkipInitStep() bool {
-	if o == nil || IsNil(o.SkipInitStep) {
-		var ret bool
-		return ret
-	}
-	return *o.SkipInitStep
-}
-
-// GetSkipInitStepOk returns a tuple with the SkipInitStep field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateOrUpdateWorkflowEntrypointRequest) GetSkipInitStepOk() (*bool, bool) {
-	if o == nil || IsNil(o.SkipInitStep) {
-		return nil, false
-	}
-	return o.SkipInitStep, true
-}
-
-// HasSkipInitStep returns a boolean if a field has been set.
-func (o *CreateOrUpdateWorkflowEntrypointRequest) HasSkipInitStep() bool {
-	if o != nil && !IsNil(o.SkipInitStep) {
-		return true
-	}
-
-	return false
-}
-
-// SetSkipInitStep gets a reference to the given bool and assigns it to the SkipInitStep field.
-func (o *CreateOrUpdateWorkflowEntrypointRequest) SetSkipInitStep(v bool) {
-	o.SkipInitStep = &v
-}
-
 func (o CreateOrUpdateWorkflowEntrypointRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -279,9 +245,6 @@ func (o CreateOrUpdateWorkflowEntrypointRequest) ToMap() (map[string]interface{}
 	toSerialize["label"] = o.Label
 	if !IsNil(o.InitScript) {
 		toSerialize["init_script"] = o.InitScript
-	}
-	if !IsNil(o.SkipInitStep) {
-		toSerialize["skip_init_step"] = o.SkipInitStep
 	}
 	return toSerialize, nil
 }
