@@ -43,7 +43,6 @@ type workflowEntrypointModel struct {
 	Icon                  types.String `tfsdk:"icon"`
 	Label                 types.Map    `tfsdk:"label"`
 	InitScript            types.String `tfsdk:"init_script"`
-	SkipInitStep          types.Bool   `tfsdk:"skip_init_step"`
 }
 
 func (r *workflowEntrypoint) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -103,10 +102,6 @@ func (r *workflowEntrypoint) Schema(ctx context.Context, req resource.SchemaRequ
 			"init_script": schema.StringAttribute{
 				Optional:    true,
 				Description: "Optional JS script to be executed before the workflow is started",
-			},
-			"skip_init_step": schema.BoolAttribute{
-				Optional:    true,
-				Description: "Whether the init step should be skipped or not",
 			},
 		},
 	}
@@ -300,7 +295,6 @@ func (model *workflowEntrypointModel) fromAPI(workflowEntrypoint *api.WorkflowEn
 	model.Label = modelValue
 
 	model.InitScript = omittableStringValue(workflowEntrypoint.InitScript, model.InitScript)
-	model.SkipInitStep = omittableBooleanValue(workflowEntrypoint.SkipInitStep, model.SkipInitStep)
 
 	return nil
 }
@@ -313,7 +307,6 @@ func (model *workflowEntrypointModel) toAPIRequest() (api.CreateOrUpdateWorkflow
 		Icon:                  model.Icon.ValueStringPointer(),
 		Label:                 modelMapToStringMap(model.Label),
 		InitScript:            model.InitScript.ValueStringPointer(),
-		SkipInitStep:          model.SkipInitStep.ValueBoolPointer(),
 	}
 
 	if !model.AppLocation.IsNull() && !model.AppLocation.IsUnknown() {

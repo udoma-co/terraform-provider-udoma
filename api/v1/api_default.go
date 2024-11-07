@@ -3499,6 +3499,115 @@ func (a *DefaultAPIService) CreateFAQEntryExecute(r ApiCreateFAQEntryRequest) (*
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiCreateFeatureFlagConfigRequest struct {
+	ctx                                    context.Context
+	ApiService                             *DefaultAPIService
+	createOrUpdateFeatureFlagConfigRequest *CreateOrUpdateFeatureFlagConfigRequest
+}
+
+func (r ApiCreateFeatureFlagConfigRequest) CreateOrUpdateFeatureFlagConfigRequest(createOrUpdateFeatureFlagConfigRequest CreateOrUpdateFeatureFlagConfigRequest) ApiCreateFeatureFlagConfigRequest {
+	r.createOrUpdateFeatureFlagConfigRequest = &createOrUpdateFeatureFlagConfigRequest
+	return r
+}
+
+func (r ApiCreateFeatureFlagConfigRequest) Execute() (*FeatureFlagConfig, *http.Response, error) {
+	return r.ApiService.CreateFeatureFlagConfigExecute(r)
+}
+
+/*
+CreateFeatureFlagConfig Create a new feature flag configuration
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiCreateFeatureFlagConfigRequest
+*/
+func (a *DefaultAPIService) CreateFeatureFlagConfig(ctx context.Context) ApiCreateFeatureFlagConfigRequest {
+	return ApiCreateFeatureFlagConfigRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return FeatureFlagConfig
+func (a *DefaultAPIService) CreateFeatureFlagConfigExecute(r ApiCreateFeatureFlagConfigRequest) (*FeatureFlagConfig, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *FeatureFlagConfig
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateFeatureFlagConfig")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/feature-flags/config"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createOrUpdateFeatureFlagConfigRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdateFeatureFlagConfigRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrUpdateFeatureFlagConfigRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiCreateFinancialAccountRequest struct {
 	ctx                                   context.Context
 	ApiService                            *DefaultAPIService
@@ -7514,6 +7623,96 @@ func (a *DefaultAPIService) DeleteFAQEntryExecute(r ApiDeleteFAQEntryRequest) (*
 	}
 
 	localVarPath := localBasePath + "/faqs/entry/{entryID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"entryID"+"}", url.PathEscape(parameterValueToString(r.entryID, "entryID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDeleteFeatureFlagConfigRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	entryID    string
+}
+
+func (r ApiDeleteFeatureFlagConfigRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteFeatureFlagConfigExecute(r)
+}
+
+/*
+DeleteFeatureFlagConfig Delete a feature flag config
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param entryID unique generated ID of a feature flag config
+	@return ApiDeleteFeatureFlagConfigRequest
+*/
+func (a *DefaultAPIService) DeleteFeatureFlagConfig(ctx context.Context, entryID string) ApiDeleteFeatureFlagConfigRequest {
+	return ApiDeleteFeatureFlagConfigRequest{
+		ApiService: a,
+		ctx:        ctx,
+		entryID:    entryID,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DeleteFeatureFlagConfigExecute(r ApiDeleteFeatureFlagConfigRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteFeatureFlagConfig")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/feature-flags/config/{entryID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"entryID"+"}", url.PathEscape(parameterValueToString(r.entryID, "entryID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -14299,6 +14498,304 @@ func (a *DefaultAPIService) GetFAQEntryExecute(r ApiGetFAQEntryRequest) (*FAQEnt
 
 	localVarPath := localBasePath + "/faqs/entry/{entryID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"entryID"+"}", url.PathEscape(parameterValueToString(r.entryID, "entryID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetFeatureFlagConfigRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	entryID    string
+}
+
+func (r ApiGetFeatureFlagConfigRequest) Execute() (*FeatureFlagConfig, *http.Response, error) {
+	return r.ApiService.GetFeatureFlagConfigExecute(r)
+}
+
+/*
+GetFeatureFlagConfig Get a feature flag config
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param entryID unique generated ID of a feature flag config
+	@return ApiGetFeatureFlagConfigRequest
+*/
+func (a *DefaultAPIService) GetFeatureFlagConfig(ctx context.Context, entryID string) ApiGetFeatureFlagConfigRequest {
+	return ApiGetFeatureFlagConfigRequest{
+		ApiService: a,
+		ctx:        ctx,
+		entryID:    entryID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return FeatureFlagConfig
+func (a *DefaultAPIService) GetFeatureFlagConfigExecute(r ApiGetFeatureFlagConfigRequest) (*FeatureFlagConfig, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *FeatureFlagConfig
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetFeatureFlagConfig")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/feature-flags/config/{entryID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"entryID"+"}", url.PathEscape(parameterValueToString(r.entryID, "entryID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetFeatureFlagsRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+}
+
+func (r ApiGetFeatureFlagsRequest) Execute() ([]FeatureFlag, *http.Response, error) {
+	return r.ApiService.GetFeatureFlagsExecute(r)
+}
+
+/*
+GetFeatureFlags Get feature flags by reference
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetFeatureFlagsRequest
+*/
+func (a *DefaultAPIService) GetFeatureFlags(ctx context.Context) ApiGetFeatureFlagsRequest {
+	return ApiGetFeatureFlagsRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return []FeatureFlag
+func (a *DefaultAPIService) GetFeatureFlagsExecute(r ApiGetFeatureFlagsRequest) ([]FeatureFlag, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []FeatureFlag
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetFeatureFlags")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/feature-flags"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetFeatureFlagsConfigRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+}
+
+func (r ApiGetFeatureFlagsConfigRequest) Execute() ([]FeatureFlagConfig, *http.Response, error) {
+	return r.ApiService.GetFeatureFlagsConfigExecute(r)
+}
+
+/*
+GetFeatureFlagsConfig Get all feature flags config
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetFeatureFlagsConfigRequest
+*/
+func (a *DefaultAPIService) GetFeatureFlagsConfig(ctx context.Context) ApiGetFeatureFlagsConfigRequest {
+	return ApiGetFeatureFlagsConfigRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return []FeatureFlagConfig
+func (a *DefaultAPIService) GetFeatureFlagsConfigExecute(r ApiGetFeatureFlagsConfigRequest) ([]FeatureFlagConfig, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []FeatureFlagConfig
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetFeatureFlagsConfig")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/feature-flags/config"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -28327,6 +28824,119 @@ func (a *DefaultAPIService) UpdateFAQEntryExecute(r ApiUpdateFAQEntryRequest) (*
 	}
 	// body params
 	localVarPostBody = r.createOrUpdateFAQEntryRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdateFeatureFlagConfigRequest struct {
+	ctx                                    context.Context
+	ApiService                             *DefaultAPIService
+	entryID                                string
+	createOrUpdateFeatureFlagConfigRequest *CreateOrUpdateFeatureFlagConfigRequest
+}
+
+func (r ApiUpdateFeatureFlagConfigRequest) CreateOrUpdateFeatureFlagConfigRequest(createOrUpdateFeatureFlagConfigRequest CreateOrUpdateFeatureFlagConfigRequest) ApiUpdateFeatureFlagConfigRequest {
+	r.createOrUpdateFeatureFlagConfigRequest = &createOrUpdateFeatureFlagConfigRequest
+	return r
+}
+
+func (r ApiUpdateFeatureFlagConfigRequest) Execute() (*FeatureFlagConfig, *http.Response, error) {
+	return r.ApiService.UpdateFeatureFlagConfigExecute(r)
+}
+
+/*
+UpdateFeatureFlagConfig Update an existing feature flag config
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param entryID unique generated ID of a feature flag config
+	@return ApiUpdateFeatureFlagConfigRequest
+*/
+func (a *DefaultAPIService) UpdateFeatureFlagConfig(ctx context.Context, entryID string) ApiUpdateFeatureFlagConfigRequest {
+	return ApiUpdateFeatureFlagConfigRequest{
+		ApiService: a,
+		ctx:        ctx,
+		entryID:    entryID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return FeatureFlagConfig
+func (a *DefaultAPIService) UpdateFeatureFlagConfigExecute(r ApiUpdateFeatureFlagConfigRequest) (*FeatureFlagConfig, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *FeatureFlagConfig
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdateFeatureFlagConfig")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/feature-flags/config/{entryID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"entryID"+"}", url.PathEscape(parameterValueToString(r.entryID, "entryID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createOrUpdateFeatureFlagConfigRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdateFeatureFlagConfigRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrUpdateFeatureFlagConfigRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

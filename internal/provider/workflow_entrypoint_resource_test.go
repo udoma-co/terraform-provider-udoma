@@ -16,10 +16,9 @@ func TestAccWorkflowEntrypointResource(t *testing.T) {
 				Config: resourceDefinitionWorkflowDefinition() + `
 resource udoma_workflow_entrypoint "test" {
 	workflow_definition_ref = udoma_workflow_definition.test.id
-	app_location 						= "case"
-	location_filter 				= "ct-JsDnoGWuXrFXqJWNFGBXUN"
-	icon 										= "fa-solid fa-file-alt"
-	skip_init_step 					= true
+	app_location 			= "case"
+	location_filter 		= "ct-JsDnoGWuXrFXqJWNFGBXUN"
+	icon 					= "fa-solid fa-file-alt"
 
 	label = {
 		en = "Start workflow"
@@ -38,7 +37,6 @@ EOF
 					resource.TestCheckResourceAttr("udoma_workflow_entrypoint.test", "app_location", "case"),
 					resource.TestCheckResourceAttr("udoma_workflow_entrypoint.test", "location_filter", "ct-JsDnoGWuXrFXqJWNFGBXUN"),
 					resource.TestCheckResourceAttr("udoma_workflow_entrypoint.test", "icon", "fa-solid fa-file-alt"),
-					resource.TestCheckResourceAttr("udoma_workflow_entrypoint.test", "skip_init_step", "true"),
 
 					// Verify label
 					resource.TestCheckResourceAttr("udoma_workflow_entrypoint.test", "label.de", "Starte Workflow"),
@@ -70,7 +68,6 @@ resource "udoma_workflow_entrypoint" "test" {
 	workflow_definition_ref = udoma_workflow_definition.test.id
 	app_location 			= "manual"
 	icon 					= "fa-solid fa-file-alt"
-	skip_init_step 			= true
 
 	label = {
 		en = "Start workflow"
@@ -89,7 +86,6 @@ EOF
 					// Verify attributes were updated
 					resource.TestCheckResourceAttr("udoma_workflow_entrypoint.test", "app_location", "manual"),
 					resource.TestCheckResourceAttr("udoma_workflow_entrypoint.test", "icon", "fa-solid fa-file-alt"),
-					resource.TestCheckResourceAttr("udoma_workflow_entrypoint.test", "skip_init_step", "true"),
 
 					// Verify label
 					resource.TestCheckResourceAttr("udoma_workflow_entrypoint.test", "label.de", "Starte Workflow"),
