@@ -21,20 +21,24 @@ var _ MappedNullable = &PropertyHandover{}
 
 // PropertyHandover struct for PropertyHandover
 type PropertyHandover struct {
-	// The ID of the property handover schedule. This ID is unique within the system.
-	Id              string   `json:"id"`
-	PropertyRef     *string  `json:"property_ref,omitempty"`
-	PropertyAddress *Address `json:"property_address,omitempty"`
+	// Unique and immutable ID attribute of the entity that is generated when the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities or to retrieve it from the backend.
+	Id string `json:"id"`
+	// The date and time the entity was created
+	CreatedAt int64 `json:"created_at"`
+	// The date and time the entity was last updated
+	UpdatedAt int64 `json:"updated_at"`
 	// The ID of the property handover template.
 	TemplateRef string `json:"template_ref"`
+	// The ID of the property that the handover is for.
+	PropertyRef     *string  `json:"property_ref,omitempty"`
+	PropertyAddress *Address `json:"property_address,omitempty"`
 	// The time of the property handover.
-	HandoverTime int64                      `json:"handover_time"`
-	Tenants      []ContactData              `json:"tenants"`
-	Status       PropertyHandoverStatusEnum `json:"status"`
+	HandoverTime int64 `json:"handover_time"`
+	// The data captured by of the property handover. This can be initalized before the handover is done to include information that is known in advance (e.g. attendees, meter readings, etc.)
+	Data   map[string]interface{}     `json:"data,omitempty"`
+	Status PropertyHandoverStatusEnum `json:"status"`
 	// Whether the property handover has been archived or not.
 	Archived *bool `json:"archived,omitempty"`
-	// The data captured by of the property handover.
-	Data map[string]interface{} `json:"data,omitempty"`
 }
 
 type _PropertyHandover PropertyHandover
@@ -43,12 +47,13 @@ type _PropertyHandover PropertyHandover
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPropertyHandover(id string, templateRef string, handoverTime int64, tenants []ContactData, status PropertyHandoverStatusEnum) *PropertyHandover {
+func NewPropertyHandover(id string, createdAt int64, updatedAt int64, templateRef string, handoverTime int64, status PropertyHandoverStatusEnum) *PropertyHandover {
 	this := PropertyHandover{}
 	this.Id = id
+	this.CreatedAt = createdAt
+	this.UpdatedAt = updatedAt
 	this.TemplateRef = templateRef
 	this.HandoverTime = handoverTime
-	this.Tenants = tenants
 	this.Status = status
 	return &this
 }
@@ -83,6 +88,78 @@ func (o *PropertyHandover) GetIdOk() (*string, bool) {
 // SetId sets field value
 func (o *PropertyHandover) SetId(v string) {
 	o.Id = v
+}
+
+// GetCreatedAt returns the CreatedAt field value
+func (o *PropertyHandover) GetCreatedAt() int64 {
+	if o == nil {
+		var ret int64
+		return ret
+	}
+
+	return o.CreatedAt
+}
+
+// GetCreatedAtOk returns a tuple with the CreatedAt field value
+// and a boolean to check if the value has been set.
+func (o *PropertyHandover) GetCreatedAtOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.CreatedAt, true
+}
+
+// SetCreatedAt sets field value
+func (o *PropertyHandover) SetCreatedAt(v int64) {
+	o.CreatedAt = v
+}
+
+// GetUpdatedAt returns the UpdatedAt field value
+func (o *PropertyHandover) GetUpdatedAt() int64 {
+	if o == nil {
+		var ret int64
+		return ret
+	}
+
+	return o.UpdatedAt
+}
+
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
+// and a boolean to check if the value has been set.
+func (o *PropertyHandover) GetUpdatedAtOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.UpdatedAt, true
+}
+
+// SetUpdatedAt sets field value
+func (o *PropertyHandover) SetUpdatedAt(v int64) {
+	o.UpdatedAt = v
+}
+
+// GetTemplateRef returns the TemplateRef field value
+func (o *PropertyHandover) GetTemplateRef() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.TemplateRef
+}
+
+// GetTemplateRefOk returns a tuple with the TemplateRef field value
+// and a boolean to check if the value has been set.
+func (o *PropertyHandover) GetTemplateRefOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.TemplateRef, true
+}
+
+// SetTemplateRef sets field value
+func (o *PropertyHandover) SetTemplateRef(v string) {
+	o.TemplateRef = v
 }
 
 // GetPropertyRef returns the PropertyRef field value if set, zero value otherwise.
@@ -149,30 +226,6 @@ func (o *PropertyHandover) SetPropertyAddress(v Address) {
 	o.PropertyAddress = &v
 }
 
-// GetTemplateRef returns the TemplateRef field value
-func (o *PropertyHandover) GetTemplateRef() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.TemplateRef
-}
-
-// GetTemplateRefOk returns a tuple with the TemplateRef field value
-// and a boolean to check if the value has been set.
-func (o *PropertyHandover) GetTemplateRefOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.TemplateRef, true
-}
-
-// SetTemplateRef sets field value
-func (o *PropertyHandover) SetTemplateRef(v string) {
-	o.TemplateRef = v
-}
-
 // GetHandoverTime returns the HandoverTime field value
 func (o *PropertyHandover) GetHandoverTime() int64 {
 	if o == nil {
@@ -197,28 +250,36 @@ func (o *PropertyHandover) SetHandoverTime(v int64) {
 	o.HandoverTime = v
 }
 
-// GetTenants returns the Tenants field value
-func (o *PropertyHandover) GetTenants() []ContactData {
-	if o == nil {
-		var ret []ContactData
+// GetData returns the Data field value if set, zero value otherwise.
+func (o *PropertyHandover) GetData() map[string]interface{} {
+	if o == nil || IsNil(o.Data) {
+		var ret map[string]interface{}
 		return ret
 	}
-
-	return o.Tenants
+	return o.Data
 }
 
-// GetTenantsOk returns a tuple with the Tenants field value
+// GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PropertyHandover) GetTenantsOk() ([]ContactData, bool) {
-	if o == nil {
-		return nil, false
+func (o *PropertyHandover) GetDataOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.Data) {
+		return map[string]interface{}{}, false
 	}
-	return o.Tenants, true
+	return o.Data, true
 }
 
-// SetTenants sets field value
-func (o *PropertyHandover) SetTenants(v []ContactData) {
-	o.Tenants = v
+// HasData returns a boolean if a field has been set.
+func (o *PropertyHandover) HasData() bool {
+	if o != nil && !IsNil(o.Data) {
+		return true
+	}
+
+	return false
+}
+
+// SetData gets a reference to the given map[string]interface{} and assigns it to the Data field.
+func (o *PropertyHandover) SetData(v map[string]interface{}) {
+	o.Data = v
 }
 
 // GetStatus returns the Status field value
@@ -277,38 +338,6 @@ func (o *PropertyHandover) SetArchived(v bool) {
 	o.Archived = &v
 }
 
-// GetData returns the Data field value if set, zero value otherwise.
-func (o *PropertyHandover) GetData() map[string]interface{} {
-	if o == nil || IsNil(o.Data) {
-		var ret map[string]interface{}
-		return ret
-	}
-	return o.Data
-}
-
-// GetDataOk returns a tuple with the Data field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *PropertyHandover) GetDataOk() (map[string]interface{}, bool) {
-	if o == nil || IsNil(o.Data) {
-		return map[string]interface{}{}, false
-	}
-	return o.Data, true
-}
-
-// HasData returns a boolean if a field has been set.
-func (o *PropertyHandover) HasData() bool {
-	if o != nil && !IsNil(o.Data) {
-		return true
-	}
-
-	return false
-}
-
-// SetData gets a reference to the given map[string]interface{} and assigns it to the Data field.
-func (o *PropertyHandover) SetData(v map[string]interface{}) {
-	o.Data = v
-}
-
 func (o PropertyHandover) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -320,21 +349,22 @@ func (o PropertyHandover) MarshalJSON() ([]byte, error) {
 func (o PropertyHandover) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["id"] = o.Id
+	toSerialize["created_at"] = o.CreatedAt
+	toSerialize["updated_at"] = o.UpdatedAt
+	toSerialize["template_ref"] = o.TemplateRef
 	if !IsNil(o.PropertyRef) {
 		toSerialize["property_ref"] = o.PropertyRef
 	}
 	if !IsNil(o.PropertyAddress) {
 		toSerialize["property_address"] = o.PropertyAddress
 	}
-	toSerialize["template_ref"] = o.TemplateRef
 	toSerialize["handover_time"] = o.HandoverTime
-	toSerialize["tenants"] = o.Tenants
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
 	toSerialize["status"] = o.Status
 	if !IsNil(o.Archived) {
 		toSerialize["archived"] = o.Archived
-	}
-	if !IsNil(o.Data) {
-		toSerialize["data"] = o.Data
 	}
 	return toSerialize, nil
 }
@@ -345,9 +375,10 @@ func (o *PropertyHandover) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"id",
+		"created_at",
+		"updated_at",
 		"template_ref",
 		"handover_time",
-		"tenants",
 		"status",
 	}
 

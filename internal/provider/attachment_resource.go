@@ -163,10 +163,12 @@ func (r *Attachment) Read(ctx context.Context, req resource.ReadRequest, resp *r
 	if httpResp != nil && httpResp.StatusCode == 404 {
 		resp.State.RemoveResource(ctx)
 		return
-	} else if err != nil {
+	}
+
+	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Reading Attachment",
-			getApiErrorMessage(err),
+			"Could not read entity from Udooma, unexpected error: "+getApiErrorMessage(err),
 		)
 		return
 	}
@@ -194,10 +196,14 @@ func (r *Attachment) Delete(ctx context.Context, req resource.DeleteRequest, res
 	}
 
 	httpResp, err := r.client.GetApi().DeleteAttachment(ctx, state.ID.ValueString()).Execute()
-	if err != nil && (httpResp == nil || httpResp.StatusCode != 404) {
+	if httpResp != nil && httpResp.StatusCode == 404 {
+		// if resource is not found, we consider it already deleted
+		return
+	}
+	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Deleting Attachment",
-			getApiErrorMessage(err),
+			"Could not delete entity in Udoma, unexpected error: "+getApiErrorMessage(err),
 		)
 	}
 }

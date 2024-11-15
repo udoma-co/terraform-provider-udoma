@@ -142,7 +142,9 @@ func (r *Notification) Read(ctx context.Context, req resource.ReadRequest, resp 
 	if httpResp != nil && httpResp.StatusCode == 404 {
 		resp.State.RemoveResource(ctx)
 		return
-	} else if err != nil {
+	}
+
+	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Reading Notification",
 			fmt.Sprintf("Could not read entity in Udoma, unexpected error: %s", getApiErrorMessage(err)),
@@ -166,10 +168,15 @@ func (r *Notification) Delete(ctx context.Context, req resource.DeleteRequest, r
 		return
 	}
 
-	_, err := r.client.GetApi().DeleteNotification(ctx, state.Name.ValueString()).Execute()
-	if err != nil {
-		resp.Diagnostics.AddError("Failed to delete notification", err.Error())
+	httpResp, err := r.client.GetApi().DeleteNotification(ctx, state.Name.ValueString()).Execute()
+	if httpResp != nil && httpResp.StatusCode == 404 {
+		// if resource is not found, we consider it already deleted
 		return
+	}
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"Error Deleting Notification",
+			"Could not delete entity in Udoma, unexpected error: "+getApiErrorMessage(err))
 	}
 }
 

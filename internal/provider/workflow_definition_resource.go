@@ -187,9 +187,6 @@ func (r *workflowDefinition) Create(ctx context.Context, req resource.CreateRequ
 	// Set state to fully populated data
 	diags = resp.State.Set(ctx, plan)
 	resp.Diagnostics.Append(diags...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
 }
 
 func (r *workflowDefinition) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
@@ -206,7 +203,9 @@ func (r *workflowDefinition) Read(ctx context.Context, req resource.ReadRequest,
 	if httpResp != nil && httpResp.StatusCode == 404 {
 		resp.State.RemoveResource(ctx)
 		return
-	} else if err != nil {
+	}
+
+	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Reading Workflow Definition",
 			"Could not read entity from Udooma, unexpected error: "+getApiErrorMessage(err),
@@ -290,13 +289,16 @@ func (r *workflowDefinition) Delete(ctx context.Context, req resource.DeleteRequ
 		return
 	}
 
-	_, err := r.client.GetApi().DeleteWorkflowDefinition(ctx, state.ID.ValueString()).Execute()
+	httpResp, err := r.client.GetApi().DeleteWorkflowDefinition(ctx, state.ID.ValueString()).Execute()
+	if httpResp != nil && httpResp.StatusCode == 404 {
+		// if resource is not found, we consider it already deleted
+		return
+	}
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Deleting Workflow Definition",
 			"Could not delete entity in Udoma, unexpected error: "+getApiErrorMessage(err),
 		)
-		return
 	}
 }
 

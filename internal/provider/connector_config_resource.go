@@ -131,10 +131,12 @@ func (c *ConnectorConfig) Read(ctx context.Context, req resource.ReadRequest, re
 	if httpResp != nil && httpResp.StatusCode == 404 {
 		resp.State.RemoveResource(ctx)
 		return
-	} else if err != nil {
+	}
+
+	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Reading Connector Config",
-			fmt.Sprintf("Could not read entity from Udoma, unexpected error: %s", getApiErrorMessage(err)),
+			"Could not read entity from Udooma, unexpected error: "+getApiErrorMessage(err),
 		)
 		return
 	}
@@ -143,13 +145,6 @@ func (c *ConnectorConfig) Read(ctx context.Context, req resource.ReadRequest, re
 	resp.Diagnostics.Append(
 		resp.State.Set(ctx, state)...,
 	)
-
-	/*
-		resp.Diagnostics.AddError(
-			"fake error",
-			fmt.Sprintf("obj: %+v\nstate: %+v", newConfig, state),
-		)
-	*/
 }
 
 func (c *ConnectorConfig) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
@@ -184,13 +179,16 @@ func (c *ConnectorConfig) Delete(ctx context.Context, req resource.DeleteRequest
 		return
 	}
 
-	_, err := c.client.GetApi().DeleteConnectorConfig(ctx, state.Name.ValueString()).Execute()
+	httpResp, err := c.client.GetApi().DeleteConnectorConfig(ctx, state.Name.ValueString()).Execute()
+	if httpResp != nil && httpResp.StatusCode == 404 {
+		// if resource is not found, we consider it already deleted
+		return
+	}
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Deleting Connector Config",
-			fmt.Sprintf("Could not delete entity from Udoma, unexpected error: %s", getApiErrorMessage(err)),
+			"Could not delete entity in Udoma, unexpected error: "+getApiErrorMessage(err),
 		)
-		return
 	}
 }
 

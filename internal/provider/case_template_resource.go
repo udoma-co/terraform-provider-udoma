@@ -238,7 +238,9 @@ func (r *CaseTemplate) Read(ctx context.Context, req resource.ReadRequest, resp 
 	if httpResp != nil && httpResp.StatusCode == 404 {
 		resp.State.RemoveResource(ctx)
 		return
-	} else if err != nil {
+	}
+
+	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Reading Case Template",
 			"Could not read entity from Udoma, unexpected error: "+getApiErrorMessage(err),
@@ -322,13 +324,16 @@ func (r *CaseTemplate) Delete(ctx context.Context, req resource.DeleteRequest, r
 		return
 	}
 
-	_, err := r.client.GetApi().DeleteCaseTemplate(ctx, state.ID.ValueString()).Execute()
+	httpResp, err := r.client.GetApi().DeleteCaseTemplate(ctx, state.ID.ValueString()).Execute()
+	if httpResp != nil && httpResp.StatusCode == 404 {
+		// if resource is not found, we consider it already deleted
+		return
+	}
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Deleting Case Template",
 			"Could not delete entity in Udoma, unexpected error: "+getApiErrorMessage(err),
 		)
-		return
 	}
 }
 

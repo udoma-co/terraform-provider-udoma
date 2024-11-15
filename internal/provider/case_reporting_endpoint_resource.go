@@ -226,10 +226,12 @@ func (r *CaseReportingEndpoint) Read(ctx context.Context, req resource.ReadReque
 	if httpResp != nil && httpResp.StatusCode == 404 {
 		resp.State.RemoveResource(ctx)
 		return
-	} else if err != nil {
+	}
+
+	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Reading Case Reporting Endpoint",
-			"Could not read entity from Udoma, unexpected error: "+err.Error(),
+			"Could not read entity from Udooma, unexpected error: "+getApiErrorMessage(err),
 		)
 		return
 	}
@@ -304,13 +306,16 @@ func (r *CaseReportingEndpoint) Delete(ctx context.Context, req resource.DeleteR
 		return
 	}
 
-	_, err := r.client.GetApi().DeleteCaseReportingEndpoint(ctx, state.Code.ValueString()).Execute()
+	httpResp, err := r.client.GetApi().DeleteCaseReportingEndpoint(ctx, state.Code.ValueString()).Execute()
+	if httpResp != nil && httpResp.StatusCode == 404 {
+		// if resource is not found, we consider it already deleted
+		return
+	}
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Deleting Case Reporting Endpoint",
-			"Could not delete entity in Udoma, unexpected error: "+err.Error(),
+			"Could not delete entity in Udoma, unexpected error: "+getApiErrorMessage(err),
 		)
-		return
 	}
 }
 

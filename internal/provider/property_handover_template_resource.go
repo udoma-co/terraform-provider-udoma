@@ -102,7 +102,7 @@ func (r *PropertyHandoverTemplate) Create(ctx context.Context, req resource.Crea
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Failed to create property handover template",
-			err.Error(),
+			"Could not create entity in Udoma, unexpected error: "+getApiErrorMessage(err),
 		)
 		return
 	}
@@ -130,10 +130,12 @@ func (r *PropertyHandoverTemplate) Read(ctx context.Context, req resource.ReadRe
 	if httpResp != nil && httpResp.StatusCode == 404 {
 		resp.State.RemoveResource(ctx)
 		return
-	} else if err != nil {
+	}
+
+	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Reading Property Handover Template",
-			fmt.Sprintf("Could not read entity in Udoma, unexpected error: %s", getApiErrorMessage(err)),
+			"Could not read entity from Udooma, unexpected error: "+getApiErrorMessage(err),
 		)
 		return
 	}
@@ -189,13 +191,16 @@ func (r *PropertyHandoverTemplate) Delete(ctx context.Context, req resource.Dele
 		return
 	}
 
-	_, err := r.client.GetApi().DeletePropertyHandoverTemplate(ctx, state.ID.ValueString()).Execute()
+	httpResp, err := r.client.GetApi().DeletePropertyHandoverTemplate(ctx, state.ID.ValueString()).Execute()
+	if httpResp != nil && httpResp.StatusCode == 404 {
+		// if resource is not found, we consider it already deleted
+		return
+	}
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Deleting Property Handover Template",
-			fmt.Sprintf("Could not delete entity in Udoma, unexpected error: %s", getApiErrorMessage(err)),
+			"Could not delete entity in Udoma, unexpected error: "+getApiErrorMessage(err),
 		)
-		return
 	}
 }
 

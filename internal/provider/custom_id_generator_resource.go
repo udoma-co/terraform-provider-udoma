@@ -168,7 +168,9 @@ func (r *customIDGenerator) Read(ctx context.Context, req resource.ReadRequest, 
 	if httpResp != nil && httpResp.StatusCode == 404 {
 		resp.State.RemoveResource(ctx)
 		return
-	} else if err != nil {
+	}
+
+	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Reading Custom ID Generator",
 			"Could not read entity from Udoma, unexpected error: "+getApiErrorMessage(err),
@@ -245,13 +247,16 @@ func (r *customIDGenerator) Delete(ctx context.Context, req resource.DeleteReque
 		return
 	}
 
-	_, err := r.client.GetApi().DeleteCustomIDGenerator(ctx, state.ID.ValueString()).Execute()
+	httpResp, err := r.client.GetApi().DeleteCustomIDGenerator(ctx, state.ID.ValueString()).Execute()
+	if httpResp != nil && httpResp.StatusCode == 404 {
+		// if resource is not found, we consider it already deleted
+		return
+	}
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Deleting Custom ID Generator",
 			"Could not delete entity in Udoma, unexpected error: "+getApiErrorMessage(err),
 		)
-		return
 	}
 }
 

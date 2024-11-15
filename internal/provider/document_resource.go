@@ -153,8 +153,13 @@ func (d *Document) Read(ctx context.Context, req resource.ReadRequest, resp *res
 	if httpResp != nil && httpResp.StatusCode == 404 {
 		resp.State.RemoveResource(ctx)
 		return
-	} else if err != nil {
-		resp.Diagnostics.AddError("Failed to read document", getApiErrorMessage(err))
+	}
+
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"Error Reading Document",
+			"Could not read entity from Udooma, unexpected error: "+getApiErrorMessage(err),
+		)
 		return
 	}
 
@@ -196,10 +201,14 @@ func (d *Document) Delete(ctx context.Context, req resource.DeleteRequest, resp 
 	}
 
 	httpResp, err := d.client.GetApi().DeleteDocument(ctx, model.ID.ValueString()).Execute()
-	if err != nil && (httpResp == nil || httpResp.StatusCode != 404) {
+	if httpResp != nil && httpResp.StatusCode == 404 {
+		// if resource is not found, we consider it already deleted
+		return
+	}
+	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Deleting document",
-			getApiErrorMessage(err),
+			"Could not delete entity in Udoma, unexpected error: "+getApiErrorMessage(err),
 		)
 	}
 }
