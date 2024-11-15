@@ -188,6 +188,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetAppointment**](docs/DefaultAPI.md#getappointment) | **Get** /calendar/appointments/entry/{entryID} | Get the appointment by ID
 *DefaultAPI* | [**GetAppointmentInIcalFormat**](docs/DefaultAPI.md#getappointmentinicalformat) | **Get** /calendar/appointments/entry/{entryID}/ical | Get appointment in ical format
 *DefaultAPI* | [**GetAppointmentSchedule**](docs/DefaultAPI.md#getappointmentschedule) | **Get** /calendar/appointments/schedule/{scheduleID} | Get the appointment schedule by ID
+*DefaultAPI* | [**GetAppointmentShareCode**](docs/DefaultAPI.md#getappointmentsharecode) | **Post** /calendar/appointments/entry/{entryID}/shareCode | Generate a share code for the appointment
 *DefaultAPI* | [**GetAppointmentTemplate**](docs/DefaultAPI.md#getappointmenttemplate) | **Get** /calendar/appointments/template/{templateID} | Get the appointment template by ID
 *DefaultAPI* | [**GetAttachment**](docs/DefaultAPI.md#getattachment) | **Get** /attachment/{attachmentID} | Get a file attachment
 *DefaultAPI* | [**GetBankAccount**](docs/DefaultAPI.md#getbankaccount) | **Get** /bank-account/{accountID} | Get the bank account with the given ID
@@ -275,6 +276,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**PublicDeleteCaseComment**](docs/DefaultAPI.md#publicdeletecasecomment) | **Delete** /public/case/{caseID}/comment/{commentID} | Delete a comment
 *DefaultAPI* | [**PublicGetAppointment**](docs/DefaultAPI.md#publicgetappointment) | **Get** /public/calendar/appointments/entry/{code} | Get appointment details
 *DefaultAPI* | [**PublicGetAppointmentInIcalFormat**](docs/DefaultAPI.md#publicgetappointmentinicalformat) | **Get** /public/calendar/appointments/entry/{code}/ical | Get appointment in ical format
+*DefaultAPI* | [**PublicGetAppointmentInfo**](docs/DefaultAPI.md#publicgetappointmentinfo) | **Get** /public/calendar/appointments/entry/{code}/info | Get appointment public details
 *DefaultAPI* | [**PublicGetAppointmentSchedule**](docs/DefaultAPI.md#publicgetappointmentschedule) | **Get** /public/calendar/appointments/schedules/{scheduleID} | Get appointment schedule details
 *DefaultAPI* | [**PublicGetAttachment**](docs/DefaultAPI.md#publicgetattachment) | **Get** /public/attachment/{attachmentID} | Get a file attachment
 *DefaultAPI* | [**PublicGetCase**](docs/DefaultAPI.md#publicgetcase) | **Get** /public/case | Get case details
@@ -283,6 +285,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**PublicGetCorrespondenceStatus**](docs/DefaultAPI.md#publicgetcorrespondencestatus) | **Get** /public/tenant-correspondence/status | Check whether an access record eixsts for the correspondence.
 *DefaultAPI* | [**PublicGetExternalUser**](docs/DefaultAPI.md#publicgetexternaluser) | **Get** /public/external-users | Get external user data
 *DefaultAPI* | [**PublicGetManagerCompanyProfile**](docs/DefaultAPI.md#publicgetmanagercompanyprofile) | **Get** /public/profile/company/manager | Get the manager company details
+*DefaultAPI* | [**PublicJoinAppointment**](docs/DefaultAPI.md#publicjoinappointment) | **Post** /public/calendar/appointments/entry/{code}/join | Join an existing appointment
 *DefaultAPI* | [**PublicUpdateCase**](docs/DefaultAPI.md#publicupdatecase) | **Put** /public/case | Update case data
 *DefaultAPI* | [**PublicUpdateCaseStatus**](docs/DefaultAPI.md#publicupdatecasestatus) | **Post** /public/case/{caseID}/status | Add new case status
 *DefaultAPI* | [**PublicUpdateExternalUser**](docs/DefaultAPI.md#publicupdateexternaluser) | **Put** /public/external-users | Update external user data
@@ -548,6 +551,7 @@ Class | Method | HTTP request | Description
  - [FormValidationRequest](docs/FormValidationRequest.md)
  - [FormValidationResponse](docs/FormValidationResponse.md)
  - [GenerateCaseReportingEndpointNoticeRequest](docs/GenerateCaseReportingEndpointNoticeRequest.md)
+ - [GetAppointmentInfoResponse](docs/GetAppointmentInfoResponse.md)
  - [GetCorrespondenceDocumentResponse](docs/GetCorrespondenceDocumentResponse.md)
  - [GetCorrespondenceStatusResponse](docs/GetCorrespondenceStatusResponse.md)
  - [GetExternalUserCasesCountResponse](docs/GetExternalUserCasesCountResponse.md)
@@ -578,6 +582,7 @@ Class | Method | HTTP request | Description
  - [PropertyFloorTypeEnum](docs/PropertyFloorTypeEnum.md)
  - [PropertyFurnishingEnum](docs/PropertyFurnishingEnum.md)
  - [PropertyHandover](docs/PropertyHandover.md)
+ - [PropertyHandoverAttributesPartial](docs/PropertyHandoverAttributesPartial.md)
  - [PropertyHandoverStatusEnum](docs/PropertyHandoverStatusEnum.md)
  - [PropertyHandoverTemplate](docs/PropertyHandoverTemplate.md)
  - [PropertyHandoverTemplateAttributesPartial](docs/PropertyHandoverTemplateAttributesPartial.md)

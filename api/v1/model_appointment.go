@@ -38,8 +38,11 @@ type Appointment struct {
 	// The reference to the appointment schedule that was used to book this appointment
 	ScheduleRef *string `json:"schedule_ref,omitempty"`
 	// Whether the appointment has been confirmed or not
-	Confirmed *bool       `json:"confirmed,omitempty"`
-	Contact   ContactData `json:"contact"`
+	Confirmed *bool         `json:"confirmed,omitempty"`
+	Contacts  []ContactData `json:"contacts,omitempty"`
+	// The reference to the property for which the appointment was booked
+	PropertyRef     *string  `json:"property_ref,omitempty"`
+	PropertyAddress *Address `json:"property_address,omitempty"`
 	// Input provided by the user when booking the appointment
 	Data map[string]interface{} `json:"data,omitempty"`
 }
@@ -50,7 +53,7 @@ type _Appointment Appointment
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppointment(id string, createdAt int64, updatedAt int64, code string, startTime int64, endTime int64, name string, contact ContactData) *Appointment {
+func NewAppointment(id string, createdAt int64, updatedAt int64, code string, startTime int64, endTime int64, name string) *Appointment {
 	this := Appointment{}
 	this.Id = id
 	this.CreatedAt = createdAt
@@ -59,7 +62,6 @@ func NewAppointment(id string, createdAt int64, updatedAt int64, code string, st
 	this.StartTime = startTime
 	this.EndTime = endTime
 	this.Name = name
-	this.Contact = contact
 	return &this
 }
 
@@ -303,28 +305,100 @@ func (o *Appointment) SetConfirmed(v bool) {
 	o.Confirmed = &v
 }
 
-// GetContact returns the Contact field value
-func (o *Appointment) GetContact() ContactData {
-	if o == nil {
-		var ret ContactData
+// GetContacts returns the Contacts field value if set, zero value otherwise.
+func (o *Appointment) GetContacts() []ContactData {
+	if o == nil || IsNil(o.Contacts) {
+		var ret []ContactData
 		return ret
 	}
-
-	return o.Contact
+	return o.Contacts
 }
 
-// GetContactOk returns a tuple with the Contact field value
+// GetContactsOk returns a tuple with the Contacts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Appointment) GetContactOk() (*ContactData, bool) {
-	if o == nil {
+func (o *Appointment) GetContactsOk() ([]ContactData, bool) {
+	if o == nil || IsNil(o.Contacts) {
 		return nil, false
 	}
-	return &o.Contact, true
+	return o.Contacts, true
 }
 
-// SetContact sets field value
-func (o *Appointment) SetContact(v ContactData) {
-	o.Contact = v
+// HasContacts returns a boolean if a field has been set.
+func (o *Appointment) HasContacts() bool {
+	if o != nil && !IsNil(o.Contacts) {
+		return true
+	}
+
+	return false
+}
+
+// SetContacts gets a reference to the given []ContactData and assigns it to the Contacts field.
+func (o *Appointment) SetContacts(v []ContactData) {
+	o.Contacts = v
+}
+
+// GetPropertyRef returns the PropertyRef field value if set, zero value otherwise.
+func (o *Appointment) GetPropertyRef() string {
+	if o == nil || IsNil(o.PropertyRef) {
+		var ret string
+		return ret
+	}
+	return *o.PropertyRef
+}
+
+// GetPropertyRefOk returns a tuple with the PropertyRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Appointment) GetPropertyRefOk() (*string, bool) {
+	if o == nil || IsNil(o.PropertyRef) {
+		return nil, false
+	}
+	return o.PropertyRef, true
+}
+
+// HasPropertyRef returns a boolean if a field has been set.
+func (o *Appointment) HasPropertyRef() bool {
+	if o != nil && !IsNil(o.PropertyRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetPropertyRef gets a reference to the given string and assigns it to the PropertyRef field.
+func (o *Appointment) SetPropertyRef(v string) {
+	o.PropertyRef = &v
+}
+
+// GetPropertyAddress returns the PropertyAddress field value if set, zero value otherwise.
+func (o *Appointment) GetPropertyAddress() Address {
+	if o == nil || IsNil(o.PropertyAddress) {
+		var ret Address
+		return ret
+	}
+	return *o.PropertyAddress
+}
+
+// GetPropertyAddressOk returns a tuple with the PropertyAddress field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Appointment) GetPropertyAddressOk() (*Address, bool) {
+	if o == nil || IsNil(o.PropertyAddress) {
+		return nil, false
+	}
+	return o.PropertyAddress, true
+}
+
+// HasPropertyAddress returns a boolean if a field has been set.
+func (o *Appointment) HasPropertyAddress() bool {
+	if o != nil && !IsNil(o.PropertyAddress) {
+		return true
+	}
+
+	return false
+}
+
+// SetPropertyAddress gets a reference to the given Address and assigns it to the PropertyAddress field.
+func (o *Appointment) SetPropertyAddress(v Address) {
+	o.PropertyAddress = &v
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
@@ -382,7 +456,15 @@ func (o Appointment) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Confirmed) {
 		toSerialize["confirmed"] = o.Confirmed
 	}
-	toSerialize["contact"] = o.Contact
+	if !IsNil(o.Contacts) {
+		toSerialize["contacts"] = o.Contacts
+	}
+	if !IsNil(o.PropertyRef) {
+		toSerialize["property_ref"] = o.PropertyRef
+	}
+	if !IsNil(o.PropertyAddress) {
+		toSerialize["property_address"] = o.PropertyAddress
+	}
 	if !IsNil(o.Data) {
 		toSerialize["data"] = o.Data
 	}
@@ -401,7 +483,6 @@ func (o *Appointment) UnmarshalJSON(data []byte) (err error) {
 		"start_time",
 		"end_time",
 		"name",
-		"contact",
 	}
 
 	allProperties := make(map[string]interface{})

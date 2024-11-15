@@ -172,7 +172,9 @@ func (bank_account *BankAccount) Read(ctx context.Context, req resource.ReadRequ
 	if httpResp != nil && httpResp.StatusCode == 404 {
 		resp.State.RemoveResource(ctx)
 		return
-	} else if err != nil {
+	}
+
+	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Reading Bank Account Entry",
 			"Could not read entity from Udoma, unexpected error: "+getApiErrorMessage(err),
@@ -252,13 +254,16 @@ func (bank_account *BankAccount) Delete(ctx context.Context, req resource.Delete
 		return
 	}
 
-	_, err := bank_account.client.GetApi().DeleteBankAccount(ctx, state.ID.ValueString()).Execute()
+	httpResp, err := bank_account.client.GetApi().DeleteBankAccount(ctx, state.ID.ValueString()).Execute()
+	if httpResp != nil && httpResp.StatusCode == 404 {
+		// if resource is not found, we consider it already deleted
+		return
+	}
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Deleting Bank Account Entry",
 			"Could not delete entity in Udoma, unexpected error: "+getApiErrorMessage(err),
 		)
-		return
 	}
 }
 

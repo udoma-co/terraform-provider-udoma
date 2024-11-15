@@ -22,12 +22,14 @@ var _ MappedNullable = &CreateOrUpdatePropertyHandoverRequest{}
 // CreateOrUpdatePropertyHandoverRequest struct for CreateOrUpdatePropertyHandoverRequest
 type CreateOrUpdatePropertyHandoverRequest struct {
 	// The ID of the property handover template.
-	TemplateRef     string   `json:"template_ref"`
+	TemplateRef string `json:"template_ref"`
+	// The ID of the property that the handover is for.
 	PropertyRef     *string  `json:"property_ref,omitempty"`
 	PropertyAddress *Address `json:"property_address,omitempty"`
 	// The time of the property handover.
-	HandoverTime int64         `json:"handover_time"`
-	Tenants      []ContactData `json:"tenants"`
+	HandoverTime int64 `json:"handover_time"`
+	// The data captured by of the property handover. This can be initalized before the handover is done to include information that is known in advance (e.g. attendees, meter readings, etc.)
+	Data map[string]interface{} `json:"data,omitempty"`
 }
 
 type _CreateOrUpdatePropertyHandoverRequest CreateOrUpdatePropertyHandoverRequest
@@ -36,11 +38,10 @@ type _CreateOrUpdatePropertyHandoverRequest CreateOrUpdatePropertyHandoverReques
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateOrUpdatePropertyHandoverRequest(templateRef string, handoverTime int64, tenants []ContactData) *CreateOrUpdatePropertyHandoverRequest {
+func NewCreateOrUpdatePropertyHandoverRequest(templateRef string, handoverTime int64) *CreateOrUpdatePropertyHandoverRequest {
 	this := CreateOrUpdatePropertyHandoverRequest{}
 	this.TemplateRef = templateRef
 	this.HandoverTime = handoverTime
-	this.Tenants = tenants
 	return &this
 }
 
@@ -164,28 +165,36 @@ func (o *CreateOrUpdatePropertyHandoverRequest) SetHandoverTime(v int64) {
 	o.HandoverTime = v
 }
 
-// GetTenants returns the Tenants field value
-func (o *CreateOrUpdatePropertyHandoverRequest) GetTenants() []ContactData {
-	if o == nil {
-		var ret []ContactData
+// GetData returns the Data field value if set, zero value otherwise.
+func (o *CreateOrUpdatePropertyHandoverRequest) GetData() map[string]interface{} {
+	if o == nil || IsNil(o.Data) {
+		var ret map[string]interface{}
 		return ret
 	}
-
-	return o.Tenants
+	return o.Data
 }
 
-// GetTenantsOk returns a tuple with the Tenants field value
+// GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CreateOrUpdatePropertyHandoverRequest) GetTenantsOk() ([]ContactData, bool) {
-	if o == nil {
-		return nil, false
+func (o *CreateOrUpdatePropertyHandoverRequest) GetDataOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.Data) {
+		return map[string]interface{}{}, false
 	}
-	return o.Tenants, true
+	return o.Data, true
 }
 
-// SetTenants sets field value
-func (o *CreateOrUpdatePropertyHandoverRequest) SetTenants(v []ContactData) {
-	o.Tenants = v
+// HasData returns a boolean if a field has been set.
+func (o *CreateOrUpdatePropertyHandoverRequest) HasData() bool {
+	if o != nil && !IsNil(o.Data) {
+		return true
+	}
+
+	return false
+}
+
+// SetData gets a reference to the given map[string]interface{} and assigns it to the Data field.
+func (o *CreateOrUpdatePropertyHandoverRequest) SetData(v map[string]interface{}) {
+	o.Data = v
 }
 
 func (o CreateOrUpdatePropertyHandoverRequest) MarshalJSON() ([]byte, error) {
@@ -206,7 +215,9 @@ func (o CreateOrUpdatePropertyHandoverRequest) ToMap() (map[string]interface{}, 
 		toSerialize["property_address"] = o.PropertyAddress
 	}
 	toSerialize["handover_time"] = o.HandoverTime
-	toSerialize["tenants"] = o.Tenants
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
 	return toSerialize, nil
 }
 
@@ -217,7 +228,6 @@ func (o *CreateOrUpdatePropertyHandoverRequest) UnmarshalJSON(data []byte) (err 
 	requiredProperties := []string{
 		"template_ref",
 		"handover_time",
-		"tenants",
 	}
 
 	allProperties := make(map[string]interface{})

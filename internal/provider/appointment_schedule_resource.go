@@ -145,10 +145,11 @@ func (r *AppointmentSchedule) Read(ctx context.Context, req resource.ReadRequest
 	if httpResp != nil && httpResp.StatusCode == 404 {
 		resp.State.RemoveResource(ctx)
 		return
-	} else if err != nil {
+	}
+	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Reading Appointment Schedule",
-			fmt.Sprintf("Could not read entity in Udoma, unexpected error: %s", getApiErrorMessage(err)),
+			"Could not read entity from Udooma, unexpected error: "+getApiErrorMessage(err),
 		)
 		return
 	}
@@ -204,13 +205,16 @@ func (r *AppointmentSchedule) Delete(ctx context.Context, req resource.DeleteReq
 		return
 	}
 
-	_, err := r.client.GetApi().DeleteAppointmentSchedule(ctx, state.ID.ValueString()).Execute()
+	httpResp, err := r.client.GetApi().DeleteAppointmentSchedule(ctx, state.ID.ValueString()).Execute()
+	if httpResp != nil && httpResp.StatusCode == 404 {
+		// if resource is not found, we consider it already deleted
+		return
+	}
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Deleting Appointment Schedule",
-			fmt.Sprintf("Could not delete entity in Udoma, unexpected error: %s", getApiErrorMessage(err)),
+			"Could not delete entity in Udoma, unexpected error: "+getApiErrorMessage(err),
 		)
-		return
 	}
 }
 

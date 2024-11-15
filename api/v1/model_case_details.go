@@ -21,11 +21,13 @@ var _ MappedNullable = &CaseDetails{}
 
 // CaseDetails All details of a case, raised via a case report endpoint
 type CaseDetails struct {
-	Case      Case           `json:"case"`
-	Reporter  *UserReference `json:"reporter,omitempty"`
-	CaseParty *CaseParty     `json:"case_party,omitempty"`
-	Template  CaseTemplate   `json:"template"`
-	Property  *Property      `json:"property,omitempty"`
+	Case     Case           `json:"case"`
+	Reporter *UserReference `json:"reporter,omitempty"`
+	// The status of the email that was used to report the case.
+	ReporterEmailStatus *string      `json:"reporter_email_status,omitempty"`
+	CaseParty           *CaseParty   `json:"case_party,omitempty"`
+	Template            CaseTemplate `json:"template"`
+	Property            *Property    `json:"property,omitempty"`
 }
 
 type _CaseDetails CaseDetails
@@ -103,6 +105,38 @@ func (o *CaseDetails) HasReporter() bool {
 // SetReporter gets a reference to the given UserReference and assigns it to the Reporter field.
 func (o *CaseDetails) SetReporter(v UserReference) {
 	o.Reporter = &v
+}
+
+// GetReporterEmailStatus returns the ReporterEmailStatus field value if set, zero value otherwise.
+func (o *CaseDetails) GetReporterEmailStatus() string {
+	if o == nil || IsNil(o.ReporterEmailStatus) {
+		var ret string
+		return ret
+	}
+	return *o.ReporterEmailStatus
+}
+
+// GetReporterEmailStatusOk returns a tuple with the ReporterEmailStatus field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CaseDetails) GetReporterEmailStatusOk() (*string, bool) {
+	if o == nil || IsNil(o.ReporterEmailStatus) {
+		return nil, false
+	}
+	return o.ReporterEmailStatus, true
+}
+
+// HasReporterEmailStatus returns a boolean if a field has been set.
+func (o *CaseDetails) HasReporterEmailStatus() bool {
+	if o != nil && !IsNil(o.ReporterEmailStatus) {
+		return true
+	}
+
+	return false
+}
+
+// SetReporterEmailStatus gets a reference to the given string and assigns it to the ReporterEmailStatus field.
+func (o *CaseDetails) SetReporterEmailStatus(v string) {
+	o.ReporterEmailStatus = &v
 }
 
 // GetCaseParty returns the CaseParty field value if set, zero value otherwise.
@@ -206,6 +240,9 @@ func (o CaseDetails) ToMap() (map[string]interface{}, error) {
 	toSerialize["case"] = o.Case
 	if !IsNil(o.Reporter) {
 		toSerialize["reporter"] = o.Reporter
+	}
+	if !IsNil(o.ReporterEmailStatus) {
+		toSerialize["reporter_email_status"] = o.ReporterEmailStatus
 	}
 	if !IsNil(o.CaseParty) {
 		toSerialize["case_party"] = o.CaseParty

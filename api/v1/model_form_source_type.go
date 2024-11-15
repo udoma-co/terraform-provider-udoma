@@ -24,6 +24,7 @@ const (
 	FORMSOURCETYPE_CASE                FormSourceType = "case"
 	FORMSOURCETYPE_CASE_FEEDBACK       FormSourceType = "case_feedback"
 	FORMSOURCETYPE_DOCUMENT_GENERATION FormSourceType = "document_generation"
+	FORMSOURCETYPE_HANDOVER            FormSourceType = "handover"
 	FORMSOURCETYPE_REPORT              FormSourceType = "report"
 	FORMSOURCETYPE_WORKFLOW            FormSourceType = "workflow"
 )
@@ -34,6 +35,7 @@ var AllowedFormSourceTypeEnumValues = []FormSourceType{
 	"case",
 	"case_feedback",
 	"document_generation",
+	"handover",
 	"report",
 	"workflow",
 }
