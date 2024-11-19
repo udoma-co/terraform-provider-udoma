@@ -177,7 +177,7 @@ func customFormInputNestedSchema() schema.NestedAttributeObject {
 				Description: "the ID of the input field, used to identify it and later access the data",
 			},
 			"label": schema.MapAttribute{
-				Required:    true,
+				Optional:    true,
 				ElementType: types.StringType,
 				Description: "a map of values, where the key and values are strings",
 			},

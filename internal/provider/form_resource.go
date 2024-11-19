@@ -100,8 +100,8 @@ func (r *Form) Create(ctx context.Context, req resource.CreateRequest, resp *res
 	newForm, _, err := r.client.GetApi().CreateCustomForm(ctx).CreateOrUpdateCustomFormRequest(*formReq).Execute()
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Failed to create custom form entry",
-			err.Error(),
+			"Error Creating Form Entry",
+			"Could not create entity in Udoma, unexpected error: "+getApiErrorMessage(err),
 		)
 		return
 	}
@@ -133,7 +133,7 @@ func (r *Form) Read(ctx context.Context, req resource.ReadRequest, resp *resourc
 
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Error reading custom form entry",
+			"Error Reading Form Entry",
 			"Could not read entity from Udooma, unexpected error: "+getApiErrorMessage(err),
 		)
 		return
@@ -165,8 +165,8 @@ func (r *Form) Update(ctx context.Context, req resource.UpdateRequest, resp *res
 	newForm, _, err := r.client.GetApi().UpdateCustomForm(ctx, id).CreateOrUpdateCustomFormRequest(*formReq).Execute()
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Error Updating custom form entry",
-			fmt.Sprintf("Could not update entity in Udoma, unexpected error: %s", getApiErrorMessage(err)),
+			"Error Updating Form Entry",
+			"Could not update entity in Udoma, unexpected error: "+getApiErrorMessage(err),
 		)
 		return
 	}
@@ -197,7 +197,7 @@ func (r *Form) Delete(ctx context.Context, req resource.DeleteRequest, resp *res
 	}
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Error deleting custom form entry",
+			"Error Deleting Form Entry",
 			"Could not delete entity in Udoma, unexpected error: "+getApiErrorMessage(err),
 		)
 	}
