@@ -33,7 +33,8 @@ type PropertyHandover struct {
 	PropertyRef     *string  `json:"property_ref,omitempty"`
 	PropertyAddress *Address `json:"property_address,omitempty"`
 	// The time of the property handover.
-	HandoverTime int64 `json:"handover_time"`
+	HandoverTime int64                 `json:"handover_time"`
+	Type         *PropertyHandoverType `json:"type,omitempty"`
 	// The data captured by of the property handover. This can be initalized before the handover is done to include information that is known in advance (e.g. attendees, meter readings, etc.)
 	Data   map[string]interface{}     `json:"data,omitempty"`
 	Status PropertyHandoverStatusEnum `json:"status"`
@@ -250,6 +251,38 @@ func (o *PropertyHandover) SetHandoverTime(v int64) {
 	o.HandoverTime = v
 }
 
+// GetType returns the Type field value if set, zero value otherwise.
+func (o *PropertyHandover) GetType() PropertyHandoverType {
+	if o == nil || IsNil(o.Type) {
+		var ret PropertyHandoverType
+		return ret
+	}
+	return *o.Type
+}
+
+// GetTypeOk returns a tuple with the Type field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PropertyHandover) GetTypeOk() (*PropertyHandoverType, bool) {
+	if o == nil || IsNil(o.Type) {
+		return nil, false
+	}
+	return o.Type, true
+}
+
+// HasType returns a boolean if a field has been set.
+func (o *PropertyHandover) HasType() bool {
+	if o != nil && !IsNil(o.Type) {
+		return true
+	}
+
+	return false
+}
+
+// SetType gets a reference to the given PropertyHandoverType and assigns it to the Type field.
+func (o *PropertyHandover) SetType(v PropertyHandoverType) {
+	o.Type = &v
+}
+
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *PropertyHandover) GetData() map[string]interface{} {
 	if o == nil || IsNil(o.Data) {
@@ -359,6 +392,9 @@ func (o PropertyHandover) ToMap() (map[string]interface{}, error) {
 		toSerialize["property_address"] = o.PropertyAddress
 	}
 	toSerialize["handover_time"] = o.HandoverTime
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
 	if !IsNil(o.Data) {
 		toSerialize["data"] = o.Data
 	}
