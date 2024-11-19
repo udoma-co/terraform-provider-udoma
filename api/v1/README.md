@@ -104,6 +104,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateConnectorCredentials**](docs/DefaultAPI.md#createconnectorcredentials) | **Post** /connector/credentials | Create new connector credentials
 *DefaultAPI* | [**CreateConnectorQuery**](docs/DefaultAPI.md#createconnectorquery) | **Post** /connector/query | Create a new connector query
 *DefaultAPI* | [**CreateCorrespondence**](docs/DefaultAPI.md#createcorrespondence) | **Post** /tenant-correspondence | Create a new correspondence object for document generation.
+*DefaultAPI* | [**CreateCustomForm**](docs/DefaultAPI.md#createcustomform) | **Post** /custom-form | Create a new custom form
 *DefaultAPI* | [**CreateCustomIDGenerator**](docs/DefaultAPI.md#createcustomidgenerator) | **Post** /id-generator | Create a new customer specififc ID generator
 *DefaultAPI* | [**CreateCustomerScript**](docs/DefaultAPI.md#createcustomerscript) | **Post** /customer-script | Create a new customer specififc JS script
 *DefaultAPI* | [**CreateDocument**](docs/DefaultAPI.md#createdocument) | **Post** /document-repository/entry | Create a new document
@@ -146,6 +147,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteConnectorEntity**](docs/DefaultAPI.md#deleteconnectorentity) | **Delete** /connector/{name}/entity/{entityType} | Delete all the entities of a certain type.
 *DefaultAPI* | [**DeleteConnectorQuery**](docs/DefaultAPI.md#deleteconnectorquery) | **Delete** /query/{queryID} | Delete the query
 *DefaultAPI* | [**DeleteCorrespondence**](docs/DefaultAPI.md#deletecorrespondence) | **Delete** /tenant-correspondence/{corrID} | Delete a correspondence object via its ID
+*DefaultAPI* | [**DeleteCustomForm**](docs/DefaultAPI.md#deletecustomform) | **Delete** /custom-form/{formID} | Delete the custom form
 *DefaultAPI* | [**DeleteCustomIDGenerator**](docs/DefaultAPI.md#deletecustomidgenerator) | **Delete** /id-generators/{generatorID} | Delete the custom ID generator with all its related data
 *DefaultAPI* | [**DeleteCustomerScript**](docs/DefaultAPI.md#deletecustomerscript) | **Delete** /customer-scripts/{scriptID} | Delete the script with all its related data
 *DefaultAPI* | [**DeleteDocument**](docs/DefaultAPI.md#deletedocument) | **Delete** /document-repository/entry/{documentID} | Delete a single document
@@ -188,7 +190,6 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetAppointment**](docs/DefaultAPI.md#getappointment) | **Get** /calendar/appointments/entry/{entryID} | Get the appointment by ID
 *DefaultAPI* | [**GetAppointmentInIcalFormat**](docs/DefaultAPI.md#getappointmentinicalformat) | **Get** /calendar/appointments/entry/{entryID}/ical | Get appointment in ical format
 *DefaultAPI* | [**GetAppointmentSchedule**](docs/DefaultAPI.md#getappointmentschedule) | **Get** /calendar/appointments/schedule/{scheduleID} | Get the appointment schedule by ID
-*DefaultAPI* | [**GetAppointmentShareCode**](docs/DefaultAPI.md#getappointmentsharecode) | **Post** /calendar/appointments/entry/{entryID}/shareCode | Generate a share code for the appointment
 *DefaultAPI* | [**GetAppointmentTemplate**](docs/DefaultAPI.md#getappointmenttemplate) | **Get** /calendar/appointments/template/{templateID} | Get the appointment template by ID
 *DefaultAPI* | [**GetAttachment**](docs/DefaultAPI.md#getattachment) | **Get** /attachment/{attachmentID} | Get a file attachment
 *DefaultAPI* | [**GetBankAccount**](docs/DefaultAPI.md#getbankaccount) | **Get** /bank-account/{accountID} | Get the bank account with the given ID
@@ -208,6 +209,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetConnectorQuery**](docs/DefaultAPI.md#getconnectorquery) | **Get** /query/{queryID} | Get the query for the current account
 *DefaultAPI* | [**GetCorrespondence**](docs/DefaultAPI.md#getcorrespondence) | **Get** /tenant-correspondence/{corrID} | Get a correspondence object via its ID
 *DefaultAPI* | [**GetCorrespondenceAccessRecord**](docs/DefaultAPI.md#getcorrespondenceaccessrecord) | **Get** /tenant-correspondence/{corrID}/access-record | Get the access record for the correspondence.
+*DefaultAPI* | [**GetCustomForm**](docs/DefaultAPI.md#getcustomform) | **Get** /custom-form/{formID} | Get the custom form by ID
 *DefaultAPI* | [**GetCustomIDGenerator**](docs/DefaultAPI.md#getcustomidgenerator) | **Get** /id-generators/{generatorID} | Get the ID generator with all its attributes
 *DefaultAPI* | [**GetCustomIDGenerators**](docs/DefaultAPI.md#getcustomidgenerators) | **Get** /id-generators | Get all customer specific ID generators
 *DefaultAPI* | [**GetCustomerScript**](docs/DefaultAPI.md#getcustomerscript) | **Get** /customer-scripts/{scriptID} | Get the script with all its attributes
@@ -276,7 +278,6 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**PublicDeleteCaseComment**](docs/DefaultAPI.md#publicdeletecasecomment) | **Delete** /public/case/{caseID}/comment/{commentID} | Delete a comment
 *DefaultAPI* | [**PublicGetAppointment**](docs/DefaultAPI.md#publicgetappointment) | **Get** /public/calendar/appointments/entry/{code} | Get appointment details
 *DefaultAPI* | [**PublicGetAppointmentInIcalFormat**](docs/DefaultAPI.md#publicgetappointmentinicalformat) | **Get** /public/calendar/appointments/entry/{code}/ical | Get appointment in ical format
-*DefaultAPI* | [**PublicGetAppointmentInfo**](docs/DefaultAPI.md#publicgetappointmentinfo) | **Get** /public/calendar/appointments/entry/{code}/info | Get appointment public details
 *DefaultAPI* | [**PublicGetAppointmentSchedule**](docs/DefaultAPI.md#publicgetappointmentschedule) | **Get** /public/calendar/appointments/schedules/{scheduleID} | Get appointment schedule details
 *DefaultAPI* | [**PublicGetAttachment**](docs/DefaultAPI.md#publicgetattachment) | **Get** /public/attachment/{attachmentID} | Get a file attachment
 *DefaultAPI* | [**PublicGetCase**](docs/DefaultAPI.md#publicgetcase) | **Get** /public/case | Get case details
@@ -285,7 +286,6 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**PublicGetCorrespondenceStatus**](docs/DefaultAPI.md#publicgetcorrespondencestatus) | **Get** /public/tenant-correspondence/status | Check whether an access record eixsts for the correspondence.
 *DefaultAPI* | [**PublicGetExternalUser**](docs/DefaultAPI.md#publicgetexternaluser) | **Get** /public/external-users | Get external user data
 *DefaultAPI* | [**PublicGetManagerCompanyProfile**](docs/DefaultAPI.md#publicgetmanagercompanyprofile) | **Get** /public/profile/company/manager | Get the manager company details
-*DefaultAPI* | [**PublicJoinAppointment**](docs/DefaultAPI.md#publicjoinappointment) | **Post** /public/calendar/appointments/entry/{code}/join | Join an existing appointment
 *DefaultAPI* | [**PublicUpdateCase**](docs/DefaultAPI.md#publicupdatecase) | **Put** /public/case | Update case data
 *DefaultAPI* | [**PublicUpdateCaseStatus**](docs/DefaultAPI.md#publicupdatecasestatus) | **Post** /public/case/{caseID}/status | Add new case status
 *DefaultAPI* | [**PublicUpdateExternalUser**](docs/DefaultAPI.md#publicupdateexternaluser) | **Put** /public/external-users | Update external user data
@@ -309,6 +309,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryCases**](docs/DefaultAPI.md#querycases) | **Post** /cases | Query cases for the current user
 *DefaultAPI* | [**QueryCommentTemplates**](docs/DefaultAPI.md#querycommenttemplates) | **Post** /comment-templates | Query all comment templates for the account
 *DefaultAPI* | [**QueryCorrespondences**](docs/DefaultAPI.md#querycorrespondences) | **Post** /tenant-correspondences | Get all the correspondences
+*DefaultAPI* | [**QueryCustomForms**](docs/DefaultAPI.md#querycustomforms) | **Get** /custom-forms | Get all custom forms
 *DefaultAPI* | [**QueryDocumentGenerations**](docs/DefaultAPI.md#querydocumentgenerations) | **Post** /document-generation/documents | Request a list of document generations
 *DefaultAPI* | [**QueryDocuments**](docs/DefaultAPI.md#querydocuments) | **Post** /document-repository/entries | Query all document for a certain ref type
 *DefaultAPI* | [**QueryExternalUserCases**](docs/DefaultAPI.md#queryexternalusercases) | **Get** /external-users/{userID}/cases | Get the cases the the given user has opened
@@ -350,6 +351,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateCompanyProfile**](docs/DefaultAPI.md#updatecompanyprofile) | **Put** /profile/company | Update company profile
 *DefaultAPI* | [**UpdateConnectorConfig**](docs/DefaultAPI.md#updateconnectorconfig) | **Put** /connector/{name}/config | Update the connector configuration
 *DefaultAPI* | [**UpdateConnectorQuery**](docs/DefaultAPI.md#updateconnectorquery) | **Put** /query/{queryID} | Update the connector Query
+*DefaultAPI* | [**UpdateCustomForm**](docs/DefaultAPI.md#updatecustomform) | **Put** /custom-form/{formID} | Update the custom form
 *DefaultAPI* | [**UpdateCustomIDGenerator**](docs/DefaultAPI.md#updatecustomidgenerator) | **Put** /id-generators/{generatorID} | Update an already existing ID generator
 *DefaultAPI* | [**UpdateCustomerScript**](docs/DefaultAPI.md#updatecustomerscript) | **Put** /customer-scripts/{scriptID} | Update an already existing script
 *DefaultAPI* | [**UpdateDocument**](docs/DefaultAPI.md#updatedocument) | **Put** /document-repository/entry/{documentID} | Update an already existing document
@@ -375,6 +377,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateWorkflowEntrypoint**](docs/DefaultAPI.md#updateworkflowentrypoint) | **Put** /workflows/entrypoint/{entrypointID} | Update workflow entry point
 *DefaultAPI* | [**UpdateWorkflowExecution**](docs/DefaultAPI.md#updateworkflowexecution) | **Put** /workflows/execution/{executionID} | Update workflow execution
 *DefaultAPI* | [**UploadAttachment**](docs/DefaultAPI.md#uploadattachment) | **Post** /attachment | Upload new file attachment
+*DefaultAPI* | [**ValidateCustomForm**](docs/DefaultAPI.md#validatecustomform) | **Post** /custom-form/{formID}/validate | Validate a custom form
 *DefaultAPI* | [**ValidateUserEmail**](docs/DefaultAPI.md#validateuseremail) | **Post** /email/validation | Validate user&#39;s email and point out problems if there are any
 
 
@@ -471,6 +474,7 @@ Class | Method | HTTP request | Description
  - [CreateOrUpdateCaseTemplateRequest](docs/CreateOrUpdateCaseTemplateRequest.md)
  - [CreateOrUpdateCommentTemplateRequest](docs/CreateOrUpdateCommentTemplateRequest.md)
  - [CreateOrUpdateConnectorQueryRequest](docs/CreateOrUpdateConnectorQueryRequest.md)
+ - [CreateOrUpdateCustomFormRequest](docs/CreateOrUpdateCustomFormRequest.md)
  - [CreateOrUpdateCustomIDGeneratorRequest](docs/CreateOrUpdateCustomIDGeneratorRequest.md)
  - [CreateOrUpdateCustomerScriptRequest](docs/CreateOrUpdateCustomerScriptRequest.md)
  - [CreateOrUpdateDocumentTemplateRequest](docs/CreateOrUpdateDocumentTemplateRequest.md)
@@ -493,6 +497,7 @@ Class | Method | HTTP request | Description
  - [CreateTenancyRequest](docs/CreateTenancyRequest.md)
  - [CreateTenantChangeRequest](docs/CreateTenantChangeRequest.md)
  - [CustomForm](docs/CustomForm.md)
+ - [CustomFormValidationRequest](docs/CustomFormValidationRequest.md)
  - [CustomIDGenerator](docs/CustomIDGenerator.md)
  - [CustomIDGeneratorAttributesPartial](docs/CustomIDGeneratorAttributesPartial.md)
  - [CustomerScript](docs/CustomerScript.md)
@@ -539,6 +544,7 @@ Class | Method | HTTP request | Description
  - [FinancialAccount](docs/FinancialAccount.md)
  - [FinancialAccountAttributesPartial](docs/FinancialAccountAttributesPartial.md)
  - [FloatNumber](docs/FloatNumber.md)
+ - [Form](docs/Form.md)
  - [FormGroup](docs/FormGroup.md)
  - [FormGroupType](docs/FormGroupType.md)
  - [FormInput](docs/FormInput.md)
@@ -551,7 +557,6 @@ Class | Method | HTTP request | Description
  - [FormValidationRequest](docs/FormValidationRequest.md)
  - [FormValidationResponse](docs/FormValidationResponse.md)
  - [GenerateCaseReportingEndpointNoticeRequest](docs/GenerateCaseReportingEndpointNoticeRequest.md)
- - [GetAppointmentInfoResponse](docs/GetAppointmentInfoResponse.md)
  - [GetCorrespondenceDocumentResponse](docs/GetCorrespondenceDocumentResponse.md)
  - [GetCorrespondenceStatusResponse](docs/GetCorrespondenceStatusResponse.md)
  - [GetExternalUserCasesCountResponse](docs/GetExternalUserCasesCountResponse.md)
@@ -609,6 +614,7 @@ Class | Method | HTTP request | Description
  - [QueryCommentTemplatesRequest](docs/QueryCommentTemplatesRequest.md)
  - [QueryCorrespondenceRequest](docs/QueryCorrespondenceRequest.md)
  - [QueryCorrespondenceType](docs/QueryCorrespondenceType.md)
+ - [QueryCustomFormsResponse](docs/QueryCustomFormsResponse.md)
  - [QueryDocumentGenerationsRequest](docs/QueryDocumentGenerationsRequest.md)
  - [QueryDocumentGenerationsResponse](docs/QueryDocumentGenerationsResponse.md)
  - [QueryDocumentsRequest](docs/QueryDocumentsRequest.md)

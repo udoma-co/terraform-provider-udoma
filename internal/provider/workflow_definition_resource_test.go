@@ -75,18 +75,6 @@ resource "udoma_workflow_definition" "test" {
 					next_step_id: "finish"
 				}
 			]
-		},
-
-		{
-			id: "finish",
-			type: "finish_execution",
-			name: "Finish",
-			actions: [
-				{
-					id: "finish",
-					label: "Finish"
-				}
-			]
 		}
 	])
 
