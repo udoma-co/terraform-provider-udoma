@@ -2841,6 +2841,115 @@ func (a *DefaultAPIService) CreateCorrespondenceExecute(r ApiCreateCorrespondenc
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiCreateCustomFormRequest struct {
+	ctx                             context.Context
+	ApiService                      *DefaultAPIService
+	createOrUpdateCustomFormRequest *CreateOrUpdateCustomFormRequest
+}
+
+func (r ApiCreateCustomFormRequest) CreateOrUpdateCustomFormRequest(createOrUpdateCustomFormRequest CreateOrUpdateCustomFormRequest) ApiCreateCustomFormRequest {
+	r.createOrUpdateCustomFormRequest = &createOrUpdateCustomFormRequest
+	return r
+}
+
+func (r ApiCreateCustomFormRequest) Execute() (*Form, *http.Response, error) {
+	return r.ApiService.CreateCustomFormExecute(r)
+}
+
+/*
+CreateCustomForm Create a new custom form
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiCreateCustomFormRequest
+*/
+func (a *DefaultAPIService) CreateCustomForm(ctx context.Context) ApiCreateCustomFormRequest {
+	return ApiCreateCustomFormRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return Form
+func (a *DefaultAPIService) CreateCustomFormExecute(r ApiCreateCustomFormRequest) (*Form, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Form
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateCustomForm")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/custom-form"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createOrUpdateCustomFormRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdateCustomFormRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrUpdateCustomFormRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiCreateCustomIDGeneratorRequest struct {
 	ctx                                    context.Context
 	ApiService                             *DefaultAPIService
@@ -7084,6 +7193,96 @@ func (a *DefaultAPIService) DeleteCorrespondenceExecute(r ApiDeleteCorrespondenc
 
 	localVarPath := localBasePath + "/tenant-correspondence/{corrID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"corrID"+"}", url.PathEscape(parameterValueToString(r.corrID, "corrID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDeleteCustomFormRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	formID     string
+}
+
+func (r ApiDeleteCustomFormRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteCustomFormExecute(r)
+}
+
+/*
+DeleteCustomForm Delete the custom form
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param formID unique generated ID of a custom form
+	@return ApiDeleteCustomFormRequest
+*/
+func (a *DefaultAPIService) DeleteCustomForm(ctx context.Context, formID string) ApiDeleteCustomFormRequest {
+	return ApiDeleteCustomFormRequest{
+		ApiService: a,
+		ctx:        ctx,
+		formID:     formID,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DeleteCustomFormExecute(r ApiDeleteCustomFormRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteCustomForm")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/custom-form/{formID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"formID"+"}", url.PathEscape(parameterValueToString(r.formID, "formID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -13188,6 +13387,108 @@ func (a *DefaultAPIService) GetCorrespondenceAccessRecordExecute(r ApiGetCorresp
 
 	localVarPath := localBasePath + "/tenant-correspondence/{corrID}/access-record"
 	localVarPath = strings.Replace(localVarPath, "{"+"corrID"+"}", url.PathEscape(parameterValueToString(r.corrID, "corrID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetCustomFormRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	formID     string
+}
+
+func (r ApiGetCustomFormRequest) Execute() (*Form, *http.Response, error) {
+	return r.ApiService.GetCustomFormExecute(r)
+}
+
+/*
+GetCustomForm Get the custom form by ID
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param formID unique generated ID of a custom form
+	@return ApiGetCustomFormRequest
+*/
+func (a *DefaultAPIService) GetCustomForm(ctx context.Context, formID string) ApiGetCustomFormRequest {
+	return ApiGetCustomFormRequest{
+		ApiService: a,
+		ctx:        ctx,
+		formID:     formID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return Form
+func (a *DefaultAPIService) GetCustomFormExecute(r ApiGetCustomFormRequest) (*Form, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Form
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetCustomForm")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/custom-form/{formID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"formID"+"}", url.PathEscape(parameterValueToString(r.formID, "formID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -24079,6 +24380,104 @@ func (a *DefaultAPIService) QueryCorrespondencesExecute(r ApiQueryCorrespondence
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiQueryCustomFormsRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+}
+
+func (r ApiQueryCustomFormsRequest) Execute() (*QueryCustomFormsResponse, *http.Response, error) {
+	return r.ApiService.QueryCustomFormsExecute(r)
+}
+
+/*
+QueryCustomForms Get all custom forms
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiQueryCustomFormsRequest
+*/
+func (a *DefaultAPIService) QueryCustomForms(ctx context.Context) ApiQueryCustomFormsRequest {
+	return ApiQueryCustomFormsRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return QueryCustomFormsResponse
+func (a *DefaultAPIService) QueryCustomFormsExecute(r ApiQueryCustomFormsRequest) (*QueryCustomFormsResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *QueryCustomFormsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.QueryCustomForms")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/custom-forms"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiQueryDocumentGenerationsRequest struct {
 	ctx                             context.Context
 	ApiService                      *DefaultAPIService
@@ -28522,6 +28921,119 @@ func (a *DefaultAPIService) UpdateConnectorQueryExecute(r ApiUpdateConnectorQuer
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiUpdateCustomFormRequest struct {
+	ctx                             context.Context
+	ApiService                      *DefaultAPIService
+	formID                          string
+	createOrUpdateCustomFormRequest *CreateOrUpdateCustomFormRequest
+}
+
+func (r ApiUpdateCustomFormRequest) CreateOrUpdateCustomFormRequest(createOrUpdateCustomFormRequest CreateOrUpdateCustomFormRequest) ApiUpdateCustomFormRequest {
+	r.createOrUpdateCustomFormRequest = &createOrUpdateCustomFormRequest
+	return r
+}
+
+func (r ApiUpdateCustomFormRequest) Execute() (*Form, *http.Response, error) {
+	return r.ApiService.UpdateCustomFormExecute(r)
+}
+
+/*
+UpdateCustomForm Update the custom form
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param formID unique generated ID of a custom form
+	@return ApiUpdateCustomFormRequest
+*/
+func (a *DefaultAPIService) UpdateCustomForm(ctx context.Context, formID string) ApiUpdateCustomFormRequest {
+	return ApiUpdateCustomFormRequest{
+		ApiService: a,
+		ctx:        ctx,
+		formID:     formID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return Form
+func (a *DefaultAPIService) UpdateCustomFormExecute(r ApiUpdateCustomFormRequest) (*Form, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Form
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdateCustomForm")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/custom-form/{formID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"formID"+"}", url.PathEscape(parameterValueToString(r.formID, "formID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createOrUpdateCustomFormRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdateCustomFormRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrUpdateCustomFormRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiUpdateCustomIDGeneratorRequest struct {
 	ctx                                    context.Context
 	ApiService                             *DefaultAPIService
@@ -31336,6 +31848,119 @@ func (a *DefaultAPIService) UploadAttachmentExecute(r ApiUploadAttachmentRequest
 		dataLocalVarFile.Close()
 		formFiles = append(formFiles, formFile{fileBytes: dataLocalVarFileBytes, fileName: dataLocalVarFileName, formFileName: dataLocalVarFormFileName})
 	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiValidateCustomFormRequest struct {
+	ctx                         context.Context
+	ApiService                  *DefaultAPIService
+	formID                      string
+	customFormValidationRequest *CustomFormValidationRequest
+}
+
+func (r ApiValidateCustomFormRequest) CustomFormValidationRequest(customFormValidationRequest CustomFormValidationRequest) ApiValidateCustomFormRequest {
+	r.customFormValidationRequest = &customFormValidationRequest
+	return r
+}
+
+func (r ApiValidateCustomFormRequest) Execute() (*FormValidationResponse, *http.Response, error) {
+	return r.ApiService.ValidateCustomFormExecute(r)
+}
+
+/*
+ValidateCustomForm Validate a custom form
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param formID unique generated ID of a custom form
+	@return ApiValidateCustomFormRequest
+*/
+func (a *DefaultAPIService) ValidateCustomForm(ctx context.Context, formID string) ApiValidateCustomFormRequest {
+	return ApiValidateCustomFormRequest{
+		ApiService: a,
+		ctx:        ctx,
+		formID:     formID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return FormValidationResponse
+func (a *DefaultAPIService) ValidateCustomFormExecute(r ApiValidateCustomFormRequest) (*FormValidationResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *FormValidationResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ValidateCustomForm")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/custom-form/{formID}/validate"
+	localVarPath = strings.Replace(localVarPath, "{"+"formID"+"}", url.PathEscape(parameterValueToString(r.formID, "formID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.customFormValidationRequest == nil {
+		return localVarReturnValue, nil, reportError("customFormValidationRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.customFormValidationRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

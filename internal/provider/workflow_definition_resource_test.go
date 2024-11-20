@@ -61,6 +61,9 @@ resource "udoma_workflow_definition" "test" {
 	init_step = jsonencode({
 		id: "init",
 		type: "select_property"
+		action: {
+    		"id": "generate_document"
+  		}
 	})
 
 	steps = jsonencode([
@@ -73,18 +76,6 @@ resource "udoma_workflow_definition" "test" {
 					id: "save",
 					label: "Save",
 					next_step_id: "finish"
-				}
-			]
-		},
-
-		{
-			id: "finish",
-			type: "finish_execution",
-			name: "Finish",
-			actions: [
-				{
-					id: "finish",
-					label: "Finish"
 				}
 			]
 		}
@@ -134,18 +125,6 @@ func resourceDefinitionWorkflowDefinition() string {
 						id: "save",
 						label: "Save",
 						next_step_id: "finish"
-					}
-				]
-			},
-	
-			{
-				id: "finish",
-				type: "finish_execution",
-				name: "Finish",
-				actions: [
-					{
-						id: "finish",
-						label: "Finish"
 					}
 				]
 			}
