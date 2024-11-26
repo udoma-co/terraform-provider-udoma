@@ -19,6 +19,10 @@ Resource represents a JSON source file that may contain references to other file
 
 - `source` (String) The file location to read the JSON from
 
+### Optional
+
+- `patches` (List of String) An optional list of patches to apply to the original JSON content
+
 ### Read-Only
 
 - `content` (String) The content read from the file, with other files referenced by the source attribute embedded

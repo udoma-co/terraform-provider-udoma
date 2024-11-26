@@ -63,7 +63,6 @@ Optional:
 Required:
 
 - `id` (String) the ID of the input field, used to identify it and later access the data
-- `label` (Map of String) a map of values, where the key and values are strings
 - `type` (String) The type of the input
 
 Optional:
@@ -72,6 +71,7 @@ Optional:
 - `default_value` (String) optional default value for the input field (as a JSON string)
 - `ephemeral` (Boolean) if true, the value of the input will not be persisted
 - `items` (List of String) only used when the type is select or multi select. This is a list of values that the user can choose from
+- `label` (Map of String) a map of values, where the key and values are strings
 - `placeholder` (Map of String) a map of values, where the key and values are strings
 - `propagate_changes` (Boolean) if true, changes to the input will be propagated to event listeners for the custom form
 - `required` (Boolean) if true, the user will be required to provide a value
