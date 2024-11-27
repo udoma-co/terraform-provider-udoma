@@ -3,6 +3,7 @@ package provider
 import (
 	"context"
 	"encoding/base64"
+	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -12,6 +13,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/internal/jsonpatch"
 	"gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/internal/tf"
 )
 
@@ -30,6 +32,7 @@ type jsonSource struct{}
 // jsonSourceModel describes the data source data model.
 type jsonSourceModel struct {
 	Source  types.String       `tfsdk:"source"`
+	Patches []string           `tfsdk:"patches"`
 	Content tf.JsonObjectValue `tfsdk:"content"`
 }
 
@@ -46,6 +49,11 @@ func (r *jsonSource) Schema(ctx context.Context, req datasource.SchemaRequest, r
 			"source": schema.StringAttribute{
 				Required:    true,
 				Description: "The file location to read the JSON from",
+			},
+			"patches": schema.ListAttribute{
+				Optional:    true,
+				Description: "An optional list of patches to apply to the original JSON content",
+				ElementType: types.StringType,
 			},
 			"content": schema.StringAttribute{
 				CustomType:  tf.JsonObjectType{},
@@ -74,6 +82,54 @@ func (r *jsonSource) Read(ctx context.Context, req datasource.ReadRequest, resp 
 			"Could not read file, unexpected error: "+err.Error(),
 		)
 		return
+	}
+
+	for _, patch := range config.Patches {
+		patchContents, err := readMergedFile(patch)
+		if err != nil {
+			resp.Diagnostics.AddError(
+				"Error Reading Json Patch",
+				"Could not read file, unexpected error: "+err.Error(),
+			)
+			return
+		}
+		patch, err := jsonpatch.DecodePatch(patchContents)
+		if err != nil {
+			resp.Diagnostics.AddError(
+				"Error Decoding Json Patch",
+				"Could not decode patch, unexpected error: "+err.Error(),
+			)
+			return
+		}
+
+		fileContents, err = patch.Apply(fileContents)
+		if err != nil {
+			resp.Diagnostics.AddError(
+				"Error Applying Json Patch",
+				"Could not apply patch, unexpected error: "+err.Error(),
+			)
+			return
+		}
+	}
+
+	if len(config.Patches) > 0 {
+		// normalize the content to remove whitespace drift
+		var data interface{}
+		if err := json.Unmarshal(fileContents, &data); err != nil {
+			resp.Diagnostics.AddError(
+				"Error Normalizing Json Content",
+				"Could not normalize content, unexpected error: "+err.Error(),
+			)
+			return
+		}
+		fileContents, err = json.Marshal(data)
+		if err != nil {
+			resp.Diagnostics.AddError(
+				"Error Normalizing Json Content",
+				"Could not normalize content, unexpected error: "+err.Error(),
+			)
+			return
+		}
 	}
 
 	config.Content = tf.NewJsonObjectValue(string(fileContents))
