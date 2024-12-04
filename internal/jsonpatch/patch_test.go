@@ -321,6 +321,27 @@ func TestReplaceEllementInArray(t *testing.T) {
 	}
 }
 
+func TestReplaceEllementInArrayViaIndex(t *testing.T) {
+
+	orig := `[{"y":"a"},{"y":"b"},{"y":"c"}]`
+
+	patchSource := `[{ "op": "replace", "path": "$.0.y", "value": "d" }]`
+
+	patch, err := DecodePatch([]byte(patchSource))
+	if err != nil {
+		t.Fatalf("Could not decode patch, unexpected error: %v", err)
+	}
+
+	res, err := patch.Apply([]byte(orig))
+	if err != nil {
+		t.Fatalf("Could not apply patch, unexpected error: %v", err)
+	}
+
+	if !matches(res, `[{"y":"d"},{"y":"b"},{"y":"c"}]`) {
+		t.Fatalf("Unexpected result: %s", string(res))
+	}
+}
+
 func TestMoveAttribute(t *testing.T) {
 	orig := `{"x":{"a":1,"b":2},"y":{"c":3}}`
 	patchSource := `[{ "op": "move", "from": "$.x.b", "path": "$.y.b" }]`
