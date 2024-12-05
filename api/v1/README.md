@@ -572,6 +572,7 @@ Class | Method | HTTP request | Description
  - [GetSummaryResponse](docs/GetSummaryResponse.md)
  - [GraduatedUpdate](docs/GraduatedUpdate.md)
  - [IDUpload](docs/IDUpload.md)
+ - [InputItem](docs/InputItem.md)
  - [IsDeletedAttributePartial](docs/IsDeletedAttributePartial.md)
  - [LogRequest](docs/LogRequest.md)
  - [MandatoryMessage](docs/MandatoryMessage.md)

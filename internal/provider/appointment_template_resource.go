@@ -50,6 +50,7 @@ func (r *AppointmentTemplate) Metadata(ctx context.Context, req resource.Metadat
 
 func (r *AppointmentTemplate) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
+		Version: 1, // update custom form input items
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				Computed:    true,
@@ -306,4 +307,108 @@ func (template *AppointmentTemplateModel) fromApiResponse(resp *v1.AppointmentTe
 	diags = template.Inputs.fromApiResponse(resp.Form.Get())
 
 	return
+}
+
+func (r *AppointmentTemplate) UpgradeState(ctx context.Context) map[int64]resource.StateUpgrader {
+
+	// AppointmentTemplateModel describes the resource data model with the old custom form model
+	type AppointmentTemplateModelV0 struct {
+		ID                         types.String       `tfsdk:"id"`
+		Name                       types.String       `tfsdk:"name"`
+		NameExpression             types.String       `tfsdk:"name_expression"`
+		Description                types.String       `tfsdk:"description"`
+		Inputs                     *CustomFormModelV0 `tfsdk:"inputs"`
+		RequireConfirmation        types.Bool         `tfsdk:"require_confirmation"`
+		ConfirmationReminders      types.List         `tfsdk:"confirmation_reminders"`
+		DefaultScheduleDescription types.Map          `tfsdk:"default_schedule_description"`
+		InvitationText             types.String       `tfsdk:"invitation_text"`
+		Icon                       types.String       `tfsdk:"icon"`
+	}
+
+	return map[int64]resource.StateUpgrader{
+		// State upgrade implementation from 0 (prior state version) to 1 (Schema.Version)
+		0: {
+			PriorSchema: &schema.Schema{
+				Attributes: map[string]schema.Attribute{
+					"id": schema.StringAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							stringplanmodifier.UseStateForUnknown(),
+						},
+					},
+					"name": schema.StringAttribute{
+						Required: true,
+					},
+					"name_expression": schema.StringAttribute{
+						Optional: true,
+					},
+					"description": schema.StringAttribute{
+						Optional: true,
+					},
+					"inputs": schema.SingleNestedAttribute{
+						Required:   true,
+						Attributes: CustomFormNestedSchemaV0(), // old custom form schema
+					},
+					"require_confirmation": schema.BoolAttribute{
+						Optional: true,
+					},
+					"confirmation_reminders": schema.ListAttribute{
+						Optional:    true,
+						ElementType: types.Int64Type,
+					},
+					"default_schedule_description": schema.MapAttribute{
+						Optional:    true,
+						ElementType: types.StringType,
+					},
+					"invitation_text": schema.StringAttribute{
+						Optional: true,
+					},
+					"icon": schema.StringAttribute{
+						Optional: true,
+					},
+				},
+			},
+			StateUpgrader: func(ctx context.Context, req resource.UpgradeStateRequest, resp *resource.UpgradeStateResponse) {
+				var priorStateData AppointmentTemplateModelV0
+
+				resp.Diagnostics.Append(req.State.Get(ctx, &priorStateData)...)
+
+				if resp.Diagnostics.HasError() {
+					return
+				}
+
+				priorCustomForm := priorStateData.Inputs.toApiRequest()
+				newCustomForm, err := priorCustomForm.Migrate()
+				if err != nil {
+					resp.Diagnostics.AddError(
+						"Error Migrating Custom Form",
+						"Could not migrate custom form: "+err.Error(),
+					)
+					return
+				}
+
+				upgradedInputs := &CustomFormModel{}
+				diags := upgradedInputs.fromApiResponse(newCustomForm)
+				if diags.HasError() {
+					resp.Diagnostics.Append(diags...)
+					return
+				}
+
+				upgradedStateData := AppointmentTemplateModel{
+					ID:                         priorStateData.ID,
+					Name:                       priorStateData.Name,
+					NameExpression:             priorStateData.NameExpression,
+					Description:                priorStateData.Description,
+					Inputs:                     upgradedInputs,
+					RequireConfirmation:        priorStateData.RequireConfirmation,
+					ConfirmationReminders:      priorStateData.ConfirmationReminders,
+					DefaultScheduleDescription: priorStateData.DefaultScheduleDescription,
+					InvitationText:             priorStateData.InvitationText,
+					Icon:                       priorStateData.Icon,
+				}
+
+				resp.Diagnostics.Append(resp.State.Set(ctx, upgradedStateData)...)
+			},
+		},
+	}
 }

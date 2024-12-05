@@ -41,29 +41,39 @@ type CustomFormGroupModel struct {
 	MinSize       types.Int64           `tfsdk:"min_size"`
 }
 
+func NewCustomFormInputItemNull() CustomFormInputItemModel {
+	return CustomFormInputItemModel{
+		Label: basetypes.NewMapNull(types.StringType),
+	}
+}
+
+type CustomFormInputItemModel struct {
+	ID    types.String `tfsdk:"id"`
+	Label types.Map    `tfsdk:"label"`
+}
+
 func NewCustomFormInputNull() CustomFormInputModel {
 	return CustomFormInputModel{
 		Label:       basetypes.NewMapNull(types.StringType),
 		ViewLabel:   basetypes.NewMapNull(types.StringType),
 		Placeholder: basetypes.NewMapNull(types.StringType),
 		Attributes:  basetypes.NewMapNull(types.StringType),
-		Items:       basetypes.NewListNull(types.StringType),
 	}
 }
 
 type CustomFormInputModel struct {
-	ID               types.String `tfsdk:"id"`
-	Label            types.Map    `tfsdk:"label"`
-	ViewLabel        types.Map    `tfsdk:"view_label"`
-	Placeholder      types.Map    `tfsdk:"placeholder"`
-	Type             types.String `tfsdk:"type"`
-	DefaultValue     types.String `tfsdk:"default_value"`
-	Required         types.Bool   `tfsdk:"required"`
-	Ephemeral        types.Bool   `tfsdk:"ephemeral"`
-	PropagateChanges types.Bool   `tfsdk:"propagate_changes"`
-	Target           types.String `tfsdk:"target"`
-	Attributes       types.Map    `tfsdk:"attributes"`
-	Items            types.List   `tfsdk:"items"`
+	ID               types.String               `tfsdk:"id"`
+	Label            types.Map                  `tfsdk:"label"`
+	ViewLabel        types.Map                  `tfsdk:"view_label"`
+	Placeholder      types.Map                  `tfsdk:"placeholder"`
+	Type             types.String               `tfsdk:"type"`
+	DefaultValue     types.String               `tfsdk:"default_value"`
+	Required         types.Bool                 `tfsdk:"required"`
+	Ephemeral        types.Bool                 `tfsdk:"ephemeral"`
+	PropagateChanges types.Bool                 `tfsdk:"propagate_changes"`
+	Target           types.String               `tfsdk:"target"`
+	Attributes       types.Map                  `tfsdk:"attributes"`
+	Items            []CustomFormInputItemModel `tfsdk:"items"`
 }
 
 func NewCustomFormValidationNull() CustomFormValidationModel {
@@ -169,6 +179,22 @@ func customFormGroupNestedSchema() schema.NestedAttributeObject {
 	}
 }
 
+func customFormInputItemNestedSchema() schema.NestedAttributeObject {
+	return schema.NestedAttributeObject{
+		Attributes: map[string]schema.Attribute{
+			"id": schema.StringAttribute{
+				Required:    true,
+				Description: "The technical value that will be stored in the collected data",
+			},
+			"label": schema.MapAttribute{
+				Required:    true,
+				ElementType: types.StringType,
+				Description: "The label to be displayed to the user as a language dictionary",
+			},
+		},
+	}
+}
+
 func customFormInputNestedSchema() schema.NestedAttributeObject {
 	return schema.NestedAttributeObject{
 		Attributes: map[string]schema.Attribute{
@@ -220,10 +246,10 @@ func customFormInputNestedSchema() schema.NestedAttributeObject {
 				ElementType: types.StringType,
 				Description: "a map of values, where the key and values are strings",
 			},
-			"items": schema.ListAttribute{
-				Optional:    true,
-				ElementType: types.StringType,
-				Description: "only used when the type is select or multi select. This is a list of values that the user can choose from",
+			"items": schema.ListNestedAttribute{
+				Optional:     true,
+				NestedObject: customFormInputItemNestedSchema(),
+				Description:  "Only used when the type is select or multi select. This is a list of values that the user can choose from.",
 			},
 		},
 	}
@@ -411,7 +437,30 @@ func (group *CustomFormGroupModel) fromApiResponse(resp *v1.FormGroup) (diags di
 	return
 }
 
+func (input *CustomFormInputItemModel) toApiRequest() *v1.InputItem {
+	return &v1.InputItem{
+		Id:    input.ID.ValueString(),
+		Label: modelMapToStringMap(input.Label),
+	}
+}
+
+func (input *CustomFormInputItemModel) fromApiResponse(resp *v1.InputItem) (diags diag.Diagnostics) {
+
+	input.ID = types.StringValue(resp.Id)
+	input.Label, diags = types.MapValue(types.StringType, stringMapToValueMap(resp.Label))
+	if diags.HasError() {
+		return
+	}
+
+	return
+}
+
 func (input *CustomFormInputModel) toApiRequest() *v1.FormInput {
+
+	items := make([]v1.InputItem, len(input.Items))
+	for i := range input.Items {
+		items[i] = *input.Items[i].toApiRequest()
+	}
 
 	ret := &v1.FormInput{
 		Id:               input.ID.ValueString(),
@@ -421,7 +470,7 @@ func (input *CustomFormInputModel) toApiRequest() *v1.FormInput {
 		Ephemeral:        input.Ephemeral.ValueBoolPointer(),
 		PropagateChanges: input.PropagateChanges.ValueBoolPointer(),
 		Target:           input.Target.ValueStringPointer(),
-		Items:            modelListToStringSlice(input.Items),
+		Items:            items,
 	}
 
 	if label := modelMapToStringMap(input.Label); len(label) > 0 {
@@ -495,11 +544,11 @@ func (input *CustomFormInputModel) fromApiResponse(resp *v1.FormInput) (diags di
 		}
 	}
 
-	if resp.Items != nil {
-		input.Items, diags = types.ListValue(types.StringType, stringSliceToValueList(resp.Items))
-		if diags.HasError() {
-			return
+	for i := range resp.Items {
+		if len(input.Items) <= i {
+			input.Items = append(input.Items, CustomFormInputItemModel{})
 		}
+		input.Items[i].fromApiResponse(&resp.Items[i])
 	}
 
 	return

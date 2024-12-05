@@ -21,29 +21,29 @@ var _ MappedNullable = &FormInput{}
 
 // FormInput a custom input that is used in dynamic forms to collect data from the user
 type FormInput struct {
-	// The ID of the input field, used to identify it within the form. If no  target value is set, this will also be how the value is stored and later accessed in the collected data.
+	// the ID of the input field, used to identify it and later access the data
 	Id string `json:"id"`
-	// Optional attribute name to use when exporting the value of this input. If not set, the ID will be used.
-	Target *string       `json:"target,omitempty"`
-	Type   FormInputType `json:"type"`
-	// a map of values, where the key and values are strings
-	Attributes *map[string]string `json:"attributes,omitempty"`
 	// a map of values, where the key and values are strings
 	Label *map[string]string `json:"label,omitempty"`
 	// a map of values, where the key and values are strings
 	ViewLabel *map[string]string `json:"view_label,omitempty"`
 	// a map of values, where the key and values are strings
 	Placeholder *map[string]string `json:"placeholder,omitempty"`
-	// Optional default value for the input field (as a JSON string)
+	Type        FormInputType      `json:"type"`
+	// optional default value for the input field (as a JSON string)
 	DefaultValue *string `json:"default_value,omitempty"`
-	// If true, the user will be required to provide a valid value for this input
+	// if true, the user will be required to provide a value
 	Required *bool `json:"required,omitempty"`
-	// If true, the value of the input will not be persisted. This is useful for checkboxes for accepting terms and conditions, etc.
+	// if true, the value of the input will not be persisted
 	Ephemeral *bool `json:"ephemeral,omitempty"`
-	// If true, changes to the input will be propagated to event listeners for  the custom form.
+	// if true, changes to the input will be propagated to event listeners for the custom form
 	PropagateChanges *bool `json:"propagate_changes,omitempty"`
-	// Only used when the type is select or multi select. This is a list of  values that the user can choose from.
-	Items []InputItem `json:"items,omitempty"`
+	// the attribute name to use when exporting the result of this input
+	Target *string `json:"target,omitempty"`
+	// a map of values, where the key and values are strings
+	Attributes *map[string]string `json:"attributes,omitempty"`
+	// only used when the type is select or multi select. This is a list of values that the user can choose from
+	Items []string `json:"items,omitempty"`
 }
 
 type _FormInput FormInput
@@ -89,94 +89,6 @@ func (o *FormInput) GetIdOk() (*string, bool) {
 // SetId sets field value
 func (o *FormInput) SetId(v string) {
 	o.Id = v
-}
-
-// GetTarget returns the Target field value if set, zero value otherwise.
-func (o *FormInput) GetTarget() string {
-	if o == nil || IsNil(o.Target) {
-		var ret string
-		return ret
-	}
-	return *o.Target
-}
-
-// GetTargetOk returns a tuple with the Target field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *FormInput) GetTargetOk() (*string, bool) {
-	if o == nil || IsNil(o.Target) {
-		return nil, false
-	}
-	return o.Target, true
-}
-
-// HasTarget returns a boolean if a field has been set.
-func (o *FormInput) HasTarget() bool {
-	if o != nil && !IsNil(o.Target) {
-		return true
-	}
-
-	return false
-}
-
-// SetTarget gets a reference to the given string and assigns it to the Target field.
-func (o *FormInput) SetTarget(v string) {
-	o.Target = &v
-}
-
-// GetType returns the Type field value
-func (o *FormInput) GetType() FormInputType {
-	if o == nil {
-		var ret FormInputType
-		return ret
-	}
-
-	return o.Type
-}
-
-// GetTypeOk returns a tuple with the Type field value
-// and a boolean to check if the value has been set.
-func (o *FormInput) GetTypeOk() (*FormInputType, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Type, true
-}
-
-// SetType sets field value
-func (o *FormInput) SetType(v FormInputType) {
-	o.Type = v
-}
-
-// GetAttributes returns the Attributes field value if set, zero value otherwise.
-func (o *FormInput) GetAttributes() map[string]string {
-	if o == nil || IsNil(o.Attributes) {
-		var ret map[string]string
-		return ret
-	}
-	return *o.Attributes
-}
-
-// GetAttributesOk returns a tuple with the Attributes field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *FormInput) GetAttributesOk() (*map[string]string, bool) {
-	if o == nil || IsNil(o.Attributes) {
-		return nil, false
-	}
-	return o.Attributes, true
-}
-
-// HasAttributes returns a boolean if a field has been set.
-func (o *FormInput) HasAttributes() bool {
-	if o != nil && !IsNil(o.Attributes) {
-		return true
-	}
-
-	return false
-}
-
-// SetAttributes gets a reference to the given map[string]string and assigns it to the Attributes field.
-func (o *FormInput) SetAttributes(v map[string]string) {
-	o.Attributes = &v
 }
 
 // GetLabel returns the Label field value if set, zero value otherwise.
@@ -273,6 +185,30 @@ func (o *FormInput) HasPlaceholder() bool {
 // SetPlaceholder gets a reference to the given map[string]string and assigns it to the Placeholder field.
 func (o *FormInput) SetPlaceholder(v map[string]string) {
 	o.Placeholder = &v
+}
+
+// GetType returns the Type field value
+func (o *FormInput) GetType() FormInputType {
+	if o == nil {
+		var ret FormInputType
+		return ret
+	}
+
+	return o.Type
+}
+
+// GetTypeOk returns a tuple with the Type field value
+// and a boolean to check if the value has been set.
+func (o *FormInput) GetTypeOk() (*FormInputType, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Type, true
+}
+
+// SetType sets field value
+func (o *FormInput) SetType(v FormInputType) {
+	o.Type = v
 }
 
 // GetDefaultValue returns the DefaultValue field value if set, zero value otherwise.
@@ -403,10 +339,74 @@ func (o *FormInput) SetPropagateChanges(v bool) {
 	o.PropagateChanges = &v
 }
 
+// GetTarget returns the Target field value if set, zero value otherwise.
+func (o *FormInput) GetTarget() string {
+	if o == nil || IsNil(o.Target) {
+		var ret string
+		return ret
+	}
+	return *o.Target
+}
+
+// GetTargetOk returns a tuple with the Target field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *FormInput) GetTargetOk() (*string, bool) {
+	if o == nil || IsNil(o.Target) {
+		return nil, false
+	}
+	return o.Target, true
+}
+
+// HasTarget returns a boolean if a field has been set.
+func (o *FormInput) HasTarget() bool {
+	if o != nil && !IsNil(o.Target) {
+		return true
+	}
+
+	return false
+}
+
+// SetTarget gets a reference to the given string and assigns it to the Target field.
+func (o *FormInput) SetTarget(v string) {
+	o.Target = &v
+}
+
+// GetAttributes returns the Attributes field value if set, zero value otherwise.
+func (o *FormInput) GetAttributes() map[string]string {
+	if o == nil || IsNil(o.Attributes) {
+		var ret map[string]string
+		return ret
+	}
+	return *o.Attributes
+}
+
+// GetAttributesOk returns a tuple with the Attributes field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *FormInput) GetAttributesOk() (*map[string]string, bool) {
+	if o == nil || IsNil(o.Attributes) {
+		return nil, false
+	}
+	return o.Attributes, true
+}
+
+// HasAttributes returns a boolean if a field has been set.
+func (o *FormInput) HasAttributes() bool {
+	if o != nil && !IsNil(o.Attributes) {
+		return true
+	}
+
+	return false
+}
+
+// SetAttributes gets a reference to the given map[string]string and assigns it to the Attributes field.
+func (o *FormInput) SetAttributes(v map[string]string) {
+	o.Attributes = &v
+}
+
 // GetItems returns the Items field value if set, zero value otherwise.
-func (o *FormInput) GetItems() []InputItem {
+func (o *FormInput) GetItems() []string {
 	if o == nil || IsNil(o.Items) {
-		var ret []InputItem
+		var ret []string
 		return ret
 	}
 	return o.Items
@@ -414,7 +414,7 @@ func (o *FormInput) GetItems() []InputItem {
 
 // GetItemsOk returns a tuple with the Items field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *FormInput) GetItemsOk() ([]InputItem, bool) {
+func (o *FormInput) GetItemsOk() ([]string, bool) {
 	if o == nil || IsNil(o.Items) {
 		return nil, false
 	}
@@ -430,8 +430,8 @@ func (o *FormInput) HasItems() bool {
 	return false
 }
 
-// SetItems gets a reference to the given []InputItem and assigns it to the Items field.
-func (o *FormInput) SetItems(v []InputItem) {
+// SetItems gets a reference to the given []string and assigns it to the Items field.
+func (o *FormInput) SetItems(v []string) {
 	o.Items = v
 }
 
@@ -446,13 +446,6 @@ func (o FormInput) MarshalJSON() ([]byte, error) {
 func (o FormInput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["id"] = o.Id
-	if !IsNil(o.Target) {
-		toSerialize["target"] = o.Target
-	}
-	toSerialize["type"] = o.Type
-	if !IsNil(o.Attributes) {
-		toSerialize["attributes"] = o.Attributes
-	}
 	if !IsNil(o.Label) {
 		toSerialize["label"] = o.Label
 	}
@@ -462,6 +455,7 @@ func (o FormInput) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Placeholder) {
 		toSerialize["placeholder"] = o.Placeholder
 	}
+	toSerialize["type"] = o.Type
 	if !IsNil(o.DefaultValue) {
 		toSerialize["default_value"] = o.DefaultValue
 	}
@@ -473,6 +467,12 @@ func (o FormInput) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.PropagateChanges) {
 		toSerialize["propagate_changes"] = o.PropagateChanges
+	}
+	if !IsNil(o.Target) {
+		toSerialize["target"] = o.Target
+	}
+	if !IsNil(o.Attributes) {
+		toSerialize["attributes"] = o.Attributes
 	}
 	if !IsNil(o.Items) {
 		toSerialize["items"] = o.Items

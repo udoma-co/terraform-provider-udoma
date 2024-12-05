@@ -43,6 +43,7 @@ func (r *PropertyHandoverTemplate) Metadata(ctx context.Context, req resource.Me
 
 func (r *PropertyHandoverTemplate) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
+		Version: 1, // update custom form input items
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				Computed:    true,
@@ -228,4 +229,76 @@ func (template *PropertyHandoverTemplateModel) fromApiResponse(resp *v1.Property
 	diags = template.Inputs.fromApiResponse(resp.CustomForm.Get())
 
 	return
+}
+
+func (r *PropertyHandoverTemplate) UpgradeState(ctx context.Context) map[int64]resource.StateUpgrader {
+
+	// PropertyTemplateTemplateModel describes the resource data model with the prior version of the custom form
+	type PropertyHandoverTemplateModelV0 struct {
+		ID          types.String       `tfsdk:"id"`
+		Name        types.String       `tfsdk:"name"`
+		Description types.String       `tfsdk:"description"`
+		Inputs      *CustomFormModelV0 `tfsdk:"inputs"`
+	}
+
+	return map[int64]resource.StateUpgrader{
+		// State upgrade implementation from 0 (prior state version) to 1 (Schema.Version)
+		0: {
+			PriorSchema: &schema.Schema{
+				Attributes: map[string]schema.Attribute{
+					"id": schema.StringAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							stringplanmodifier.UseStateForUnknown(),
+						},
+					},
+					"name": schema.StringAttribute{
+						Required: true,
+					},
+					"description": schema.StringAttribute{
+						Optional: true,
+					},
+					"inputs": schema.SingleNestedAttribute{
+						Required:   true,
+						Attributes: CustomFormNestedSchemaV0(), // use the prior version of the custom form schema
+					},
+				},
+			},
+			StateUpgrader: func(ctx context.Context, req resource.UpgradeStateRequest, resp *resource.UpgradeStateResponse) {
+				var priorStateData PropertyHandoverTemplateModelV0
+
+				resp.Diagnostics.Append(req.State.Get(ctx, &priorStateData)...)
+
+				if resp.Diagnostics.HasError() {
+					return
+				}
+
+				priorCustomForm := priorStateData.Inputs.toApiRequest()
+				newCustomForm, err := priorCustomForm.Migrate()
+				if err != nil {
+					resp.Diagnostics.AddError(
+						"Error Migrating Custom Form",
+						"Could not migrate custom form: "+err.Error(),
+					)
+					return
+				}
+
+				upgradedInputs := &CustomFormModel{}
+				diags := upgradedInputs.fromApiResponse(newCustomForm)
+				if diags.HasError() {
+					resp.Diagnostics.Append(diags...)
+					return
+				}
+
+				upgradedStateData := PropertyHandoverTemplateModel{
+					ID:          priorStateData.ID,
+					Name:        priorStateData.Name,
+					Description: priorStateData.Description,
+					Inputs:      upgradedInputs,
+				}
+
+				resp.Diagnostics.Append(resp.State.Set(ctx, upgradedStateData)...)
+			},
+		},
+	}
 }
