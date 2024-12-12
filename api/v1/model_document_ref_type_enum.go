@@ -20,13 +20,21 @@ type DocumentRefTypeEnum string
 
 // List of DocumentRefTypeEnum
 const (
-	DOCUMENTREFTYPEENUM_PROPERTY DocumentRefTypeEnum = "property"
-	DOCUMENTREFTYPEENUM_STATIC   DocumentRefTypeEnum = "static"
+	DOCUMENTREFTYPEENUM_PROPERTY         DocumentRefTypeEnum = "property"
+	DOCUMENTREFTYPEENUM_TENANCY          DocumentRefTypeEnum = "tenancy"
+	DOCUMENTREFTYPEENUM_TENANT           DocumentRefTypeEnum = "tenant"
+	DOCUMENTREFTYPEENUM_OWNER            DocumentRefTypeEnum = "owner"
+	DOCUMENTREFTYPEENUM_SERVICE_PROVIDER DocumentRefTypeEnum = "service_provider"
+	DOCUMENTREFTYPEENUM_STATIC           DocumentRefTypeEnum = "static"
 )
 
 // All allowed values of DocumentRefTypeEnum enum
 var AllowedDocumentRefTypeEnumEnumValues = []DocumentRefTypeEnum{
 	"property",
+	"tenancy",
+	"tenant",
+	"owner",
+	"service_provider",
 	"static",
 }
 

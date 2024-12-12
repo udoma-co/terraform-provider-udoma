@@ -25,9 +25,7 @@ Resource represents an entrypoint to a workflow
 - `icon` (String) Optional icon to be displayed on the button that will start the workflow execution
 - `init_script` (String) Optional JS script to be executed before the workflow is started
 - `label` (Map of String) The label to be displayed on the button starting the workflow execution
-- `location_filter` (String) Optional filter that can be used to limit where the entrypoint is shown, e.g.
-        for cases this can be the case template, for reports this can be the report 
-        definition, etc.
+- `location_filters` (Attributes List) Filters that can be used to limit where the entrypoint is shown (see [below for nested schema](#nestedatt--location_filters))
 
 ### Read-Only
 
@@ -35,3 +33,11 @@ Resource represents an entrypoint to a workflow
 - `id` (String) The unique identifier for the workflow entrypoint.
 - `last_updated` (String)
 - `updated_at` (Number) The date and time the workflow entrypoint was last modified
+
+<a id="nestedatt--location_filters"></a>
+### Nested Schema for `location_filters`
+
+Required:
+
+- `attribute` (String) The ID of the entity that will be referenced
+- `value` (String) The type of the entity that will be referenced

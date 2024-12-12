@@ -187,7 +187,7 @@ func (p *UdomaProvider) Configure(ctx context.Context, req provider.ConfigureReq
 
 	tflog.Info(ctx, "Created Udoma API client")
 
-	// Make the HashiCups client available during DataSource and Resource
+	// Make the Udoma client available during DataSource and Resource
 	// type Configure methods.
 	resp.DataSourceData = client
 	resp.ResourceData = client

@@ -21,15 +21,22 @@ var _ MappedNullable = &WorkflowTrigger{}
 
 // WorkflowTrigger information for the trigger of a workflow execution
 type WorkflowTrigger struct {
-	// the ID of the workflow execution
+	// The date and time the entity was created
+	CreatedAt int64 `json:"created_at"`
+	// The date and time the entity was last updated
+	UpdatedAt int64 `json:"updated_at"`
+	// The ID of the workflow execution that was triggered
 	ExecutionRef   string                     `json:"execution_ref"`
 	EntrypointType WorkflowEntrypointLocation `json:"entrypoint_type"`
-	// the ID of the source object
+	// The ID of the source object
 	SourceRef string `json:"source_ref"`
-	// The timestamp of when the workflow was created
-	CreatedAt int64 `json:"created_at"`
-	// the name of the related workflow execution
-	Label string `json:"label"`
+	// The ID of the workflow definition on which the execution is based
+	DefinitionRef string `json:"definition_ref"`
+	// The name of the workflow execution that was triggered
+	Name   string                  `json:"name"`
+	Status WorkflowExecutionStatus `json:"status"`
+	// Flag indicating whether the workflow execution is archived or not
+	Archived *bool `json:"archived,omitempty"`
 }
 
 type _WorkflowTrigger WorkflowTrigger
@@ -38,13 +45,16 @@ type _WorkflowTrigger WorkflowTrigger
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewWorkflowTrigger(executionRef string, entrypointType WorkflowEntrypointLocation, sourceRef string, createdAt int64, label string) *WorkflowTrigger {
+func NewWorkflowTrigger(createdAt int64, updatedAt int64, executionRef string, entrypointType WorkflowEntrypointLocation, sourceRef string, definitionRef string, name string, status WorkflowExecutionStatus) *WorkflowTrigger {
 	this := WorkflowTrigger{}
+	this.CreatedAt = createdAt
+	this.UpdatedAt = updatedAt
 	this.ExecutionRef = executionRef
 	this.EntrypointType = entrypointType
 	this.SourceRef = sourceRef
-	this.CreatedAt = createdAt
-	this.Label = label
+	this.DefinitionRef = definitionRef
+	this.Name = name
+	this.Status = status
 	return &this
 }
 
@@ -54,6 +64,54 @@ func NewWorkflowTrigger(executionRef string, entrypointType WorkflowEntrypointLo
 func NewWorkflowTriggerWithDefaults() *WorkflowTrigger {
 	this := WorkflowTrigger{}
 	return &this
+}
+
+// GetCreatedAt returns the CreatedAt field value
+func (o *WorkflowTrigger) GetCreatedAt() int64 {
+	if o == nil {
+		var ret int64
+		return ret
+	}
+
+	return o.CreatedAt
+}
+
+// GetCreatedAtOk returns a tuple with the CreatedAt field value
+// and a boolean to check if the value has been set.
+func (o *WorkflowTrigger) GetCreatedAtOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.CreatedAt, true
+}
+
+// SetCreatedAt sets field value
+func (o *WorkflowTrigger) SetCreatedAt(v int64) {
+	o.CreatedAt = v
+}
+
+// GetUpdatedAt returns the UpdatedAt field value
+func (o *WorkflowTrigger) GetUpdatedAt() int64 {
+	if o == nil {
+		var ret int64
+		return ret
+	}
+
+	return o.UpdatedAt
+}
+
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
+// and a boolean to check if the value has been set.
+func (o *WorkflowTrigger) GetUpdatedAtOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.UpdatedAt, true
+}
+
+// SetUpdatedAt sets field value
+func (o *WorkflowTrigger) SetUpdatedAt(v int64) {
+	o.UpdatedAt = v
 }
 
 // GetExecutionRef returns the ExecutionRef field value
@@ -128,52 +186,108 @@ func (o *WorkflowTrigger) SetSourceRef(v string) {
 	o.SourceRef = v
 }
 
-// GetCreatedAt returns the CreatedAt field value
-func (o *WorkflowTrigger) GetCreatedAt() int64 {
-	if o == nil {
-		var ret int64
-		return ret
-	}
-
-	return o.CreatedAt
-}
-
-// GetCreatedAtOk returns a tuple with the CreatedAt field value
-// and a boolean to check if the value has been set.
-func (o *WorkflowTrigger) GetCreatedAtOk() (*int64, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.CreatedAt, true
-}
-
-// SetCreatedAt sets field value
-func (o *WorkflowTrigger) SetCreatedAt(v int64) {
-	o.CreatedAt = v
-}
-
-// GetLabel returns the Label field value
-func (o *WorkflowTrigger) GetLabel() string {
+// GetDefinitionRef returns the DefinitionRef field value
+func (o *WorkflowTrigger) GetDefinitionRef() string {
 	if o == nil {
 		var ret string
 		return ret
 	}
 
-	return o.Label
+	return o.DefinitionRef
 }
 
-// GetLabelOk returns a tuple with the Label field value
+// GetDefinitionRefOk returns a tuple with the DefinitionRef field value
 // and a boolean to check if the value has been set.
-func (o *WorkflowTrigger) GetLabelOk() (*string, bool) {
+func (o *WorkflowTrigger) GetDefinitionRefOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Label, true
+	return &o.DefinitionRef, true
 }
 
-// SetLabel sets field value
-func (o *WorkflowTrigger) SetLabel(v string) {
-	o.Label = v
+// SetDefinitionRef sets field value
+func (o *WorkflowTrigger) SetDefinitionRef(v string) {
+	o.DefinitionRef = v
+}
+
+// GetName returns the Name field value
+func (o *WorkflowTrigger) GetName() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.Name
+}
+
+// GetNameOk returns a tuple with the Name field value
+// and a boolean to check if the value has been set.
+func (o *WorkflowTrigger) GetNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Name, true
+}
+
+// SetName sets field value
+func (o *WorkflowTrigger) SetName(v string) {
+	o.Name = v
+}
+
+// GetStatus returns the Status field value
+func (o *WorkflowTrigger) GetStatus() WorkflowExecutionStatus {
+	if o == nil {
+		var ret WorkflowExecutionStatus
+		return ret
+	}
+
+	return o.Status
+}
+
+// GetStatusOk returns a tuple with the Status field value
+// and a boolean to check if the value has been set.
+func (o *WorkflowTrigger) GetStatusOk() (*WorkflowExecutionStatus, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Status, true
+}
+
+// SetStatus sets field value
+func (o *WorkflowTrigger) SetStatus(v WorkflowExecutionStatus) {
+	o.Status = v
+}
+
+// GetArchived returns the Archived field value if set, zero value otherwise.
+func (o *WorkflowTrigger) GetArchived() bool {
+	if o == nil || IsNil(o.Archived) {
+		var ret bool
+		return ret
+	}
+	return *o.Archived
+}
+
+// GetArchivedOk returns a tuple with the Archived field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowTrigger) GetArchivedOk() (*bool, bool) {
+	if o == nil || IsNil(o.Archived) {
+		return nil, false
+	}
+	return o.Archived, true
+}
+
+// HasArchived returns a boolean if a field has been set.
+func (o *WorkflowTrigger) HasArchived() bool {
+	if o != nil && !IsNil(o.Archived) {
+		return true
+	}
+
+	return false
+}
+
+// SetArchived gets a reference to the given bool and assigns it to the Archived field.
+func (o *WorkflowTrigger) SetArchived(v bool) {
+	o.Archived = &v
 }
 
 func (o WorkflowTrigger) MarshalJSON() ([]byte, error) {
@@ -186,11 +300,17 @@ func (o WorkflowTrigger) MarshalJSON() ([]byte, error) {
 
 func (o WorkflowTrigger) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	toSerialize["created_at"] = o.CreatedAt
+	toSerialize["updated_at"] = o.UpdatedAt
 	toSerialize["execution_ref"] = o.ExecutionRef
 	toSerialize["entrypoint_type"] = o.EntrypointType
 	toSerialize["source_ref"] = o.SourceRef
-	toSerialize["created_at"] = o.CreatedAt
-	toSerialize["label"] = o.Label
+	toSerialize["definition_ref"] = o.DefinitionRef
+	toSerialize["name"] = o.Name
+	toSerialize["status"] = o.Status
+	if !IsNil(o.Archived) {
+		toSerialize["archived"] = o.Archived
+	}
 	return toSerialize, nil
 }
 
@@ -199,11 +319,14 @@ func (o *WorkflowTrigger) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
+		"created_at",
+		"updated_at",
 		"execution_ref",
 		"entrypoint_type",
 		"source_ref",
-		"created_at",
-		"label",
+		"definition_ref",
+		"name",
+		"status",
 	}
 
 	allProperties := make(map[string]interface{})

@@ -24,8 +24,8 @@ type CreateOrUpdateWorkflowEntrypointRequest struct {
 	// the ID of the workflow definition
 	WorkflowDefinitionRef string                     `json:"workflow_definition_ref"`
 	AppLocation           WorkflowEntrypointLocation `json:"app_location"`
-	// optional filter that can be used to limit where the entrypoint is shown, e.g. for cases this can be the case template, for reports this can be the report  definition, etc.
-	LocationFilter *string `json:"location_filter,omitempty"`
+	// optional filters that can be used to limit where the entrypoint is shown, e.g. for cases this can be the case template, for reports this can be the report  definition, etc.
+	LocationFilters []WorkflowEntrypointFilter `json:"location_filters,omitempty"`
 	// Optional icon of the entrypoint
 	Icon *string `json:"icon,omitempty"`
 	// a map of values, where the key and values are strings
@@ -104,36 +104,36 @@ func (o *CreateOrUpdateWorkflowEntrypointRequest) SetAppLocation(v WorkflowEntry
 	o.AppLocation = v
 }
 
-// GetLocationFilter returns the LocationFilter field value if set, zero value otherwise.
-func (o *CreateOrUpdateWorkflowEntrypointRequest) GetLocationFilter() string {
-	if o == nil || IsNil(o.LocationFilter) {
-		var ret string
+// GetLocationFilters returns the LocationFilters field value if set, zero value otherwise.
+func (o *CreateOrUpdateWorkflowEntrypointRequest) GetLocationFilters() []WorkflowEntrypointFilter {
+	if o == nil || IsNil(o.LocationFilters) {
+		var ret []WorkflowEntrypointFilter
 		return ret
 	}
-	return *o.LocationFilter
+	return o.LocationFilters
 }
 
-// GetLocationFilterOk returns a tuple with the LocationFilter field value if set, nil otherwise
+// GetLocationFiltersOk returns a tuple with the LocationFilters field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CreateOrUpdateWorkflowEntrypointRequest) GetLocationFilterOk() (*string, bool) {
-	if o == nil || IsNil(o.LocationFilter) {
+func (o *CreateOrUpdateWorkflowEntrypointRequest) GetLocationFiltersOk() ([]WorkflowEntrypointFilter, bool) {
+	if o == nil || IsNil(o.LocationFilters) {
 		return nil, false
 	}
-	return o.LocationFilter, true
+	return o.LocationFilters, true
 }
 
-// HasLocationFilter returns a boolean if a field has been set.
-func (o *CreateOrUpdateWorkflowEntrypointRequest) HasLocationFilter() bool {
-	if o != nil && !IsNil(o.LocationFilter) {
+// HasLocationFilters returns a boolean if a field has been set.
+func (o *CreateOrUpdateWorkflowEntrypointRequest) HasLocationFilters() bool {
+	if o != nil && !IsNil(o.LocationFilters) {
 		return true
 	}
 
 	return false
 }
 
-// SetLocationFilter gets a reference to the given string and assigns it to the LocationFilter field.
-func (o *CreateOrUpdateWorkflowEntrypointRequest) SetLocationFilter(v string) {
-	o.LocationFilter = &v
+// SetLocationFilters gets a reference to the given []WorkflowEntrypointFilter and assigns it to the LocationFilters field.
+func (o *CreateOrUpdateWorkflowEntrypointRequest) SetLocationFilters(v []WorkflowEntrypointFilter) {
+	o.LocationFilters = v
 }
 
 // GetIcon returns the Icon field value if set, zero value otherwise.
@@ -236,8 +236,8 @@ func (o CreateOrUpdateWorkflowEntrypointRequest) ToMap() (map[string]interface{}
 	toSerialize := map[string]interface{}{}
 	toSerialize["workflow_definition_ref"] = o.WorkflowDefinitionRef
 	toSerialize["app_location"] = o.AppLocation
-	if !IsNil(o.LocationFilter) {
-		toSerialize["location_filter"] = o.LocationFilter
+	if !IsNil(o.LocationFilters) {
+		toSerialize["location_filters"] = o.LocationFilters
 	}
 	if !IsNil(o.Icon) {
 		toSerialize["icon"] = o.Icon

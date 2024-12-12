@@ -39,7 +39,7 @@ func TestAccWorkflowDefinitionResource(t *testing.T) {
 				ResourceName:      "udoma_workflow_definition.test",
 				ImportState:       true,
 				ImportStateVerify: true,
-				// The last_updated attribute does not exist in the HashiCups
+				// The last_updated attribute does not exist in the Udoma
 				// API, therefore there is no value for it during import.
 				ImportStateVerifyIgnore: []string{"last_updated"},
 			},
