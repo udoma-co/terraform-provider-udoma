@@ -694,6 +694,7 @@ Class | Method | HTTP request | Description
  - [WorkflowDefinitionAttributesPartial](docs/WorkflowDefinitionAttributesPartial.md)
  - [WorkflowEntrypoint](docs/WorkflowEntrypoint.md)
  - [WorkflowEntrypointAttributesPartial](docs/WorkflowEntrypointAttributesPartial.md)
+ - [WorkflowEntrypointFilter](docs/WorkflowEntrypointFilter.md)
  - [WorkflowEntrypointLocation](docs/WorkflowEntrypointLocation.md)
  - [WorkflowExecution](docs/WorkflowExecution.md)
  - [WorkflowExecutionResponse](docs/WorkflowExecutionResponse.md)

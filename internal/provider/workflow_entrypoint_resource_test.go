@@ -17,8 +17,14 @@ func TestAccWorkflowEntrypointResource(t *testing.T) {
 resource udoma_workflow_entrypoint "test" {
 	workflow_definition_ref = udoma_workflow_definition.test.id
 	app_location 			= "case"
-	location_filter 		= "ct-JsDnoGWuXrFXqJWNFGBXUN"
 	icon 					= "fa-solid fa-file-alt"
+	
+	location_filters 		= [
+		{ 
+			attribute = "template_ref"
+			value 	  = "ct-JsDnoGWuXrFXqJWNFGBXUN"
+		}
+	]
 
 	label = {
 		en = "Start workflow"
@@ -35,7 +41,7 @@ EOF
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify base addtributes
 					resource.TestCheckResourceAttr("udoma_workflow_entrypoint.test", "app_location", "case"),
-					resource.TestCheckResourceAttr("udoma_workflow_entrypoint.test", "location_filter", "ct-JsDnoGWuXrFXqJWNFGBXUN"),
+					resource.TestCheckResourceAttr("udoma_workflow_entrypoint.test", "location_filters.0.value", "ct-JsDnoGWuXrFXqJWNFGBXUN"),
 					resource.TestCheckResourceAttr("udoma_workflow_entrypoint.test", "icon", "fa-solid fa-file-alt"),
 
 					// Verify label
@@ -57,7 +63,7 @@ EOF
 				ResourceName:      "udoma_workflow_entrypoint.test",
 				ImportState:       true,
 				ImportStateVerify: true,
-				// The last_updated attribute does not exist in the HashiCups
+				// The last_updated attribute does not exist in the Udoma
 				// API, therefore there is no value for it during import.
 				ImportStateVerifyIgnore: []string{"last_updated"},
 			},

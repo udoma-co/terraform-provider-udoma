@@ -33,16 +33,21 @@ type workflowEntrypoint struct {
 
 // workflowEntrypointModel describes the resource data model.
 type workflowEntrypointModel struct {
-	ID                    types.String `tfsdk:"id"`
-	LastUpdated           types.String `tfsdk:"last_updated"`
-	CreatedAt             types.Int64  `tfsdk:"created_at"`
-	UpdatedAt             types.Int64  `tfsdk:"updated_at"`
-	WorkflowDefinitionRef types.String `tfsdk:"workflow_definition_ref"`
-	AppLocation           types.String `tfsdk:"app_location"`
-	LocationFilter        types.String `tfsdk:"location_filter"`
-	Icon                  types.String `tfsdk:"icon"`
-	Label                 types.Map    `tfsdk:"label"`
-	InitScript            types.String `tfsdk:"init_script"`
+	ID                    types.String               `tfsdk:"id"`
+	LastUpdated           types.String               `tfsdk:"last_updated"`
+	CreatedAt             types.Int64                `tfsdk:"created_at"`
+	UpdatedAt             types.Int64                `tfsdk:"updated_at"`
+	WorkflowDefinitionRef types.String               `tfsdk:"workflow_definition_ref"`
+	AppLocation           types.String               `tfsdk:"app_location"`
+	LocationFilters       []workflowEntrypointFilter `tfsdk:"location_filters"`
+	Icon                  types.String               `tfsdk:"icon"`
+	Label                 types.Map                  `tfsdk:"label"`
+	InitScript            types.String               `tfsdk:"init_script"`
+}
+
+type workflowEntrypointFilter struct {
+	Attribute types.String `tfsdk:"attribute"`
+	Value     types.String `tfsdk:"value"`
 }
 
 func (r *workflowEntrypoint) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -84,11 +89,10 @@ func (r *workflowEntrypoint) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:    true,
 				Description: "The location in the webapp where the workflow can be strated from",
 			},
-			"location_filter": schema.StringAttribute{
-				Optional: true,
-				Description: `Optional filter that can be used to limit where the entrypoint is shown, e.g.
-        for cases this can be the case template, for reports this can be the report 
-        definition, etc.`,
+			"location_filters": schema.ListNestedAttribute{
+				Optional:     true,
+				NestedObject: workflowEntrypointFilterNestedSchema(),
+				Description:  "Filters that can be used to limit where the entrypoint is shown",
 			},
 			"icon": schema.StringAttribute{
 				Optional:    true,
@@ -102,6 +106,21 @@ func (r *workflowEntrypoint) Schema(ctx context.Context, req resource.SchemaRequ
 			"init_script": schema.StringAttribute{
 				Optional:    true,
 				Description: "Optional JS script to be executed before the workflow is started",
+			},
+		},
+	}
+}
+
+func workflowEntrypointFilterNestedSchema() schema.NestedAttributeObject {
+	return schema.NestedAttributeObject{
+		Attributes: map[string]schema.Attribute{
+			"attribute": schema.StringAttribute{
+				Required:    true,
+				Description: "The ID of the entity that will be referenced",
+			},
+			"value": schema.StringAttribute{
+				Required:    true,
+				Description: "The type of the entity that will be referenced",
 			},
 		},
 	}
@@ -277,6 +296,11 @@ func (r *workflowEntrypoint) ImportState(ctx context.Context, req resource.Impor
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
 
+func (item *workflowEntrypointFilter) fromApi(resp *api.WorkflowEntrypointFilter) {
+	item.Attribute = types.StringValue(resp.Attribute)
+	item.Value = types.StringValue(resp.Value)
+}
+
 func (model *workflowEntrypointModel) fromAPI(workflowEntrypoint *api.WorkflowEntrypoint) error {
 
 	if workflowEntrypoint == nil {
@@ -288,7 +312,6 @@ func (model *workflowEntrypointModel) fromAPI(workflowEntrypoint *api.WorkflowEn
 	model.UpdatedAt = types.Int64Value(workflowEntrypoint.UpdatedAt)
 	model.WorkflowDefinitionRef = types.StringValue(workflowEntrypoint.WorkflowDefinitionRef)
 	model.AppLocation = types.StringValue(string(workflowEntrypoint.AppLocation))
-	model.LocationFilter = omittableStringValue(workflowEntrypoint.LocationFilter, model.LocationFilter)
 	model.Icon = omittableStringValue(workflowEntrypoint.Icon, model.Icon)
 
 	in := stringMapToValueMap(workflowEntrypoint.Label)
@@ -300,18 +323,37 @@ func (model *workflowEntrypointModel) fromAPI(workflowEntrypoint *api.WorkflowEn
 
 	model.InitScript = omittableStringValue(workflowEntrypoint.InitScript, model.InitScript)
 
+	for i := range workflowEntrypoint.LocationFilters {
+		if len(model.LocationFilters) <= i {
+			model.LocationFilters = append(model.LocationFilters, workflowEntrypointFilter{})
+		}
+		model.LocationFilters[i].fromApi(&workflowEntrypoint.LocationFilters[i])
+	}
+
 	return nil
+}
+
+func (filter *workflowEntrypointFilter) toApiRequest() *api.WorkflowEntrypointFilter {
+	return &api.WorkflowEntrypointFilter{
+		Attribute: filter.Attribute.ValueString(),
+		Value:     filter.Value.ValueString(),
+	}
 }
 
 func (model *workflowEntrypointModel) toAPIRequest() (api.CreateOrUpdateWorkflowEntrypointRequest, error) {
 
 	workflowEntrypoint := api.CreateOrUpdateWorkflowEntrypointRequest{
 		WorkflowDefinitionRef: model.WorkflowDefinitionRef.ValueString(),
-		LocationFilter:        model.LocationFilter.ValueStringPointer(),
 		Icon:                  model.Icon.ValueStringPointer(),
 		Label:                 modelMapToStringMap(model.Label),
 		InitScript:            model.InitScript.ValueStringPointer(),
 	}
+
+	filters := make([]api.WorkflowEntrypointFilter, len(model.LocationFilters))
+	for i := range model.LocationFilters {
+		filters[i] = *model.LocationFilters[i].toApiRequest()
+	}
+	workflowEntrypoint.LocationFilters = filters
 
 	if !model.AppLocation.IsNull() && !model.AppLocation.IsUnknown() {
 		location := api.WorkflowEntrypointLocation(model.AppLocation.ValueString())

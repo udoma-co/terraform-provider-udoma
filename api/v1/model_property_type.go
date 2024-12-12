@@ -24,6 +24,7 @@ const (
 	PROPERTYTYPE_ATTIC              PropertyType = "ATTIC"
 	PROPERTYTYPE_BASEMENT           PropertyType = "BASEMENT"
 	PROPERTYTYPE_BUILDING           PropertyType = "BUILDING"
+	PROPERTYTYPE_BUILDING_COMPLEX   PropertyType = "BUILDING_COMPLEX"
 	PROPERTYTYPE_COMMERCIAL_SPACE   PropertyType = "COMMERCIAL_SPACE"
 	PROPERTYTYPE_GARAGE             PropertyType = "GARAGE"
 	PROPERTYTYPE_GARDEN             PropertyType = "GARDEN"
@@ -42,6 +43,7 @@ var AllowedPropertyTypeEnumValues = []PropertyType{
 	"ATTIC",
 	"BASEMENT",
 	"BUILDING",
+	"BUILDING_COMPLEX",
 	"COMMERCIAL_SPACE",
 	"GARAGE",
 	"GARDEN",
