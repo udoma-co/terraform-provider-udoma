@@ -58,6 +58,7 @@ Optional:
 - `label` (Map of String) a map of values, where the key and values are strings
 - `placeholder` (Map of String) a map of values, where the key and values are strings
 - `propagate_changes` (Boolean) if true, changes to the input will be propagated to event listeners for the custom form
+- `readonly` (Boolean) if true, the user will not be able to change the value of this input
 - `required` (Boolean) if true, the user will be required to provide a value
 - `target` (String) the attribute name to use when exporting the result of this input
 - `view_label` (Map of String) a map of values, where the key and values are strings
@@ -98,7 +99,6 @@ Optional:
 - `min_size` (Number) the minimum number of items that must be submitted in the group (only used for repeat groups)
 - `target` (String) the attribute name to use when exporting the result of this group (only used for repeat groups)
 - `top_divider` (Boolean) if true, a divider will be displayed above the group
-- `use_item_group` (Boolean) if true, the inputs will be displayed in a group, otherwise they will be displayed in a row
 
 <a id="nestedatt--form_definition--groups--items"></a>
 ### Nested Schema for `form_definition.groups.items`

@@ -37,7 +37,6 @@ type CustomFormGroupModel struct {
 	Target        types.String          `tfsdk:"target"`
 	TopDivider    types.Bool            `tfsdk:"top_divider"`
 	BottomDivider types.Bool            `tfsdk:"bottom_divider"`
-	UseItemGroup  types.Bool            `tfsdk:"use_item_group"`
 	MinSize       types.Int64           `tfsdk:"min_size"`
 }
 
@@ -69,6 +68,7 @@ type CustomFormInputModel struct {
 	Type             types.String               `tfsdk:"type"`
 	DefaultValue     types.String               `tfsdk:"default_value"`
 	Required         types.Bool                 `tfsdk:"required"`
+	Readonly         types.Bool                 `tfsdk:"readonly"`
 	Ephemeral        types.Bool                 `tfsdk:"ephemeral"`
 	PropagateChanges types.Bool                 `tfsdk:"propagate_changes"`
 	Target           types.String               `tfsdk:"target"`
@@ -167,10 +167,6 @@ func customFormGroupNestedSchema() schema.NestedAttributeObject {
 				Optional:    true,
 				Description: "if true, a divider will be displayed below the group",
 			},
-			"use_item_group": schema.BoolAttribute{
-				Optional:    true,
-				Description: "if true, the inputs will be displayed in a group, otherwise they will be displayed in a row",
-			},
 			"min_size": schema.Int64Attribute{
 				Optional:    true,
 				Description: "the minimum number of items that must be submitted in the group (only used for repeat groups)",
@@ -228,6 +224,10 @@ func customFormInputNestedSchema() schema.NestedAttributeObject {
 			"required": schema.BoolAttribute{
 				Optional:    true,
 				Description: "if true, the user will be required to provide a value",
+			},
+			"readonly": schema.BoolAttribute{
+				Optional:    true,
+				Description: "if true, the user will not be able to change the value of this input",
 			},
 			"ephemeral": schema.BoolAttribute{
 				Optional:    true,
@@ -387,7 +387,6 @@ func (group *CustomFormGroupModel) toApiRequest() *v1.FormGroup {
 		Target:        group.Target.ValueStringPointer(),
 		TopDivider:    group.TopDivider.ValueBoolPointer(),
 		BottomDivider: group.BottomDivider.ValueBoolPointer(),
-		UseItemGroup:  group.UseItemGroup.ValueBoolPointer(),
 		MinSize:       &minSize,
 	}
 }
@@ -427,9 +426,6 @@ func (group *CustomFormGroupModel) fromApiResponse(resp *v1.FormGroup) (diags di
 	if resp.BottomDivider != nil {
 		group.BottomDivider = types.BoolValue(*resp.BottomDivider)
 	}
-	if resp.UseItemGroup != nil {
-		group.UseItemGroup = types.BoolValue(*resp.UseItemGroup)
-	}
 	if resp.MinSize != nil {
 		group.MinSize = types.Int64Value(int64(idp32(resp.MinSize)))
 	}
@@ -467,6 +463,7 @@ func (input *CustomFormInputModel) toApiRequest() *v1.FormInput {
 		Type:             v1.FormInputType(input.Type.ValueString()),
 		DefaultValue:     input.DefaultValue.ValueStringPointer(),
 		Required:         input.Required.ValueBoolPointer(),
+		Readonly:         input.Readonly.ValueBoolPointer(),
 		Ephemeral:        input.Ephemeral.ValueBoolPointer(),
 		PropagateChanges: input.PropagateChanges.ValueBoolPointer(),
 		Target:           input.Target.ValueStringPointer(),
@@ -523,6 +520,9 @@ func (input *CustomFormInputModel) fromApiResponse(resp *v1.FormInput) (diags di
 	}
 	if resp.Required != nil {
 		input.Required = types.BoolValue(*resp.Required)
+	}
+	if resp.Readonly != nil {
+		input.Readonly = types.BoolValue(*resp.Readonly)
 	}
 	if resp.PropagateChanges != nil {
 		input.PropagateChanges = types.BoolValue(*resp.PropagateChanges)

@@ -36,8 +36,6 @@ type FormGroup struct {
 	TopDivider *bool `json:"top_divider,omitempty"`
 	// if true, a divider will be displayed below the group
 	BottomDivider *bool `json:"bottom_divider,omitempty"`
-	// if true, the inputs will be displayed in a group, otherwise they will be displayed in a row
-	UseItemGroup *bool `json:"use_item_group,omitempty"`
 	// the minimum number of items that must be submitted in the group (only used for repeat groups)
 	MinSize *int32 `json:"min_size,omitempty"`
 }
@@ -296,38 +294,6 @@ func (o *FormGroup) SetBottomDivider(v bool) {
 	o.BottomDivider = &v
 }
 
-// GetUseItemGroup returns the UseItemGroup field value if set, zero value otherwise.
-func (o *FormGroup) GetUseItemGroup() bool {
-	if o == nil || IsNil(o.UseItemGroup) {
-		var ret bool
-		return ret
-	}
-	return *o.UseItemGroup
-}
-
-// GetUseItemGroupOk returns a tuple with the UseItemGroup field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *FormGroup) GetUseItemGroupOk() (*bool, bool) {
-	if o == nil || IsNil(o.UseItemGroup) {
-		return nil, false
-	}
-	return o.UseItemGroup, true
-}
-
-// HasUseItemGroup returns a boolean if a field has been set.
-func (o *FormGroup) HasUseItemGroup() bool {
-	if o != nil && !IsNil(o.UseItemGroup) {
-		return true
-	}
-
-	return false
-}
-
-// SetUseItemGroup gets a reference to the given bool and assigns it to the UseItemGroup field.
-func (o *FormGroup) SetUseItemGroup(v bool) {
-	o.UseItemGroup = &v
-}
-
 // GetMinSize returns the MinSize field value if set, zero value otherwise.
 func (o *FormGroup) GetMinSize() int32 {
 	if o == nil || IsNil(o.MinSize) {
@@ -387,9 +353,6 @@ func (o FormGroup) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.BottomDivider) {
 		toSerialize["bottom_divider"] = o.BottomDivider
-	}
-	if !IsNil(o.UseItemGroup) {
-		toSerialize["use_item_group"] = o.UseItemGroup
 	}
 	if !IsNil(o.MinSize) {
 		toSerialize["min_size"] = o.MinSize
