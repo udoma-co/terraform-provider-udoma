@@ -38,6 +38,8 @@ type FormInput struct {
 	DefaultValue *string `json:"default_value,omitempty"`
 	// If true, the user will be required to provide a valid value for this input
 	Required *bool `json:"required,omitempty"`
+	// If true, the user will not be able to change the value of this input
+	Readonly *bool `json:"readonly,omitempty"`
 	// If true, the value of the input will not be persisted. This is useful for checkboxes for accepting terms and conditions, etc.
 	Ephemeral *bool `json:"ephemeral,omitempty"`
 	// If true, changes to the input will be propagated to event listeners for  the custom form.
@@ -339,6 +341,38 @@ func (o *FormInput) SetRequired(v bool) {
 	o.Required = &v
 }
 
+// GetReadonly returns the Readonly field value if set, zero value otherwise.
+func (o *FormInput) GetReadonly() bool {
+	if o == nil || IsNil(o.Readonly) {
+		var ret bool
+		return ret
+	}
+	return *o.Readonly
+}
+
+// GetReadonlyOk returns a tuple with the Readonly field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *FormInput) GetReadonlyOk() (*bool, bool) {
+	if o == nil || IsNil(o.Readonly) {
+		return nil, false
+	}
+	return o.Readonly, true
+}
+
+// HasReadonly returns a boolean if a field has been set.
+func (o *FormInput) HasReadonly() bool {
+	if o != nil && !IsNil(o.Readonly) {
+		return true
+	}
+
+	return false
+}
+
+// SetReadonly gets a reference to the given bool and assigns it to the Readonly field.
+func (o *FormInput) SetReadonly(v bool) {
+	o.Readonly = &v
+}
+
 // GetEphemeral returns the Ephemeral field value if set, zero value otherwise.
 func (o *FormInput) GetEphemeral() bool {
 	if o == nil || IsNil(o.Ephemeral) {
@@ -467,6 +501,9 @@ func (o FormInput) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Required) {
 		toSerialize["required"] = o.Required
+	}
+	if !IsNil(o.Readonly) {
+		toSerialize["readonly"] = o.Readonly
 	}
 	if !IsNil(o.Ephemeral) {
 		toSerialize["ephemeral"] = o.Ephemeral
