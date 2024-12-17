@@ -196,7 +196,7 @@ func (r *CaseTemplate) Create(ctx context.Context, req resource.CreateRequest, r
 		return
 	}
 
-	newEndpoint, _, err := r.client.GetApi().CreateCaseTemplate(ctx).CreateOrUpdateCaseTemplateRequest(createReq).Execute()
+	newTemplate, _, err := r.client.GetApi().CreateCaseTemplate(ctx).CreateOrUpdateCaseTemplateRequest(createReq).Execute()
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Creating Case Template",
@@ -206,7 +206,7 @@ func (r *CaseTemplate) Create(ctx context.Context, req resource.CreateRequest, r
 	}
 
 	// update the tf struct with the new values
-	if err := plan.fromAPI(newEndpoint); err != nil {
+	if err := plan.fromAPI(newTemplate); err != nil {
 		resp.Diagnostics.AddError(
 			"Error Creating Case Template",
 			"Could not process API response, unexpected error: "+err.Error(),
@@ -286,7 +286,7 @@ func (r *CaseTemplate) Update(ctx context.Context, req resource.UpdateRequest, r
 
 	id := plan.ID.ValueString()
 
-	newEndpoint, _, err := r.client.GetApi().UpdateCaseTemplate(ctx, id).CreateOrUpdateCaseTemplateRequest(createReq).Execute()
+	updatedCaseTemplate, _, err := r.client.GetApi().UpdateCaseTemplate(ctx, id).CreateOrUpdateCaseTemplateRequest(createReq).Execute()
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Updating Case Template",
@@ -296,7 +296,7 @@ func (r *CaseTemplate) Update(ctx context.Context, req resource.UpdateRequest, r
 	}
 
 	// update the tf struct with the new values
-	if err := plan.fromAPI(newEndpoint); err != nil {
+	if err := plan.fromAPI(updatedCaseTemplate); err != nil {
 		resp.Diagnostics.AddError(
 			"Error Updating Case Template",
 			"Could not process API response, unexpected error: "+err.Error(),

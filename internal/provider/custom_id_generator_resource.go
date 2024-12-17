@@ -209,7 +209,7 @@ func (r *customIDGenerator) Update(ctx context.Context, req resource.UpdateReque
 
 	id := plan.ID.ValueString()
 
-	newEndpoint, _, err := r.client.GetApi().UpdateCustomIDGenerator(ctx, id).CreateOrUpdateCustomIDGeneratorRequest(createReq).Execute()
+	updatedCustomIDGenerator, _, err := r.client.GetApi().UpdateCustomIDGenerator(ctx, id).CreateOrUpdateCustomIDGeneratorRequest(createReq).Execute()
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Updating Custom ID Generator",
@@ -219,7 +219,7 @@ func (r *customIDGenerator) Update(ctx context.Context, req resource.UpdateReque
 	}
 
 	// update the tf struct with the new values
-	if err := plan.fromAPI(newEndpoint); err != nil {
+	if err := plan.fromAPI(updatedCustomIDGenerator); err != nil {
 		resp.Diagnostics.AddError(
 			"Error Updating Custom ID Generator",
 			"Could not process API response, unexpected error: "+err.Error(),

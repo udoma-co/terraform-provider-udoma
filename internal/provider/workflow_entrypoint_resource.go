@@ -158,7 +158,7 @@ func (r *workflowEntrypoint) Create(ctx context.Context, req resource.CreateRequ
 
 	createReq, _ := plan.toAPIRequest()
 
-	newEndpoint, _, err := r.client.GetApi().CreateWorkflowEntrypoint(ctx, createReq.WorkflowDefinitionRef).CreateOrUpdateWorkflowEntrypointRequest(createReq).Execute()
+	newlyCreatedWorkflowEntrypoint, _, err := r.client.GetApi().CreateWorkflowEntrypoint(ctx, createReq.WorkflowDefinitionRef).CreateOrUpdateWorkflowEntrypointRequest(createReq).Execute()
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Creating Workflow Entrypoint",
@@ -168,7 +168,7 @@ func (r *workflowEntrypoint) Create(ctx context.Context, req resource.CreateRequ
 	}
 
 	// update the tf struct with the new values
-	if err := plan.fromAPI(newEndpoint); err != nil {
+	if err := plan.fromAPI(newlyCreatedWorkflowEntrypoint); err != nil {
 		resp.Diagnostics.AddError(
 			"Error Creating Workflow Entrypoint",
 			"Could not process API response, unexpected error: "+err.Error(),
@@ -240,7 +240,7 @@ func (r *workflowEntrypoint) Update(ctx context.Context, req resource.UpdateRequ
 
 	id := plan.ID.ValueString()
 
-	newEndpoint, _, err := r.client.GetApi().UpdateWorkflowEntrypoint(ctx, id).CreateOrUpdateWorkflowEntrypointRequest(createReq).Execute()
+	updatedWorkflowEntrypoint, _, err := r.client.GetApi().UpdateWorkflowEntrypoint(ctx, id).CreateOrUpdateWorkflowEntrypointRequest(createReq).Execute()
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Updating Workflow Entrypoint",
@@ -250,7 +250,7 @@ func (r *workflowEntrypoint) Update(ctx context.Context, req resource.UpdateRequ
 	}
 
 	// update the tf struct with the new values
-	if err := plan.fromAPI(newEndpoint); err != nil {
+	if err := plan.fromAPI(updatedWorkflowEntrypoint); err != nil {
 		resp.Diagnostics.AddError(
 			"Error Updating Workflow Entrypoint",
 			"Could process API response, unexpected error: "+err.Error(),
