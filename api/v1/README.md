@@ -329,6 +329,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryWorkflowDefinitions**](docs/DefaultAPI.md#queryworkflowdefinitions) | **Post** /workflows/definitions | Query all workflow definitions
 *DefaultAPI* | [**QueryWorkflowExecutions**](docs/DefaultAPI.md#queryworkflowexecutions) | **Post** /workflows/executions | Get a list of all workflow executions, matching the criteria in the request 
 *DefaultAPI* | [**RequestESignaturesForDocument**](docs/DefaultAPI.md#requestesignaturesfordocument) | **Post** /document-generation/documents/{docID}/esignature | Trigger a signing request for a document
+*DefaultAPI* | [**RerunReportExecution**](docs/DefaultAPI.md#rerunreportexecution) | **Post** /report/executions/{executionID}/rerun | Rerun the report execution with the same parameters
 *DefaultAPI* | [**ResetConnectorQuery**](docs/DefaultAPI.md#resetconnectorquery) | **Put** /connector/query/{queryID}/reset | Get the query for the current account
 *DefaultAPI* | [**SendAppointmentScheduleInvitation**](docs/DefaultAPI.md#sendappointmentscheduleinvitation) | **Post** /calendar/appointments/schedule/{scheduleID}/invitation | Send invitation to recepients after creating a new appointment schedule
 *DefaultAPI* | [**SendNotification**](docs/DefaultAPI.md#sendnotification) | **Post** /notification/{notificationName}/send | Send notification
@@ -529,6 +530,7 @@ Class | Method | HTTP request | Description
  - [EntityGeneratedCodeAttributePartial](docs/EntityGeneratedCodeAttributePartial.md)
  - [EntityGeneratedIDAttributePartial](docs/EntityGeneratedIDAttributePartial.md)
  - [EntityNameAttributePartial](docs/EntityNameAttributePartial.md)
+ - [EntityReference](docs/EntityReference.md)
  - [EntityTimestampsAttributesPartial](docs/EntityTimestampsAttributesPartial.md)
  - [ExecuteCommentTemplateRequest](docs/ExecuteCommentTemplateRequest.md)
  - [ExecuteCommentTemplateResponse](docs/ExecuteCommentTemplateResponse.md)
@@ -657,7 +659,8 @@ Class | Method | HTTP request | Description
  - [ReportExecution](docs/ReportExecution.md)
  - [ReportExecutionStatusEnum](docs/ReportExecutionStatusEnum.md)
  - [ReportResultSchema](docs/ReportResultSchema.md)
- - [ReportResultSchemaProperty](docs/ReportResultSchemaProperty.md)
+ - [ReportResultSchemaAttribute](docs/ReportResultSchemaAttribute.md)
+ - [ReportResultTypeEnum](docs/ReportResultTypeEnum.md)
  - [SendNotificationRequest](docs/SendNotificationRequest.md)
  - [ServiceCategoryEnum](docs/ServiceCategoryEnum.md)
  - [ServiceProvider](docs/ServiceProvider.md)

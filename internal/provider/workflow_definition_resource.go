@@ -164,7 +164,7 @@ func (r *workflowDefinition) Create(ctx context.Context, req resource.CreateRequ
 		return
 	}
 
-	newEndpoint, _, err := r.client.GetApi().CreateWorkflowDefinition(ctx).CreateOrUpdateWorkflowDefinitionRequest(createReq).Execute()
+	newlyCreatedWorkflowDefinition, _, err := r.client.GetApi().CreateWorkflowDefinition(ctx).CreateOrUpdateWorkflowDefinitionRequest(createReq).Execute()
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Creating Workflow Definition",
@@ -174,7 +174,7 @@ func (r *workflowDefinition) Create(ctx context.Context, req resource.CreateRequ
 	}
 
 	// update the tf struct with the new values
-	if err := plan.fromAPI(newEndpoint); err != nil {
+	if err := plan.fromAPI(newlyCreatedWorkflowDefinition); err != nil {
 		resp.Diagnostics.AddError(
 			"Error Creating Workflow Definition",
 			"Could not process API response, unexpected error: "+err.Error(),
@@ -251,7 +251,7 @@ func (r *workflowDefinition) Update(ctx context.Context, req resource.UpdateRequ
 
 	id := plan.ID.ValueString()
 
-	newEndpoint, _, err := r.client.GetApi().UpdateWorkflowDefinition(ctx, id).CreateOrUpdateWorkflowDefinitionRequest(createReq).Execute()
+	updatedWorkflowDefinition, _, err := r.client.GetApi().UpdateWorkflowDefinition(ctx, id).CreateOrUpdateWorkflowDefinitionRequest(createReq).Execute()
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Updating Workflow Definition",
@@ -261,7 +261,7 @@ func (r *workflowDefinition) Update(ctx context.Context, req resource.UpdateRequ
 	}
 
 	// update the tf struct with the new values
-	if err := plan.fromAPI(newEndpoint); err != nil {
+	if err := plan.fromAPI(updatedWorkflowDefinition); err != nil {
 		resp.Diagnostics.AddError(
 			"Error Updating Workflow Definition",
 			"Could not process API response, unexpected error: "+err.Error(),

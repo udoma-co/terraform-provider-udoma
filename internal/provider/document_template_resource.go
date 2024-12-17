@@ -257,7 +257,7 @@ func (r *documentTemplate) Update(ctx context.Context, req resource.UpdateReques
 
 	id := plan.ID.ValueString()
 
-	newEndpoint, _, err := r.client.GetApi().UpdateDocumentTemplate(ctx, id).CreateOrUpdateDocumentTemplateRequest(createReq).Execute()
+	updatedDocumentTemplate, _, err := r.client.GetApi().UpdateDocumentTemplate(ctx, id).CreateOrUpdateDocumentTemplateRequest(createReq).Execute()
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Updating Document Template",
@@ -267,7 +267,7 @@ func (r *documentTemplate) Update(ctx context.Context, req resource.UpdateReques
 	}
 
 	// update the tf struct with the new values
-	if err := plan.fromAPI(newEndpoint); err != nil {
+	if err := plan.fromAPI(updatedDocumentTemplate); err != nil {
 		resp.Diagnostics.AddError(
 			"Error Updating Document Template",
 			"Could not process API response, unexpected error: "+err.Error(),

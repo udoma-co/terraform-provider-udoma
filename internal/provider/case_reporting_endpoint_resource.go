@@ -270,7 +270,7 @@ func (r *CaseReportingEndpoint) Update(ctx context.Context, req resource.UpdateR
 		return
 	}
 
-	newEndpoint, _, err := r.client.GetApi().UpdateCaseReportingEndpoint(ctx, plan.Code.ValueString()).CreateOrUpdateCaseReportingEndpointRequest(createReq).Execute()
+	updatedEndpoint, _, err := r.client.GetApi().UpdateCaseReportingEndpoint(ctx, plan.Code.ValueString()).CreateOrUpdateCaseReportingEndpointRequest(createReq).Execute()
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Updating Case Reporting Endpoint",
@@ -280,7 +280,7 @@ func (r *CaseReportingEndpoint) Update(ctx context.Context, req resource.UpdateR
 	}
 
 	// update the tf struct with the new values
-	diags = plan.fromAPI(newEndpoint)
+	diags = plan.fromAPI(updatedEndpoint)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return

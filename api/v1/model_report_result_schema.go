@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the ReportResultSchema type satisfies the MappedNullable interface at compile time
@@ -19,17 +21,23 @@ var _ MappedNullable = &ReportResultSchema{}
 
 // ReportResultSchema struct for ReportResultSchema
 type ReportResultSchema struct {
-	// Whether the result is a list of items
-	IsList     *bool                        `json:"is_list,omitempty"`
-	Properties []ReportResultSchemaProperty `json:"properties,omitempty"`
+	ResultType ReportResultTypeEnum `json:"result_type"`
+	// The attribute that will be used as the ID of each item in the result set.  When set, the table will be clickable and the value of the respective  attribute can be used to navigate to the detail view of the item.
+	TableRowIdAttribute *string `json:"table_row_id_attribute,omitempty"`
+	// The attributes within the result. Each attribute will be displayed  as a column in the UI, if the result is a list, or as a field if not.
+	Attributes []ReportResultSchemaAttribute `json:"attributes"`
 }
+
+type _ReportResultSchema ReportResultSchema
 
 // NewReportResultSchema instantiates a new ReportResultSchema object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewReportResultSchema() *ReportResultSchema {
+func NewReportResultSchema(resultType ReportResultTypeEnum, attributes []ReportResultSchemaAttribute) *ReportResultSchema {
 	this := ReportResultSchema{}
+	this.ResultType = resultType
+	this.Attributes = attributes
 	return &this
 }
 
@@ -41,68 +49,84 @@ func NewReportResultSchemaWithDefaults() *ReportResultSchema {
 	return &this
 }
 
-// GetIsList returns the IsList field value if set, zero value otherwise.
-func (o *ReportResultSchema) GetIsList() bool {
-	if o == nil || IsNil(o.IsList) {
-		var ret bool
+// GetResultType returns the ResultType field value
+func (o *ReportResultSchema) GetResultType() ReportResultTypeEnum {
+	if o == nil {
+		var ret ReportResultTypeEnum
 		return ret
 	}
-	return *o.IsList
+
+	return o.ResultType
 }
 
-// GetIsListOk returns a tuple with the IsList field value if set, nil otherwise
+// GetResultTypeOk returns a tuple with the ResultType field value
 // and a boolean to check if the value has been set.
-func (o *ReportResultSchema) GetIsListOk() (*bool, bool) {
-	if o == nil || IsNil(o.IsList) {
+func (o *ReportResultSchema) GetResultTypeOk() (*ReportResultTypeEnum, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.IsList, true
+	return &o.ResultType, true
 }
 
-// HasIsList returns a boolean if a field has been set.
-func (o *ReportResultSchema) HasIsList() bool {
-	if o != nil && !IsNil(o.IsList) {
+// SetResultType sets field value
+func (o *ReportResultSchema) SetResultType(v ReportResultTypeEnum) {
+	o.ResultType = v
+}
+
+// GetTableRowIdAttribute returns the TableRowIdAttribute field value if set, zero value otherwise.
+func (o *ReportResultSchema) GetTableRowIdAttribute() string {
+	if o == nil || IsNil(o.TableRowIdAttribute) {
+		var ret string
+		return ret
+	}
+	return *o.TableRowIdAttribute
+}
+
+// GetTableRowIdAttributeOk returns a tuple with the TableRowIdAttribute field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReportResultSchema) GetTableRowIdAttributeOk() (*string, bool) {
+	if o == nil || IsNil(o.TableRowIdAttribute) {
+		return nil, false
+	}
+	return o.TableRowIdAttribute, true
+}
+
+// HasTableRowIdAttribute returns a boolean if a field has been set.
+func (o *ReportResultSchema) HasTableRowIdAttribute() bool {
+	if o != nil && !IsNil(o.TableRowIdAttribute) {
 		return true
 	}
 
 	return false
 }
 
-// SetIsList gets a reference to the given bool and assigns it to the IsList field.
-func (o *ReportResultSchema) SetIsList(v bool) {
-	o.IsList = &v
+// SetTableRowIdAttribute gets a reference to the given string and assigns it to the TableRowIdAttribute field.
+func (o *ReportResultSchema) SetTableRowIdAttribute(v string) {
+	o.TableRowIdAttribute = &v
 }
 
-// GetProperties returns the Properties field value if set, zero value otherwise.
-func (o *ReportResultSchema) GetProperties() []ReportResultSchemaProperty {
-	if o == nil || IsNil(o.Properties) {
-		var ret []ReportResultSchemaProperty
+// GetAttributes returns the Attributes field value
+func (o *ReportResultSchema) GetAttributes() []ReportResultSchemaAttribute {
+	if o == nil {
+		var ret []ReportResultSchemaAttribute
 		return ret
 	}
-	return o.Properties
+
+	return o.Attributes
 }
 
-// GetPropertiesOk returns a tuple with the Properties field value if set, nil otherwise
+// GetAttributesOk returns a tuple with the Attributes field value
 // and a boolean to check if the value has been set.
-func (o *ReportResultSchema) GetPropertiesOk() ([]ReportResultSchemaProperty, bool) {
-	if o == nil || IsNil(o.Properties) {
+func (o *ReportResultSchema) GetAttributesOk() ([]ReportResultSchemaAttribute, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Properties, true
+	return o.Attributes, true
 }
 
-// HasProperties returns a boolean if a field has been set.
-func (o *ReportResultSchema) HasProperties() bool {
-	if o != nil && !IsNil(o.Properties) {
-		return true
-	}
-
-	return false
-}
-
-// SetProperties gets a reference to the given []ReportResultSchemaProperty and assigns it to the Properties field.
-func (o *ReportResultSchema) SetProperties(v []ReportResultSchemaProperty) {
-	o.Properties = v
+// SetAttributes sets field value
+func (o *ReportResultSchema) SetAttributes(v []ReportResultSchemaAttribute) {
+	o.Attributes = v
 }
 
 func (o ReportResultSchema) MarshalJSON() ([]byte, error) {
@@ -115,13 +139,50 @@ func (o ReportResultSchema) MarshalJSON() ([]byte, error) {
 
 func (o ReportResultSchema) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.IsList) {
-		toSerialize["is_list"] = o.IsList
+	toSerialize["result_type"] = o.ResultType
+	if !IsNil(o.TableRowIdAttribute) {
+		toSerialize["table_row_id_attribute"] = o.TableRowIdAttribute
 	}
-	if !IsNil(o.Properties) {
-		toSerialize["properties"] = o.Properties
-	}
+	toSerialize["attributes"] = o.Attributes
 	return toSerialize, nil
+}
+
+func (o *ReportResultSchema) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"result_type",
+		"attributes",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varReportResultSchema := _ReportResultSchema{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varReportResultSchema)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ReportResultSchema(varReportResultSchema)
+
+	return err
 }
 
 type NullableReportResultSchema struct {

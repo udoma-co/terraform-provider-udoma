@@ -26,8 +26,6 @@ type CreateOrUpdateReportDefinitionRequest struct {
 	// The description of the report
 	Description  *string            `json:"description,omitempty"`
 	ResultSchema ReportResultSchema `json:"result_schema"`
-	// The JS script to execute to map the result to the result schema
-	ResultMapper string             `json:"result_mapper"`
 	Parameters   NullableCustomForm `json:"parameters,omitempty"`
 	// The JS script to execute to generate the report result
 	Script string `json:"script"`
@@ -39,11 +37,10 @@ type _CreateOrUpdateReportDefinitionRequest CreateOrUpdateReportDefinitionReques
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateOrUpdateReportDefinitionRequest(name string, resultSchema ReportResultSchema, resultMapper string, script string) *CreateOrUpdateReportDefinitionRequest {
+func NewCreateOrUpdateReportDefinitionRequest(name string, resultSchema ReportResultSchema, script string) *CreateOrUpdateReportDefinitionRequest {
 	this := CreateOrUpdateReportDefinitionRequest{}
 	this.Name = name
 	this.ResultSchema = resultSchema
-	this.ResultMapper = resultMapper
 	this.Script = script
 	return &this
 }
@@ -136,30 +133,6 @@ func (o *CreateOrUpdateReportDefinitionRequest) SetResultSchema(v ReportResultSc
 	o.ResultSchema = v
 }
 
-// GetResultMapper returns the ResultMapper field value
-func (o *CreateOrUpdateReportDefinitionRequest) GetResultMapper() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.ResultMapper
-}
-
-// GetResultMapperOk returns a tuple with the ResultMapper field value
-// and a boolean to check if the value has been set.
-func (o *CreateOrUpdateReportDefinitionRequest) GetResultMapperOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.ResultMapper, true
-}
-
-// SetResultMapper sets field value
-func (o *CreateOrUpdateReportDefinitionRequest) SetResultMapper(v string) {
-	o.ResultMapper = v
-}
-
 // GetParameters returns the Parameters field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *CreateOrUpdateReportDefinitionRequest) GetParameters() CustomForm {
 	if o == nil || IsNil(o.Parameters.Get()) {
@@ -242,7 +215,6 @@ func (o CreateOrUpdateReportDefinitionRequest) ToMap() (map[string]interface{}, 
 		toSerialize["description"] = o.Description
 	}
 	toSerialize["result_schema"] = o.ResultSchema
-	toSerialize["result_mapper"] = o.ResultMapper
 	if o.Parameters.IsSet() {
 		toSerialize["parameters"] = o.Parameters.Get()
 	}
@@ -257,7 +229,6 @@ func (o *CreateOrUpdateReportDefinitionRequest) UnmarshalJSON(data []byte) (err 
 	requiredProperties := []string{
 		"name",
 		"result_schema",
-		"result_mapper",
 		"script",
 	}
 

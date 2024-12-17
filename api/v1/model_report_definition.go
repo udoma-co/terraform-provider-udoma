@@ -23,13 +23,15 @@ var _ MappedNullable = &ReportDefinition{}
 type ReportDefinition struct {
 	// Unique and immutable ID attribute of the entity that is generated when the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities or to retrieve it from the backend.
 	Id string `json:"id"`
+	// The date and time the entity was created
+	CreatedAt int64 `json:"created_at"`
+	// The date and time the entity was last updated
+	UpdatedAt int64 `json:"updated_at"`
 	// The name of the report
 	Name string `json:"name"`
 	// The description of the report
 	Description  *string            `json:"description,omitempty"`
 	ResultSchema ReportResultSchema `json:"result_schema"`
-	// The JS script to execute to map the result to the result schema
-	ResultMapper string             `json:"result_mapper"`
 	Parameters   NullableCustomForm `json:"parameters,omitempty"`
 	// The JS script to execute to generate the report result
 	Script string `json:"script"`
@@ -41,12 +43,13 @@ type _ReportDefinition ReportDefinition
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewReportDefinition(id string, name string, resultSchema ReportResultSchema, resultMapper string, script string) *ReportDefinition {
+func NewReportDefinition(id string, createdAt int64, updatedAt int64, name string, resultSchema ReportResultSchema, script string) *ReportDefinition {
 	this := ReportDefinition{}
 	this.Id = id
+	this.CreatedAt = createdAt
+	this.UpdatedAt = updatedAt
 	this.Name = name
 	this.ResultSchema = resultSchema
-	this.ResultMapper = resultMapper
 	this.Script = script
 	return &this
 }
@@ -81,6 +84,54 @@ func (o *ReportDefinition) GetIdOk() (*string, bool) {
 // SetId sets field value
 func (o *ReportDefinition) SetId(v string) {
 	o.Id = v
+}
+
+// GetCreatedAt returns the CreatedAt field value
+func (o *ReportDefinition) GetCreatedAt() int64 {
+	if o == nil {
+		var ret int64
+		return ret
+	}
+
+	return o.CreatedAt
+}
+
+// GetCreatedAtOk returns a tuple with the CreatedAt field value
+// and a boolean to check if the value has been set.
+func (o *ReportDefinition) GetCreatedAtOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.CreatedAt, true
+}
+
+// SetCreatedAt sets field value
+func (o *ReportDefinition) SetCreatedAt(v int64) {
+	o.CreatedAt = v
+}
+
+// GetUpdatedAt returns the UpdatedAt field value
+func (o *ReportDefinition) GetUpdatedAt() int64 {
+	if o == nil {
+		var ret int64
+		return ret
+	}
+
+	return o.UpdatedAt
+}
+
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
+// and a boolean to check if the value has been set.
+func (o *ReportDefinition) GetUpdatedAtOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.UpdatedAt, true
+}
+
+// SetUpdatedAt sets field value
+func (o *ReportDefinition) SetUpdatedAt(v int64) {
+	o.UpdatedAt = v
 }
 
 // GetName returns the Name field value
@@ -163,30 +214,6 @@ func (o *ReportDefinition) SetResultSchema(v ReportResultSchema) {
 	o.ResultSchema = v
 }
 
-// GetResultMapper returns the ResultMapper field value
-func (o *ReportDefinition) GetResultMapper() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.ResultMapper
-}
-
-// GetResultMapperOk returns a tuple with the ResultMapper field value
-// and a boolean to check if the value has been set.
-func (o *ReportDefinition) GetResultMapperOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.ResultMapper, true
-}
-
-// SetResultMapper sets field value
-func (o *ReportDefinition) SetResultMapper(v string) {
-	o.ResultMapper = v
-}
-
 // GetParameters returns the Parameters field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *ReportDefinition) GetParameters() CustomForm {
 	if o == nil || IsNil(o.Parameters.Get()) {
@@ -265,12 +292,13 @@ func (o ReportDefinition) MarshalJSON() ([]byte, error) {
 func (o ReportDefinition) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["id"] = o.Id
+	toSerialize["created_at"] = o.CreatedAt
+	toSerialize["updated_at"] = o.UpdatedAt
 	toSerialize["name"] = o.Name
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
 	}
 	toSerialize["result_schema"] = o.ResultSchema
-	toSerialize["result_mapper"] = o.ResultMapper
 	if o.Parameters.IsSet() {
 		toSerialize["parameters"] = o.Parameters.Get()
 	}
@@ -284,9 +312,10 @@ func (o *ReportDefinition) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"id",
+		"created_at",
+		"updated_at",
 		"name",
 		"result_schema",
-		"result_mapper",
 		"script",
 	}
 
