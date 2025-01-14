@@ -77,7 +77,7 @@ func (faq *AccountDimension) Schema(ctx context.Context, req resource.SchemaRequ
 				MarkdownDescription: "The parent dimension of the account",
 			},
 			"ref_type": schema.StringAttribute{
-				Optional:            true,
+				Required:            true,
 				MarkdownDescription: "The reference type of the account",
 			},
 			"required": schema.BoolAttribute{

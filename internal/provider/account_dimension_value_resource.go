@@ -59,7 +59,7 @@ func (faq *AccountDimensionValue) Schema(ctx context.Context, req resource.Schem
 				MarkdownDescription: "The reference to the account dimension",
 			},
 			"alias": schema.StringAttribute{
-				Optional:            true,
+				Computed:            true,
 				MarkdownDescription: "The alias of the account dimension value",
 			},
 		},

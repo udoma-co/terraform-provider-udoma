@@ -15,35 +15,35 @@ import (
 )
 
 var (
-	_ resource.ResourceWithConfigure   = &FinancialAccount{}
-	_ resource.ResourceWithImportState = &FinancialAccount{}
+	_ resource.ResourceWithConfigure   = &Account{}
+	_ resource.ResourceWithImportState = &Account{}
 )
 
-func NewFinancialAccount() resource.Resource {
-	return &FinancialAccount{}
+func NewAccount() resource.Resource {
+	return &Account{}
 }
 
-type FinancialAccount struct {
+type Account struct {
 	client *client.UdomaClient
 }
 
-type FinancialAccountModel struct {
-	ID         types.String            `tfsdk:"id"`
-	CreatedAt  types.Int64             `tfsdk:"created_at"`
-	UpdatedAt  types.Int64             `tfsdk:"updated_at"`
-	Number     types.Int32             `tfsdk:"number"`
-	Name       types.String            `tfsdk:"name"`
-	Type       types.String            `tfsdk:"type"`
-	IsBalance  types.Bool              `tfsdk:"is_balance"`
-	Currency   types.String            `tfsdk:"currency"`
-	Dimensions []AccountDimensionModel `tfsdk:"dimensions"`
+type AccountModel struct {
+	ID         types.String   `tfsdk:"id"`
+	CreatedAt  types.Int64    `tfsdk:"created_at"`
+	UpdatedAt  types.Int64    `tfsdk:"updated_at"`
+	Number     types.Int32    `tfsdk:"number"`
+	Name       types.String   `tfsdk:"name"`
+	Type       types.String   `tfsdk:"type"`
+	IsBalance  types.Bool     `tfsdk:"is_balance"`
+	Currency   types.String   `tfsdk:"currency"`
+	Dimensions []types.String `tfsdk:"dimensions"`
 }
 
-func (faq *FinancialAccount) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_financial_account"
+func (faq *Account) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_account"
 }
 
-func (faq *FinancialAccount) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+func (faq *Account) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Resource represents a financial account",
 
@@ -83,16 +83,16 @@ func (faq *FinancialAccount) Schema(ctx context.Context, req resource.SchemaRequ
 				Required:            true,
 				MarkdownDescription: "The currency of the account",
 			},
-			"dimensions": schema.ListNestedAttribute{
-				Optional:     true,
-				Description:  "The sub dimensions of the account.",
-				NestedObject: AccountDimensionNestedSchema(),
+			"dimensions": schema.ListAttribute{
+				Optional:    true,
+				Description: "The sub dimensions of the account.",
+				ElementType: types.StringType,
 			},
 		},
 	}
 }
 
-func (bank_account *FinancialAccount) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
+func (account *Account) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -107,13 +107,13 @@ func (bank_account *FinancialAccount) Configure(ctx context.Context, req resourc
 		return
 	}
 
-	bank_account.client = cl
+	account.client = cl
 }
 
-func (account *FinancialAccount) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+func (account *Account) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 
 	// Retrieve values from plan
-	var plan FinancialAccountModel
+	var plan AccountModel
 	diags := req.Plan.Get(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
@@ -155,9 +155,9 @@ func (account *FinancialAccount) Create(ctx context.Context, req resource.Create
 	}
 }
 
-func (account *FinancialAccount) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+func (account *Account) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
 
-	var state FinancialAccountModel
+	var state AccountModel
 	diags := req.State.Get(ctx, &state)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
@@ -195,10 +195,10 @@ func (account *FinancialAccount) Read(ctx context.Context, req resource.ReadRequ
 	}
 }
 
-func (account *FinancialAccount) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+func (account *Account) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 
 	// Retrieve values from plan
-	var plan FinancialAccountModel
+	var plan AccountModel
 	diags := req.Plan.Get(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
@@ -240,10 +240,10 @@ func (account *FinancialAccount) Update(ctx context.Context, req resource.Update
 	}
 }
 
-func (account *FinancialAccount) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+func (account *Account) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
 
 	// Retrieve values from state
-	var state FinancialAccountModel
+	var state AccountModel
 	diags := req.State.Get(ctx, &state)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
@@ -263,11 +263,11 @@ func (account *FinancialAccount) Delete(ctx context.Context, req resource.Delete
 	}
 }
 
-func (bank_account *FinancialAccount) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+func (account *Account) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
 
-func (model *FinancialAccountModel) fromAPI(account *api.FinancialAccount) error {
+func (model *AccountModel) fromAPI(account *api.FinancialAccount) error {
 
 	if account == nil {
 		return fmt.Errorf("financial account is nil")
@@ -281,24 +281,18 @@ func (model *FinancialAccountModel) fromAPI(account *api.FinancialAccount) error
 	model.UpdatedAt = types.Int64Value(account.UpdatedAt)
 	model.Type = types.StringValue(string(account.Type))
 	model.IsBalance = types.BoolPointerValue(account.IsBalance)
-	model.Dimensions = make([]AccountDimensionModel, len(account.Dimensions))
 
 	if account.Dimensions != nil {
-		for _, subDimension := range account.Dimensions {
-			var subDimensionModel AccountDimensionModel
-			if err := subDimensionModel.fromAPI(&subDimension); err != nil {
-				return fmt.Errorf("error converting sub dimensions")
-			}
-			model.Dimensions = append(model.Dimensions, subDimensionModel)
+		model.Dimensions = make([]types.String, len(account.Dimensions))
+		for i, dimension := range account.Dimensions {
+			model.Dimensions[i] = types.StringValue(dimension.Id)
 		}
-	} else {
-		model.Dimensions = nil
 	}
 
 	return nil
 }
 
-func (model *FinancialAccountModel) toAPIRequest() (api.CreateOrUpdateFinancialAccountRequest, error) {
+func (model *AccountModel) toAPIRequest() (api.CreateOrUpdateFinancialAccountRequest, error) {
 
 	account := api.CreateOrUpdateFinancialAccountRequest{
 		Number:    model.Number.ValueInt32(),
@@ -310,8 +304,8 @@ func (model *FinancialAccountModel) toAPIRequest() (api.CreateOrUpdateFinancialA
 
 	if model.Dimensions != nil {
 		account.Dimensions = make([]string, len(model.Dimensions))
-		for i, subDimension := range model.Dimensions {
-			account.Dimensions[i] = subDimension.ID.ValueString()
+		for i, dimension := range model.Dimensions {
+			account.Dimensions[i] = dimension.ValueString()
 		}
 	}
 
