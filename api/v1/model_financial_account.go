@@ -30,7 +30,10 @@ type FinancialAccount struct {
 	// The unique account number, manually set
 	Number int32 `json:"number"`
 	// The name of the account
-	Name string `json:"name"`
+	Name string           `json:"name"`
+	Type AccountTypesEnum `json:"type"`
+	// Indicates whether the account is part of the balance sheet. If set to false, the account is part of the profit and loss statement.
+	IsBalance *bool `json:"is_balance,omitempty"`
 	// The currency of the booking
 	Currency string `json:"currency"`
 	// The dimensions that are assigned to the account
@@ -43,13 +46,14 @@ type _FinancialAccount FinancialAccount
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewFinancialAccount(id string, createdAt int64, updatedAt int64, number int32, name string, currency string) *FinancialAccount {
+func NewFinancialAccount(id string, createdAt int64, updatedAt int64, number int32, name string, type_ AccountTypesEnum, currency string) *FinancialAccount {
 	this := FinancialAccount{}
 	this.Id = id
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
 	this.Number = number
 	this.Name = name
+	this.Type = type_
 	this.Currency = currency
 	return &this
 }
@@ -182,6 +186,62 @@ func (o *FinancialAccount) SetName(v string) {
 	o.Name = v
 }
 
+// GetType returns the Type field value
+func (o *FinancialAccount) GetType() AccountTypesEnum {
+	if o == nil {
+		var ret AccountTypesEnum
+		return ret
+	}
+
+	return o.Type
+}
+
+// GetTypeOk returns a tuple with the Type field value
+// and a boolean to check if the value has been set.
+func (o *FinancialAccount) GetTypeOk() (*AccountTypesEnum, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Type, true
+}
+
+// SetType sets field value
+func (o *FinancialAccount) SetType(v AccountTypesEnum) {
+	o.Type = v
+}
+
+// GetIsBalance returns the IsBalance field value if set, zero value otherwise.
+func (o *FinancialAccount) GetIsBalance() bool {
+	if o == nil || IsNil(o.IsBalance) {
+		var ret bool
+		return ret
+	}
+	return *o.IsBalance
+}
+
+// GetIsBalanceOk returns a tuple with the IsBalance field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *FinancialAccount) GetIsBalanceOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsBalance) {
+		return nil, false
+	}
+	return o.IsBalance, true
+}
+
+// HasIsBalance returns a boolean if a field has been set.
+func (o *FinancialAccount) HasIsBalance() bool {
+	if o != nil && !IsNil(o.IsBalance) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsBalance gets a reference to the given bool and assigns it to the IsBalance field.
+func (o *FinancialAccount) SetIsBalance(v bool) {
+	o.IsBalance = &v
+}
+
 // GetCurrency returns the Currency field value
 func (o *FinancialAccount) GetCurrency() string {
 	if o == nil {
@@ -253,6 +313,10 @@ func (o FinancialAccount) ToMap() (map[string]interface{}, error) {
 	toSerialize["updated_at"] = o.UpdatedAt
 	toSerialize["number"] = o.Number
 	toSerialize["name"] = o.Name
+	toSerialize["type"] = o.Type
+	if !IsNil(o.IsBalance) {
+		toSerialize["is_balance"] = o.IsBalance
+	}
 	toSerialize["currency"] = o.Currency
 	if !IsNil(o.Dimensions) {
 		toSerialize["dimensions"] = o.Dimensions
@@ -270,6 +334,7 @@ func (o *FinancialAccount) UnmarshalJSON(data []byte) (err error) {
 		"updated_at",
 		"number",
 		"name",
+		"type",
 		"currency",
 	}
 

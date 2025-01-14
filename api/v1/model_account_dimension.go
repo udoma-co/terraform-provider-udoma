@@ -39,9 +39,9 @@ type AccountDimension struct {
 	Required *bool `json:"required,omitempty"`
 	// A JS script that generates a value for the dimension.
 	ValueGenerator *string `json:"value_generator,omitempty"`
-	// The sub-dimensions of the dimension
+	// Optional nested dimensions for this dimension. This is lazy loaded, that is, it is returned only if a single dimension is loaded.
 	SubDimensions []AccountDimension `json:"sub_dimensions,omitempty"`
-	// All defined values the dimension. This is lazy loaded, that is, only  if a single dimension is loaded.
+	// All available values for this dimension. This is lazy loaded, that is, only  if a single dimension is loaded.
 	Values []AccountDimensionValue `json:"values,omitempty"`
 }
 

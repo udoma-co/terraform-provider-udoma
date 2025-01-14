@@ -19,7 +19,7 @@ import (
 // checks if the AccountDimensionValueRef type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &AccountDimensionValueRef{}
 
-// AccountDimensionValueRef A reference to a single dimension value
+// AccountDimensionValueRef A reference to a single dimension value. Unlike the AccountDimensionValue, this object only holds the value, not the reference information. That is, for a property dimension, this object would only hold the value '20', but not the property ID.
 type AccountDimensionValueRef struct {
 	// The unique ID of the dimension, for which this value is defined.
 	DimensionRef string `json:"dimension_ref"`

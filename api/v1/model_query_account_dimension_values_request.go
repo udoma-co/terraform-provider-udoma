@@ -20,7 +20,7 @@ var _ MappedNullable = &QueryAccountDimensionValuesRequest{}
 // QueryAccountDimensionValuesRequest The data required to query the mappings of a value of a dimension
 type QueryAccountDimensionValuesRequest struct {
 	// The ID of the parent dimension value, for which to query the sub-values
-	ParentDimensionId *string `json:"parent_dimension_id,omitempty"`
+	ParentId *string `json:"parent_id,omitempty"`
 	// The minimum value of the dimension
 	ValueMin *int32 `json:"value_min,omitempty"`
 	// The maximum value of the dimension
@@ -44,36 +44,36 @@ func NewQueryAccountDimensionValuesRequestWithDefaults() *QueryAccountDimensionV
 	return &this
 }
 
-// GetParentDimensionId returns the ParentDimensionId field value if set, zero value otherwise.
-func (o *QueryAccountDimensionValuesRequest) GetParentDimensionId() string {
-	if o == nil || IsNil(o.ParentDimensionId) {
+// GetParentId returns the ParentId field value if set, zero value otherwise.
+func (o *QueryAccountDimensionValuesRequest) GetParentId() string {
+	if o == nil || IsNil(o.ParentId) {
 		var ret string
 		return ret
 	}
-	return *o.ParentDimensionId
+	return *o.ParentId
 }
 
-// GetParentDimensionIdOk returns a tuple with the ParentDimensionId field value if set, nil otherwise
+// GetParentIdOk returns a tuple with the ParentId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *QueryAccountDimensionValuesRequest) GetParentDimensionIdOk() (*string, bool) {
-	if o == nil || IsNil(o.ParentDimensionId) {
+func (o *QueryAccountDimensionValuesRequest) GetParentIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ParentId) {
 		return nil, false
 	}
-	return o.ParentDimensionId, true
+	return o.ParentId, true
 }
 
-// HasParentDimensionId returns a boolean if a field has been set.
-func (o *QueryAccountDimensionValuesRequest) HasParentDimensionId() bool {
-	if o != nil && !IsNil(o.ParentDimensionId) {
+// HasParentId returns a boolean if a field has been set.
+func (o *QueryAccountDimensionValuesRequest) HasParentId() bool {
+	if o != nil && !IsNil(o.ParentId) {
 		return true
 	}
 
 	return false
 }
 
-// SetParentDimensionId gets a reference to the given string and assigns it to the ParentDimensionId field.
-func (o *QueryAccountDimensionValuesRequest) SetParentDimensionId(v string) {
-	o.ParentDimensionId = &v
+// SetParentId gets a reference to the given string and assigns it to the ParentId field.
+func (o *QueryAccountDimensionValuesRequest) SetParentId(v string) {
+	o.ParentId = &v
 }
 
 // GetValueMin returns the ValueMin field value if set, zero value otherwise.
@@ -150,8 +150,8 @@ func (o QueryAccountDimensionValuesRequest) MarshalJSON() ([]byte, error) {
 
 func (o QueryAccountDimensionValuesRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.ParentDimensionId) {
-		toSerialize["parent_dimension_id"] = o.ParentDimensionId
+	if !IsNil(o.ParentId) {
+		toSerialize["parent_id"] = o.ParentId
 	}
 	if !IsNil(o.ValueMin) {
 		toSerialize["value_min"] = o.ValueMin

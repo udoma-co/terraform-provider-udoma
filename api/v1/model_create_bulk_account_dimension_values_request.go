@@ -19,8 +19,8 @@ var _ MappedNullable = &CreateBulkAccountDimensionValuesRequest{}
 
 // CreateBulkAccountDimensionValuesRequest The data required to create a set of new values of a dimension
 type CreateBulkAccountDimensionValuesRequest struct {
-	// Optional value for the parent dimension. If set, this value is only available when the parent dimension has been set to the given ref.
-	ParentDimensionId *string `json:"parent_dimension_id,omitempty"`
+	// Optional ID for the parent dimension. If set, this value is only available when the parent dimension has been set to the given ID.
+	ParentId *string `json:"parent_id,omitempty"`
 	// The set of ref-value pairs for the dimension
 	Values []CreateOrUpdateAccountDimensionValueRequest `json:"values,omitempty"`
 }
@@ -42,36 +42,36 @@ func NewCreateBulkAccountDimensionValuesRequestWithDefaults() *CreateBulkAccount
 	return &this
 }
 
-// GetParentDimensionId returns the ParentDimensionId field value if set, zero value otherwise.
-func (o *CreateBulkAccountDimensionValuesRequest) GetParentDimensionId() string {
-	if o == nil || IsNil(o.ParentDimensionId) {
+// GetParentId returns the ParentId field value if set, zero value otherwise.
+func (o *CreateBulkAccountDimensionValuesRequest) GetParentId() string {
+	if o == nil || IsNil(o.ParentId) {
 		var ret string
 		return ret
 	}
-	return *o.ParentDimensionId
+	return *o.ParentId
 }
 
-// GetParentDimensionIdOk returns a tuple with the ParentDimensionId field value if set, nil otherwise
+// GetParentIdOk returns a tuple with the ParentId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CreateBulkAccountDimensionValuesRequest) GetParentDimensionIdOk() (*string, bool) {
-	if o == nil || IsNil(o.ParentDimensionId) {
+func (o *CreateBulkAccountDimensionValuesRequest) GetParentIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ParentId) {
 		return nil, false
 	}
-	return o.ParentDimensionId, true
+	return o.ParentId, true
 }
 
-// HasParentDimensionId returns a boolean if a field has been set.
-func (o *CreateBulkAccountDimensionValuesRequest) HasParentDimensionId() bool {
-	if o != nil && !IsNil(o.ParentDimensionId) {
+// HasParentId returns a boolean if a field has been set.
+func (o *CreateBulkAccountDimensionValuesRequest) HasParentId() bool {
+	if o != nil && !IsNil(o.ParentId) {
 		return true
 	}
 
 	return false
 }
 
-// SetParentDimensionId gets a reference to the given string and assigns it to the ParentDimensionId field.
-func (o *CreateBulkAccountDimensionValuesRequest) SetParentDimensionId(v string) {
-	o.ParentDimensionId = &v
+// SetParentId gets a reference to the given string and assigns it to the ParentId field.
+func (o *CreateBulkAccountDimensionValuesRequest) SetParentId(v string) {
+	o.ParentId = &v
 }
 
 // GetValues returns the Values field value if set, zero value otherwise.
@@ -116,8 +116,8 @@ func (o CreateBulkAccountDimensionValuesRequest) MarshalJSON() ([]byte, error) {
 
 func (o CreateBulkAccountDimensionValuesRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.ParentDimensionId) {
-		toSerialize["parent_dimension_id"] = o.ParentDimensionId
+	if !IsNil(o.ParentId) {
+		toSerialize["parent_id"] = o.ParentId
 	}
 	if !IsNil(o.Values) {
 		toSerialize["values"] = o.Values
