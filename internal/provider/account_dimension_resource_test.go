@@ -15,7 +15,7 @@ func TestAccAccountDimensionResource(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr("udoma_account_dimension.test", "name", "Test Account Dimension"),
 					resource.TestCheckResourceAttr("udoma_account_dimension.test", "description", "A test account dimension"),
-					resource.TestCheckResourceAttr("udoma_account_dimension.test", "ref_type", "owner"),
+					resource.TestCheckResourceAttr("udoma_account_dimension.test", "ref_type", "none"),
 					resource.TestCheckResourceAttr("udoma_account_dimension.test", "required", "true"),
 					resource.TestCheckResourceAttr("udoma_account_dimension.test", "pad_to_size", "10"),
 				),

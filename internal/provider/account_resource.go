@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -28,15 +29,15 @@ type Account struct {
 }
 
 type AccountModel struct {
-	ID         types.String   `tfsdk:"id"`
-	CreatedAt  types.Int64    `tfsdk:"created_at"`
-	UpdatedAt  types.Int64    `tfsdk:"updated_at"`
-	Number     types.Int32    `tfsdk:"number"`
-	Name       types.String   `tfsdk:"name"`
-	Type       types.String   `tfsdk:"type"`
-	IsBalance  types.Bool     `tfsdk:"is_balance"`
-	Currency   types.String   `tfsdk:"currency"`
-	Dimensions []types.String `tfsdk:"dimensions"`
+	ID         types.String `tfsdk:"id"`
+	CreatedAt  types.Int64  `tfsdk:"created_at"`
+	UpdatedAt  types.Int64  `tfsdk:"updated_at"`
+	Number     types.Int32  `tfsdk:"number"`
+	Name       types.String `tfsdk:"name"`
+	Type       types.String `tfsdk:"type"`
+	IsBalance  types.Bool   `tfsdk:"is_balance"`
+	Currency   types.String `tfsdk:"currency"`
+	Dimensions types.List   `tfsdk:"dimensions"`
 }
 
 func (faq *Account) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -139,20 +140,16 @@ func (account *Account) Create(ctx context.Context, req resource.CreateRequest, 
 	}
 
 	// update the tf struct with the new values
-	if err := plan.fromAPI(newAccount); err != nil {
-		resp.Diagnostics.AddError(
-			"Error Creating Financial Account Entry",
-			"Could not process API response, unexpected error: "+err.Error(),
-		)
+	diags = plan.fromAPI(newAccount)
+	if diags.HasError() {
+		resp.Diagnostics.Append(diags...)
 		return
 	}
 
 	// Set state to fully populated data
-	diags = resp.State.Set(ctx, plan)
-	resp.Diagnostics.Append(diags...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	resp.Diagnostics.Append(
+		resp.State.Set(ctx, plan)...,
+	)
 }
 
 func (account *Account) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
@@ -169,7 +166,6 @@ func (account *Account) Read(ctx context.Context, req resource.ReadRequest, resp
 		resp.State.RemoveResource(ctx)
 		return
 	}
-
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Reading Financial Account Entry",
@@ -179,20 +175,17 @@ func (account *Account) Read(ctx context.Context, req resource.ReadRequest, resp
 	}
 
 	// update the tf struct with the new values
-	if err := state.fromAPI(financialAccount); err != nil {
-		resp.Diagnostics.AddError(
-			"Error Reading Financial Account Entry",
-			"Could not process API response, unexpected error: "+err.Error(),
-		)
+	diags = state.fromAPI(financialAccount)
+	if diags.HasError() {
+		resp.Diagnostics.Append(diags...)
 		return
 	}
 
 	// Set refreshed state
-	diags = resp.State.Set(ctx, &state)
-	resp.Diagnostics.Append(diags...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	resp.Diagnostics.Append(
+		resp.State.Set(ctx, &state)...,
+	)
+
 }
 
 func (account *Account) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
@@ -224,20 +217,16 @@ func (account *Account) Update(ctx context.Context, req resource.UpdateRequest, 
 	}
 
 	// update the tf struct with the new values
-	if err := plan.fromAPI(updatedAccount); err != nil {
-		resp.Diagnostics.AddError(
-			"Error Updating Financial Account",
-			"Could not process API response, unexpected error: "+err.Error(),
-		)
+	diags = plan.fromAPI(updatedAccount)
+	if diags.HasError() {
+		resp.Diagnostics.Append(diags...)
 		return
 	}
 
 	// Set state to fully populated data
-	diags = resp.State.Set(ctx, plan)
-	resp.Diagnostics.Append(diags...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	resp.Diagnostics.Append(
+		resp.State.Set(ctx, plan)...,
+	)
 }
 
 func (account *Account) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
@@ -267,10 +256,11 @@ func (account *Account) ImportState(ctx context.Context, req resource.ImportStat
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
 
-func (model *AccountModel) fromAPI(account *api.FinancialAccount) error {
+func (model *AccountModel) fromAPI(account *api.FinancialAccount) (diags diag.Diagnostics) {
 
 	if account == nil {
-		return fmt.Errorf("financial account is nil")
+		diags.AddError("API response is nil", "The API response provided to AccountModel.fromAPIResponse is nil")
+		return
 	}
 
 	model.ID = types.StringValue(account.Id)
@@ -282,10 +272,15 @@ func (model *AccountModel) fromAPI(account *api.FinancialAccount) error {
 	model.Type = types.StringValue(string(account.Type))
 	model.IsBalance = types.BoolPointerValue(account.IsBalance)
 
-	if account.Dimensions != nil {
-		model.Dimensions = make([]types.String, len(account.Dimensions))
-		for i, dimension := range account.Dimensions {
-			model.Dimensions[i] = types.StringValue(dimension.Id)
+	dimensionIDs := make([]string, len(account.Dimensions))
+	for i := range account.Dimensions {
+		dimensionIDs[i] = account.Dimensions[i].Id
+	}
+
+	if model.Dimensions.IsNull() && len(dimensionIDs) > 0 {
+		model.Dimensions, diags = types.ListValue(types.StringType, stringSliceToValueList(dimensionIDs))
+		if diags.HasError() {
+			return
 		}
 	}
 
@@ -295,18 +290,12 @@ func (model *AccountModel) fromAPI(account *api.FinancialAccount) error {
 func (model *AccountModel) toAPIRequest() (api.CreateOrUpdateFinancialAccountRequest, error) {
 
 	account := api.CreateOrUpdateFinancialAccountRequest{
-		Number:    model.Number.ValueInt32(),
-		Name:      model.Name.ValueString(),
-		Type:      api.AccountTypesEnum(model.Type.ValueString()),
-		IsBalance: model.IsBalance.ValueBoolPointer(),
-		Currency:  model.Currency.ValueString(),
-	}
-
-	if model.Dimensions != nil {
-		account.Dimensions = make([]string, len(model.Dimensions))
-		for i, dimension := range model.Dimensions {
-			account.Dimensions[i] = dimension.ValueString()
-		}
+		Number:     model.Number.ValueInt32(),
+		Name:       model.Name.ValueString(),
+		Type:       api.AccountTypesEnum(model.Type.ValueString()),
+		IsBalance:  model.IsBalance.ValueBoolPointer(),
+		Currency:   model.Currency.ValueString(),
+		Dimensions: modelListToStringSlice(model.Dimensions),
 	}
 
 	return account, nil

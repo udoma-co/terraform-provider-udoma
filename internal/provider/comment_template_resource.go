@@ -129,7 +129,12 @@ func (c *CommentTemplate) Create(ctx context.Context, req resource.CreateRequest
 		)
 	}
 
-	plan.fromAPIResponse(ct)
+	diags = plan.fromAPIResponse(ct)
+	if diags.HasError() {
+		resp.Diagnostics.Append(diags...)
+		return
+	}
+
 	resp.Diagnostics.Append(
 		resp.State.Set(ctx, plan)...,
 	)
