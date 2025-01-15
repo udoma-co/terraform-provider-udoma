@@ -52,7 +52,7 @@ func testAccAccountDimensionConfig() string {
 resource "udoma_account_dimension" "test" {
   name            = "Test Account Dimension"
   description     = "A test account dimension"
-  ref_type        = "owner"
+  ref_type        = "none"
   required        = true
   pad_to_size     = 10
 }
