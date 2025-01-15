@@ -19,8 +19,16 @@ var _ MappedNullable = &QueryCasesRequest{}
 
 // QueryCasesRequest Request used to get cases by a user
 type QueryCasesRequest struct {
-	// if true, only archived cases will be returned
-	Archived *bool `json:"archived,omitempty"`
+	// If true, only archived cases will be returned.
+	Archived  *bool                  `json:"archived,omitempty"`
+	CreatedAt NullableQueryTimeRange `json:"created_at,omitempty"`
+	UpdatedAt NullableQueryTimeRange `json:"updated_at,omitempty"`
+	// List of statuses that the returned cases should currently have.  If empty, all cases will be returned.
+	CurrentStatus []CaseStatusEnum `json:"current_status,omitempty"`
+	// List of statuses that the returned cases should have had in the past.  If empty, all cases will be returned.
+	PastStatus []CaseStatusEnum `json:"past_status,omitempty"`
+	// List of template IDs that the returned cases should have been created with. If empty, all cases will be returned.
+	TemplateRefs []string `json:"template_refs,omitempty"`
 }
 
 // NewQueryCasesRequest instantiates a new QueryCasesRequest object
@@ -72,6 +80,188 @@ func (o *QueryCasesRequest) SetArchived(v bool) {
 	o.Archived = &v
 }
 
+// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *QueryCasesRequest) GetCreatedAt() QueryTimeRange {
+	if o == nil || IsNil(o.CreatedAt.Get()) {
+		var ret QueryTimeRange
+		return ret
+	}
+	return *o.CreatedAt.Get()
+}
+
+// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *QueryCasesRequest) GetCreatedAtOk() (*QueryTimeRange, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.CreatedAt.Get(), o.CreatedAt.IsSet()
+}
+
+// HasCreatedAt returns a boolean if a field has been set.
+func (o *QueryCasesRequest) HasCreatedAt() bool {
+	if o != nil && o.CreatedAt.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCreatedAt gets a reference to the given NullableQueryTimeRange and assigns it to the CreatedAt field.
+func (o *QueryCasesRequest) SetCreatedAt(v QueryTimeRange) {
+	o.CreatedAt.Set(&v)
+}
+
+// SetCreatedAtNil sets the value for CreatedAt to be an explicit nil
+func (o *QueryCasesRequest) SetCreatedAtNil() {
+	o.CreatedAt.Set(nil)
+}
+
+// UnsetCreatedAt ensures that no value is present for CreatedAt, not even an explicit nil
+func (o *QueryCasesRequest) UnsetCreatedAt() {
+	o.CreatedAt.Unset()
+}
+
+// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *QueryCasesRequest) GetUpdatedAt() QueryTimeRange {
+	if o == nil || IsNil(o.UpdatedAt.Get()) {
+		var ret QueryTimeRange
+		return ret
+	}
+	return *o.UpdatedAt.Get()
+}
+
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *QueryCasesRequest) GetUpdatedAtOk() (*QueryTimeRange, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.UpdatedAt.Get(), o.UpdatedAt.IsSet()
+}
+
+// HasUpdatedAt returns a boolean if a field has been set.
+func (o *QueryCasesRequest) HasUpdatedAt() bool {
+	if o != nil && o.UpdatedAt.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetUpdatedAt gets a reference to the given NullableQueryTimeRange and assigns it to the UpdatedAt field.
+func (o *QueryCasesRequest) SetUpdatedAt(v QueryTimeRange) {
+	o.UpdatedAt.Set(&v)
+}
+
+// SetUpdatedAtNil sets the value for UpdatedAt to be an explicit nil
+func (o *QueryCasesRequest) SetUpdatedAtNil() {
+	o.UpdatedAt.Set(nil)
+}
+
+// UnsetUpdatedAt ensures that no value is present for UpdatedAt, not even an explicit nil
+func (o *QueryCasesRequest) UnsetUpdatedAt() {
+	o.UpdatedAt.Unset()
+}
+
+// GetCurrentStatus returns the CurrentStatus field value if set, zero value otherwise.
+func (o *QueryCasesRequest) GetCurrentStatus() []CaseStatusEnum {
+	if o == nil || IsNil(o.CurrentStatus) {
+		var ret []CaseStatusEnum
+		return ret
+	}
+	return o.CurrentStatus
+}
+
+// GetCurrentStatusOk returns a tuple with the CurrentStatus field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryCasesRequest) GetCurrentStatusOk() ([]CaseStatusEnum, bool) {
+	if o == nil || IsNil(o.CurrentStatus) {
+		return nil, false
+	}
+	return o.CurrentStatus, true
+}
+
+// HasCurrentStatus returns a boolean if a field has been set.
+func (o *QueryCasesRequest) HasCurrentStatus() bool {
+	if o != nil && !IsNil(o.CurrentStatus) {
+		return true
+	}
+
+	return false
+}
+
+// SetCurrentStatus gets a reference to the given []CaseStatusEnum and assigns it to the CurrentStatus field.
+func (o *QueryCasesRequest) SetCurrentStatus(v []CaseStatusEnum) {
+	o.CurrentStatus = v
+}
+
+// GetPastStatus returns the PastStatus field value if set, zero value otherwise.
+func (o *QueryCasesRequest) GetPastStatus() []CaseStatusEnum {
+	if o == nil || IsNil(o.PastStatus) {
+		var ret []CaseStatusEnum
+		return ret
+	}
+	return o.PastStatus
+}
+
+// GetPastStatusOk returns a tuple with the PastStatus field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryCasesRequest) GetPastStatusOk() ([]CaseStatusEnum, bool) {
+	if o == nil || IsNil(o.PastStatus) {
+		return nil, false
+	}
+	return o.PastStatus, true
+}
+
+// HasPastStatus returns a boolean if a field has been set.
+func (o *QueryCasesRequest) HasPastStatus() bool {
+	if o != nil && !IsNil(o.PastStatus) {
+		return true
+	}
+
+	return false
+}
+
+// SetPastStatus gets a reference to the given []CaseStatusEnum and assigns it to the PastStatus field.
+func (o *QueryCasesRequest) SetPastStatus(v []CaseStatusEnum) {
+	o.PastStatus = v
+}
+
+// GetTemplateRefs returns the TemplateRefs field value if set, zero value otherwise.
+func (o *QueryCasesRequest) GetTemplateRefs() []string {
+	if o == nil || IsNil(o.TemplateRefs) {
+		var ret []string
+		return ret
+	}
+	return o.TemplateRefs
+}
+
+// GetTemplateRefsOk returns a tuple with the TemplateRefs field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryCasesRequest) GetTemplateRefsOk() ([]string, bool) {
+	if o == nil || IsNil(o.TemplateRefs) {
+		return nil, false
+	}
+	return o.TemplateRefs, true
+}
+
+// HasTemplateRefs returns a boolean if a field has been set.
+func (o *QueryCasesRequest) HasTemplateRefs() bool {
+	if o != nil && !IsNil(o.TemplateRefs) {
+		return true
+	}
+
+	return false
+}
+
+// SetTemplateRefs gets a reference to the given []string and assigns it to the TemplateRefs field.
+func (o *QueryCasesRequest) SetTemplateRefs(v []string) {
+	o.TemplateRefs = v
+}
+
 func (o QueryCasesRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -84,6 +274,21 @@ func (o QueryCasesRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Archived) {
 		toSerialize["archived"] = o.Archived
+	}
+	if o.CreatedAt.IsSet() {
+		toSerialize["created_at"] = o.CreatedAt.Get()
+	}
+	if o.UpdatedAt.IsSet() {
+		toSerialize["updated_at"] = o.UpdatedAt.Get()
+	}
+	if !IsNil(o.CurrentStatus) {
+		toSerialize["current_status"] = o.CurrentStatus
+	}
+	if !IsNil(o.PastStatus) {
+		toSerialize["past_status"] = o.PastStatus
+	}
+	if !IsNil(o.TemplateRefs) {
+		toSerialize["template_refs"] = o.TemplateRefs
 	}
 	return toSerialize, nil
 }

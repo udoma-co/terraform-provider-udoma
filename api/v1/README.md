@@ -115,6 +115,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateFinancialAccount**](docs/DefaultAPI.md#createfinancialaccount) | **Post** /financial/account | Create a new financial account
 *DefaultAPI* | [**CreateMeter**](docs/DefaultAPI.md#createmeter) | **Post** /meters | Create a new meter for a property
 *DefaultAPI* | [**CreateMeterReading**](docs/DefaultAPI.md#createmeterreading) | **Post** /meter/{meterID}/readings | Create a new meter reading for a meter
+*DefaultAPI* | [**CreateNote**](docs/DefaultAPI.md#createnote) | **Post** /note | Create a new note
 *DefaultAPI* | [**CreateNotification**](docs/DefaultAPI.md#createnotification) | **Post** /notification | Create a new notification
 *DefaultAPI* | [**CreateProperty**](docs/DefaultAPI.md#createproperty) | **Post** /property | Create property
 *DefaultAPI* | [**CreatePropertyHandover**](docs/DefaultAPI.md#createpropertyhandover) | **Post** /property-handovers/handover | Create a new property handover
@@ -158,6 +159,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteFinancialAccount**](docs/DefaultAPI.md#deletefinancialaccount) | **Delete** /financial/accounts/{accountID} | Delete the financial account with all its related data
 *DefaultAPI* | [**DeleteMeter**](docs/DefaultAPI.md#deletemeter) | **Delete** /meter/{meterID} | Delete meter
 *DefaultAPI* | [**DeleteMeterReading**](docs/DefaultAPI.md#deletemeterreading) | **Delete** /meter/{meterID}/reading/{readingID} | Delete meter reading
+*DefaultAPI* | [**DeleteNote**](docs/DefaultAPI.md#deletenote) | **Delete** /notes/{noteID} | Delete note
 *DefaultAPI* | [**DeleteNotification**](docs/DefaultAPI.md#deletenotification) | **Delete** /notification/{notificationName} | Delete notification
 *DefaultAPI* | [**DeleteProperty**](docs/DefaultAPI.md#deleteproperty) | **Delete** /properties/{propID} | Delete property
 *DefaultAPI* | [**DeletePropertyHandover**](docs/DefaultAPI.md#deletepropertyhandover) | **Delete** /property-handovers/handovers/{handoverID} | Delete property handover
@@ -179,6 +181,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**ExecuteWorkflowEntrypoint**](docs/DefaultAPI.md#executeworkflowentrypoint) | **Post** /workflows/entrypoint/{entrypointID}/execute | Execute the workflow entry point
 *DefaultAPI* | [**ExecuteWorkflowExecutionStep**](docs/DefaultAPI.md#executeworkflowexecutionstep) | **Post** /workflows/execution/{executionID} | Execute workflow execution step
 *DefaultAPI* | [**Feedback**](docs/DefaultAPI.md#feedback) | **Post** /feedback | User feedback about the product
+*DefaultAPI* | [**GenerateAccountDimensionValues**](docs/DefaultAPI.md#generateaccountdimensionvalues) | **Post** /financial/account-dimension/{dimensionID}/values/generate | Generate the account dimension values for the given dimension
 *DefaultAPI* | [**GenerateCaseReportingEndpointNotice**](docs/DefaultAPI.md#generatecasereportingendpointnotice) | **Post** /cases/endpoints/{endpointID}/notice | Generate a PDF for a notice of the case reporting endpoint
 *DefaultAPI* | [**GenerateDocumentPDF**](docs/DefaultAPI.md#generatedocumentpdf) | **Post** /document-generation/documents/{docID}/generate-pdf | Generate a PDF for the document generation
 *DefaultAPI* | [**GenerateDocumentText**](docs/DefaultAPI.md#generatedocumenttext) | **Post** /document-generation/documents/{docID}/generate-text | Generate the text for the document, based on template and input data 
@@ -229,12 +232,14 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetFeatureFlags**](docs/DefaultAPI.md#getfeatureflags) | **Get** /feature-flags | Get feature flags by reference
 *DefaultAPI* | [**GetFeatureFlagsConfig**](docs/DefaultAPI.md#getfeatureflagsconfig) | **Get** /feature-flags/config | Get all feature flags config
 *DefaultAPI* | [**GetFinancialAccount**](docs/DefaultAPI.md#getfinancialaccount) | **Get** /financial/accounts/{accountID} | Get the financial account with all its attributes
+*DefaultAPI* | [**GetFinancialAccountsByRef**](docs/DefaultAPI.md#getfinancialaccountsbyref) | **Post** /financial/account/by-ref/{refType}/{refID} | Get the financial account for a given ref type and ref ID
 *DefaultAPI* | [**GetLatestPriceIndexPoint**](docs/DefaultAPI.md#getlatestpriceindexpoint) | **Get** /price-index/latest/{countryCode} | Get the current latest PriceIndexPoint
 *DefaultAPI* | [**GetMeter**](docs/DefaultAPI.md#getmeter) | **Get** /meter/{meterID} | Get meter
 *DefaultAPI* | [**GetMeterReading**](docs/DefaultAPI.md#getmeterreading) | **Get** /meter/{meterID}/reading/{readingID} | Get meter reading
 *DefaultAPI* | [**GetMeterReadings**](docs/DefaultAPI.md#getmeterreadings) | **Get** /meter/{meterID}/readings | List meter readings
 *DefaultAPI* | [**GetMeters**](docs/DefaultAPI.md#getmeters) | **Get** /meters | List meters
 *DefaultAPI* | [**GetMetersByProperty**](docs/DefaultAPI.md#getmetersbyproperty) | **Get** /meters/by-property/{propID} | List meters for a property
+*DefaultAPI* | [**GetNote**](docs/DefaultAPI.md#getnote) | **Get** /notes/{noteID} | Get note
 *DefaultAPI* | [**GetNotification**](docs/DefaultAPI.md#getnotification) | **Get** /notification/{notificationName} | Get notification
 *DefaultAPI* | [**GetNumberOfCasesForActionAndTimePeriod**](docs/DefaultAPI.md#getnumberofcasesforactionandtimeperiod) | **Post** /cases/stats/action | Get number of cases for the given action and time period
 *DefaultAPI* | [**GetNumberOfInteractionsForCases**](docs/DefaultAPI.md#getnumberofinteractionsforcases) | **Post** /cases/stats/interactions | Query case interactions
@@ -269,6 +274,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetWorkflowExecutionTrigger**](docs/DefaultAPI.md#getworkflowexecutiontrigger) | **Get** /workflows/triggers/{executionID} | Get workflow trigger for an execution
 *DefaultAPI* | [**GetWorkflowTriggersForSource**](docs/DefaultAPI.md#getworkflowtriggersforsource) | **Get** /workflows/trigger/source/{sourceID} | Get workflow triggers for a source
 *DefaultAPI* | [**InternalAddPriceIndexPoint**](docs/DefaultAPI.md#internaladdpriceindexpoint) | **Put** /price-index | Push a new value for the inflation index
+*DefaultAPI* | [**InviteToAppointment**](docs/DefaultAPI.md#invitetoappointment) | **Post** /calendar/appointments/entry/{entryID}/invite | Invite a users to an appointment
 *DefaultAPI* | [**LinkCaseProperty**](docs/DefaultAPI.md#linkcaseproperty) | **Post** /case/{caseID}/property/{propID}/link | Link a property to a case
 *DefaultAPI* | [**PreviewCommentTemplate**](docs/DefaultAPI.md#previewcommenttemplate) | **Post** /comment-template/{commentTemplateID}/preview | Preview a comment template returning an example comment.
 *DefaultAPI* | [**PublicAddCaseComment**](docs/DefaultAPI.md#publicaddcasecomment) | **Post** /public/case/{caseID}/comment | Add new case comment
@@ -318,6 +324,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryExternalUserCases**](docs/DefaultAPI.md#queryexternalusercases) | **Get** /external-users/{userID}/cases | Get the cases the the given user has opened
 *DefaultAPI* | [**QueryExternalUsers**](docs/DefaultAPI.md#queryexternalusers) | **Get** /external-users | Get a list of external users who reported to the current manager
 *DefaultAPI* | [**QueryFinancialAccounts**](docs/DefaultAPI.md#queryfinancialaccounts) | **Post** /financial/accounts | Query all financial accounts
+*DefaultAPI* | [**QueryNotesForEntity**](docs/DefaultAPI.md#querynotesforentity) | **Get** /notes/by-reference/{refID} | List notes
 *DefaultAPI* | [**QueryProperties**](docs/DefaultAPI.md#queryproperties) | **Post** /properties | Query properties
 *DefaultAPI* | [**QueryPropertyHandoverTemplates**](docs/DefaultAPI.md#querypropertyhandovertemplates) | **Post** /property-handovers/templates | Query property handover templates
 *DefaultAPI* | [**QueryPropertyHandovers**](docs/DefaultAPI.md#querypropertyhandovers) | **Post** /property-handovers/handovers | Query property handovers
@@ -366,6 +373,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateFinancialAccount**](docs/DefaultAPI.md#updatefinancialaccount) | **Put** /financial/accounts/{accountID} | Update an already existing financial account
 *DefaultAPI* | [**UpdateMeter**](docs/DefaultAPI.md#updatemeter) | **Put** /meter/{meterID} | Update meter
 *DefaultAPI* | [**UpdateMeterReading**](docs/DefaultAPI.md#updatemeterreading) | **Put** /meter/{meterID}/reading/{readingID} | Update meter reading
+*DefaultAPI* | [**UpdateNote**](docs/DefaultAPI.md#updatenote) | **Put** /notes/{noteID} | Update note
 *DefaultAPI* | [**UpdateNotification**](docs/DefaultAPI.md#updatenotification) | **Put** /notification/{notificationName} | Update notification
 *DefaultAPI* | [**UpdateProperty**](docs/DefaultAPI.md#updateproperty) | **Put** /properties/{propID} | Update property
 *DefaultAPI* | [**UpdatePropertyHandover**](docs/DefaultAPI.md#updatepropertyhandover) | **Put** /property-handovers/handovers/{handoverID} | Update property handover
@@ -398,9 +406,11 @@ Class | Method | HTTP request | Description
  - [AccountDimensionValue](docs/AccountDimensionValue.md)
  - [AccountDimensionValueAttributesPartial](docs/AccountDimensionValueAttributesPartial.md)
  - [AccountDimensionValueRef](docs/AccountDimensionValueRef.md)
+ - [AccountTypesEnum](docs/AccountTypesEnum.md)
  - [AdditionalRentCost](docs/AdditionalRentCost.md)
  - [Address](docs/Address.md)
  - [Appointment](docs/Appointment.md)
+ - [AppointmentDetails](docs/AppointmentDetails.md)
  - [AppointmentSchedule](docs/AppointmentSchedule.md)
  - [AppointmentScheduleAttributesPartial](docs/AppointmentScheduleAttributesPartial.md)
  - [AppointmentScheduleInvitationRequest](docs/AppointmentScheduleInvitationRequest.md)
@@ -465,6 +475,7 @@ Class | Method | HTTP request | Description
  - [CreateCorrespondenceRequest](docs/CreateCorrespondenceRequest.md)
  - [CreateDocumentGenerationRequest](docs/CreateDocumentGenerationRequest.md)
  - [CreateDocumentRequest](docs/CreateDocumentRequest.md)
+ - [CreateNoteRequest](docs/CreateNoteRequest.md)
  - [CreateNotificationRequest](docs/CreateNotificationRequest.md)
  - [CreateOrUpdateAccountBookingRequest](docs/CreateOrUpdateAccountBookingRequest.md)
  - [CreateOrUpdateAccountDimensionRequest](docs/CreateOrUpdateAccountDimensionRequest.md)
@@ -548,6 +559,7 @@ Class | Method | HTTP request | Description
  - [FeedbackType](docs/FeedbackType.md)
  - [FinancialAccount](docs/FinancialAccount.md)
  - [FinancialAccountAttributesPartial](docs/FinancialAccountAttributesPartial.md)
+ - [FinancialSubAccount](docs/FinancialSubAccount.md)
  - [FloatNumber](docs/FloatNumber.md)
  - [Form](docs/Form.md)
  - [FormGroup](docs/FormGroup.md)
@@ -575,6 +587,7 @@ Class | Method | HTTP request | Description
  - [GraduatedUpdate](docs/GraduatedUpdate.md)
  - [IDUpload](docs/IDUpload.md)
  - [InputItem](docs/InputItem.md)
+ - [InviteToAppointmentRequest](docs/InviteToAppointmentRequest.md)
  - [IsDeletedAttributePartial](docs/IsDeletedAttributePartial.md)
  - [LogRequest](docs/LogRequest.md)
  - [MandatoryMessage](docs/MandatoryMessage.md)
@@ -583,6 +596,8 @@ Class | Method | HTTP request | Description
  - [MeterReading](docs/MeterReading.md)
  - [MeterReadingAttributesPartial](docs/MeterReadingAttributesPartial.md)
  - [MeterTypeEnum](docs/MeterTypeEnum.md)
+ - [Note](docs/Note.md)
+ - [NoteAtributesPartial](docs/NoteAtributesPartial.md)
  - [Notification](docs/Notification.md)
  - [NotificationAttributesPartial](docs/NotificationAttributesPartial.md)
  - [NotificationType](docs/NotificationType.md)
@@ -644,6 +659,7 @@ Class | Method | HTTP request | Description
  - [QuerySimilarPropertiesResponse](docs/QuerySimilarPropertiesResponse.md)
  - [QueryTenantsRequest](docs/QueryTenantsRequest.md)
  - [QueryTenantsResponse](docs/QueryTenantsResponse.md)
+ - [QueryTimeRange](docs/QueryTimeRange.md)
  - [QueryWorkflowDefinitionsRequest](docs/QueryWorkflowDefinitionsRequest.md)
  - [QueryWorkflowDefinitionsResponse](docs/QueryWorkflowDefinitionsResponse.md)
  - [QueryWorkflowExecutionsRequest](docs/QueryWorkflowExecutionsRequest.md)
@@ -685,6 +701,7 @@ Class | Method | HTTP request | Description
  - [UpdateConnectorConfigRequest](docs/UpdateConnectorConfigRequest.md)
  - [UpdateDocumentRequest](docs/UpdateDocumentRequest.md)
  - [UpdateExternalUserRequest](docs/UpdateExternalUserRequest.md)
+ - [UpdateNoteRequest](docs/UpdateNoteRequest.md)
  - [UpdateNotificationRequest](docs/UpdateNotificationRequest.md)
  - [UpdateTenancyRequest](docs/UpdateTenancyRequest.md)
  - [UpdateUserPreferencesRequest](docs/UpdateUserPreferencesRequest.md)

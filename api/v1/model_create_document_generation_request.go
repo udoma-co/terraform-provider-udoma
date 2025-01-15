@@ -25,6 +25,8 @@ type CreateDocumentGenerationRequest struct {
 	TemplateRef string `json:"template_ref"`
 	// Optional initialisation data for the inputs of the template. If not set, the default values of the inputs will be used. To be provided as JSON serialised object, where the values are NOT JSON serialised themselves.
 	InitData *string `json:"init_data,omitempty"`
+	// Optional static data to be used in the generation process.
+	StaticData *string `json:"static_data,omitempty"`
 }
 
 type _CreateDocumentGenerationRequest CreateDocumentGenerationRequest
@@ -103,6 +105,38 @@ func (o *CreateDocumentGenerationRequest) SetInitData(v string) {
 	o.InitData = &v
 }
 
+// GetStaticData returns the StaticData field value if set, zero value otherwise.
+func (o *CreateDocumentGenerationRequest) GetStaticData() string {
+	if o == nil || IsNil(o.StaticData) {
+		var ret string
+		return ret
+	}
+	return *o.StaticData
+}
+
+// GetStaticDataOk returns a tuple with the StaticData field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateDocumentGenerationRequest) GetStaticDataOk() (*string, bool) {
+	if o == nil || IsNil(o.StaticData) {
+		return nil, false
+	}
+	return o.StaticData, true
+}
+
+// HasStaticData returns a boolean if a field has been set.
+func (o *CreateDocumentGenerationRequest) HasStaticData() bool {
+	if o != nil && !IsNil(o.StaticData) {
+		return true
+	}
+
+	return false
+}
+
+// SetStaticData gets a reference to the given string and assigns it to the StaticData field.
+func (o *CreateDocumentGenerationRequest) SetStaticData(v string) {
+	o.StaticData = &v
+}
+
 func (o CreateDocumentGenerationRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -116,6 +150,9 @@ func (o CreateDocumentGenerationRequest) ToMap() (map[string]interface{}, error)
 	toSerialize["template_ref"] = o.TemplateRef
 	if !IsNil(o.InitData) {
 		toSerialize["init_data"] = o.InitData
+	}
+	if !IsNil(o.StaticData) {
+		toSerialize["static_data"] = o.StaticData
 	}
 	return toSerialize, nil
 }

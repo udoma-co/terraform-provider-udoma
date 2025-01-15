@@ -21,14 +21,16 @@ var _ MappedNullable = &AccountDimensionValue{}
 
 // AccountDimensionValue A mapping of an entity to a value of a dimension
 type AccountDimensionValue struct {
+	// Optional ID for the parent dimension. If set, this value is only available when the parent dimension has been set to the given ID.
+	ParentId *string `json:"parent_id,omitempty"`
 	// The unique ID this this value (typically the ID of the referenced  entity that is mapped, e.g. property ID). This value must be unique for the given dimension, regardless of the parent dimension value.
 	Id string `json:"id"`
 	// The numeric value under the given dimension. This value is unique for the given dimension. If a parent dimension reference is set,  then the value is only unique for the parent dimension value and  may be repeated for other parent dimension values.
 	Value *int32 `json:"value,omitempty"`
-	// Optional ID for the parent dimension value. If set, the value can only be set, when the parent dimension was set to the given ID.
-	ParentDimensionId *string `json:"parent_dimension_id,omitempty"`
 	// The unique ID of the dimension, for which this value is defined.
 	DimensionRef string `json:"dimension_ref"`
+	// Optional alias that holds the name of the referenced entity (e.g.  property name, tenant name, etc.). This might get returned by the  backend, when loading the values and when the reference is known.
+	Alias *string `json:"alias,omitempty"`
 }
 
 type _AccountDimensionValue AccountDimensionValue
@@ -50,6 +52,38 @@ func NewAccountDimensionValue(id string, dimensionRef string) *AccountDimensionV
 func NewAccountDimensionValueWithDefaults() *AccountDimensionValue {
 	this := AccountDimensionValue{}
 	return &this
+}
+
+// GetParentId returns the ParentId field value if set, zero value otherwise.
+func (o *AccountDimensionValue) GetParentId() string {
+	if o == nil || IsNil(o.ParentId) {
+		var ret string
+		return ret
+	}
+	return *o.ParentId
+}
+
+// GetParentIdOk returns a tuple with the ParentId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AccountDimensionValue) GetParentIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ParentId) {
+		return nil, false
+	}
+	return o.ParentId, true
+}
+
+// HasParentId returns a boolean if a field has been set.
+func (o *AccountDimensionValue) HasParentId() bool {
+	if o != nil && !IsNil(o.ParentId) {
+		return true
+	}
+
+	return false
+}
+
+// SetParentId gets a reference to the given string and assigns it to the ParentId field.
+func (o *AccountDimensionValue) SetParentId(v string) {
+	o.ParentId = &v
 }
 
 // GetId returns the Id field value
@@ -108,38 +142,6 @@ func (o *AccountDimensionValue) SetValue(v int32) {
 	o.Value = &v
 }
 
-// GetParentDimensionId returns the ParentDimensionId field value if set, zero value otherwise.
-func (o *AccountDimensionValue) GetParentDimensionId() string {
-	if o == nil || IsNil(o.ParentDimensionId) {
-		var ret string
-		return ret
-	}
-	return *o.ParentDimensionId
-}
-
-// GetParentDimensionIdOk returns a tuple with the ParentDimensionId field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *AccountDimensionValue) GetParentDimensionIdOk() (*string, bool) {
-	if o == nil || IsNil(o.ParentDimensionId) {
-		return nil, false
-	}
-	return o.ParentDimensionId, true
-}
-
-// HasParentDimensionId returns a boolean if a field has been set.
-func (o *AccountDimensionValue) HasParentDimensionId() bool {
-	if o != nil && !IsNil(o.ParentDimensionId) {
-		return true
-	}
-
-	return false
-}
-
-// SetParentDimensionId gets a reference to the given string and assigns it to the ParentDimensionId field.
-func (o *AccountDimensionValue) SetParentDimensionId(v string) {
-	o.ParentDimensionId = &v
-}
-
 // GetDimensionRef returns the DimensionRef field value
 func (o *AccountDimensionValue) GetDimensionRef() string {
 	if o == nil {
@@ -164,6 +166,38 @@ func (o *AccountDimensionValue) SetDimensionRef(v string) {
 	o.DimensionRef = v
 }
 
+// GetAlias returns the Alias field value if set, zero value otherwise.
+func (o *AccountDimensionValue) GetAlias() string {
+	if o == nil || IsNil(o.Alias) {
+		var ret string
+		return ret
+	}
+	return *o.Alias
+}
+
+// GetAliasOk returns a tuple with the Alias field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AccountDimensionValue) GetAliasOk() (*string, bool) {
+	if o == nil || IsNil(o.Alias) {
+		return nil, false
+	}
+	return o.Alias, true
+}
+
+// HasAlias returns a boolean if a field has been set.
+func (o *AccountDimensionValue) HasAlias() bool {
+	if o != nil && !IsNil(o.Alias) {
+		return true
+	}
+
+	return false
+}
+
+// SetAlias gets a reference to the given string and assigns it to the Alias field.
+func (o *AccountDimensionValue) SetAlias(v string) {
+	o.Alias = &v
+}
+
 func (o AccountDimensionValue) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -174,14 +208,17 @@ func (o AccountDimensionValue) MarshalJSON() ([]byte, error) {
 
 func (o AccountDimensionValue) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.ParentId) {
+		toSerialize["parent_id"] = o.ParentId
+	}
 	toSerialize["id"] = o.Id
 	if !IsNil(o.Value) {
 		toSerialize["value"] = o.Value
 	}
-	if !IsNil(o.ParentDimensionId) {
-		toSerialize["parent_dimension_id"] = o.ParentDimensionId
-	}
 	toSerialize["dimension_ref"] = o.DimensionRef
+	if !IsNil(o.Alias) {
+		toSerialize["alias"] = o.Alias
+	}
 	return toSerialize, nil
 }
 

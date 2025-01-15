@@ -27,7 +27,7 @@ type ReportResultSchemaAttribute struct {
 	Label map[string]string `json:"label"`
 	// The sequence of the attribute, which will be used to order the attributes  in the UI.
 	Sequence int32 `json:"sequence"`
-	// Whether the attribute is used to link to another entity. If true, the  UI will parse the attribute and render a link to the referenced entity. If the result is a list, this attribute will be used as the target of each row, hence, it should be avoided to have more than one reference attribute in a list schema.
+	// Whether the attribute is used to link to another entity. If true, the  UI will parse the attribute and render a link to the referenced entity. If the result is a list, this attribute will be used as the target of each row, hence, it should be avoided to have more than one reference attribute in a table schema.
 	IsReference *bool `json:"is_reference,omitempty"`
 }
 
