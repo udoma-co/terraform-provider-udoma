@@ -56,6 +56,7 @@ type reportDefinitionModel struct {
 	ResultSchema *resultSchemaModel `tfsdk:"result_schema"`
 	Parameters   *CustomFormModel   `tfsdk:"parameters"`
 	Script       types.String       `tfsdk:"script"`
+	Version      types.Int32        `tfsdk:"version"`
 }
 
 func NewReportDefinitionModelNull() *reportDefinitionModel {
@@ -147,6 +148,10 @@ func (r *reportDefinition) Schema(ctx context.Context, req resource.SchemaReques
 			"script": schema.StringAttribute{
 				Required:    true,
 				Description: "JS script that is executed to generate the report",
+			},
+			"version": schema.Int32Attribute{
+				Computed:    true,
+				Description: "The version of the report definition",
 			},
 		},
 	}
@@ -382,6 +387,7 @@ func (model *reportDefinitionModel) fromAPI(reportDefinition *api.ReportDefiniti
 	model.Name = types.StringValue(reportDefinition.Name)
 	model.Description = omittableStringValue(reportDefinition.Description, model.Description)
 	model.Script = types.StringValue(reportDefinition.Script)
+	model.Version = types.Int32PointerValue(reportDefinition.Version)
 
 	if params := reportDefinition.Parameters.Get(); params != nil {
 		if model.Parameters == nil {
@@ -431,6 +437,7 @@ func (model *reportDefinitionModel) toAPIRequest() (api.CreateOrUpdateReportDefi
 		Description:  model.Description.ValueStringPointer(),
 		ResultSchema: model.ResultSchema.toAPIRequest(),
 		Script:       model.Script.ValueString(),
+		Version:      model.Version.ValueInt32Pointer(),
 	}
 
 	if model.Parameters != nil {

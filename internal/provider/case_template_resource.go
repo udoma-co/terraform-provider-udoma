@@ -53,6 +53,7 @@ type CaseTemplateModel struct {
 	Config           *CaseConfigModel   `tfsdk:"config"`
 	AdCategories     []types.String     `tfsdk:"ad_categories"`
 	ConfirmationText types.Map          `tfsdk:"confirmation_text"`
+	Version          types.Int32        `tfsdk:"version"`
 }
 
 func (r *CaseTemplate) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -152,6 +153,10 @@ func (r *CaseTemplate) Schema(ctx context.Context, req resource.SchemaRequest, r
 				Optional:    true,
 				Description: "Text for the confirmation window before submiting case",
 				ElementType: types.StringType,
+			},
+			"version": schema.Int32Attribute{
+				Computed:    true,
+				Description: "The version of the case template",
 			},
 		},
 	}
@@ -354,6 +359,7 @@ func (model *CaseTemplateModel) fromAPI(template *api.CaseTemplate) error {
 	model.Name = types.StringValue(template.Name)
 	model.NameExpression = omittableStringValue(template.NameExpression, model.NameExpression)
 	model.Icon = omittableStringValue(template.Icon, model.Icon)
+	model.Version = types.Int32PointerValue(template.Version)
 
 	model.Access = make([]types.String, len(template.Access))
 	for i := range template.Access {
@@ -430,6 +436,7 @@ func (model *CaseTemplateModel) toAPIRequest() (api.CreateOrUpdateCaseTemplateRe
 		Name:           model.Name.ValueString(),
 		NameExpression: model.NameExpression.ValueStringPointer(),
 		Icon:           model.Icon.ValueStringPointer(),
+		Version:        model.Version.ValueInt32Pointer(),
 	}
 
 	if description := modelMapToStringMap(model.Description); len(description) > 0 {

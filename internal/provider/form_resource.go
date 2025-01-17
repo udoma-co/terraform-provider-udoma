@@ -34,6 +34,7 @@ type FormModel struct {
 	Name           types.String     `tfsdk:"name"`
 	Description    types.String     `tfsdk:"description"`
 	FormDefinition *CustomFormModel `tfsdk:"form_definition"`
+	Version        types.Int32      `tfsdk:"version"`
 }
 
 func (r *Form) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -62,6 +63,10 @@ func (r *Form) Schema(ctx context.Context, req resource.SchemaRequest, resp *res
 				Optional:    true,
 				Description: "A custom form to collect data with",
 				Attributes:  CustomFormNestedSchema(),
+			},
+			"version": schema.Int32Attribute{
+				Computed:    true,
+				Description: "The version of the custom form.",
 			},
 		},
 	}
@@ -222,6 +227,7 @@ func (template *FormModel) fromApiResponse(resp *v1.Form) (diags diag.Diagnostic
 	template.ID = types.StringValue(resp.Id)
 	template.Name = types.StringPointerValue(resp.Name)
 	template.Description = omittableStringValue(resp.Description, template.Description)
+	template.Version = types.Int32PointerValue(resp.Version)
 
 	if template.FormDefinition == nil {
 		template.FormDefinition = &CustomFormModel{}
