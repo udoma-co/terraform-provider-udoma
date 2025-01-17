@@ -25,11 +25,13 @@ type CreateOrUpdatePropertyRequest struct {
 	Name    string       `json:"name"`
 	Type    PropertyType `json:"type"`
 	Address *Address     `json:"address,omitempty"`
-	// Optional reference to the property owner
+	// For appartments, this is the unique number within the building. For  buildings, this can be used as a short identifier
+	Number *int32 `json:"number,omitempty"`
+	// Optional reference to the owner of this property
 	OwnerRef *string `json:"owner_ref,omitempty"`
-	// Optional reference to the parent property
+	// Optional reference to the parent property (e.g. building) of this property
 	ParentRef *string `json:"parent_ref,omitempty"`
-	// Address of the suite.
+	// Optional information about the suite, e.g. '2. floor, left'
 	Suite   *string          `json:"suite,omitempty"`
 	Details *PropertyDetails `json:"details,omitempty"`
 }
@@ -133,6 +135,38 @@ func (o *CreateOrUpdatePropertyRequest) HasAddress() bool {
 // SetAddress gets a reference to the given Address and assigns it to the Address field.
 func (o *CreateOrUpdatePropertyRequest) SetAddress(v Address) {
 	o.Address = &v
+}
+
+// GetNumber returns the Number field value if set, zero value otherwise.
+func (o *CreateOrUpdatePropertyRequest) GetNumber() int32 {
+	if o == nil || IsNil(o.Number) {
+		var ret int32
+		return ret
+	}
+	return *o.Number
+}
+
+// GetNumberOk returns a tuple with the Number field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdatePropertyRequest) GetNumberOk() (*int32, bool) {
+	if o == nil || IsNil(o.Number) {
+		return nil, false
+	}
+	return o.Number, true
+}
+
+// HasNumber returns a boolean if a field has been set.
+func (o *CreateOrUpdatePropertyRequest) HasNumber() bool {
+	if o != nil && !IsNil(o.Number) {
+		return true
+	}
+
+	return false
+}
+
+// SetNumber gets a reference to the given int32 and assigns it to the Number field.
+func (o *CreateOrUpdatePropertyRequest) SetNumber(v int32) {
+	o.Number = &v
 }
 
 // GetOwnerRef returns the OwnerRef field value if set, zero value otherwise.
@@ -277,6 +311,9 @@ func (o CreateOrUpdatePropertyRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize["type"] = o.Type
 	if !IsNil(o.Address) {
 		toSerialize["address"] = o.Address
+	}
+	if !IsNil(o.Number) {
+		toSerialize["number"] = o.Number
 	}
 	if !IsNil(o.OwnerRef) {
 		toSerialize["owner_ref"] = o.OwnerRef

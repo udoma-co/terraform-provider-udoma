@@ -24,7 +24,7 @@ type UpdateNotificationRequest struct {
 	// A short description of the notification.
 	Description *string `json:"description,omitempty"`
 	// A script that can run the notification given some initial data.
-	Script string `json:"script"`
+	Script *string `json:"script,omitempty"`
 	// A potential reference to an intermediate template. Empty if no intermediate used.
 	IntermediateRef *string `json:"intermediate_ref,omitempty"`
 	// The golang html template to use for the notification.
@@ -39,9 +39,8 @@ type _UpdateNotificationRequest UpdateNotificationRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewUpdateNotificationRequest(script string, templateHtml string, templateText string) *UpdateNotificationRequest {
+func NewUpdateNotificationRequest(templateHtml string, templateText string) *UpdateNotificationRequest {
 	this := UpdateNotificationRequest{}
-	this.Script = script
 	this.TemplateHtml = templateHtml
 	this.TemplateText = templateText
 	return &this
@@ -87,28 +86,36 @@ func (o *UpdateNotificationRequest) SetDescription(v string) {
 	o.Description = &v
 }
 
-// GetScript returns the Script field value
+// GetScript returns the Script field value if set, zero value otherwise.
 func (o *UpdateNotificationRequest) GetScript() string {
-	if o == nil {
+	if o == nil || IsNil(o.Script) {
 		var ret string
 		return ret
 	}
-
-	return o.Script
+	return *o.Script
 }
 
-// GetScriptOk returns a tuple with the Script field value
+// GetScriptOk returns a tuple with the Script field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateNotificationRequest) GetScriptOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Script) {
 		return nil, false
 	}
-	return &o.Script, true
+	return o.Script, true
 }
 
-// SetScript sets field value
+// HasScript returns a boolean if a field has been set.
+func (o *UpdateNotificationRequest) HasScript() bool {
+	if o != nil && !IsNil(o.Script) {
+		return true
+	}
+
+	return false
+}
+
+// SetScript gets a reference to the given string and assigns it to the Script field.
 func (o *UpdateNotificationRequest) SetScript(v string) {
-	o.Script = v
+	o.Script = &v
 }
 
 // GetIntermediateRef returns the IntermediateRef field value if set, zero value otherwise.
@@ -204,7 +211,9 @@ func (o UpdateNotificationRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
 	}
-	toSerialize["script"] = o.Script
+	if !IsNil(o.Script) {
+		toSerialize["script"] = o.Script
+	}
 	if !IsNil(o.IntermediateRef) {
 		toSerialize["intermediate_ref"] = o.IntermediateRef
 	}
@@ -218,7 +227,6 @@ func (o *UpdateNotificationRequest) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"script",
 		"template_html",
 		"template_text",
 	}

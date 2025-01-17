@@ -40,6 +40,7 @@ type CreateOrUpdateCaseTemplateRequest struct {
 	AdCategories []CaseTemplateAdCategoryEnum `json:"ad_categories,omitempty"`
 	// a map of values, where the key and values are strings
 	ConfirmationText *map[string]string `json:"confirmation_text,omitempty"`
+	Version          *int32             `json:"version,omitempty"`
 }
 
 type _CreateOrUpdateCaseTemplateRequest CreateOrUpdateCaseTemplateRequest
@@ -387,6 +388,38 @@ func (o *CreateOrUpdateCaseTemplateRequest) SetConfirmationText(v map[string]str
 	o.ConfirmationText = &v
 }
 
+// GetVersion returns the Version field value if set, zero value otherwise.
+func (o *CreateOrUpdateCaseTemplateRequest) GetVersion() int32 {
+	if o == nil || IsNil(o.Version) {
+		var ret int32
+		return ret
+	}
+	return *o.Version
+}
+
+// GetVersionOk returns a tuple with the Version field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateCaseTemplateRequest) GetVersionOk() (*int32, bool) {
+	if o == nil || IsNil(o.Version) {
+		return nil, false
+	}
+	return o.Version, true
+}
+
+// HasVersion returns a boolean if a field has been set.
+func (o *CreateOrUpdateCaseTemplateRequest) HasVersion() bool {
+	if o != nil && !IsNil(o.Version) {
+		return true
+	}
+
+	return false
+}
+
+// SetVersion gets a reference to the given int32 and assigns it to the Version field.
+func (o *CreateOrUpdateCaseTemplateRequest) SetVersion(v int32) {
+	o.Version = &v
+}
+
 func (o CreateOrUpdateCaseTemplateRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -421,6 +454,9 @@ func (o CreateOrUpdateCaseTemplateRequest) ToMap() (map[string]interface{}, erro
 	}
 	if !IsNil(o.ConfirmationText) {
 		toSerialize["confirmation_text"] = o.ConfirmationText
+	}
+	if !IsNil(o.Version) {
+		toSerialize["version"] = o.Version
 	}
 	return toSerialize, nil
 }

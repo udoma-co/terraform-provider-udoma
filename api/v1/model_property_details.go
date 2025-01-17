@@ -20,9 +20,7 @@ var _ MappedNullable = &PropertyDetails{}
 // PropertyDetails Holds extra details about a property
 type PropertyDetails struct {
 	// Floor/storey of a building.
-	Floor *string `json:"floor,omitempty"`
-	// Unit number within a building.
-	UnitNumber       *string                  `json:"unit_number,omitempty"`
+	Floor            *string                  `json:"floor,omitempty"`
 	Area             *float32                 `json:"area,omitempty"`
 	Rooms            *float32                 `json:"rooms,omitempty"`
 	Bedrooms         *float32                 `json:"bedrooms,omitempty"`
@@ -88,38 +86,6 @@ func (o *PropertyDetails) HasFloor() bool {
 // SetFloor gets a reference to the given string and assigns it to the Floor field.
 func (o *PropertyDetails) SetFloor(v string) {
 	o.Floor = &v
-}
-
-// GetUnitNumber returns the UnitNumber field value if set, zero value otherwise.
-func (o *PropertyDetails) GetUnitNumber() string {
-	if o == nil || IsNil(o.UnitNumber) {
-		var ret string
-		return ret
-	}
-	return *o.UnitNumber
-}
-
-// GetUnitNumberOk returns a tuple with the UnitNumber field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *PropertyDetails) GetUnitNumberOk() (*string, bool) {
-	if o == nil || IsNil(o.UnitNumber) {
-		return nil, false
-	}
-	return o.UnitNumber, true
-}
-
-// HasUnitNumber returns a boolean if a field has been set.
-func (o *PropertyDetails) HasUnitNumber() bool {
-	if o != nil && !IsNil(o.UnitNumber) {
-		return true
-	}
-
-	return false
-}
-
-// SetUnitNumber gets a reference to the given string and assigns it to the UnitNumber field.
-func (o *PropertyDetails) SetUnitNumber(v string) {
-	o.UnitNumber = &v
 }
 
 // GetArea returns the Area field value if set, zero value otherwise.
@@ -518,9 +484,6 @@ func (o PropertyDetails) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Floor) {
 		toSerialize["floor"] = o.Floor
-	}
-	if !IsNil(o.UnitNumber) {
-		toSerialize["unit_number"] = o.UnitNumber
 	}
 	if !IsNil(o.Area) {
 		toSerialize["area"] = o.Area

@@ -33,6 +33,7 @@ type CreateOrUpdateWorkflowDefinitionRequest struct {
 	FirstStepId string                             `json:"first_step_id"`
 	InitStep    NullableWorkflowInitStepDefinition `json:"init_step,omitempty"`
 	Steps       []WorkflowStepDefinition           `json:"steps"`
+	Version     *int32                             `json:"version,omitempty"`
 }
 
 type _CreateOrUpdateWorkflowDefinitionRequest CreateOrUpdateWorkflowDefinitionRequest
@@ -300,6 +301,38 @@ func (o *CreateOrUpdateWorkflowDefinitionRequest) SetSteps(v []WorkflowStepDefin
 	o.Steps = v
 }
 
+// GetVersion returns the Version field value if set, zero value otherwise.
+func (o *CreateOrUpdateWorkflowDefinitionRequest) GetVersion() int32 {
+	if o == nil || IsNil(o.Version) {
+		var ret int32
+		return ret
+	}
+	return *o.Version
+}
+
+// GetVersionOk returns a tuple with the Version field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateWorkflowDefinitionRequest) GetVersionOk() (*int32, bool) {
+	if o == nil || IsNil(o.Version) {
+		return nil, false
+	}
+	return o.Version, true
+}
+
+// HasVersion returns a boolean if a field has been set.
+func (o *CreateOrUpdateWorkflowDefinitionRequest) HasVersion() bool {
+	if o != nil && !IsNil(o.Version) {
+		return true
+	}
+
+	return false
+}
+
+// SetVersion gets a reference to the given int32 and assigns it to the Version field.
+func (o *CreateOrUpdateWorkflowDefinitionRequest) SetVersion(v int32) {
+	o.Version = &v
+}
+
 func (o CreateOrUpdateWorkflowDefinitionRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -328,6 +361,9 @@ func (o CreateOrUpdateWorkflowDefinitionRequest) ToMap() (map[string]interface{}
 		toSerialize["init_step"] = o.InitStep.Get()
 	}
 	toSerialize["steps"] = o.Steps
+	if !IsNil(o.Version) {
+		toSerialize["version"] = o.Version
+	}
 	return toSerialize, nil
 }
 

@@ -34,6 +34,7 @@ type CreateOrUpdateDocumentTemplateRequest struct {
 	// The script we run to generate the object used in the template
 	PlaceholdersScript *string                                       `json:"placeholders_script,omitempty"`
 	Signatures         NullableDocumentTemplateSignatureConfguration `json:"signatures,omitempty"`
+	Version            *int32                                        `json:"version,omitempty"`
 }
 
 type _CreateOrUpdateDocumentTemplateRequest CreateOrUpdateDocumentTemplateRequest
@@ -314,6 +315,38 @@ func (o *CreateOrUpdateDocumentTemplateRequest) UnsetSignatures() {
 	o.Signatures.Unset()
 }
 
+// GetVersion returns the Version field value if set, zero value otherwise.
+func (o *CreateOrUpdateDocumentTemplateRequest) GetVersion() int32 {
+	if o == nil || IsNil(o.Version) {
+		var ret int32
+		return ret
+	}
+	return *o.Version
+}
+
+// GetVersionOk returns a tuple with the Version field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateDocumentTemplateRequest) GetVersionOk() (*int32, bool) {
+	if o == nil || IsNil(o.Version) {
+		return nil, false
+	}
+	return o.Version, true
+}
+
+// HasVersion returns a boolean if a field has been set.
+func (o *CreateOrUpdateDocumentTemplateRequest) HasVersion() bool {
+	if o != nil && !IsNil(o.Version) {
+		return true
+	}
+
+	return false
+}
+
+// SetVersion gets a reference to the given int32 and assigns it to the Version field.
+func (o *CreateOrUpdateDocumentTemplateRequest) SetVersion(v int32) {
+	o.Version = &v
+}
+
 func (o CreateOrUpdateDocumentTemplateRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -341,6 +374,9 @@ func (o CreateOrUpdateDocumentTemplateRequest) ToMap() (map[string]interface{}, 
 	}
 	if o.Signatures.IsSet() {
 		toSerialize["signatures"] = o.Signatures.Get()
+	}
+	if !IsNil(o.Version) {
+		toSerialize["version"] = o.Version
 	}
 	return toSerialize, nil
 }
