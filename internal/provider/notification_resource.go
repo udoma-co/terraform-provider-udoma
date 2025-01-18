@@ -7,6 +7,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	v1 "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
 	"gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/internal/client"
@@ -26,11 +28,13 @@ type Notification struct {
 }
 
 type NotificationModel struct {
-	Name         types.String `tfsdk:"name"`
-	Description  types.String `tfsdk:"description"`
-	Script       types.String `tfsdk:"script"`
-	TemplateHtml types.String `tfsdk:"template_html"`
-	TemplateText types.String `tfsdk:"template_text"`
+	Name            types.String `tfsdk:"name"`
+	Description     types.String `tfsdk:"description"`
+	Script          types.String `tfsdk:"script"`
+	IsIntermediate  types.Bool   `tfsdk:"is_intermediate"`
+	IntermediateRef types.String `tfsdk:"intermediate_ref"`
+	TemplateHtml    types.String `tfsdk:"template_html"`
+	TemplateText    types.String `tfsdk:"template_text"`
 }
 
 func (n *Notification) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -43,14 +47,27 @@ func (n *Notification) Schema(ctx context.Context, req resource.SchemaRequest, r
 			"name": schema.StringAttribute{
 				Required:    true,
 				Description: "The name of the notification.",
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 			},
 			"description": schema.StringAttribute{
 				Optional:    true,
 				Description: "The description of the notification.",
 			},
 			"script": schema.StringAttribute{
-				Required:    true,
+				Optional:    true,
 				Description: "The script of the notification.",
+			},
+			"is_intermediate": schema.BoolAttribute{
+				Optional: true,
+				Description: `Whether this template is used an intermediate template or not. 
+					If true it cannot be used as a regular template and must only be referenced 
+					by other templates.`,
+			},
+			"intermediate_ref": schema.StringAttribute{
+				Optional:    true,
+				Description: "Optional reference to a intermediate template.",
 			},
 			"template_html": schema.StringAttribute{
 				Required:    true,
@@ -96,7 +113,10 @@ func (r *Notification) Create(ctx context.Context, req resource.CreateRequest, r
 	notificationReq := plan.toCreateApiRequest()
 	newNotification, _, err := r.client.GetApi().CreateNotification(ctx).CreateNotificationRequest(notificationReq).Execute()
 	if err != nil {
-		resp.Diagnostics.AddError("Failed to create notification", err.Error())
+		resp.Diagnostics.AddError(
+			"Error Creating Notification",
+			"Could not update entity in Udoma, unexpected error: "+getApiErrorMessage(err),
+		)
 		return
 	}
 
@@ -118,7 +138,10 @@ func (r *Notification) Update(ctx context.Context, req resource.UpdateRequest, r
 	notificationReq := plan.toUpdateApiRequest()
 	updatedNotification, _, err := r.client.GetApi().UpdateNotification(ctx, plan.Name.ValueString()).UpdateNotificationRequest(notificationReq).Execute()
 	if err != nil {
-		resp.Diagnostics.AddError("Failed to update notification", err.Error())
+		resp.Diagnostics.AddError(
+			"Error Updating Notification",
+			"Could not update entity in Udoma, unexpected error: "+getApiErrorMessage(err),
+		)
 		return
 	}
 
@@ -182,27 +205,32 @@ func (r *Notification) Delete(ctx context.Context, req resource.DeleteRequest, r
 
 func (n *NotificationModel) toCreateApiRequest() v1.CreateNotificationRequest {
 	return v1.CreateNotificationRequest{
-		Name:         n.Name.ValueString(),
-		Description:  n.Description.ValueStringPointer(),
-		Script:       n.Script.ValueString(),
-		TemplateHtml: n.TemplateHtml.ValueString(),
-		TemplateText: n.TemplateText.ValueString(),
+		Name:            n.Name.ValueString(),
+		Description:     n.Description.ValueStringPointer(),
+		IsIntermediate:  n.IsIntermediate.ValueBoolPointer(),
+		IntermediateRef: n.IntermediateRef.ValueStringPointer(),
+		Script:          n.Script.ValueStringPointer(),
+		TemplateHtml:    n.TemplateHtml.ValueString(),
+		TemplateText:    n.TemplateText.ValueString(),
 	}
 }
 
 func (n *NotificationModel) toUpdateApiRequest() v1.UpdateNotificationRequest {
 	return v1.UpdateNotificationRequest{
-		Description:  n.Description.ValueStringPointer(),
-		Script:       n.Script.ValueString(),
-		TemplateHtml: n.TemplateHtml.ValueString(),
-		TemplateText: n.TemplateText.ValueString(),
+		IntermediateRef: n.IntermediateRef.ValueStringPointer(),
+		Description:     n.Description.ValueStringPointer(),
+		Script:          n.Script.ValueStringPointer(),
+		TemplateHtml:    n.TemplateHtml.ValueString(),
+		TemplateText:    n.TemplateText.ValueString(),
 	}
 }
 
 func (n *NotificationModel) fromApiResponse(notification v1.Notification) {
 	n.Name = types.StringValue(notification.Name)
 	n.Description = omittableStringValue(notification.Description, n.Description)
-	n.Script = types.StringValue(notification.Script)
+	n.IsIntermediate = omittableBooleanValue(notification.IsIntermediate, n.IsIntermediate)
+	n.IntermediateRef = omittableStringValue(notification.IntermediateRef, n.IntermediateRef)
+	n.Script = omittableStringValue(notification.Script, n.Script)
 	n.TemplateHtml = types.StringValue(notification.TemplateHtml)
 	n.TemplateText = types.StringValue(notification.TemplateText)
 }

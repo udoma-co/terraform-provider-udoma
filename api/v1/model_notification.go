@@ -21,18 +21,18 @@ var _ MappedNullable = &Notification{}
 
 // Notification A notification template that can be sent to a user.
 type Notification struct {
+	// The date and time the entity was created
+	CreatedAt int64 `json:"created_at"`
+	// The date and time the entity was last updated
+	UpdatedAt int64 `json:"updated_at"`
 	// A unique, descriptive, and short identifier name.
 	Name string `json:"name"`
+	// Whether this template is used an intermediate template or not. If true it cannot be used as a regular template and must only be referenced by other templates.
+	IsIntermediate *bool `json:"is_intermediate,omitempty"`
 	// A short description of the notification.
 	Description *string `json:"description,omitempty"`
-	// The timestamp of when the notification was created.
-	CreatedAt int64 `json:"created_at"`
-	// The timestamp of when the notification was last updated.
-	UpdatedAt int64 `json:"updated_at"`
 	// A script that can run the notification given some initial data.
-	Script string `json:"script"`
-	// Whether this template is used an intermediate template or not. If true it cannot be used as a regular template and must only be referenced by others.
-	IsIntermediate *bool `json:"is_intermediate,omitempty"`
+	Script *string `json:"script,omitempty"`
 	// A potential reference to an intermediate template. Empty if no intermediate used.
 	IntermediateRef *string `json:"intermediate_ref,omitempty"`
 	// The golang html template to use for the notification.
@@ -47,12 +47,11 @@ type _Notification Notification
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewNotification(name string, createdAt int64, updatedAt int64, script string, templateHtml string, templateText string) *Notification {
+func NewNotification(createdAt int64, updatedAt int64, name string, templateHtml string, templateText string) *Notification {
 	this := Notification{}
-	this.Name = name
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
-	this.Script = script
+	this.Name = name
 	this.TemplateHtml = templateHtml
 	this.TemplateText = templateText
 	return &this
@@ -64,62 +63,6 @@ func NewNotification(name string, createdAt int64, updatedAt int64, script strin
 func NewNotificationWithDefaults() *Notification {
 	this := Notification{}
 	return &this
-}
-
-// GetName returns the Name field value
-func (o *Notification) GetName() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Name
-}
-
-// GetNameOk returns a tuple with the Name field value
-// and a boolean to check if the value has been set.
-func (o *Notification) GetNameOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Name, true
-}
-
-// SetName sets field value
-func (o *Notification) SetName(v string) {
-	o.Name = v
-}
-
-// GetDescription returns the Description field value if set, zero value otherwise.
-func (o *Notification) GetDescription() string {
-	if o == nil || IsNil(o.Description) {
-		var ret string
-		return ret
-	}
-	return *o.Description
-}
-
-// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Notification) GetDescriptionOk() (*string, bool) {
-	if o == nil || IsNil(o.Description) {
-		return nil, false
-	}
-	return o.Description, true
-}
-
-// HasDescription returns a boolean if a field has been set.
-func (o *Notification) HasDescription() bool {
-	if o != nil && !IsNil(o.Description) {
-		return true
-	}
-
-	return false
-}
-
-// SetDescription gets a reference to the given string and assigns it to the Description field.
-func (o *Notification) SetDescription(v string) {
-	o.Description = &v
 }
 
 // GetCreatedAt returns the CreatedAt field value
@@ -170,28 +113,28 @@ func (o *Notification) SetUpdatedAt(v int64) {
 	o.UpdatedAt = v
 }
 
-// GetScript returns the Script field value
-func (o *Notification) GetScript() string {
+// GetName returns the Name field value
+func (o *Notification) GetName() string {
 	if o == nil {
 		var ret string
 		return ret
 	}
 
-	return o.Script
+	return o.Name
 }
 
-// GetScriptOk returns a tuple with the Script field value
+// GetNameOk returns a tuple with the Name field value
 // and a boolean to check if the value has been set.
-func (o *Notification) GetScriptOk() (*string, bool) {
+func (o *Notification) GetNameOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Script, true
+	return &o.Name, true
 }
 
-// SetScript sets field value
-func (o *Notification) SetScript(v string) {
-	o.Script = v
+// SetName sets field value
+func (o *Notification) SetName(v string) {
+	o.Name = v
 }
 
 // GetIsIntermediate returns the IsIntermediate field value if set, zero value otherwise.
@@ -224,6 +167,70 @@ func (o *Notification) HasIsIntermediate() bool {
 // SetIsIntermediate gets a reference to the given bool and assigns it to the IsIntermediate field.
 func (o *Notification) SetIsIntermediate(v bool) {
 	o.IsIntermediate = &v
+}
+
+// GetDescription returns the Description field value if set, zero value otherwise.
+func (o *Notification) GetDescription() string {
+	if o == nil || IsNil(o.Description) {
+		var ret string
+		return ret
+	}
+	return *o.Description
+}
+
+// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Notification) GetDescriptionOk() (*string, bool) {
+	if o == nil || IsNil(o.Description) {
+		return nil, false
+	}
+	return o.Description, true
+}
+
+// HasDescription returns a boolean if a field has been set.
+func (o *Notification) HasDescription() bool {
+	if o != nil && !IsNil(o.Description) {
+		return true
+	}
+
+	return false
+}
+
+// SetDescription gets a reference to the given string and assigns it to the Description field.
+func (o *Notification) SetDescription(v string) {
+	o.Description = &v
+}
+
+// GetScript returns the Script field value if set, zero value otherwise.
+func (o *Notification) GetScript() string {
+	if o == nil || IsNil(o.Script) {
+		var ret string
+		return ret
+	}
+	return *o.Script
+}
+
+// GetScriptOk returns a tuple with the Script field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Notification) GetScriptOk() (*string, bool) {
+	if o == nil || IsNil(o.Script) {
+		return nil, false
+	}
+	return o.Script, true
+}
+
+// HasScript returns a boolean if a field has been set.
+func (o *Notification) HasScript() bool {
+	if o != nil && !IsNil(o.Script) {
+		return true
+	}
+
+	return false
+}
+
+// SetScript gets a reference to the given string and assigns it to the Script field.
+func (o *Notification) SetScript(v string) {
+	o.Script = &v
 }
 
 // GetIntermediateRef returns the IntermediateRef field value if set, zero value otherwise.
@@ -316,15 +323,17 @@ func (o Notification) MarshalJSON() ([]byte, error) {
 
 func (o Notification) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	toSerialize["created_at"] = o.CreatedAt
+	toSerialize["updated_at"] = o.UpdatedAt
 	toSerialize["name"] = o.Name
+	if !IsNil(o.IsIntermediate) {
+		toSerialize["is_intermediate"] = o.IsIntermediate
+	}
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
 	}
-	toSerialize["created_at"] = o.CreatedAt
-	toSerialize["updated_at"] = o.UpdatedAt
-	toSerialize["script"] = o.Script
-	if !IsNil(o.IsIntermediate) {
-		toSerialize["is_intermediate"] = o.IsIntermediate
+	if !IsNil(o.Script) {
+		toSerialize["script"] = o.Script
 	}
 	if !IsNil(o.IntermediateRef) {
 		toSerialize["intermediate_ref"] = o.IntermediateRef
@@ -339,10 +348,9 @@ func (o *Notification) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"name",
 		"created_at",
 		"updated_at",
-		"script",
+		"name",
 		"template_html",
 		"template_text",
 	}

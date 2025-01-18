@@ -2,6 +2,7 @@ package provider
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -52,7 +53,13 @@ func getApiErrorMessage(err error) string {
 
 	apiErr, ok := err.(*api.GenericOpenAPIError)
 	if ok {
-		return fmt.Sprintf("%s: %s", err.Error(), string(apiErr.Body()))
+		body := string(apiErr.Body())
+		body = strings.TrimSpace(body)
+		body = strings.Trim(body, `\n`)
+		body = strings.Trim(body, `"`)
+		body = strings.TrimPrefix(body, "bad request: ")
+
+		return fmt.Sprintf("%s: %s", err.Error(), body)
 	}
 
 	return err.Error()

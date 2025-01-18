@@ -40,6 +40,7 @@ type CreateOrUpdateAppointmentTemplateRequest struct {
 	DefaultScheduleDescription *map[string]string `json:"default_schedule_description,omitempty"`
 	// The text that is sent with the email to the recepients
 	InvitationText *string `json:"invitation_text,omitempty"`
+	Version        *int32  `json:"version,omitempty"`
 }
 
 type _CreateOrUpdateAppointmentTemplateRequest CreateOrUpdateAppointmentTemplateRequest
@@ -369,6 +370,38 @@ func (o *CreateOrUpdateAppointmentTemplateRequest) SetInvitationText(v string) {
 	o.InvitationText = &v
 }
 
+// GetVersion returns the Version field value if set, zero value otherwise.
+func (o *CreateOrUpdateAppointmentTemplateRequest) GetVersion() int32 {
+	if o == nil || IsNil(o.Version) {
+		var ret int32
+		return ret
+	}
+	return *o.Version
+}
+
+// GetVersionOk returns a tuple with the Version field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateAppointmentTemplateRequest) GetVersionOk() (*int32, bool) {
+	if o == nil || IsNil(o.Version) {
+		return nil, false
+	}
+	return o.Version, true
+}
+
+// HasVersion returns a boolean if a field has been set.
+func (o *CreateOrUpdateAppointmentTemplateRequest) HasVersion() bool {
+	if o != nil && !IsNil(o.Version) {
+		return true
+	}
+
+	return false
+}
+
+// SetVersion gets a reference to the given int32 and assigns it to the Version field.
+func (o *CreateOrUpdateAppointmentTemplateRequest) SetVersion(v int32) {
+	o.Version = &v
+}
+
 func (o CreateOrUpdateAppointmentTemplateRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -404,6 +437,9 @@ func (o CreateOrUpdateAppointmentTemplateRequest) ToMap() (map[string]interface{
 	}
 	if !IsNil(o.InvitationText) {
 		toSerialize["invitation_text"] = o.InvitationText
+	}
+	if !IsNil(o.Version) {
+		toSerialize["version"] = o.Version
 	}
 	return toSerialize, nil
 }

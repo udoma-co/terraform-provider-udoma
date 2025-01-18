@@ -2743,7 +2743,7 @@ func (r ApiCreateCorrespondenceRequest) CreateCorrespondenceRequest(createCorres
 	return r
 }
 
-func (r ApiCreateCorrespondenceRequest) Execute() ([]Correspondence, *http.Response, error) {
+func (r ApiCreateCorrespondenceRequest) Execute() (*Correspondence, *http.Response, error) {
 	return r.ApiService.CreateCorrespondenceExecute(r)
 }
 
@@ -2762,13 +2762,13 @@ func (a *DefaultAPIService) CreateCorrespondence(ctx context.Context) ApiCreateC
 
 // Execute executes the request
 //
-//	@return []Correspondence
-func (a *DefaultAPIService) CreateCorrespondenceExecute(r ApiCreateCorrespondenceRequest) ([]Correspondence, *http.Response, error) {
+//	@return Correspondence
+func (a *DefaultAPIService) CreateCorrespondenceExecute(r ApiCreateCorrespondenceRequest) (*Correspondence, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue []Correspondence
+		localVarReturnValue *Correspondence
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateCorrespondence")
@@ -30193,7 +30193,7 @@ func (r ApiUpdateDocumentGenerationRequest) DocumentGeneration(documentGeneratio
 	return r
 }
 
-func (r ApiUpdateDocumentGenerationRequest) Execute() (*http.Response, error) {
+func (r ApiUpdateDocumentGenerationRequest) Execute() (*DocumentGeneration, *http.Response, error) {
 	return r.ApiService.UpdateDocumentGenerationExecute(r)
 }
 
@@ -30213,16 +30213,19 @@ func (a *DefaultAPIService) UpdateDocumentGeneration(ctx context.Context, docID 
 }
 
 // Execute executes the request
-func (a *DefaultAPIService) UpdateDocumentGenerationExecute(r ApiUpdateDocumentGenerationRequest) (*http.Response, error) {
+//
+//	@return DocumentGeneration
+func (a *DefaultAPIService) UpdateDocumentGenerationExecute(r ApiUpdateDocumentGenerationRequest) (*DocumentGeneration, *http.Response, error) {
 	var (
-		localVarHTTPMethod = http.MethodPut
-		localVarPostBody   interface{}
-		formFiles          []formFile
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *DocumentGeneration
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdateDocumentGeneration")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/document-generation/documents/{docID}"
@@ -30232,7 +30235,7 @@ func (a *DefaultAPIService) UpdateDocumentGenerationExecute(r ApiUpdateDocumentG
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 	if r.documentGeneration == nil {
-		return nil, reportError("documentGeneration is required and must be specified")
+		return localVarReturnValue, nil, reportError("documentGeneration is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -30245,7 +30248,7 @@ func (a *DefaultAPIService) UpdateDocumentGenerationExecute(r ApiUpdateDocumentG
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -30256,19 +30259,19 @@ func (a *DefaultAPIService) UpdateDocumentGenerationExecute(r ApiUpdateDocumentG
 	localVarPostBody = r.documentGeneration
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -30276,10 +30279,19 @@ func (a *DefaultAPIService) UpdateDocumentGenerationExecute(r ApiUpdateDocumentG
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiUpdateDocumentTemplateRequest struct {
@@ -31900,7 +31912,7 @@ func (r ApiUpdateServiceProviderRequest) CreateOrUpdateServiceProvider(createOrU
 	return r
 }
 
-func (r ApiUpdateServiceProviderRequest) Execute() (*Case, *http.Response, error) {
+func (r ApiUpdateServiceProviderRequest) Execute() (*ServiceProvider, *http.Response, error) {
 	return r.ApiService.UpdateServiceProviderExecute(r)
 }
 
@@ -31921,13 +31933,13 @@ func (a *DefaultAPIService) UpdateServiceProvider(ctx context.Context, servicePr
 
 // Execute executes the request
 //
-//	@return Case
-func (a *DefaultAPIService) UpdateServiceProviderExecute(r ApiUpdateServiceProviderRequest) (*Case, *http.Response, error) {
+//	@return ServiceProvider
+func (a *DefaultAPIService) UpdateServiceProviderExecute(r ApiUpdateServiceProviderRequest) (*ServiceProvider, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *Case
+		localVarReturnValue *ServiceProvider
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdateServiceProvider")

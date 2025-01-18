@@ -34,7 +34,8 @@ type ReportDefinition struct {
 	ResultSchema ReportResultSchema `json:"result_schema"`
 	Parameters   NullableCustomForm `json:"parameters,omitempty"`
 	// The JS script to execute to generate the report result
-	Script string `json:"script"`
+	Script  string `json:"script"`
+	Version *int32 `json:"version,omitempty"`
 }
 
 type _ReportDefinition ReportDefinition
@@ -281,6 +282,38 @@ func (o *ReportDefinition) SetScript(v string) {
 	o.Script = v
 }
 
+// GetVersion returns the Version field value if set, zero value otherwise.
+func (o *ReportDefinition) GetVersion() int32 {
+	if o == nil || IsNil(o.Version) {
+		var ret int32
+		return ret
+	}
+	return *o.Version
+}
+
+// GetVersionOk returns a tuple with the Version field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReportDefinition) GetVersionOk() (*int32, bool) {
+	if o == nil || IsNil(o.Version) {
+		return nil, false
+	}
+	return o.Version, true
+}
+
+// HasVersion returns a boolean if a field has been set.
+func (o *ReportDefinition) HasVersion() bool {
+	if o != nil && !IsNil(o.Version) {
+		return true
+	}
+
+	return false
+}
+
+// SetVersion gets a reference to the given int32 and assigns it to the Version field.
+func (o *ReportDefinition) SetVersion(v int32) {
+	o.Version = &v
+}
+
 func (o ReportDefinition) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -303,6 +336,9 @@ func (o ReportDefinition) ToMap() (map[string]interface{}, error) {
 		toSerialize["parameters"] = o.Parameters.Get()
 	}
 	toSerialize["script"] = o.Script
+	if !IsNil(o.Version) {
+		toSerialize["version"] = o.Version
+	}
 	return toSerialize, nil
 }
 

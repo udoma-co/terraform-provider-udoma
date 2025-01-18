@@ -19,22 +19,22 @@ import (
 // checks if the CreateNotificationRequest type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &CreateNotificationRequest{}
 
-// CreateNotificationRequest struct for CreateNotificationRequest
+// CreateNotificationRequest Create request for a new notification.
 type CreateNotificationRequest struct {
+	// A unique, descriptive, and short identifier name.
+	Name string `json:"name"`
+	// Whether this template is used an intermediate template or not. If true it cannot be used as a regular template and must only be referenced by other templates.
+	IsIntermediate *bool `json:"is_intermediate,omitempty"`
 	// A short description of the notification.
 	Description *string `json:"description,omitempty"`
 	// A script that can run the notification given some initial data.
-	Script string `json:"script"`
+	Script *string `json:"script,omitempty"`
 	// A potential reference to an intermediate template. Empty if no intermediate used.
 	IntermediateRef *string `json:"intermediate_ref,omitempty"`
 	// The golang html template to use for the notification.
 	TemplateHtml string `json:"template_html"`
 	// The golang text template to use for the notification.
 	TemplateText string `json:"template_text"`
-	// A unique, descriptive, and short identifier name.
-	Name string `json:"name"`
-	// Whether this template is used an intermediate template or not. If true it cannot be used as a regular template and must only be referenced by other templates.
-	IsIntermediate *bool `json:"is_intermediate,omitempty"`
 }
 
 type _CreateNotificationRequest CreateNotificationRequest
@@ -43,12 +43,11 @@ type _CreateNotificationRequest CreateNotificationRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateNotificationRequest(script string, templateHtml string, templateText string, name string) *CreateNotificationRequest {
+func NewCreateNotificationRequest(name string, templateHtml string, templateText string) *CreateNotificationRequest {
 	this := CreateNotificationRequest{}
-	this.Script = script
+	this.Name = name
 	this.TemplateHtml = templateHtml
 	this.TemplateText = templateText
-	this.Name = name
 	return &this
 }
 
@@ -58,6 +57,62 @@ func NewCreateNotificationRequest(script string, templateHtml string, templateTe
 func NewCreateNotificationRequestWithDefaults() *CreateNotificationRequest {
 	this := CreateNotificationRequest{}
 	return &this
+}
+
+// GetName returns the Name field value
+func (o *CreateNotificationRequest) GetName() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.Name
+}
+
+// GetNameOk returns a tuple with the Name field value
+// and a boolean to check if the value has been set.
+func (o *CreateNotificationRequest) GetNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Name, true
+}
+
+// SetName sets field value
+func (o *CreateNotificationRequest) SetName(v string) {
+	o.Name = v
+}
+
+// GetIsIntermediate returns the IsIntermediate field value if set, zero value otherwise.
+func (o *CreateNotificationRequest) GetIsIntermediate() bool {
+	if o == nil || IsNil(o.IsIntermediate) {
+		var ret bool
+		return ret
+	}
+	return *o.IsIntermediate
+}
+
+// GetIsIntermediateOk returns a tuple with the IsIntermediate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateNotificationRequest) GetIsIntermediateOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsIntermediate) {
+		return nil, false
+	}
+	return o.IsIntermediate, true
+}
+
+// HasIsIntermediate returns a boolean if a field has been set.
+func (o *CreateNotificationRequest) HasIsIntermediate() bool {
+	if o != nil && !IsNil(o.IsIntermediate) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsIntermediate gets a reference to the given bool and assigns it to the IsIntermediate field.
+func (o *CreateNotificationRequest) SetIsIntermediate(v bool) {
+	o.IsIntermediate = &v
 }
 
 // GetDescription returns the Description field value if set, zero value otherwise.
@@ -92,28 +147,36 @@ func (o *CreateNotificationRequest) SetDescription(v string) {
 	o.Description = &v
 }
 
-// GetScript returns the Script field value
+// GetScript returns the Script field value if set, zero value otherwise.
 func (o *CreateNotificationRequest) GetScript() string {
-	if o == nil {
+	if o == nil || IsNil(o.Script) {
 		var ret string
 		return ret
 	}
-
-	return o.Script
+	return *o.Script
 }
 
-// GetScriptOk returns a tuple with the Script field value
+// GetScriptOk returns a tuple with the Script field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateNotificationRequest) GetScriptOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Script) {
 		return nil, false
 	}
-	return &o.Script, true
+	return o.Script, true
 }
 
-// SetScript sets field value
+// HasScript returns a boolean if a field has been set.
+func (o *CreateNotificationRequest) HasScript() bool {
+	if o != nil && !IsNil(o.Script) {
+		return true
+	}
+
+	return false
+}
+
+// SetScript gets a reference to the given string and assigns it to the Script field.
 func (o *CreateNotificationRequest) SetScript(v string) {
-	o.Script = v
+	o.Script = &v
 }
 
 // GetIntermediateRef returns the IntermediateRef field value if set, zero value otherwise.
@@ -196,62 +259,6 @@ func (o *CreateNotificationRequest) SetTemplateText(v string) {
 	o.TemplateText = v
 }
 
-// GetName returns the Name field value
-func (o *CreateNotificationRequest) GetName() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Name
-}
-
-// GetNameOk returns a tuple with the Name field value
-// and a boolean to check if the value has been set.
-func (o *CreateNotificationRequest) GetNameOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Name, true
-}
-
-// SetName sets field value
-func (o *CreateNotificationRequest) SetName(v string) {
-	o.Name = v
-}
-
-// GetIsIntermediate returns the IsIntermediate field value if set, zero value otherwise.
-func (o *CreateNotificationRequest) GetIsIntermediate() bool {
-	if o == nil || IsNil(o.IsIntermediate) {
-		var ret bool
-		return ret
-	}
-	return *o.IsIntermediate
-}
-
-// GetIsIntermediateOk returns a tuple with the IsIntermediate field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateNotificationRequest) GetIsIntermediateOk() (*bool, bool) {
-	if o == nil || IsNil(o.IsIntermediate) {
-		return nil, false
-	}
-	return o.IsIntermediate, true
-}
-
-// HasIsIntermediate returns a boolean if a field has been set.
-func (o *CreateNotificationRequest) HasIsIntermediate() bool {
-	if o != nil && !IsNil(o.IsIntermediate) {
-		return true
-	}
-
-	return false
-}
-
-// SetIsIntermediate gets a reference to the given bool and assigns it to the IsIntermediate field.
-func (o *CreateNotificationRequest) SetIsIntermediate(v bool) {
-	o.IsIntermediate = &v
-}
-
 func (o CreateNotificationRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -262,19 +269,21 @@ func (o CreateNotificationRequest) MarshalJSON() ([]byte, error) {
 
 func (o CreateNotificationRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.IsIntermediate) {
+		toSerialize["is_intermediate"] = o.IsIntermediate
+	}
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
 	}
-	toSerialize["script"] = o.Script
+	if !IsNil(o.Script) {
+		toSerialize["script"] = o.Script
+	}
 	if !IsNil(o.IntermediateRef) {
 		toSerialize["intermediate_ref"] = o.IntermediateRef
 	}
 	toSerialize["template_html"] = o.TemplateHtml
 	toSerialize["template_text"] = o.TemplateText
-	toSerialize["name"] = o.Name
-	if !IsNil(o.IsIntermediate) {
-		toSerialize["is_intermediate"] = o.IsIntermediate
-	}
 	return toSerialize, nil
 }
 
@@ -283,10 +292,9 @@ func (o *CreateNotificationRequest) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"script",
+		"name",
 		"template_html",
 		"template_text",
-		"name",
 	}
 
 	allProperties := make(map[string]interface{})

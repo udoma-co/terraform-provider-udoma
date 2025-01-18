@@ -46,6 +46,7 @@ type CaseTemplate struct {
 	AdCategories []CaseTemplateAdCategoryEnum `json:"ad_categories,omitempty"`
 	// a map of values, where the key and values are strings
 	ConfirmationText *map[string]string `json:"confirmation_text,omitempty"`
+	Version          *int32             `json:"version,omitempty"`
 	// A flag indicating whether the entity is deleted. If the entity is deleted, it should not be returned in the results of a query, but it is still kept in the database as it is referenced by other entities.
 	IsDeleted *bool `json:"is_deleted,omitempty"`
 }
@@ -470,6 +471,38 @@ func (o *CaseTemplate) SetConfirmationText(v map[string]string) {
 	o.ConfirmationText = &v
 }
 
+// GetVersion returns the Version field value if set, zero value otherwise.
+func (o *CaseTemplate) GetVersion() int32 {
+	if o == nil || IsNil(o.Version) {
+		var ret int32
+		return ret
+	}
+	return *o.Version
+}
+
+// GetVersionOk returns a tuple with the Version field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CaseTemplate) GetVersionOk() (*int32, bool) {
+	if o == nil || IsNil(o.Version) {
+		return nil, false
+	}
+	return o.Version, true
+}
+
+// HasVersion returns a boolean if a field has been set.
+func (o *CaseTemplate) HasVersion() bool {
+	if o != nil && !IsNil(o.Version) {
+		return true
+	}
+
+	return false
+}
+
+// SetVersion gets a reference to the given int32 and assigns it to the Version field.
+func (o *CaseTemplate) SetVersion(v int32) {
+	o.Version = &v
+}
+
 // GetIsDeleted returns the IsDeleted field value if set, zero value otherwise.
 func (o *CaseTemplate) GetIsDeleted() bool {
 	if o == nil || IsNil(o.IsDeleted) {
@@ -539,6 +572,9 @@ func (o CaseTemplate) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ConfirmationText) {
 		toSerialize["confirmation_text"] = o.ConfirmationText
+	}
+	if !IsNil(o.Version) {
+		toSerialize["version"] = o.Version
 	}
 	if !IsNil(o.IsDeleted) {
 		toSerialize["is_deleted"] = o.IsDeleted

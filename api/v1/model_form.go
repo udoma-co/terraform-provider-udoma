@@ -32,6 +32,7 @@ type Form struct {
 	// the description of the form
 	Description    *string            `json:"description,omitempty"`
 	FormDefinition NullableCustomForm `json:"form_definition,omitempty"`
+	Version        *int32             `json:"version,omitempty"`
 }
 
 type _Form Form
@@ -235,6 +236,38 @@ func (o *Form) UnsetFormDefinition() {
 	o.FormDefinition.Unset()
 }
 
+// GetVersion returns the Version field value if set, zero value otherwise.
+func (o *Form) GetVersion() int32 {
+	if o == nil || IsNil(o.Version) {
+		var ret int32
+		return ret
+	}
+	return *o.Version
+}
+
+// GetVersionOk returns a tuple with the Version field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Form) GetVersionOk() (*int32, bool) {
+	if o == nil || IsNil(o.Version) {
+		return nil, false
+	}
+	return o.Version, true
+}
+
+// HasVersion returns a boolean if a field has been set.
+func (o *Form) HasVersion() bool {
+	if o != nil && !IsNil(o.Version) {
+		return true
+	}
+
+	return false
+}
+
+// SetVersion gets a reference to the given int32 and assigns it to the Version field.
+func (o *Form) SetVersion(v int32) {
+	o.Version = &v
+}
+
 func (o Form) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -256,6 +289,9 @@ func (o Form) ToMap() (map[string]interface{}, error) {
 	}
 	if o.FormDefinition.IsSet() {
 		toSerialize["form_definition"] = o.FormDefinition.Get()
+	}
+	if !IsNil(o.Version) {
+		toSerialize["version"] = o.Version
 	}
 	return toSerialize, nil
 }

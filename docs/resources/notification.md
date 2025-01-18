@@ -18,10 +18,14 @@ description: |-
 ### Required
 
 - `name` (String) The name of the notification.
-- `script` (String) The script of the notification.
 - `template_html` (String) The html template of the notification.
 - `template_text` (String) The text template of the notification.
 
 ### Optional
 
 - `description` (String) The description of the notification.
+- `intermediate_ref` (String) Optional reference to a intermediate template.
+- `is_intermediate` (Boolean) Whether this template is used an intermediate template or not. 
+					If true it cannot be used as a regular template and must only be referenced 
+					by other templates.
+- `script` (String) The script of the notification.

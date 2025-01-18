@@ -600,6 +600,7 @@ Class | Method | HTTP request | Description
  - [NoteAtributesPartial](docs/NoteAtributesPartial.md)
  - [Notification](docs/Notification.md)
  - [NotificationAttributesPartial](docs/NotificationAttributesPartial.md)
+ - [NotificationROAttributesPartial](docs/NotificationROAttributesPartial.md)
  - [NotificationType](docs/NotificationType.md)
  - [PriceIndexPoint](docs/PriceIndexPoint.md)
  - [PriceIndexPointQueryRequest](docs/PriceIndexPointQueryRequest.md)

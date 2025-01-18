@@ -42,6 +42,7 @@ type AppointmentTemplate struct {
 	DefaultScheduleDescription *map[string]string `json:"default_schedule_description,omitempty"`
 	// The text that is sent with the email to the recepients
 	InvitationText *string `json:"invitation_text,omitempty"`
+	Version        *int32  `json:"version,omitempty"`
 	// A flag indicating whether the entity is deleted. If the entity is deleted, it should not be returned in the results of a query, but it is still kept in the database as it is referenced by other entities.
 	IsDeleted *bool `json:"is_deleted,omitempty"`
 }
@@ -398,6 +399,38 @@ func (o *AppointmentTemplate) SetInvitationText(v string) {
 	o.InvitationText = &v
 }
 
+// GetVersion returns the Version field value if set, zero value otherwise.
+func (o *AppointmentTemplate) GetVersion() int32 {
+	if o == nil || IsNil(o.Version) {
+		var ret int32
+		return ret
+	}
+	return *o.Version
+}
+
+// GetVersionOk returns a tuple with the Version field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AppointmentTemplate) GetVersionOk() (*int32, bool) {
+	if o == nil || IsNil(o.Version) {
+		return nil, false
+	}
+	return o.Version, true
+}
+
+// HasVersion returns a boolean if a field has been set.
+func (o *AppointmentTemplate) HasVersion() bool {
+	if o != nil && !IsNil(o.Version) {
+		return true
+	}
+
+	return false
+}
+
+// SetVersion gets a reference to the given int32 and assigns it to the Version field.
+func (o *AppointmentTemplate) SetVersion(v int32) {
+	o.Version = &v
+}
+
 // GetIsDeleted returns the IsDeleted field value if set, zero value otherwise.
 func (o *AppointmentTemplate) GetIsDeleted() bool {
 	if o == nil || IsNil(o.IsDeleted) {
@@ -466,6 +499,9 @@ func (o AppointmentTemplate) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.InvitationText) {
 		toSerialize["invitation_text"] = o.InvitationText
+	}
+	if !IsNil(o.Version) {
+		toSerialize["version"] = o.Version
 	}
 	if !IsNil(o.IsDeleted) {
 		toSerialize["is_deleted"] = o.IsDeleted
