@@ -65,7 +65,7 @@ func (r *Form) Schema(ctx context.Context, req resource.SchemaRequest, resp *res
 				Attributes:  CustomFormNestedSchema(),
 			},
 			"version": schema.Int32Attribute{
-				Computed:    true,
+				Optional:    true,
 				Description: "The version of the custom form.",
 			},
 		},

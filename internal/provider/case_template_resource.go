@@ -155,7 +155,7 @@ func (r *CaseTemplate) Schema(ctx context.Context, req resource.SchemaRequest, r
 				ElementType: types.StringType,
 			},
 			"version": schema.Int32Attribute{
-				Computed:    true,
+				Optional:    true,
 				Description: "The version of the case template",
 			},
 		},

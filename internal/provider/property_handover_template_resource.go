@@ -67,7 +67,7 @@ func (r *PropertyHandoverTemplate) Schema(ctx context.Context, req resource.Sche
 				Attributes:  CustomFormNestedSchema(),
 			},
 			"version": schema.Int32Attribute{
-				Computed:    true,
+				Optional:    true,
 				Description: "The version of the property handover template.",
 			},
 		},
@@ -271,7 +271,7 @@ func (r *PropertyHandoverTemplate) UpgradeState(ctx context.Context) map[int64]r
 						Attributes: CustomFormNestedSchemaV0(), // use the prior version of the custom form schema
 					},
 					"version": schema.Int32Attribute{
-						Computed: true,
+						Optional: true,
 					},
 				},
 			},

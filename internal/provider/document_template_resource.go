@@ -126,7 +126,7 @@ func (r *documentTemplate) Schema(ctx context.Context, req resource.SchemaReques
 				Description: "The JSON serialised signature configuration of the template",
 			},
 			"version": schema.Int32Attribute{
-				Computed:    true,
+				Optional:    true,
 				Description: "The version of the document template",
 			},
 		},

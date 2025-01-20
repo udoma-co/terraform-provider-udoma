@@ -150,7 +150,7 @@ func (r *reportDefinition) Schema(ctx context.Context, req resource.SchemaReques
 				Description: "JS script that is executed to generate the report",
 			},
 			"version": schema.Int32Attribute{
-				Computed:    true,
+				Optional:    true,
 				Description: "The version of the report definition",
 			},
 		},

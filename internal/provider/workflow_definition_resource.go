@@ -123,7 +123,7 @@ func (r *workflowDefinition) Schema(ctx context.Context, req resource.SchemaRequ
 				Description: "The JSON serialised step definitions",
 			},
 			"version": schema.Int32Attribute{
-				Computed:    true,
+				Optional:    true,
 				Description: "The version of the workflow definition",
 			},
 		},

@@ -112,7 +112,7 @@ func (r *AppointmentTemplate) Schema(ctx context.Context, req resource.SchemaReq
 				Description: "The icon of the appointment template.",
 			},
 			"version": schema.Int32Attribute{
-				Computed:    true,
+				Optional:    true,
 				Description: "The version of the appointment template.",
 			},
 		},
@@ -375,7 +375,7 @@ func (r *AppointmentTemplate) UpgradeState(ctx context.Context) map[int64]resour
 						Optional: true,
 					},
 					"version": schema.Int32Attribute{
-						Computed: true,
+						Optional: true,
 					},
 				},
 			},
