@@ -23,6 +23,7 @@ description: |-
 ### Optional
 
 - `description` (String) The description of the property handover template.
+- `version` (Number) The version of the property handover template.
 
 ### Read-Only
 

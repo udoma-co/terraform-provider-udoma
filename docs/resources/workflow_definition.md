@@ -30,6 +30,7 @@ Resource represents a defintion of a workflow
 				the workflow execution. If not set, the name of the definition will be used
 				for new executions
 - `steps` (String) The JSON serialised step definitions
+- `version` (Number) The version of the workflow definition
 
 ### Read-Only
 

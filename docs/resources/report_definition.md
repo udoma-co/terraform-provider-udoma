@@ -25,6 +25,7 @@ Resource represents a defintion of a report
 
 - `description` (String) The description of the report definition
 - `parameters` (Attributes) Optional input definition (see [below for nested schema](#nestedatt--parameters))
+- `version` (Number) The version of the report definition
 
 ### Read-Only
 
