@@ -1,6 +1,7 @@
 package provider
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
@@ -11,10 +12,11 @@ func TestCustomFormResource(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: resourceDefinitionCustomForm("basic custom form"),
+				Config: resourceDefinitionCustomForm("basic custom form", 1),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr("udoma_form.test", "name", "basic custom form"),
 					resource.TestCheckResourceAttr("udoma_form.test", "description", "Basic custom form description"),
+					resource.TestCheckResourceAttr("udoma_form.test", "version", "1"),
 
 					resource.TestCheckResourceAttr("udoma_form.test", "form_definition.layout.0.ref_id", "test"),
 					resource.TestCheckResourceAttr("udoma_form.test", "form_definition.layout.0.ref_type", "group"),
@@ -32,21 +34,23 @@ func TestCustomFormResource(t *testing.T) {
 			},
 			// Update and Read testing
 			{
-				Config: resourceDefinitionCustomForm("updated custom form"),
+				Config: resourceDefinitionCustomForm("updated custom form", 2),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify attributes were updated
 					resource.TestCheckResourceAttr("udoma_form.test", "name", "updated custom form"),
+					resource.TestCheckResourceAttr("udoma_form.test", "version", "2"),
 				),
 			},
 		},
 	})
 }
 
-func resourceDefinitionCustomForm(name string) string {
+func resourceDefinitionCustomForm(name string, version int32) string {
 	return `
 	resource udoma_form "test" {
 		name = "` + name + `"
 		description = "Basic custom form description"
+		version = ` + fmt.Sprint(version) + `
 		form_definition = {
 			"layout" = [
 				{

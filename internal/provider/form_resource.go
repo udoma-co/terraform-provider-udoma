@@ -218,6 +218,7 @@ func (template *FormModel) toApiRequest() *v1.CreateOrUpdateCustomFormRequest {
 		Name:           template.Name.ValueStringPointer(),
 		Description:    template.Description.ValueStringPointer(),
 		FormDefinition: *v1.NewNullableCustomForm(&form),
+		Version:        template.Version.ValueInt32Pointer(),
 	}
 
 	return ret
