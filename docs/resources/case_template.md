@@ -31,6 +31,7 @@ Resource represents a template for raising cases
 - `info_text` (Map of String) A longer introduction text, shown in the case specific reporting page
 - `label` (Map of String) The short label to be displayed on the reporting page
 - `name_expression` (String) The name expression used to generate the name of cases based on this template
+- `version` (Number) The version of the case template
 
 ### Read-Only
 

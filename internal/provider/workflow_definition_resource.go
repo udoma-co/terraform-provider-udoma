@@ -47,6 +47,7 @@ type workflowDefinitionModel struct {
 	FirstStepID    types.String       `tfsdk:"first_step_id"`
 	InitStep       tf.JsonObjectValue `tfsdk:"init_step"`
 	Steps          tf.JsonObjectValue `tfsdk:"steps"`
+	Version        types.Int32        `tfsdk:"version"`
 }
 
 func NewWorkflowDefinitionModelNull() *workflowDefinitionModel {
@@ -120,6 +121,10 @@ func (r *workflowDefinition) Schema(ctx context.Context, req resource.SchemaRequ
 				CustomType:  tf.JsonObjectType{},
 				Optional:    true,
 				Description: "The JSON serialised step definitions",
+			},
+			"version": schema.Int32Attribute{
+				Optional:    true,
+				Description: "The version of the workflow definition",
 			},
 		},
 	}
@@ -321,6 +326,7 @@ func (model *workflowDefinitionModel) fromAPI(workflowDefinition *api.WorkflowDe
 	model.Icon = omittableStringValue(workflowDefinition.Icon, model.Icon)
 	model.NameExpression = omittableStringValue(workflowDefinition.NameExpression, model.NameExpression)
 	model.FirstStepID = types.StringValue(workflowDefinition.FirstStepId)
+	model.Version = types.Int32PointerValue(workflowDefinition.Version)
 
 	if workflowDefinition.EnvVars != nil {
 		in := stringMapToValueMap(*workflowDefinition.EnvVars)
@@ -357,6 +363,7 @@ func (model *workflowDefinitionModel) toAPIRequest() (api.CreateOrUpdateWorkflow
 		Icon:           model.Icon.ValueStringPointer(),
 		NameExpression: model.NameExpression.ValueStringPointer(),
 		FirstStepId:    model.FirstStepID.ValueString(),
+		Version:        model.Version.ValueInt32Pointer(),
 	}
 
 	if envVars := modelMapToStringMap(model.EnvVars); len(envVars) > 0 {

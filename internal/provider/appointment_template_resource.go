@@ -42,6 +42,7 @@ type AppointmentTemplateModel struct {
 	DefaultScheduleDescription types.Map        `tfsdk:"default_schedule_description"`
 	InvitationText             types.String     `tfsdk:"invitation_text"`
 	Icon                       types.String     `tfsdk:"icon"`
+	Version                    types.Int32      `tfsdk:"version"`
 }
 
 func (r *AppointmentTemplate) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -109,6 +110,10 @@ func (r *AppointmentTemplate) Schema(ctx context.Context, req resource.SchemaReq
 			"icon": schema.StringAttribute{
 				Optional:    true,
 				Description: "The icon of the appointment template.",
+			},
+			"version": schema.Int32Attribute{
+				Optional:    true,
+				Description: "The version of the appointment template.",
 			},
 		},
 	}
@@ -265,6 +270,7 @@ func (template *AppointmentTemplateModel) toApiRequest() *v1.CreateOrUpdateAppoi
 		ConfirmationReminders: modelListToInt32Slice(template.ConfirmationReminders),
 		InvitationText:        template.InvitationText.ValueStringPointer(),
 		Icon:                  template.Icon.ValueStringPointer(),
+		Version:               template.Version.ValueInt32Pointer(),
 	}
 
 	if description := modelMapToStringMap(template.DefaultScheduleDescription); len(description) > 0 {
@@ -282,6 +288,7 @@ func (template *AppointmentTemplateModel) fromApiResponse(resp *v1.AppointmentTe
 	template.InvitationText = omittableStringValue(resp.InvitationText, template.InvitationText)
 	template.Icon = omittableStringValue(resp.Icon, template.Icon)
 	template.RequireConfirmation = omittableBooleanValue(resp.RequireConfirmation, template.RequireConfirmation)
+	template.Version = types.Int32PointerValue(resp.Version)
 
 	if len(resp.ConfirmationReminders) != 0 {
 		template.ConfirmationReminders, diags = types.ListValue(types.Int64Type, int32SliceToValueList(resp.ConfirmationReminders))
@@ -323,6 +330,7 @@ func (r *AppointmentTemplate) UpgradeState(ctx context.Context) map[int64]resour
 		DefaultScheduleDescription types.Map          `tfsdk:"default_schedule_description"`
 		InvitationText             types.String       `tfsdk:"invitation_text"`
 		Icon                       types.String       `tfsdk:"icon"`
+		Version                    types.Int32        `tfsdk:"version"`
 	}
 
 	return map[int64]resource.StateUpgrader{
@@ -366,6 +374,9 @@ func (r *AppointmentTemplate) UpgradeState(ctx context.Context) map[int64]resour
 					"icon": schema.StringAttribute{
 						Optional: true,
 					},
+					"version": schema.Int32Attribute{
+						Optional: true,
+					},
 				},
 			},
 			StateUpgrader: func(ctx context.Context, req resource.UpgradeStateRequest, resp *resource.UpgradeStateResponse) {
@@ -405,6 +416,7 @@ func (r *AppointmentTemplate) UpgradeState(ctx context.Context) map[int64]resour
 					DefaultScheduleDescription: priorStateData.DefaultScheduleDescription,
 					InvitationText:             priorStateData.InvitationText,
 					Icon:                       priorStateData.Icon,
+					Version:                    priorStateData.Version,
 				}
 
 				resp.Diagnostics.Append(resp.State.Set(ctx, upgradedStateData)...)

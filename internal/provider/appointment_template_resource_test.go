@@ -1,6 +1,7 @@
 package provider
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
@@ -11,11 +12,12 @@ func TestAppointmentTemplateResource(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: resourceDefinitionAppointmentTemplate("basic template", "Basic template"),
+				Config: resourceDefinitionAppointmentTemplate("basic template", "Basic template", 1),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr("udoma_appointment_template.test", "name", "basic template"),
 					resource.TestCheckResourceAttr("udoma_appointment_template.test", "name_expression", "\"Basic template\""),
 					resource.TestCheckResourceAttr("udoma_appointment_template.test", "description", "Basic template description"),
+					resource.TestCheckResourceAttr("udoma_appointment_template.test", "version", "1"),
 
 					resource.TestCheckResourceAttr("udoma_appointment_template.test", "inputs.layout.0.ref_id", "test"),
 					resource.TestCheckResourceAttr("udoma_appointment_template.test", "inputs.layout.0.ref_type", "group"),
@@ -36,23 +38,25 @@ func TestAppointmentTemplateResource(t *testing.T) {
 			},
 			// Update and Read testing
 			{
-				Config: resourceDefinitionAppointmentTemplate("updated template", "Special appointment"),
+				Config: resourceDefinitionAppointmentTemplate("updated template", "Special appointment", 4),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify attributes were updated
 					resource.TestCheckResourceAttr("udoma_appointment_template.test", "name", "updated template"),
 					resource.TestCheckResourceAttr("udoma_appointment_template.test", "name_expression", "\"Special appointment\""),
+					resource.TestCheckResourceAttr("udoma_appointment_template.test", "version", "4"),
 				),
 			},
 		},
 	})
 }
 
-func resourceDefinitionAppointmentTemplate(name, nameExpression string) string {
+func resourceDefinitionAppointmentTemplate(name, nameExpression string, version int32) string {
 	return `
 	resource udoma_appointment_template "test" {
 		name = "` + name + `"
 		name_expression = "\"` + nameExpression + `\""
 		description = "Basic template description"
+		version = ` + fmt.Sprint(version) + `
 
 		require_confirmation = true
 		confirmation_reminders = [

@@ -29,6 +29,7 @@ Resource represents a template for generating documents
 - `options` (Attributes) The options of the document template (see [below for nested schema](#nestedatt--options))
 - `placeholders_script` (String) The script that has to be ran to generate the placeholders
 - `signatures` (String) The JSON serialised signature configuration of the template
+- `version` (Number) The version of the document template
 
 ### Read-Only
 

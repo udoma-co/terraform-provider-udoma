@@ -35,6 +35,7 @@ type PropertyHandoverTemplateModel struct {
 	Name        types.String     `tfsdk:"name"`
 	Description types.String     `tfsdk:"description"`
 	Inputs      *CustomFormModel `tfsdk:"inputs"`
+	Version     types.Int32      `tfsdk:"version"`
 }
 
 func (r *PropertyHandoverTemplate) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -64,6 +65,10 @@ func (r *PropertyHandoverTemplate) Schema(ctx context.Context, req resource.Sche
 				Required:    true,
 				Description: "A custom form to collect data with",
 				Attributes:  CustomFormNestedSchema(),
+			},
+			"version": schema.Int32Attribute{
+				Optional:    true,
+				Description: "The version of the property handover template.",
 			},
 		},
 	}
@@ -215,6 +220,7 @@ func (template *PropertyHandoverTemplateModel) toApiRequest() *v1.CreateOrUpdate
 		Name:        template.Name.ValueString(),
 		Description: template.Description.ValueStringPointer(),
 		CustomForm:  *v1.NewNullableCustomForm(&form),
+		Version:     template.Version.ValueInt32Pointer(),
 	}
 }
 
@@ -222,6 +228,7 @@ func (template *PropertyHandoverTemplateModel) fromApiResponse(resp *v1.Property
 	template.ID = types.StringValue(resp.Id)
 	template.Name = types.StringValue(resp.Name)
 	template.Description = omittableStringValue(resp.Description, template.Description)
+	template.Version = types.Int32PointerValue(resp.Version)
 
 	if template.Inputs == nil {
 		template.Inputs = &CustomFormModel{}
@@ -239,6 +246,7 @@ func (r *PropertyHandoverTemplate) UpgradeState(ctx context.Context) map[int64]r
 		Name        types.String       `tfsdk:"name"`
 		Description types.String       `tfsdk:"description"`
 		Inputs      *CustomFormModelV0 `tfsdk:"inputs"`
+		Version     types.Int32        `tfsdk:"version"`
 	}
 
 	return map[int64]resource.StateUpgrader{
@@ -261,6 +269,9 @@ func (r *PropertyHandoverTemplate) UpgradeState(ctx context.Context) map[int64]r
 					"inputs": schema.SingleNestedAttribute{
 						Required:   true,
 						Attributes: CustomFormNestedSchemaV0(), // use the prior version of the custom form schema
+					},
+					"version": schema.Int32Attribute{
+						Optional: true,
 					},
 				},
 			},
@@ -295,6 +306,7 @@ func (r *PropertyHandoverTemplate) UpgradeState(ctx context.Context) map[int64]r
 					Name:        priorStateData.Name,
 					Description: priorStateData.Description,
 					Inputs:      upgradedInputs,
+					Version:     priorStateData.Version,
 				}
 
 				resp.Diagnostics.Append(resp.State.Set(ctx, upgradedStateData)...)

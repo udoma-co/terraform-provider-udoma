@@ -1,6 +1,7 @@
 package provider
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
@@ -12,12 +13,13 @@ func TestPropertyHandoverTemplateResource(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Create and Read testing
 			{
-				Config: propertyHandoverTemplateResource("test-template"),
+				Config: propertyHandoverTemplateResource("test-template", 1),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify base addtributes
 					resource.TestCheckResourceAttr("udoma_property_handover_template.test_handover_template", "name", "test-template"),
 					resource.TestCheckResourceAttr("udoma_property_handover_template.test_handover_template", "description", "Test Handover Template Description"),
 					resource.TestCheckResourceAttr("udoma_property_handover_template.test_handover_template", "inputs.layout.0.ref_id", "test"),
+					resource.TestCheckResourceAttr("udoma_property_handover_template.test_handover_template", "version", "1"),
 				),
 			},
 			{
@@ -26,23 +28,25 @@ func TestPropertyHandoverTemplateResource(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: propertyHandoverTemplateResource("updated-template"),
+				Config: propertyHandoverTemplateResource("updated-template", 2),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify base addtributes
 					resource.TestCheckResourceAttr("udoma_property_handover_template.test_handover_template", "name", "updated-template"),
 					resource.TestCheckResourceAttr("udoma_property_handover_template.test_handover_template", "description", "Test Handover Template Description"),
 					resource.TestCheckResourceAttr("udoma_property_handover_template.test_handover_template", "inputs.layout.0.ref_id", "test"),
+					resource.TestCheckResourceAttr("udoma_property_handover_template.test_handover_template", "version", "2"),
 				),
 			},
 		},
 	})
 }
 
-func propertyHandoverTemplateResource(name string) string {
+func propertyHandoverTemplateResource(name string, version int32) string {
 	return `
 resource "udoma_property_handover_template" "test_handover_template" {
 	name = "` + name + `"
 	description = "Test Handover Template Description"
+	version = ` + fmt.Sprint(version) + `
 	inputs = {
 		"layout" = [
 			{

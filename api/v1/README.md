@@ -387,7 +387,6 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateUserPreferences**](docs/DefaultAPI.md#updateuserpreferences) | **Put** /preferences | Update the user preferences
 *DefaultAPI* | [**UpdateWorkflowDefinition**](docs/DefaultAPI.md#updateworkflowdefinition) | **Put** /workflows/definition/{definitionID} | Update workflow definition
 *DefaultAPI* | [**UpdateWorkflowEntrypoint**](docs/DefaultAPI.md#updateworkflowentrypoint) | **Put** /workflows/entrypoint/{entrypointID} | Update workflow entry point
-*DefaultAPI* | [**UpdateWorkflowExecution**](docs/DefaultAPI.md#updateworkflowexecution) | **Put** /workflows/execution/{executionID} | Update workflow execution
 *DefaultAPI* | [**UploadAttachment**](docs/DefaultAPI.md#uploadattachment) | **Post** /attachment | Upload new file attachment
 *DefaultAPI* | [**ValidateCustomForm**](docs/DefaultAPI.md#validatecustomform) | **Post** /custom-form/{formID}/validate | Validate a custom form
 *DefaultAPI* | [**ValidateUserEmail**](docs/DefaultAPI.md#validateuseremail) | **Post** /email/validation | Validate user&#39;s email and point out problems if there are any
@@ -706,7 +705,6 @@ Class | Method | HTTP request | Description
  - [UpdateNotificationRequest](docs/UpdateNotificationRequest.md)
  - [UpdateTenancyRequest](docs/UpdateTenancyRequest.md)
  - [UpdateUserPreferencesRequest](docs/UpdateUserPreferencesRequest.md)
- - [UpdateWorkflowExecutionRequest](docs/UpdateWorkflowExecutionRequest.md)
  - [UserPreferences](docs/UserPreferences.md)
  - [UserPreferencesAttributesPartial](docs/UserPreferencesAttributesPartial.md)
  - [UserReference](docs/UserReference.md)

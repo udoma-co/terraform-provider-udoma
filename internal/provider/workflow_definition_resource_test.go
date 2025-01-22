@@ -51,6 +51,7 @@ resource "udoma_workflow_definition" "test" {
 	description 	= "Test updated description"
 	name_expression = "\"New workflow\""
 	icon 			= "fa-solid fa-file-alt"
+	version 		= 2
 
 	env_vars = {
 		var1 = "val1"
@@ -90,6 +91,7 @@ resource "udoma_workflow_definition" "test" {
 					resource.TestCheckResourceAttr("udoma_workflow_definition.test", "name_expression", "\"New workflow\""),
 					resource.TestCheckResourceAttr("udoma_workflow_definition.test", "description", "Test updated description"),
 					resource.TestCheckResourceAttr("udoma_workflow_definition.test", "first_step_id", "generate_document"),
+					resource.TestCheckResourceAttr("udoma_workflow_definition.test", "version", "2"),
 
 					// Verify env_vars
 					resource.TestCheckResourceAttr("udoma_workflow_definition.test", "env_vars.var1", "val1"),

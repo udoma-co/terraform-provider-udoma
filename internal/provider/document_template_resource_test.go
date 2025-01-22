@@ -17,6 +17,7 @@ resource udoma_document_template "test" {
 	name 			= "doc-template"
 	name_expression = "\"Document\""
 	description 	= "Test description"
+	version 		= 1
 
 	options = {
 		allow_text_edit			= true
@@ -88,6 +89,7 @@ EOF
 					resource.TestCheckResourceAttr("udoma_document_template.test", "options.allow_text_edit", "true"),
 					resource.TestCheckResourceAttr("udoma_document_template.test", "options.include_footer_branding", "true"),
 					resource.TestCheckResourceAttr("udoma_document_template.test", "options.include_page_numbers", "true"),
+					resource.TestCheckResourceAttr("udoma_document_template.test", "version", "1"),
 
 					// Verify custom_inputs
 					// TODO
@@ -114,6 +116,7 @@ resource "udoma_document_template" "test" {
 	name 			= "doc-template-updated"
 	name_expression = "\"Document name\""
 	description 	= "Test description"
+	version 		= 2
 
 	options = {
 		allow_text_edit 		= true
@@ -176,6 +179,7 @@ EOF
 					resource.TestCheckResourceAttr("udoma_document_template.test", "name_expression", "\"Document name\""),
 					resource.TestCheckResourceAttr("udoma_document_template.test", "description", "Test description"),
 					resource.TestCheckResourceAttr("udoma_document_template.test", "options.include_page_numbers", "false"),
+					resource.TestCheckResourceAttr("udoma_document_template.test", "version", "2"),
 				),
 			},
 

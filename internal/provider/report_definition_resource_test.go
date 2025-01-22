@@ -41,6 +41,7 @@ func TestAccReportDefinitionResource(t *testing.T) {
 resource "udoma_report_definition" "test" {
 	name 			= "basic updated report"
 	description 	= "Test updated description"
+	version 		= 2
 
 	result_schema = {
 		result_type 		   = "TABLE"
@@ -67,6 +68,7 @@ resource "udoma_report_definition" "test" {
 					resource.TestCheckResourceAttr("udoma_report_definition.test", "name", "basic updated report"),
 					resource.TestCheckResourceAttr("udoma_report_definition.test", "description", "Test updated description"),
 					resource.TestCheckResourceAttr("udoma_report_definition.test", "script", `const ret = { "count": 2 }; return ret;`),
+					resource.TestCheckResourceAttr("udoma_report_definition.test", "version", "2"),
 				),
 			},
 

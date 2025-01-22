@@ -39,6 +39,7 @@ description: |-
 - `require_confirmation` (Boolean) Whether the appointment requires confirmation.
 				If set to true, the Appointment will not be scheduled until the
 				manager has confirmed it.
+- `version` (Number) The version of the appointment template.
 
 ### Read-Only
 

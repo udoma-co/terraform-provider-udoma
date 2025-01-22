@@ -23,6 +23,7 @@ description: |-
 
 - `description` (String) The description of the custom form.
 - `form_definition` (Attributes) A custom form to collect data with (see [below for nested schema](#nestedatt--form_definition))
+- `version` (Number) The version of the custom form.
 
 ### Read-Only
 

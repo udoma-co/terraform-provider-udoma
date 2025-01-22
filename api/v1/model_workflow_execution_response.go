@@ -25,7 +25,9 @@ type WorkflowExecutionResponse struct {
 	// the result of the workflow execution as JSON
 	Result string `json:"result"`
 	// the ID of the next step of the workflow execution
-	NextStep          *string            `json:"next_step,omitempty"`
+	NextStep *string `json:"next_step,omitempty"`
+	// optional ID of an entity that the app should navigate to. This can be used when the workflow execution creates a new entity and the user is supposed to be redirected to that entity.
+	Goto              *string            `json:"goto,omitempty"`
 	WorkflowExecution *WorkflowExecution `json:"workflow_execution,omitempty"`
 }
 
@@ -130,6 +132,38 @@ func (o *WorkflowExecutionResponse) SetNextStep(v string) {
 	o.NextStep = &v
 }
 
+// GetGoto returns the Goto field value if set, zero value otherwise.
+func (o *WorkflowExecutionResponse) GetGoto() string {
+	if o == nil || IsNil(o.Goto) {
+		var ret string
+		return ret
+	}
+	return *o.Goto
+}
+
+// GetGotoOk returns a tuple with the Goto field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowExecutionResponse) GetGotoOk() (*string, bool) {
+	if o == nil || IsNil(o.Goto) {
+		return nil, false
+	}
+	return o.Goto, true
+}
+
+// HasGoto returns a boolean if a field has been set.
+func (o *WorkflowExecutionResponse) HasGoto() bool {
+	if o != nil && !IsNil(o.Goto) {
+		return true
+	}
+
+	return false
+}
+
+// SetGoto gets a reference to the given string and assigns it to the Goto field.
+func (o *WorkflowExecutionResponse) SetGoto(v string) {
+	o.Goto = &v
+}
+
 // GetWorkflowExecution returns the WorkflowExecution field value if set, zero value otherwise.
 func (o *WorkflowExecutionResponse) GetWorkflowExecution() WorkflowExecution {
 	if o == nil || IsNil(o.WorkflowExecution) {
@@ -176,6 +210,9 @@ func (o WorkflowExecutionResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize["result"] = o.Result
 	if !IsNil(o.NextStep) {
 		toSerialize["next_step"] = o.NextStep
+	}
+	if !IsNil(o.Goto) {
+		toSerialize["goto"] = o.Goto
 	}
 	if !IsNil(o.WorkflowExecution) {
 		toSerialize["workflow_execution"] = o.WorkflowExecution

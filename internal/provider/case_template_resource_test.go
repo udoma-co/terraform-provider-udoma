@@ -1,6 +1,7 @@
 package provider
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
@@ -12,13 +13,14 @@ func TestAccCaseTemplateResource(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Create and Read testing
 			{
-				Config: resourceDefinitionCaseTemplate("basic template", "Basic case"),
+				Config: resourceDefinitionCaseTemplate("basic template", "Basic case", 1),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify base addtributes
 					resource.TestCheckResourceAttr("udoma_case_template.test", "name", "basic template"),
 					resource.TestCheckResourceAttr("udoma_case_template.test", "name_expression", "\"Basic case\""),
 					resource.TestCheckResourceAttr("udoma_case_template.test", "icon", "fa fa-bug"),
 					resource.TestCheckResourceAttr("udoma_case_template.test", "ad_categories.0", "ELECTRICITY_PROVIDERS"),
+					resource.TestCheckResourceAttr("udoma_case_template.test", "version", "1"),
 
 					// Verify map attributes
 					resource.TestCheckResourceAttr("udoma_case_template.test", "label.de", "Einfache Meldung"),
@@ -53,12 +55,13 @@ func TestAccCaseTemplateResource(t *testing.T) {
 			},
 			// Update and Read testing
 			{
-				Config: resourceDefinitionCaseTemplate("updated template", "Special case"),
+				Config: resourceDefinitionCaseTemplate("updated template", "Special case", 2),
 
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify attributes were updated
 					resource.TestCheckResourceAttr("udoma_case_template.test", "name", "updated template"),
 					resource.TestCheckResourceAttr("udoma_case_template.test", "name_expression", "\"Special case\""),
+					resource.TestCheckResourceAttr("udoma_case_template.test", "version", "2"),
 				),
 			},
 
@@ -67,7 +70,7 @@ func TestAccCaseTemplateResource(t *testing.T) {
 	})
 }
 
-func resourceDefinitionCaseTemplate(name, nameExpression string) string {
+func resourceDefinitionCaseTemplate(name, nameExpression string, version int32) string {
 	return `
 	resource udoma_case_template "test" {
 		name 							= "` + name + `"
@@ -90,6 +93,7 @@ func resourceDefinitionCaseTemplate(name, nameExpression string) string {
 			en = "Test info text"
 		}
 
+		version = ` + fmt.Sprint(version) + `
 	
 		custom_inputs = <<EOF
 		{

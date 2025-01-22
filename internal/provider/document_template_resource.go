@@ -52,6 +52,7 @@ type documentTemplateModel struct {
 	Inputs             tf.JsonObjectValue            `tfsdk:"inputs"`
 	PlaceholdersScript types.String                  `tfsdk:"placeholders_script"`
 	Signatures         tf.JsonObjectValue            `tfsdk:"signatures"`
+	Version            types.Int32                   `tfsdk:"version"`
 }
 
 func (r *documentTemplate) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -123,6 +124,10 @@ func (r *documentTemplate) Schema(ctx context.Context, req resource.SchemaReques
 				CustomType:  tf.JsonObjectType{},
 				Optional:    true,
 				Description: "The JSON serialised signature configuration of the template",
+			},
+			"version": schema.Int32Attribute{
+				Optional:    true,
+				Description: "The version of the document template",
 			},
 		},
 	}
@@ -323,6 +328,7 @@ func (model *documentTemplateModel) fromAPI(template *api.DocumentTemplate) erro
 	model.Name = types.StringValue(template.Name)
 	model.Description = omittableStringValue(template.Description, model.Description)
 	model.PlaceholdersScript = omittableStringValue(template.PlaceholdersScript, model.PlaceholdersScript)
+	model.Version = types.Int32PointerValue(template.Version)
 
 	if template.Options.IsSet() {
 		if model.Options == nil {
@@ -376,6 +382,7 @@ func (model *documentTemplateModel) toAPIRequest() (api.CreateOrUpdateDocumentTe
 		Description:        model.Description.ValueStringPointer(),
 		Content:            model.Content.ValueString(),
 		PlaceholdersScript: model.PlaceholdersScript.ValueStringPointer(),
+		Version:            model.Version.ValueInt32Pointer(),
 	}
 
 	if opts := model.Options; opts != nil {
