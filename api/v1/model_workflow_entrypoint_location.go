@@ -27,6 +27,7 @@ const (
 	WORKFLOWENTRYPOINTLOCATION_CASE        WorkflowEntrypointLocation = "case"
 	WORKFLOWENTRYPOINTLOCATION_REPORT      WorkflowEntrypointLocation = "report"
 	WORKFLOWENTRYPOINTLOCATION_APPOINTMENT WorkflowEntrypointLocation = "appointment"
+	WORKFLOWENTRYPOINTLOCATION_HANDOVER    WorkflowEntrypointLocation = "handover"
 )
 
 // All allowed values of WorkflowEntrypointLocation enum
@@ -38,6 +39,7 @@ var AllowedWorkflowEntrypointLocationEnumValues = []WorkflowEntrypointLocation{
 	"case",
 	"report",
 	"appointment",
+	"handover",
 }
 
 func (v *WorkflowEntrypointLocation) UnmarshalJSON(src []byte) error {
