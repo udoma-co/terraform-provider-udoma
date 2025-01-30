@@ -14,11 +14,11 @@ import (
 	"encoding/json"
 )
 
-// checks if the DocumentTemplateSignatureConfguration type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &DocumentTemplateSignatureConfguration{}
+// checks if the DocumentTemplateSignatureConfiguration type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DocumentTemplateSignatureConfiguration{}
 
-// DocumentTemplateSignatureConfguration The configuration for electronic signatures
-type DocumentTemplateSignatureConfguration struct {
+// DocumentTemplateSignatureConfiguration The configuration for electronic signatures
+type DocumentTemplateSignatureConfiguration struct {
 	// The list of signers of the document
 	Signers []DocumentTemplateSignerDefinition `json:"signers,omitempty"`
 	// True if electronic signatures are enabled for the template
@@ -29,25 +29,25 @@ type DocumentTemplateSignatureConfguration struct {
 	CustomMessage *string `json:"custom_message,omitempty"`
 }
 
-// NewDocumentTemplateSignatureConfguration instantiates a new DocumentTemplateSignatureConfguration object
+// NewDocumentTemplateSignatureConfiguration instantiates a new DocumentTemplateSignatureConfiguration object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDocumentTemplateSignatureConfguration() *DocumentTemplateSignatureConfguration {
-	this := DocumentTemplateSignatureConfguration{}
+func NewDocumentTemplateSignatureConfiguration() *DocumentTemplateSignatureConfiguration {
+	this := DocumentTemplateSignatureConfiguration{}
 	return &this
 }
 
-// NewDocumentTemplateSignatureConfgurationWithDefaults instantiates a new DocumentTemplateSignatureConfguration object
+// NewDocumentTemplateSignatureConfigurationWithDefaults instantiates a new DocumentTemplateSignatureConfiguration object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewDocumentTemplateSignatureConfgurationWithDefaults() *DocumentTemplateSignatureConfguration {
-	this := DocumentTemplateSignatureConfguration{}
+func NewDocumentTemplateSignatureConfigurationWithDefaults() *DocumentTemplateSignatureConfiguration {
+	this := DocumentTemplateSignatureConfiguration{}
 	return &this
 }
 
 // GetSigners returns the Signers field value if set, zero value otherwise.
-func (o *DocumentTemplateSignatureConfguration) GetSigners() []DocumentTemplateSignerDefinition {
+func (o *DocumentTemplateSignatureConfiguration) GetSigners() []DocumentTemplateSignerDefinition {
 	if o == nil || IsNil(o.Signers) {
 		var ret []DocumentTemplateSignerDefinition
 		return ret
@@ -57,7 +57,7 @@ func (o *DocumentTemplateSignatureConfguration) GetSigners() []DocumentTemplateS
 
 // GetSignersOk returns a tuple with the Signers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DocumentTemplateSignatureConfguration) GetSignersOk() ([]DocumentTemplateSignerDefinition, bool) {
+func (o *DocumentTemplateSignatureConfiguration) GetSignersOk() ([]DocumentTemplateSignerDefinition, bool) {
 	if o == nil || IsNil(o.Signers) {
 		return nil, false
 	}
@@ -65,7 +65,7 @@ func (o *DocumentTemplateSignatureConfguration) GetSignersOk() ([]DocumentTempla
 }
 
 // HasSigners returns a boolean if a field has been set.
-func (o *DocumentTemplateSignatureConfguration) HasSigners() bool {
+func (o *DocumentTemplateSignatureConfiguration) HasSigners() bool {
 	if o != nil && !IsNil(o.Signers) {
 		return true
 	}
@@ -74,12 +74,12 @@ func (o *DocumentTemplateSignatureConfguration) HasSigners() bool {
 }
 
 // SetSigners gets a reference to the given []DocumentTemplateSignerDefinition and assigns it to the Signers field.
-func (o *DocumentTemplateSignatureConfguration) SetSigners(v []DocumentTemplateSignerDefinition) {
+func (o *DocumentTemplateSignatureConfiguration) SetSigners(v []DocumentTemplateSignerDefinition) {
 	o.Signers = v
 }
 
 // GetEsignaturesEnabled returns the EsignaturesEnabled field value if set, zero value otherwise.
-func (o *DocumentTemplateSignatureConfguration) GetEsignaturesEnabled() bool {
+func (o *DocumentTemplateSignatureConfiguration) GetEsignaturesEnabled() bool {
 	if o == nil || IsNil(o.EsignaturesEnabled) {
 		var ret bool
 		return ret
@@ -89,7 +89,7 @@ func (o *DocumentTemplateSignatureConfguration) GetEsignaturesEnabled() bool {
 
 // GetEsignaturesEnabledOk returns a tuple with the EsignaturesEnabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DocumentTemplateSignatureConfguration) GetEsignaturesEnabledOk() (*bool, bool) {
+func (o *DocumentTemplateSignatureConfiguration) GetEsignaturesEnabledOk() (*bool, bool) {
 	if o == nil || IsNil(o.EsignaturesEnabled) {
 		return nil, false
 	}
@@ -97,7 +97,7 @@ func (o *DocumentTemplateSignatureConfguration) GetEsignaturesEnabledOk() (*bool
 }
 
 // HasEsignaturesEnabled returns a boolean if a field has been set.
-func (o *DocumentTemplateSignatureConfguration) HasEsignaturesEnabled() bool {
+func (o *DocumentTemplateSignatureConfiguration) HasEsignaturesEnabled() bool {
 	if o != nil && !IsNil(o.EsignaturesEnabled) {
 		return true
 	}
@@ -106,12 +106,12 @@ func (o *DocumentTemplateSignatureConfguration) HasEsignaturesEnabled() bool {
 }
 
 // SetEsignaturesEnabled gets a reference to the given bool and assigns it to the EsignaturesEnabled field.
-func (o *DocumentTemplateSignatureConfguration) SetEsignaturesEnabled(v bool) {
+func (o *DocumentTemplateSignatureConfiguration) SetEsignaturesEnabled(v bool) {
 	o.EsignaturesEnabled = &v
 }
 
 // GetExpirationDays returns the ExpirationDays field value if set, zero value otherwise.
-func (o *DocumentTemplateSignatureConfguration) GetExpirationDays() int32 {
+func (o *DocumentTemplateSignatureConfiguration) GetExpirationDays() int32 {
 	if o == nil || IsNil(o.ExpirationDays) {
 		var ret int32
 		return ret
@@ -121,7 +121,7 @@ func (o *DocumentTemplateSignatureConfguration) GetExpirationDays() int32 {
 
 // GetExpirationDaysOk returns a tuple with the ExpirationDays field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DocumentTemplateSignatureConfguration) GetExpirationDaysOk() (*int32, bool) {
+func (o *DocumentTemplateSignatureConfiguration) GetExpirationDaysOk() (*int32, bool) {
 	if o == nil || IsNil(o.ExpirationDays) {
 		return nil, false
 	}
@@ -129,7 +129,7 @@ func (o *DocumentTemplateSignatureConfguration) GetExpirationDaysOk() (*int32, b
 }
 
 // HasExpirationDays returns a boolean if a field has been set.
-func (o *DocumentTemplateSignatureConfguration) HasExpirationDays() bool {
+func (o *DocumentTemplateSignatureConfiguration) HasExpirationDays() bool {
 	if o != nil && !IsNil(o.ExpirationDays) {
 		return true
 	}
@@ -138,12 +138,12 @@ func (o *DocumentTemplateSignatureConfguration) HasExpirationDays() bool {
 }
 
 // SetExpirationDays gets a reference to the given int32 and assigns it to the ExpirationDays field.
-func (o *DocumentTemplateSignatureConfguration) SetExpirationDays(v int32) {
+func (o *DocumentTemplateSignatureConfiguration) SetExpirationDays(v int32) {
 	o.ExpirationDays = &v
 }
 
 // GetCustomMessage returns the CustomMessage field value if set, zero value otherwise.
-func (o *DocumentTemplateSignatureConfguration) GetCustomMessage() string {
+func (o *DocumentTemplateSignatureConfiguration) GetCustomMessage() string {
 	if o == nil || IsNil(o.CustomMessage) {
 		var ret string
 		return ret
@@ -153,7 +153,7 @@ func (o *DocumentTemplateSignatureConfguration) GetCustomMessage() string {
 
 // GetCustomMessageOk returns a tuple with the CustomMessage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DocumentTemplateSignatureConfguration) GetCustomMessageOk() (*string, bool) {
+func (o *DocumentTemplateSignatureConfiguration) GetCustomMessageOk() (*string, bool) {
 	if o == nil || IsNil(o.CustomMessage) {
 		return nil, false
 	}
@@ -161,7 +161,7 @@ func (o *DocumentTemplateSignatureConfguration) GetCustomMessageOk() (*string, b
 }
 
 // HasCustomMessage returns a boolean if a field has been set.
-func (o *DocumentTemplateSignatureConfguration) HasCustomMessage() bool {
+func (o *DocumentTemplateSignatureConfiguration) HasCustomMessage() bool {
 	if o != nil && !IsNil(o.CustomMessage) {
 		return true
 	}
@@ -170,11 +170,11 @@ func (o *DocumentTemplateSignatureConfguration) HasCustomMessage() bool {
 }
 
 // SetCustomMessage gets a reference to the given string and assigns it to the CustomMessage field.
-func (o *DocumentTemplateSignatureConfguration) SetCustomMessage(v string) {
+func (o *DocumentTemplateSignatureConfiguration) SetCustomMessage(v string) {
 	o.CustomMessage = &v
 }
 
-func (o DocumentTemplateSignatureConfguration) MarshalJSON() ([]byte, error) {
+func (o DocumentTemplateSignatureConfiguration) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -182,7 +182,7 @@ func (o DocumentTemplateSignatureConfguration) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o DocumentTemplateSignatureConfguration) ToMap() (map[string]interface{}, error) {
+func (o DocumentTemplateSignatureConfiguration) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Signers) {
 		toSerialize["signers"] = o.Signers
@@ -199,38 +199,38 @@ func (o DocumentTemplateSignatureConfguration) ToMap() (map[string]interface{}, 
 	return toSerialize, nil
 }
 
-type NullableDocumentTemplateSignatureConfguration struct {
-	value *DocumentTemplateSignatureConfguration
+type NullableDocumentTemplateSignatureConfiguration struct {
+	value *DocumentTemplateSignatureConfiguration
 	isSet bool
 }
 
-func (v NullableDocumentTemplateSignatureConfguration) Get() *DocumentTemplateSignatureConfguration {
+func (v NullableDocumentTemplateSignatureConfiguration) Get() *DocumentTemplateSignatureConfiguration {
 	return v.value
 }
 
-func (v *NullableDocumentTemplateSignatureConfguration) Set(val *DocumentTemplateSignatureConfguration) {
+func (v *NullableDocumentTemplateSignatureConfiguration) Set(val *DocumentTemplateSignatureConfiguration) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableDocumentTemplateSignatureConfguration) IsSet() bool {
+func (v NullableDocumentTemplateSignatureConfiguration) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableDocumentTemplateSignatureConfguration) Unset() {
+func (v *NullableDocumentTemplateSignatureConfiguration) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableDocumentTemplateSignatureConfguration(val *DocumentTemplateSignatureConfguration) *NullableDocumentTemplateSignatureConfguration {
-	return &NullableDocumentTemplateSignatureConfguration{value: val, isSet: true}
+func NewNullableDocumentTemplateSignatureConfiguration(val *DocumentTemplateSignatureConfiguration) *NullableDocumentTemplateSignatureConfiguration {
+	return &NullableDocumentTemplateSignatureConfiguration{value: val, isSet: true}
 }
 
-func (v NullableDocumentTemplateSignatureConfguration) MarshalJSON() ([]byte, error) {
+func (v NullableDocumentTemplateSignatureConfiguration) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableDocumentTemplateSignatureConfguration) UnmarshalJSON(src []byte) error {
+func (v *NullableDocumentTemplateSignatureConfiguration) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

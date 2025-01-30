@@ -41,8 +41,6 @@ type DocumentGeneration struct {
 	PdfUrl *string `json:"pdf_url,omitempty"`
 	// The date and time the document was generated
 	PdfGenerationDate *int64 `json:"pdf_generation_date,omitempty"`
-	// True if the document was sent to the signing service
-	EsignatureTriggered *bool `json:"esignature_triggered,omitempty"`
 }
 
 type _DocumentGeneration DocumentGeneration
@@ -349,38 +347,6 @@ func (o *DocumentGeneration) SetPdfGenerationDate(v int64) {
 	o.PdfGenerationDate = &v
 }
 
-// GetEsignatureTriggered returns the EsignatureTriggered field value if set, zero value otherwise.
-func (o *DocumentGeneration) GetEsignatureTriggered() bool {
-	if o == nil || IsNil(o.EsignatureTriggered) {
-		var ret bool
-		return ret
-	}
-	return *o.EsignatureTriggered
-}
-
-// GetEsignatureTriggeredOk returns a tuple with the EsignatureTriggered field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *DocumentGeneration) GetEsignatureTriggeredOk() (*bool, bool) {
-	if o == nil || IsNil(o.EsignatureTriggered) {
-		return nil, false
-	}
-	return o.EsignatureTriggered, true
-}
-
-// HasEsignatureTriggered returns a boolean if a field has been set.
-func (o *DocumentGeneration) HasEsignatureTriggered() bool {
-	if o != nil && !IsNil(o.EsignatureTriggered) {
-		return true
-	}
-
-	return false
-}
-
-// SetEsignatureTriggered gets a reference to the given bool and assigns it to the EsignatureTriggered field.
-func (o *DocumentGeneration) SetEsignatureTriggered(v bool) {
-	o.EsignatureTriggered = &v
-}
-
 func (o DocumentGeneration) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -410,9 +376,6 @@ func (o DocumentGeneration) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.PdfGenerationDate) {
 		toSerialize["pdf_generation_date"] = o.PdfGenerationDate
-	}
-	if !IsNil(o.EsignatureTriggered) {
-		toSerialize["esignature_triggered"] = o.EsignatureTriggered
 	}
 	return toSerialize, nil
 }

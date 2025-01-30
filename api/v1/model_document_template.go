@@ -34,9 +34,9 @@ type DocumentTemplate struct {
 	Content string             `json:"content"`
 	Inputs  NullableCustomForm `json:"inputs"`
 	// The script we run to generate the object used in the template
-	PlaceholdersScript *string                                       `json:"placeholders_script,omitempty"`
-	Signatures         NullableDocumentTemplateSignatureConfguration `json:"signatures,omitempty"`
-	Version            *int32                                        `json:"version,omitempty"`
+	PlaceholdersScript *string                                        `json:"placeholders_script,omitempty"`
+	Signatures         NullableDocumentTemplateSignatureConfiguration `json:"signatures,omitempty"`
+	Version            *int32                                         `json:"version,omitempty"`
 	// A flag indicating whether the entity is deleted. If the entity is deleted, it should not be returned in the results of a query, but it is still kept in the database as it is referenced by other entities.
 	IsDeleted *bool `json:"is_deleted,omitempty"`
 }
@@ -302,9 +302,9 @@ func (o *DocumentTemplate) SetPlaceholdersScript(v string) {
 }
 
 // GetSignatures returns the Signatures field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *DocumentTemplate) GetSignatures() DocumentTemplateSignatureConfguration {
+func (o *DocumentTemplate) GetSignatures() DocumentTemplateSignatureConfiguration {
 	if o == nil || IsNil(o.Signatures.Get()) {
-		var ret DocumentTemplateSignatureConfguration
+		var ret DocumentTemplateSignatureConfiguration
 		return ret
 	}
 	return *o.Signatures.Get()
@@ -313,7 +313,7 @@ func (o *DocumentTemplate) GetSignatures() DocumentTemplateSignatureConfguration
 // GetSignaturesOk returns a tuple with the Signatures field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *DocumentTemplate) GetSignaturesOk() (*DocumentTemplateSignatureConfguration, bool) {
+func (o *DocumentTemplate) GetSignaturesOk() (*DocumentTemplateSignatureConfiguration, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -329,8 +329,8 @@ func (o *DocumentTemplate) HasSignatures() bool {
 	return false
 }
 
-// SetSignatures gets a reference to the given NullableDocumentTemplateSignatureConfguration and assigns it to the Signatures field.
-func (o *DocumentTemplate) SetSignatures(v DocumentTemplateSignatureConfguration) {
+// SetSignatures gets a reference to the given NullableDocumentTemplateSignatureConfiguration and assigns it to the Signatures field.
+func (o *DocumentTemplate) SetSignatures(v DocumentTemplateSignatureConfiguration) {
 	o.Signatures.Set(&v)
 }
 

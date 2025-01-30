@@ -27,8 +27,6 @@ type PropertyHandover struct {
 	CreatedAt int64 `json:"created_at"`
 	// The date and time the entity was last updated
 	UpdatedAt int64 `json:"updated_at"`
-	// The ID of the property handover template.
-	TemplateRef string `json:"template_ref"`
 	// The ID of the property that the handover is for.
 	PropertyRef     *string  `json:"property_ref,omitempty"`
 	PropertyAddress *Address `json:"property_address,omitempty"`
@@ -36,8 +34,10 @@ type PropertyHandover struct {
 	HandoverTime int64                 `json:"handover_time"`
 	Type         *PropertyHandoverType `json:"type,omitempty"`
 	// The data captured by of the property handover. This can be initalized before the handover is done to include information that is known in advance (e.g. attendees, meter readings, etc.)
-	Data   map[string]interface{}     `json:"data,omitempty"`
-	Status PropertyHandoverStatusEnum `json:"status"`
+	Data map[string]interface{} `json:"data,omitempty"`
+	// The ID of the property handover template.
+	TemplateRef string                     `json:"template_ref"`
+	Status      PropertyHandoverStatusEnum `json:"status"`
 	// Whether the property handover has been archived or not.
 	Archived *bool `json:"archived,omitempty"`
 }
@@ -48,13 +48,13 @@ type _PropertyHandover PropertyHandover
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPropertyHandover(id string, createdAt int64, updatedAt int64, templateRef string, handoverTime int64, status PropertyHandoverStatusEnum) *PropertyHandover {
+func NewPropertyHandover(id string, createdAt int64, updatedAt int64, handoverTime int64, templateRef string, status PropertyHandoverStatusEnum) *PropertyHandover {
 	this := PropertyHandover{}
 	this.Id = id
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
-	this.TemplateRef = templateRef
 	this.HandoverTime = handoverTime
+	this.TemplateRef = templateRef
 	this.Status = status
 	return &this
 }
@@ -137,30 +137,6 @@ func (o *PropertyHandover) GetUpdatedAtOk() (*int64, bool) {
 // SetUpdatedAt sets field value
 func (o *PropertyHandover) SetUpdatedAt(v int64) {
 	o.UpdatedAt = v
-}
-
-// GetTemplateRef returns the TemplateRef field value
-func (o *PropertyHandover) GetTemplateRef() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.TemplateRef
-}
-
-// GetTemplateRefOk returns a tuple with the TemplateRef field value
-// and a boolean to check if the value has been set.
-func (o *PropertyHandover) GetTemplateRefOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.TemplateRef, true
-}
-
-// SetTemplateRef sets field value
-func (o *PropertyHandover) SetTemplateRef(v string) {
-	o.TemplateRef = v
 }
 
 // GetPropertyRef returns the PropertyRef field value if set, zero value otherwise.
@@ -315,6 +291,30 @@ func (o *PropertyHandover) SetData(v map[string]interface{}) {
 	o.Data = v
 }
 
+// GetTemplateRef returns the TemplateRef field value
+func (o *PropertyHandover) GetTemplateRef() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.TemplateRef
+}
+
+// GetTemplateRefOk returns a tuple with the TemplateRef field value
+// and a boolean to check if the value has been set.
+func (o *PropertyHandover) GetTemplateRefOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.TemplateRef, true
+}
+
+// SetTemplateRef sets field value
+func (o *PropertyHandover) SetTemplateRef(v string) {
+	o.TemplateRef = v
+}
+
 // GetStatus returns the Status field value
 func (o *PropertyHandover) GetStatus() PropertyHandoverStatusEnum {
 	if o == nil {
@@ -384,7 +384,6 @@ func (o PropertyHandover) ToMap() (map[string]interface{}, error) {
 	toSerialize["id"] = o.Id
 	toSerialize["created_at"] = o.CreatedAt
 	toSerialize["updated_at"] = o.UpdatedAt
-	toSerialize["template_ref"] = o.TemplateRef
 	if !IsNil(o.PropertyRef) {
 		toSerialize["property_ref"] = o.PropertyRef
 	}
@@ -398,6 +397,7 @@ func (o PropertyHandover) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Data) {
 		toSerialize["data"] = o.Data
 	}
+	toSerialize["template_ref"] = o.TemplateRef
 	toSerialize["status"] = o.Status
 	if !IsNil(o.Archived) {
 		toSerialize["archived"] = o.Archived
@@ -413,8 +413,8 @@ func (o *PropertyHandover) UnmarshalJSON(data []byte) (err error) {
 		"id",
 		"created_at",
 		"updated_at",
-		"template_ref",
 		"handover_time",
+		"template_ref",
 		"status",
 	}
 

@@ -785,7 +785,7 @@ type ApiCancelSignaturesForDocumentRequest struct {
 	docID      string
 }
 
-func (r ApiCancelSignaturesForDocumentRequest) Execute() (*DocumentESignatureStatus, *http.Response, error) {
+func (r ApiCancelSignaturesForDocumentRequest) Execute() (*http.Response, error) {
 	return r.ApiService.CancelSignaturesForDocumentExecute(r)
 }
 
@@ -805,19 +805,16 @@ func (a *DefaultAPIService) CancelSignaturesForDocument(ctx context.Context, doc
 }
 
 // Execute executes the request
-//
-//	@return DocumentESignatureStatus
-func (a *DefaultAPIService) CancelSignaturesForDocumentExecute(r ApiCancelSignaturesForDocumentRequest) (*DocumentESignatureStatus, *http.Response, error) {
+func (a *DefaultAPIService) CancelSignaturesForDocumentExecute(r ApiCancelSignaturesForDocumentRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodDelete
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *DocumentESignatureStatus
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CancelSignaturesForDocument")
 	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/document-generation/documents/{docID}/esignature"
@@ -837,7 +834,7 @@ func (a *DefaultAPIService) CancelSignaturesForDocumentExecute(r ApiCancelSignat
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -846,19 +843,19 @@ func (a *DefaultAPIService) CancelSignaturesForDocumentExecute(r ApiCancelSignat
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return localVarReturnValue, nil, err
+		return nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
+		return localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
+		return localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -866,19 +863,10 @@ func (a *DefaultAPIService) CancelSignaturesForDocumentExecute(r ApiCancelSignat
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
+		return localVarHTTPResponse, newErr
 	}
 
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
+	return localVarHTTPResponse, nil
 }
 
 type ApiConfirmAppointmentRequest struct {
@@ -3829,6 +3817,7 @@ func (a *DefaultAPIService) CreateFinancialAccountExecute(r ApiCreateFinancialAc
 type ApiCreateMeterRequest struct {
 	ctx                        context.Context
 	ApiService                 *DefaultAPIService
+	propID                     string
 	createOrUpdateMeterRequest *CreateOrUpdateMeterRequest
 }
 
@@ -3846,12 +3835,14 @@ func (r ApiCreateMeterRequest) Execute() (*Meter, *http.Response, error) {
 CreateMeter Create a new meter for a property
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param propID unique generated ID of a property
 	@return ApiCreateMeterRequest
 */
-func (a *DefaultAPIService) CreateMeter(ctx context.Context) ApiCreateMeterRequest {
+func (a *DefaultAPIService) CreateMeter(ctx context.Context, propID string) ApiCreateMeterRequest {
 	return ApiCreateMeterRequest{
 		ApiService: a,
 		ctx:        ctx,
+		propID:     propID,
 	}
 }
 
@@ -3871,7 +3862,8 @@ func (a *DefaultAPIService) CreateMeterExecute(r ApiCreateMeterRequest) (*Meter,
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/meters"
+	localVarPath := localBasePath + "/meter/{propID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"propID"+"}", url.PathEscape(parameterValueToString(r.propID, "propID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -4385,6 +4377,7 @@ func (a *DefaultAPIService) CreatePropertyExecute(r ApiCreatePropertyRequest) (*
 type ApiCreatePropertyHandoverRequest struct {
 	ctx                                   context.Context
 	ApiService                            *DefaultAPIService
+	templateID                            string
 	createOrUpdatePropertyHandoverRequest *CreateOrUpdatePropertyHandoverRequest
 }
 
@@ -4402,12 +4395,14 @@ func (r ApiCreatePropertyHandoverRequest) Execute() (*PropertyHandover, *http.Re
 CreatePropertyHandover Create a new property handover
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param templateID unique generated ID of a property handover template
 	@return ApiCreatePropertyHandoverRequest
 */
-func (a *DefaultAPIService) CreatePropertyHandover(ctx context.Context) ApiCreatePropertyHandoverRequest {
+func (a *DefaultAPIService) CreatePropertyHandover(ctx context.Context, templateID string) ApiCreatePropertyHandoverRequest {
 	return ApiCreatePropertyHandoverRequest{
 		ApiService: a,
 		ctx:        ctx,
+		templateID: templateID,
 	}
 }
 
@@ -4427,7 +4422,8 @@ func (a *DefaultAPIService) CreatePropertyHandoverExecute(r ApiCreatePropertyHan
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/property-handovers/handover"
+	localVarPath := localBasePath + "/property-handovers/handover/{templateID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"templateID"+"}", url.PathEscape(parameterValueToString(r.templateID, "templateID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -10869,25 +10865,25 @@ func (a *DefaultAPIService) GenerateDocumentTextExecute(r ApiGenerateDocumentTex
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiGenerateESignatureRequestRequest struct {
+type ApiGenerateESignatureForDocumentRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
 	docID      string
 }
 
-func (r ApiGenerateESignatureRequestRequest) Execute() (*DocumentESignatureRequest, *http.Response, error) {
-	return r.ApiService.GenerateESignatureRequestExecute(r)
+func (r ApiGenerateESignatureForDocumentRequest) Execute() (*SignatureRequest, *http.Response, error) {
+	return r.ApiService.GenerateESignatureForDocumentExecute(r)
 }
 
 /*
-GenerateESignatureRequest Generate an eSignature request for a document, based on template signature config
+GenerateESignatureForDocument Get the singing status for the document
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param docID unique generated ID of a document generation
-	@return ApiGenerateESignatureRequestRequest
+	@return ApiGenerateESignatureForDocumentRequest
 */
-func (a *DefaultAPIService) GenerateESignatureRequest(ctx context.Context, docID string) ApiGenerateESignatureRequestRequest {
-	return ApiGenerateESignatureRequestRequest{
+func (a *DefaultAPIService) GenerateESignatureForDocument(ctx context.Context, docID string) ApiGenerateESignatureForDocumentRequest {
+	return ApiGenerateESignatureForDocumentRequest{
 		ApiService: a,
 		ctx:        ctx,
 		docID:      docID,
@@ -10896,21 +10892,21 @@ func (a *DefaultAPIService) GenerateESignatureRequest(ctx context.Context, docID
 
 // Execute executes the request
 //
-//	@return DocumentESignatureRequest
-func (a *DefaultAPIService) GenerateESignatureRequestExecute(r ApiGenerateESignatureRequestRequest) (*DocumentESignatureRequest, *http.Response, error) {
+//	@return SignatureRequest
+func (a *DefaultAPIService) GenerateESignatureForDocumentExecute(r ApiGenerateESignatureForDocumentRequest) (*SignatureRequest, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *DocumentESignatureRequest
+		localVarReturnValue *SignatureRequest
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GenerateESignatureRequest")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GenerateESignatureForDocument")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/document-generation/documents/{docID}/esignature/request"
+	localVarPath := localBasePath + "/document-generation/documents/{docID}/esignature/generate"
 	localVarPath = strings.Replace(localVarPath, "{"+"docID"+"}", url.PathEscape(parameterValueToString(r.docID, "docID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -14642,25 +14638,25 @@ func (a *DefaultAPIService) GetDocumentTemplatesExecute(r ApiGetDocumentTemplate
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiGetESignatureStatusForDocumentRequest struct {
+type ApiGetESignatureForDocumentRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
 	docID      string
 }
 
-func (r ApiGetESignatureStatusForDocumentRequest) Execute() (*DocumentESignatureStatus, *http.Response, error) {
-	return r.ApiService.GetESignatureStatusForDocumentExecute(r)
+func (r ApiGetESignatureForDocumentRequest) Execute() (*Signature, *http.Response, error) {
+	return r.ApiService.GetESignatureForDocumentExecute(r)
 }
 
 /*
-GetESignatureStatusForDocument Get the singing status for the document
+GetESignatureForDocument Get the singing status for the document
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param docID unique generated ID of a document generation
-	@return ApiGetESignatureStatusForDocumentRequest
+	@return ApiGetESignatureForDocumentRequest
 */
-func (a *DefaultAPIService) GetESignatureStatusForDocument(ctx context.Context, docID string) ApiGetESignatureStatusForDocumentRequest {
-	return ApiGetESignatureStatusForDocumentRequest{
+func (a *DefaultAPIService) GetESignatureForDocument(ctx context.Context, docID string) ApiGetESignatureForDocumentRequest {
+	return ApiGetESignatureForDocumentRequest{
 		ApiService: a,
 		ctx:        ctx,
 		docID:      docID,
@@ -14669,16 +14665,16 @@ func (a *DefaultAPIService) GetESignatureStatusForDocument(ctx context.Context, 
 
 // Execute executes the request
 //
-//	@return DocumentESignatureStatus
-func (a *DefaultAPIService) GetESignatureStatusForDocumentExecute(r ApiGetESignatureStatusForDocumentRequest) (*DocumentESignatureStatus, *http.Response, error) {
+//	@return Signature
+func (a *DefaultAPIService) GetESignatureForDocumentExecute(r ApiGetESignatureForDocumentRequest) (*Signature, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *DocumentESignatureStatus
+		localVarReturnValue *Signature
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetESignatureStatusForDocument")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetESignatureForDocument")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -14787,6 +14783,108 @@ func (a *DefaultAPIService) GetEmailStatusExecute(r ApiGetEmailStatusRequest) (*
 
 	localVarPath := localBasePath + "/email/status/{email}"
 	localVarPath = strings.Replace(localVarPath, "{"+"email"+"}", url.PathEscape(parameterValueToString(r.email, "email")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetEsignatureInformationRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	code       string
+}
+
+func (r ApiGetEsignatureInformationRequest) Execute() (*SignatureInformationResponse, *http.Response, error) {
+	return r.ApiService.GetEsignatureInformationExecute(r)
+}
+
+/*
+GetEsignatureInformation Get information about an esignature
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param code A unique code that grants access to public users to the requested resource. Depending on the context, the code can have a different format and be validated in a different way. The parameter can be either provided in a path or as a query parameter
+	@return ApiGetEsignatureInformationRequest
+*/
+func (a *DefaultAPIService) GetEsignatureInformation(ctx context.Context, code string) ApiGetEsignatureInformationRequest {
+	return ApiGetEsignatureInformationRequest{
+		ApiService: a,
+		ctx:        ctx,
+		code:       code,
+	}
+}
+
+// Execute executes the request
+//
+//	@return SignatureInformationResponse
+func (a *DefaultAPIService) GetEsignatureInformationExecute(r ApiGetEsignatureInformationRequest) (*SignatureInformationResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *SignatureInformationResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetEsignatureInformation")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/public/document-generation/esignature/{code}/info"
+	localVarPath = strings.Replace(localVarPath, "{"+"code"+"}", url.PathEscape(parameterValueToString(r.code, "code")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -26785,18 +26883,18 @@ func (a *DefaultAPIService) QueryWorkflowExecutionsExecute(r ApiQueryWorkflowExe
 }
 
 type ApiRequestESignaturesForDocumentRequest struct {
-	ctx                       context.Context
-	ApiService                *DefaultAPIService
-	docID                     string
-	documentESignatureRequest *DocumentESignatureRequest
+	ctx              context.Context
+	ApiService       *DefaultAPIService
+	docID            string
+	signatureRequest *SignatureRequest
 }
 
-func (r ApiRequestESignaturesForDocumentRequest) DocumentESignatureRequest(documentESignatureRequest DocumentESignatureRequest) ApiRequestESignaturesForDocumentRequest {
-	r.documentESignatureRequest = &documentESignatureRequest
+func (r ApiRequestESignaturesForDocumentRequest) SignatureRequest(signatureRequest SignatureRequest) ApiRequestESignaturesForDocumentRequest {
+	r.signatureRequest = &signatureRequest
 	return r
 }
 
-func (r ApiRequestESignaturesForDocumentRequest) Execute() (*DocumentESignatureStatus, *http.Response, error) {
+func (r ApiRequestESignaturesForDocumentRequest) Execute() (*Signature, *http.Response, error) {
 	return r.ApiService.RequestESignaturesForDocumentExecute(r)
 }
 
@@ -26817,13 +26915,13 @@ func (a *DefaultAPIService) RequestESignaturesForDocument(ctx context.Context, d
 
 // Execute executes the request
 //
-//	@return DocumentESignatureStatus
-func (a *DefaultAPIService) RequestESignaturesForDocumentExecute(r ApiRequestESignaturesForDocumentRequest) (*DocumentESignatureStatus, *http.Response, error) {
+//	@return Signature
+func (a *DefaultAPIService) RequestESignaturesForDocumentExecute(r ApiRequestESignaturesForDocumentRequest) (*Signature, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *DocumentESignatureStatus
+		localVarReturnValue *Signature
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.RequestESignaturesForDocument")
@@ -26837,8 +26935,8 @@ func (a *DefaultAPIService) RequestESignaturesForDocumentExecute(r ApiRequestESi
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.documentESignatureRequest == nil {
-		return localVarReturnValue, nil, reportError("documentESignatureRequest is required and must be specified")
+	if r.signatureRequest == nil {
+		return localVarReturnValue, nil, reportError("signatureRequest is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -26859,7 +26957,7 @@ func (a *DefaultAPIService) RequestESignaturesForDocumentExecute(r ApiRequestESi
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.documentESignatureRequest
+	localVarPostBody = r.signatureRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -27438,7 +27536,7 @@ func (a *DefaultAPIService) SubmitPropertyHandover(ctx context.Context, handover
 // Execute executes the request
 func (a *DefaultAPIService) SubmitPropertyHandoverExecute(r ApiSubmitPropertyHandoverRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod = http.MethodPut
+		localVarHTTPMethod = http.MethodPost
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
