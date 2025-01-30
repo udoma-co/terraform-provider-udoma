@@ -14,13 +14,13 @@ import (
 	"encoding/json"
 )
 
-// checks if the DocumentESignatureRequest type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &DocumentESignatureRequest{}
+// checks if the SignatureRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SignatureRequest{}
 
-// DocumentESignatureRequest The request to start a document signing process
-type DocumentESignatureRequest struct {
+// SignatureRequest The request to start a document signing process
+type SignatureRequest struct {
 	// The list of signers
-	Signers []DocumentSigner `json:"signers,omitempty"`
+	Signers []SignatureSignerRequest `json:"signers,omitempty"`
 	// The message to be included in the invitation to the signers
 	Message *string `json:"message,omitempty"`
 	// The date the document signing request expires
@@ -29,27 +29,27 @@ type DocumentESignatureRequest struct {
 	Qes *bool `json:"qes,omitempty"`
 }
 
-// NewDocumentESignatureRequest instantiates a new DocumentESignatureRequest object
+// NewSignatureRequest instantiates a new SignatureRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDocumentESignatureRequest() *DocumentESignatureRequest {
-	this := DocumentESignatureRequest{}
+func NewSignatureRequest() *SignatureRequest {
+	this := SignatureRequest{}
 	return &this
 }
 
-// NewDocumentESignatureRequestWithDefaults instantiates a new DocumentESignatureRequest object
+// NewSignatureRequestWithDefaults instantiates a new SignatureRequest object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewDocumentESignatureRequestWithDefaults() *DocumentESignatureRequest {
-	this := DocumentESignatureRequest{}
+func NewSignatureRequestWithDefaults() *SignatureRequest {
+	this := SignatureRequest{}
 	return &this
 }
 
 // GetSigners returns the Signers field value if set, zero value otherwise.
-func (o *DocumentESignatureRequest) GetSigners() []DocumentSigner {
+func (o *SignatureRequest) GetSigners() []SignatureSignerRequest {
 	if o == nil || IsNil(o.Signers) {
-		var ret []DocumentSigner
+		var ret []SignatureSignerRequest
 		return ret
 	}
 	return o.Signers
@@ -57,7 +57,7 @@ func (o *DocumentESignatureRequest) GetSigners() []DocumentSigner {
 
 // GetSignersOk returns a tuple with the Signers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DocumentESignatureRequest) GetSignersOk() ([]DocumentSigner, bool) {
+func (o *SignatureRequest) GetSignersOk() ([]SignatureSignerRequest, bool) {
 	if o == nil || IsNil(o.Signers) {
 		return nil, false
 	}
@@ -65,7 +65,7 @@ func (o *DocumentESignatureRequest) GetSignersOk() ([]DocumentSigner, bool) {
 }
 
 // HasSigners returns a boolean if a field has been set.
-func (o *DocumentESignatureRequest) HasSigners() bool {
+func (o *SignatureRequest) HasSigners() bool {
 	if o != nil && !IsNil(o.Signers) {
 		return true
 	}
@@ -73,13 +73,13 @@ func (o *DocumentESignatureRequest) HasSigners() bool {
 	return false
 }
 
-// SetSigners gets a reference to the given []DocumentSigner and assigns it to the Signers field.
-func (o *DocumentESignatureRequest) SetSigners(v []DocumentSigner) {
+// SetSigners gets a reference to the given []SignatureSignerRequest and assigns it to the Signers field.
+func (o *SignatureRequest) SetSigners(v []SignatureSignerRequest) {
 	o.Signers = v
 }
 
 // GetMessage returns the Message field value if set, zero value otherwise.
-func (o *DocumentESignatureRequest) GetMessage() string {
+func (o *SignatureRequest) GetMessage() string {
 	if o == nil || IsNil(o.Message) {
 		var ret string
 		return ret
@@ -89,7 +89,7 @@ func (o *DocumentESignatureRequest) GetMessage() string {
 
 // GetMessageOk returns a tuple with the Message field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DocumentESignatureRequest) GetMessageOk() (*string, bool) {
+func (o *SignatureRequest) GetMessageOk() (*string, bool) {
 	if o == nil || IsNil(o.Message) {
 		return nil, false
 	}
@@ -97,7 +97,7 @@ func (o *DocumentESignatureRequest) GetMessageOk() (*string, bool) {
 }
 
 // HasMessage returns a boolean if a field has been set.
-func (o *DocumentESignatureRequest) HasMessage() bool {
+func (o *SignatureRequest) HasMessage() bool {
 	if o != nil && !IsNil(o.Message) {
 		return true
 	}
@@ -106,12 +106,12 @@ func (o *DocumentESignatureRequest) HasMessage() bool {
 }
 
 // SetMessage gets a reference to the given string and assigns it to the Message field.
-func (o *DocumentESignatureRequest) SetMessage(v string) {
+func (o *SignatureRequest) SetMessage(v string) {
 	o.Message = &v
 }
 
 // GetExpirationDate returns the ExpirationDate field value if set, zero value otherwise.
-func (o *DocumentESignatureRequest) GetExpirationDate() int64 {
+func (o *SignatureRequest) GetExpirationDate() int64 {
 	if o == nil || IsNil(o.ExpirationDate) {
 		var ret int64
 		return ret
@@ -121,7 +121,7 @@ func (o *DocumentESignatureRequest) GetExpirationDate() int64 {
 
 // GetExpirationDateOk returns a tuple with the ExpirationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DocumentESignatureRequest) GetExpirationDateOk() (*int64, bool) {
+func (o *SignatureRequest) GetExpirationDateOk() (*int64, bool) {
 	if o == nil || IsNil(o.ExpirationDate) {
 		return nil, false
 	}
@@ -129,7 +129,7 @@ func (o *DocumentESignatureRequest) GetExpirationDateOk() (*int64, bool) {
 }
 
 // HasExpirationDate returns a boolean if a field has been set.
-func (o *DocumentESignatureRequest) HasExpirationDate() bool {
+func (o *SignatureRequest) HasExpirationDate() bool {
 	if o != nil && !IsNil(o.ExpirationDate) {
 		return true
 	}
@@ -138,12 +138,12 @@ func (o *DocumentESignatureRequest) HasExpirationDate() bool {
 }
 
 // SetExpirationDate gets a reference to the given int64 and assigns it to the ExpirationDate field.
-func (o *DocumentESignatureRequest) SetExpirationDate(v int64) {
+func (o *SignatureRequest) SetExpirationDate(v int64) {
 	o.ExpirationDate = &v
 }
 
 // GetQes returns the Qes field value if set, zero value otherwise.
-func (o *DocumentESignatureRequest) GetQes() bool {
+func (o *SignatureRequest) GetQes() bool {
 	if o == nil || IsNil(o.Qes) {
 		var ret bool
 		return ret
@@ -153,7 +153,7 @@ func (o *DocumentESignatureRequest) GetQes() bool {
 
 // GetQesOk returns a tuple with the Qes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DocumentESignatureRequest) GetQesOk() (*bool, bool) {
+func (o *SignatureRequest) GetQesOk() (*bool, bool) {
 	if o == nil || IsNil(o.Qes) {
 		return nil, false
 	}
@@ -161,7 +161,7 @@ func (o *DocumentESignatureRequest) GetQesOk() (*bool, bool) {
 }
 
 // HasQes returns a boolean if a field has been set.
-func (o *DocumentESignatureRequest) HasQes() bool {
+func (o *SignatureRequest) HasQes() bool {
 	if o != nil && !IsNil(o.Qes) {
 		return true
 	}
@@ -170,11 +170,11 @@ func (o *DocumentESignatureRequest) HasQes() bool {
 }
 
 // SetQes gets a reference to the given bool and assigns it to the Qes field.
-func (o *DocumentESignatureRequest) SetQes(v bool) {
+func (o *SignatureRequest) SetQes(v bool) {
 	o.Qes = &v
 }
 
-func (o DocumentESignatureRequest) MarshalJSON() ([]byte, error) {
+func (o SignatureRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -182,7 +182,7 @@ func (o DocumentESignatureRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o DocumentESignatureRequest) ToMap() (map[string]interface{}, error) {
+func (o SignatureRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Signers) {
 		toSerialize["signers"] = o.Signers
@@ -199,38 +199,38 @@ func (o DocumentESignatureRequest) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-type NullableDocumentESignatureRequest struct {
-	value *DocumentESignatureRequest
+type NullableSignatureRequest struct {
+	value *SignatureRequest
 	isSet bool
 }
 
-func (v NullableDocumentESignatureRequest) Get() *DocumentESignatureRequest {
+func (v NullableSignatureRequest) Get() *SignatureRequest {
 	return v.value
 }
 
-func (v *NullableDocumentESignatureRequest) Set(val *DocumentESignatureRequest) {
+func (v *NullableSignatureRequest) Set(val *SignatureRequest) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableDocumentESignatureRequest) IsSet() bool {
+func (v NullableSignatureRequest) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableDocumentESignatureRequest) Unset() {
+func (v *NullableSignatureRequest) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableDocumentESignatureRequest(val *DocumentESignatureRequest) *NullableDocumentESignatureRequest {
-	return &NullableDocumentESignatureRequest{value: val, isSet: true}
+func NewNullableSignatureRequest(val *SignatureRequest) *NullableSignatureRequest {
+	return &NullableSignatureRequest{value: val, isSet: true}
 }
 
-func (v NullableDocumentESignatureRequest) MarshalJSON() ([]byte, error) {
+func (v NullableSignatureRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableDocumentESignatureRequest) UnmarshalJSON(src []byte) error {
+func (v *NullableSignatureRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

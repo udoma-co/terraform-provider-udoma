@@ -38,6 +38,8 @@ type FormGroup struct {
 	BottomDivider *bool `json:"bottom_divider,omitempty"`
 	// the minimum number of items that must be submitted in the group (only used for repeat groups)
 	MinSize *int32 `json:"min_size,omitempty"`
+	// the icon to display (only used for pages)
+	Icon *string `json:"icon,omitempty"`
 }
 
 type _FormGroup FormGroup
@@ -326,6 +328,38 @@ func (o *FormGroup) SetMinSize(v int32) {
 	o.MinSize = &v
 }
 
+// GetIcon returns the Icon field value if set, zero value otherwise.
+func (o *FormGroup) GetIcon() string {
+	if o == nil || IsNil(o.Icon) {
+		var ret string
+		return ret
+	}
+	return *o.Icon
+}
+
+// GetIconOk returns a tuple with the Icon field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *FormGroup) GetIconOk() (*string, bool) {
+	if o == nil || IsNil(o.Icon) {
+		return nil, false
+	}
+	return o.Icon, true
+}
+
+// HasIcon returns a boolean if a field has been set.
+func (o *FormGroup) HasIcon() bool {
+	if o != nil && !IsNil(o.Icon) {
+		return true
+	}
+
+	return false
+}
+
+// SetIcon gets a reference to the given string and assigns it to the Icon field.
+func (o *FormGroup) SetIcon(v string) {
+	o.Icon = &v
+}
+
 func (o FormGroup) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -356,6 +390,9 @@ func (o FormGroup) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.MinSize) {
 		toSerialize["min_size"] = o.MinSize
+	}
+	if !IsNil(o.Icon) {
+		toSerialize["icon"] = o.Icon
 	}
 	return toSerialize, nil
 }

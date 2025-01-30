@@ -38,6 +38,7 @@ type CustomFormGroupModel struct {
 	TopDivider    types.Bool            `tfsdk:"top_divider"`
 	BottomDivider types.Bool            `tfsdk:"bottom_divider"`
 	MinSize       types.Int64           `tfsdk:"min_size"`
+	Icon          types.String          `tfsdk:"icon"`
 }
 
 func NewCustomFormInputItemNull() CustomFormInputItemModel {
@@ -170,6 +171,10 @@ func customFormGroupNestedSchema() schema.NestedAttributeObject {
 			"min_size": schema.Int64Attribute{
 				Optional:    true,
 				Description: "the minimum number of items that must be submitted in the group (only used for repeat groups)",
+			},
+			"icon": schema.StringAttribute{
+				Optional:    true,
+				Description: "the icon to display (only used for pages)",
 			},
 		},
 	}
@@ -388,6 +393,7 @@ func (group *CustomFormGroupModel) toApiRequest() *v1.FormGroup {
 		TopDivider:    group.TopDivider.ValueBoolPointer(),
 		BottomDivider: group.BottomDivider.ValueBoolPointer(),
 		MinSize:       &minSize,
+		Icon:          group.Icon.ValueStringPointer(),
 	}
 }
 
@@ -428,6 +434,10 @@ func (group *CustomFormGroupModel) fromApiResponse(resp *v1.FormGroup) (diags di
 	}
 	if resp.MinSize != nil {
 		group.MinSize = types.Int64Value(int64(idp32(resp.MinSize)))
+	}
+
+	if resp.Icon != nil {
+		group.Icon = types.StringValue(*resp.Icon)
 	}
 
 	return

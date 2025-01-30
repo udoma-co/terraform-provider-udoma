@@ -19,6 +19,7 @@ func TestPropertyHandoverTemplateResource(t *testing.T) {
 					resource.TestCheckResourceAttr("udoma_property_handover_template.test_handover_template", "name", "test-template"),
 					resource.TestCheckResourceAttr("udoma_property_handover_template.test_handover_template", "description", "Test Handover Template Description"),
 					resource.TestCheckResourceAttr("udoma_property_handover_template.test_handover_template", "inputs.layout.0.ref_id", "test"),
+					resource.TestCheckResourceAttr("udoma_property_handover_template.test_handover_template", "inputs.groups.0.icon", "icon"),
 					resource.TestCheckResourceAttr("udoma_property_handover_template.test_handover_template", "version", "1"),
 				),
 			},
@@ -34,6 +35,7 @@ func TestPropertyHandoverTemplateResource(t *testing.T) {
 					resource.TestCheckResourceAttr("udoma_property_handover_template.test_handover_template", "name", "updated-template"),
 					resource.TestCheckResourceAttr("udoma_property_handover_template.test_handover_template", "description", "Test Handover Template Description"),
 					resource.TestCheckResourceAttr("udoma_property_handover_template.test_handover_template", "inputs.layout.0.ref_id", "test"),
+					resource.TestCheckResourceAttr("udoma_property_handover_template.test_handover_template", "inputs.groups.0.icon", "icon"),
 					resource.TestCheckResourceAttr("udoma_property_handover_template.test_handover_template", "version", "2"),
 				),
 			},
@@ -74,6 +76,7 @@ resource "udoma_property_handover_template" "test_handover_template" {
 						"ref_type" = "input"
 					}
 				]
+				"icon" = "icon"
 			}
 		]
 		"validation" = [

@@ -21,8 +21,6 @@ var _ MappedNullable = &CreateOrUpdatePropertyHandoverRequest{}
 
 // CreateOrUpdatePropertyHandoverRequest struct for CreateOrUpdatePropertyHandoverRequest
 type CreateOrUpdatePropertyHandoverRequest struct {
-	// The ID of the property handover template.
-	TemplateRef string `json:"template_ref"`
 	// The ID of the property that the handover is for.
 	PropertyRef     *string  `json:"property_ref,omitempty"`
 	PropertyAddress *Address `json:"property_address,omitempty"`
@@ -39,9 +37,8 @@ type _CreateOrUpdatePropertyHandoverRequest CreateOrUpdatePropertyHandoverReques
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateOrUpdatePropertyHandoverRequest(templateRef string, handoverTime int64) *CreateOrUpdatePropertyHandoverRequest {
+func NewCreateOrUpdatePropertyHandoverRequest(handoverTime int64) *CreateOrUpdatePropertyHandoverRequest {
 	this := CreateOrUpdatePropertyHandoverRequest{}
-	this.TemplateRef = templateRef
 	this.HandoverTime = handoverTime
 	return &this
 }
@@ -52,30 +49,6 @@ func NewCreateOrUpdatePropertyHandoverRequest(templateRef string, handoverTime i
 func NewCreateOrUpdatePropertyHandoverRequestWithDefaults() *CreateOrUpdatePropertyHandoverRequest {
 	this := CreateOrUpdatePropertyHandoverRequest{}
 	return &this
-}
-
-// GetTemplateRef returns the TemplateRef field value
-func (o *CreateOrUpdatePropertyHandoverRequest) GetTemplateRef() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.TemplateRef
-}
-
-// GetTemplateRefOk returns a tuple with the TemplateRef field value
-// and a boolean to check if the value has been set.
-func (o *CreateOrUpdatePropertyHandoverRequest) GetTemplateRefOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.TemplateRef, true
-}
-
-// SetTemplateRef sets field value
-func (o *CreateOrUpdatePropertyHandoverRequest) SetTemplateRef(v string) {
-	o.TemplateRef = v
 }
 
 // GetPropertyRef returns the PropertyRef field value if set, zero value otherwise.
@@ -240,7 +213,6 @@ func (o CreateOrUpdatePropertyHandoverRequest) MarshalJSON() ([]byte, error) {
 
 func (o CreateOrUpdatePropertyHandoverRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["template_ref"] = o.TemplateRef
 	if !IsNil(o.PropertyRef) {
 		toSerialize["property_ref"] = o.PropertyRef
 	}
@@ -262,7 +234,6 @@ func (o *CreateOrUpdatePropertyHandoverRequest) UnmarshalJSON(data []byte) (err 
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"template_ref",
 		"handover_time",
 	}
 

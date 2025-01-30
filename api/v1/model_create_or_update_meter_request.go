@@ -21,7 +21,6 @@ var _ MappedNullable = &CreateOrUpdateMeterRequest{}
 
 // CreateOrUpdateMeterRequest All the information required for creating a new meter
 type CreateOrUpdateMeterRequest struct {
-	PropertyRef         string        `json:"property_ref"`
 	MeterType           MeterTypeEnum `json:"meter_type"`
 	Unit                string        `json:"unit"`
 	Name                string        `json:"name"`
@@ -37,9 +36,8 @@ type _CreateOrUpdateMeterRequest CreateOrUpdateMeterRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateOrUpdateMeterRequest(propertyRef string, meterType MeterTypeEnum, unit string, name string, serialNumber string) *CreateOrUpdateMeterRequest {
+func NewCreateOrUpdateMeterRequest(meterType MeterTypeEnum, unit string, name string, serialNumber string) *CreateOrUpdateMeterRequest {
 	this := CreateOrUpdateMeterRequest{}
-	this.PropertyRef = propertyRef
 	this.MeterType = meterType
 	this.Unit = unit
 	this.Name = name
@@ -53,30 +51,6 @@ func NewCreateOrUpdateMeterRequest(propertyRef string, meterType MeterTypeEnum, 
 func NewCreateOrUpdateMeterRequestWithDefaults() *CreateOrUpdateMeterRequest {
 	this := CreateOrUpdateMeterRequest{}
 	return &this
-}
-
-// GetPropertyRef returns the PropertyRef field value
-func (o *CreateOrUpdateMeterRequest) GetPropertyRef() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.PropertyRef
-}
-
-// GetPropertyRefOk returns a tuple with the PropertyRef field value
-// and a boolean to check if the value has been set.
-func (o *CreateOrUpdateMeterRequest) GetPropertyRefOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.PropertyRef, true
-}
-
-// SetPropertyRef sets field value
-func (o *CreateOrUpdateMeterRequest) SetPropertyRef(v string) {
-	o.PropertyRef = v
 }
 
 // GetMeterType returns the MeterType field value
@@ -281,7 +255,6 @@ func (o CreateOrUpdateMeterRequest) MarshalJSON() ([]byte, error) {
 
 func (o CreateOrUpdateMeterRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["property_ref"] = o.PropertyRef
 	toSerialize["meter_type"] = o.MeterType
 	toSerialize["unit"] = o.Unit
 	toSerialize["name"] = o.Name
@@ -303,7 +276,6 @@ func (o *CreateOrUpdateMeterRequest) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"property_ref",
 		"meter_type",
 		"unit",
 		"name",

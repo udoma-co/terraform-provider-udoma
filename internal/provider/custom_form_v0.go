@@ -37,6 +37,7 @@ type CustomFormGroupModelV0 struct {
 	BottomDivider types.Bool              `tfsdk:"bottom_divider"`
 	UseItemGroup  types.Bool              `tfsdk:"use_item_group"`
 	MinSize       types.Int64             `tfsdk:"min_size"`
+	Icon          types.String            `tfsdk:"icon"`
 }
 
 func NewCustomFormInputNullV0() CustomFormInputModelV0 {
@@ -145,6 +146,9 @@ func customFormGroupNestedSchemaV0() schema.NestedAttributeObject {
 				Optional: true,
 			},
 			"min_size": schema.Int64Attribute{
+				Optional: true,
+			},
+			"icon": schema.StringAttribute{
 				Optional: true,
 			},
 		},

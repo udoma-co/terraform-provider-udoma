@@ -27,7 +27,6 @@ type Meter struct {
 	CreatedAt int64 `json:"created_at"`
 	// The date and time the entity was last updated
 	UpdatedAt           int64         `json:"updated_at"`
-	PropertyRef         string        `json:"property_ref"`
 	MeterType           MeterTypeEnum `json:"meter_type"`
 	Unit                string        `json:"unit"`
 	Name                string        `json:"name"`
@@ -35,6 +34,7 @@ type Meter struct {
 	SerialNumber        string        `json:"serial_number"`
 	CalibrationDate     *int64        `json:"calibration_date,omitempty"`
 	CalibrationValidity *int64        `json:"calibration_validity,omitempty"`
+	PropertyRef         string        `json:"property_ref"`
 }
 
 type _Meter Meter
@@ -43,16 +43,16 @@ type _Meter Meter
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewMeter(id string, createdAt int64, updatedAt int64, propertyRef string, meterType MeterTypeEnum, unit string, name string, serialNumber string) *Meter {
+func NewMeter(id string, createdAt int64, updatedAt int64, meterType MeterTypeEnum, unit string, name string, serialNumber string, propertyRef string) *Meter {
 	this := Meter{}
 	this.Id = id
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
-	this.PropertyRef = propertyRef
 	this.MeterType = meterType
 	this.Unit = unit
 	this.Name = name
 	this.SerialNumber = serialNumber
+	this.PropertyRef = propertyRef
 	return &this
 }
 
@@ -134,30 +134,6 @@ func (o *Meter) GetUpdatedAtOk() (*int64, bool) {
 // SetUpdatedAt sets field value
 func (o *Meter) SetUpdatedAt(v int64) {
 	o.UpdatedAt = v
-}
-
-// GetPropertyRef returns the PropertyRef field value
-func (o *Meter) GetPropertyRef() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.PropertyRef
-}
-
-// GetPropertyRefOk returns a tuple with the PropertyRef field value
-// and a boolean to check if the value has been set.
-func (o *Meter) GetPropertyRefOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.PropertyRef, true
-}
-
-// SetPropertyRef sets field value
-func (o *Meter) SetPropertyRef(v string) {
-	o.PropertyRef = v
 }
 
 // GetMeterType returns the MeterType field value
@@ -352,6 +328,30 @@ func (o *Meter) SetCalibrationValidity(v int64) {
 	o.CalibrationValidity = &v
 }
 
+// GetPropertyRef returns the PropertyRef field value
+func (o *Meter) GetPropertyRef() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.PropertyRef
+}
+
+// GetPropertyRefOk returns a tuple with the PropertyRef field value
+// and a boolean to check if the value has been set.
+func (o *Meter) GetPropertyRefOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.PropertyRef, true
+}
+
+// SetPropertyRef sets field value
+func (o *Meter) SetPropertyRef(v string) {
+	o.PropertyRef = v
+}
+
 func (o Meter) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -365,7 +365,6 @@ func (o Meter) ToMap() (map[string]interface{}, error) {
 	toSerialize["id"] = o.Id
 	toSerialize["created_at"] = o.CreatedAt
 	toSerialize["updated_at"] = o.UpdatedAt
-	toSerialize["property_ref"] = o.PropertyRef
 	toSerialize["meter_type"] = o.MeterType
 	toSerialize["unit"] = o.Unit
 	toSerialize["name"] = o.Name
@@ -379,6 +378,7 @@ func (o Meter) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.CalibrationValidity) {
 		toSerialize["calibration_validity"] = o.CalibrationValidity
 	}
+	toSerialize["property_ref"] = o.PropertyRef
 	return toSerialize, nil
 }
 
@@ -390,11 +390,11 @@ func (o *Meter) UnmarshalJSON(data []byte) (err error) {
 		"id",
 		"created_at",
 		"updated_at",
-		"property_ref",
 		"meter_type",
 		"unit",
 		"name",
 		"serial_number",
+		"property_ref",
 	}
 
 	allProperties := make(map[string]interface{})

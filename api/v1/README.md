@@ -113,12 +113,12 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateFAQEntry**](docs/DefaultAPI.md#createfaqentry) | **Post** /faqs/entry | Create a new FAQ entry
 *DefaultAPI* | [**CreateFeatureFlagConfig**](docs/DefaultAPI.md#createfeatureflagconfig) | **Post** /feature-flags/config | Create a new feature flag configuration
 *DefaultAPI* | [**CreateFinancialAccount**](docs/DefaultAPI.md#createfinancialaccount) | **Post** /financial/account | Create a new financial account
-*DefaultAPI* | [**CreateMeter**](docs/DefaultAPI.md#createmeter) | **Post** /meters | Create a new meter for a property
+*DefaultAPI* | [**CreateMeter**](docs/DefaultAPI.md#createmeter) | **Post** /meter/{propID} | Create a new meter for a property
 *DefaultAPI* | [**CreateMeterReading**](docs/DefaultAPI.md#createmeterreading) | **Post** /meter/{meterID}/readings | Create a new meter reading for a meter
 *DefaultAPI* | [**CreateNote**](docs/DefaultAPI.md#createnote) | **Post** /note | Create a new note
 *DefaultAPI* | [**CreateNotification**](docs/DefaultAPI.md#createnotification) | **Post** /notification | Create a new notification
 *DefaultAPI* | [**CreateProperty**](docs/DefaultAPI.md#createproperty) | **Post** /property | Create property
-*DefaultAPI* | [**CreatePropertyHandover**](docs/DefaultAPI.md#createpropertyhandover) | **Post** /property-handovers/handover | Create a new property handover
+*DefaultAPI* | [**CreatePropertyHandover**](docs/DefaultAPI.md#createpropertyhandover) | **Post** /property-handovers/handover/{templateID} | Create a new property handover
 *DefaultAPI* | [**CreatePropertyHandoverTemplate**](docs/DefaultAPI.md#createpropertyhandovertemplate) | **Post** /property-handovers/template | Create a new property handover template
 *DefaultAPI* | [**CreatePropertyOwner**](docs/DefaultAPI.md#createpropertyowner) | **Post** /owner | Create a new property owner
 *DefaultAPI* | [**CreateRentUpdate**](docs/DefaultAPI.md#createrentupdate) | **Post** /tenancy/{tenancyID}/rent-updates | Create new rent update for the tenancy
@@ -185,7 +185,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GenerateCaseReportingEndpointNotice**](docs/DefaultAPI.md#generatecasereportingendpointnotice) | **Post** /cases/endpoints/{endpointID}/notice | Generate a PDF for a notice of the case reporting endpoint
 *DefaultAPI* | [**GenerateDocumentPDF**](docs/DefaultAPI.md#generatedocumentpdf) | **Post** /document-generation/documents/{docID}/generate-pdf | Generate a PDF for the document generation
 *DefaultAPI* | [**GenerateDocumentText**](docs/DefaultAPI.md#generatedocumenttext) | **Post** /document-generation/documents/{docID}/generate-text | Generate the text for the document, based on template and input data 
-*DefaultAPI* | [**GenerateESignatureRequest**](docs/DefaultAPI.md#generateesignaturerequest) | **Get** /document-generation/documents/{docID}/esignature/request | Generate an eSignature request for a document, based on template signature config 
+*DefaultAPI* | [**GenerateESignatureForDocument**](docs/DefaultAPI.md#generateesignaturefordocument) | **Get** /document-generation/documents/{docID}/esignature/generate | Get the singing status for the document
 *DefaultAPI* | [**GetAccountBooking**](docs/DefaultAPI.md#getaccountbooking) | **Get** /financial/bookings/{bookingID} | Get the booking with all its attributes
 *DefaultAPI* | [**GetAccountDimension**](docs/DefaultAPI.md#getaccountdimension) | **Get** /financial/account-dimension/{dimensionID} | Get the account dimension with all its attributes
 *DefaultAPI* | [**GetAccountDimensionValue**](docs/DefaultAPI.md#getaccountdimensionvalue) | **Get** /financial/account-dimension/{dimensionID}/value/{refID} | Get the account dimension value for a refID with all its attributes
@@ -222,8 +222,9 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetDocumentGeneration**](docs/DefaultAPI.md#getdocumentgeneration) | **Get** /document-generation/documents/{docID} | Get a single document generation
 *DefaultAPI* | [**GetDocumentTemplate**](docs/DefaultAPI.md#getdocumenttemplate) | **Get** /document-generation/template/{templateID} | Get a document template
 *DefaultAPI* | [**GetDocumentTemplates**](docs/DefaultAPI.md#getdocumenttemplates) | **Get** /document-generation/templates | Get all available document templates
-*DefaultAPI* | [**GetESignatureStatusForDocument**](docs/DefaultAPI.md#getesignaturestatusfordocument) | **Get** /document-generation/documents/{docID}/esignature | Get the singing status for the document
+*DefaultAPI* | [**GetESignatureForDocument**](docs/DefaultAPI.md#getesignaturefordocument) | **Get** /document-generation/documents/{docID}/esignature | Get the singing status for the document
 *DefaultAPI* | [**GetEmailStatus**](docs/DefaultAPI.md#getemailstatus) | **Get** /email/status/{email} | Get the status of the email
+*DefaultAPI* | [**GetEsignatureInformation**](docs/DefaultAPI.md#getesignatureinformation) | **Get** /public/document-generation/esignature/{code}/info | Get information about an esignature
 *DefaultAPI* | [**GetExternalUser**](docs/DefaultAPI.md#getexternaluser) | **Get** /external-users/{userID} | Get information about external user
 *DefaultAPI* | [**GetExternalUserCasesCount**](docs/DefaultAPI.md#getexternalusercasescount) | **Get** /external-users/{userID}/cases/count | Get the number of cases the the given user has opened
 *DefaultAPI* | [**GetFAQEntries**](docs/DefaultAPI.md#getfaqentries) | **Get** /faqs/entries | Get all available FAQ entries
@@ -341,7 +342,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**SendAppointmentScheduleInvitation**](docs/DefaultAPI.md#sendappointmentscheduleinvitation) | **Post** /calendar/appointments/schedule/{scheduleID}/invitation | Send invitation to recepients after creating a new appointment schedule
 *DefaultAPI* | [**SendNotification**](docs/DefaultAPI.md#sendnotification) | **Post** /notification/{notificationName}/send | Send notification
 *DefaultAPI* | [**StartWorkflowExecution**](docs/DefaultAPI.md#startworkflowexecution) | **Post** /workflows/execution | Start a new workflow execution
-*DefaultAPI* | [**SubmitPropertyHandover**](docs/DefaultAPI.md#submitpropertyhandover) | **Put** /property-handovers/handovers/{handoverID}/submit | Submit the data for a property handover
+*DefaultAPI* | [**SubmitPropertyHandover**](docs/DefaultAPI.md#submitpropertyhandover) | **Post** /property-handovers/handovers/{handoverID}/submit | Submit the data for a property handover
 *DefaultAPI* | [**SyncConnectorData**](docs/DefaultAPI.md#syncconnectordata) | **Post** /connector/sync | Sync the next batch of connector data.
 *DefaultAPI* | [**TestDocumentTemplatePlaceholders**](docs/DefaultAPI.md#testdocumenttemplateplaceholders) | **Post** /document-generation/template/{templateID}/placeholders | Test placeholder generation for given template and data
 *DefaultAPI* | [**UnassignCase**](docs/DefaultAPI.md#unassigncase) | **Post** /case/{caseID}/unassign | Remove access from case
@@ -519,17 +520,14 @@ Class | Method | HTTP request | Description
  - [CustomerScriptScope](docs/CustomerScriptScope.md)
  - [Document](docs/Document.md)
  - [DocumentCreateAttributesPartial](docs/DocumentCreateAttributesPartial.md)
- - [DocumentESignatureRequest](docs/DocumentESignatureRequest.md)
- - [DocumentESignatureStatus](docs/DocumentESignatureStatus.md)
  - [DocumentGeneration](docs/DocumentGeneration.md)
  - [DocumentPDFResponse](docs/DocumentPDFResponse.md)
  - [DocumentRefTypeEnum](docs/DocumentRefTypeEnum.md)
- - [DocumentSigner](docs/DocumentSigner.md)
  - [DocumentTemplate](docs/DocumentTemplate.md)
  - [DocumentTemplateAttributesPartial](docs/DocumentTemplateAttributesPartial.md)
  - [DocumentTemplateGetPlaceholdersResponse](docs/DocumentTemplateGetPlaceholdersResponse.md)
  - [DocumentTemplateOptions](docs/DocumentTemplateOptions.md)
- - [DocumentTemplateSignatureConfguration](docs/DocumentTemplateSignatureConfguration.md)
+ - [DocumentTemplateSignatureConfiguration](docs/DocumentTemplateSignatureConfiguration.md)
  - [DocumentTemplateSignerDefinition](docs/DocumentTemplateSignerDefinition.md)
  - [DocumentUpdateAttributesPartial](docs/DocumentUpdateAttributesPartial.md)
  - [EmailStatusResponse](docs/EmailStatusResponse.md)
@@ -681,7 +679,15 @@ Class | Method | HTTP request | Description
  - [ServiceCategoryEnum](docs/ServiceCategoryEnum.md)
  - [ServiceProvider](docs/ServiceProvider.md)
  - [ServiceProviderAttributesPartial](docs/ServiceProviderAttributesPartial.md)
+ - [Signature](docs/Signature.md)
  - [SignatureData](docs/SignatureData.md)
+ - [SignatureInformationResponse](docs/SignatureInformationResponse.md)
+ - [SignatureRequest](docs/SignatureRequest.md)
+ - [SignatureSigner](docs/SignatureSigner.md)
+ - [SignatureSignerRequest](docs/SignatureSignerRequest.md)
+ - [SignatureStatusType](docs/SignatureStatusType.md)
+ - [SignerNotificationTypeEnum](docs/SignerNotificationTypeEnum.md)
+ - [SignerStatusType](docs/SignerStatusType.md)
  - [StartWorkflowExecutionRequest](docs/StartWorkflowExecutionRequest.md)
  - [SubmitPropertyHandoverRequest](docs/SubmitPropertyHandoverRequest.md)
  - [Tenancy](docs/Tenancy.md)

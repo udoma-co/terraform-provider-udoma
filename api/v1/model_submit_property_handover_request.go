@@ -21,8 +21,14 @@ var _ MappedNullable = &SubmitPropertyHandoverRequest{}
 
 // SubmitPropertyHandoverRequest struct for SubmitPropertyHandoverRequest
 type SubmitPropertyHandoverRequest struct {
-	// The data captured by of the property handover.
-	Data map[string]interface{} `json:"data"`
+	// The ID of the property that the handover is for.
+	PropertyRef     *string  `json:"property_ref,omitempty"`
+	PropertyAddress *Address `json:"property_address,omitempty"`
+	// The time of the property handover.
+	HandoverTime int64                 `json:"handover_time"`
+	Type         *PropertyHandoverType `json:"type,omitempty"`
+	// The data captured by of the property handover. This can be initalized before the handover is done to include information that is known in advance (e.g. attendees, meter readings, etc.)
+	Data map[string]interface{} `json:"data,omitempty"`
 }
 
 type _SubmitPropertyHandoverRequest SubmitPropertyHandoverRequest
@@ -31,9 +37,9 @@ type _SubmitPropertyHandoverRequest SubmitPropertyHandoverRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSubmitPropertyHandoverRequest(data map[string]interface{}) *SubmitPropertyHandoverRequest {
+func NewSubmitPropertyHandoverRequest(handoverTime int64) *SubmitPropertyHandoverRequest {
 	this := SubmitPropertyHandoverRequest{}
-	this.Data = data
+	this.HandoverTime = handoverTime
 	return &this
 }
 
@@ -45,26 +51,154 @@ func NewSubmitPropertyHandoverRequestWithDefaults() *SubmitPropertyHandoverReque
 	return &this
 }
 
-// GetData returns the Data field value
-func (o *SubmitPropertyHandoverRequest) GetData() map[string]interface{} {
+// GetPropertyRef returns the PropertyRef field value if set, zero value otherwise.
+func (o *SubmitPropertyHandoverRequest) GetPropertyRef() string {
+	if o == nil || IsNil(o.PropertyRef) {
+		var ret string
+		return ret
+	}
+	return *o.PropertyRef
+}
+
+// GetPropertyRefOk returns a tuple with the PropertyRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SubmitPropertyHandoverRequest) GetPropertyRefOk() (*string, bool) {
+	if o == nil || IsNil(o.PropertyRef) {
+		return nil, false
+	}
+	return o.PropertyRef, true
+}
+
+// HasPropertyRef returns a boolean if a field has been set.
+func (o *SubmitPropertyHandoverRequest) HasPropertyRef() bool {
+	if o != nil && !IsNil(o.PropertyRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetPropertyRef gets a reference to the given string and assigns it to the PropertyRef field.
+func (o *SubmitPropertyHandoverRequest) SetPropertyRef(v string) {
+	o.PropertyRef = &v
+}
+
+// GetPropertyAddress returns the PropertyAddress field value if set, zero value otherwise.
+func (o *SubmitPropertyHandoverRequest) GetPropertyAddress() Address {
+	if o == nil || IsNil(o.PropertyAddress) {
+		var ret Address
+		return ret
+	}
+	return *o.PropertyAddress
+}
+
+// GetPropertyAddressOk returns a tuple with the PropertyAddress field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SubmitPropertyHandoverRequest) GetPropertyAddressOk() (*Address, bool) {
+	if o == nil || IsNil(o.PropertyAddress) {
+		return nil, false
+	}
+	return o.PropertyAddress, true
+}
+
+// HasPropertyAddress returns a boolean if a field has been set.
+func (o *SubmitPropertyHandoverRequest) HasPropertyAddress() bool {
+	if o != nil && !IsNil(o.PropertyAddress) {
+		return true
+	}
+
+	return false
+}
+
+// SetPropertyAddress gets a reference to the given Address and assigns it to the PropertyAddress field.
+func (o *SubmitPropertyHandoverRequest) SetPropertyAddress(v Address) {
+	o.PropertyAddress = &v
+}
+
+// GetHandoverTime returns the HandoverTime field value
+func (o *SubmitPropertyHandoverRequest) GetHandoverTime() int64 {
 	if o == nil {
-		var ret map[string]interface{}
+		var ret int64
 		return ret
 	}
 
+	return o.HandoverTime
+}
+
+// GetHandoverTimeOk returns a tuple with the HandoverTime field value
+// and a boolean to check if the value has been set.
+func (o *SubmitPropertyHandoverRequest) GetHandoverTimeOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.HandoverTime, true
+}
+
+// SetHandoverTime sets field value
+func (o *SubmitPropertyHandoverRequest) SetHandoverTime(v int64) {
+	o.HandoverTime = v
+}
+
+// GetType returns the Type field value if set, zero value otherwise.
+func (o *SubmitPropertyHandoverRequest) GetType() PropertyHandoverType {
+	if o == nil || IsNil(o.Type) {
+		var ret PropertyHandoverType
+		return ret
+	}
+	return *o.Type
+}
+
+// GetTypeOk returns a tuple with the Type field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SubmitPropertyHandoverRequest) GetTypeOk() (*PropertyHandoverType, bool) {
+	if o == nil || IsNil(o.Type) {
+		return nil, false
+	}
+	return o.Type, true
+}
+
+// HasType returns a boolean if a field has been set.
+func (o *SubmitPropertyHandoverRequest) HasType() bool {
+	if o != nil && !IsNil(o.Type) {
+		return true
+	}
+
+	return false
+}
+
+// SetType gets a reference to the given PropertyHandoverType and assigns it to the Type field.
+func (o *SubmitPropertyHandoverRequest) SetType(v PropertyHandoverType) {
+	o.Type = &v
+}
+
+// GetData returns the Data field value if set, zero value otherwise.
+func (o *SubmitPropertyHandoverRequest) GetData() map[string]interface{} {
+	if o == nil || IsNil(o.Data) {
+		var ret map[string]interface{}
+		return ret
+	}
 	return o.Data
 }
 
-// GetDataOk returns a tuple with the Data field value
+// GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SubmitPropertyHandoverRequest) GetDataOk() (map[string]interface{}, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Data) {
 		return map[string]interface{}{}, false
 	}
 	return o.Data, true
 }
 
-// SetData sets field value
+// HasData returns a boolean if a field has been set.
+func (o *SubmitPropertyHandoverRequest) HasData() bool {
+	if o != nil && !IsNil(o.Data) {
+		return true
+	}
+
+	return false
+}
+
+// SetData gets a reference to the given map[string]interface{} and assigns it to the Data field.
 func (o *SubmitPropertyHandoverRequest) SetData(v map[string]interface{}) {
 	o.Data = v
 }
@@ -79,7 +213,19 @@ func (o SubmitPropertyHandoverRequest) MarshalJSON() ([]byte, error) {
 
 func (o SubmitPropertyHandoverRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["data"] = o.Data
+	if !IsNil(o.PropertyRef) {
+		toSerialize["property_ref"] = o.PropertyRef
+	}
+	if !IsNil(o.PropertyAddress) {
+		toSerialize["property_address"] = o.PropertyAddress
+	}
+	toSerialize["handover_time"] = o.HandoverTime
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
 	return toSerialize, nil
 }
 
@@ -88,7 +234,7 @@ func (o *SubmitPropertyHandoverRequest) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"data",
+		"handover_time",
 	}
 
 	allProperties := make(map[string]interface{})
