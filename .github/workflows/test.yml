@@ -7,6 +7,7 @@ on:
 
 jobs:
   test:
+    environment: default
     name: Run Tests
     runs-on: ubuntu-latest
 
@@ -25,8 +26,8 @@ jobs:
       - name: Create .env file
         run: |
           echo "UDOMA_ENDPOINT=http://test.udoma.co" >> .env
-          echo "UDOMA_API_KEY=${{ secrets.API_KEY }} " >> .env
-          echo "UDOMA_KEY_SECRET=${{ secrets.KEY_SECRET }}" >> .env
+          echo "UDOMA_API_KEY=${{ secrets.UDOMA_API_KEY }}" >> .env
+          echo "UDOMA_KEY_SECRET=${{ secrets.UDOMA_KEY_SECRET }}" >> .env
 
 
       - name: Run tests
