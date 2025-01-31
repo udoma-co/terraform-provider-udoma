@@ -25,10 +25,10 @@ jobs:
 
       - name: Create .env file
         run: |
-          echo "UDOMA_ENDPOINT=http://test.udoma.co" >> .env
+          echo "UDOMA_ENDPOINT=${{ vars.UDOMA_ENDPOINT }}" >> .env
           echo "UDOMA_API_KEY=${{ secrets.UDOMA_API_KEY }}" >> .env
           echo "UDOMA_KEY_SECRET=${{ secrets.UDOMA_KEY_SECRET }}" >> .env
-
+          cat .env
 
       - name: Run tests
         run: TF_ACC=1 go test ./...
