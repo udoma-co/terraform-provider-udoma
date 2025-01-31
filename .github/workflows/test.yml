@@ -1,0 +1,33 @@
+name: Terraform Provider Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    environment: default
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.22
+
+      - name: Install dependencies
+        run: go mod tidy
+
+      - name: Create .env file
+        run: |
+          echo "UDOMA_ENDPOINT=${{ vars.UDOMA_ENDPOINT }}" >> .env
+          echo "UDOMA_API_KEY=${{ secrets.UDOMA_API_KEY }}" >> .env
+          echo "UDOMA_KEY_SECRET=${{ secrets.UDOMA_KEY_SECRET }}" >> .env
+
+      - name: Run tests
+        run: make test
