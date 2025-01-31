@@ -31,4 +31,4 @@ jobs:
           cat .env
 
       - name: Run tests
-        run: TF_ACC=1 go test ./...
+        run: make test
