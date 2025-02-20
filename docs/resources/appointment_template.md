@@ -111,6 +111,7 @@ Required:
 Optional:
 
 - `bottom_divider` (Boolean) if true, a divider will be displayed below the group
+- `icon` (String) the icon to display (only used for pages)
 - `info` (Map of String) The info of the group
 - `label` (Map of String) The label of the group
 - `min_size` (Number) the minimum number of items that must be submitted in the group (only used for repeat groups)

@@ -24,9 +24,11 @@ type CreateCorrespondenceRequest struct {
 	// A descriptive display name
 	DisplayName string `json:"display_name"`
 	// A reference to the document generation that is being shared with the tenant
-	DocumentRef string               `json:"document_ref"`
-	Recipient   *ContactData         `json:"recipient,omitempty"`
-	Email       *CorrespondenceEmail `json:"email,omitempty"`
+	DocumentRef *string `json:"document_ref,omitempty"`
+	// A reference to the pdf attachment that'll be used for the correspondence
+	AttachmentRef *string              `json:"attachment_ref,omitempty"`
+	Recipient     *ContactData         `json:"recipient,omitempty"`
+	Email         *CorrespondenceEmail `json:"email,omitempty"`
 }
 
 type _CreateCorrespondenceRequest CreateCorrespondenceRequest
@@ -35,10 +37,9 @@ type _CreateCorrespondenceRequest CreateCorrespondenceRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateCorrespondenceRequest(displayName string, documentRef string) *CreateCorrespondenceRequest {
+func NewCreateCorrespondenceRequest(displayName string) *CreateCorrespondenceRequest {
 	this := CreateCorrespondenceRequest{}
 	this.DisplayName = displayName
-	this.DocumentRef = documentRef
 	return &this
 }
 
@@ -74,28 +75,68 @@ func (o *CreateCorrespondenceRequest) SetDisplayName(v string) {
 	o.DisplayName = v
 }
 
-// GetDocumentRef returns the DocumentRef field value
+// GetDocumentRef returns the DocumentRef field value if set, zero value otherwise.
 func (o *CreateCorrespondenceRequest) GetDocumentRef() string {
-	if o == nil {
+	if o == nil || IsNil(o.DocumentRef) {
 		var ret string
 		return ret
 	}
-
-	return o.DocumentRef
+	return *o.DocumentRef
 }
 
-// GetDocumentRefOk returns a tuple with the DocumentRef field value
+// GetDocumentRefOk returns a tuple with the DocumentRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateCorrespondenceRequest) GetDocumentRefOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.DocumentRef) {
 		return nil, false
 	}
-	return &o.DocumentRef, true
+	return o.DocumentRef, true
 }
 
-// SetDocumentRef sets field value
+// HasDocumentRef returns a boolean if a field has been set.
+func (o *CreateCorrespondenceRequest) HasDocumentRef() bool {
+	if o != nil && !IsNil(o.DocumentRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetDocumentRef gets a reference to the given string and assigns it to the DocumentRef field.
 func (o *CreateCorrespondenceRequest) SetDocumentRef(v string) {
-	o.DocumentRef = v
+	o.DocumentRef = &v
+}
+
+// GetAttachmentRef returns the AttachmentRef field value if set, zero value otherwise.
+func (o *CreateCorrespondenceRequest) GetAttachmentRef() string {
+	if o == nil || IsNil(o.AttachmentRef) {
+		var ret string
+		return ret
+	}
+	return *o.AttachmentRef
+}
+
+// GetAttachmentRefOk returns a tuple with the AttachmentRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateCorrespondenceRequest) GetAttachmentRefOk() (*string, bool) {
+	if o == nil || IsNil(o.AttachmentRef) {
+		return nil, false
+	}
+	return o.AttachmentRef, true
+}
+
+// HasAttachmentRef returns a boolean if a field has been set.
+func (o *CreateCorrespondenceRequest) HasAttachmentRef() bool {
+	if o != nil && !IsNil(o.AttachmentRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetAttachmentRef gets a reference to the given string and assigns it to the AttachmentRef field.
+func (o *CreateCorrespondenceRequest) SetAttachmentRef(v string) {
+	o.AttachmentRef = &v
 }
 
 // GetRecipient returns the Recipient field value if set, zero value otherwise.
@@ -173,7 +214,12 @@ func (o CreateCorrespondenceRequest) MarshalJSON() ([]byte, error) {
 func (o CreateCorrespondenceRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["display_name"] = o.DisplayName
-	toSerialize["document_ref"] = o.DocumentRef
+	if !IsNil(o.DocumentRef) {
+		toSerialize["document_ref"] = o.DocumentRef
+	}
+	if !IsNil(o.AttachmentRef) {
+		toSerialize["attachment_ref"] = o.AttachmentRef
+	}
 	if !IsNil(o.Recipient) {
 		toSerialize["recipient"] = o.Recipient
 	}
@@ -189,7 +235,6 @@ func (o *CreateCorrespondenceRequest) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"display_name",
-		"document_ref",
 	}
 
 	allProperties := make(map[string]interface{})

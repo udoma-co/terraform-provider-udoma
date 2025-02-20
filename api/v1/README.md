@@ -326,6 +326,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryExternalUsers**](docs/DefaultAPI.md#queryexternalusers) | **Get** /external-users | Get a list of external users who reported to the current manager
 *DefaultAPI* | [**QueryFinancialAccounts**](docs/DefaultAPI.md#queryfinancialaccounts) | **Post** /financial/accounts | Query all financial accounts
 *DefaultAPI* | [**QueryNotesForEntity**](docs/DefaultAPI.md#querynotesforentity) | **Get** /notes/by-reference/{refID} | List notes
+*DefaultAPI* | [**QueryNotifications**](docs/DefaultAPI.md#querynotifications) | **Post** /notifications | Query notifications
 *DefaultAPI* | [**QueryProperties**](docs/DefaultAPI.md#queryproperties) | **Post** /properties | Query properties
 *DefaultAPI* | [**QueryPropertyHandoverTemplates**](docs/DefaultAPI.md#querypropertyhandovertemplates) | **Post** /property-handovers/templates | Query property handover templates
 *DefaultAPI* | [**QueryPropertyHandovers**](docs/DefaultAPI.md#querypropertyhandovers) | **Post** /property-handovers/handovers | Query property handovers
@@ -645,6 +646,8 @@ Class | Method | HTTP request | Description
  - [QueryExternalUsersResponse](docs/QueryExternalUsersResponse.md)
  - [QueryFinancialAccountsRequest](docs/QueryFinancialAccountsRequest.md)
  - [QueryLimitAttributesPartial](docs/QueryLimitAttributesPartial.md)
+ - [QueryNotificationsRequest](docs/QueryNotificationsRequest.md)
+ - [QueryNotificationsResponse](docs/QueryNotificationsResponse.md)
  - [QueryPropertiesRequest](docs/QueryPropertiesRequest.md)
  - [QueryPropertiesResponse](docs/QueryPropertiesResponse.md)
  - [QueryPropertyHandoversRequest](docs/QueryPropertyHandoversRequest.md)

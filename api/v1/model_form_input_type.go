@@ -26,6 +26,7 @@ const (
 	FORMINPUTTYPE_BOOLEAN              FormInputType = "boolean"
 	FORMINPUTTYPE_SINGLE_SELECT        FormInputType = "single_select"
 	FORMINPUTTYPE_MULTI_SELECT         FormInputType = "multi_select"
+	FORMINPUTTYPE_SUGGESTION           FormInputType = "suggestion"
 	FORMINPUTTYPE_FILE                 FormInputType = "file"
 	FORMINPUTTYPE_ID_UPLOAD            FormInputType = "id_upload"
 	FORMINPUTTYPE_ADDRESS              FormInputType = "address"
@@ -51,6 +52,7 @@ var AllowedFormInputTypeEnumValues = []FormInputType{
 	"boolean",
 	"single_select",
 	"multi_select",
+	"suggestion",
 	"file",
 	"id_upload",
 	"address",

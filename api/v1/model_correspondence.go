@@ -32,8 +32,10 @@ type Correspondence struct {
 	// A descriptive display name
 	DisplayName string `json:"display_name"`
 	// A reference to the document generation that is being shared with the tenant
-	DocumentRef string       `json:"document_ref"`
-	Recipient   *ContactData `json:"recipient,omitempty"`
+	DocumentRef string `json:"document_ref"`
+	// A reference to the pdf attachment that'll be used for the correspondence
+	AttachmentRef *string      `json:"attachment_ref,omitempty"`
+	Recipient     *ContactData `json:"recipient,omitempty"`
 	// Whether the document has been seen by the tenant or not(true if AccessRecord exists for the correspondence)
 	Seen bool `json:"seen"`
 	// Whether the Correspondence has been archived and shouldn't appear in query requests
@@ -213,6 +215,38 @@ func (o *Correspondence) SetDocumentRef(v string) {
 	o.DocumentRef = v
 }
 
+// GetAttachmentRef returns the AttachmentRef field value if set, zero value otherwise.
+func (o *Correspondence) GetAttachmentRef() string {
+	if o == nil || IsNil(o.AttachmentRef) {
+		var ret string
+		return ret
+	}
+	return *o.AttachmentRef
+}
+
+// GetAttachmentRefOk returns a tuple with the AttachmentRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Correspondence) GetAttachmentRefOk() (*string, bool) {
+	if o == nil || IsNil(o.AttachmentRef) {
+		return nil, false
+	}
+	return o.AttachmentRef, true
+}
+
+// HasAttachmentRef returns a boolean if a field has been set.
+func (o *Correspondence) HasAttachmentRef() bool {
+	if o != nil && !IsNil(o.AttachmentRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetAttachmentRef gets a reference to the given string and assigns it to the AttachmentRef field.
+func (o *Correspondence) SetAttachmentRef(v string) {
+	o.AttachmentRef = &v
+}
+
 // GetRecipient returns the Recipient field value if set, zero value otherwise.
 func (o *Correspondence) GetRecipient() ContactData {
 	if o == nil || IsNil(o.Recipient) {
@@ -341,6 +375,9 @@ func (o Correspondence) ToMap() (map[string]interface{}, error) {
 	toSerialize["code"] = o.Code
 	toSerialize["display_name"] = o.DisplayName
 	toSerialize["document_ref"] = o.DocumentRef
+	if !IsNil(o.AttachmentRef) {
+		toSerialize["attachment_ref"] = o.AttachmentRef
+	}
 	if !IsNil(o.Recipient) {
 		toSerialize["recipient"] = o.Recipient
 	}
