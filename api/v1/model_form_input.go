@@ -45,7 +45,8 @@ type FormInput struct {
 	// If true, changes to the input will be propagated to event listeners for  the custom form.
 	PropagateChanges *bool `json:"propagate_changes,omitempty"`
 	// Only used when the type is select or multi select. This is a list of  values that the user can choose from.
-	Items []InputItem `json:"items,omitempty"`
+	Items            []InputItem              `json:"items,omitempty"`
+	DisplayCondition NullableDisplayCondition `json:"display_condition,omitempty"`
 }
 
 type _FormInput FormInput
@@ -469,6 +470,49 @@ func (o *FormInput) SetItems(v []InputItem) {
 	o.Items = v
 }
 
+// GetDisplayCondition returns the DisplayCondition field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *FormInput) GetDisplayCondition() DisplayCondition {
+	if o == nil || IsNil(o.DisplayCondition.Get()) {
+		var ret DisplayCondition
+		return ret
+	}
+	return *o.DisplayCondition.Get()
+}
+
+// GetDisplayConditionOk returns a tuple with the DisplayCondition field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *FormInput) GetDisplayConditionOk() (*DisplayCondition, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.DisplayCondition.Get(), o.DisplayCondition.IsSet()
+}
+
+// HasDisplayCondition returns a boolean if a field has been set.
+func (o *FormInput) HasDisplayCondition() bool {
+	if o != nil && o.DisplayCondition.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetDisplayCondition gets a reference to the given NullableDisplayCondition and assigns it to the DisplayCondition field.
+func (o *FormInput) SetDisplayCondition(v DisplayCondition) {
+	o.DisplayCondition.Set(&v)
+}
+
+// SetDisplayConditionNil sets the value for DisplayCondition to be an explicit nil
+func (o *FormInput) SetDisplayConditionNil() {
+	o.DisplayCondition.Set(nil)
+}
+
+// UnsetDisplayCondition ensures that no value is present for DisplayCondition, not even an explicit nil
+func (o *FormInput) UnsetDisplayCondition() {
+	o.DisplayCondition.Unset()
+}
+
 func (o FormInput) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -513,6 +557,9 @@ func (o FormInput) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Items) {
 		toSerialize["items"] = o.Items
+	}
+	if o.DisplayCondition.IsSet() {
+		toSerialize["display_condition"] = o.DisplayCondition.Get()
 	}
 	return toSerialize, nil
 }

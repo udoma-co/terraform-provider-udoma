@@ -52,6 +52,16 @@ type CustomFormInputItemModel struct {
 	Label types.Map    `tfsdk:"label"`
 }
 
+func NewConditionalInputNull() DisplayConditionModel {
+	return DisplayConditionModel{}
+}
+
+type DisplayConditionModel struct {
+	Source  types.String `tfsdk:"source"`
+	Operand types.String `tfsdk:"operand"`
+	Value   types.String `tfsdk:"value"`
+}
+
 func NewCustomFormInputNull() CustomFormInputModel {
 	return CustomFormInputModel{
 		Label:       basetypes.NewMapNull(types.StringType),
@@ -75,6 +85,7 @@ type CustomFormInputModel struct {
 	Target           types.String               `tfsdk:"target"`
 	Attributes       types.Map                  `tfsdk:"attributes"`
 	Items            []CustomFormInputItemModel `tfsdk:"items"`
+	DisplayCondition *DisplayConditionModel     `tfsdk:"condition"`
 }
 
 func NewCustomFormValidationNull() CustomFormValidationModel {
@@ -256,6 +267,28 @@ func customFormInputNestedSchema() schema.NestedAttributeObject {
 				NestedObject: customFormInputItemNestedSchema(),
 				Description:  "Only used when the type is select or multi select. This is a list of values that the user can choose from.",
 			},
+			"condition": schema.SingleNestedAttribute{
+				Optional:    true,
+				Attributes:  conditionalInputNestedSchema(),
+				Description: "Optional condition that must be met for the input to be displayed",
+			},
+		},
+	}
+}
+
+func conditionalInputNestedSchema() map[string]schema.Attribute {
+	return map[string]schema.Attribute{
+		"source": schema.StringAttribute{
+			Required:    true,
+			Description: "the source field, which will be checked",
+		},
+		"operand": schema.StringAttribute{
+			Required:    true,
+			Description: "the operand of the condition",
+		},
+		"value": schema.StringAttribute{
+			Required:    true,
+			Description: "the value of the condition, as serialized JSON",
 		},
 	}
 }
@@ -480,6 +513,10 @@ func (input *CustomFormInputModel) toApiRequest() *v1.FormInput {
 		Items:            items,
 	}
 
+	if input.DisplayCondition != nil {
+		ret.DisplayCondition = input.DisplayCondition.toApiRequest()
+	}
+
 	if label := modelMapToStringMap(input.Label); len(label) > 0 {
 		ret.Label = &label
 	}
@@ -561,6 +598,10 @@ func (input *CustomFormInputModel) fromApiResponse(resp *v1.FormInput) (diags di
 		input.Items[i].fromApiResponse(&resp.Items[i])
 	}
 
+	if resp.DisplayCondition.IsSet() {
+		diags = input.DisplayCondition.fromApiResponse(resp.DisplayCondition.Get())
+	}
+
 	return
 }
 
@@ -584,6 +625,27 @@ func (validation *CustomFormValidationModel) fromApiResponse(resp *v1.FormValida
 	validation.Expression = types.StringValue(resp.Expression)
 	validation.Target = types.StringValue(resp.Target)
 	validation.Message, diags = types.MapValue(types.StringType, message)
+
+	return
+}
+
+func (conditional *DisplayConditionModel) toApiRequest() v1.NullableDisplayCondition {
+	return *v1.NewNullableDisplayCondition(&v1.DisplayCondition{
+		Source:  conditional.Source.ValueString(),
+		Operand: v1.ConditionOperandEnum(conditional.Operand.ValueString()),
+		Value:   conditional.Value.ValueString(),
+	})
+}
+
+func (conditional *DisplayConditionModel) fromApiResponse(resp *v1.DisplayCondition) (diags diag.Diagnostics) {
+
+	if resp == nil {
+		return
+	}
+
+	conditional.Source = types.StringValue(resp.Source)
+	conditional.Operand = types.StringValue(string(resp.Operand))
+	conditional.Value = types.StringValue(resp.Value)
 
 	return
 }
