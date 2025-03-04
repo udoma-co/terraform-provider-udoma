@@ -23,9 +23,9 @@ var _ MappedNullable = &AccountBookingAllocation{}
 type AccountBookingAllocation struct {
 	// The unique identifier of the financial account
 	AccountRef string `json:"account_ref"`
-	// The split amount that is assigned to the referenced account. The sum  of all allocations must add up to the total amount of the booking.
+	// The split amount that is assigned to the referenced account. The sum of all allocations must add up to the total amount of the booking.
 	Amount float64 `json:"amount"`
-	// The values of the dimensions that are assigned to the booking for the  allocation
+	// The values of the dimensions that are assigned to the booking for the allocation
 	Dimensions []AccountDimensionValueRef `json:"dimensions,omitempty"`
 }
 

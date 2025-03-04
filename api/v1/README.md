@@ -113,6 +113,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateFAQEntry**](docs/DefaultAPI.md#createfaqentry) | **Post** /faqs/entry | Create a new FAQ entry
 *DefaultAPI* | [**CreateFeatureFlagConfig**](docs/DefaultAPI.md#createfeatureflagconfig) | **Post** /feature-flags/config | Create a new feature flag configuration
 *DefaultAPI* | [**CreateFinancialAccount**](docs/DefaultAPI.md#createfinancialaccount) | **Post** /financial/account | Create a new financial account
+*DefaultAPI* | [**CreateHook**](docs/DefaultAPI.md#createhook) | **Post** /hook | Create a new hook
 *DefaultAPI* | [**CreateMeter**](docs/DefaultAPI.md#createmeter) | **Post** /meter/{propID} | Create a new meter for a property
 *DefaultAPI* | [**CreateMeterReading**](docs/DefaultAPI.md#createmeterreading) | **Post** /meter/{meterID}/readings | Create a new meter reading for a meter
 *DefaultAPI* | [**CreateNote**](docs/DefaultAPI.md#createnote) | **Post** /note | Create a new note
@@ -157,6 +158,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteFAQEntry**](docs/DefaultAPI.md#deletefaqentry) | **Delete** /faqs/entry/{entryID} | Delete a FAQ entry
 *DefaultAPI* | [**DeleteFeatureFlagConfig**](docs/DefaultAPI.md#deletefeatureflagconfig) | **Delete** /feature-flags/config/{entryID} | Delete a feature flag config
 *DefaultAPI* | [**DeleteFinancialAccount**](docs/DefaultAPI.md#deletefinancialaccount) | **Delete** /financial/accounts/{accountID} | Delete the financial account with all its related data
+*DefaultAPI* | [**DeleteHook**](docs/DefaultAPI.md#deletehook) | **Delete** /hook/{hookID} | Delete hook with all its related data
 *DefaultAPI* | [**DeleteMeter**](docs/DefaultAPI.md#deletemeter) | **Delete** /meter/{meterID} | Delete meter
 *DefaultAPI* | [**DeleteMeterReading**](docs/DefaultAPI.md#deletemeterreading) | **Delete** /meter/{meterID}/reading/{readingID} | Delete meter reading
 *DefaultAPI* | [**DeleteNote**](docs/DefaultAPI.md#deletenote) | **Delete** /notes/{noteID} | Delete note
@@ -186,6 +188,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GenerateDocumentPDF**](docs/DefaultAPI.md#generatedocumentpdf) | **Post** /document-generation/documents/{docID}/generate-pdf | Generate a PDF for the document generation
 *DefaultAPI* | [**GenerateDocumentText**](docs/DefaultAPI.md#generatedocumenttext) | **Post** /document-generation/documents/{docID}/generate-text | Generate the text for the document, based on template and input data 
 *DefaultAPI* | [**GenerateESignatureForDocument**](docs/DefaultAPI.md#generateesignaturefordocument) | **Get** /document-generation/documents/{docID}/esignature/generate | Get the singing status for the document
+*DefaultAPI* | [**GenerateFinancialAccountAllocations**](docs/DefaultAPI.md#generatefinancialaccountallocations) | **Post** /financial/account/{accountID}/script | Run booking allocations script
 *DefaultAPI* | [**GetAccountBooking**](docs/DefaultAPI.md#getaccountbooking) | **Get** /financial/bookings/{bookingID} | Get the booking with all its attributes
 *DefaultAPI* | [**GetAccountDimension**](docs/DefaultAPI.md#getaccountdimension) | **Get** /financial/account-dimension/{dimensionID} | Get the account dimension with all its attributes
 *DefaultAPI* | [**GetAccountDimensionValue**](docs/DefaultAPI.md#getaccountdimensionvalue) | **Get** /financial/account-dimension/{dimensionID}/value/{refID} | Get the account dimension value for a refID with all its attributes
@@ -234,6 +237,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetFeatureFlagsConfig**](docs/DefaultAPI.md#getfeatureflagsconfig) | **Get** /feature-flags/config | Get all feature flags config
 *DefaultAPI* | [**GetFinancialAccount**](docs/DefaultAPI.md#getfinancialaccount) | **Get** /financial/accounts/{accountID} | Get the financial account with all its attributes
 *DefaultAPI* | [**GetFinancialAccountsByRef**](docs/DefaultAPI.md#getfinancialaccountsbyref) | **Post** /financial/account/by-ref/{refType}/{refID} | Get the financial account for a given ref type and ref ID
+*DefaultAPI* | [**GetHook**](docs/DefaultAPI.md#gethook) | **Get** /hook/{hookID} | Get hook with all its attributes
 *DefaultAPI* | [**GetLatestPriceIndexPoint**](docs/DefaultAPI.md#getlatestpriceindexpoint) | **Get** /price-index/latest/{countryCode} | Get the current latest PriceIndexPoint
 *DefaultAPI* | [**GetMeter**](docs/DefaultAPI.md#getmeter) | **Get** /meter/{meterID} | Get meter
 *DefaultAPI* | [**GetMeterReading**](docs/DefaultAPI.md#getmeterreading) | **Get** /meter/{meterID}/reading/{readingID} | Get meter reading
@@ -276,6 +280,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetWorkflowTriggersForSource**](docs/DefaultAPI.md#getworkflowtriggersforsource) | **Get** /workflows/trigger/source/{sourceID} | Get workflow triggers for a source
 *DefaultAPI* | [**InternalAddPriceIndexPoint**](docs/DefaultAPI.md#internaladdpriceindexpoint) | **Put** /price-index | Push a new value for the inflation index
 *DefaultAPI* | [**InviteToAppointment**](docs/DefaultAPI.md#invitetoappointment) | **Post** /calendar/appointments/entry/{entryID}/invite | Invite a users to an appointment
+*DefaultAPI* | [**LinkAppointmentProperty**](docs/DefaultAPI.md#linkappointmentproperty) | **Post** /calendar/appointments/entry/{entryID}/property/{propID}/link | Link a property to an appointment
 *DefaultAPI* | [**LinkCaseProperty**](docs/DefaultAPI.md#linkcaseproperty) | **Post** /case/{caseID}/property/{propID}/link | Link a property to a case
 *DefaultAPI* | [**PreviewCommentTemplate**](docs/DefaultAPI.md#previewcommenttemplate) | **Post** /comment-template/{commentTemplateID}/preview | Preview a comment template returning an example comment.
 *DefaultAPI* | [**PublicAddCaseComment**](docs/DefaultAPI.md#publicaddcasecomment) | **Post** /public/case/{caseID}/comment | Add new case comment
@@ -333,7 +338,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryPropertyOwners**](docs/DefaultAPI.md#querypropertyowners) | **Post** /owners | Query property owners
 *DefaultAPI* | [**QueryServiceProviderCases**](docs/DefaultAPI.md#queryserviceprovidercases) | **Get** /service-provider/{serviceProviderID}/cases | Get the cases the the given service provider has access to
 *DefaultAPI* | [**QueryServiceProviders**](docs/DefaultAPI.md#queryserviceproviders) | **Post** /service-providers | Query all service providers for certain criteria
-*DefaultAPI* | [**QuerySimilarCaseProperties**](docs/DefaultAPI.md#querysimilarcaseproperties) | **Post** /case/{caseID}/property/similar | Returns properties that match the address provided in the case
+*DefaultAPI* | [**QuerySimilarProperties**](docs/DefaultAPI.md#querysimilarproperties) | **Post** /property/similar | Returns properties that match the provided address
 *DefaultAPI* | [**QueryTenants**](docs/DefaultAPI.md#querytenants) | **Post** /tenants | Query all tenants
 *DefaultAPI* | [**QueryWorkflowDefinitions**](docs/DefaultAPI.md#queryworkflowdefinitions) | **Post** /workflows/definitions | Query all workflow definitions
 *DefaultAPI* | [**QueryWorkflowExecutions**](docs/DefaultAPI.md#queryworkflowexecutions) | **Post** /workflows/executions | Get a list of all workflow executions, matching the criteria in the request 
@@ -347,6 +352,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**SyncConnectorData**](docs/DefaultAPI.md#syncconnectordata) | **Post** /connector/sync | Sync the next batch of connector data.
 *DefaultAPI* | [**TestDocumentTemplatePlaceholders**](docs/DefaultAPI.md#testdocumenttemplateplaceholders) | **Post** /document-generation/template/{templateID}/placeholders | Test placeholder generation for given template and data
 *DefaultAPI* | [**UnassignCase**](docs/DefaultAPI.md#unassigncase) | **Post** /case/{caseID}/unassign | Remove access from case
+*DefaultAPI* | [**UnlinkAppointmentProperty**](docs/DefaultAPI.md#unlinkappointmentproperty) | **Post** /calendar/appointments/entry/{entryID}/property/unlink | Unlink a property from an appointment
 *DefaultAPI* | [**UnlinkCaseProperty**](docs/DefaultAPI.md#unlinkcaseproperty) | **Post** /case/{caseID}/property/unlink | Unlink a property from a case
 *DefaultAPI* | [**UpdateAccountBooking**](docs/DefaultAPI.md#updateaccountbooking) | **Put** /financial/bookings/{bookingID} | Update an already existing booking
 *DefaultAPI* | [**UpdateAccountDimension**](docs/DefaultAPI.md#updateaccountdimension) | **Put** /financial/account-dimension/{dimensionID} | Update an already existing account dimension
@@ -373,6 +379,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateFAQEntry**](docs/DefaultAPI.md#updatefaqentry) | **Put** /faqs/entry/{entryID} | Update an existing FAQ entry
 *DefaultAPI* | [**UpdateFeatureFlagConfig**](docs/DefaultAPI.md#updatefeatureflagconfig) | **Put** /feature-flags/config/{entryID} | Update an existing feature flag config
 *DefaultAPI* | [**UpdateFinancialAccount**](docs/DefaultAPI.md#updatefinancialaccount) | **Put** /financial/accounts/{accountID} | Update an already existing financial account
+*DefaultAPI* | [**UpdateHook**](docs/DefaultAPI.md#updatehook) | **Put** /hook/{hookID} | Update an already hook
 *DefaultAPI* | [**UpdateMeter**](docs/DefaultAPI.md#updatemeter) | **Put** /meter/{meterID} | Update meter
 *DefaultAPI* | [**UpdateMeterReading**](docs/DefaultAPI.md#updatemeterreading) | **Put** /meter/{meterID}/reading/{readingID} | Update meter reading
 *DefaultAPI* | [**UpdateNote**](docs/DefaultAPI.md#updatenote) | **Put** /notes/{noteID} | Update note
@@ -498,6 +505,7 @@ Class | Method | HTTP request | Description
  - [CreateOrUpdateFAQEntryRequest](docs/CreateOrUpdateFAQEntryRequest.md)
  - [CreateOrUpdateFeatureFlagConfigRequest](docs/CreateOrUpdateFeatureFlagConfigRequest.md)
  - [CreateOrUpdateFinancialAccountRequest](docs/CreateOrUpdateFinancialAccountRequest.md)
+ - [CreateOrUpdateHookRequest](docs/CreateOrUpdateHookRequest.md)
  - [CreateOrUpdateMeterReadingRequest](docs/CreateOrUpdateMeterReadingRequest.md)
  - [CreateOrUpdateMeterRequest](docs/CreateOrUpdateMeterRequest.md)
  - [CreateOrUpdatePropertyHandoverRequest](docs/CreateOrUpdatePropertyHandoverRequest.md)
@@ -574,6 +582,8 @@ Class | Method | HTTP request | Description
  - [FormValidationRequest](docs/FormValidationRequest.md)
  - [FormValidationResponse](docs/FormValidationResponse.md)
  - [GenerateCaseReportingEndpointNoticeRequest](docs/GenerateCaseReportingEndpointNoticeRequest.md)
+ - [GenerateFinancialAccountAllocationsRequest](docs/GenerateFinancialAccountAllocationsRequest.md)
+ - [GenerateFinancialAccountAllocationsResponse](docs/GenerateFinancialAccountAllocationsResponse.md)
  - [GetAppointmentInfoResponse](docs/GetAppointmentInfoResponse.md)
  - [GetCorrespondenceDocumentResponse](docs/GetCorrespondenceDocumentResponse.md)
  - [GetCorrespondenceStatusResponse](docs/GetCorrespondenceStatusResponse.md)
@@ -585,6 +595,10 @@ Class | Method | HTTP request | Description
  - [GetSummaryRequest](docs/GetSummaryRequest.md)
  - [GetSummaryResponse](docs/GetSummaryResponse.md)
  - [GraduatedUpdate](docs/GraduatedUpdate.md)
+ - [Hook](docs/Hook.md)
+ - [HookAction](docs/HookAction.md)
+ - [HookAttributesPartial](docs/HookAttributesPartial.md)
+ - [HookEntity](docs/HookEntity.md)
  - [IDUpload](docs/IDUpload.md)
  - [InputItem](docs/InputItem.md)
  - [InviteToAppointmentRequest](docs/InviteToAppointmentRequest.md)
