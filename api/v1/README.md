@@ -116,6 +116,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateFAQEntry**](docs/DefaultAPI.md#createfaqentry) | **Post** /faqs/entry | Create a new FAQ entry
 *DefaultAPI* | [**CreateFeatureFlagConfig**](docs/DefaultAPI.md#createfeatureflagconfig) | **Post** /feature-flags/config | Create a new feature flag configuration
 *DefaultAPI* | [**CreateFinancialAccount**](docs/DefaultAPI.md#createfinancialaccount) | **Post** /financial/account | Create a new financial account
+*DefaultAPI* | [**CreateHook**](docs/DefaultAPI.md#createhook) | **Post** /hook | Create a new hook
 *DefaultAPI* | [**CreateMeter**](docs/DefaultAPI.md#createmeter) | **Post** /meter/{propID} | Create a new meter for a property
 *DefaultAPI* | [**CreateMeterReading**](docs/DefaultAPI.md#createmeterreading) | **Post** /meter/{meterID}/readings | Create a new meter reading for a meter
 *DefaultAPI* | [**CreateNote**](docs/DefaultAPI.md#createnote) | **Post** /note | Create a new note
@@ -162,6 +163,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteFAQEntry**](docs/DefaultAPI.md#deletefaqentry) | **Delete** /faqs/entry/{entryID} | Delete a FAQ entry
 *DefaultAPI* | [**DeleteFeatureFlagConfig**](docs/DefaultAPI.md#deletefeatureflagconfig) | **Delete** /feature-flags/config/{entryID} | Delete a feature flag config
 *DefaultAPI* | [**DeleteFinancialAccount**](docs/DefaultAPI.md#deletefinancialaccount) | **Delete** /financial/accounts/{accountID} | Delete the financial account with all its related data
+*DefaultAPI* | [**DeleteHook**](docs/DefaultAPI.md#deletehook) | **Delete** /hook/{hookID} | Delete hook with all its related data
 *DefaultAPI* | [**DeleteMeter**](docs/DefaultAPI.md#deletemeter) | **Delete** /meter/{meterID} | Delete meter
 *DefaultAPI* | [**DeleteMeterReading**](docs/DefaultAPI.md#deletemeterreading) | **Delete** /meter/{meterID}/reading/{readingID} | Delete meter reading
 *DefaultAPI* | [**DeleteNote**](docs/DefaultAPI.md#deletenote) | **Delete** /notes/{noteID} | Delete note
@@ -243,6 +245,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetFeatureFlagsConfig**](docs/DefaultAPI.md#getfeatureflagsconfig) | **Get** /feature-flags/config | Get all feature flags config
 *DefaultAPI* | [**GetFinancialAccount**](docs/DefaultAPI.md#getfinancialaccount) | **Get** /financial/accounts/{accountID} | Get the financial account with all its attributes
 *DefaultAPI* | [**GetFinancialAccountsByRef**](docs/DefaultAPI.md#getfinancialaccountsbyref) | **Post** /financial/account/by-ref/{refType}/{refID} | Get the financial account for a given ref type and ref ID
+*DefaultAPI* | [**GetHook**](docs/DefaultAPI.md#gethook) | **Get** /hook/{hookID} | Get hook with all its attributes
 *DefaultAPI* | [**GetLatestPriceIndexPoint**](docs/DefaultAPI.md#getlatestpriceindexpoint) | **Get** /price-index/latest/{countryCode} | Get the current latest PriceIndexPoint
 *DefaultAPI* | [**GetMeter**](docs/DefaultAPI.md#getmeter) | **Get** /meter/{meterID} | Get meter
 *DefaultAPI* | [**GetMeterReading**](docs/DefaultAPI.md#getmeterreading) | **Get** /meter/{meterID}/reading/{readingID} | Get meter reading
@@ -388,6 +391,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateFAQEntry**](docs/DefaultAPI.md#updatefaqentry) | **Put** /faqs/entry/{entryID} | Update an existing FAQ entry
 *DefaultAPI* | [**UpdateFeatureFlagConfig**](docs/DefaultAPI.md#updatefeatureflagconfig) | **Put** /feature-flags/config/{entryID} | Update an existing feature flag config
 *DefaultAPI* | [**UpdateFinancialAccount**](docs/DefaultAPI.md#updatefinancialaccount) | **Put** /financial/accounts/{accountID} | Update an already existing financial account
+*DefaultAPI* | [**UpdateHook**](docs/DefaultAPI.md#updatehook) | **Put** /hook/{hookID} | Update an already hook
 *DefaultAPI* | [**UpdateMeter**](docs/DefaultAPI.md#updatemeter) | **Put** /meter/{meterID} | Update meter
 *DefaultAPI* | [**UpdateMeterReading**](docs/DefaultAPI.md#updatemeterreading) | **Put** /meter/{meterID}/reading/{readingID} | Update meter reading
 *DefaultAPI* | [**UpdateNote**](docs/DefaultAPI.md#updatenote) | **Put** /notes/{noteID} | Update note
@@ -520,6 +524,7 @@ Class | Method | HTTP request | Description
  - [CreateOrUpdateFAQEntryRequest](docs/CreateOrUpdateFAQEntryRequest.md)
  - [CreateOrUpdateFeatureFlagConfigRequest](docs/CreateOrUpdateFeatureFlagConfigRequest.md)
  - [CreateOrUpdateFinancialAccountRequest](docs/CreateOrUpdateFinancialAccountRequest.md)
+ - [CreateOrUpdateHookRequest](docs/CreateOrUpdateHookRequest.md)
  - [CreateOrUpdateMeterReadingRequest](docs/CreateOrUpdateMeterReadingRequest.md)
  - [CreateOrUpdateMeterRequest](docs/CreateOrUpdateMeterRequest.md)
  - [CreateOrUpdatePropertyHandoverRequest](docs/CreateOrUpdatePropertyHandoverRequest.md)
@@ -610,6 +615,10 @@ Class | Method | HTTP request | Description
  - [GetSummaryRequest](docs/GetSummaryRequest.md)
  - [GetSummaryResponse](docs/GetSummaryResponse.md)
  - [GraduatedUpdate](docs/GraduatedUpdate.md)
+ - [Hook](docs/Hook.md)
+ - [HookAction](docs/HookAction.md)
+ - [HookAttributesPartial](docs/HookAttributesPartial.md)
+ - [HookEntity](docs/HookEntity.md)
  - [IDUpload](docs/IDUpload.md)
  - [InputItem](docs/InputItem.md)
  - [InviteToAppointmentRequest](docs/InviteToAppointmentRequest.md)
