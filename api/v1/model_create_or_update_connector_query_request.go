@@ -19,7 +19,7 @@ import (
 // checks if the CreateOrUpdateConnectorQueryRequest type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &CreateOrUpdateConnectorQueryRequest{}
 
-// CreateOrUpdateConnectorQueryRequest struct for CreateOrUpdateConnectorQueryRequest
+// CreateOrUpdateConnectorQueryRequest Request used to create or update a connector query. If the query already exists it will be updated.
 type CreateOrUpdateConnectorQueryRequest struct {
 	// A unique and descriptive name given to the query.
 	Name string `json:"name"`

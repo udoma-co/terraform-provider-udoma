@@ -31,10 +31,16 @@ type CompanyProfile struct {
 	Website *string `json:"website,omitempty"`
 	// The ID of the image that is used as the company logo.
 	LogoAttachmentRef *string `json:"logo_attachment_ref,omitempty"`
+	// The ID of the image that is used as the company signature.
+	SignatureLogoAttachmentRef *string `json:"signature_logo_attachment_ref,omitempty"`
 	// Base64 of the company logo in base64 (only set when a logo is uploaded)
 	LogoData *string `json:"logo_data,omitempty"`
 	// The type of the image that is used as the company logo. This can be used by the client to determine how to display the image.
 	LogoFileType *string `json:"logo_file_type,omitempty"`
+	// Base64 of the company signature in base64 (only set when a signature is uploaded)
+	SignatureLogoData *string `json:"signature_logo_data,omitempty"`
+	// The type of the image that is used as the company signature. This can be used by the client to determine how to display the image.
+	SignatureLogoFileType *string `json:"signature_logo_file_type,omitempty"`
 }
 
 type _CompanyProfile CompanyProfile
@@ -241,6 +247,38 @@ func (o *CompanyProfile) SetLogoAttachmentRef(v string) {
 	o.LogoAttachmentRef = &v
 }
 
+// GetSignatureLogoAttachmentRef returns the SignatureLogoAttachmentRef field value if set, zero value otherwise.
+func (o *CompanyProfile) GetSignatureLogoAttachmentRef() string {
+	if o == nil || IsNil(o.SignatureLogoAttachmentRef) {
+		var ret string
+		return ret
+	}
+	return *o.SignatureLogoAttachmentRef
+}
+
+// GetSignatureLogoAttachmentRefOk returns a tuple with the SignatureLogoAttachmentRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CompanyProfile) GetSignatureLogoAttachmentRefOk() (*string, bool) {
+	if o == nil || IsNil(o.SignatureLogoAttachmentRef) {
+		return nil, false
+	}
+	return o.SignatureLogoAttachmentRef, true
+}
+
+// HasSignatureLogoAttachmentRef returns a boolean if a field has been set.
+func (o *CompanyProfile) HasSignatureLogoAttachmentRef() bool {
+	if o != nil && !IsNil(o.SignatureLogoAttachmentRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetSignatureLogoAttachmentRef gets a reference to the given string and assigns it to the SignatureLogoAttachmentRef field.
+func (o *CompanyProfile) SetSignatureLogoAttachmentRef(v string) {
+	o.SignatureLogoAttachmentRef = &v
+}
+
 // GetLogoData returns the LogoData field value if set, zero value otherwise.
 func (o *CompanyProfile) GetLogoData() string {
 	if o == nil || IsNil(o.LogoData) {
@@ -305,6 +343,70 @@ func (o *CompanyProfile) SetLogoFileType(v string) {
 	o.LogoFileType = &v
 }
 
+// GetSignatureLogoData returns the SignatureLogoData field value if set, zero value otherwise.
+func (o *CompanyProfile) GetSignatureLogoData() string {
+	if o == nil || IsNil(o.SignatureLogoData) {
+		var ret string
+		return ret
+	}
+	return *o.SignatureLogoData
+}
+
+// GetSignatureLogoDataOk returns a tuple with the SignatureLogoData field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CompanyProfile) GetSignatureLogoDataOk() (*string, bool) {
+	if o == nil || IsNil(o.SignatureLogoData) {
+		return nil, false
+	}
+	return o.SignatureLogoData, true
+}
+
+// HasSignatureLogoData returns a boolean if a field has been set.
+func (o *CompanyProfile) HasSignatureLogoData() bool {
+	if o != nil && !IsNil(o.SignatureLogoData) {
+		return true
+	}
+
+	return false
+}
+
+// SetSignatureLogoData gets a reference to the given string and assigns it to the SignatureLogoData field.
+func (o *CompanyProfile) SetSignatureLogoData(v string) {
+	o.SignatureLogoData = &v
+}
+
+// GetSignatureLogoFileType returns the SignatureLogoFileType field value if set, zero value otherwise.
+func (o *CompanyProfile) GetSignatureLogoFileType() string {
+	if o == nil || IsNil(o.SignatureLogoFileType) {
+		var ret string
+		return ret
+	}
+	return *o.SignatureLogoFileType
+}
+
+// GetSignatureLogoFileTypeOk returns a tuple with the SignatureLogoFileType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CompanyProfile) GetSignatureLogoFileTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.SignatureLogoFileType) {
+		return nil, false
+	}
+	return o.SignatureLogoFileType, true
+}
+
+// HasSignatureLogoFileType returns a boolean if a field has been set.
+func (o *CompanyProfile) HasSignatureLogoFileType() bool {
+	if o != nil && !IsNil(o.SignatureLogoFileType) {
+		return true
+	}
+
+	return false
+}
+
+// SetSignatureLogoFileType gets a reference to the given string and assigns it to the SignatureLogoFileType field.
+func (o *CompanyProfile) SetSignatureLogoFileType(v string) {
+	o.SignatureLogoFileType = &v
+}
+
 func (o CompanyProfile) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -331,11 +433,20 @@ func (o CompanyProfile) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.LogoAttachmentRef) {
 		toSerialize["logo_attachment_ref"] = o.LogoAttachmentRef
 	}
+	if !IsNil(o.SignatureLogoAttachmentRef) {
+		toSerialize["signature_logo_attachment_ref"] = o.SignatureLogoAttachmentRef
+	}
 	if !IsNil(o.LogoData) {
 		toSerialize["logo_data"] = o.LogoData
 	}
 	if !IsNil(o.LogoFileType) {
 		toSerialize["logo_file_type"] = o.LogoFileType
+	}
+	if !IsNil(o.SignatureLogoData) {
+		toSerialize["signature_logo_data"] = o.SignatureLogoData
+	}
+	if !IsNil(o.SignatureLogoFileType) {
+		toSerialize["signature_logo_file_type"] = o.SignatureLogoFileType
 	}
 	return toSerialize, nil
 }

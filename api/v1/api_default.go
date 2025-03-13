@@ -5379,6 +5379,115 @@ func (a *DefaultAPIService) CreateTenantChangesExecute(r ApiCreateTenantChangesR
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiCreateVersionMigratorRequest struct {
+	ctx                                  context.Context
+	ApiService                           *DefaultAPIService
+	createOrUpdateVersionMigratorRequest *CreateOrUpdateVersionMigratorRequest
+}
+
+func (r ApiCreateVersionMigratorRequest) CreateOrUpdateVersionMigratorRequest(createOrUpdateVersionMigratorRequest CreateOrUpdateVersionMigratorRequest) ApiCreateVersionMigratorRequest {
+	r.createOrUpdateVersionMigratorRequest = &createOrUpdateVersionMigratorRequest
+	return r
+}
+
+func (r ApiCreateVersionMigratorRequest) Execute() (*VersionMigrator, *http.Response, error) {
+	return r.ApiService.CreateVersionMigratorExecute(r)
+}
+
+/*
+CreateVersionMigrator Create a migrator for a template/definition versions
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiCreateVersionMigratorRequest
+*/
+func (a *DefaultAPIService) CreateVersionMigrator(ctx context.Context) ApiCreateVersionMigratorRequest {
+	return ApiCreateVersionMigratorRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return VersionMigrator
+func (a *DefaultAPIService) CreateVersionMigratorExecute(r ApiCreateVersionMigratorRequest) (*VersionMigrator, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *VersionMigrator
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateVersionMigrator")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/vesion-migrator"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createOrUpdateVersionMigratorRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdateVersionMigratorRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrUpdateVersionMigratorRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiCreateWorkflowDefinitionRequest struct {
 	ctx                                     context.Context
 	ApiService                              *DefaultAPIService
@@ -9527,6 +9636,96 @@ func (a *DefaultAPIService) DeleteTenantChangeExecute(r ApiDeleteTenantChangeReq
 	return localVarHTTPResponse, nil
 }
 
+type ApiDeleteVersionMigratorRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	migratorID string
+}
+
+func (r ApiDeleteVersionMigratorRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteVersionMigratorExecute(r)
+}
+
+/*
+DeleteVersionMigrator Delete the version migrator with the given ID
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param migratorID unique generated ID of a version migrator
+	@return ApiDeleteVersionMigratorRequest
+*/
+func (a *DefaultAPIService) DeleteVersionMigrator(ctx context.Context, migratorID string) ApiDeleteVersionMigratorRequest {
+	return ApiDeleteVersionMigratorRequest{
+		ApiService: a,
+		ctx:        ctx,
+		migratorID: migratorID,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DeleteVersionMigratorExecute(r ApiDeleteVersionMigratorRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteVersionMigrator")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/version-migrator/{migratorID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"migratorID"+"}", url.PathEscape(parameterValueToString(r.migratorID, "migratorID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
 type ApiDeleteWorkflowDefinitionRequest struct {
 	ctx          context.Context
 	ApiService   *DefaultAPIService
@@ -10930,6 +11129,119 @@ func (a *DefaultAPIService) GenerateESignatureForDocumentExecute(r ApiGenerateES
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGenerateFinancialAccountAllocationsRequest struct {
+	ctx                                        context.Context
+	ApiService                                 *DefaultAPIService
+	accountID                                  string
+	generateFinancialAccountAllocationsRequest *GenerateFinancialAccountAllocationsRequest
+}
+
+func (r ApiGenerateFinancialAccountAllocationsRequest) GenerateFinancialAccountAllocationsRequest(generateFinancialAccountAllocationsRequest GenerateFinancialAccountAllocationsRequest) ApiGenerateFinancialAccountAllocationsRequest {
+	r.generateFinancialAccountAllocationsRequest = &generateFinancialAccountAllocationsRequest
+	return r
+}
+
+func (r ApiGenerateFinancialAccountAllocationsRequest) Execute() (*GenerateFinancialAccountAllocationsResponse, *http.Response, error) {
+	return r.ApiService.GenerateFinancialAccountAllocationsExecute(r)
+}
+
+/*
+GenerateFinancialAccountAllocations Run booking allocations script
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param accountID unique generated ID of a financial account
+	@return ApiGenerateFinancialAccountAllocationsRequest
+*/
+func (a *DefaultAPIService) GenerateFinancialAccountAllocations(ctx context.Context, accountID string) ApiGenerateFinancialAccountAllocationsRequest {
+	return ApiGenerateFinancialAccountAllocationsRequest{
+		ApiService: a,
+		ctx:        ctx,
+		accountID:  accountID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return GenerateFinancialAccountAllocationsResponse
+func (a *DefaultAPIService) GenerateFinancialAccountAllocationsExecute(r ApiGenerateFinancialAccountAllocationsRequest) (*GenerateFinancialAccountAllocationsResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GenerateFinancialAccountAllocationsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GenerateFinancialAccountAllocations")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/financial/account/{accountID}/script"
+	localVarPath = strings.Replace(localVarPath, "{"+"accountID"+"}", url.PathEscape(parameterValueToString(r.accountID, "accountID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.generateFinancialAccountAllocationsRequest == nil {
+		return localVarReturnValue, nil, reportError("generateFinancialAccountAllocationsRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.generateFinancialAccountAllocationsRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -19273,6 +19585,108 @@ func (a *DefaultAPIService) GetUserPreferencesExecute(r ApiGetUserPreferencesReq
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetVersionMigratorRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	migratorID string
+}
+
+func (r ApiGetVersionMigratorRequest) Execute() (*VersionMigrator, *http.Response, error) {
+	return r.ApiService.GetVersionMigratorExecute(r)
+}
+
+/*
+GetVersionMigrator Get the version migrator with the given ID
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param migratorID unique generated ID of a version migrator
+	@return ApiGetVersionMigratorRequest
+*/
+func (a *DefaultAPIService) GetVersionMigrator(ctx context.Context, migratorID string) ApiGetVersionMigratorRequest {
+	return ApiGetVersionMigratorRequest{
+		ApiService: a,
+		ctx:        ctx,
+		migratorID: migratorID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return VersionMigrator
+func (a *DefaultAPIService) GetVersionMigratorExecute(r ApiGetVersionMigratorRequest) (*VersionMigrator, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *VersionMigrator
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetVersionMigrator")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/version-migrator/{migratorID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"migratorID"+"}", url.PathEscape(parameterValueToString(r.migratorID, "migratorID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetWorkflowDefinitionRequest struct {
 	ctx          context.Context
 	ApiService   *DefaultAPIService
@@ -20169,6 +20583,100 @@ func (a *DefaultAPIService) InviteToAppointmentExecute(r ApiInviteToAppointmentR
 	}
 	// body params
 	localVarPostBody = r.inviteToAppointmentRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiLinkAppointmentPropertyRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	entryID    string
+	propID     string
+}
+
+func (r ApiLinkAppointmentPropertyRequest) Execute() (*http.Response, error) {
+	return r.ApiService.LinkAppointmentPropertyExecute(r)
+}
+
+/*
+LinkAppointmentProperty Link a property to an appointment
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param entryID unique generated ID of an appointment entry
+	@param propID unique generated ID of a property
+	@return ApiLinkAppointmentPropertyRequest
+*/
+func (a *DefaultAPIService) LinkAppointmentProperty(ctx context.Context, entryID string, propID string) ApiLinkAppointmentPropertyRequest {
+	return ApiLinkAppointmentPropertyRequest{
+		ApiService: a,
+		ctx:        ctx,
+		entryID:    entryID,
+		propID:     propID,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) LinkAppointmentPropertyExecute(r ApiLinkAppointmentPropertyRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod = http.MethodPost
+		localVarPostBody   interface{}
+		formFiles          []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.LinkAppointmentProperty")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/calendar/appointments/entry/{entryID}/property/{propID}/link"
+	localVarPath = strings.Replace(localVarPath, "{"+"entryID"+"}", url.PathEscape(parameterValueToString(r.entryID, "entryID")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"propID"+"}", url.PathEscape(parameterValueToString(r.propID, "propID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -26558,35 +27066,39 @@ func (a *DefaultAPIService) QueryServiceProvidersExecute(r ApiQueryServiceProvid
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiQuerySimilarCasePropertiesRequest struct {
+type ApiQuerySimilarPropertiesRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
-	caseID     string
+	address    *Address
 }
 
-func (r ApiQuerySimilarCasePropertiesRequest) Execute() (*QuerySimilarPropertiesResponse, *http.Response, error) {
-	return r.ApiService.QuerySimilarCasePropertiesExecute(r)
+// Adress to match
+func (r ApiQuerySimilarPropertiesRequest) Address(address Address) ApiQuerySimilarPropertiesRequest {
+	r.address = &address
+	return r
+}
+
+func (r ApiQuerySimilarPropertiesRequest) Execute() (*QuerySimilarPropertiesResponse, *http.Response, error) {
+	return r.ApiService.QuerySimilarPropertiesExecute(r)
 }
 
 /*
-QuerySimilarCaseProperties Returns properties that match the address provided in the case
+QuerySimilarProperties Returns properties that match the provided address
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param caseID unique generated ID of a case
-	@return ApiQuerySimilarCasePropertiesRequest
+	@return ApiQuerySimilarPropertiesRequest
 */
-func (a *DefaultAPIService) QuerySimilarCaseProperties(ctx context.Context, caseID string) ApiQuerySimilarCasePropertiesRequest {
-	return ApiQuerySimilarCasePropertiesRequest{
+func (a *DefaultAPIService) QuerySimilarProperties(ctx context.Context) ApiQuerySimilarPropertiesRequest {
+	return ApiQuerySimilarPropertiesRequest{
 		ApiService: a,
 		ctx:        ctx,
-		caseID:     caseID,
 	}
 }
 
 // Execute executes the request
 //
 //	@return QuerySimilarPropertiesResponse
-func (a *DefaultAPIService) QuerySimilarCasePropertiesExecute(r ApiQuerySimilarCasePropertiesRequest) (*QuerySimilarPropertiesResponse, *http.Response, error) {
+func (a *DefaultAPIService) QuerySimilarPropertiesExecute(r ApiQuerySimilarPropertiesRequest) (*QuerySimilarPropertiesResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -26594,20 +27106,22 @@ func (a *DefaultAPIService) QuerySimilarCasePropertiesExecute(r ApiQuerySimilarC
 		localVarReturnValue *QuerySimilarPropertiesResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.QuerySimilarCaseProperties")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.QuerySimilarProperties")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/case/{caseID}/property/similar"
-	localVarPath = strings.Replace(localVarPath, "{"+"caseID"+"}", url.PathEscape(parameterValueToString(r.caseID, "caseID")), -1)
+	localVarPath := localBasePath + "/property/similar"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.address == nil {
+		return localVarReturnValue, nil, reportError("address is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -26623,6 +27137,8 @@ func (a *DefaultAPIService) QuerySimilarCasePropertiesExecute(r ApiQuerySimilarC
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.address
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -26735,6 +27251,116 @@ func (a *DefaultAPIService) QueryTenantsExecute(r ApiQueryTenantsRequest) (*Quer
 	}
 	// body params
 	localVarPostBody = r.queryTenantsRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiQueryVersionMigratorsRequest struct {
+	ctx                          context.Context
+	ApiService                   *DefaultAPIService
+	queryVersionMigratorsRequest *QueryVersionMigratorsRequest
+}
+
+// Version migrator query criteria
+func (r ApiQueryVersionMigratorsRequest) QueryVersionMigratorsRequest(queryVersionMigratorsRequest QueryVersionMigratorsRequest) ApiQueryVersionMigratorsRequest {
+	r.queryVersionMigratorsRequest = &queryVersionMigratorsRequest
+	return r
+}
+
+func (r ApiQueryVersionMigratorsRequest) Execute() (*QueryVersionMigratorsResponse, *http.Response, error) {
+	return r.ApiService.QueryVersionMigratorsExecute(r)
+}
+
+/*
+QueryVersionMigrators Query all version migrators
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiQueryVersionMigratorsRequest
+*/
+func (a *DefaultAPIService) QueryVersionMigrators(ctx context.Context) ApiQueryVersionMigratorsRequest {
+	return ApiQueryVersionMigratorsRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return QueryVersionMigratorsResponse
+func (a *DefaultAPIService) QueryVersionMigratorsExecute(r ApiQueryVersionMigratorsRequest) (*QueryVersionMigratorsResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *QueryVersionMigratorsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.QueryVersionMigrators")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/version-migrators"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.queryVersionMigratorsRequest == nil {
+		return localVarReturnValue, nil, reportError("queryVersionMigratorsRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.queryVersionMigratorsRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -27996,6 +28622,96 @@ func (a *DefaultAPIService) UnassignCaseExecute(r ApiUnassignCaseRequest) (*http
 	}
 	// body params
 	localVarPostBody = r.unssignCaseRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiUnlinkAppointmentPropertyRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	entryID    string
+}
+
+func (r ApiUnlinkAppointmentPropertyRequest) Execute() (*http.Response, error) {
+	return r.ApiService.UnlinkAppointmentPropertyExecute(r)
+}
+
+/*
+UnlinkAppointmentProperty Unlink a property from an appointment
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param entryID unique generated ID of an appointment entry
+	@return ApiUnlinkAppointmentPropertyRequest
+*/
+func (a *DefaultAPIService) UnlinkAppointmentProperty(ctx context.Context, entryID string) ApiUnlinkAppointmentPropertyRequest {
+	return ApiUnlinkAppointmentPropertyRequest{
+		ApiService: a,
+		ctx:        ctx,
+		entryID:    entryID,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) UnlinkAppointmentPropertyExecute(r ApiUnlinkAppointmentPropertyRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod = http.MethodPost
+		localVarPostBody   interface{}
+		formFiles          []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UnlinkAppointmentProperty")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/calendar/appointments/entry/{entryID}/property/unlink"
+	localVarPath = strings.Replace(localVarPath, "{"+"entryID"+"}", url.PathEscape(parameterValueToString(r.entryID, "entryID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -32525,6 +33241,119 @@ func (a *DefaultAPIService) UpdateUserPreferencesExecute(r ApiUpdateUserPreferen
 	}
 	// body params
 	localVarPostBody = r.updateUserPreferencesRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdateVersionMigratorRequest struct {
+	ctx                                  context.Context
+	ApiService                           *DefaultAPIService
+	migratorID                           string
+	createOrUpdateVersionMigratorRequest *CreateOrUpdateVersionMigratorRequest
+}
+
+func (r ApiUpdateVersionMigratorRequest) CreateOrUpdateVersionMigratorRequest(createOrUpdateVersionMigratorRequest CreateOrUpdateVersionMigratorRequest) ApiUpdateVersionMigratorRequest {
+	r.createOrUpdateVersionMigratorRequest = &createOrUpdateVersionMigratorRequest
+	return r
+}
+
+func (r ApiUpdateVersionMigratorRequest) Execute() (*VersionMigrator, *http.Response, error) {
+	return r.ApiService.UpdateVersionMigratorExecute(r)
+}
+
+/*
+UpdateVersionMigrator Update the version migrator with the given ID
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param migratorID unique generated ID of a version migrator
+	@return ApiUpdateVersionMigratorRequest
+*/
+func (a *DefaultAPIService) UpdateVersionMigrator(ctx context.Context, migratorID string) ApiUpdateVersionMigratorRequest {
+	return ApiUpdateVersionMigratorRequest{
+		ApiService: a,
+		ctx:        ctx,
+		migratorID: migratorID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return VersionMigrator
+func (a *DefaultAPIService) UpdateVersionMigratorExecute(r ApiUpdateVersionMigratorRequest) (*VersionMigrator, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *VersionMigrator
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdateVersionMigrator")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/version-migrator/{migratorID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"migratorID"+"}", url.PathEscape(parameterValueToString(r.migratorID, "migratorID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createOrUpdateVersionMigratorRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdateVersionMigratorRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrUpdateVersionMigratorRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

@@ -127,6 +127,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateTenancy**](docs/DefaultAPI.md#createtenancy) | **Post** /property/{propID}/tenancy | Create new tenancy for the property
 *DefaultAPI* | [**CreateTenant**](docs/DefaultAPI.md#createtenant) | **Post** /tenant | Create a new tenant and optionally invites them to join the platform 
 *DefaultAPI* | [**CreateTenantChanges**](docs/DefaultAPI.md#createtenantchanges) | **Post** /tenancy/{tenancyID}/tenant-changes | Change the tenants in a tenancy.
+*DefaultAPI* | [**CreateVersionMigrator**](docs/DefaultAPI.md#createversionmigrator) | **Post** /vesion-migrator | Create a migrator for a template/definition versions
 *DefaultAPI* | [**CreateWorkflowDefinition**](docs/DefaultAPI.md#createworkflowdefinition) | **Post** /workflows/definition | Create a new workflow definition
 *DefaultAPI* | [**CreateWorkflowEntrypoint**](docs/DefaultAPI.md#createworkflowentrypoint) | **Post** /workflows/definition/{definitionID}/entrypoint | Create a new workflow entry point for the workflow definition
 *DefaultAPI* | [**DeleteAccountBooking**](docs/DefaultAPI.md#deleteaccountbooking) | **Delete** /financial/bookings/{bookingID} | Delete the booking with all its related data
@@ -172,6 +173,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteTenancy**](docs/DefaultAPI.md#deletetenancy) | **Delete** /tenancy/{tenancyID} | Delete the tenancy with the given ID
 *DefaultAPI* | [**DeleteTenant**](docs/DefaultAPI.md#deletetenant) | **Delete** /tenant/{tenantID} | Remove tenant from property
 *DefaultAPI* | [**DeleteTenantChange**](docs/DefaultAPI.md#deletetenantchange) | **Delete** /tenant-change/{tenantChangeID} | Delete a tenant change
+*DefaultAPI* | [**DeleteVersionMigrator**](docs/DefaultAPI.md#deleteversionmigrator) | **Delete** /version-migrator/{migratorID} | Delete the version migrator with the given ID
 *DefaultAPI* | [**DeleteWorkflowDefinition**](docs/DefaultAPI.md#deleteworkflowdefinition) | **Delete** /workflows/definition/{definitionID} | Delete workflow definition
 *DefaultAPI* | [**DeleteWorkflowEntrypoint**](docs/DefaultAPI.md#deleteworkflowentrypoint) | **Delete** /workflows/entrypoint/{entrypointID} | Delete workflow entry point
 *DefaultAPI* | [**DeleteWorkflowExecution**](docs/DefaultAPI.md#deleteworkflowexecution) | **Delete** /workflows/execution/{executionID} | Delete workflow execution
@@ -186,6 +188,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GenerateDocumentPDF**](docs/DefaultAPI.md#generatedocumentpdf) | **Post** /document-generation/documents/{docID}/generate-pdf | Generate a PDF for the document generation
 *DefaultAPI* | [**GenerateDocumentText**](docs/DefaultAPI.md#generatedocumenttext) | **Post** /document-generation/documents/{docID}/generate-text | Generate the text for the document, based on template and input data 
 *DefaultAPI* | [**GenerateESignatureForDocument**](docs/DefaultAPI.md#generateesignaturefordocument) | **Get** /document-generation/documents/{docID}/esignature/generate | Get the singing status for the document
+*DefaultAPI* | [**GenerateFinancialAccountAllocations**](docs/DefaultAPI.md#generatefinancialaccountallocations) | **Post** /financial/account/{accountID}/script | Run booking allocations script
 *DefaultAPI* | [**GetAccountBooking**](docs/DefaultAPI.md#getaccountbooking) | **Get** /financial/bookings/{bookingID} | Get the booking with all its attributes
 *DefaultAPI* | [**GetAccountDimension**](docs/DefaultAPI.md#getaccountdimension) | **Get** /financial/account-dimension/{dimensionID} | Get the account dimension with all its attributes
 *DefaultAPI* | [**GetAccountDimensionValue**](docs/DefaultAPI.md#getaccountdimensionvalue) | **Get** /financial/account-dimension/{dimensionID}/value/{refID} | Get the account dimension value for a refID with all its attributes
@@ -267,6 +270,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetTenantChanges**](docs/DefaultAPI.md#gettenantchanges) | **Get** /tenancy/{tenancyID}/tenant-changes | Get all the tenant changes for a tenancy.
 *DefaultAPI* | [**GetTenantTenancies**](docs/DefaultAPI.md#gettenanttenancies) | **Get** /tenant/{tenantID}/tenancies | Get all tenancies for the tenant
 *DefaultAPI* | [**GetUserPreferences**](docs/DefaultAPI.md#getuserpreferences) | **Get** /preferences | Get the user preferences details
+*DefaultAPI* | [**GetVersionMigrator**](docs/DefaultAPI.md#getversionmigrator) | **Get** /version-migrator/{migratorID} | Get the version migrator with the given ID
 *DefaultAPI* | [**GetWorkflowDefinition**](docs/DefaultAPI.md#getworkflowdefinition) | **Get** /workflows/definition/{definitionID} | Get workflow definition details
 *DefaultAPI* | [**GetWorkflowEntrypoint**](docs/DefaultAPI.md#getworkflowentrypoint) | **Get** /workflows/entrypoint/{entrypointID} | Get the workflow entry point for the workflow definition
 *DefaultAPI* | [**GetWorkflowEntrypoints**](docs/DefaultAPI.md#getworkflowentrypoints) | **Get** /workflows/entrypoints | Get all workflow entry points
@@ -276,6 +280,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetWorkflowTriggersForSource**](docs/DefaultAPI.md#getworkflowtriggersforsource) | **Get** /workflows/trigger/source/{sourceID} | Get workflow triggers for a source
 *DefaultAPI* | [**InternalAddPriceIndexPoint**](docs/DefaultAPI.md#internaladdpriceindexpoint) | **Put** /price-index | Push a new value for the inflation index
 *DefaultAPI* | [**InviteToAppointment**](docs/DefaultAPI.md#invitetoappointment) | **Post** /calendar/appointments/entry/{entryID}/invite | Invite a users to an appointment
+*DefaultAPI* | [**LinkAppointmentProperty**](docs/DefaultAPI.md#linkappointmentproperty) | **Post** /calendar/appointments/entry/{entryID}/property/{propID}/link | Link a property to an appointment
 *DefaultAPI* | [**LinkCaseProperty**](docs/DefaultAPI.md#linkcaseproperty) | **Post** /case/{caseID}/property/{propID}/link | Link a property to a case
 *DefaultAPI* | [**PreviewCommentTemplate**](docs/DefaultAPI.md#previewcommenttemplate) | **Post** /comment-template/{commentTemplateID}/preview | Preview a comment template returning an example comment.
 *DefaultAPI* | [**PublicAddCaseComment**](docs/DefaultAPI.md#publicaddcasecomment) | **Post** /public/case/{caseID}/comment | Add new case comment
@@ -333,8 +338,9 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryPropertyOwners**](docs/DefaultAPI.md#querypropertyowners) | **Post** /owners | Query property owners
 *DefaultAPI* | [**QueryServiceProviderCases**](docs/DefaultAPI.md#queryserviceprovidercases) | **Get** /service-provider/{serviceProviderID}/cases | Get the cases the the given service provider has access to
 *DefaultAPI* | [**QueryServiceProviders**](docs/DefaultAPI.md#queryserviceproviders) | **Post** /service-providers | Query all service providers for certain criteria
-*DefaultAPI* | [**QuerySimilarCaseProperties**](docs/DefaultAPI.md#querysimilarcaseproperties) | **Post** /case/{caseID}/property/similar | Returns properties that match the address provided in the case
+*DefaultAPI* | [**QuerySimilarProperties**](docs/DefaultAPI.md#querysimilarproperties) | **Post** /property/similar | Returns properties that match the provided address
 *DefaultAPI* | [**QueryTenants**](docs/DefaultAPI.md#querytenants) | **Post** /tenants | Query all tenants
+*DefaultAPI* | [**QueryVersionMigrators**](docs/DefaultAPI.md#queryversionmigrators) | **Post** /version-migrators | Query all version migrators
 *DefaultAPI* | [**QueryWorkflowDefinitions**](docs/DefaultAPI.md#queryworkflowdefinitions) | **Post** /workflows/definitions | Query all workflow definitions
 *DefaultAPI* | [**QueryWorkflowExecutions**](docs/DefaultAPI.md#queryworkflowexecutions) | **Post** /workflows/executions | Get a list of all workflow executions, matching the criteria in the request 
 *DefaultAPI* | [**RequestESignaturesForDocument**](docs/DefaultAPI.md#requestesignaturesfordocument) | **Post** /document-generation/documents/{docID}/esignature | Trigger a signing request for a document
@@ -347,6 +353,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**SyncConnectorData**](docs/DefaultAPI.md#syncconnectordata) | **Post** /connector/sync | Sync the next batch of connector data.
 *DefaultAPI* | [**TestDocumentTemplatePlaceholders**](docs/DefaultAPI.md#testdocumenttemplateplaceholders) | **Post** /document-generation/template/{templateID}/placeholders | Test placeholder generation for given template and data
 *DefaultAPI* | [**UnassignCase**](docs/DefaultAPI.md#unassigncase) | **Post** /case/{caseID}/unassign | Remove access from case
+*DefaultAPI* | [**UnlinkAppointmentProperty**](docs/DefaultAPI.md#unlinkappointmentproperty) | **Post** /calendar/appointments/entry/{entryID}/property/unlink | Unlink a property from an appointment
 *DefaultAPI* | [**UnlinkCaseProperty**](docs/DefaultAPI.md#unlinkcaseproperty) | **Post** /case/{caseID}/property/unlink | Unlink a property from a case
 *DefaultAPI* | [**UpdateAccountBooking**](docs/DefaultAPI.md#updateaccountbooking) | **Put** /financial/bookings/{bookingID} | Update an already existing booking
 *DefaultAPI* | [**UpdateAccountDimension**](docs/DefaultAPI.md#updateaccountdimension) | **Put** /financial/account-dimension/{dimensionID} | Update an already existing account dimension
@@ -387,6 +394,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateTenancy**](docs/DefaultAPI.md#updatetenancy) | **Put** /tenancy/{tenancyID} | Update the tenancy with the given ID
 *DefaultAPI* | [**UpdateTenant**](docs/DefaultAPI.md#updatetenant) | **Put** /tenant/{tenantID} | Update tenant information
 *DefaultAPI* | [**UpdateUserPreferences**](docs/DefaultAPI.md#updateuserpreferences) | **Put** /preferences | Update the user preferences
+*DefaultAPI* | [**UpdateVersionMigrator**](docs/DefaultAPI.md#updateversionmigrator) | **Put** /version-migrator/{migratorID} | Update the version migrator with the given ID
 *DefaultAPI* | [**UpdateWorkflowDefinition**](docs/DefaultAPI.md#updateworkflowdefinition) | **Put** /workflows/definition/{definitionID} | Update workflow definition
 *DefaultAPI* | [**UpdateWorkflowEntrypoint**](docs/DefaultAPI.md#updateworkflowentrypoint) | **Put** /workflows/entrypoint/{entrypointID} | Update workflow entry point
 *DefaultAPI* | [**UploadAttachment**](docs/DefaultAPI.md#uploadattachment) | **Post** /attachment | Upload new file attachment
@@ -508,6 +516,7 @@ Class | Method | HTTP request | Description
  - [CreateOrUpdateReportDefinitionRequest](docs/CreateOrUpdateReportDefinitionRequest.md)
  - [CreateOrUpdateServiceProvider](docs/CreateOrUpdateServiceProvider.md)
  - [CreateOrUpdateTenantRequest](docs/CreateOrUpdateTenantRequest.md)
+ - [CreateOrUpdateVersionMigratorRequest](docs/CreateOrUpdateVersionMigratorRequest.md)
  - [CreateOrUpdateWorkflowDefinitionRequest](docs/CreateOrUpdateWorkflowDefinitionRequest.md)
  - [CreateOrUpdateWorkflowEntrypointRequest](docs/CreateOrUpdateWorkflowEntrypointRequest.md)
  - [CreatePriceIndexPointRequest](docs/CreatePriceIndexPointRequest.md)
@@ -574,6 +583,8 @@ Class | Method | HTTP request | Description
  - [FormValidationRequest](docs/FormValidationRequest.md)
  - [FormValidationResponse](docs/FormValidationResponse.md)
  - [GenerateCaseReportingEndpointNoticeRequest](docs/GenerateCaseReportingEndpointNoticeRequest.md)
+ - [GenerateFinancialAccountAllocationsRequest](docs/GenerateFinancialAccountAllocationsRequest.md)
+ - [GenerateFinancialAccountAllocationsResponse](docs/GenerateFinancialAccountAllocationsResponse.md)
  - [GetAppointmentInfoResponse](docs/GetAppointmentInfoResponse.md)
  - [GetCorrespondenceDocumentResponse](docs/GetCorrespondenceDocumentResponse.md)
  - [GetCorrespondenceStatusResponse](docs/GetCorrespondenceStatusResponse.md)
@@ -663,6 +674,8 @@ Class | Method | HTTP request | Description
  - [QueryTenantsRequest](docs/QueryTenantsRequest.md)
  - [QueryTenantsResponse](docs/QueryTenantsResponse.md)
  - [QueryTimeRange](docs/QueryTimeRange.md)
+ - [QueryVersionMigratorsRequest](docs/QueryVersionMigratorsRequest.md)
+ - [QueryVersionMigratorsResponse](docs/QueryVersionMigratorsResponse.md)
  - [QueryWorkflowDefinitionsRequest](docs/QueryWorkflowDefinitionsRequest.md)
  - [QueryWorkflowDefinitionsResponse](docs/QueryWorkflowDefinitionsResponse.md)
  - [QueryWorkflowExecutionsRequest](docs/QueryWorkflowExecutionsRequest.md)
@@ -720,6 +733,8 @@ Class | Method | HTTP request | Description
  - [UserPreferencesAttributesPartial](docs/UserPreferencesAttributesPartial.md)
  - [UserReference](docs/UserReference.md)
  - [UserTypeEnum](docs/UserTypeEnum.md)
+ - [VersionMigrator](docs/VersionMigrator.md)
+ - [VersionMigratorAttributesPartial](docs/VersionMigratorAttributesPartial.md)
  - [WorkflowDefinition](docs/WorkflowDefinition.md)
  - [WorkflowDefinitionAttributesPartial](docs/WorkflowDefinitionAttributesPartial.md)
  - [WorkflowEntrypoint](docs/WorkflowEntrypoint.md)
