@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the SignatureSigner type satisfies the MappedNullable interface at compile time
@@ -19,23 +21,31 @@ var _ MappedNullable = &SignatureSigner{}
 
 // SignatureSigner Signer, required to sign a document in a signautre request
 type SignatureSigner struct {
-	// The id used to identify the signer.
-	Id *string `json:"id,omitempty"`
-	// The unix timestamp of the creation of the object.
-	CreatedAt *int64 `json:"created_at,omitempty"`
-	// A unix timestamp of the last time the object was changed.
-	UpdatedAt        *int64                      `json:"updated_at,omitempty"`
-	Status           *SignerStatusType           `json:"status,omitempty"`
-	NotificationType *SignerNotificationTypeEnum `json:"notification_type,omitempty"`
-	ContactData      *ContactData                `json:"contact_data,omitempty"`
+	// Unique and immutable ID attribute of the entity that is generated when the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities or to retrieve it from the backend.
+	Id string `json:"id"`
+	// The date and time the entity was created
+	CreatedAt int64 `json:"created_at"`
+	// The date and time the entity was last updated
+	UpdatedAt        int64                      `json:"updated_at"`
+	Status           SignerStatusType           `json:"status"`
+	NotificationType SignerNotificationTypeEnum `json:"notification_type"`
+	ContactData      NullableContactData        `json:"contact_data"`
 }
+
+type _SignatureSigner SignatureSigner
 
 // NewSignatureSigner instantiates a new SignatureSigner object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSignatureSigner() *SignatureSigner {
+func NewSignatureSigner(id string, createdAt int64, updatedAt int64, status SignerStatusType, notificationType SignerNotificationTypeEnum, contactData NullableContactData) *SignatureSigner {
 	this := SignatureSigner{}
+	this.Id = id
+	this.CreatedAt = createdAt
+	this.UpdatedAt = updatedAt
+	this.Status = status
+	this.NotificationType = notificationType
+	this.ContactData = contactData
 	return &this
 }
 
@@ -47,196 +57,150 @@ func NewSignatureSignerWithDefaults() *SignatureSigner {
 	return &this
 }
 
-// GetId returns the Id field value if set, zero value otherwise.
+// GetId returns the Id field value
 func (o *SignatureSigner) GetId() string {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Id
+
+	return o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
 func (o *SignatureSigner) GetIdOk() (*string, bool) {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Id, true
+	return &o.Id, true
 }
 
-// HasId returns a boolean if a field has been set.
-func (o *SignatureSigner) HasId() bool {
-	if o != nil && !IsNil(o.Id) {
-		return true
-	}
-
-	return false
-}
-
-// SetId gets a reference to the given string and assigns it to the Id field.
+// SetId sets field value
 func (o *SignatureSigner) SetId(v string) {
-	o.Id = &v
+	o.Id = v
 }
 
-// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
+// GetCreatedAt returns the CreatedAt field value
 func (o *SignatureSigner) GetCreatedAt() int64 {
-	if o == nil || IsNil(o.CreatedAt) {
+	if o == nil {
 		var ret int64
 		return ret
 	}
-	return *o.CreatedAt
+
+	return o.CreatedAt
 }
 
-// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
+// GetCreatedAtOk returns a tuple with the CreatedAt field value
 // and a boolean to check if the value has been set.
 func (o *SignatureSigner) GetCreatedAtOk() (*int64, bool) {
-	if o == nil || IsNil(o.CreatedAt) {
+	if o == nil {
 		return nil, false
 	}
-	return o.CreatedAt, true
+	return &o.CreatedAt, true
 }
 
-// HasCreatedAt returns a boolean if a field has been set.
-func (o *SignatureSigner) HasCreatedAt() bool {
-	if o != nil && !IsNil(o.CreatedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetCreatedAt gets a reference to the given int64 and assigns it to the CreatedAt field.
+// SetCreatedAt sets field value
 func (o *SignatureSigner) SetCreatedAt(v int64) {
-	o.CreatedAt = &v
+	o.CreatedAt = v
 }
 
-// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
+// GetUpdatedAt returns the UpdatedAt field value
 func (o *SignatureSigner) GetUpdatedAt() int64 {
-	if o == nil || IsNil(o.UpdatedAt) {
+	if o == nil {
 		var ret int64
 		return ret
 	}
-	return *o.UpdatedAt
+
+	return o.UpdatedAt
 }
 
-// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
 // and a boolean to check if the value has been set.
 func (o *SignatureSigner) GetUpdatedAtOk() (*int64, bool) {
-	if o == nil || IsNil(o.UpdatedAt) {
+	if o == nil {
 		return nil, false
 	}
-	return o.UpdatedAt, true
+	return &o.UpdatedAt, true
 }
 
-// HasUpdatedAt returns a boolean if a field has been set.
-func (o *SignatureSigner) HasUpdatedAt() bool {
-	if o != nil && !IsNil(o.UpdatedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetUpdatedAt gets a reference to the given int64 and assigns it to the UpdatedAt field.
+// SetUpdatedAt sets field value
 func (o *SignatureSigner) SetUpdatedAt(v int64) {
-	o.UpdatedAt = &v
+	o.UpdatedAt = v
 }
 
-// GetStatus returns the Status field value if set, zero value otherwise.
+// GetStatus returns the Status field value
 func (o *SignatureSigner) GetStatus() SignerStatusType {
-	if o == nil || IsNil(o.Status) {
+	if o == nil {
 		var ret SignerStatusType
 		return ret
 	}
-	return *o.Status
+
+	return o.Status
 }
 
-// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
+// GetStatusOk returns a tuple with the Status field value
 // and a boolean to check if the value has been set.
 func (o *SignatureSigner) GetStatusOk() (*SignerStatusType, bool) {
-	if o == nil || IsNil(o.Status) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Status, true
+	return &o.Status, true
 }
 
-// HasStatus returns a boolean if a field has been set.
-func (o *SignatureSigner) HasStatus() bool {
-	if o != nil && !IsNil(o.Status) {
-		return true
-	}
-
-	return false
-}
-
-// SetStatus gets a reference to the given SignerStatusType and assigns it to the Status field.
+// SetStatus sets field value
 func (o *SignatureSigner) SetStatus(v SignerStatusType) {
-	o.Status = &v
+	o.Status = v
 }
 
-// GetNotificationType returns the NotificationType field value if set, zero value otherwise.
+// GetNotificationType returns the NotificationType field value
 func (o *SignatureSigner) GetNotificationType() SignerNotificationTypeEnum {
-	if o == nil || IsNil(o.NotificationType) {
+	if o == nil {
 		var ret SignerNotificationTypeEnum
 		return ret
 	}
-	return *o.NotificationType
+
+	return o.NotificationType
 }
 
-// GetNotificationTypeOk returns a tuple with the NotificationType field value if set, nil otherwise
+// GetNotificationTypeOk returns a tuple with the NotificationType field value
 // and a boolean to check if the value has been set.
 func (o *SignatureSigner) GetNotificationTypeOk() (*SignerNotificationTypeEnum, bool) {
-	if o == nil || IsNil(o.NotificationType) {
+	if o == nil {
 		return nil, false
 	}
-	return o.NotificationType, true
+	return &o.NotificationType, true
 }
 
-// HasNotificationType returns a boolean if a field has been set.
-func (o *SignatureSigner) HasNotificationType() bool {
-	if o != nil && !IsNil(o.NotificationType) {
-		return true
-	}
-
-	return false
-}
-
-// SetNotificationType gets a reference to the given SignerNotificationTypeEnum and assigns it to the NotificationType field.
+// SetNotificationType sets field value
 func (o *SignatureSigner) SetNotificationType(v SignerNotificationTypeEnum) {
-	o.NotificationType = &v
+	o.NotificationType = v
 }
 
-// GetContactData returns the ContactData field value if set, zero value otherwise.
+// GetContactData returns the ContactData field value
+// If the value is explicit nil, the zero value for ContactData will be returned
 func (o *SignatureSigner) GetContactData() ContactData {
-	if o == nil || IsNil(o.ContactData) {
+	if o == nil || o.ContactData.Get() == nil {
 		var ret ContactData
 		return ret
 	}
-	return *o.ContactData
+
+	return *o.ContactData.Get()
 }
 
-// GetContactDataOk returns a tuple with the ContactData field value if set, nil otherwise
+// GetContactDataOk returns a tuple with the ContactData field value
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *SignatureSigner) GetContactDataOk() (*ContactData, bool) {
-	if o == nil || IsNil(o.ContactData) {
+	if o == nil {
 		return nil, false
 	}
-	return o.ContactData, true
+	return o.ContactData.Get(), o.ContactData.IsSet()
 }
 
-// HasContactData returns a boolean if a field has been set.
-func (o *SignatureSigner) HasContactData() bool {
-	if o != nil && !IsNil(o.ContactData) {
-		return true
-	}
-
-	return false
-}
-
-// SetContactData gets a reference to the given ContactData and assigns it to the ContactData field.
+// SetContactData sets field value
 func (o *SignatureSigner) SetContactData(v ContactData) {
-	o.ContactData = &v
+	o.ContactData.Set(&v)
 }
 
 func (o SignatureSigner) MarshalJSON() ([]byte, error) {
@@ -249,25 +213,55 @@ func (o SignatureSigner) MarshalJSON() ([]byte, error) {
 
 func (o SignatureSigner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Id) {
-		toSerialize["id"] = o.Id
-	}
-	if !IsNil(o.CreatedAt) {
-		toSerialize["created_at"] = o.CreatedAt
-	}
-	if !IsNil(o.UpdatedAt) {
-		toSerialize["updated_at"] = o.UpdatedAt
-	}
-	if !IsNil(o.Status) {
-		toSerialize["status"] = o.Status
-	}
-	if !IsNil(o.NotificationType) {
-		toSerialize["notification_type"] = o.NotificationType
-	}
-	if !IsNil(o.ContactData) {
-		toSerialize["contact_data"] = o.ContactData
-	}
+	toSerialize["id"] = o.Id
+	toSerialize["created_at"] = o.CreatedAt
+	toSerialize["updated_at"] = o.UpdatedAt
+	toSerialize["status"] = o.Status
+	toSerialize["notification_type"] = o.NotificationType
+	toSerialize["contact_data"] = o.ContactData.Get()
 	return toSerialize, nil
+}
+
+func (o *SignatureSigner) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"id",
+		"created_at",
+		"updated_at",
+		"status",
+		"notification_type",
+		"contact_data",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varSignatureSigner := _SignatureSigner{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varSignatureSigner)
+
+	if err != nil {
+		return err
+	}
+
+	*o = SignatureSigner(varSignatureSigner)
+
+	return err
 }
 
 type NullableSignatureSigner struct {

@@ -138,6 +138,108 @@ func (a *DefaultAPIService) AddCaseCommentExecute(r ApiAddCaseCommentRequest) (*
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiArchiveApprovalRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	approvalID string
+}
+
+func (r ApiArchiveApprovalRequest) Execute() (*Approval, *http.Response, error) {
+	return r.ApiService.ArchiveApprovalExecute(r)
+}
+
+/*
+ArchiveApproval Archive the approval with the given ID
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param approvalID unique generated ID of an approval
+	@return ApiArchiveApprovalRequest
+*/
+func (a *DefaultAPIService) ArchiveApproval(ctx context.Context, approvalID string) ApiArchiveApprovalRequest {
+	return ApiArchiveApprovalRequest{
+		ApiService: a,
+		ctx:        ctx,
+		approvalID: approvalID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return Approval
+func (a *DefaultAPIService) ArchiveApprovalExecute(r ApiArchiveApprovalRequest) (*Approval, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Approval
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ArchiveApproval")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/approval/{approvalID}/archive"
+	localVarPath = strings.Replace(localVarPath, "{"+"approvalID"+"}", url.PathEscape(parameterValueToString(r.approvalID, "approvalID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiArchiveCaseRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
@@ -961,6 +1063,120 @@ func (a *DefaultAPIService) ConfirmAppointmentExecute(r ApiConfirmAppointmentReq
 	return localVarHTTPResponse, nil
 }
 
+type ApiConfirmApprovalRequest struct {
+	ctx                    context.Context
+	ApiService             *DefaultAPIService
+	approvalID             string
+	confirmApprovalRequest *ConfirmApprovalRequest
+}
+
+// Approval that needs to be approved
+func (r ApiConfirmApprovalRequest) ConfirmApprovalRequest(confirmApprovalRequest ConfirmApprovalRequest) ApiConfirmApprovalRequest {
+	r.confirmApprovalRequest = &confirmApprovalRequest
+	return r
+}
+
+func (r ApiConfirmApprovalRequest) Execute() (*Approval, *http.Response, error) {
+	return r.ApiService.ConfirmApprovalExecute(r)
+}
+
+/*
+ConfirmApproval Confirm the approval with the given ID
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param approvalID unique generated ID of an approval
+	@return ApiConfirmApprovalRequest
+*/
+func (a *DefaultAPIService) ConfirmApproval(ctx context.Context, approvalID string) ApiConfirmApprovalRequest {
+	return ApiConfirmApprovalRequest{
+		ApiService: a,
+		ctx:        ctx,
+		approvalID: approvalID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return Approval
+func (a *DefaultAPIService) ConfirmApprovalExecute(r ApiConfirmApprovalRequest) (*Approval, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Approval
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ConfirmApproval")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/approval/{approvalID}/approve"
+	localVarPath = strings.Replace(localVarPath, "{"+"approvalID"+"}", url.PathEscape(parameterValueToString(r.approvalID, "approvalID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.confirmApprovalRequest == nil {
+		return localVarReturnValue, nil, reportError("confirmApprovalRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.confirmApprovalRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiCreateAccountBookingRequest struct {
 	ctx                                 context.Context
 	ApiService                          *DefaultAPIService
@@ -1589,6 +1805,118 @@ func (a *DefaultAPIService) CreateAppointmentTemplateExecute(r ApiCreateAppointm
 	}
 	// body params
 	localVarPostBody = r.createOrUpdateAppointmentTemplateRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiCreateApprovalRequest struct {
+	ctx                   context.Context
+	ApiService            *DefaultAPIService
+	createApprovalRequest *CreateApprovalRequest
+}
+
+// Approval that needs to be created
+func (r ApiCreateApprovalRequest) CreateApprovalRequest(createApprovalRequest CreateApprovalRequest) ApiCreateApprovalRequest {
+	r.createApprovalRequest = &createApprovalRequest
+	return r
+}
+
+func (r ApiCreateApprovalRequest) Execute() (*Approval, *http.Response, error) {
+	return r.ApiService.CreateApprovalExecute(r)
+}
+
+/*
+CreateApproval Create a new approval
+
+Create a new approval for the given entity
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiCreateApprovalRequest
+*/
+func (a *DefaultAPIService) CreateApproval(ctx context.Context) ApiCreateApprovalRequest {
+	return ApiCreateApprovalRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return Approval
+func (a *DefaultAPIService) CreateApprovalExecute(r ApiCreateApprovalRequest) (*Approval, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Approval
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateApproval")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/approval"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createApprovalRequest == nil {
+		return localVarReturnValue, nil, reportError("createApprovalRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createApprovalRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -6224,6 +6552,96 @@ func (a *DefaultAPIService) DeleteAppointmentTemplateExecute(r ApiDeleteAppointm
 
 	localVarPath := localBasePath + "/calendar/appointments/template/{templateID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"templateID"+"}", url.PathEscape(parameterValueToString(r.templateID, "templateID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDeleteApprovalRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	approvalID string
+}
+
+func (r ApiDeleteApprovalRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteApprovalExecute(r)
+}
+
+/*
+DeleteApproval Delete an already existing approval
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param approvalID unique generated ID of an approval
+	@return ApiDeleteApprovalRequest
+*/
+func (a *DefaultAPIService) DeleteApproval(ctx context.Context, approvalID string) ApiDeleteApprovalRequest {
+	return ApiDeleteApprovalRequest{
+		ApiService: a,
+		ctx:        ctx,
+		approvalID: approvalID,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DeleteApprovalExecute(r ApiDeleteApprovalRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteApproval")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/approval/{approvalID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"approvalID"+"}", url.PathEscape(parameterValueToString(r.approvalID, "approvalID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -12149,6 +12567,210 @@ func (a *DefaultAPIService) GetAppointmentTemplateExecute(r ApiGetAppointmentTem
 
 	localVarPath := localBasePath + "/calendar/appointments/template/{templateID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"templateID"+"}", url.PathEscape(parameterValueToString(r.templateID, "templateID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetApprovalRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	approvalID string
+}
+
+func (r ApiGetApprovalRequest) Execute() (*Approval, *http.Response, error) {
+	return r.ApiService.GetApprovalExecute(r)
+}
+
+/*
+GetApproval Get the approval with the given ID
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param approvalID unique generated ID of an approval
+	@return ApiGetApprovalRequest
+*/
+func (a *DefaultAPIService) GetApproval(ctx context.Context, approvalID string) ApiGetApprovalRequest {
+	return ApiGetApprovalRequest{
+		ApiService: a,
+		ctx:        ctx,
+		approvalID: approvalID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return Approval
+func (a *DefaultAPIService) GetApprovalExecute(r ApiGetApprovalRequest) (*Approval, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Approval
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetApproval")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/approval/{approvalID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"approvalID"+"}", url.PathEscape(parameterValueToString(r.approvalID, "approvalID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetApprovalsByRefIdRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	refID      string
+}
+
+func (r ApiGetApprovalsByRefIdRequest) Execute() ([]Approval, *http.Response, error) {
+	return r.ApiService.GetApprovalsByRefIdExecute(r)
+}
+
+/*
+GetApprovalsByRefId Get the approvals for the given entity ID
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param refID unique generated ID of a referenced entity
+	@return ApiGetApprovalsByRefIdRequest
+*/
+func (a *DefaultAPIService) GetApprovalsByRefId(ctx context.Context, refID string) ApiGetApprovalsByRefIdRequest {
+	return ApiGetApprovalsByRefIdRequest{
+		ApiService: a,
+		ctx:        ctx,
+		refID:      refID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return []Approval
+func (a *DefaultAPIService) GetApprovalsByRefIdExecute(r ApiGetApprovalsByRefIdRequest) ([]Approval, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []Approval
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetApprovalsByRefId")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/approval/by-ref/{refID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"refID"+"}", url.PathEscape(parameterValueToString(r.refID, "refID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -22839,11 +23461,11 @@ func (a *DefaultAPIService) PublicGetManagerCompanyProfileExecute(r ApiPublicGet
 }
 
 type ApiPublicJoinAppointmentRequest struct {
-	ctx         context.Context
-	ApiService  *DefaultAPIService
-	code        string
-	locale      *string
-	contactData *ContactData
+	ctx                          context.Context
+	ApiService                   *DefaultAPIService
+	code                         string
+	locale                       *string
+	publicJoinAppointmentRequest *PublicJoinAppointmentRequest
 }
 
 // the string containing the language for the user
@@ -22853,8 +23475,8 @@ func (r ApiPublicJoinAppointmentRequest) Locale(locale string) ApiPublicJoinAppo
 }
 
 // Appointment that needs to be joined
-func (r ApiPublicJoinAppointmentRequest) ContactData(contactData ContactData) ApiPublicJoinAppointmentRequest {
-	r.contactData = &contactData
+func (r ApiPublicJoinAppointmentRequest) PublicJoinAppointmentRequest(publicJoinAppointmentRequest PublicJoinAppointmentRequest) ApiPublicJoinAppointmentRequest {
+	r.publicJoinAppointmentRequest = &publicJoinAppointmentRequest
 	return r
 }
 
@@ -22902,8 +23524,8 @@ func (a *DefaultAPIService) PublicJoinAppointmentExecute(r ApiPublicJoinAppointm
 	if r.locale == nil {
 		return localVarReturnValue, nil, reportError("locale is required and must be specified")
 	}
-	if r.contactData == nil {
-		return localVarReturnValue, nil, reportError("contactData is required and must be specified")
+	if r.publicJoinAppointmentRequest == nil {
+		return localVarReturnValue, nil, reportError("publicJoinAppointmentRequest is required and must be specified")
 	}
 
 	parameterAddToHeaderOrQuery(localVarQueryParams, "locale", r.locale, "")
@@ -22925,7 +23547,7 @@ func (a *DefaultAPIService) PublicJoinAppointmentExecute(r ApiPublicJoinAppointm
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.contactData
+	localVarPostBody = r.publicJoinAppointmentRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -24667,6 +25289,118 @@ func (a *DefaultAPIService) QueryAppointmentsExecute(r ApiQueryAppointmentsReque
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiQueryApprovalsRequest struct {
+	ctx                   context.Context
+	ApiService            *DefaultAPIService
+	queryApprovalsRequest *QueryApprovalsRequest
+}
+
+// Approval query criteria
+func (r ApiQueryApprovalsRequest) QueryApprovalsRequest(queryApprovalsRequest QueryApprovalsRequest) ApiQueryApprovalsRequest {
+	r.queryApprovalsRequest = &queryApprovalsRequest
+	return r
+}
+
+func (r ApiQueryApprovalsRequest) Execute() (*QueryApprovalsResponse, *http.Response, error) {
+	return r.ApiService.QueryApprovalsExecute(r)
+}
+
+/*
+QueryApprovals Query approvals
+
+Query the approvals for certain criteria
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiQueryApprovalsRequest
+*/
+func (a *DefaultAPIService) QueryApprovals(ctx context.Context) ApiQueryApprovalsRequest {
+	return ApiQueryApprovalsRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return QueryApprovalsResponse
+func (a *DefaultAPIService) QueryApprovalsExecute(r ApiQueryApprovalsRequest) (*QueryApprovalsResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *QueryApprovalsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.QueryApprovals")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/approvals"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.queryApprovalsRequest == nil {
+		return localVarReturnValue, nil, reportError("queryApprovalsRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.queryApprovalsRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -27581,6 +28315,120 @@ func (a *DefaultAPIService) QueryWorkflowExecutionsExecute(r ApiQueryWorkflowExe
 	}
 	// body params
 	localVarPostBody = r.queryWorkflowExecutionsRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiRejectApprovalRequest struct {
+	ctx                   context.Context
+	ApiService            *DefaultAPIService
+	approvalID            string
+	rejectApprovalRequest *RejectApprovalRequest
+}
+
+// Approval that needs to be rejected
+func (r ApiRejectApprovalRequest) RejectApprovalRequest(rejectApprovalRequest RejectApprovalRequest) ApiRejectApprovalRequest {
+	r.rejectApprovalRequest = &rejectApprovalRequest
+	return r
+}
+
+func (r ApiRejectApprovalRequest) Execute() (*Approval, *http.Response, error) {
+	return r.ApiService.RejectApprovalExecute(r)
+}
+
+/*
+RejectApproval Reject the approval with the given ID
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param approvalID unique generated ID of an approval
+	@return ApiRejectApprovalRequest
+*/
+func (a *DefaultAPIService) RejectApproval(ctx context.Context, approvalID string) ApiRejectApprovalRequest {
+	return ApiRejectApprovalRequest{
+		ApiService: a,
+		ctx:        ctx,
+		approvalID: approvalID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return Approval
+func (a *DefaultAPIService) RejectApprovalExecute(r ApiRejectApprovalRequest) (*Approval, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Approval
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.RejectApproval")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/approval/{approvalID}/reject"
+	localVarPath = strings.Replace(localVarPath, "{"+"approvalID"+"}", url.PathEscape(parameterValueToString(r.approvalID, "approvalID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.rejectApprovalRequest == nil {
+		return localVarReturnValue, nil, reportError("rejectApprovalRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.rejectApprovalRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

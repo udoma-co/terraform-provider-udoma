@@ -37,9 +37,9 @@ type Case struct {
 	TemplateRef *string        `json:"template_ref,omitempty"`
 	Status      CaseStatusEnum `json:"status"`
 	// Indicates if the case has been archived
-	Archived *bool         `json:"archived,omitempty"`
-	Reporter *ContactData  `json:"reporter,omitempty"`
-	Assignee *CaseAssignee `json:"assignee,omitempty"`
+	Archived *bool               `json:"archived,omitempty"`
+	Reporter NullableContactData `json:"reporter"`
+	Assignee *CaseAssignee       `json:"assignee,omitempty"`
 	// List of all accounts that have access to the case (e.g. manager, tenenat, and service provider)
 	Parties []CaseParty `json:"parties,omitempty"`
 	// List of all status changes. Latest one is the current one
@@ -55,7 +55,7 @@ type _Case Case
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCase(id string, createdAt int64, updatedAt int64, data map[string]interface{}, name string, status CaseStatusEnum) *Case {
+func NewCase(id string, createdAt int64, updatedAt int64, data map[string]interface{}, name string, status CaseStatusEnum, reporter NullableContactData) *Case {
 	this := Case{}
 	this.Id = id
 	this.CreatedAt = createdAt
@@ -63,6 +63,7 @@ func NewCase(id string, createdAt int64, updatedAt int64, data map[string]interf
 	this.Data = data
 	this.Name = name
 	this.Status = status
+	this.Reporter = reporter
 	return &this
 }
 
@@ -346,36 +347,30 @@ func (o *Case) SetArchived(v bool) {
 	o.Archived = &v
 }
 
-// GetReporter returns the Reporter field value if set, zero value otherwise.
+// GetReporter returns the Reporter field value
+// If the value is explicit nil, the zero value for ContactData will be returned
 func (o *Case) GetReporter() ContactData {
-	if o == nil || IsNil(o.Reporter) {
+	if o == nil || o.Reporter.Get() == nil {
 		var ret ContactData
 		return ret
 	}
-	return *o.Reporter
+
+	return *o.Reporter.Get()
 }
 
-// GetReporterOk returns a tuple with the Reporter field value if set, nil otherwise
+// GetReporterOk returns a tuple with the Reporter field value
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Case) GetReporterOk() (*ContactData, bool) {
-	if o == nil || IsNil(o.Reporter) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Reporter, true
+	return o.Reporter.Get(), o.Reporter.IsSet()
 }
 
-// HasReporter returns a boolean if a field has been set.
-func (o *Case) HasReporter() bool {
-	if o != nil && !IsNil(o.Reporter) {
-		return true
-	}
-
-	return false
-}
-
-// SetReporter gets a reference to the given ContactData and assigns it to the Reporter field.
+// SetReporter sets field value
 func (o *Case) SetReporter(v ContactData) {
-	o.Reporter = &v
+	o.Reporter.Set(&v)
 }
 
 // GetAssignee returns the Assignee field value if set, zero value otherwise.
@@ -566,9 +561,7 @@ func (o Case) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Archived) {
 		toSerialize["archived"] = o.Archived
 	}
-	if !IsNil(o.Reporter) {
-		toSerialize["reporter"] = o.Reporter
-	}
+	toSerialize["reporter"] = o.Reporter.Get()
 	if !IsNil(o.Assignee) {
 		toSerialize["assignee"] = o.Assignee
 	}
@@ -598,6 +591,7 @@ func (o *Case) UnmarshalJSON(data []byte) (err error) {
 		"data",
 		"name",
 		"status",
+		"reporter",
 	}
 
 	allProperties := make(map[string]interface{})

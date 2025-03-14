@@ -24,7 +24,7 @@ type CreateOrUpdateVersionMigratorRequest struct {
 	// The id of the template/definition that this migrator is for.
 	RefId string `json:"ref_id"`
 	// The version of the template/definition that an entity has to be  referencing, so that the migrator can be applied.
-	SourceVersion int32 `json:"source_version"`
+	SourceVersion *int32 `json:"source_version,omitempty"`
 	// The version of the template/definition that an entity will be  referencing after the migrator has been applied.
 	TargetVersion int32 `json:"target_version"`
 	// The JS code that will be executed to migrate the data from the source  version to the target version.
@@ -37,10 +37,9 @@ type _CreateOrUpdateVersionMigratorRequest CreateOrUpdateVersionMigratorRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateOrUpdateVersionMigratorRequest(refId string, sourceVersion int32, targetVersion int32, script string) *CreateOrUpdateVersionMigratorRequest {
+func NewCreateOrUpdateVersionMigratorRequest(refId string, targetVersion int32, script string) *CreateOrUpdateVersionMigratorRequest {
 	this := CreateOrUpdateVersionMigratorRequest{}
 	this.RefId = refId
-	this.SourceVersion = sourceVersion
 	this.TargetVersion = targetVersion
 	this.Script = script
 	return &this
@@ -78,28 +77,36 @@ func (o *CreateOrUpdateVersionMigratorRequest) SetRefId(v string) {
 	o.RefId = v
 }
 
-// GetSourceVersion returns the SourceVersion field value
+// GetSourceVersion returns the SourceVersion field value if set, zero value otherwise.
 func (o *CreateOrUpdateVersionMigratorRequest) GetSourceVersion() int32 {
-	if o == nil {
+	if o == nil || IsNil(o.SourceVersion) {
 		var ret int32
 		return ret
 	}
-
-	return o.SourceVersion
+	return *o.SourceVersion
 }
 
-// GetSourceVersionOk returns a tuple with the SourceVersion field value
+// GetSourceVersionOk returns a tuple with the SourceVersion field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateVersionMigratorRequest) GetSourceVersionOk() (*int32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.SourceVersion) {
 		return nil, false
 	}
-	return &o.SourceVersion, true
+	return o.SourceVersion, true
 }
 
-// SetSourceVersion sets field value
+// HasSourceVersion returns a boolean if a field has been set.
+func (o *CreateOrUpdateVersionMigratorRequest) HasSourceVersion() bool {
+	if o != nil && !IsNil(o.SourceVersion) {
+		return true
+	}
+
+	return false
+}
+
+// SetSourceVersion gets a reference to the given int32 and assigns it to the SourceVersion field.
 func (o *CreateOrUpdateVersionMigratorRequest) SetSourceVersion(v int32) {
-	o.SourceVersion = v
+	o.SourceVersion = &v
 }
 
 // GetTargetVersion returns the TargetVersion field value
@@ -161,7 +168,9 @@ func (o CreateOrUpdateVersionMigratorRequest) MarshalJSON() ([]byte, error) {
 func (o CreateOrUpdateVersionMigratorRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["ref_id"] = o.RefId
-	toSerialize["source_version"] = o.SourceVersion
+	if !IsNil(o.SourceVersion) {
+		toSerialize["source_version"] = o.SourceVersion
+	}
 	toSerialize["target_version"] = o.TargetVersion
 	toSerialize["script"] = o.Script
 	return toSerialize, nil
@@ -173,7 +182,6 @@ func (o *CreateOrUpdateVersionMigratorRequest) UnmarshalJSON(data []byte) (err e
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"ref_id",
-		"source_version",
 		"target_version",
 		"script",
 	}

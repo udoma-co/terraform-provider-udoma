@@ -26,6 +26,7 @@ const (
 	FORMINPUTTYPE_BOOLEAN              FormInputType = "boolean"
 	FORMINPUTTYPE_SINGLE_SELECT        FormInputType = "single_select"
 	FORMINPUTTYPE_MULTI_SELECT         FormInputType = "multi_select"
+	FORMINPUTTYPE_SUGGESTION           FormInputType = "suggestion"
 	FORMINPUTTYPE_FILE                 FormInputType = "file"
 	FORMINPUTTYPE_ID_UPLOAD            FormInputType = "id_upload"
 	FORMINPUTTYPE_ADDRESS              FormInputType = "address"
@@ -37,7 +38,6 @@ const (
 	FORMINPUTTYPE_PROPERTY_REF         FormInputType = "property_ref"
 	FORMINPUTTYPE_OWNER_REF            FormInputType = "owner_ref"
 	FORMINPUTTYPE_TENANT_REF           FormInputType = "tenant_ref"
-	FORMINPUTTYPE_SUGGESTION           FormInputType = "suggestion"
 	FORMINPUTTYPE_REPORTER             FormInputType = "reporter"
 	FORMINPUTTYPE_PROPERTY             FormInputType = "property"
 	FORMINPUTTYPE_CASE_PARTY           FormInputType = "case_party"
@@ -52,6 +52,7 @@ var AllowedFormInputTypeEnumValues = []FormInputType{
 	"boolean",
 	"single_select",
 	"multi_select",
+	"suggestion",
 	"file",
 	"id_upload",
 	"address",
@@ -63,7 +64,6 @@ var AllowedFormInputTypeEnumValues = []FormInputType{
 	"property_ref",
 	"owner_ref",
 	"tenant_ref",
-	"suggestion",
 	"reporter",
 	"property",
 	"case_party",

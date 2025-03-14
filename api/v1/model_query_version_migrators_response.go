@@ -19,7 +19,7 @@ var _ MappedNullable = &QueryVersionMigratorsResponse{}
 
 // QueryVersionMigratorsResponse a response for querying version migrators
 type QueryVersionMigratorsResponse struct {
-	Workflows []VersionMigrator `json:"workflows,omitempty"`
+	Migrators []VersionMigrator `json:"migrators,omitempty"`
 }
 
 // NewQueryVersionMigratorsResponse instantiates a new QueryVersionMigratorsResponse object
@@ -39,36 +39,36 @@ func NewQueryVersionMigratorsResponseWithDefaults() *QueryVersionMigratorsRespon
 	return &this
 }
 
-// GetWorkflows returns the Workflows field value if set, zero value otherwise.
-func (o *QueryVersionMigratorsResponse) GetWorkflows() []VersionMigrator {
-	if o == nil || IsNil(o.Workflows) {
+// GetMigrators returns the Migrators field value if set, zero value otherwise.
+func (o *QueryVersionMigratorsResponse) GetMigrators() []VersionMigrator {
+	if o == nil || IsNil(o.Migrators) {
 		var ret []VersionMigrator
 		return ret
 	}
-	return o.Workflows
+	return o.Migrators
 }
 
-// GetWorkflowsOk returns a tuple with the Workflows field value if set, nil otherwise
+// GetMigratorsOk returns a tuple with the Migrators field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *QueryVersionMigratorsResponse) GetWorkflowsOk() ([]VersionMigrator, bool) {
-	if o == nil || IsNil(o.Workflows) {
+func (o *QueryVersionMigratorsResponse) GetMigratorsOk() ([]VersionMigrator, bool) {
+	if o == nil || IsNil(o.Migrators) {
 		return nil, false
 	}
-	return o.Workflows, true
+	return o.Migrators, true
 }
 
-// HasWorkflows returns a boolean if a field has been set.
-func (o *QueryVersionMigratorsResponse) HasWorkflows() bool {
-	if o != nil && !IsNil(o.Workflows) {
+// HasMigrators returns a boolean if a field has been set.
+func (o *QueryVersionMigratorsResponse) HasMigrators() bool {
+	if o != nil && !IsNil(o.Migrators) {
 		return true
 	}
 
 	return false
 }
 
-// SetWorkflows gets a reference to the given []VersionMigrator and assigns it to the Workflows field.
-func (o *QueryVersionMigratorsResponse) SetWorkflows(v []VersionMigrator) {
-	o.Workflows = v
+// SetMigrators gets a reference to the given []VersionMigrator and assigns it to the Migrators field.
+func (o *QueryVersionMigratorsResponse) SetMigrators(v []VersionMigrator) {
+	o.Migrators = v
 }
 
 func (o QueryVersionMigratorsResponse) MarshalJSON() ([]byte, error) {
@@ -81,8 +81,8 @@ func (o QueryVersionMigratorsResponse) MarshalJSON() ([]byte, error) {
 
 func (o QueryVersionMigratorsResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Workflows) {
-		toSerialize["workflows"] = o.Workflows
+	if !IsNil(o.Migrators) {
+		toSerialize["migrators"] = o.Migrators
 	}
 	return toSerialize, nil
 }

@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the TenantChangesInner type satisfies the MappedNullable interface at compile time
@@ -19,16 +21,20 @@ var _ MappedNullable = &TenantChangesInner{}
 
 // TenantChangesInner struct for TenantChangesInner
 type TenantChangesInner struct {
-	Tenant *ContactData            `json:"tenant,omitempty"`
-	Action *TenantChangeActionEnum `json:"action,omitempty"`
+	Tenant NullableContactData    `json:"tenant"`
+	Action TenantChangeActionEnum `json:"action"`
 }
+
+type _TenantChangesInner TenantChangesInner
 
 // NewTenantChangesInner instantiates a new TenantChangesInner object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTenantChangesInner() *TenantChangesInner {
+func NewTenantChangesInner(tenant NullableContactData, action TenantChangeActionEnum) *TenantChangesInner {
 	this := TenantChangesInner{}
+	this.Tenant = tenant
+	this.Action = action
 	return &this
 }
 
@@ -40,68 +46,54 @@ func NewTenantChangesInnerWithDefaults() *TenantChangesInner {
 	return &this
 }
 
-// GetTenant returns the Tenant field value if set, zero value otherwise.
+// GetTenant returns the Tenant field value
+// If the value is explicit nil, the zero value for ContactData will be returned
 func (o *TenantChangesInner) GetTenant() ContactData {
-	if o == nil || IsNil(o.Tenant) {
+	if o == nil || o.Tenant.Get() == nil {
 		var ret ContactData
 		return ret
 	}
-	return *o.Tenant
+
+	return *o.Tenant.Get()
 }
 
-// GetTenantOk returns a tuple with the Tenant field value if set, nil otherwise
+// GetTenantOk returns a tuple with the Tenant field value
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *TenantChangesInner) GetTenantOk() (*ContactData, bool) {
-	if o == nil || IsNil(o.Tenant) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Tenant, true
+	return o.Tenant.Get(), o.Tenant.IsSet()
 }
 
-// HasTenant returns a boolean if a field has been set.
-func (o *TenantChangesInner) HasTenant() bool {
-	if o != nil && !IsNil(o.Tenant) {
-		return true
-	}
-
-	return false
-}
-
-// SetTenant gets a reference to the given ContactData and assigns it to the Tenant field.
+// SetTenant sets field value
 func (o *TenantChangesInner) SetTenant(v ContactData) {
-	o.Tenant = &v
+	o.Tenant.Set(&v)
 }
 
-// GetAction returns the Action field value if set, zero value otherwise.
+// GetAction returns the Action field value
 func (o *TenantChangesInner) GetAction() TenantChangeActionEnum {
-	if o == nil || IsNil(o.Action) {
+	if o == nil {
 		var ret TenantChangeActionEnum
 		return ret
 	}
-	return *o.Action
+
+	return o.Action
 }
 
-// GetActionOk returns a tuple with the Action field value if set, nil otherwise
+// GetActionOk returns a tuple with the Action field value
 // and a boolean to check if the value has been set.
 func (o *TenantChangesInner) GetActionOk() (*TenantChangeActionEnum, bool) {
-	if o == nil || IsNil(o.Action) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Action, true
+	return &o.Action, true
 }
 
-// HasAction returns a boolean if a field has been set.
-func (o *TenantChangesInner) HasAction() bool {
-	if o != nil && !IsNil(o.Action) {
-		return true
-	}
-
-	return false
-}
-
-// SetAction gets a reference to the given TenantChangeActionEnum and assigns it to the Action field.
+// SetAction sets field value
 func (o *TenantChangesInner) SetAction(v TenantChangeActionEnum) {
-	o.Action = &v
+	o.Action = v
 }
 
 func (o TenantChangesInner) MarshalJSON() ([]byte, error) {
@@ -114,13 +106,47 @@ func (o TenantChangesInner) MarshalJSON() ([]byte, error) {
 
 func (o TenantChangesInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Tenant) {
-		toSerialize["tenant"] = o.Tenant
-	}
-	if !IsNil(o.Action) {
-		toSerialize["action"] = o.Action
-	}
+	toSerialize["tenant"] = o.Tenant.Get()
+	toSerialize["action"] = o.Action
 	return toSerialize, nil
+}
+
+func (o *TenantChangesInner) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"tenant",
+		"action",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varTenantChangesInner := _TenantChangesInner{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varTenantChangesInner)
+
+	if err != nil {
+		return err
+	}
+
+	*o = TenantChangesInner(varTenantChangesInner)
+
+	return err
 }
 
 type NullableTenantChangesInner struct {

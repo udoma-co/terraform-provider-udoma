@@ -26,7 +26,7 @@ type CreateCaseRequest struct {
 	PropertyAddress *Address `json:"property_address,omitempty"`
 	// Input provided by the user when updating the case as a key-value map
 	Data         map[string]interface{} `json:"data"`
-	ReporterInfo *ContactData           `json:"reporter_info,omitempty"`
+	ReporterInfo NullableContactData    `json:"reporter_info"`
 	// The ID of the case template used to create this case
 	TemplateRef string `json:"template_ref"`
 }
@@ -37,9 +37,10 @@ type _CreateCaseRequest CreateCaseRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateCaseRequest(data map[string]interface{}, templateRef string) *CreateCaseRequest {
+func NewCreateCaseRequest(data map[string]interface{}, reporterInfo NullableContactData, templateRef string) *CreateCaseRequest {
 	this := CreateCaseRequest{}
 	this.Data = data
+	this.ReporterInfo = reporterInfo
 	this.TemplateRef = templateRef
 	return &this
 }
@@ -140,36 +141,30 @@ func (o *CreateCaseRequest) SetData(v map[string]interface{}) {
 	o.Data = v
 }
 
-// GetReporterInfo returns the ReporterInfo field value if set, zero value otherwise.
+// GetReporterInfo returns the ReporterInfo field value
+// If the value is explicit nil, the zero value for ContactData will be returned
 func (o *CreateCaseRequest) GetReporterInfo() ContactData {
-	if o == nil || IsNil(o.ReporterInfo) {
+	if o == nil || o.ReporterInfo.Get() == nil {
 		var ret ContactData
 		return ret
 	}
-	return *o.ReporterInfo
+
+	return *o.ReporterInfo.Get()
 }
 
-// GetReporterInfoOk returns a tuple with the ReporterInfo field value if set, nil otherwise
+// GetReporterInfoOk returns a tuple with the ReporterInfo field value
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *CreateCaseRequest) GetReporterInfoOk() (*ContactData, bool) {
-	if o == nil || IsNil(o.ReporterInfo) {
+	if o == nil {
 		return nil, false
 	}
-	return o.ReporterInfo, true
+	return o.ReporterInfo.Get(), o.ReporterInfo.IsSet()
 }
 
-// HasReporterInfo returns a boolean if a field has been set.
-func (o *CreateCaseRequest) HasReporterInfo() bool {
-	if o != nil && !IsNil(o.ReporterInfo) {
-		return true
-	}
-
-	return false
-}
-
-// SetReporterInfo gets a reference to the given ContactData and assigns it to the ReporterInfo field.
+// SetReporterInfo sets field value
 func (o *CreateCaseRequest) SetReporterInfo(v ContactData) {
-	o.ReporterInfo = &v
+	o.ReporterInfo.Set(&v)
 }
 
 // GetTemplateRef returns the TemplateRef field value
@@ -213,9 +208,7 @@ func (o CreateCaseRequest) ToMap() (map[string]interface{}, error) {
 		toSerialize["property_address"] = o.PropertyAddress
 	}
 	toSerialize["data"] = o.Data
-	if !IsNil(o.ReporterInfo) {
-		toSerialize["reporter_info"] = o.ReporterInfo
-	}
+	toSerialize["reporter_info"] = o.ReporterInfo.Get()
 	toSerialize["template_ref"] = o.TemplateRef
 	return toSerialize, nil
 }
@@ -226,6 +219,7 @@ func (o *CreateCaseRequest) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"data",
+		"reporter_info",
 		"template_ref",
 	}
 

@@ -264,11 +264,13 @@ func (model *VersionMigratorModel) fromAPI(migrator *api.VersionMigrator) error 
 
 	model.ID = types.StringValue(migrator.Id)
 	model.RefId = types.StringValue(migrator.RefId)
-	model.SourceVersion = types.Int32Value(migrator.SourceVersion)
 	model.TargetVersion = types.Int32Value(migrator.TargetVersion)
 	model.Script = types.StringValue(migrator.Script)
 	model.CreatedAt = types.Int64Value(migrator.CreatedAt)
 	model.UpdatedAt = types.Int64Value(migrator.UpdatedAt)
+	if migrator.SourceVersion != nil {
+		model.SourceVersion = types.Int32Value(*migrator.SourceVersion)
+	}
 
 	return nil
 }
@@ -278,8 +280,11 @@ func (model *VersionMigratorModel) toAPIRequest() (api.CreateOrUpdateVersionMigr
 	migrator := api.CreateOrUpdateVersionMigratorRequest{
 		RefId:         model.RefId.ValueString(),
 		TargetVersion: model.TargetVersion.ValueInt32(),
-		SourceVersion: model.SourceVersion.ValueInt32(),
 		Script:        model.Script.ValueString(),
+	}
+
+	if !model.SourceVersion.IsNull() {
+		migrator.SourceVersion = model.SourceVersion.ValueInt32Pointer()
 	}
 
 	return migrator, nil
