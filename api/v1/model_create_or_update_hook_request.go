@@ -27,6 +27,8 @@ type CreateOrUpdateHookRequest struct {
 	Script string `json:"script"`
 	// This is just the order of execution of the hooks
 	Priority int32 `json:"priority"`
+	// Whether the entire event should be cancelled if the script throws an error
+	BreakOnError *bool `json:"break_on_error,omitempty"`
 	// Whether the hook is enabled and should be ran
 	Enabled bool `json:"enabled"`
 }
@@ -151,6 +153,38 @@ func (o *CreateOrUpdateHookRequest) SetPriority(v int32) {
 	o.Priority = v
 }
 
+// GetBreakOnError returns the BreakOnError field value if set, zero value otherwise.
+func (o *CreateOrUpdateHookRequest) GetBreakOnError() bool {
+	if o == nil || IsNil(o.BreakOnError) {
+		var ret bool
+		return ret
+	}
+	return *o.BreakOnError
+}
+
+// GetBreakOnErrorOk returns a tuple with the BreakOnError field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateHookRequest) GetBreakOnErrorOk() (*bool, bool) {
+	if o == nil || IsNil(o.BreakOnError) {
+		return nil, false
+	}
+	return o.BreakOnError, true
+}
+
+// HasBreakOnError returns a boolean if a field has been set.
+func (o *CreateOrUpdateHookRequest) HasBreakOnError() bool {
+	if o != nil && !IsNil(o.BreakOnError) {
+		return true
+	}
+
+	return false
+}
+
+// SetBreakOnError gets a reference to the given bool and assigns it to the BreakOnError field.
+func (o *CreateOrUpdateHookRequest) SetBreakOnError(v bool) {
+	o.BreakOnError = &v
+}
+
 // GetEnabled returns the Enabled field value
 func (o *CreateOrUpdateHookRequest) GetEnabled() bool {
 	if o == nil {
@@ -189,6 +223,9 @@ func (o CreateOrUpdateHookRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize["action"] = o.Action
 	toSerialize["script"] = o.Script
 	toSerialize["priority"] = o.Priority
+	if !IsNil(o.BreakOnError) {
+		toSerialize["break_on_error"] = o.BreakOnError
+	}
 	toSerialize["enabled"] = o.Enabled
 	return toSerialize, nil
 }

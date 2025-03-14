@@ -30,12 +30,13 @@ type Hook struct {
 }
 
 type HookModel struct {
-	ID       types.String `tfsdk:"id"`
-	Entity   types.String `tfsdk:"entity"`
-	Action   types.String `tfsdk:"action"`
-	Priority types.Int32  `tfsdk:"priority"`
-	Enabled  types.Bool   `tfsdk:"enabled"`
-	Script   types.String `tfsdk:"script"`
+	ID           types.String `tfsdk:"id"`
+	Entity       types.String `tfsdk:"entity"`
+	Action       types.String `tfsdk:"action"`
+	Priority     types.Int32  `tfsdk:"priority"`
+	Enabled      types.Bool   `tfsdk:"enabled"`
+	BreakOnError types.Bool   `tfsdk:"break_on_error"`
+	Script       types.String `tfsdk:"script"`
 }
 
 func (hook *Hook) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -83,6 +84,10 @@ func (hook *Hook) Schema(ctx context.Context, req resource.SchemaRequest, resp *
 			"prioirty": schema.Int32Attribute{
 				Required:    true,
 				Description: "The priority of the hook",
+			},
+			"break_on_error": schema.BoolAttribute{
+				Required:    true,
+				Description: "Whether the hook should break on error or not",
 			},
 			"enabled": schema.BoolAttribute{
 				Optional:    true,

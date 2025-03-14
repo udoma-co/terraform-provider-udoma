@@ -20,24 +20,22 @@ type HookEntity string
 
 // List of HookEntity
 const (
-	HOOKENTITY_CASE             HookEntity = "case"
-	HOOKENTITY_BANK_ACCOUNT     HookEntity = "bank_account"
-	HOOKENTITY_PROPERTY         HookEntity = "property"
-	HOOKENTITY_PROPERTY_OWNER   HookEntity = "property_owner"
-	HOOKENTITY_TENANT           HookEntity = "tenant"
-	HOOKENTITY_TENANCY          HookEntity = "tenancy"
-	HOOKENTITY_SERVICE_PROVIDER HookEntity = "service_provider"
+	HOOKENTITY_BANK_ACCOUNT     HookEntity = "BANK_ACCOUNT"
+	HOOKENTITY_PROPERTY         HookEntity = "PROPERTY"
+	HOOKENTITY_PROPERTY_OWNER   HookEntity = "PROPERTY_OWNER"
+	HOOKENTITY_TENANT           HookEntity = "TENANT"
+	HOOKENTITY_TENANCY          HookEntity = "TENANCY"
+	HOOKENTITY_SERVICE_PROVIDER HookEntity = "SERVICE_PROVIDER"
 )
 
 // All allowed values of HookEntity enum
 var AllowedHookEntityEnumValues = []HookEntity{
-	"case",
-	"bank_account",
-	"property",
-	"property_owner",
-	"tenant",
-	"tenancy",
-	"service_provider",
+	"BANK_ACCOUNT",
+	"PROPERTY",
+	"PROPERTY_OWNER",
+	"TENANT",
+	"TENANCY",
+	"SERVICE_PROVIDER",
 }
 
 func (v *HookEntity) UnmarshalJSON(src []byte) error {
