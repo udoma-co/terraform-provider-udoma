@@ -26,9 +26,9 @@ type CreateCorrespondenceRequest struct {
 	// A reference to the document generation that is being shared with the tenant
 	DocumentRef *string `json:"document_ref,omitempty"`
 	// A reference to the pdf attachment that'll be used for the correspondence
-	AttachmentRef *string              `json:"attachment_ref,omitempty"`
-	Recipient     *ContactData         `json:"recipient,omitempty"`
-	Email         *CorrespondenceEmail `json:"email,omitempty"`
+	AttachmentRef *string             `json:"attachment_ref,omitempty"`
+	Recipient     NullableContactData `json:"recipient"`
+	Email         CorrespondenceEmail `json:"email"`
 }
 
 type _CreateCorrespondenceRequest CreateCorrespondenceRequest
@@ -37,9 +37,11 @@ type _CreateCorrespondenceRequest CreateCorrespondenceRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateCorrespondenceRequest(displayName string) *CreateCorrespondenceRequest {
+func NewCreateCorrespondenceRequest(displayName string, recipient NullableContactData, email CorrespondenceEmail) *CreateCorrespondenceRequest {
 	this := CreateCorrespondenceRequest{}
 	this.DisplayName = displayName
+	this.Recipient = recipient
+	this.Email = email
 	return &this
 }
 
@@ -139,68 +141,54 @@ func (o *CreateCorrespondenceRequest) SetAttachmentRef(v string) {
 	o.AttachmentRef = &v
 }
 
-// GetRecipient returns the Recipient field value if set, zero value otherwise.
+// GetRecipient returns the Recipient field value
+// If the value is explicit nil, the zero value for ContactData will be returned
 func (o *CreateCorrespondenceRequest) GetRecipient() ContactData {
-	if o == nil || IsNil(o.Recipient) {
+	if o == nil || o.Recipient.Get() == nil {
 		var ret ContactData
 		return ret
 	}
-	return *o.Recipient
+
+	return *o.Recipient.Get()
 }
 
-// GetRecipientOk returns a tuple with the Recipient field value if set, nil otherwise
+// GetRecipientOk returns a tuple with the Recipient field value
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *CreateCorrespondenceRequest) GetRecipientOk() (*ContactData, bool) {
-	if o == nil || IsNil(o.Recipient) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Recipient, true
+	return o.Recipient.Get(), o.Recipient.IsSet()
 }
 
-// HasRecipient returns a boolean if a field has been set.
-func (o *CreateCorrespondenceRequest) HasRecipient() bool {
-	if o != nil && !IsNil(o.Recipient) {
-		return true
-	}
-
-	return false
-}
-
-// SetRecipient gets a reference to the given ContactData and assigns it to the Recipient field.
+// SetRecipient sets field value
 func (o *CreateCorrespondenceRequest) SetRecipient(v ContactData) {
-	o.Recipient = &v
+	o.Recipient.Set(&v)
 }
 
-// GetEmail returns the Email field value if set, zero value otherwise.
+// GetEmail returns the Email field value
 func (o *CreateCorrespondenceRequest) GetEmail() CorrespondenceEmail {
-	if o == nil || IsNil(o.Email) {
+	if o == nil {
 		var ret CorrespondenceEmail
 		return ret
 	}
-	return *o.Email
+
+	return o.Email
 }
 
-// GetEmailOk returns a tuple with the Email field value if set, nil otherwise
+// GetEmailOk returns a tuple with the Email field value
 // and a boolean to check if the value has been set.
 func (o *CreateCorrespondenceRequest) GetEmailOk() (*CorrespondenceEmail, bool) {
-	if o == nil || IsNil(o.Email) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Email, true
+	return &o.Email, true
 }
 
-// HasEmail returns a boolean if a field has been set.
-func (o *CreateCorrespondenceRequest) HasEmail() bool {
-	if o != nil && !IsNil(o.Email) {
-		return true
-	}
-
-	return false
-}
-
-// SetEmail gets a reference to the given CorrespondenceEmail and assigns it to the Email field.
+// SetEmail sets field value
 func (o *CreateCorrespondenceRequest) SetEmail(v CorrespondenceEmail) {
-	o.Email = &v
+	o.Email = v
 }
 
 func (o CreateCorrespondenceRequest) MarshalJSON() ([]byte, error) {
@@ -220,12 +208,8 @@ func (o CreateCorrespondenceRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.AttachmentRef) {
 		toSerialize["attachment_ref"] = o.AttachmentRef
 	}
-	if !IsNil(o.Recipient) {
-		toSerialize["recipient"] = o.Recipient
-	}
-	if !IsNil(o.Email) {
-		toSerialize["email"] = o.Email
-	}
+	toSerialize["recipient"] = o.Recipient.Get()
+	toSerialize["email"] = o.Email
 	return toSerialize, nil
 }
 
@@ -235,6 +219,8 @@ func (o *CreateCorrespondenceRequest) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"display_name",
+		"recipient",
+		"email",
 	}
 
 	allProperties := make(map[string]interface{})

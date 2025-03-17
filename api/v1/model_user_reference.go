@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the UserReference type satisfies the MappedNullable interface at compile time
@@ -20,17 +22,21 @@ var _ MappedNullable = &UserReference{}
 // UserReference Contains information about a user referenced in other entities
 type UserReference struct {
 	// The ID of the user, can be undefined, if user is not registered, or was already deleted
-	UserId      *string       `json:"user_id,omitempty"`
-	UserRole    *UserTypeEnum `json:"user_role,omitempty"`
-	ContactData *ContactData  `json:"contact_data,omitempty"`
+	UserId      string              `json:"user_id"`
+	UserRole    *UserTypeEnum       `json:"user_role,omitempty"`
+	ContactData NullableContactData `json:"contact_data"`
 }
+
+type _UserReference UserReference
 
 // NewUserReference instantiates a new UserReference object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewUserReference() *UserReference {
+func NewUserReference(userId string, contactData NullableContactData) *UserReference {
 	this := UserReference{}
+	this.UserId = userId
+	this.ContactData = contactData
 	return &this
 }
 
@@ -42,36 +48,28 @@ func NewUserReferenceWithDefaults() *UserReference {
 	return &this
 }
 
-// GetUserId returns the UserId field value if set, zero value otherwise.
+// GetUserId returns the UserId field value
 func (o *UserReference) GetUserId() string {
-	if o == nil || IsNil(o.UserId) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.UserId
+
+	return o.UserId
 }
 
-// GetUserIdOk returns a tuple with the UserId field value if set, nil otherwise
+// GetUserIdOk returns a tuple with the UserId field value
 // and a boolean to check if the value has been set.
 func (o *UserReference) GetUserIdOk() (*string, bool) {
-	if o == nil || IsNil(o.UserId) {
+	if o == nil {
 		return nil, false
 	}
-	return o.UserId, true
+	return &o.UserId, true
 }
 
-// HasUserId returns a boolean if a field has been set.
-func (o *UserReference) HasUserId() bool {
-	if o != nil && !IsNil(o.UserId) {
-		return true
-	}
-
-	return false
-}
-
-// SetUserId gets a reference to the given string and assigns it to the UserId field.
+// SetUserId sets field value
 func (o *UserReference) SetUserId(v string) {
-	o.UserId = &v
+	o.UserId = v
 }
 
 // GetUserRole returns the UserRole field value if set, zero value otherwise.
@@ -106,36 +104,30 @@ func (o *UserReference) SetUserRole(v UserTypeEnum) {
 	o.UserRole = &v
 }
 
-// GetContactData returns the ContactData field value if set, zero value otherwise.
+// GetContactData returns the ContactData field value
+// If the value is explicit nil, the zero value for ContactData will be returned
 func (o *UserReference) GetContactData() ContactData {
-	if o == nil || IsNil(o.ContactData) {
+	if o == nil || o.ContactData.Get() == nil {
 		var ret ContactData
 		return ret
 	}
-	return *o.ContactData
+
+	return *o.ContactData.Get()
 }
 
-// GetContactDataOk returns a tuple with the ContactData field value if set, nil otherwise
+// GetContactDataOk returns a tuple with the ContactData field value
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *UserReference) GetContactDataOk() (*ContactData, bool) {
-	if o == nil || IsNil(o.ContactData) {
+	if o == nil {
 		return nil, false
 	}
-	return o.ContactData, true
+	return o.ContactData.Get(), o.ContactData.IsSet()
 }
 
-// HasContactData returns a boolean if a field has been set.
-func (o *UserReference) HasContactData() bool {
-	if o != nil && !IsNil(o.ContactData) {
-		return true
-	}
-
-	return false
-}
-
-// SetContactData gets a reference to the given ContactData and assigns it to the ContactData field.
+// SetContactData sets field value
 func (o *UserReference) SetContactData(v ContactData) {
-	o.ContactData = &v
+	o.ContactData.Set(&v)
 }
 
 func (o UserReference) MarshalJSON() ([]byte, error) {
@@ -148,16 +140,50 @@ func (o UserReference) MarshalJSON() ([]byte, error) {
 
 func (o UserReference) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.UserId) {
-		toSerialize["user_id"] = o.UserId
-	}
+	toSerialize["user_id"] = o.UserId
 	if !IsNil(o.UserRole) {
 		toSerialize["user_role"] = o.UserRole
 	}
-	if !IsNil(o.ContactData) {
-		toSerialize["contact_data"] = o.ContactData
-	}
+	toSerialize["contact_data"] = o.ContactData.Get()
 	return toSerialize, nil
+}
+
+func (o *UserReference) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"user_id",
+		"contact_data",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varUserReference := _UserReference{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varUserReference)
+
+	if err != nil {
+		return err
+	}
+
+	*o = UserReference(varUserReference)
+
+	return err
 }
 
 type NullableUserReference struct {

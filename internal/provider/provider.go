@@ -217,6 +217,7 @@ func (p *UdomaProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewForm,
 		NewAccountDimension,
 		NewAccount,
+		NewVersionMigrator,
 	}
 }
 

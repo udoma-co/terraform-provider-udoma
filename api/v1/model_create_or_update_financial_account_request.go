@@ -30,6 +30,8 @@ type CreateOrUpdateFinancialAccountRequest struct {
 	IsBalance *bool `json:"is_balance,omitempty"`
 	// The currency of the booking
 	Currency string `json:"currency"`
+	// A script to generate booking allocations when passed the total booking value
+	AllocationScript *string `json:"allocation_script,omitempty"`
 	// The IDs of the dimensions that are assigned to the account
 	Dimensions []string `json:"dimensions,omitempty"`
 }
@@ -185,6 +187,38 @@ func (o *CreateOrUpdateFinancialAccountRequest) SetCurrency(v string) {
 	o.Currency = v
 }
 
+// GetAllocationScript returns the AllocationScript field value if set, zero value otherwise.
+func (o *CreateOrUpdateFinancialAccountRequest) GetAllocationScript() string {
+	if o == nil || IsNil(o.AllocationScript) {
+		var ret string
+		return ret
+	}
+	return *o.AllocationScript
+}
+
+// GetAllocationScriptOk returns a tuple with the AllocationScript field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateFinancialAccountRequest) GetAllocationScriptOk() (*string, bool) {
+	if o == nil || IsNil(o.AllocationScript) {
+		return nil, false
+	}
+	return o.AllocationScript, true
+}
+
+// HasAllocationScript returns a boolean if a field has been set.
+func (o *CreateOrUpdateFinancialAccountRequest) HasAllocationScript() bool {
+	if o != nil && !IsNil(o.AllocationScript) {
+		return true
+	}
+
+	return false
+}
+
+// SetAllocationScript gets a reference to the given string and assigns it to the AllocationScript field.
+func (o *CreateOrUpdateFinancialAccountRequest) SetAllocationScript(v string) {
+	o.AllocationScript = &v
+}
+
 // GetDimensions returns the Dimensions field value if set, zero value otherwise.
 func (o *CreateOrUpdateFinancialAccountRequest) GetDimensions() []string {
 	if o == nil || IsNil(o.Dimensions) {
@@ -234,6 +268,9 @@ func (o CreateOrUpdateFinancialAccountRequest) ToMap() (map[string]interface{}, 
 		toSerialize["is_balance"] = o.IsBalance
 	}
 	toSerialize["currency"] = o.Currency
+	if !IsNil(o.AllocationScript) {
+		toSerialize["allocation_script"] = o.AllocationScript
+	}
 	if !IsNil(o.Dimensions) {
 		toSerialize["dimensions"] = o.Dimensions
 	}

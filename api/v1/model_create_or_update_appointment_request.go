@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the CreateOrUpdateAppointmentRequest type satisfies the MappedNullable interface at compile time
@@ -20,20 +22,25 @@ var _ MappedNullable = &CreateOrUpdateAppointmentRequest{}
 // CreateOrUpdateAppointmentRequest struct for CreateOrUpdateAppointmentRequest
 type CreateOrUpdateAppointmentRequest struct {
 	// The id of the appointment window that the user wants to book
-	AppointmentWindowId *string `json:"appointment_window_id,omitempty"`
+	AppointmentWindowId string `json:"appointment_window_id"`
 	// The offset within the appointment window which should be booked
-	SlotIdx *int32       `json:"slot_idx,omitempty"`
-	Contact *ContactData `json:"contact,omitempty"`
+	SlotIdx int32               `json:"slot_idx"`
+	Contact NullableContactData `json:"contact"`
 	// The data that the user has entered when booking the appointment
 	Data map[string]interface{} `json:"data,omitempty"`
 }
+
+type _CreateOrUpdateAppointmentRequest CreateOrUpdateAppointmentRequest
 
 // NewCreateOrUpdateAppointmentRequest instantiates a new CreateOrUpdateAppointmentRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateOrUpdateAppointmentRequest() *CreateOrUpdateAppointmentRequest {
+func NewCreateOrUpdateAppointmentRequest(appointmentWindowId string, slotIdx int32, contact NullableContactData) *CreateOrUpdateAppointmentRequest {
 	this := CreateOrUpdateAppointmentRequest{}
+	this.AppointmentWindowId = appointmentWindowId
+	this.SlotIdx = slotIdx
+	this.Contact = contact
 	return &this
 }
 
@@ -45,100 +52,78 @@ func NewCreateOrUpdateAppointmentRequestWithDefaults() *CreateOrUpdateAppointmen
 	return &this
 }
 
-// GetAppointmentWindowId returns the AppointmentWindowId field value if set, zero value otherwise.
+// GetAppointmentWindowId returns the AppointmentWindowId field value
 func (o *CreateOrUpdateAppointmentRequest) GetAppointmentWindowId() string {
-	if o == nil || IsNil(o.AppointmentWindowId) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.AppointmentWindowId
+
+	return o.AppointmentWindowId
 }
 
-// GetAppointmentWindowIdOk returns a tuple with the AppointmentWindowId field value if set, nil otherwise
+// GetAppointmentWindowIdOk returns a tuple with the AppointmentWindowId field value
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateAppointmentRequest) GetAppointmentWindowIdOk() (*string, bool) {
-	if o == nil || IsNil(o.AppointmentWindowId) {
+	if o == nil {
 		return nil, false
 	}
-	return o.AppointmentWindowId, true
+	return &o.AppointmentWindowId, true
 }
 
-// HasAppointmentWindowId returns a boolean if a field has been set.
-func (o *CreateOrUpdateAppointmentRequest) HasAppointmentWindowId() bool {
-	if o != nil && !IsNil(o.AppointmentWindowId) {
-		return true
-	}
-
-	return false
-}
-
-// SetAppointmentWindowId gets a reference to the given string and assigns it to the AppointmentWindowId field.
+// SetAppointmentWindowId sets field value
 func (o *CreateOrUpdateAppointmentRequest) SetAppointmentWindowId(v string) {
-	o.AppointmentWindowId = &v
+	o.AppointmentWindowId = v
 }
 
-// GetSlotIdx returns the SlotIdx field value if set, zero value otherwise.
+// GetSlotIdx returns the SlotIdx field value
 func (o *CreateOrUpdateAppointmentRequest) GetSlotIdx() int32 {
-	if o == nil || IsNil(o.SlotIdx) {
+	if o == nil {
 		var ret int32
 		return ret
 	}
-	return *o.SlotIdx
+
+	return o.SlotIdx
 }
 
-// GetSlotIdxOk returns a tuple with the SlotIdx field value if set, nil otherwise
+// GetSlotIdxOk returns a tuple with the SlotIdx field value
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateAppointmentRequest) GetSlotIdxOk() (*int32, bool) {
-	if o == nil || IsNil(o.SlotIdx) {
+	if o == nil {
 		return nil, false
 	}
-	return o.SlotIdx, true
+	return &o.SlotIdx, true
 }
 
-// HasSlotIdx returns a boolean if a field has been set.
-func (o *CreateOrUpdateAppointmentRequest) HasSlotIdx() bool {
-	if o != nil && !IsNil(o.SlotIdx) {
-		return true
-	}
-
-	return false
-}
-
-// SetSlotIdx gets a reference to the given int32 and assigns it to the SlotIdx field.
+// SetSlotIdx sets field value
 func (o *CreateOrUpdateAppointmentRequest) SetSlotIdx(v int32) {
-	o.SlotIdx = &v
+	o.SlotIdx = v
 }
 
-// GetContact returns the Contact field value if set, zero value otherwise.
+// GetContact returns the Contact field value
+// If the value is explicit nil, the zero value for ContactData will be returned
 func (o *CreateOrUpdateAppointmentRequest) GetContact() ContactData {
-	if o == nil || IsNil(o.Contact) {
+	if o == nil || o.Contact.Get() == nil {
 		var ret ContactData
 		return ret
 	}
-	return *o.Contact
+
+	return *o.Contact.Get()
 }
 
-// GetContactOk returns a tuple with the Contact field value if set, nil otherwise
+// GetContactOk returns a tuple with the Contact field value
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *CreateOrUpdateAppointmentRequest) GetContactOk() (*ContactData, bool) {
-	if o == nil || IsNil(o.Contact) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Contact, true
+	return o.Contact.Get(), o.Contact.IsSet()
 }
 
-// HasContact returns a boolean if a field has been set.
-func (o *CreateOrUpdateAppointmentRequest) HasContact() bool {
-	if o != nil && !IsNil(o.Contact) {
-		return true
-	}
-
-	return false
-}
-
-// SetContact gets a reference to the given ContactData and assigns it to the Contact field.
+// SetContact sets field value
 func (o *CreateOrUpdateAppointmentRequest) SetContact(v ContactData) {
-	o.Contact = &v
+	o.Contact.Set(&v)
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
@@ -183,19 +168,52 @@ func (o CreateOrUpdateAppointmentRequest) MarshalJSON() ([]byte, error) {
 
 func (o CreateOrUpdateAppointmentRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.AppointmentWindowId) {
-		toSerialize["appointment_window_id"] = o.AppointmentWindowId
-	}
-	if !IsNil(o.SlotIdx) {
-		toSerialize["slot_idx"] = o.SlotIdx
-	}
-	if !IsNil(o.Contact) {
-		toSerialize["contact"] = o.Contact
-	}
+	toSerialize["appointment_window_id"] = o.AppointmentWindowId
+	toSerialize["slot_idx"] = o.SlotIdx
+	toSerialize["contact"] = o.Contact.Get()
 	if !IsNil(o.Data) {
 		toSerialize["data"] = o.Data
 	}
 	return toSerialize, nil
+}
+
+func (o *CreateOrUpdateAppointmentRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"appointment_window_id",
+		"slot_idx",
+		"contact",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCreateOrUpdateAppointmentRequest := _CreateOrUpdateAppointmentRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCreateOrUpdateAppointmentRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CreateOrUpdateAppointmentRequest(varCreateOrUpdateAppointmentRequest)
+
+	return err
 }
 
 type NullableCreateOrUpdateAppointmentRequest struct {

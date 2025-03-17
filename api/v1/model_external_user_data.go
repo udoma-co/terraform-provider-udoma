@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the ExternalUserData type satisfies the MappedNullable interface at compile time
@@ -20,19 +22,24 @@ var _ MappedNullable = &ExternalUserData{}
 // ExternalUserData Contains information about a user referenced in other entities
 type ExternalUserData struct {
 	// The ID of the user, can be undefined, if user is not registered, or was already deleted
-	UserId      *string       `json:"user_id,omitempty"`
-	UserRole    *UserTypeEnum `json:"user_role,omitempty"`
-	ContactData *ContactData  `json:"contact_data,omitempty"`
+	UserId      string              `json:"user_id"`
+	UserRole    UserTypeEnum        `json:"user_role"`
+	ContactData NullableContactData `json:"contact_data"`
 	// the locale of the user
 	Locale *string `json:"locale,omitempty"`
 }
+
+type _ExternalUserData ExternalUserData
 
 // NewExternalUserData instantiates a new ExternalUserData object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewExternalUserData() *ExternalUserData {
+func NewExternalUserData(userId string, userRole UserTypeEnum, contactData NullableContactData) *ExternalUserData {
 	this := ExternalUserData{}
+	this.UserId = userId
+	this.UserRole = userRole
+	this.ContactData = contactData
 	return &this
 }
 
@@ -44,100 +51,78 @@ func NewExternalUserDataWithDefaults() *ExternalUserData {
 	return &this
 }
 
-// GetUserId returns the UserId field value if set, zero value otherwise.
+// GetUserId returns the UserId field value
 func (o *ExternalUserData) GetUserId() string {
-	if o == nil || IsNil(o.UserId) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.UserId
+
+	return o.UserId
 }
 
-// GetUserIdOk returns a tuple with the UserId field value if set, nil otherwise
+// GetUserIdOk returns a tuple with the UserId field value
 // and a boolean to check if the value has been set.
 func (o *ExternalUserData) GetUserIdOk() (*string, bool) {
-	if o == nil || IsNil(o.UserId) {
+	if o == nil {
 		return nil, false
 	}
-	return o.UserId, true
+	return &o.UserId, true
 }
 
-// HasUserId returns a boolean if a field has been set.
-func (o *ExternalUserData) HasUserId() bool {
-	if o != nil && !IsNil(o.UserId) {
-		return true
-	}
-
-	return false
-}
-
-// SetUserId gets a reference to the given string and assigns it to the UserId field.
+// SetUserId sets field value
 func (o *ExternalUserData) SetUserId(v string) {
-	o.UserId = &v
+	o.UserId = v
 }
 
-// GetUserRole returns the UserRole field value if set, zero value otherwise.
+// GetUserRole returns the UserRole field value
 func (o *ExternalUserData) GetUserRole() UserTypeEnum {
-	if o == nil || IsNil(o.UserRole) {
+	if o == nil {
 		var ret UserTypeEnum
 		return ret
 	}
-	return *o.UserRole
+
+	return o.UserRole
 }
 
-// GetUserRoleOk returns a tuple with the UserRole field value if set, nil otherwise
+// GetUserRoleOk returns a tuple with the UserRole field value
 // and a boolean to check if the value has been set.
 func (o *ExternalUserData) GetUserRoleOk() (*UserTypeEnum, bool) {
-	if o == nil || IsNil(o.UserRole) {
+	if o == nil {
 		return nil, false
 	}
-	return o.UserRole, true
+	return &o.UserRole, true
 }
 
-// HasUserRole returns a boolean if a field has been set.
-func (o *ExternalUserData) HasUserRole() bool {
-	if o != nil && !IsNil(o.UserRole) {
-		return true
-	}
-
-	return false
-}
-
-// SetUserRole gets a reference to the given UserTypeEnum and assigns it to the UserRole field.
+// SetUserRole sets field value
 func (o *ExternalUserData) SetUserRole(v UserTypeEnum) {
-	o.UserRole = &v
+	o.UserRole = v
 }
 
-// GetContactData returns the ContactData field value if set, zero value otherwise.
+// GetContactData returns the ContactData field value
+// If the value is explicit nil, the zero value for ContactData will be returned
 func (o *ExternalUserData) GetContactData() ContactData {
-	if o == nil || IsNil(o.ContactData) {
+	if o == nil || o.ContactData.Get() == nil {
 		var ret ContactData
 		return ret
 	}
-	return *o.ContactData
+
+	return *o.ContactData.Get()
 }
 
-// GetContactDataOk returns a tuple with the ContactData field value if set, nil otherwise
+// GetContactDataOk returns a tuple with the ContactData field value
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *ExternalUserData) GetContactDataOk() (*ContactData, bool) {
-	if o == nil || IsNil(o.ContactData) {
+	if o == nil {
 		return nil, false
 	}
-	return o.ContactData, true
+	return o.ContactData.Get(), o.ContactData.IsSet()
 }
 
-// HasContactData returns a boolean if a field has been set.
-func (o *ExternalUserData) HasContactData() bool {
-	if o != nil && !IsNil(o.ContactData) {
-		return true
-	}
-
-	return false
-}
-
-// SetContactData gets a reference to the given ContactData and assigns it to the ContactData field.
+// SetContactData sets field value
 func (o *ExternalUserData) SetContactData(v ContactData) {
-	o.ContactData = &v
+	o.ContactData.Set(&v)
 }
 
 // GetLocale returns the Locale field value if set, zero value otherwise.
@@ -182,19 +167,52 @@ func (o ExternalUserData) MarshalJSON() ([]byte, error) {
 
 func (o ExternalUserData) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.UserId) {
-		toSerialize["user_id"] = o.UserId
-	}
-	if !IsNil(o.UserRole) {
-		toSerialize["user_role"] = o.UserRole
-	}
-	if !IsNil(o.ContactData) {
-		toSerialize["contact_data"] = o.ContactData
-	}
+	toSerialize["user_id"] = o.UserId
+	toSerialize["user_role"] = o.UserRole
+	toSerialize["contact_data"] = o.ContactData.Get()
 	if !IsNil(o.Locale) {
 		toSerialize["locale"] = o.Locale
 	}
 	return toSerialize, nil
+}
+
+func (o *ExternalUserData) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"user_id",
+		"user_role",
+		"contact_data",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varExternalUserData := _ExternalUserData{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varExternalUserData)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ExternalUserData(varExternalUserData)
+
+	return err
 }
 
 type NullableExternalUserData struct {
