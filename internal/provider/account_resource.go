@@ -270,7 +270,7 @@ func (model *AccountModel) fromAPI(account *api.FinancialAccount) (diags diag.Di
 	model.CreatedAt = types.Int64Value(account.CreatedAt)
 	model.UpdatedAt = types.Int64Value(account.UpdatedAt)
 	model.Type = types.StringValue(string(account.Type))
-	model.IsBalance = types.BoolPointerValue(account.IsBalance)
+	model.IsBalance = omittableBooleanValue(account.IsBalance, model.IsBalance)
 
 	dimensionIDs := make([]string, len(account.Dimensions))
 	for i := range account.Dimensions {
