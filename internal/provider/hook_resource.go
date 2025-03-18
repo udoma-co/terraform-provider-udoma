@@ -22,7 +22,7 @@ var (
 )
 
 func NewHook() resource.Resource {
-	return &FAQ{}
+	return &Hook{}
 }
 
 type Hook struct {
@@ -50,7 +50,7 @@ func (hook *Hook) Schema(ctx context.Context, req resource.SchemaRequest, resp *
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				Computed:    true,
-				Description: "The unique identifier for the faq",
+				Description: "The unique identifier for the hook",
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
@@ -130,7 +130,7 @@ func (hook *Hook) Create(ctx context.Context, req resource.CreateRequest, resp *
 	newHook, _, err := hook.client.GetApi().CreateHook(ctx).CreateOrUpdateHookRequest(createReq).Execute()
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Error Creating FAQ Entry",
+			"Error Creating Hook Entry",
 			"Could not create entity in Udoma, unexpected error: "+getApiErrorMessage(err),
 		)
 		return
@@ -164,7 +164,7 @@ func (hook *Hook) Read(ctx context.Context, req resource.ReadRequest, resp *reso
 
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Error Reading FAQ Entry",
+			"Error Reading Hook Entry",
 			"Could not read entity from Udoma, unexpected error: "+getApiErrorMessage(err),
 		)
 		return
@@ -196,7 +196,7 @@ func (hook *Hook) Update(ctx context.Context, req resource.UpdateRequest, resp *
 	newHook, _, err := hook.client.GetApi().UpdateHook(ctx, plan.ID.ValueString()).CreateOrUpdateHookRequest(createReq).Execute()
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Error Updating FAQ Entry",
+			"Error Updating Hook Entry",
 			"Could not update entity in Udoma, unexpected error: "+getApiErrorMessage(err),
 		)
 		return
@@ -230,7 +230,7 @@ func (hook *Hook) Delete(ctx context.Context, req resource.DeleteRequest, resp *
 	}
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Error Deleting FAQ Entry",
+			"Error Deleting Hook Entry",
 			"Could not delete entity in Udoma, unexpected error: "+getApiErrorMessage(err),
 		)
 	}
