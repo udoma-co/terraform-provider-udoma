@@ -60,7 +60,6 @@ func (hook *Hook) Schema(ctx context.Context, req resource.SchemaRequest, resp *
 				Description: "The type of entity the hook is targeting",
 				Validators: []validator.String{
 					stringvalidator.OneOf(
-						"CASE",
 						"BANK_ACCOUNT",
 						"PROPERTY",
 						"PROPERTY_OWNER",
@@ -81,7 +80,7 @@ func (hook *Hook) Schema(ctx context.Context, req resource.SchemaRequest, resp *
 					),
 				},
 			},
-			"prioirty": schema.Int32Attribute{
+			"priority": schema.Int32Attribute{
 				Required:    true,
 				Description: "The priority of the hook",
 			},
@@ -92,6 +91,10 @@ func (hook *Hook) Schema(ctx context.Context, req resource.SchemaRequest, resp *
 			"enabled": schema.BoolAttribute{
 				Optional:    true,
 				Description: "Whether the hook is enabled or not",
+			},
+			"script": schema.StringAttribute{
+				Required:    true,
+				Description: "The script that should be executed when the hook is triggered",
 			},
 		},
 	}
@@ -242,11 +245,12 @@ func (hook *Hook) ImportState(ctx context.Context, req resource.ImportStateReque
 
 func (hook *HookModel) toAPIRequest() api.CreateOrUpdateHookRequest {
 	return api.CreateOrUpdateHookRequest{
-		Entity:   api.HookEntity(hook.Entity.ValueString()),
-		Action:   api.HookAction(hook.Action.ValueString()),
-		Script:   hook.Script.ValueString(),
-		Priority: hook.Priority.ValueInt32(),
-		Enabled:  hook.Enabled.ValueBool(),
+		Entity:       api.HookEntity(hook.Entity.ValueString()),
+		Action:       api.HookAction(hook.Action.ValueString()),
+		Script:       hook.Script.ValueString(),
+		Priority:     hook.Priority.ValueInt32(),
+		Enabled:      hook.Enabled.ValueBool(),
+		BreakOnError: hook.BreakOnError.ValueBoolPointer(),
 	}
 }
 
@@ -257,4 +261,5 @@ func (hook *HookModel) fromAPI(resp *api.Hook) {
 	hook.Script = types.StringValue(resp.Script)
 	hook.Priority = types.Int32Value(resp.Priority)
 	hook.Enabled = types.BoolValue(resp.Enabled)
+	hook.BreakOnError = omittableBooleanValue(resp.BreakOnError, hook.BreakOnError)
 }
