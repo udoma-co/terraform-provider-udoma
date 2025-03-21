@@ -11,9 +11,7 @@ API version: 1.0
 package v1
 
 import (
-	"bytes"
 	"encoding/json"
-	"fmt"
 )
 
 // checks if the DocumentTemplateSignerDefinition type satisfies the MappedNullable interface at compile time
@@ -21,22 +19,19 @@ var _ MappedNullable = &DocumentTemplateSignerDefinition{}
 
 // DocumentTemplateSignerDefinition Indicates where to get data to generate info of a signer
 type DocumentTemplateSignerDefinition struct {
-	ContactData NullableContactData `json:"contact_data"`
-	// JS expression to compute the contact data of the signer
+	ContactData NullableContactData `json:"contact_data,omitempty"`
+	// JS expression to compute the contact data of the signer. Must be set if repeated is true, or if contact_data is not set.
 	ContactDataExpression *string `json:"contact_data_expression,omitempty"`
 	// If set to true, the signer definition will be repeated for each value of the name and contract data expressions.
 	Repeated *bool `json:"repeated,omitempty"`
 }
 
-type _DocumentTemplateSignerDefinition DocumentTemplateSignerDefinition
-
 // NewDocumentTemplateSignerDefinition instantiates a new DocumentTemplateSignerDefinition object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDocumentTemplateSignerDefinition(contactData NullableContactData) *DocumentTemplateSignerDefinition {
+func NewDocumentTemplateSignerDefinition() *DocumentTemplateSignerDefinition {
 	this := DocumentTemplateSignerDefinition{}
-	this.ContactData = contactData
 	return &this
 }
 
@@ -48,18 +43,16 @@ func NewDocumentTemplateSignerDefinitionWithDefaults() *DocumentTemplateSignerDe
 	return &this
 }
 
-// GetContactData returns the ContactData field value
-// If the value is explicit nil, the zero value for ContactData will be returned
+// GetContactData returns the ContactData field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *DocumentTemplateSignerDefinition) GetContactData() ContactData {
-	if o == nil || o.ContactData.Get() == nil {
+	if o == nil || IsNil(o.ContactData.Get()) {
 		var ret ContactData
 		return ret
 	}
-
 	return *o.ContactData.Get()
 }
 
-// GetContactDataOk returns a tuple with the ContactData field value
+// GetContactDataOk returns a tuple with the ContactData field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *DocumentTemplateSignerDefinition) GetContactDataOk() (*ContactData, bool) {
@@ -69,9 +62,28 @@ func (o *DocumentTemplateSignerDefinition) GetContactDataOk() (*ContactData, boo
 	return o.ContactData.Get(), o.ContactData.IsSet()
 }
 
-// SetContactData sets field value
+// HasContactData returns a boolean if a field has been set.
+func (o *DocumentTemplateSignerDefinition) HasContactData() bool {
+	if o != nil && o.ContactData.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetContactData gets a reference to the given NullableContactData and assigns it to the ContactData field.
 func (o *DocumentTemplateSignerDefinition) SetContactData(v ContactData) {
 	o.ContactData.Set(&v)
+}
+
+// SetContactDataNil sets the value for ContactData to be an explicit nil
+func (o *DocumentTemplateSignerDefinition) SetContactDataNil() {
+	o.ContactData.Set(nil)
+}
+
+// UnsetContactData ensures that no value is present for ContactData, not even an explicit nil
+func (o *DocumentTemplateSignerDefinition) UnsetContactData() {
+	o.ContactData.Unset()
 }
 
 // GetContactDataExpression returns the ContactDataExpression field value if set, zero value otherwise.
@@ -148,7 +160,9 @@ func (o DocumentTemplateSignerDefinition) MarshalJSON() ([]byte, error) {
 
 func (o DocumentTemplateSignerDefinition) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["contact_data"] = o.ContactData.Get()
+	if o.ContactData.IsSet() {
+		toSerialize["contact_data"] = o.ContactData.Get()
+	}
 	if !IsNil(o.ContactDataExpression) {
 		toSerialize["contact_data_expression"] = o.ContactDataExpression
 	}
@@ -156,43 +170,6 @@ func (o DocumentTemplateSignerDefinition) ToMap() (map[string]interface{}, error
 		toSerialize["repeated"] = o.Repeated
 	}
 	return toSerialize, nil
-}
-
-func (o *DocumentTemplateSignerDefinition) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"contact_data",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
-	varDocumentTemplateSignerDefinition := _DocumentTemplateSignerDefinition{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varDocumentTemplateSignerDefinition)
-
-	if err != nil {
-		return err
-	}
-
-	*o = DocumentTemplateSignerDefinition(varDocumentTemplateSignerDefinition)
-
-	return err
 }
 
 type NullableDocumentTemplateSignerDefinition struct {
