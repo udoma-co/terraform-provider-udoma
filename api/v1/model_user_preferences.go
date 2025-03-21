@@ -23,6 +23,10 @@ type UserPreferences struct {
 	NotifyOnNewCase []NotificationType `json:"notify_on_new_case,omitempty"`
 	// Notify when a new case has been updated, which the user or their  company has been active on.
 	NotifyOnCaseUpdate []NotificationType `json:"notify_on_case_update,omitempty"`
+	// Notify when an appointment has been created, confirmed, cancelled,  cancelled by participant or joined.
+	NotifyOnAppointment []NotificationType `json:"notify_on_appointment,omitempty"`
+	// Notify when a user has accessed a sent correspondence.
+	NotifyOnCorrespondenceAccessed []NotificationType `json:"notify_on_correspondence_accessed,omitempty"`
 }
 
 // NewUserPreferences instantiates a new UserPreferences object
@@ -106,6 +110,70 @@ func (o *UserPreferences) SetNotifyOnCaseUpdate(v []NotificationType) {
 	o.NotifyOnCaseUpdate = v
 }
 
+// GetNotifyOnAppointment returns the NotifyOnAppointment field value if set, zero value otherwise.
+func (o *UserPreferences) GetNotifyOnAppointment() []NotificationType {
+	if o == nil || IsNil(o.NotifyOnAppointment) {
+		var ret []NotificationType
+		return ret
+	}
+	return o.NotifyOnAppointment
+}
+
+// GetNotifyOnAppointmentOk returns a tuple with the NotifyOnAppointment field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UserPreferences) GetNotifyOnAppointmentOk() ([]NotificationType, bool) {
+	if o == nil || IsNil(o.NotifyOnAppointment) {
+		return nil, false
+	}
+	return o.NotifyOnAppointment, true
+}
+
+// HasNotifyOnAppointment returns a boolean if a field has been set.
+func (o *UserPreferences) HasNotifyOnAppointment() bool {
+	if o != nil && !IsNil(o.NotifyOnAppointment) {
+		return true
+	}
+
+	return false
+}
+
+// SetNotifyOnAppointment gets a reference to the given []NotificationType and assigns it to the NotifyOnAppointment field.
+func (o *UserPreferences) SetNotifyOnAppointment(v []NotificationType) {
+	o.NotifyOnAppointment = v
+}
+
+// GetNotifyOnCorrespondenceAccessed returns the NotifyOnCorrespondenceAccessed field value if set, zero value otherwise.
+func (o *UserPreferences) GetNotifyOnCorrespondenceAccessed() []NotificationType {
+	if o == nil || IsNil(o.NotifyOnCorrespondenceAccessed) {
+		var ret []NotificationType
+		return ret
+	}
+	return o.NotifyOnCorrespondenceAccessed
+}
+
+// GetNotifyOnCorrespondenceAccessedOk returns a tuple with the NotifyOnCorrespondenceAccessed field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UserPreferences) GetNotifyOnCorrespondenceAccessedOk() ([]NotificationType, bool) {
+	if o == nil || IsNil(o.NotifyOnCorrespondenceAccessed) {
+		return nil, false
+	}
+	return o.NotifyOnCorrespondenceAccessed, true
+}
+
+// HasNotifyOnCorrespondenceAccessed returns a boolean if a field has been set.
+func (o *UserPreferences) HasNotifyOnCorrespondenceAccessed() bool {
+	if o != nil && !IsNil(o.NotifyOnCorrespondenceAccessed) {
+		return true
+	}
+
+	return false
+}
+
+// SetNotifyOnCorrespondenceAccessed gets a reference to the given []NotificationType and assigns it to the NotifyOnCorrespondenceAccessed field.
+func (o *UserPreferences) SetNotifyOnCorrespondenceAccessed(v []NotificationType) {
+	o.NotifyOnCorrespondenceAccessed = v
+}
+
 func (o UserPreferences) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -121,6 +189,12 @@ func (o UserPreferences) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.NotifyOnCaseUpdate) {
 		toSerialize["notify_on_case_update"] = o.NotifyOnCaseUpdate
+	}
+	if !IsNil(o.NotifyOnAppointment) {
+		toSerialize["notify_on_appointment"] = o.NotifyOnAppointment
+	}
+	if !IsNil(o.NotifyOnCorrespondenceAccessed) {
+		toSerialize["notify_on_correspondence_accessed"] = o.NotifyOnCorrespondenceAccessed
 	}
 	return toSerialize, nil
 }

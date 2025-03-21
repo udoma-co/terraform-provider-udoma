@@ -340,6 +340,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryExternalUserCases**](docs/DefaultAPI.md#queryexternalusercases) | **Get** /external-users/{userID}/cases | Get the cases the the given user has opened
 *DefaultAPI* | [**QueryExternalUsers**](docs/DefaultAPI.md#queryexternalusers) | **Get** /external-users | Get a list of external users who reported to the current manager
 *DefaultAPI* | [**QueryFinancialAccounts**](docs/DefaultAPI.md#queryfinancialaccounts) | **Post** /financial/accounts | Query all financial accounts
+*DefaultAPI* | [**QueryHooks**](docs/DefaultAPI.md#queryhooks) | **Post** /hooks | Query hooks
 *DefaultAPI* | [**QueryNotesForEntity**](docs/DefaultAPI.md#querynotesforentity) | **Get** /notes/by-reference/{refID} | List notes
 *DefaultAPI* | [**QueryNotifications**](docs/DefaultAPI.md#querynotifications) | **Post** /notifications | Query notifications
 *DefaultAPI* | [**QueryProperties**](docs/DefaultAPI.md#queryproperties) | **Post** /properties | Query properties
@@ -685,6 +686,8 @@ Class | Method | HTTP request | Description
  - [QueryExternalUserCasesResponse](docs/QueryExternalUserCasesResponse.md)
  - [QueryExternalUsersResponse](docs/QueryExternalUsersResponse.md)
  - [QueryFinancialAccountsRequest](docs/QueryFinancialAccountsRequest.md)
+ - [QueryHooksRequest](docs/QueryHooksRequest.md)
+ - [QueryHooksResponse](docs/QueryHooksResponse.md)
  - [QueryLimitAttributesPartial](docs/QueryLimitAttributesPartial.md)
  - [QueryNotificationsRequest](docs/QueryNotificationsRequest.md)
  - [QueryNotificationsResponse](docs/QueryNotificationsResponse.md)

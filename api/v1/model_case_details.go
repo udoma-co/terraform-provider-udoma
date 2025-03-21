@@ -28,6 +28,8 @@ type CaseDetails struct {
 	CaseParty           *CaseParty   `json:"case_party,omitempty"`
 	Template            CaseTemplate `json:"template"`
 	Property            *Property    `json:"property,omitempty"`
+	// Indicator of if the user still has access to the case
+	AccessRevoked *bool `json:"access_revoked,omitempty"`
 }
 
 type _CaseDetails CaseDetails
@@ -227,6 +229,38 @@ func (o *CaseDetails) SetProperty(v Property) {
 	o.Property = &v
 }
 
+// GetAccessRevoked returns the AccessRevoked field value if set, zero value otherwise.
+func (o *CaseDetails) GetAccessRevoked() bool {
+	if o == nil || IsNil(o.AccessRevoked) {
+		var ret bool
+		return ret
+	}
+	return *o.AccessRevoked
+}
+
+// GetAccessRevokedOk returns a tuple with the AccessRevoked field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CaseDetails) GetAccessRevokedOk() (*bool, bool) {
+	if o == nil || IsNil(o.AccessRevoked) {
+		return nil, false
+	}
+	return o.AccessRevoked, true
+}
+
+// HasAccessRevoked returns a boolean if a field has been set.
+func (o *CaseDetails) HasAccessRevoked() bool {
+	if o != nil && !IsNil(o.AccessRevoked) {
+		return true
+	}
+
+	return false
+}
+
+// SetAccessRevoked gets a reference to the given bool and assigns it to the AccessRevoked field.
+func (o *CaseDetails) SetAccessRevoked(v bool) {
+	o.AccessRevoked = &v
+}
+
 func (o CaseDetails) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -250,6 +284,9 @@ func (o CaseDetails) ToMap() (map[string]interface{}, error) {
 	toSerialize["template"] = o.Template
 	if !IsNil(o.Property) {
 		toSerialize["property"] = o.Property
+	}
+	if !IsNil(o.AccessRevoked) {
+		toSerialize["access_revoked"] = o.AccessRevoked
 	}
 	return toSerialize, nil
 }
