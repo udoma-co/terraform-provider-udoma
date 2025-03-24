@@ -53,7 +53,7 @@ EOF
 
 	signatures = <<EOF
 	{
-		"esignatures_enabled": true
+		"esignatures_enabled": false
 	}
 EOF
 
