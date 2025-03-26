@@ -19,7 +19,7 @@ import (
 // checks if the FinancialSubAccount type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &FinancialSubAccount{}
 
-// FinancialSubAccount A sub-account of a financial account that can be used to track  financial transactions mapped to a specific entity
+// FinancialSubAccount A sub-account of a financial account that can be used to track financial transactions mapped to a specific entity
 type FinancialSubAccount struct {
 	Account FinancialAccount `json:"account"`
 	// The dimensions that are assigned to the sub-account

@@ -23,9 +23,9 @@ var _ MappedNullable = &CreateOrUpdateAccountDimensionValueRequest{}
 type CreateOrUpdateAccountDimensionValueRequest struct {
 	// Optional ID for the parent dimension. If set, this value is only available when the parent dimension has been set to the given ID.
 	ParentId *string `json:"parent_id,omitempty"`
-	// The unique ID this this value (typically the ID of the referenced  entity that is mapped, e.g. property ID). This value must be unique for the given dimension, regardless of the parent dimension value.
+	// The unique ID this this value (typically the ID of the referenced entity that is mapped, e.g. property ID). This value must be unique for the given dimension, regardless of the parent dimension value.
 	Id string `json:"id"`
-	// The numeric value under the given dimension. This value is unique for the given dimension. If a parent dimension reference is set,  then the value is only unique for the parent dimension value and  may be repeated for other parent dimension values.
+	// The numeric value under the given dimension. This value is unique for the given dimension. If a parent dimension reference is set, then the value is only unique for the parent dimension value and may be repeated for other parent dimension values.
 	Value *int32 `json:"value,omitempty"`
 }
 

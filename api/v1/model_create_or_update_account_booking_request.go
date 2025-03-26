@@ -26,11 +26,9 @@ type CreateOrUpdateAccountBookingRequest struct {
 	// The timestamp of the booking
 	Date int64 `json:"date"`
 	// A short description of the booking
-	Description string `json:"description"`
-	// Information on how the total amount of the booking is allocated to  different accounts for the credit
-	Credit []AccountBookingAllocation `json:"credit"`
-	// Information on how the total amount of the booking is allocated to  different accounts for the debit
-	Debit []AccountBookingAllocation `json:"debit"`
+	Description string                                   `json:"description"`
+	Credit      []CreateOrUpdateAccountBookingAllocation `json:"credit"`
+	Debit       []CreateOrUpdateAccountBookingAllocation `json:"debit"`
 	// Optional reference to the source transaction, if the booking was made based on a transaction
 	TransactionRef *string `json:"transaction_ref,omitempty"`
 }
@@ -41,7 +39,7 @@ type _CreateOrUpdateAccountBookingRequest CreateOrUpdateAccountBookingRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateOrUpdateAccountBookingRequest(amount float64, date int64, description string, credit []AccountBookingAllocation, debit []AccountBookingAllocation) *CreateOrUpdateAccountBookingRequest {
+func NewCreateOrUpdateAccountBookingRequest(amount float64, date int64, description string, credit []CreateOrUpdateAccountBookingAllocation, debit []CreateOrUpdateAccountBookingAllocation) *CreateOrUpdateAccountBookingRequest {
 	this := CreateOrUpdateAccountBookingRequest{}
 	this.Amount = amount
 	this.Date = date
@@ -132,9 +130,9 @@ func (o *CreateOrUpdateAccountBookingRequest) SetDescription(v string) {
 }
 
 // GetCredit returns the Credit field value
-func (o *CreateOrUpdateAccountBookingRequest) GetCredit() []AccountBookingAllocation {
+func (o *CreateOrUpdateAccountBookingRequest) GetCredit() []CreateOrUpdateAccountBookingAllocation {
 	if o == nil {
-		var ret []AccountBookingAllocation
+		var ret []CreateOrUpdateAccountBookingAllocation
 		return ret
 	}
 
@@ -143,7 +141,7 @@ func (o *CreateOrUpdateAccountBookingRequest) GetCredit() []AccountBookingAlloca
 
 // GetCreditOk returns a tuple with the Credit field value
 // and a boolean to check if the value has been set.
-func (o *CreateOrUpdateAccountBookingRequest) GetCreditOk() ([]AccountBookingAllocation, bool) {
+func (o *CreateOrUpdateAccountBookingRequest) GetCreditOk() ([]CreateOrUpdateAccountBookingAllocation, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -151,14 +149,14 @@ func (o *CreateOrUpdateAccountBookingRequest) GetCreditOk() ([]AccountBookingAll
 }
 
 // SetCredit sets field value
-func (o *CreateOrUpdateAccountBookingRequest) SetCredit(v []AccountBookingAllocation) {
+func (o *CreateOrUpdateAccountBookingRequest) SetCredit(v []CreateOrUpdateAccountBookingAllocation) {
 	o.Credit = v
 }
 
 // GetDebit returns the Debit field value
-func (o *CreateOrUpdateAccountBookingRequest) GetDebit() []AccountBookingAllocation {
+func (o *CreateOrUpdateAccountBookingRequest) GetDebit() []CreateOrUpdateAccountBookingAllocation {
 	if o == nil {
-		var ret []AccountBookingAllocation
+		var ret []CreateOrUpdateAccountBookingAllocation
 		return ret
 	}
 
@@ -167,7 +165,7 @@ func (o *CreateOrUpdateAccountBookingRequest) GetDebit() []AccountBookingAllocat
 
 // GetDebitOk returns a tuple with the Debit field value
 // and a boolean to check if the value has been set.
-func (o *CreateOrUpdateAccountBookingRequest) GetDebitOk() ([]AccountBookingAllocation, bool) {
+func (o *CreateOrUpdateAccountBookingRequest) GetDebitOk() ([]CreateOrUpdateAccountBookingAllocation, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -175,7 +173,7 @@ func (o *CreateOrUpdateAccountBookingRequest) GetDebitOk() ([]AccountBookingAllo
 }
 
 // SetDebit sets field value
-func (o *CreateOrUpdateAccountBookingRequest) SetDebit(v []AccountBookingAllocation) {
+func (o *CreateOrUpdateAccountBookingRequest) SetDebit(v []CreateOrUpdateAccountBookingAllocation) {
 	o.Debit = v
 }
 

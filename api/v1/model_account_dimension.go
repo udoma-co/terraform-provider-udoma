@@ -42,7 +42,7 @@ type AccountDimension struct {
 	ValueGenerator *string `json:"value_generator,omitempty"`
 	// Optional nested dimensions for this dimension. This is lazy loaded, that is, it is returned only if a single dimension is loaded.
 	SubDimensions []AccountDimension `json:"sub_dimensions,omitempty"`
-	// All available values for this dimension. This is lazy loaded, that is, only  if a single dimension is loaded.
+	// All available values for this dimension. This is lazy loaded, that is, only if a single dimension is loaded.
 	Values []AccountDimensionValue `json:"values,omitempty"`
 }
 
