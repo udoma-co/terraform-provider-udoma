@@ -26,6 +26,8 @@ type CreateOrUpdateWorkflowEntrypointRequest struct {
 	AppLocation           WorkflowEntrypointLocation `json:"app_location"`
 	// optional filters that can be used to limit where the entrypoint is shown, e.g. for cases this can be the case template, for reports this can be the report  definition, etc.
 	LocationFilters []WorkflowEntrypointFilter `json:"location_filters,omitempty"`
+	// optional validations that can be used to determine if the workflow can  be started via this entrypoint. Depending on the result, the workflow can be started or not.
+	Validations []WorkflowEntrypointValidation `json:"validations,omitempty"`
 	// Optional icon of the entrypoint
 	Icon *string `json:"icon,omitempty"`
 	// a map of values, where the key and values are strings
@@ -136,6 +138,38 @@ func (o *CreateOrUpdateWorkflowEntrypointRequest) SetLocationFilters(v []Workflo
 	o.LocationFilters = v
 }
 
+// GetValidations returns the Validations field value if set, zero value otherwise.
+func (o *CreateOrUpdateWorkflowEntrypointRequest) GetValidations() []WorkflowEntrypointValidation {
+	if o == nil || IsNil(o.Validations) {
+		var ret []WorkflowEntrypointValidation
+		return ret
+	}
+	return o.Validations
+}
+
+// GetValidationsOk returns a tuple with the Validations field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateWorkflowEntrypointRequest) GetValidationsOk() ([]WorkflowEntrypointValidation, bool) {
+	if o == nil || IsNil(o.Validations) {
+		return nil, false
+	}
+	return o.Validations, true
+}
+
+// HasValidations returns a boolean if a field has been set.
+func (o *CreateOrUpdateWorkflowEntrypointRequest) HasValidations() bool {
+	if o != nil && !IsNil(o.Validations) {
+		return true
+	}
+
+	return false
+}
+
+// SetValidations gets a reference to the given []WorkflowEntrypointValidation and assigns it to the Validations field.
+func (o *CreateOrUpdateWorkflowEntrypointRequest) SetValidations(v []WorkflowEntrypointValidation) {
+	o.Validations = v
+}
+
 // GetIcon returns the Icon field value if set, zero value otherwise.
 func (o *CreateOrUpdateWorkflowEntrypointRequest) GetIcon() string {
 	if o == nil || IsNil(o.Icon) {
@@ -238,6 +272,9 @@ func (o CreateOrUpdateWorkflowEntrypointRequest) ToMap() (map[string]interface{}
 	toSerialize["app_location"] = o.AppLocation
 	if !IsNil(o.LocationFilters) {
 		toSerialize["location_filters"] = o.LocationFilters
+	}
+	if !IsNil(o.Validations) {
+		toSerialize["validations"] = o.Validations
 	}
 	if !IsNil(o.Icon) {
 		toSerialize["icon"] = o.Icon

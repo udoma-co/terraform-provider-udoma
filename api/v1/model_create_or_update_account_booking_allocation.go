@@ -16,44 +16,42 @@ import (
 	"fmt"
 )
 
-// checks if the AccountBookingAllocation type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &AccountBookingAllocation{}
+// checks if the CreateOrUpdateAccountBookingAllocation type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CreateOrUpdateAccountBookingAllocation{}
 
-// AccountBookingAllocation The allocation of (part of) the amount of a booking to a financial account
-type AccountBookingAllocation struct {
+// CreateOrUpdateAccountBookingAllocation The allocation of (part of) the amount of a booking to a financial account
+type CreateOrUpdateAccountBookingAllocation struct {
 	// The unique identifier of the financial account
 	AccountRef string `json:"account_ref"`
 	// The split amount that is assigned to the referenced account. The sum of all allocations must add up to the total amount of the booking.
 	Amount float64 `json:"amount"`
 	// A serialized version of dimensions containing account value for the first value and dimensions for the rest in downwards order. They should be separated with '.' Example - \"10000.20.001.02\", where 10000 is the account value, 20, 001, and 02 are dimension values for dimensions that belong to the account.
 	FlatNumber *string `json:"flat_number,omitempty"`
-	// The values of the dimensions that are assigned to the booking for the allocation
-	Dimensions []AccountDimensionValueRef `json:"dimensions,omitempty"`
 }
 
-type _AccountBookingAllocation AccountBookingAllocation
+type _CreateOrUpdateAccountBookingAllocation CreateOrUpdateAccountBookingAllocation
 
-// NewAccountBookingAllocation instantiates a new AccountBookingAllocation object
+// NewCreateOrUpdateAccountBookingAllocation instantiates a new CreateOrUpdateAccountBookingAllocation object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAccountBookingAllocation(accountRef string, amount float64) *AccountBookingAllocation {
-	this := AccountBookingAllocation{}
+func NewCreateOrUpdateAccountBookingAllocation(accountRef string, amount float64) *CreateOrUpdateAccountBookingAllocation {
+	this := CreateOrUpdateAccountBookingAllocation{}
 	this.AccountRef = accountRef
 	this.Amount = amount
 	return &this
 }
 
-// NewAccountBookingAllocationWithDefaults instantiates a new AccountBookingAllocation object
+// NewCreateOrUpdateAccountBookingAllocationWithDefaults instantiates a new CreateOrUpdateAccountBookingAllocation object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewAccountBookingAllocationWithDefaults() *AccountBookingAllocation {
-	this := AccountBookingAllocation{}
+func NewCreateOrUpdateAccountBookingAllocationWithDefaults() *CreateOrUpdateAccountBookingAllocation {
+	this := CreateOrUpdateAccountBookingAllocation{}
 	return &this
 }
 
 // GetAccountRef returns the AccountRef field value
-func (o *AccountBookingAllocation) GetAccountRef() string {
+func (o *CreateOrUpdateAccountBookingAllocation) GetAccountRef() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -64,7 +62,7 @@ func (o *AccountBookingAllocation) GetAccountRef() string {
 
 // GetAccountRefOk returns a tuple with the AccountRef field value
 // and a boolean to check if the value has been set.
-func (o *AccountBookingAllocation) GetAccountRefOk() (*string, bool) {
+func (o *CreateOrUpdateAccountBookingAllocation) GetAccountRefOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -72,12 +70,12 @@ func (o *AccountBookingAllocation) GetAccountRefOk() (*string, bool) {
 }
 
 // SetAccountRef sets field value
-func (o *AccountBookingAllocation) SetAccountRef(v string) {
+func (o *CreateOrUpdateAccountBookingAllocation) SetAccountRef(v string) {
 	o.AccountRef = v
 }
 
 // GetAmount returns the Amount field value
-func (o *AccountBookingAllocation) GetAmount() float64 {
+func (o *CreateOrUpdateAccountBookingAllocation) GetAmount() float64 {
 	if o == nil {
 		var ret float64
 		return ret
@@ -88,7 +86,7 @@ func (o *AccountBookingAllocation) GetAmount() float64 {
 
 // GetAmountOk returns a tuple with the Amount field value
 // and a boolean to check if the value has been set.
-func (o *AccountBookingAllocation) GetAmountOk() (*float64, bool) {
+func (o *CreateOrUpdateAccountBookingAllocation) GetAmountOk() (*float64, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -96,12 +94,12 @@ func (o *AccountBookingAllocation) GetAmountOk() (*float64, bool) {
 }
 
 // SetAmount sets field value
-func (o *AccountBookingAllocation) SetAmount(v float64) {
+func (o *CreateOrUpdateAccountBookingAllocation) SetAmount(v float64) {
 	o.Amount = v
 }
 
 // GetFlatNumber returns the FlatNumber field value if set, zero value otherwise.
-func (o *AccountBookingAllocation) GetFlatNumber() string {
+func (o *CreateOrUpdateAccountBookingAllocation) GetFlatNumber() string {
 	if o == nil || IsNil(o.FlatNumber) {
 		var ret string
 		return ret
@@ -111,7 +109,7 @@ func (o *AccountBookingAllocation) GetFlatNumber() string {
 
 // GetFlatNumberOk returns a tuple with the FlatNumber field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AccountBookingAllocation) GetFlatNumberOk() (*string, bool) {
+func (o *CreateOrUpdateAccountBookingAllocation) GetFlatNumberOk() (*string, bool) {
 	if o == nil || IsNil(o.FlatNumber) {
 		return nil, false
 	}
@@ -119,7 +117,7 @@ func (o *AccountBookingAllocation) GetFlatNumberOk() (*string, bool) {
 }
 
 // HasFlatNumber returns a boolean if a field has been set.
-func (o *AccountBookingAllocation) HasFlatNumber() bool {
+func (o *CreateOrUpdateAccountBookingAllocation) HasFlatNumber() bool {
 	if o != nil && !IsNil(o.FlatNumber) {
 		return true
 	}
@@ -128,43 +126,11 @@ func (o *AccountBookingAllocation) HasFlatNumber() bool {
 }
 
 // SetFlatNumber gets a reference to the given string and assigns it to the FlatNumber field.
-func (o *AccountBookingAllocation) SetFlatNumber(v string) {
+func (o *CreateOrUpdateAccountBookingAllocation) SetFlatNumber(v string) {
 	o.FlatNumber = &v
 }
 
-// GetDimensions returns the Dimensions field value if set, zero value otherwise.
-func (o *AccountBookingAllocation) GetDimensions() []AccountDimensionValueRef {
-	if o == nil || IsNil(o.Dimensions) {
-		var ret []AccountDimensionValueRef
-		return ret
-	}
-	return o.Dimensions
-}
-
-// GetDimensionsOk returns a tuple with the Dimensions field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *AccountBookingAllocation) GetDimensionsOk() ([]AccountDimensionValueRef, bool) {
-	if o == nil || IsNil(o.Dimensions) {
-		return nil, false
-	}
-	return o.Dimensions, true
-}
-
-// HasDimensions returns a boolean if a field has been set.
-func (o *AccountBookingAllocation) HasDimensions() bool {
-	if o != nil && !IsNil(o.Dimensions) {
-		return true
-	}
-
-	return false
-}
-
-// SetDimensions gets a reference to the given []AccountDimensionValueRef and assigns it to the Dimensions field.
-func (o *AccountBookingAllocation) SetDimensions(v []AccountDimensionValueRef) {
-	o.Dimensions = v
-}
-
-func (o AccountBookingAllocation) MarshalJSON() ([]byte, error) {
+func (o CreateOrUpdateAccountBookingAllocation) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -172,20 +138,17 @@ func (o AccountBookingAllocation) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o AccountBookingAllocation) ToMap() (map[string]interface{}, error) {
+func (o CreateOrUpdateAccountBookingAllocation) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["account_ref"] = o.AccountRef
 	toSerialize["amount"] = o.Amount
 	if !IsNil(o.FlatNumber) {
 		toSerialize["flat_number"] = o.FlatNumber
 	}
-	if !IsNil(o.Dimensions) {
-		toSerialize["dimensions"] = o.Dimensions
-	}
 	return toSerialize, nil
 }
 
-func (o *AccountBookingAllocation) UnmarshalJSON(data []byte) (err error) {
+func (o *CreateOrUpdateAccountBookingAllocation) UnmarshalJSON(data []byte) (err error) {
 	// This validates that all required properties are included in the JSON object
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
@@ -208,53 +171,53 @@ func (o *AccountBookingAllocation) UnmarshalJSON(data []byte) (err error) {
 		}
 	}
 
-	varAccountBookingAllocation := _AccountBookingAllocation{}
+	varCreateOrUpdateAccountBookingAllocation := _CreateOrUpdateAccountBookingAllocation{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varAccountBookingAllocation)
+	err = decoder.Decode(&varCreateOrUpdateAccountBookingAllocation)
 
 	if err != nil {
 		return err
 	}
 
-	*o = AccountBookingAllocation(varAccountBookingAllocation)
+	*o = CreateOrUpdateAccountBookingAllocation(varCreateOrUpdateAccountBookingAllocation)
 
 	return err
 }
 
-type NullableAccountBookingAllocation struct {
-	value *AccountBookingAllocation
+type NullableCreateOrUpdateAccountBookingAllocation struct {
+	value *CreateOrUpdateAccountBookingAllocation
 	isSet bool
 }
 
-func (v NullableAccountBookingAllocation) Get() *AccountBookingAllocation {
+func (v NullableCreateOrUpdateAccountBookingAllocation) Get() *CreateOrUpdateAccountBookingAllocation {
 	return v.value
 }
 
-func (v *NullableAccountBookingAllocation) Set(val *AccountBookingAllocation) {
+func (v *NullableCreateOrUpdateAccountBookingAllocation) Set(val *CreateOrUpdateAccountBookingAllocation) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableAccountBookingAllocation) IsSet() bool {
+func (v NullableCreateOrUpdateAccountBookingAllocation) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableAccountBookingAllocation) Unset() {
+func (v *NullableCreateOrUpdateAccountBookingAllocation) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableAccountBookingAllocation(val *AccountBookingAllocation) *NullableAccountBookingAllocation {
-	return &NullableAccountBookingAllocation{value: val, isSet: true}
+func NewNullableCreateOrUpdateAccountBookingAllocation(val *CreateOrUpdateAccountBookingAllocation) *NullableCreateOrUpdateAccountBookingAllocation {
+	return &NullableCreateOrUpdateAccountBookingAllocation{value: val, isSet: true}
 }
 
-func (v NullableAccountBookingAllocation) MarshalJSON() ([]byte, error) {
+func (v NullableCreateOrUpdateAccountBookingAllocation) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableAccountBookingAllocation) UnmarshalJSON(src []byte) error {
+func (v *NullableCreateOrUpdateAccountBookingAllocation) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

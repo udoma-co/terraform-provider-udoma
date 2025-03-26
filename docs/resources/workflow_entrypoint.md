@@ -26,6 +26,9 @@ Resource represents an entrypoint to a workflow
 - `init_script` (String) Optional JS script to be executed before the workflow is started
 - `label` (Map of String) The label to be displayed on the button starting the workflow execution
 - `location_filters` (Attributes List) Filters that can be used to limit where the entrypoint is shown (see [below for nested schema](#nestedatt--location_filters))
+- `validations` (Attributes List) Optional validations that can be used to determine if the workflow can 
+					be started via this entrypoint. Depending on the result, the workflow
+					can be started or not. (see [below for nested schema](#nestedatt--validations))
 
 ### Read-Only
 
@@ -41,3 +44,12 @@ Required:
 
 - `attribute` (String) The ID of the entity that will be referenced
 - `value` (String) The type of the entity that will be referenced
+
+
+<a id="nestedatt--validations"></a>
+### Nested Schema for `validations`
+
+Required:
+
+- `name` (String) The name of the validation
+- `script` (String) JS script that will be executed to validate if the workflow can be started via this entrypoint

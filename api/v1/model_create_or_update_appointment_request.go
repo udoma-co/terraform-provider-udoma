@@ -24,7 +24,7 @@ type CreateOrUpdateAppointmentRequest struct {
 	// The id of the appointment window that the user wants to book
 	AppointmentWindowId string `json:"appointment_window_id"`
 	// The offset within the appointment window which should be booked
-	SlotIdx int32               `json:"slot_idx"`
+	SlotIdx *int32              `json:"slot_idx,omitempty"`
 	Contact NullableContactData `json:"contact"`
 	// The data that the user has entered when booking the appointment
 	Data map[string]interface{} `json:"data,omitempty"`
@@ -36,10 +36,9 @@ type _CreateOrUpdateAppointmentRequest CreateOrUpdateAppointmentRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateOrUpdateAppointmentRequest(appointmentWindowId string, slotIdx int32, contact NullableContactData) *CreateOrUpdateAppointmentRequest {
+func NewCreateOrUpdateAppointmentRequest(appointmentWindowId string, contact NullableContactData) *CreateOrUpdateAppointmentRequest {
 	this := CreateOrUpdateAppointmentRequest{}
 	this.AppointmentWindowId = appointmentWindowId
-	this.SlotIdx = slotIdx
 	this.Contact = contact
 	return &this
 }
@@ -76,28 +75,36 @@ func (o *CreateOrUpdateAppointmentRequest) SetAppointmentWindowId(v string) {
 	o.AppointmentWindowId = v
 }
 
-// GetSlotIdx returns the SlotIdx field value
+// GetSlotIdx returns the SlotIdx field value if set, zero value otherwise.
 func (o *CreateOrUpdateAppointmentRequest) GetSlotIdx() int32 {
-	if o == nil {
+	if o == nil || IsNil(o.SlotIdx) {
 		var ret int32
 		return ret
 	}
-
-	return o.SlotIdx
+	return *o.SlotIdx
 }
 
-// GetSlotIdxOk returns a tuple with the SlotIdx field value
+// GetSlotIdxOk returns a tuple with the SlotIdx field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateAppointmentRequest) GetSlotIdxOk() (*int32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.SlotIdx) {
 		return nil, false
 	}
-	return &o.SlotIdx, true
+	return o.SlotIdx, true
 }
 
-// SetSlotIdx sets field value
+// HasSlotIdx returns a boolean if a field has been set.
+func (o *CreateOrUpdateAppointmentRequest) HasSlotIdx() bool {
+	if o != nil && !IsNil(o.SlotIdx) {
+		return true
+	}
+
+	return false
+}
+
+// SetSlotIdx gets a reference to the given int32 and assigns it to the SlotIdx field.
 func (o *CreateOrUpdateAppointmentRequest) SetSlotIdx(v int32) {
-	o.SlotIdx = v
+	o.SlotIdx = &v
 }
 
 // GetContact returns the Contact field value
@@ -169,7 +176,9 @@ func (o CreateOrUpdateAppointmentRequest) MarshalJSON() ([]byte, error) {
 func (o CreateOrUpdateAppointmentRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["appointment_window_id"] = o.AppointmentWindowId
-	toSerialize["slot_idx"] = o.SlotIdx
+	if !IsNil(o.SlotIdx) {
+		toSerialize["slot_idx"] = o.SlotIdx
+	}
 	toSerialize["contact"] = o.Contact.Get()
 	if !IsNil(o.Data) {
 		toSerialize["data"] = o.Data
@@ -183,7 +192,6 @@ func (o *CreateOrUpdateAppointmentRequest) UnmarshalJSON(data []byte) (err error
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"appointment_window_id",
-		"slot_idx",
 		"contact",
 	}
 

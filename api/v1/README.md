@@ -196,6 +196,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GenerateESignatureForDocument**](docs/DefaultAPI.md#generateesignaturefordocument) | **Get** /document-generation/documents/{docID}/esignature/generate | Get the singing status for the document
 *DefaultAPI* | [**GenerateFinancialAccountAllocations**](docs/DefaultAPI.md#generatefinancialaccountallocations) | **Post** /financial/account/{accountID}/script | Run booking allocations script
 *DefaultAPI* | [**GetAccountBooking**](docs/DefaultAPI.md#getaccountbooking) | **Get** /financial/bookings/{bookingID} | Get the booking with all its attributes
+*DefaultAPI* | [**GetAccountBookingWithDimensions**](docs/DefaultAPI.md#getaccountbookingwithdimensions) | **Get** /financial/bookings/{bookingID}/dimensions | Get the booking with its allocations dimensions
 *DefaultAPI* | [**GetAccountDimension**](docs/DefaultAPI.md#getaccountdimension) | **Get** /financial/account-dimension/{dimensionID} | Get the account dimension with all its attributes
 *DefaultAPI* | [**GetAccountDimensionValue**](docs/DefaultAPI.md#getaccountdimensionvalue) | **Get** /financial/account-dimension/{dimensionID}/value/{refID} | Get the account dimension value for a refID with all its attributes
 *DefaultAPI* | [**GetAccountSummary**](docs/DefaultAPI.md#getaccountsummary) | **Post** /summary | Get overview of data in the system for current account
@@ -318,6 +319,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**PublicValidateUserEmail**](docs/DefaultAPI.md#publicvalidateuseremail) | **Post** /public/validate/email | Validate user&#39;s email and point out problems if there are any
 *DefaultAPI* | [**PushConnectorLog**](docs/DefaultAPI.md#pushconnectorlog) | **Post** /connector/{name}/log | Push logs from the connector
 *DefaultAPI* | [**QueryAccountBookings**](docs/DefaultAPI.md#queryaccountbookings) | **Post** /financial/accounts/{accountID}/bookings | Query all bookings for a given account
+*DefaultAPI* | [**QueryAccountBookingsByFlatNumber**](docs/DefaultAPI.md#queryaccountbookingsbyflatnumber) | **Post** /financial/bookings/flat-number | Query bookings through flat number
 *DefaultAPI* | [**QueryAccountDimensionValues**](docs/DefaultAPI.md#queryaccountdimensionvalues) | **Post** /financial/account-dimension/{dimensionID}/values | Query all account dimension values for a given dimension
 *DefaultAPI* | [**QueryAccountDimensionValuesForEntity**](docs/DefaultAPI.md#queryaccountdimensionvaluesforentity) | **Post** /financial/account-dimension/by-ref | Query all account dimension values for a given entity
 *DefaultAPI* | [**QueryAccountDimensions**](docs/DefaultAPI.md#queryaccountdimensions) | **Post** /financial/account-dimensions | Query all account dimensions
@@ -413,6 +415,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UploadAttachment**](docs/DefaultAPI.md#uploadattachment) | **Post** /attachment | Upload new file attachment
 *DefaultAPI* | [**ValidateCustomForm**](docs/DefaultAPI.md#validatecustomform) | **Post** /custom-form/{formID}/validate | Validate a custom form
 *DefaultAPI* | [**ValidateUserEmail**](docs/DefaultAPI.md#validateuseremail) | **Post** /email/validation | Validate user&#39;s email and point out problems if there are any
+*DefaultAPI* | [**ValidateWorkflowEntrypoint**](docs/DefaultAPI.md#validateworkflowentrypoint) | **Post** /workflows/entrypoint/{entrypointID}/validate | Run the workflow entrypoint validations
 
 
 ## Documentation For Models
@@ -506,6 +509,7 @@ Class | Method | HTTP request | Description
  - [CreateDocumentRequest](docs/CreateDocumentRequest.md)
  - [CreateNoteRequest](docs/CreateNoteRequest.md)
  - [CreateNotificationRequest](docs/CreateNotificationRequest.md)
+ - [CreateOrUpdateAccountBookingAllocation](docs/CreateOrUpdateAccountBookingAllocation.md)
  - [CreateOrUpdateAccountBookingRequest](docs/CreateOrUpdateAccountBookingRequest.md)
  - [CreateOrUpdateAccountDimensionRequest](docs/CreateOrUpdateAccountDimensionRequest.md)
  - [CreateOrUpdateAccountDimensionValueRequest](docs/CreateOrUpdateAccountDimensionValueRequest.md)
@@ -658,6 +662,7 @@ Class | Method | HTTP request | Description
  - [PropertyType](docs/PropertyType.md)
  - [PropertyWindowTypeEnum](docs/PropertyWindowTypeEnum.md)
  - [PublicJoinAppointmentRequest](docs/PublicJoinAppointmentRequest.md)
+ - [QueryAccountBookingsByFlatNumber](docs/QueryAccountBookingsByFlatNumber.md)
  - [QueryAccountDimensionValuesRequest](docs/QueryAccountDimensionValuesRequest.md)
  - [QueryAccountDimensionsRequest](docs/QueryAccountDimensionsRequest.md)
  - [QueryAppointmentSchedulesRequest](docs/QueryAppointmentSchedulesRequest.md)
@@ -772,6 +777,9 @@ Class | Method | HTTP request | Description
  - [WorkflowEntrypointAttributesPartial](docs/WorkflowEntrypointAttributesPartial.md)
  - [WorkflowEntrypointFilter](docs/WorkflowEntrypointFilter.md)
  - [WorkflowEntrypointLocation](docs/WorkflowEntrypointLocation.md)
+ - [WorkflowEntrypointValidation](docs/WorkflowEntrypointValidation.md)
+ - [WorkflowEntrypointValidationResult](docs/WorkflowEntrypointValidationResult.md)
+ - [WorkflowEntrypointValidationSeverity](docs/WorkflowEntrypointValidationSeverity.md)
  - [WorkflowExecution](docs/WorkflowExecution.md)
  - [WorkflowExecutionResponse](docs/WorkflowExecutionResponse.md)
  - [WorkflowExecutionStatus](docs/WorkflowExecutionStatus.md)

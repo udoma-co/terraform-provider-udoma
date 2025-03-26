@@ -33,9 +33,9 @@ type AccountBooking struct {
 	Date int64 `json:"date"`
 	// A short description of the booking
 	Description string `json:"description"`
-	// Information on how the total amount of the booking is allocated to  different accounts for the credit
+	// Information on how the total amount of the booking is allocated to different accounts for the credit
 	Credit []AccountBookingAllocation `json:"credit"`
-	// Information on how the total amount of the booking is allocated to  different accounts for the debit
+	// Information on how the total amount of the booking is allocated to different accounts for the debit
 	Debit []AccountBookingAllocation `json:"debit"`
 	// Optional reference to the source transaction, if the booking was made based on a transaction
 	TransactionRef *string `json:"transaction_ref,omitempty"`

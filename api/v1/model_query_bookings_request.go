@@ -25,7 +25,7 @@ type QueryBookingsRequest struct {
 	DateMax   *int64       `json:"date_max,omitempty"`
 	AmountMin *FloatNumber `json:"amount_min,omitempty"`
 	AmountMax *FloatNumber `json:"amount_max,omitempty"`
-	// The values of the dimensions that are assigned to the booking for  the account
+	// The values of the dimensions that are assigned to the booking for the account
 	Dimensions []AccountDimensionValue `json:"dimensions,omitempty"`
 }
 

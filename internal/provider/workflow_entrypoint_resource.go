@@ -31,23 +31,29 @@ type workflowEntrypoint struct {
 	client *client.UdomaClient
 }
 
-// workflowEntrypointModel describes the resource data model.
-type workflowEntrypointModel struct {
-	ID                    types.String               `tfsdk:"id"`
-	LastUpdated           types.String               `tfsdk:"last_updated"`
-	CreatedAt             types.Int64                `tfsdk:"created_at"`
-	UpdatedAt             types.Int64                `tfsdk:"updated_at"`
-	WorkflowDefinitionRef types.String               `tfsdk:"workflow_definition_ref"`
-	AppLocation           types.String               `tfsdk:"app_location"`
-	LocationFilters       []workflowEntrypointFilter `tfsdk:"location_filters"`
-	Icon                  types.String               `tfsdk:"icon"`
-	Label                 types.Map                  `tfsdk:"label"`
-	InitScript            types.String               `tfsdk:"init_script"`
-}
-
 type workflowEntrypointFilter struct {
 	Attribute types.String `tfsdk:"attribute"`
 	Value     types.String `tfsdk:"value"`
+}
+
+type workflowEntrypointValidation struct {
+	Name   types.String `tfsdk:"name"`
+	Script types.String `tfsdk:"script"`
+}
+
+// workflowEntrypointModel describes the resource data model.
+type workflowEntrypointModel struct {
+	ID                    types.String                   `tfsdk:"id"`
+	LastUpdated           types.String                   `tfsdk:"last_updated"`
+	CreatedAt             types.Int64                    `tfsdk:"created_at"`
+	UpdatedAt             types.Int64                    `tfsdk:"updated_at"`
+	WorkflowDefinitionRef types.String                   `tfsdk:"workflow_definition_ref"`
+	AppLocation           types.String                   `tfsdk:"app_location"`
+	LocationFilters       []workflowEntrypointFilter     `tfsdk:"location_filters"`
+	Validations           []workflowEntrypointValidation `tfsdk:"validations"`
+	Icon                  types.String                   `tfsdk:"icon"`
+	Label                 types.Map                      `tfsdk:"label"`
+	InitScript            types.String                   `tfsdk:"init_script"`
 }
 
 func (r *workflowEntrypoint) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -94,6 +100,13 @@ func (r *workflowEntrypoint) Schema(ctx context.Context, req resource.SchemaRequ
 				NestedObject: workflowEntrypointFilterNestedSchema(),
 				Description:  "Filters that can be used to limit where the entrypoint is shown",
 			},
+			"validations": schema.ListNestedAttribute{
+				Optional:     true,
+				NestedObject: workflowEntrypointValidationNestedSchema(),
+				Description: `Optional validations that can be used to determine if the workflow can 
+					be started via this entrypoint. Depending on the result, the workflow
+					can be started or not.`,
+			},
 			"icon": schema.StringAttribute{
 				Optional:    true,
 				Description: "Optional icon to be displayed on the button that will start the workflow execution",
@@ -121,6 +134,21 @@ func workflowEntrypointFilterNestedSchema() schema.NestedAttributeObject {
 			"value": schema.StringAttribute{
 				Required:    true,
 				Description: "The type of the entity that will be referenced",
+			},
+		},
+	}
+}
+
+func workflowEntrypointValidationNestedSchema() schema.NestedAttributeObject {
+	return schema.NestedAttributeObject{
+		Attributes: map[string]schema.Attribute{
+			"name": schema.StringAttribute{
+				Required:    true,
+				Description: "The name of the validation",
+			},
+			"script": schema.StringAttribute{
+				Required:    true,
+				Description: "JS script that will be executed to validate if the workflow can be started via this entrypoint",
 			},
 		},
 	}
@@ -301,6 +329,11 @@ func (item *workflowEntrypointFilter) fromApi(resp *api.WorkflowEntrypointFilter
 	item.Value = types.StringValue(resp.Value)
 }
 
+func (item *workflowEntrypointValidation) fromApi(resp *api.WorkflowEntrypointValidation) {
+	item.Name = types.StringValue(resp.Name)
+	item.Script = types.StringValue(resp.Script)
+}
+
 func (model *workflowEntrypointModel) fromAPI(workflowEntrypoint *api.WorkflowEntrypoint) error {
 
 	if workflowEntrypoint == nil {
@@ -330,6 +363,13 @@ func (model *workflowEntrypointModel) fromAPI(workflowEntrypoint *api.WorkflowEn
 		model.LocationFilters[i].fromApi(&workflowEntrypoint.LocationFilters[i])
 	}
 
+	for i := range workflowEntrypoint.Validations {
+		if len(model.Validations) <= i {
+			model.Validations = append(model.Validations, workflowEntrypointValidation{})
+		}
+		model.Validations[i].fromApi(&workflowEntrypoint.Validations[i])
+	}
+
 	return nil
 }
 
@@ -337,6 +377,13 @@ func (filter *workflowEntrypointFilter) toApiRequest() *api.WorkflowEntrypointFi
 	return &api.WorkflowEntrypointFilter{
 		Attribute: filter.Attribute.ValueString(),
 		Value:     filter.Value.ValueString(),
+	}
+}
+
+func (filter *workflowEntrypointValidation) toApiRequest() *api.WorkflowEntrypointValidation {
+	return &api.WorkflowEntrypointValidation{
+		Name:   filter.Name.ValueString(),
+		Script: filter.Script.ValueString(),
 	}
 }
 
@@ -354,6 +401,12 @@ func (model *workflowEntrypointModel) toAPIRequest() (api.CreateOrUpdateWorkflow
 		filters[i] = *model.LocationFilters[i].toApiRequest()
 	}
 	workflowEntrypoint.LocationFilters = filters
+
+	validations := make([]api.WorkflowEntrypointValidation, len(model.Validations))
+	for i := range model.Validations {
+		validations[i] = *model.Validations[i].toApiRequest()
+	}
+	workflowEntrypoint.Validations = validations
 
 	if !model.AppLocation.IsNull() && !model.AppLocation.IsUnknown() {
 		location := api.WorkflowEntrypointLocation(model.AppLocation.ValueString())
