@@ -69,8 +69,8 @@ Required:
 Optional:
 
 - `attributes` (Map of String) a map of values, where the key and values are strings
-- `condition` (Attributes) Optional condition that must be met for the input to be displayed (see [below for nested schema](#nestedatt--inputs--inputs--condition))
 - `default_value` (String) optional default value for the input field (as a JSON string)
+- `display_condition` (Attributes) Optional condition that must be met for the input to be displayed (see [below for nested schema](#nestedatt--inputs--inputs--display_condition))
 - `ephemeral` (Boolean) if true, the value of the input will not be persisted
 - `items` (Attributes List) Only used when the type is select or multi select. This is a list of values that the user can choose from. (see [below for nested schema](#nestedatt--inputs--inputs--items))
 - `label` (Map of String) a map of values, where the key and values are strings
@@ -81,8 +81,8 @@ Optional:
 - `target` (String) the attribute name to use when exporting the result of this input
 - `view_label` (Map of String) a map of values, where the key and values are strings
 
-<a id="nestedatt--inputs--inputs--condition"></a>
-### Nested Schema for `inputs.inputs.condition`
+<a id="nestedatt--inputs--inputs--display_condition"></a>
+### Nested Schema for `inputs.inputs.display_condition`
 
 Required:
 
