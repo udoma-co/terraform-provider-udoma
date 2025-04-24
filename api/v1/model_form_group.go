@@ -28,6 +28,8 @@ type FormGroup struct {
 	Label *map[string]string `json:"label,omitempty"`
 	// a map of values, where the key and values are strings
 	Info *map[string]string `json:"info,omitempty"`
+	// If true, the group will be displayed in a nested UI (only works on mobile and tablet). This  is useful for more complex group that require more space to be displayed. The group will be  displayed in a separate screen, and the user will be able to navigate back and forth between  the group and the main form.
+	NestedDisplay *bool `json:"nested_display,omitempty"`
 	// the IDs of the inputs that will be displayed in the group
 	Items []FormItem `json:"items"`
 	// the attribute name to use when exporting the result of this group (only used for repeat groups)
@@ -174,6 +176,38 @@ func (o *FormGroup) HasInfo() bool {
 // SetInfo gets a reference to the given map[string]string and assigns it to the Info field.
 func (o *FormGroup) SetInfo(v map[string]string) {
 	o.Info = &v
+}
+
+// GetNestedDisplay returns the NestedDisplay field value if set, zero value otherwise.
+func (o *FormGroup) GetNestedDisplay() bool {
+	if o == nil || IsNil(o.NestedDisplay) {
+		var ret bool
+		return ret
+	}
+	return *o.NestedDisplay
+}
+
+// GetNestedDisplayOk returns a tuple with the NestedDisplay field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *FormGroup) GetNestedDisplayOk() (*bool, bool) {
+	if o == nil || IsNil(o.NestedDisplay) {
+		return nil, false
+	}
+	return o.NestedDisplay, true
+}
+
+// HasNestedDisplay returns a boolean if a field has been set.
+func (o *FormGroup) HasNestedDisplay() bool {
+	if o != nil && !IsNil(o.NestedDisplay) {
+		return true
+	}
+
+	return false
+}
+
+// SetNestedDisplay gets a reference to the given bool and assigns it to the NestedDisplay field.
+func (o *FormGroup) SetNestedDisplay(v bool) {
+	o.NestedDisplay = &v
 }
 
 // GetItems returns the Items field value
@@ -377,6 +411,9 @@ func (o FormGroup) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Info) {
 		toSerialize["info"] = o.Info
+	}
+	if !IsNil(o.NestedDisplay) {
+		toSerialize["nested_display"] = o.NestedDisplay
 	}
 	toSerialize["items"] = o.Items
 	if !IsNil(o.Target) {

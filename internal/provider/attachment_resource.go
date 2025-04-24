@@ -38,7 +38,6 @@ type AttachmentModel struct {
 	ID         types.String `tfsdk:"id"`
 	Source     types.String `tfsdk:"source"`
 	Created    types.Int64  `tfsdk:"created"`
-	Ref        types.String `tfsdk:"ref"`
 	FileType   types.String `tfsdk:"file_type"`
 	FileSize   types.Int64  `tfsdk:"file_size"`
 	FileName   types.String `tfsdk:"file_name"`
@@ -69,10 +68,6 @@ func (r *Attachment) Schema(ctx context.Context, req resource.SchemaRequest, res
 			"created": schema.Int64Attribute{
 				Computed:    true,
 				Description: "The date and time the attachment was created",
-			},
-			"ref": schema.StringAttribute{
-				Computed:    true,
-				Description: "Some reference to anything to whatever the attachment is linked to",
 			},
 			"file_type": schema.StringAttribute{
 				Computed:    true,
@@ -195,17 +190,7 @@ func (r *Attachment) Delete(ctx context.Context, req resource.DeleteRequest, res
 		return
 	}
 
-	httpResp, err := r.client.GetApi().DeleteAttachment(ctx, state.ID.ValueString()).Execute()
-	if httpResp != nil && httpResp.StatusCode == 404 {
-		// if resource is not found, we consider it already deleted
-		return
-	}
-	if err != nil {
-		resp.Diagnostics.AddError(
-			"Error Deleting Attachment",
-			"Could not delete entity in Udoma, unexpected error: "+getApiErrorMessage(err),
-		)
-	}
+	// attachments are deleted automatically by the backend when there are no references left
 }
 
 func (r *Attachment) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
@@ -223,7 +208,6 @@ func (m *AttachmentModel) fromApiResponse(api *v1.Attachment) (diags diag.Diagno
 
 	m.ID = types.StringValue(api.Id)
 	m.Created = types.Int64Value(api.Created)
-	m.Ref = types.StringValue(api.Ref)
 	m.FileType = types.StringValue(api.FileType)
 	m.FileSize = types.Int64Value(api.FileSize)
 	m.FileName = types.StringValue(api.FileName)

@@ -33,6 +33,7 @@ type CustomFormGroupModel struct {
 	Type          types.String          `tfsdk:"type"`
 	Label         types.Map             `tfsdk:"label"`
 	Info          types.Map             `tfsdk:"info"`
+	NestedDisplay types.Bool            `tfsdk:"nested_display"`
 	Items         []CustomFormItemModel `tfsdk:"items"`
 	Target        types.String          `tfsdk:"target"`
 	TopDivider    types.Bool            `tfsdk:"top_divider"`
@@ -161,6 +162,13 @@ func customFormGroupNestedSchema() schema.NestedAttributeObject {
 				Optional:    true,
 				ElementType: types.StringType,
 				Description: "The info of the group",
+			},
+			"nested_display": schema.BoolAttribute{
+				Optional: true,
+				Description: "If true, the nested group will be displayed in a nested UI (only works on mobile " +
+					"and tablet). This is useful for more complex group that require more space to be displayed. " +
+					"The group will be displayed in a separate screen, and the user will be able to navigate back " +
+					"and forth between the group and the main form.",
 			},
 			"items": schema.ListNestedAttribute{
 				Required:     true,
@@ -421,6 +429,7 @@ func (group *CustomFormGroupModel) toApiRequest() *v1.FormGroup {
 		Type:          v1.FormGroupType(group.Type.ValueString()),
 		Label:         &label,
 		Info:          &info,
+		NestedDisplay: group.NestedDisplay.ValueBoolPointer(),
 		Items:         items,
 		Target:        group.Target.ValueStringPointer(),
 		TopDivider:    group.TopDivider.ValueBoolPointer(),
@@ -447,6 +456,10 @@ func (group *CustomFormGroupModel) fromApiResponse(resp *v1.FormGroup) (diags di
 		if diags.HasError() {
 			return
 		}
+	}
+
+	if resp.NestedDisplay != nil {
+		group.NestedDisplay = types.BoolValue(*resp.NestedDisplay)
 	}
 
 	for i := range resp.Items {

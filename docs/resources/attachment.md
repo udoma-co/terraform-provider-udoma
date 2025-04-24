@@ -27,5 +27,4 @@ Resource represents an attachment
 - `file_size` (Number) Size of the attachment
 - `file_type` (String) Metadata about the attachment
 - `id` (String) The unique identifier for the attachment
-- `ref` (String) Some reference to anything to whatever the attachment is linked to
 - `url` (String) The URL to download the attachment

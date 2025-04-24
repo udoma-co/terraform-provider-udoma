@@ -141,7 +141,6 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteAppointmentSchedule**](docs/DefaultAPI.md#deleteappointmentschedule) | **Delete** /calendar/appointments/schedule/{scheduleID} | Delete an appointment schedule
 *DefaultAPI* | [**DeleteAppointmentTemplate**](docs/DefaultAPI.md#deleteappointmenttemplate) | **Delete** /calendar/appointments/template/{templateID} | Delete an appointment template
 *DefaultAPI* | [**DeleteApproval**](docs/DefaultAPI.md#deleteapproval) | **Delete** /approval/{approvalID} | Delete an already existing approval
-*DefaultAPI* | [**DeleteAttachment**](docs/DefaultAPI.md#deleteattachment) | **Delete** /attachment/{attachmentID} | Delete the file upload with the given ID
 *DefaultAPI* | [**DeleteBankAccount**](docs/DefaultAPI.md#deletebankaccount) | **Delete** /bank-account/{accountID} | Delete an already existing bank account
 *DefaultAPI* | [**DeleteBankTransaction**](docs/DefaultAPI.md#deletebanktransaction) | **Delete** /financial/bank-transaction/{transactionID} | Delete the bank transaction with all its related data
 *DefaultAPI* | [**DeleteCase**](docs/DefaultAPI.md#deletecase) | **Delete** /case/{caseID} | Delete case
@@ -297,7 +296,6 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**PublicCreateAppointment**](docs/DefaultAPI.md#publiccreateappointment) | **Post** /public/calendar/appointments/{scheduleID}/entry | Create a new appointment for the given schedule
 *DefaultAPI* | [**PublicCreateCase**](docs/DefaultAPI.md#publiccreatecase) | **Post** /public/case | Raise a new case from a public endpoint.
 *DefaultAPI* | [**PublicDeleteAppointment**](docs/DefaultAPI.md#publicdeleteappointment) | **Delete** /public/calendar/appointments/entry/{code} | Delete an appointment
-*DefaultAPI* | [**PublicDeleteAttachment**](docs/DefaultAPI.md#publicdeleteattachment) | **Delete** /public/attachment/{attachmentID} | Delete the file upload with the given ID
 *DefaultAPI* | [**PublicDeleteCaseComment**](docs/DefaultAPI.md#publicdeletecasecomment) | **Delete** /public/case/{caseID}/comment/{commentID} | Delete a comment
 *DefaultAPI* | [**PublicGetAppointment**](docs/DefaultAPI.md#publicgetappointment) | **Get** /public/calendar/appointments/entry/{code} | Get appointment details
 *DefaultAPI* | [**PublicGetAppointmentInIcalFormat**](docs/DefaultAPI.md#publicgetappointmentinicalformat) | **Get** /public/calendar/appointments/entry/{code}/ical | Get appointment in ical format

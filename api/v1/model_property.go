@@ -32,19 +32,19 @@ type Property struct {
 	// Optional external source, in case entity was created via backend integration
 	ExternalSource *string `json:"external_source,omitempty"`
 	// meaningful name of the property, e.g. 'Whg 12', or 'Etage 2/Links'
-	Name    string       `json:"name"`
-	Type    PropertyType `json:"type"`
-	Address *Address     `json:"address,omitempty"`
+	Name string       `json:"name"`
+	Type PropertyType `json:"type"`
+	// Controls if the property is a rentable unit. If set to true, it will be possible to add tenancies to it. If set to false, it will not be possible to add tenancies to it and it can be set as a parent property for other properties.
+	Rentable *bool    `json:"rentable,omitempty"`
+	Address  *Address `json:"address,omitempty"`
 	// For appartments, this is the unique number within the building. For  buildings, this can be used as a short identifier
 	Number *int32 `json:"number,omitempty"`
 	// Optional reference to the owner of this property
 	OwnerRef *string `json:"owner_ref,omitempty"`
 	// Optional reference to the parent property (e.g. building) of this property
-	ParentRef *string `json:"parent_ref,omitempty"`
-	// Optional information about the suite, e.g. '2. floor, left'
-	Suite   *string          `json:"suite,omitempty"`
-	Details *PropertyDetails `json:"details,omitempty"`
-	// Optional name of the parent property
+	ParentRef *string          `json:"parent_ref,omitempty"`
+	Details   *PropertyDetails `json:"details,omitempty"`
+	// Optional name of the parent property. If there is several levels of parent properties, this name the merged value  of all parent properties.
 	ParentName    *string  `json:"parent_name,omitempty"`
 	ParentAddress *Address `json:"parent_address,omitempty"`
 }
@@ -257,6 +257,38 @@ func (o *Property) SetType(v PropertyType) {
 	o.Type = v
 }
 
+// GetRentable returns the Rentable field value if set, zero value otherwise.
+func (o *Property) GetRentable() bool {
+	if o == nil || IsNil(o.Rentable) {
+		var ret bool
+		return ret
+	}
+	return *o.Rentable
+}
+
+// GetRentableOk returns a tuple with the Rentable field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Property) GetRentableOk() (*bool, bool) {
+	if o == nil || IsNil(o.Rentable) {
+		return nil, false
+	}
+	return o.Rentable, true
+}
+
+// HasRentable returns a boolean if a field has been set.
+func (o *Property) HasRentable() bool {
+	if o != nil && !IsNil(o.Rentable) {
+		return true
+	}
+
+	return false
+}
+
+// SetRentable gets a reference to the given bool and assigns it to the Rentable field.
+func (o *Property) SetRentable(v bool) {
+	o.Rentable = &v
+}
+
 // GetAddress returns the Address field value if set, zero value otherwise.
 func (o *Property) GetAddress() Address {
 	if o == nil || IsNil(o.Address) {
@@ -385,38 +417,6 @@ func (o *Property) SetParentRef(v string) {
 	o.ParentRef = &v
 }
 
-// GetSuite returns the Suite field value if set, zero value otherwise.
-func (o *Property) GetSuite() string {
-	if o == nil || IsNil(o.Suite) {
-		var ret string
-		return ret
-	}
-	return *o.Suite
-}
-
-// GetSuiteOk returns a tuple with the Suite field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Property) GetSuiteOk() (*string, bool) {
-	if o == nil || IsNil(o.Suite) {
-		return nil, false
-	}
-	return o.Suite, true
-}
-
-// HasSuite returns a boolean if a field has been set.
-func (o *Property) HasSuite() bool {
-	if o != nil && !IsNil(o.Suite) {
-		return true
-	}
-
-	return false
-}
-
-// SetSuite gets a reference to the given string and assigns it to the Suite field.
-func (o *Property) SetSuite(v string) {
-	o.Suite = &v
-}
-
 // GetDetails returns the Details field value if set, zero value otherwise.
 func (o *Property) GetDetails() PropertyDetails {
 	if o == nil || IsNil(o.Details) {
@@ -534,6 +534,9 @@ func (o Property) ToMap() (map[string]interface{}, error) {
 	}
 	toSerialize["name"] = o.Name
 	toSerialize["type"] = o.Type
+	if !IsNil(o.Rentable) {
+		toSerialize["rentable"] = o.Rentable
+	}
 	if !IsNil(o.Address) {
 		toSerialize["address"] = o.Address
 	}
@@ -545,9 +548,6 @@ func (o Property) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ParentRef) {
 		toSerialize["parent_ref"] = o.ParentRef
-	}
-	if !IsNil(o.Suite) {
-		toSerialize["suite"] = o.Suite
 	}
 	if !IsNil(o.Details) {
 		toSerialize["details"] = o.Details

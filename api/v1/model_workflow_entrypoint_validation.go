@@ -19,7 +19,7 @@ import (
 // checks if the WorkflowEntrypointValidation type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &WorkflowEntrypointValidation{}
 
-// WorkflowEntrypointValidation a filter that controls which entrypoints are shown in the UI
+// WorkflowEntrypointValidation a dynamic validation that checks if the workflow can be started  via this entrypoint
 type WorkflowEntrypointValidation struct {
 	// the name of the validation
 	Name string `json:"name"`

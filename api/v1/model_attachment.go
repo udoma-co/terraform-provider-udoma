@@ -25,8 +25,6 @@ type Attachment struct {
 	Id string `json:"id"`
 	// timestamp indicating when the attachment was uploaded
 	Created int64 `json:"created"`
-	// ID of the entity for which this file was uploaded (case, property, etc.)
-	Ref string `json:"ref"`
 	// the content type of the attachment
 	FileType string `json:"file_type"`
 	// the size of the attachment in bytes
@@ -47,11 +45,10 @@ type _Attachment Attachment
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAttachment(id string, created int64, ref string, fileType string, fileSize int64, fileName string, fileSha256 string, url string) *Attachment {
+func NewAttachment(id string, created int64, fileType string, fileSize int64, fileName string, fileSha256 string, url string) *Attachment {
 	this := Attachment{}
 	this.Id = id
 	this.Created = created
-	this.Ref = ref
 	this.FileType = fileType
 	this.FileSize = fileSize
 	this.FileName = fileName
@@ -114,30 +111,6 @@ func (o *Attachment) GetCreatedOk() (*int64, bool) {
 // SetCreated sets field value
 func (o *Attachment) SetCreated(v int64) {
 	o.Created = v
-}
-
-// GetRef returns the Ref field value
-func (o *Attachment) GetRef() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Ref
-}
-
-// GetRefOk returns a tuple with the Ref field value
-// and a boolean to check if the value has been set.
-func (o *Attachment) GetRefOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Ref, true
-}
-
-// SetRef sets field value
-func (o *Attachment) SetRef(v string) {
-	o.Ref = v
 }
 
 // GetFileType returns the FileType field value
@@ -304,7 +277,6 @@ func (o Attachment) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["id"] = o.Id
 	toSerialize["created"] = o.Created
-	toSerialize["ref"] = o.Ref
 	toSerialize["file_type"] = o.FileType
 	toSerialize["file_size"] = o.FileSize
 	toSerialize["file_name"] = o.FileName
@@ -323,7 +295,6 @@ func (o *Attachment) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"id",
 		"created",
-		"ref",
 		"file_type",
 		"file_size",
 		"file_name",
