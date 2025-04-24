@@ -142,6 +142,7 @@ Optional:
 - `info` (Map of String) The info of the group
 - `label` (Map of String) The label of the group
 - `min_size` (Number) the minimum number of items that must be submitted in the group (only used for repeat groups)
+- `nested_display` (Boolean) If true, the nested group will be displayed in a nested UI (only works on mobile and tablet). This is useful for more complex group that require more space to be displayed. The group will be displayed in a separate screen, and the user will be able to navigate back and forth between the group and the main form.
 - `target` (String) the attribute name to use when exporting the result of this group (only used for repeat groups)
 - `top_divider` (Boolean) if true, a divider will be displayed above the group
 

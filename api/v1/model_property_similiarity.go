@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the PropertySimiliarity type satisfies the MappedNullable interface at compile time
@@ -19,17 +21,22 @@ var _ MappedNullable = &PropertySimiliarity{}
 
 // PropertySimiliarity struct for PropertySimiliarity
 type PropertySimiliarity struct {
-	Property *Property `json:"property,omitempty"`
-	// A metric indicating the similarity of the property to a given address
-	Similarity *int64 `json:"similarity,omitempty"`
+	Property Property `json:"property"`
+	// A metric indicating the similarity of the property suite to a given address
+	SuiteSimilarity *int64 `json:"suite_similarity,omitempty"`
+	// A metric indicating the similarity of the property address to a given address
+	AddressSimilarity *int64 `json:"address_similarity,omitempty"`
 }
+
+type _PropertySimiliarity PropertySimiliarity
 
 // NewPropertySimiliarity instantiates a new PropertySimiliarity object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPropertySimiliarity() *PropertySimiliarity {
+func NewPropertySimiliarity(property Property) *PropertySimiliarity {
 	this := PropertySimiliarity{}
+	this.Property = property
 	return &this
 }
 
@@ -41,68 +48,92 @@ func NewPropertySimiliarityWithDefaults() *PropertySimiliarity {
 	return &this
 }
 
-// GetProperty returns the Property field value if set, zero value otherwise.
+// GetProperty returns the Property field value
 func (o *PropertySimiliarity) GetProperty() Property {
-	if o == nil || IsNil(o.Property) {
+	if o == nil {
 		var ret Property
 		return ret
 	}
-	return *o.Property
+
+	return o.Property
 }
 
-// GetPropertyOk returns a tuple with the Property field value if set, nil otherwise
+// GetPropertyOk returns a tuple with the Property field value
 // and a boolean to check if the value has been set.
 func (o *PropertySimiliarity) GetPropertyOk() (*Property, bool) {
-	if o == nil || IsNil(o.Property) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Property, true
+	return &o.Property, true
 }
 
-// HasProperty returns a boolean if a field has been set.
-func (o *PropertySimiliarity) HasProperty() bool {
-	if o != nil && !IsNil(o.Property) {
-		return true
-	}
-
-	return false
-}
-
-// SetProperty gets a reference to the given Property and assigns it to the Property field.
+// SetProperty sets field value
 func (o *PropertySimiliarity) SetProperty(v Property) {
-	o.Property = &v
+	o.Property = v
 }
 
-// GetSimilarity returns the Similarity field value if set, zero value otherwise.
-func (o *PropertySimiliarity) GetSimilarity() int64 {
-	if o == nil || IsNil(o.Similarity) {
+// GetSuiteSimilarity returns the SuiteSimilarity field value if set, zero value otherwise.
+func (o *PropertySimiliarity) GetSuiteSimilarity() int64 {
+	if o == nil || IsNil(o.SuiteSimilarity) {
 		var ret int64
 		return ret
 	}
-	return *o.Similarity
+	return *o.SuiteSimilarity
 }
 
-// GetSimilarityOk returns a tuple with the Similarity field value if set, nil otherwise
+// GetSuiteSimilarityOk returns a tuple with the SuiteSimilarity field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PropertySimiliarity) GetSimilarityOk() (*int64, bool) {
-	if o == nil || IsNil(o.Similarity) {
+func (o *PropertySimiliarity) GetSuiteSimilarityOk() (*int64, bool) {
+	if o == nil || IsNil(o.SuiteSimilarity) {
 		return nil, false
 	}
-	return o.Similarity, true
+	return o.SuiteSimilarity, true
 }
 
-// HasSimilarity returns a boolean if a field has been set.
-func (o *PropertySimiliarity) HasSimilarity() bool {
-	if o != nil && !IsNil(o.Similarity) {
+// HasSuiteSimilarity returns a boolean if a field has been set.
+func (o *PropertySimiliarity) HasSuiteSimilarity() bool {
+	if o != nil && !IsNil(o.SuiteSimilarity) {
 		return true
 	}
 
 	return false
 }
 
-// SetSimilarity gets a reference to the given int64 and assigns it to the Similarity field.
-func (o *PropertySimiliarity) SetSimilarity(v int64) {
-	o.Similarity = &v
+// SetSuiteSimilarity gets a reference to the given int64 and assigns it to the SuiteSimilarity field.
+func (o *PropertySimiliarity) SetSuiteSimilarity(v int64) {
+	o.SuiteSimilarity = &v
+}
+
+// GetAddressSimilarity returns the AddressSimilarity field value if set, zero value otherwise.
+func (o *PropertySimiliarity) GetAddressSimilarity() int64 {
+	if o == nil || IsNil(o.AddressSimilarity) {
+		var ret int64
+		return ret
+	}
+	return *o.AddressSimilarity
+}
+
+// GetAddressSimilarityOk returns a tuple with the AddressSimilarity field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PropertySimiliarity) GetAddressSimilarityOk() (*int64, bool) {
+	if o == nil || IsNil(o.AddressSimilarity) {
+		return nil, false
+	}
+	return o.AddressSimilarity, true
+}
+
+// HasAddressSimilarity returns a boolean if a field has been set.
+func (o *PropertySimiliarity) HasAddressSimilarity() bool {
+	if o != nil && !IsNil(o.AddressSimilarity) {
+		return true
+	}
+
+	return false
+}
+
+// SetAddressSimilarity gets a reference to the given int64 and assigns it to the AddressSimilarity field.
+func (o *PropertySimiliarity) SetAddressSimilarity(v int64) {
+	o.AddressSimilarity = &v
 }
 
 func (o PropertySimiliarity) MarshalJSON() ([]byte, error) {
@@ -115,13 +146,51 @@ func (o PropertySimiliarity) MarshalJSON() ([]byte, error) {
 
 func (o PropertySimiliarity) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Property) {
-		toSerialize["property"] = o.Property
+	toSerialize["property"] = o.Property
+	if !IsNil(o.SuiteSimilarity) {
+		toSerialize["suite_similarity"] = o.SuiteSimilarity
 	}
-	if !IsNil(o.Similarity) {
-		toSerialize["similarity"] = o.Similarity
+	if !IsNil(o.AddressSimilarity) {
+		toSerialize["address_similarity"] = o.AddressSimilarity
 	}
 	return toSerialize, nil
+}
+
+func (o *PropertySimiliarity) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"property",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varPropertySimiliarity := _PropertySimiliarity{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varPropertySimiliarity)
+
+	if err != nil {
+		return err
+	}
+
+	*o = PropertySimiliarity(varPropertySimiliarity)
+
+	return err
 }
 
 type NullablePropertySimiliarity struct {
