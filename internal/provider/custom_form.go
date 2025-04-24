@@ -86,7 +86,7 @@ type CustomFormInputModel struct {
 	Target           types.String               `tfsdk:"target"`
 	Attributes       types.Map                  `tfsdk:"attributes"`
 	Items            []CustomFormInputItemModel `tfsdk:"items"`
-	DisplayCondition *DisplayConditionModel     `tfsdk:"condition"`
+	DisplayCondition *DisplayConditionModel     `tfsdk:"display_condition"`
 }
 
 func NewCustomFormValidationNull() CustomFormValidationModel {
@@ -275,7 +275,7 @@ func customFormInputNestedSchema() schema.NestedAttributeObject {
 				NestedObject: customFormInputItemNestedSchema(),
 				Description:  "Only used when the type is select or multi select. This is a list of values that the user can choose from.",
 			},
-			"condition": schema.SingleNestedAttribute{
+			"display_condition": schema.SingleNestedAttribute{
 				Optional:    true,
 				Attributes:  conditionalInputNestedSchema(),
 				Description: "Optional condition that must be met for the input to be displayed",
@@ -612,6 +612,9 @@ func (input *CustomFormInputModel) fromApiResponse(resp *v1.FormInput) (diags di
 	}
 
 	if resp.DisplayCondition.IsSet() {
+		if input.DisplayCondition == nil {
+			input.DisplayCondition = &DisplayConditionModel{}
+		}
 		diags = input.DisplayCondition.fromApiResponse(resp.DisplayCondition.Get())
 	}
 
