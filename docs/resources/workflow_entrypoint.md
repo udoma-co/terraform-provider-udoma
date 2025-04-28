@@ -42,8 +42,12 @@ Resource represents an entrypoint to a workflow
 
 Required:
 
-- `attribute` (String) The ID of the entity that will be referenced
-- `value` (String) The type of the entity that will be referenced
+- `attribute` (String) The name of the attribute to filter by. This can be any attribute of the entity that is used to trigger theworkflow execution. This can also be a nested attribute, e.g. "case.template.id".
+- `value` (String) The value of the attribute to filter by, as a static string.
+
+Optional:
+
+- `group` (String) Optional group name to which this filter belongs. Filters in the same group will evaluated with an OR operator, while filters in different groups will be evaluated with an AND operator. If no group is provided, the filter will be evaluated with an AND operator.
 
 
 <a id="nestedatt--validations"></a>
