@@ -34,6 +34,7 @@ type workflowEntrypoint struct {
 type workflowEntrypointFilter struct {
 	Attribute types.String `tfsdk:"attribute"`
 	Value     types.String `tfsdk:"value"`
+	Group     types.String `tfsdk:"group"`
 }
 
 type workflowEntrypointValidation struct {
@@ -128,12 +129,23 @@ func workflowEntrypointFilterNestedSchema() schema.NestedAttributeObject {
 	return schema.NestedAttributeObject{
 		Attributes: map[string]schema.Attribute{
 			"attribute": schema.StringAttribute{
-				Required:    true,
-				Description: "The ID of the entity that will be referenced",
+				Required: true,
+				Description: "The name of the attribute to filter by. This can " +
+					"be any attribute of the entity that is used to trigger the" +
+					"workflow execution. This can also be a nested attribute, " +
+					"e.g. \"case.template.id\".",
 			},
 			"value": schema.StringAttribute{
 				Required:    true,
-				Description: "The type of the entity that will be referenced",
+				Description: "The value of the attribute to filter by, as a static string.",
+			},
+			"group": schema.StringAttribute{
+				Optional: true,
+				Description: "Optional group name to which this filter belongs. " +
+					"Filters in the same group will evaluated with an OR operator, " +
+					"while filters in different groups will be evaluated with an AND " +
+					"operator. If no group is provided, the filter will be evaluated " +
+					"with an AND operator.",
 			},
 		},
 	}
@@ -327,6 +339,7 @@ func (r *workflowEntrypoint) ImportState(ctx context.Context, req resource.Impor
 func (item *workflowEntrypointFilter) fromApi(resp *api.WorkflowEntrypointFilter) {
 	item.Attribute = types.StringValue(resp.Attribute)
 	item.Value = types.StringValue(resp.Value)
+	item.Group = omittableStringValue(resp.Group, item.Group)
 }
 
 func (item *workflowEntrypointValidation) fromApi(resp *api.WorkflowEntrypointValidation) {
@@ -377,6 +390,7 @@ func (filter *workflowEntrypointFilter) toApiRequest() *api.WorkflowEntrypointFi
 	return &api.WorkflowEntrypointFilter{
 		Attribute: filter.Attribute.ValueString(),
 		Value:     filter.Value.ValueString(),
+		Group:     filter.Group.ValueStringPointer(),
 	}
 }
 

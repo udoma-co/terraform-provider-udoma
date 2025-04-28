@@ -21,10 +21,12 @@ var _ MappedNullable = &WorkflowEntrypointFilter{}
 
 // WorkflowEntrypointFilter a filter that controls which entrypoints are shown in the UI
 type WorkflowEntrypointFilter struct {
-	// the name of the attribute to filter by
+	// the name of the attribute to filter by. This can be any attribute of the entity that is used to trigger the workflow execution. This can also be a nested attribute, e.g. \"case.template.id\".
 	Attribute string `json:"attribute"`
-	// the value of the attribute to filter by
+	// the value of the attribute to filter by, as a static string.
 	Value string `json:"value"`
+	// optional group name to which this filter belongs. Filters in the same group will evaluated with an AND operator, while filters in different groups will be evaluated with an OR operator. If no group is provided, the filter will be evaluated with an OR operator.
+	Group *string `json:"group,omitempty"`
 }
 
 type _WorkflowEntrypointFilter WorkflowEntrypointFilter
@@ -96,6 +98,38 @@ func (o *WorkflowEntrypointFilter) SetValue(v string) {
 	o.Value = v
 }
 
+// GetGroup returns the Group field value if set, zero value otherwise.
+func (o *WorkflowEntrypointFilter) GetGroup() string {
+	if o == nil || IsNil(o.Group) {
+		var ret string
+		return ret
+	}
+	return *o.Group
+}
+
+// GetGroupOk returns a tuple with the Group field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowEntrypointFilter) GetGroupOk() (*string, bool) {
+	if o == nil || IsNil(o.Group) {
+		return nil, false
+	}
+	return o.Group, true
+}
+
+// HasGroup returns a boolean if a field has been set.
+func (o *WorkflowEntrypointFilter) HasGroup() bool {
+	if o != nil && !IsNil(o.Group) {
+		return true
+	}
+
+	return false
+}
+
+// SetGroup gets a reference to the given string and assigns it to the Group field.
+func (o *WorkflowEntrypointFilter) SetGroup(v string) {
+	o.Group = &v
+}
+
 func (o WorkflowEntrypointFilter) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -108,6 +142,9 @@ func (o WorkflowEntrypointFilter) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["attribute"] = o.Attribute
 	toSerialize["value"] = o.Value
+	if !IsNil(o.Group) {
+		toSerialize["group"] = o.Group
+	}
 	return toSerialize, nil
 }
 

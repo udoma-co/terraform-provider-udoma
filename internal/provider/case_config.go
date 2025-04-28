@@ -176,7 +176,7 @@ func (cfg *CaseStatusConfigModel) fromApiResponse(resp *v1.CaseStatusConfig) (di
 	}
 
 	if len(resp.Parties) != 0 {
-		cfg.Parties, diags = types.ListValue(types.StringType, enumSliceToValueList[v1.UserTypeEnum](resp.Parties))
+		cfg.Parties, diags = types.ListValue(types.StringType, enumSliceToValueList(resp.Parties))
 		if diags.HasError() {
 			return
 		}
@@ -194,7 +194,7 @@ func (cfg *CaseStatusConfigModel) fromApiResponse(resp *v1.CaseStatusConfig) (di
 	}
 
 	if len(resp.Notify) != 0 {
-		cfg.Notify, diags = types.ListValue(types.StringType, enumSliceToValueList[v1.UserTypeEnum](resp.Notify))
+		cfg.Notify, diags = types.ListValue(types.StringType, enumSliceToValueList(resp.Notify))
 		if diags.HasError() {
 			return
 		}
