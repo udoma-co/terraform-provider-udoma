@@ -25,7 +25,7 @@ type WorkflowEntrypointFilter struct {
 	Attribute string `json:"attribute"`
 	// the value of the attribute to filter by, as a static string.
 	Value string `json:"value"`
-	// optional group name to which this filter belongs. Filters in the same group will evaluated with an AND operator, while filters in different groups will be evaluated with an OR operator. If no group is provided, the filter will be evaluated with an OR operator.
+	// optional group name to which this filter belongs. Filters in the same group will evaluated with an OR operator, while filters in different groups will be evaluated with an AND operator. If no group is provided, the filter will be evaluated with an AND operator.
 	Group *string `json:"group,omitempty"`
 }
 
