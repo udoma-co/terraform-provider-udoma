@@ -32,9 +32,14 @@ type CreateOrUpdateServiceProvider struct {
 	// the email address at which the company can be contacted by the platform
 	Email string `json:"email"`
 	// a phone number at which the company can be reached
-	PhoneNumber *string              `json:"phone_number,omitempty"`
-	Category    *ServiceCategoryEnum `json:"category,omitempty"`
-	Address     *Address             `json:"address,omitempty"`
+	PhoneNumber *string `json:"phone_number,omitempty"`
+	// a phone number at which the contact person can be reached
+	ContactPhoneNumber *string `json:"contact_phone_number,omitempty"`
+	// optional customer number of the company at the property manager
+	CustomerNumber *string `json:"customer_number,omitempty"`
+	// optional list of categories, in which the company is providing services
+	Categories []ServiceCategoryEnum `json:"categories,omitempty"`
+	Address    *Address              `json:"address,omitempty"`
 }
 
 type _CreateOrUpdateServiceProvider CreateOrUpdateServiceProvider
@@ -241,36 +246,100 @@ func (o *CreateOrUpdateServiceProvider) SetPhoneNumber(v string) {
 	o.PhoneNumber = &v
 }
 
-// GetCategory returns the Category field value if set, zero value otherwise.
-func (o *CreateOrUpdateServiceProvider) GetCategory() ServiceCategoryEnum {
-	if o == nil || IsNil(o.Category) {
-		var ret ServiceCategoryEnum
+// GetContactPhoneNumber returns the ContactPhoneNumber field value if set, zero value otherwise.
+func (o *CreateOrUpdateServiceProvider) GetContactPhoneNumber() string {
+	if o == nil || IsNil(o.ContactPhoneNumber) {
+		var ret string
 		return ret
 	}
-	return *o.Category
+	return *o.ContactPhoneNumber
 }
 
-// GetCategoryOk returns a tuple with the Category field value if set, nil otherwise
+// GetContactPhoneNumberOk returns a tuple with the ContactPhoneNumber field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CreateOrUpdateServiceProvider) GetCategoryOk() (*ServiceCategoryEnum, bool) {
-	if o == nil || IsNil(o.Category) {
+func (o *CreateOrUpdateServiceProvider) GetContactPhoneNumberOk() (*string, bool) {
+	if o == nil || IsNil(o.ContactPhoneNumber) {
 		return nil, false
 	}
-	return o.Category, true
+	return o.ContactPhoneNumber, true
 }
 
-// HasCategory returns a boolean if a field has been set.
-func (o *CreateOrUpdateServiceProvider) HasCategory() bool {
-	if o != nil && !IsNil(o.Category) {
+// HasContactPhoneNumber returns a boolean if a field has been set.
+func (o *CreateOrUpdateServiceProvider) HasContactPhoneNumber() bool {
+	if o != nil && !IsNil(o.ContactPhoneNumber) {
 		return true
 	}
 
 	return false
 }
 
-// SetCategory gets a reference to the given ServiceCategoryEnum and assigns it to the Category field.
-func (o *CreateOrUpdateServiceProvider) SetCategory(v ServiceCategoryEnum) {
-	o.Category = &v
+// SetContactPhoneNumber gets a reference to the given string and assigns it to the ContactPhoneNumber field.
+func (o *CreateOrUpdateServiceProvider) SetContactPhoneNumber(v string) {
+	o.ContactPhoneNumber = &v
+}
+
+// GetCustomerNumber returns the CustomerNumber field value if set, zero value otherwise.
+func (o *CreateOrUpdateServiceProvider) GetCustomerNumber() string {
+	if o == nil || IsNil(o.CustomerNumber) {
+		var ret string
+		return ret
+	}
+	return *o.CustomerNumber
+}
+
+// GetCustomerNumberOk returns a tuple with the CustomerNumber field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateServiceProvider) GetCustomerNumberOk() (*string, bool) {
+	if o == nil || IsNil(o.CustomerNumber) {
+		return nil, false
+	}
+	return o.CustomerNumber, true
+}
+
+// HasCustomerNumber returns a boolean if a field has been set.
+func (o *CreateOrUpdateServiceProvider) HasCustomerNumber() bool {
+	if o != nil && !IsNil(o.CustomerNumber) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomerNumber gets a reference to the given string and assigns it to the CustomerNumber field.
+func (o *CreateOrUpdateServiceProvider) SetCustomerNumber(v string) {
+	o.CustomerNumber = &v
+}
+
+// GetCategories returns the Categories field value if set, zero value otherwise.
+func (o *CreateOrUpdateServiceProvider) GetCategories() []ServiceCategoryEnum {
+	if o == nil || IsNil(o.Categories) {
+		var ret []ServiceCategoryEnum
+		return ret
+	}
+	return o.Categories
+}
+
+// GetCategoriesOk returns a tuple with the Categories field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateServiceProvider) GetCategoriesOk() ([]ServiceCategoryEnum, bool) {
+	if o == nil || IsNil(o.Categories) {
+		return nil, false
+	}
+	return o.Categories, true
+}
+
+// HasCategories returns a boolean if a field has been set.
+func (o *CreateOrUpdateServiceProvider) HasCategories() bool {
+	if o != nil && !IsNil(o.Categories) {
+		return true
+	}
+
+	return false
+}
+
+// SetCategories gets a reference to the given []ServiceCategoryEnum and assigns it to the Categories field.
+func (o *CreateOrUpdateServiceProvider) SetCategories(v []ServiceCategoryEnum) {
+	o.Categories = v
 }
 
 // GetAddress returns the Address field value if set, zero value otherwise.
@@ -331,8 +400,14 @@ func (o CreateOrUpdateServiceProvider) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.PhoneNumber) {
 		toSerialize["phone_number"] = o.PhoneNumber
 	}
-	if !IsNil(o.Category) {
-		toSerialize["category"] = o.Category
+	if !IsNil(o.ContactPhoneNumber) {
+		toSerialize["contact_phone_number"] = o.ContactPhoneNumber
+	}
+	if !IsNil(o.CustomerNumber) {
+		toSerialize["customer_number"] = o.CustomerNumber
+	}
+	if !IsNil(o.Categories) {
+		toSerialize["categories"] = o.Categories
 	}
 	if !IsNil(o.Address) {
 		toSerialize["address"] = o.Address

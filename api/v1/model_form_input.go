@@ -34,6 +34,8 @@ type FormInput struct {
 	ViewLabel *map[string]string `json:"view_label,omitempty"`
 	// a map of values, where the key and values are strings
 	Placeholder *map[string]string `json:"placeholder,omitempty"`
+	// a map of values, where the key and values are strings
+	Tooltip *map[string]string `json:"tooltip,omitempty"`
 	// Optional default value for the input field (as a JSON string)
 	DefaultValue *string `json:"default_value,omitempty"`
 	// If true, the user will be required to provide a valid value for this input
@@ -276,6 +278,38 @@ func (o *FormInput) HasPlaceholder() bool {
 // SetPlaceholder gets a reference to the given map[string]string and assigns it to the Placeholder field.
 func (o *FormInput) SetPlaceholder(v map[string]string) {
 	o.Placeholder = &v
+}
+
+// GetTooltip returns the Tooltip field value if set, zero value otherwise.
+func (o *FormInput) GetTooltip() map[string]string {
+	if o == nil || IsNil(o.Tooltip) {
+		var ret map[string]string
+		return ret
+	}
+	return *o.Tooltip
+}
+
+// GetTooltipOk returns a tuple with the Tooltip field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *FormInput) GetTooltipOk() (*map[string]string, bool) {
+	if o == nil || IsNil(o.Tooltip) {
+		return nil, false
+	}
+	return o.Tooltip, true
+}
+
+// HasTooltip returns a boolean if a field has been set.
+func (o *FormInput) HasTooltip() bool {
+	if o != nil && !IsNil(o.Tooltip) {
+		return true
+	}
+
+	return false
+}
+
+// SetTooltip gets a reference to the given map[string]string and assigns it to the Tooltip field.
+func (o *FormInput) SetTooltip(v map[string]string) {
+	o.Tooltip = &v
 }
 
 // GetDefaultValue returns the DefaultValue field value if set, zero value otherwise.
@@ -539,6 +573,9 @@ func (o FormInput) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Placeholder) {
 		toSerialize["placeholder"] = o.Placeholder
+	}
+	if !IsNil(o.Tooltip) {
+		toSerialize["tooltip"] = o.Tooltip
 	}
 	if !IsNil(o.DefaultValue) {
 		toSerialize["default_value"] = o.DefaultValue

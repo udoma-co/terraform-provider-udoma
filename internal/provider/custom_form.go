@@ -68,6 +68,7 @@ func NewCustomFormInputNull() CustomFormInputModel {
 		Label:       basetypes.NewMapNull(types.StringType),
 		ViewLabel:   basetypes.NewMapNull(types.StringType),
 		Placeholder: basetypes.NewMapNull(types.StringType),
+		Tooltip:     basetypes.NewMapNull(types.StringType),
 		Attributes:  basetypes.NewMapNull(types.StringType),
 	}
 }
@@ -77,6 +78,7 @@ type CustomFormInputModel struct {
 	Label            types.Map                  `tfsdk:"label"`
 	ViewLabel        types.Map                  `tfsdk:"view_label"`
 	Placeholder      types.Map                  `tfsdk:"placeholder"`
+	Tooltip          types.Map                  `tfsdk:"tooltip"`
 	Type             types.String               `tfsdk:"type"`
 	DefaultValue     types.String               `tfsdk:"default_value"`
 	Required         types.Bool                 `tfsdk:"required"`
@@ -219,66 +221,84 @@ func customFormInputNestedSchema() schema.NestedAttributeObject {
 	return schema.NestedAttributeObject{
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				Required:    true,
-				Description: "the ID of the input field, used to identify it and later access the data",
+				Required: true,
+				Description: "The ID of the input field, used to identify it within the form. If no " +
+					"target value is set, this will also be how the value is stored and later" +
+					"accessed in the collected data.",
+			},
+			"target": schema.StringAttribute{
+				Optional: true,
+				Description: "Optional attribute name to use when exporting the value of this input. If " +
+					"not set, the ID will be used.",
+			},
+			"type": schema.StringAttribute{
+				Required: true,
+				Description: "The type of data that will be retrieved by that input. This also controls " +
+					"how the input will be displayed to the user.",
 			},
 			"label": schema.MapAttribute{
 				Optional:    true,
 				ElementType: types.StringType,
-				Description: "a map of values, where the key and values are strings",
+				Description: "The label for the input field as a language dictionary (e.g. 'What is your name?')",
 			},
 			"view_label": schema.MapAttribute{
 				Optional:    true,
 				ElementType: types.StringType,
-				Description: "a map of values, where the key and values are strings",
+				Description: "Optional label to be displayed when viewing the input field (e.g. 'Name'). " +
+					"This is useful when the label is not suitable to be displayed in a view.",
 			},
 			"placeholder": schema.MapAttribute{
 				Optional:    true,
 				ElementType: types.StringType,
-				Description: "a map of values, where the key and values are strings",
+				Description: "An optional placeholder to use for the input field. If not set, a default " +
+					"one will be used based on the label of the input.",
 			},
-			"type": schema.StringAttribute{
-				Required:    true,
-				Description: "The type of the input",
+			"tooltip": schema.MapAttribute{
+				Optional:    true,
+				ElementType: types.StringType,
+				Description: "Optional tooltip to be displayed next to the label (hover or click on icon). " +
+					"This is useful for providing additional information to the user.",
 			},
 			"default_value": schema.StringAttribute{
 				Optional:    true,
-				Description: "optional default value for the input field (as a JSON string)",
+				Description: "Optional default value for the input field (as a JSON string)",
 			},
 			"required": schema.BoolAttribute{
 				Optional:    true,
-				Description: "if true, the user will be required to provide a value",
+				Description: "If true, the user will be required to provide a valid value for this input",
 			},
 			"readonly": schema.BoolAttribute{
 				Optional:    true,
-				Description: "if true, the user will not be able to change the value of this input",
+				Description: "If true, the user will not be able to change the value of this input",
 			},
 			"ephemeral": schema.BoolAttribute{
-				Optional:    true,
-				Description: "if true, the value of the input will not be persisted",
+				Optional: true,
+				Description: "If true, the value of the input will not be persisted. This is useful for " +
+					"checkboxes for accepting terms and conditions, etc.",
 			},
 			"propagate_changes": schema.BoolAttribute{
-				Optional:    true,
-				Description: "if true, changes to the input will be propagated to event listeners for the custom form",
-			},
-			"target": schema.StringAttribute{
-				Optional:    true,
-				Description: "the attribute name to use when exporting the result of this input",
+				Optional: true,
+				Description: "If true, changes to the input will be propagated to event listeners for " +
+					"the custom form.",
 			},
 			"attributes": schema.MapAttribute{
 				Optional:    true,
 				ElementType: types.StringType,
-				Description: "a map of values, where the key and values are strings",
+				Description: "Optional set of settings for the input field, such as min/max values. " +
+					"Those will vary depending on the type.",
 			},
 			"items": schema.ListNestedAttribute{
 				Optional:     true,
 				NestedObject: customFormInputItemNestedSchema(),
-				Description:  "Only used when the type is select or multi select. This is a list of values that the user can choose from.",
+				Description: "Only used when the type is select or multi select. This is a list of " +
+					"values that the user can choose from.",
 			},
 			"display_condition": schema.SingleNestedAttribute{
-				Optional:    true,
-				Attributes:  conditionalInputNestedSchema(),
-				Description: "Optional condition that must be met for the input to be displayed",
+				Optional:   true,
+				Attributes: conditionalInputNestedSchema(),
+				Description: "Optional condition that must be met for the input to be displayed. If the " +
+					"condition is not met, the input will be hidden. This overrides the required " +
+					"attribute.",
 			},
 		},
 	}
@@ -542,6 +562,10 @@ func (input *CustomFormInputModel) toApiRequest() *v1.FormInput {
 		ret.Placeholder = &placeholder
 	}
 
+	if tooltip := modelMapToStringMap(input.Tooltip); len(tooltip) > 0 {
+		ret.Tooltip = &tooltip
+	}
+
 	if attributes := modelMapToStringMap(input.Attributes); len(attributes) > 0 {
 		ret.Attributes = &attributes
 	}
@@ -570,6 +594,13 @@ func (input *CustomFormInputModel) fromApiResponse(resp *v1.FormInput) (diags di
 
 	if resp.Placeholder != nil {
 		input.Placeholder, diags = types.MapValue(types.StringType, stringMapToValueMap(*resp.Placeholder))
+		if diags.HasError() {
+			return
+		}
+	}
+
+	if resp.Tooltip != nil {
+		input.Tooltip, diags = types.MapValue(types.StringType, stringMapToValueMap(*resp.Tooltip))
 		if diags.HasError() {
 			return
 		}
