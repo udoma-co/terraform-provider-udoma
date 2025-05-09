@@ -129,7 +129,7 @@ Optional:
 
 Required:
 
-- `id` (String) The ID of the input field, used to identify it within the form. If no target value is set, this will also be how the value is stored and lateraccessed in the collected data.
+- `id` (String) The ID of the input field, used to identify it within the form. If no target value is set, this will also be how the value is stored and later accessed in the collected data.
 - `type` (String) The type of data that will be retrieved by that input. This also controls how the input will be displayed to the user.
 
 Optional:

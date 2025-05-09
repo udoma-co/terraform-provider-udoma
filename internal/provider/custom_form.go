@@ -223,7 +223,7 @@ func customFormInputNestedSchema() schema.NestedAttributeObject {
 			"id": schema.StringAttribute{
 				Required: true,
 				Description: "The ID of the input field, used to identify it within the form. If no " +
-					"target value is set, this will also be how the value is stored and later" +
+					"target value is set, this will also be how the value is stored and later " +
 					"accessed in the collected data.",
 			},
 			"target": schema.StringAttribute{
