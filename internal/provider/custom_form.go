@@ -33,6 +33,7 @@ type CustomFormGroupModel struct {
 	Type          types.String          `tfsdk:"type"`
 	Label         types.Map             `tfsdk:"label"`
 	Info          types.Map             `tfsdk:"info"`
+	Subtitle      types.List            `tfsdk:"subtitle"`
 	NestedDisplay types.Bool            `tfsdk:"nested_display"`
 	Items         []CustomFormItemModel `tfsdk:"items"`
 	Target        types.String          `tfsdk:"target"`
@@ -159,6 +160,13 @@ func customFormGroupNestedSchema() schema.NestedAttributeObject {
 				Optional:    true,
 				ElementType: types.StringType,
 				Description: "The label of the group",
+			},
+			"subtitle": schema.ListAttribute{
+				Optional:    true,
+				ElementType: types.StringType,
+				Description: "Optional subtitle for repeat groups. This will be computed dynamically based on the " +
+					"data provided by the user and will be displayed as a subtitle in the group accordion. The " +
+					"values are interpreted as JSON paths based on the data for the group.",
 			},
 			"info": schema.MapAttribute{
 				Optional:    true,
@@ -449,6 +457,7 @@ func (group *CustomFormGroupModel) toApiRequest() *v1.FormGroup {
 		Type:          v1.FormGroupType(group.Type.ValueString()),
 		Label:         &label,
 		Info:          &info,
+		Subtitle:      modelListToStringSlice(group.Subtitle),
 		NestedDisplay: group.NestedDisplay.ValueBoolPointer(),
 		Items:         items,
 		Target:        group.Target.ValueStringPointer(),
@@ -463,6 +472,15 @@ func (group *CustomFormGroupModel) fromApiResponse(resp *v1.FormGroup) (diags di
 
 	group.ID = types.StringValue(resp.Id)
 	group.Type = types.StringValue(string(resp.Type))
+
+	if resp.Subtitle != nil {
+		group.Subtitle, diags = types.ListValue(types.StringType, stringSliceToValueList(resp.Subtitle))
+		if diags.HasError() {
+			return
+		}
+	} else {
+		group.Subtitle = types.ListNull(types.StringType)
+	}
 
 	if resp.Label != nil {
 		group.Label, diags = types.MapValue(types.StringType, stringMapToValueMap(*resp.Label))
