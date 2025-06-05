@@ -478,6 +478,8 @@ func (group *CustomFormGroupModel) fromApiResponse(resp *v1.FormGroup) (diags di
 		if diags.HasError() {
 			return
 		}
+	} else {
+		group.Subtitle = types.ListNull(types.StringType)
 	}
 
 	if resp.Label != nil {
