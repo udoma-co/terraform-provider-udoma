@@ -165,7 +165,7 @@ func customFormGroupNestedSchema() schema.NestedAttributeObject {
 				Optional:    true,
 				ElementType: types.StringType,
 				Description: "Optional subtitle for repeat groups. This will be computed dynamically based on the " +
-					"data provided by the user and will be displayed as a subtitle in the group accordeon. The " +
+					"data provided by the user and will be displayed as a subtitle in the group accordion. The " +
 					"values are interpreted as JSON paths based on the data for the group.",
 			},
 			"info": schema.MapAttribute{

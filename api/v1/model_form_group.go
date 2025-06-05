@@ -26,7 +26,7 @@ type FormGroup struct {
 	Type FormGroupType `json:"type"`
 	// a map of values, where the key and values are strings
 	Label *map[string]string `json:"label,omitempty"`
-	// Optional subtitle for repeat groups. This will be computed dynamically based on the data  provided by the user and will be displayed as a subtitle in the group accordeon. The values are interpreted as JSON paths based on the data for the group.
+	// Optional subtitle for repeat groups. This will be computed dynamically based on the data  provided by the user and will be displayed as a subtitle in the group accordion. The values are interpreted as JSON paths based on the data for the group.
 	Subtitle []string `json:"subtitle,omitempty"`
 	// a map of values, where the key and values are strings
 	Info *map[string]string `json:"info,omitempty"`
