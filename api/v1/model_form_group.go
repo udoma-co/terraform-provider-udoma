@@ -26,6 +26,8 @@ type FormGroup struct {
 	Type FormGroupType `json:"type"`
 	// a map of values, where the key and values are strings
 	Label *map[string]string `json:"label,omitempty"`
+	// Optional subtitle for repeat groups. This will be computed dynamically based on the data  provided by the user and will be displayed as a subtitle in the group accordeon. The values are interpreted as JSON paths based on the data for the group.
+	Subtitle []string `json:"subtitle,omitempty"`
 	// a map of values, where the key and values are strings
 	Info *map[string]string `json:"info,omitempty"`
 	// If true, the group will be displayed in a nested UI (only works on mobile and tablet). This  is useful for more complex group that require more space to be displayed. The group will be  displayed in a separate screen, and the user will be able to navigate back and forth between  the group and the main form.
@@ -144,6 +146,38 @@ func (o *FormGroup) HasLabel() bool {
 // SetLabel gets a reference to the given map[string]string and assigns it to the Label field.
 func (o *FormGroup) SetLabel(v map[string]string) {
 	o.Label = &v
+}
+
+// GetSubtitle returns the Subtitle field value if set, zero value otherwise.
+func (o *FormGroup) GetSubtitle() []string {
+	if o == nil || IsNil(o.Subtitle) {
+		var ret []string
+		return ret
+	}
+	return o.Subtitle
+}
+
+// GetSubtitleOk returns a tuple with the Subtitle field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *FormGroup) GetSubtitleOk() ([]string, bool) {
+	if o == nil || IsNil(o.Subtitle) {
+		return nil, false
+	}
+	return o.Subtitle, true
+}
+
+// HasSubtitle returns a boolean if a field has been set.
+func (o *FormGroup) HasSubtitle() bool {
+	if o != nil && !IsNil(o.Subtitle) {
+		return true
+	}
+
+	return false
+}
+
+// SetSubtitle gets a reference to the given []string and assigns it to the Subtitle field.
+func (o *FormGroup) SetSubtitle(v []string) {
+	o.Subtitle = v
 }
 
 // GetInfo returns the Info field value if set, zero value otherwise.
@@ -408,6 +442,9 @@ func (o FormGroup) ToMap() (map[string]interface{}, error) {
 	toSerialize["type"] = o.Type
 	if !IsNil(o.Label) {
 		toSerialize["label"] = o.Label
+	}
+	if !IsNil(o.Subtitle) {
+		toSerialize["subtitle"] = o.Subtitle
 	}
 	if !IsNil(o.Info) {
 		toSerialize["info"] = o.Info
