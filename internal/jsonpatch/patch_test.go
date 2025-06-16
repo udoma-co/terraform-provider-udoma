@@ -1,8 +1,11 @@
 package jsonpatch
 
 import (
+	"bytes"
+	"strings"
 	"testing"
 
+	"github.com/bluekeyes/go-gitdiff/gitdiff"
 	"github.com/spyzhov/ajson"
 )
 
@@ -482,4 +485,39 @@ func matches(a []byte, b string) bool {
 	}
 
 	return res
+}
+
+func TestDiffPatch(t *testing.T) {
+	orig := `Hello
+World
+!`
+
+	patch := `--- source.json
++++ source.json
+@@ -1,3 +1,4 @@
+ Hello
+-World
++patched
++world
+ !`
+
+	dest := `Hello
+patched
+world
+!`
+
+	files, _, err := gitdiff.Parse(strings.NewReader(patch))
+	if err != nil {
+		t.Fatalf("Could not parse patch, unexpected error: %v", err)
+	}
+
+	var output bytes.Buffer
+	if err := gitdiff.Apply(&output, strings.NewReader(orig), files[0]); err != nil {
+		t.Fatalf("Could not apply patch, unexpected error: %v", err)
+	}
+
+	if output.String() != dest {
+		t.Fatalf("Unexpected result: %s", output.String())
+	}
+
 }

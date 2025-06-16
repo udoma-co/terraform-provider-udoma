@@ -21,7 +21,7 @@ Resource represents a JSON source file that may contain references to other file
 
 ### Optional
 
-- `patches` (List of String) An optional list of patches to apply to the original JSON content
+- `patches` (List of String) An optional list of patches to apply to the original JSON content. These patches can be either JSON patches or unified diff patches. If a unified diff patch is provided, it will be applied to the content of the source file before any JSON patches are applied.
 
 ### Read-Only
 

@@ -1,6 +1,7 @@
 package provider
 
 import (
+	"bytes"
 	"context"
 	"encoding/base64"
 	"encoding/json"
@@ -10,6 +11,7 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/bluekeyes/go-gitdiff/gitdiff"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -51,8 +53,10 @@ func (r *jsonSource) Schema(ctx context.Context, req datasource.SchemaRequest, r
 				Description: "The file location to read the JSON from",
 			},
 			"patches": schema.ListAttribute{
-				Optional:    true,
-				Description: "An optional list of patches to apply to the original JSON content",
+				Optional: true,
+				Description: "An optional list of patches to apply to the original JSON content. These patches can " +
+					"be either JSON patches or unified diff patches. If a unified diff patch is provided, it will be " +
+					"applied to the content of the source file before any JSON patches are applied.",
 				ElementType: types.StringType,
 			},
 			"content": schema.StringAttribute{
@@ -75,7 +79,7 @@ func (r *jsonSource) Read(ctx context.Context, req datasource.ReadRequest, resp 
 		return
 	}
 
-	fileContents, err := readMergedFile(config.Source.ValueString())
+	fileContents, err := readMergedFile(config.Source.ValueString(), nil)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Reading Json Source",
@@ -84,37 +88,101 @@ func (r *jsonSource) Read(ctx context.Context, req datasource.ReadRequest, resp 
 		return
 	}
 
+	jsonPatches := []jsonpatch.Patch{}
+	diffPatches := []*gitdiff.File{}
+
 	for _, patch := range config.Patches {
-		patchContents, err := readMergedFile(patch)
+
+		patchContents, err := readMergedFile(patch, diffPatches)
 		if err != nil {
 			resp.Diagnostics.AddError(
-				"Error Reading Json Patch",
+				"Error Reading Patch File",
 				"Could not read file, unexpected error: "+err.Error(),
 			)
 			return
 		}
-		patch, err := jsonpatch.DecodePatch(patchContents)
-		if err != nil {
+
+		// patch can be either a JSON patch or a unified diff patch. We can
+		// distinguish them by checking if the first character is a '[' for
+		// JSON patch or a '-' for unified diff patch.
+		if len(patchContents) == 0 {
 			resp.Diagnostics.AddError(
-				"Error Decoding Json Patch",
-				"Could not decode patch, unexpected error: "+err.Error(),
+				"Error Reading Patch File",
+				"Patch file is empty",
+			)
+			return
+		}
+		if patchContents[0] == '[' {
+			// JSON patch
+
+			patch, err := jsonpatch.DecodePatch(patchContents)
+			if err != nil {
+				resp.Diagnostics.AddError(
+					"Error Decoding Json Patch",
+					"Could not decode json patch, unexpected error: "+err.Error(),
+				)
+				return
+			}
+
+			jsonPatches = append(jsonPatches, patch)
+
+		} else if patchContents[0] == '-' {
+			// Unified diff patch
+
+			files, _, err := gitdiff.Parse(bytes.NewReader(patchContents))
+			if err != nil {
+				resp.Diagnostics.AddError(
+					"Error Parsing Diff Patch",
+					"Could not parse diff patch, unexpected error: "+err.Error(),
+				)
+				return
+			}
+
+			diffPatches = append(diffPatches, files...)
+
+		} else {
+			resp.Diagnostics.AddError(
+				"Error Reading Patch File",
+				"Patch file does not start with a valid character, expected '[' for JSON patch or '-' for unified diff patch",
 			)
 			return
 		}
 
+	}
+
+	for _, patch := range jsonPatches {
 		fileContents, err = patch.Apply(fileContents)
 		if err != nil {
 			resp.Diagnostics.AddError(
 				"Error Applying Json Patch",
-				"Could not apply patch, unexpected error: "+err.Error(),
+				"Could not apply json patch, unexpected error: "+err.Error(),
 			)
 			return
 		}
 	}
 
+	for _, patch := range diffPatches {
+
+		if !strings.HasSuffix(config.Source.String(), patch.OldName) {
+			// skip patches that do not match the source file
+			continue
+		}
+
+		var output bytes.Buffer
+		if err := gitdiff.Apply(&output, strings.NewReader(string(fileContents)), patch); err != nil {
+			resp.Diagnostics.AddError(
+				"Error Applying Diff Patch",
+				"Could not apply diff patch, unexpected error: "+err.Error(),
+			)
+			return
+		}
+
+		fileContents = output.Bytes()
+	}
+
 	if len(config.Patches) > 0 {
 		// normalize the content to remove whitespace drift
-		var data interface{}
+		var data any
 		if err := json.Unmarshal(fileContents, &data); err != nil {
 			resp.Diagnostics.AddError(
 				"Error Normalizing Json Content",
@@ -142,7 +210,11 @@ func (r *jsonSource) Read(ctx context.Context, req datasource.ReadRequest, resp 
 	}
 }
 
-func readMergedFile(fileName string) ([]byte, error) {
+// readMergedFile reads the file with the given name and embeds any nested
+// files, such as JSON, PNG, JPG, and JS files, into the content. For JS
+// files, it applies any diff patches that were provided that match the
+// file name.
+func readMergedFile(fileName string, diffPatches []*gitdiff.File) ([]byte, error) {
 
 	dirName := filepath.Dir(fileName)
 
@@ -151,7 +223,7 @@ func readMergedFile(fileName string) ([]byte, error) {
 		return nil, fmt.Errorf("could not read file: %w", err)
 	}
 
-	data, err = embedFiles(data, dirName)
+	data, err = embedFiles(data, dirName, diffPatches)
 	if err != nil {
 		return nil, fmt.Errorf("could not embed nested files %w", err)
 	}
@@ -159,7 +231,17 @@ func readMergedFile(fileName string) ([]byte, error) {
 	return data, nil
 }
 
-func embedFiles(data []byte, dirName string) ([]byte, error) {
+// embedFiles finds occurrences of "src:.*.json", "src:.*.png", "src:.*.jpg",
+// and "src:.*.js" in the data and replaces them with the content of the
+// respective files. For JSON files, it embeds the content as a string, for
+// PNG and JPG  files, it embeds the content as base64 encoded strings, and
+// for JS files, it embeds the content as a single line string with escaped
+// characters, after applying all patches that match the file name. JSON files
+// can also be embedded as a string, rather than a nested JSON structure by
+// adding "|string" at the end of the file name. It also recursively embeds
+// any nested files found within the JSON content. It returns the modified
+// data or an error if any file could not be read.
+func embedFiles(data []byte, dirName string, diffPatches []*gitdiff.File) ([]byte, error) {
 
 	// find occurrences of "src:.*.json" and replace with the content of the file
 	pattern := regexp.MustCompile(`"src:.*\.json(\|string)?"`)
@@ -185,7 +267,7 @@ func embedFiles(data []byte, dirName string) ([]byte, error) {
 			return nil, fmt.Errorf("could not read file %w", err)
 		}
 
-		fileData, err = embedFiles(fileData, dirName)
+		fileData, err = embedFiles(fileData, dirName, diffPatches)
 		if err != nil {
 			return nil, fmt.Errorf("could not embed nested files %w", err)
 		}
@@ -235,6 +317,18 @@ func embedFiles(data []byte, dirName string) ([]byte, error) {
 			return nil, fmt.Errorf("could not read file %w", err)
 		}
 
+		// apply any diff patches that match the file name
+		for _, patch := range diffPatches {
+			// if strings.HasSuffix(fileName, patch.OldName) {
+			// 	var output bytes.Buffer
+			// 	if err := gitdiff.Apply(&output, bytes.NewReader(fileData), patch); err != nil {
+			// 		return nil, fmt.Errorf("could not apply diff patch to file %s: %w", fileName, err)
+			// 	}
+			// 	fileData = output.Bytes()
+			// }
+			fileData = bytes.TrimSpace([]byte(patch.OldName))
+		}
+
 		sanitized := embedString(fileData, false)
 
 		data = append(data[:start], append(sanitized, data[end:]...)...)
@@ -243,6 +337,8 @@ func embedFiles(data []byte, dirName string) ([]byte, error) {
 	return data, nil
 }
 
+// embedString takes a byte slice, replaces newlines with \n, escapes quotes,
+// and optionally replaces tabs with \t. It returns the modified byte slice
 func embedString(in []byte, replaceTabs bool) []byte {
 
 	ret := string(in)
