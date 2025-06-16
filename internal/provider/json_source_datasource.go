@@ -79,15 +79,6 @@ func (r *jsonSource) Read(ctx context.Context, req datasource.ReadRequest, resp 
 		return
 	}
 
-	fileContents, err := readMergedFile(config.Source.ValueString(), nil)
-	if err != nil {
-		resp.Diagnostics.AddError(
-			"Error Reading Json Source",
-			"Could not read file, unexpected error: "+err.Error(),
-		)
-		return
-	}
-
 	jsonPatches := []jsonpatch.Patch{}
 	diffPatches := []*gitdiff.File{}
 
@@ -138,6 +129,11 @@ func (r *jsonSource) Read(ctx context.Context, req datasource.ReadRequest, resp 
 				return
 			}
 
+			resp.Diagnostics.AddWarning(
+				"Diff Patch Warning",
+				"Running diff for file "+files[0].OldName,
+			)
+
 			diffPatches = append(diffPatches, files...)
 
 		} else {
@@ -148,6 +144,15 @@ func (r *jsonSource) Read(ctx context.Context, req datasource.ReadRequest, resp 
 			return
 		}
 
+	}
+
+	fileContents, err := readMergedFile(config.Source.ValueString(), diffPatches)
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"Error Reading Json Source",
+			"Could not read source file, unexpected error: "+err.Error(),
+		)
+		return
 	}
 
 	for _, patch := range jsonPatches {
@@ -169,7 +174,7 @@ func (r *jsonSource) Read(ctx context.Context, req datasource.ReadRequest, resp 
 		}
 
 		var output bytes.Buffer
-		if err := gitdiff.Apply(&output, strings.NewReader(string(fileContents)), patch); err != nil {
+		if err := gitdiff.Apply(&output, bytes.NewReader(fileContents), patch); err != nil {
 			resp.Diagnostics.AddError(
 				"Error Applying Diff Patch",
 				"Could not apply diff patch, unexpected error: "+err.Error(),
@@ -225,7 +230,7 @@ func readMergedFile(fileName string, diffPatches []*gitdiff.File) ([]byte, error
 
 	data, err = embedFiles(data, dirName, diffPatches)
 	if err != nil {
-		return nil, fmt.Errorf("could not embed nested files %w", err)
+		return nil, fmt.Errorf("could not embed nested files: %w", err)
 	}
 
 	return data, nil
@@ -264,12 +269,12 @@ func embedFiles(data []byte, dirName string, diffPatches []*gitdiff.File) ([]byt
 		filePath := filepath.Join(dirName, fileName)
 		fileData, err := os.ReadFile(filePath)
 		if err != nil {
-			return nil, fmt.Errorf("could not read file %w", err)
+			return nil, fmt.Errorf("could not read file: %w", err)
 		}
 
 		fileData, err = embedFiles(fileData, dirName, diffPatches)
 		if err != nil {
-			return nil, fmt.Errorf("could not embed nested files %w", err)
+			return nil, fmt.Errorf("could not embed nested files: %w", err)
 		}
 
 		if embedAsStr {
@@ -293,7 +298,7 @@ func embedFiles(data []byte, dirName string, diffPatches []*gitdiff.File) ([]byt
 		filePath := filepath.Join(dirName, fileName)
 		fileData, err := os.ReadFile(filePath)
 		if err != nil {
-			return nil, fmt.Errorf("could not read file %w", err)
+			return nil, fmt.Errorf("could not read file: %w", err)
 		}
 
 		base64Data := base64.StdEncoding.EncodeToString(fileData)
@@ -314,19 +319,21 @@ func embedFiles(data []byte, dirName string, diffPatches []*gitdiff.File) ([]byt
 		filePath := filepath.Join(dirName, fileName)
 		fileData, err := os.ReadFile(filePath)
 		if err != nil {
-			return nil, fmt.Errorf("could not read file %w", err)
+			return nil, fmt.Errorf("could not read file: %w", err)
 		}
 
 		// apply any diff patches that match the file name
 		for _, patch := range diffPatches {
-			// if strings.HasSuffix(fileName, patch.OldName) {
-			// 	var output bytes.Buffer
-			// 	if err := gitdiff.Apply(&output, bytes.NewReader(fileData), patch); err != nil {
-			// 		return nil, fmt.Errorf("could not apply diff patch to file %s: %w", fileName, err)
-			// 	}
-			// 	fileData = output.Bytes()
-			// }
-			fileData = bytes.TrimSpace([]byte(patch.OldName))
+			if !strings.HasSuffix(fileName, patch.OldName) {
+				// skip patches that do not match the file name
+				continue
+			}
+
+			var output bytes.Buffer
+			if err := gitdiff.Apply(&output, bytes.NewReader(fileData), patch); err != nil {
+				return nil, fmt.Errorf("could not apply diff patch to file %s: %w", fileName, err)
+			}
+			fileData = output.Bytes()
 		}
 
 		sanitized := embedString(fileData, false)
