@@ -174,7 +174,7 @@ func (r *jsonSource) Read(ctx context.Context, req datasource.ReadRequest, resp 
 		}
 
 		var output bytes.Buffer
-		if err := gitdiff.Apply(&output, strings.NewReader(string(fileContents)), patch); err != nil {
+		if err := gitdiff.Apply(&output, bytes.NewReader(fileContents), patch); err != nil {
 			resp.Diagnostics.AddError(
 				"Error Applying Diff Patch",
 				"Could not apply diff patch, unexpected error: "+err.Error(),
