@@ -7,7 +7,6 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"strings"
 
 	"github.com/bluekeyes/go-gitdiff/gitdiff"
 	"github.com/hashicorp/terraform-plugin-framework/function"
@@ -77,6 +76,5 @@ func (f *ApplyPatchFunction) Run(ctx context.Context, req function.RunRequest, r
 		sourceData = output.Bytes()
 	}
 
-	res := strings.TrimSpace(string(sourceData))
-	resp.Error = resp.Result.Set(ctx, &res)
+	resp.Error = resp.Result.Set(ctx, types.StringValue(string(sourceData)))
 }
