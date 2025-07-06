@@ -129,11 +129,6 @@ func (r *jsonSource) Read(ctx context.Context, req datasource.ReadRequest, resp 
 				return
 			}
 
-			resp.Diagnostics.AddWarning(
-				"Diff Patch Warning",
-				"Running diff for file "+files[0].OldName,
-			)
-
 			diffPatches = append(diffPatches, files...)
 
 		} else {

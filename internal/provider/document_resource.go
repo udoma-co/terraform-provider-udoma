@@ -72,6 +72,9 @@ func (d *Document) Schema(ctx context.Context, req resource.SchemaRequest, resp 
 			"attachment": schema.StringAttribute{
 				Required:    true,
 				Description: "The attachment to be used in the document",
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 			},
 			"path": schema.StringAttribute{
 				Optional:    true,
