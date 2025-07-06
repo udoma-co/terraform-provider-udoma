@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
+	"github.com/hashicorp/terraform-plugin-framework/function"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/provider"
 	"github.com/hashicorp/terraform-plugin-framework/provider/schema"
@@ -225,5 +226,12 @@ func (p *UdomaProvider) Resources(ctx context.Context) []func() resource.Resourc
 func (p *UdomaProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
 	return []func() datasource.DataSource{
 		NewJsonSource,
+	}
+}
+
+// Functions defines the functions implemented in the provider.
+func (p *UdomaProvider) Functions(_ context.Context) []func() function.Function {
+	return []func() function.Function{
+		NewApplyPatchFunction,
 	}
 }
