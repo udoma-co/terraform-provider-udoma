@@ -35,7 +35,6 @@ type AccountModel struct {
 	Number     types.Int32  `tfsdk:"number"`
 	Name       types.String `tfsdk:"name"`
 	Type       types.String `tfsdk:"type"`
-	IsBalance  types.Bool   `tfsdk:"is_balance"`
 	Currency   types.String `tfsdk:"currency"`
 	Dimensions types.List   `tfsdk:"dimensions"`
 }
@@ -75,10 +74,6 @@ func (faq *Account) Schema(ctx context.Context, req resource.SchemaRequest, resp
 			"type": schema.StringAttribute{
 				Required:            true,
 				MarkdownDescription: "The type of the account",
-			},
-			"is_balance": schema.BoolAttribute{
-				Required:            true,
-				MarkdownDescription: "Whether the account is a balance account",
 			},
 			"currency": schema.StringAttribute{
 				Required:            true,
@@ -270,7 +265,6 @@ func (model *AccountModel) fromAPI(account *api.FinancialAccount) (diags diag.Di
 	model.CreatedAt = types.Int64Value(account.CreatedAt)
 	model.UpdatedAt = types.Int64Value(account.UpdatedAt)
 	model.Type = types.StringValue(string(account.Type))
-	model.IsBalance = omittableBooleanValue(account.IsBalance, model.IsBalance)
 
 	dimensionIDs := make([]string, len(account.Dimensions))
 	for i := range account.Dimensions {
@@ -293,7 +287,6 @@ func (model *AccountModel) toAPIRequest() (api.CreateOrUpdateFinancialAccountReq
 		Number:     model.Number.ValueInt32(),
 		Name:       model.Name.ValueString(),
 		Type:       api.AccountTypesEnum(model.Type.ValueString()),
-		IsBalance:  model.IsBalance.ValueBoolPointer(),
 		Currency:   model.Currency.ValueString(),
 		Dimensions: modelListToStringSlice(model.Dimensions),
 	}
