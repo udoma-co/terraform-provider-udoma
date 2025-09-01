@@ -18,7 +18,6 @@ Resource represents a financial account
 ### Required
 
 - `currency` (String) The currency of the account
-- `is_balance` (Boolean) Whether the account is a balance account
 - `name` (String) The name of the account
 - `number` (Number) The unique account number, manually set
 - `type` (String) The type of the account
