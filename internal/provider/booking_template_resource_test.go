@@ -18,7 +18,6 @@ func TestAccBookingTemplateResource(t *testing.T) {
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "name", "test_template"),
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "description", "test_description"),
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "icon", "fa-solid fa-plus"),
-					resource.TestCheckResourceAttr("udoma_booking_template.test", "custom_form", ""),
 
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "inputs.layout.0.ref_id", "test"),
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "inputs.layout.0.ref_type", "group"),
@@ -27,7 +26,7 @@ func TestAccBookingTemplateResource(t *testing.T) {
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "inputs.inputs.0.label.de", "Test Eingabe"),
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "inputs.inputs.0.label.en", "Test input"),
 
-					resource.TestCheckResourceAttr("udoma_booking_template.test", "generation_script", "// This is a test generation script"),
+					resource.TestCheckResourceAttr("udoma_booking_template.test", "script", "// This is a test generation script"),
 
 					// Verify dynamic values have any value set in the state.
 					resource.TestCheckResourceAttrSet("udoma_booking_template.test", "id"),
@@ -56,7 +55,7 @@ func TestAccBookingTemplateResource(t *testing.T) {
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "inputs.inputs.0.label.de", "Test Eingabe"),
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "inputs.inputs.0.label.en", "Test input"),
 
-					resource.TestCheckResourceAttr("udoma_booking_template.test", "generation_script", "// This is a test generation script"),
+					resource.TestCheckResourceAttr("udoma_booking_template.test", "script", "// This is a test generation script"),
 				),
 			},
 
@@ -72,7 +71,7 @@ func resourceDefinitionBookingTemplate(name, description string) string {
 		description = "` + description + `"
 		icon		= "fa-solid fa-plus"
 
-		custom_form = {
+		inputs = {
 			"layout" = [
 				{
 					"ref_id" = "test",
@@ -102,9 +101,7 @@ func resourceDefinitionBookingTemplate(name, description string) string {
 			]
 		}
 
-		generation_script = <<EOF
-		// This is a test generation script
-		EOF
+		script = "// This is a test generation script"
 	}
 	`
 }
