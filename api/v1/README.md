@@ -77,6 +77,7 @@ All URIs are relative to *http://hostlocal/api/udoma/v1*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*DefaultAPI* | [**AddAppointmentComment**](docs/DefaultAPI.md#addappointmentcomment) | **Post** /calendar/appointments/entry/{entryID}/comment | Add a comment in an appointment
 *DefaultAPI* | [**AddCaseComment**](docs/DefaultAPI.md#addcasecomment) | **Post** /case/{caseID}/comment | Add new case comment
 *DefaultAPI* | [**ArchiveApproval**](docs/DefaultAPI.md#archiveapproval) | **Post** /approval/{approvalID}/archive | Archive the approval with the given ID
 *DefaultAPI* | [**ArchiveCase**](docs/DefaultAPI.md#archivecase) | **Post** /case/{caseID}/archive | Mark the case as archived
@@ -97,7 +98,8 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateAppointmentTemplate**](docs/DefaultAPI.md#createappointmenttemplate) | **Post** /calendar/appointments/template | Create new appointment template
 *DefaultAPI* | [**CreateApproval**](docs/DefaultAPI.md#createapproval) | **Post** /approval | Create a new approval
 *DefaultAPI* | [**CreateBankAccount**](docs/DefaultAPI.md#createbankaccount) | **Post** /bank-account | Create new bank account
-*DefaultAPI* | [**CreateBankTransaction**](docs/DefaultAPI.md#createbanktransaction) | **Post** /financial/bank-transaction/{accountID} | Create a new bank transaction
+*DefaultAPI* | [**CreateBankTransaction**](docs/DefaultAPI.md#createbanktransaction) | **Post** /bank-account/{accountID}/bank-transaction | Create a new bank transaction
+*DefaultAPI* | [**CreateBookingTemplate**](docs/DefaultAPI.md#createbookingtemplate) | **Post** /financial/booking-template | Create a new booking template
 *DefaultAPI* | [**CreateBulkAccountDimensionValues**](docs/DefaultAPI.md#createbulkaccountdimensionvalues) | **Post** /financial/account-dimension/{dimensionID}/value/bulk | Create a set of new account dimension values
 *DefaultAPI* | [**CreateCase**](docs/DefaultAPI.md#createcase) | **Post** /case | Create a new case
 *DefaultAPI* | [**CreateCaseReportingEndpoint**](docs/DefaultAPI.md#createcasereportingendpoint) | **Post** /cases/endpoint | Create new case reporting endpoint
@@ -134,15 +136,17 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateVersionMigrator**](docs/DefaultAPI.md#createversionmigrator) | **Post** /vesion-migrator | Create a migrator for a template/definition versions
 *DefaultAPI* | [**CreateWorkflowDefinition**](docs/DefaultAPI.md#createworkflowdefinition) | **Post** /workflows/definition | Create a new workflow definition
 *DefaultAPI* | [**CreateWorkflowEntrypoint**](docs/DefaultAPI.md#createworkflowentrypoint) | **Post** /workflows/definition/{definitionID}/entrypoint | Create a new workflow entry point for the workflow definition
-*DefaultAPI* | [**DeleteAccountBooking**](docs/DefaultAPI.md#deleteaccountbooking) | **Delete** /financial/bookings/{bookingID} | Delete the booking with all its related data
 *DefaultAPI* | [**DeleteAccountDimension**](docs/DefaultAPI.md#deleteaccountdimension) | **Delete** /financial/account-dimension/{dimensionID} | Delete the account dimension with all its related data
 *DefaultAPI* | [**DeleteAccountDimensionValue**](docs/DefaultAPI.md#deleteaccountdimensionvalue) | **Delete** /financial/account-dimension/{dimensionID}/value/{refID} | Delete the account dimension value with all its related data
 *DefaultAPI* | [**DeleteAppointment**](docs/DefaultAPI.md#deleteappointment) | **Delete** /calendar/appointments/entry/{entryID} | Delete an appointment
+*DefaultAPI* | [**DeleteAppointmentComment**](docs/DefaultAPI.md#deleteappointmentcomment) | **Delete** /calendar/appointments/entry/{entryID}/comment/{commentID} | Delete a comment from appointment.
 *DefaultAPI* | [**DeleteAppointmentSchedule**](docs/DefaultAPI.md#deleteappointmentschedule) | **Delete** /calendar/appointments/schedule/{scheduleID} | Delete an appointment schedule
 *DefaultAPI* | [**DeleteAppointmentTemplate**](docs/DefaultAPI.md#deleteappointmenttemplate) | **Delete** /calendar/appointments/template/{templateID} | Delete an appointment template
 *DefaultAPI* | [**DeleteApproval**](docs/DefaultAPI.md#deleteapproval) | **Delete** /approval/{approvalID} | Delete an already existing approval
 *DefaultAPI* | [**DeleteBankAccount**](docs/DefaultAPI.md#deletebankaccount) | **Delete** /bank-account/{accountID} | Delete an already existing bank account
-*DefaultAPI* | [**DeleteBankTransaction**](docs/DefaultAPI.md#deletebanktransaction) | **Delete** /financial/bank-transaction/{transactionID} | Delete the bank transaction with all its related data
+*DefaultAPI* | [**DeleteBankTransaction**](docs/DefaultAPI.md#deletebanktransaction) | **Delete** /bank-account/transaction/{transactionID} | Delete the bank transaction with all its related data
+*DefaultAPI* | [**DeleteBookingPreview**](docs/DefaultAPI.md#deletebookingpreview) | **Delete** /financial/booking-preview/{bookingPreviewID} | Delete the booking preview
+*DefaultAPI* | [**DeleteBookingTemplate**](docs/DefaultAPI.md#deletebookingtemplate) | **Delete** /financial/booking-template/{bookingTemplateID} | Delete the booking template with all its related data
 *DefaultAPI* | [**DeleteCase**](docs/DefaultAPI.md#deletecase) | **Delete** /case/{caseID} | Delete case
 *DefaultAPI* | [**DeleteCaseComment**](docs/DefaultAPI.md#deletecasecomment) | **Delete** /case/{caseID}/comment/{commentID} | Mark a case comment as deleted
 *DefaultAPI* | [**DeleteCaseReportingEndpoint**](docs/DefaultAPI.md#deletecasereportingendpoint) | **Delete** /cases/endpoints/{endpointID} | Delete the case reporting endpoint by ID
@@ -183,6 +187,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteWorkflowEntrypoint**](docs/DefaultAPI.md#deleteworkflowentrypoint) | **Delete** /workflows/entrypoint/{entrypointID} | Delete workflow entry point
 *DefaultAPI* | [**DeleteWorkflowExecution**](docs/DefaultAPI.md#deleteworkflowexecution) | **Delete** /workflows/execution/{executionID} | Delete workflow execution
 *DefaultAPI* | [**DenyAppointment**](docs/DefaultAPI.md#denyappointment) | **Post** /calendar/appointments/entry/{entryID}/deny | Deny an appointment
+*DefaultAPI* | [**ExecuteBookingTemplate**](docs/DefaultAPI.md#executebookingtemplate) | **Post** /financial/booking-template/{bookingTemplateID}/execute | Execute a booking template and create a booking preview
 *DefaultAPI* | [**ExecuteCommentTemplate**](docs/DefaultAPI.md#executecommenttemplate) | **Post** /comment-template/{commentTemplateID}/execute | Execute a comment template returning the comment.
 *DefaultAPI* | [**ExecuteReport**](docs/DefaultAPI.md#executereport) | **Post** /report/{definitionID}/execute | 
 *DefaultAPI* | [**ExecuteWorkflowEntrypoint**](docs/DefaultAPI.md#executeworkflowentrypoint) | **Post** /workflows/entrypoint/{entrypointID}/execute | Execute the workflow entry point
@@ -193,9 +198,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GenerateDocumentPDF**](docs/DefaultAPI.md#generatedocumentpdf) | **Post** /document-generation/documents/{docID}/generate-pdf | Generate a PDF for the document generation
 *DefaultAPI* | [**GenerateDocumentText**](docs/DefaultAPI.md#generatedocumenttext) | **Post** /document-generation/documents/{docID}/generate-text | Generate the text for the document, based on template and input data 
 *DefaultAPI* | [**GenerateESignatureForDocument**](docs/DefaultAPI.md#generateesignaturefordocument) | **Get** /document-generation/documents/{docID}/esignature/generate | Get the singing status for the document
-*DefaultAPI* | [**GenerateFinancialAccountAllocations**](docs/DefaultAPI.md#generatefinancialaccountallocations) | **Post** /financial/account/{accountID}/script | Run booking allocations script
 *DefaultAPI* | [**GetAccountBooking**](docs/DefaultAPI.md#getaccountbooking) | **Get** /financial/bookings/{bookingID} | Get the booking with all its attributes
-*DefaultAPI* | [**GetAccountBookingWithDimensions**](docs/DefaultAPI.md#getaccountbookingwithdimensions) | **Get** /financial/bookings/{bookingID}/dimensions | Get the booking with its allocations dimensions
 *DefaultAPI* | [**GetAccountDimension**](docs/DefaultAPI.md#getaccountdimension) | **Get** /financial/account-dimension/{dimensionID} | Get the account dimension with all its attributes
 *DefaultAPI* | [**GetAccountDimensionValue**](docs/DefaultAPI.md#getaccountdimensionvalue) | **Get** /financial/account-dimension/{dimensionID}/value/{refID} | Get the account dimension value for a refID with all its attributes
 *DefaultAPI* | [**GetAccountSummary**](docs/DefaultAPI.md#getaccountsummary) | **Post** /summary | Get overview of data in the system for current account
@@ -208,7 +211,9 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetApprovalsByRefId**](docs/DefaultAPI.md#getapprovalsbyrefid) | **Get** /approval/by-ref/{refID} | Get the approvals for the given entity ID
 *DefaultAPI* | [**GetAttachment**](docs/DefaultAPI.md#getattachment) | **Get** /attachment/{attachmentID} | Get a file attachment
 *DefaultAPI* | [**GetBankAccount**](docs/DefaultAPI.md#getbankaccount) | **Get** /bank-account/{accountID} | Get the bank account with the given ID
-*DefaultAPI* | [**GetBankTransaction**](docs/DefaultAPI.md#getbanktransaction) | **Get** /financial/bank-transaction/{transactionID} | Get the bank transaction with all its attributes
+*DefaultAPI* | [**GetBankTransaction**](docs/DefaultAPI.md#getbanktransaction) | **Get** /bank-account/transaction/{transactionID} | Get the bank transaction with all its attributes
+*DefaultAPI* | [**GetBookingPreview**](docs/DefaultAPI.md#getbookingpreview) | **Get** /financial/booking-preview/{bookingPreviewID} | Get the booking preview with all its attributes
+*DefaultAPI* | [**GetBookingTemplate**](docs/DefaultAPI.md#getbookingtemplate) | **Get** /financial/booking-template/{bookingTemplateID} | Get the booking template with all its attributes
 *DefaultAPI* | [**GetCase**](docs/DefaultAPI.md#getcase) | **Get** /case/{caseID} | Get case details
 *DefaultAPI* | [**GetCaseComment**](docs/DefaultAPI.md#getcasecomment) | **Get** /case/{caseID}/comment/{commentID} | Get comment details
 *DefaultAPI* | [**GetCaseReportingEndpoint**](docs/DefaultAPI.md#getcasereportingendpoint) | **Get** /cases/endpoints/{endpointID} | Get the case report endpoint by ID
@@ -244,6 +249,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetFeatureFlags**](docs/DefaultAPI.md#getfeatureflags) | **Get** /feature-flags | Get feature flags by reference
 *DefaultAPI* | [**GetFeatureFlagsConfig**](docs/DefaultAPI.md#getfeatureflagsconfig) | **Get** /feature-flags/config | Get all feature flags config
 *DefaultAPI* | [**GetFinancialAccount**](docs/DefaultAPI.md#getfinancialaccount) | **Get** /financial/accounts/{accountID} | Get the financial account with all its attributes
+*DefaultAPI* | [**GetFinancialAccountByFlatNumber**](docs/DefaultAPI.md#getfinancialaccountbyflatnumber) | **Get** /financial/accounts-by-number/{flatNumber} | Get financial account by flat number
 *DefaultAPI* | [**GetFinancialAccountsByRef**](docs/DefaultAPI.md#getfinancialaccountsbyref) | **Post** /financial/account/by-ref/{refType}/{refID} | Get the financial account for a given ref type and ref ID
 *DefaultAPI* | [**GetHook**](docs/DefaultAPI.md#gethook) | **Get** /hook/{hookID} | Get hook with all its attributes
 *DefaultAPI* | [**GetLatestPriceIndexPoint**](docs/DefaultAPI.md#getlatestpriceindexpoint) | **Get** /price-index/latest/{countryCode} | Get the current latest PriceIndexPoint
@@ -255,7 +261,8 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetNote**](docs/DefaultAPI.md#getnote) | **Get** /notes/{noteID} | Get note
 *DefaultAPI* | [**GetNotification**](docs/DefaultAPI.md#getnotification) | **Get** /notification/{notificationName} | Get notification
 *DefaultAPI* | [**GetNumberOfCasesForActionAndTimePeriod**](docs/DefaultAPI.md#getnumberofcasesforactionandtimeperiod) | **Post** /cases/stats/action | Get number of cases for the given action and time period
-*DefaultAPI* | [**GetNumberOfInteractionsForCases**](docs/DefaultAPI.md#getnumberofinteractionsforcases) | **Post** /cases/stats/interactions | Query case interactions
+*DefaultAPI* | [**GetNumberOfCasesForStatus**](docs/DefaultAPI.md#getnumberofcasesforstatus) | **Post** /cases/stats/status | Get number of cases for the given status
+*DefaultAPI* | [**GetNumberOfInteractionsForCases**](docs/DefaultAPI.md#getnumberofinteractionsforcases) | **Post** /cases/stats/interactions | Query the interactions of the cases for the current user
 *DefaultAPI* | [**GetPriceIndexPoint**](docs/DefaultAPI.md#getpriceindexpoint) | **Post** /price-index | Get the PriceIndexPoint
 *DefaultAPI* | [**GetProperty**](docs/DefaultAPI.md#getproperty) | **Get** /properties/{propID} | Get property details
 *DefaultAPI* | [**GetPropertyCases**](docs/DefaultAPI.md#getpropertycases) | **Post** /property/{propID}/cases | Get property cases
@@ -291,11 +298,14 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**InviteToAppointment**](docs/DefaultAPI.md#invitetoappointment) | **Post** /calendar/appointments/entry/{entryID}/invite | Invite a users to an appointment
 *DefaultAPI* | [**LinkAppointmentProperty**](docs/DefaultAPI.md#linkappointmentproperty) | **Post** /calendar/appointments/entry/{entryID}/property/{propID}/link | Link a property to an appointment
 *DefaultAPI* | [**LinkCaseProperty**](docs/DefaultAPI.md#linkcaseproperty) | **Post** /case/{caseID}/property/{propID}/link | Link a property to a case
+*DefaultAPI* | [**PersistBookingPreview**](docs/DefaultAPI.md#persistbookingpreview) | **Post** /financial/booking-preview/{bookingPreviewID}/persist | Persist the bookings in the given booking preview
 *DefaultAPI* | [**PreviewCommentTemplate**](docs/DefaultAPI.md#previewcommenttemplate) | **Post** /comment-template/{commentTemplateID}/preview | Preview a comment template returning an example comment.
+*DefaultAPI* | [**PublicAddAppointmentComment**](docs/DefaultAPI.md#publicaddappointmentcomment) | **Post** /public/calendar/appointments/entry/{code}/comment | Send a comment in an appointment.
 *DefaultAPI* | [**PublicAddCaseComment**](docs/DefaultAPI.md#publicaddcasecomment) | **Post** /public/case/{caseID}/comment | Add new case comment
 *DefaultAPI* | [**PublicCreateAppointment**](docs/DefaultAPI.md#publiccreateappointment) | **Post** /public/calendar/appointments/{scheduleID}/entry | Create a new appointment for the given schedule
 *DefaultAPI* | [**PublicCreateCase**](docs/DefaultAPI.md#publiccreatecase) | **Post** /public/case | Raise a new case from a public endpoint.
 *DefaultAPI* | [**PublicDeleteAppointment**](docs/DefaultAPI.md#publicdeleteappointment) | **Delete** /public/calendar/appointments/entry/{code} | Delete an appointment
+*DefaultAPI* | [**PublicDeleteAppointmentComment**](docs/DefaultAPI.md#publicdeleteappointmentcomment) | **Delete** /public/calendar/appointments/entry/{code}/comment/{commentID} | Delete a comment from appointment.
 *DefaultAPI* | [**PublicDeleteCaseComment**](docs/DefaultAPI.md#publicdeletecasecomment) | **Delete** /public/case/{caseID}/comment/{commentID} | Delete a comment
 *DefaultAPI* | [**PublicGetAppointment**](docs/DefaultAPI.md#publicgetappointment) | **Get** /public/calendar/appointments/entry/{code} | Get appointment details
 *DefaultAPI* | [**PublicGetAppointmentInIcalFormat**](docs/DefaultAPI.md#publicgetappointmentinicalformat) | **Get** /public/calendar/appointments/entry/{code}/ical | Get appointment in ical format
@@ -316,19 +326,20 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**PublicValidateFormData**](docs/DefaultAPI.md#publicvalidateformdata) | **Post** /public/validate/formData | Validate the data provided by the user against a custom form
 *DefaultAPI* | [**PublicValidateUserEmail**](docs/DefaultAPI.md#publicvalidateuseremail) | **Post** /public/validate/email | Validate user&#39;s email and point out problems if there are any
 *DefaultAPI* | [**PushConnectorLog**](docs/DefaultAPI.md#pushconnectorlog) | **Post** /connector/{name}/log | Push logs from the connector
-*DefaultAPI* | [**QueryAccountBookings**](docs/DefaultAPI.md#queryaccountbookings) | **Post** /financial/accounts/{accountID}/bookings | Query all bookings for a given account
-*DefaultAPI* | [**QueryAccountBookingsByFlatNumber**](docs/DefaultAPI.md#queryaccountbookingsbyflatnumber) | **Post** /financial/bookings/flat-number | Query bookings through flat number
 *DefaultAPI* | [**QueryAccountDimensionValues**](docs/DefaultAPI.md#queryaccountdimensionvalues) | **Post** /financial/account-dimension/{dimensionID}/values | Query all account dimension values for a given dimension
 *DefaultAPI* | [**QueryAccountDimensionValuesForEntity**](docs/DefaultAPI.md#queryaccountdimensionvaluesforentity) | **Post** /financial/account-dimension/by-ref | Query all account dimension values for a given entity
 *DefaultAPI* | [**QueryAccountDimensions**](docs/DefaultAPI.md#queryaccountdimensions) | **Post** /financial/account-dimensions | Query all account dimensions
-*DefaultAPI* | [**QueryAllBookings**](docs/DefaultAPI.md#queryallbookings) | **Post** /financial/bookings | Query all bookings
 *DefaultAPI* | [**QueryAppointmentSchedules**](docs/DefaultAPI.md#queryappointmentschedules) | **Post** /calendar/appointments/schedules | Query all appointment schedules for given criteria
 *DefaultAPI* | [**QueryAppointmentTemplates**](docs/DefaultAPI.md#queryappointmenttemplates) | **Post** /calendar/appointments/templates | Query all appointment templates for given criteria
 *DefaultAPI* | [**QueryAppointments**](docs/DefaultAPI.md#queryappointments) | **Get** /calendar/appointments/window/{windowID} | Get the appointments of a Window
 *DefaultAPI* | [**QueryApprovals**](docs/DefaultAPI.md#queryapprovals) | **Post** /approvals | Query approvals
 *DefaultAPI* | [**QueryArchivedDocumentGenerations**](docs/DefaultAPI.md#queryarchiveddocumentgenerations) | **Post** /document-generation/documents/archive | Request a list of archived document generations
+*DefaultAPI* | [**QueryBankAccountBalance**](docs/DefaultAPI.md#querybankaccountbalance) | **Post** /bank-account/{accountID}/balance | Query the balance of the bank account with the given ID
 *DefaultAPI* | [**QueryBankAccounts**](docs/DefaultAPI.md#querybankaccounts) | **Post** /bank-accounts | Query bank accounts
-*DefaultAPI* | [**QueryBankTransactions**](docs/DefaultAPI.md#querybanktransactions) | **Post** /financial/bank-transactions/{accountID} | Query all bank transactions for a given account
+*DefaultAPI* | [**QueryBankTransactions**](docs/DefaultAPI.md#querybanktransactions) | **Post** /bank-account/{accountID}/bank-transactions | Query all bank transactions for a given account
+*DefaultAPI* | [**QueryBookingPreviews**](docs/DefaultAPI.md#querybookingpreviews) | **Post** /financial/booking-previews | Query all booking previews
+*DefaultAPI* | [**QueryBookingTemplates**](docs/DefaultAPI.md#querybookingtemplates) | **Post** /financial/booking-templates | Query all booking templates
+*DefaultAPI* | [**QueryBookingsForAccount**](docs/DefaultAPI.md#querybookingsforaccount) | **Post** /financial/accounts-by-number/{flatNumber}/bookings | Query bookings for the given account
 *DefaultAPI* | [**QueryCaseReportingEndpoints**](docs/DefaultAPI.md#querycasereportingendpoints) | **Post** /cases/endpoints | Query all case reporting endpoints for given criteria
 *DefaultAPI* | [**QueryCaseTemplates**](docs/DefaultAPI.md#querycasetemplates) | **Post** /cases/templates | Query all case templates for given criteria
 *DefaultAPI* | [**QueryCases**](docs/DefaultAPI.md#querycases) | **Post** /cases | Query cases for the current user
@@ -339,6 +350,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryDocuments**](docs/DefaultAPI.md#querydocuments) | **Post** /document-repository/entries | Query all document for a certain ref type
 *DefaultAPI* | [**QueryExternalUserCases**](docs/DefaultAPI.md#queryexternalusercases) | **Get** /external-users/{userID}/cases | Get the cases the the given user has opened
 *DefaultAPI* | [**QueryExternalUsers**](docs/DefaultAPI.md#queryexternalusers) | **Get** /external-users | Get a list of external users who reported to the current manager
+*DefaultAPI* | [**QueryFinancialAccountBalances**](docs/DefaultAPI.md#queryfinancialaccountbalances) | **Post** /financial/balances | Query the current balances of all financial accounts
 *DefaultAPI* | [**QueryFinancialAccounts**](docs/DefaultAPI.md#queryfinancialaccounts) | **Post** /financial/accounts | Query all financial accounts
 *DefaultAPI* | [**QueryHooks**](docs/DefaultAPI.md#queryhooks) | **Post** /hooks | Query hooks
 *DefaultAPI* | [**QueryNotesForEntity**](docs/DefaultAPI.md#querynotesforentity) | **Get** /notes/by-reference/{refID} | List notes
@@ -358,6 +370,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**RequestESignaturesForDocument**](docs/DefaultAPI.md#requestesignaturesfordocument) | **Post** /document-generation/documents/{docID}/esignature | Trigger a signing request for a document
 *DefaultAPI* | [**RerunReportExecution**](docs/DefaultAPI.md#rerunreportexecution) | **Post** /report/executions/{executionID}/rerun | Rerun the report execution with the same parameters
 *DefaultAPI* | [**ResetConnectorQuery**](docs/DefaultAPI.md#resetconnectorquery) | **Put** /connector/query/{queryID}/reset | Get the query for the current account
+*DefaultAPI* | [**RevertAccountBooking**](docs/DefaultAPI.md#revertaccountbooking) | **Post** /financial/bookings/{bookingID}/revert | Revert a previously created booking
 *DefaultAPI* | [**SendAppointmentScheduleInvitation**](docs/DefaultAPI.md#sendappointmentscheduleinvitation) | **Post** /calendar/appointments/schedule/{scheduleID}/invitation | Send invitation to recepients after creating a new appointment schedule
 *DefaultAPI* | [**SendNotification**](docs/DefaultAPI.md#sendnotification) | **Post** /notification/{notificationName}/send | Send notification
 *DefaultAPI* | [**StartWorkflowExecution**](docs/DefaultAPI.md#startworkflowexecution) | **Post** /workflows/execution | Start a new workflow execution
@@ -367,14 +380,14 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UnassignCase**](docs/DefaultAPI.md#unassigncase) | **Post** /case/{caseID}/unassign | Remove access from case
 *DefaultAPI* | [**UnlinkAppointmentProperty**](docs/DefaultAPI.md#unlinkappointmentproperty) | **Post** /calendar/appointments/entry/{entryID}/property/unlink | Unlink a property from an appointment
 *DefaultAPI* | [**UnlinkCaseProperty**](docs/DefaultAPI.md#unlinkcaseproperty) | **Post** /case/{caseID}/property/unlink | Unlink a property from a case
-*DefaultAPI* | [**UpdateAccountBooking**](docs/DefaultAPI.md#updateaccountbooking) | **Put** /financial/bookings/{bookingID} | Update an already existing booking
 *DefaultAPI* | [**UpdateAccountDimension**](docs/DefaultAPI.md#updateaccountdimension) | **Put** /financial/account-dimension/{dimensionID} | Update an already existing account dimension
 *DefaultAPI* | [**UpdateAccountDimensionValue**](docs/DefaultAPI.md#updateaccountdimensionvalue) | **Put** /financial/account-dimension/{dimensionID}/value/{refID} | Update an already existing account dimension value
 *DefaultAPI* | [**UpdateAppointment**](docs/DefaultAPI.md#updateappointment) | **Put** /calendar/appointments/entry/{entryID} | Update appointment
 *DefaultAPI* | [**UpdateAppointmentSchedule**](docs/DefaultAPI.md#updateappointmentschedule) | **Put** /calendar/appointments/schedule/{scheduleID} | Update appointment schedule
 *DefaultAPI* | [**UpdateAppointmentTemplate**](docs/DefaultAPI.md#updateappointmenttemplate) | **Put** /calendar/appointments/template/{templateID} | Update appointment template
 *DefaultAPI* | [**UpdateBankAccount**](docs/DefaultAPI.md#updatebankaccount) | **Put** /bank-account/{accountID} | Update the attributes of the already existing bank account
-*DefaultAPI* | [**UpdateBankTransaction**](docs/DefaultAPI.md#updatebanktransaction) | **Put** /financial/bank-transaction/{transactionID} | Update an already existing bank transaction
+*DefaultAPI* | [**UpdateBankTransaction**](docs/DefaultAPI.md#updatebanktransaction) | **Put** /bank-account/transaction/{transactionID} | Update an already existing bank transaction
+*DefaultAPI* | [**UpdateBookingTemplate**](docs/DefaultAPI.md#updatebookingtemplate) | **Put** /financial/booking-template/{bookingTemplateID} | Update an already existing booking template
 *DefaultAPI* | [**UpdateCase**](docs/DefaultAPI.md#updatecase) | **Put** /case/{caseID} | Update case
 *DefaultAPI* | [**UpdateCaseReportingEndpoint**](docs/DefaultAPI.md#updatecasereportingendpoint) | **Put** /cases/endpoints/{endpointID} | Update the case reporting endpoint by ID
 *DefaultAPI* | [**UpdateCaseStatus**](docs/DefaultAPI.md#updatecasestatus) | **Post** /case/{caseID}/status | Add new case status
@@ -420,6 +433,7 @@ Class | Method | HTTP request | Description
 
  - [AccessRecord](docs/AccessRecord.md)
  - [AccessRecordData](docs/AccessRecordData.md)
+ - [AccountBalance](docs/AccountBalance.md)
  - [AccountBooking](docs/AccountBooking.md)
  - [AccountBookingAllocation](docs/AccountBookingAllocation.md)
  - [AccountBookingAttributesPartial](docs/AccountBookingAttributesPartial.md)
@@ -429,10 +443,13 @@ Class | Method | HTTP request | Description
  - [AccountDimensionValue](docs/AccountDimensionValue.md)
  - [AccountDimensionValueAttributesPartial](docs/AccountDimensionValueAttributesPartial.md)
  - [AccountDimensionValueRef](docs/AccountDimensionValueRef.md)
+ - [AccountDimensionWithValue](docs/AccountDimensionWithValue.md)
  - [AccountTypesEnum](docs/AccountTypesEnum.md)
  - [AdditionalRentCost](docs/AdditionalRentCost.md)
  - [Address](docs/Address.md)
  - [Appointment](docs/Appointment.md)
+ - [AppointmentComment](docs/AppointmentComment.md)
+ - [AppointmentCommentPartial](docs/AppointmentCommentPartial.md)
  - [AppointmentDetails](docs/AppointmentDetails.md)
  - [AppointmentSchedule](docs/AppointmentSchedule.md)
  - [AppointmentScheduleAttributesPartial](docs/AppointmentScheduleAttributesPartial.md)
@@ -451,6 +468,12 @@ Class | Method | HTTP request | Description
  - [BankAccountAttributesPartial](docs/BankAccountAttributesPartial.md)
  - [BankTransaction](docs/BankTransaction.md)
  - [BankTransactionAttributesPartial](docs/BankTransactionAttributesPartial.md)
+ - [BookingPreview](docs/BookingPreview.md)
+ - [BookingPreviewPartial](docs/BookingPreviewPartial.md)
+ - [BookingPreviewSourceTypeEnum](docs/BookingPreviewSourceTypeEnum.md)
+ - [BookingTemplate](docs/BookingTemplate.md)
+ - [BookingTemplatePartial](docs/BookingTemplatePartial.md)
+ - [BookingTypeEnum](docs/BookingTypeEnum.md)
  - [Case](docs/Case.md)
  - [CaseActionEnum](docs/CaseActionEnum.md)
  - [CaseAssignee](docs/CaseAssignee.md)
@@ -496,6 +519,8 @@ Class | Method | HTTP request | Description
  - [CorrespondenceAttributesPartial](docs/CorrespondenceAttributesPartial.md)
  - [CorrespondenceEmail](docs/CorrespondenceEmail.md)
  - [CorrespondenceStatus](docs/CorrespondenceStatus.md)
+ - [CreateAccountBookingAllocation](docs/CreateAccountBookingAllocation.md)
+ - [CreateAccountBookingRequest](docs/CreateAccountBookingRequest.md)
  - [CreateApprovalRequest](docs/CreateApprovalRequest.md)
  - [CreateBulkAccountDimensionValuesRequest](docs/CreateBulkAccountDimensionValuesRequest.md)
  - [CreateCaseCommentRequest](docs/CreateCaseCommentRequest.md)
@@ -507,15 +532,15 @@ Class | Method | HTTP request | Description
  - [CreateDocumentRequest](docs/CreateDocumentRequest.md)
  - [CreateNoteRequest](docs/CreateNoteRequest.md)
  - [CreateNotificationRequest](docs/CreateNotificationRequest.md)
- - [CreateOrUpdateAccountBookingAllocation](docs/CreateOrUpdateAccountBookingAllocation.md)
- - [CreateOrUpdateAccountBookingRequest](docs/CreateOrUpdateAccountBookingRequest.md)
  - [CreateOrUpdateAccountDimensionRequest](docs/CreateOrUpdateAccountDimensionRequest.md)
  - [CreateOrUpdateAccountDimensionValueRequest](docs/CreateOrUpdateAccountDimensionValueRequest.md)
+ - [CreateOrUpdateAppointmentComment](docs/CreateOrUpdateAppointmentComment.md)
  - [CreateOrUpdateAppointmentRequest](docs/CreateOrUpdateAppointmentRequest.md)
  - [CreateOrUpdateAppointmentScheduleRequest](docs/CreateOrUpdateAppointmentScheduleRequest.md)
  - [CreateOrUpdateAppointmentTemplateRequest](docs/CreateOrUpdateAppointmentTemplateRequest.md)
  - [CreateOrUpdateBankAccountRequest](docs/CreateOrUpdateBankAccountRequest.md)
  - [CreateOrUpdateBankTransactionRequest](docs/CreateOrUpdateBankTransactionRequest.md)
+ - [CreateOrUpdateBookingTemplateRequest](docs/CreateOrUpdateBookingTemplateRequest.md)
  - [CreateOrUpdateCaseReportingEndpointRequest](docs/CreateOrUpdateCaseReportingEndpointRequest.md)
  - [CreateOrUpdateCaseTemplateRequest](docs/CreateOrUpdateCaseTemplateRequest.md)
  - [CreateOrUpdateCommentTemplateRequest](docs/CreateOrUpdateCommentTemplateRequest.md)
@@ -574,6 +599,7 @@ Class | Method | HTTP request | Description
  - [EntityNameAttributePartial](docs/EntityNameAttributePartial.md)
  - [EntityReference](docs/EntityReference.md)
  - [EntityTimestampsAttributesPartial](docs/EntityTimestampsAttributesPartial.md)
+ - [ExecuteBookingTemplateRequest](docs/ExecuteBookingTemplateRequest.md)
  - [ExecuteCommentTemplateRequest](docs/ExecuteCommentTemplateRequest.md)
  - [ExecuteCommentTemplateResponse](docs/ExecuteCommentTemplateResponse.md)
  - [ExecuteReportRequest](docs/ExecuteReportRequest.md)
@@ -605,14 +631,14 @@ Class | Method | HTTP request | Description
  - [FormValidationRequest](docs/FormValidationRequest.md)
  - [FormValidationResponse](docs/FormValidationResponse.md)
  - [GenerateCaseReportingEndpointNoticeRequest](docs/GenerateCaseReportingEndpointNoticeRequest.md)
- - [GenerateFinancialAccountAllocationsRequest](docs/GenerateFinancialAccountAllocationsRequest.md)
- - [GenerateFinancialAccountAllocationsResponse](docs/GenerateFinancialAccountAllocationsResponse.md)
  - [GetAppointmentInfoResponse](docs/GetAppointmentInfoResponse.md)
  - [GetCorrespondenceDocumentResponse](docs/GetCorrespondenceDocumentResponse.md)
  - [GetCorrespondenceStatusResponse](docs/GetCorrespondenceStatusResponse.md)
  - [GetExternalUserCasesCountResponse](docs/GetExternalUserCasesCountResponse.md)
  - [GetNumberOfCasesForActionAndTimePeriodRequest](docs/GetNumberOfCasesForActionAndTimePeriodRequest.md)
  - [GetNumberOfCasesForActionAndTimePeriodResponse](docs/GetNumberOfCasesForActionAndTimePeriodResponse.md)
+ - [GetNumberOfCasesForStatusRequest](docs/GetNumberOfCasesForStatusRequest.md)
+ - [GetNumberOfCasesForStatusResponse](docs/GetNumberOfCasesForStatusResponse.md)
  - [GetNumberOfInteractionsForCasesRequest](docs/GetNumberOfInteractionsForCasesRequest.md)
  - [GetNumberOfInteractionsForCasesResponse](docs/GetNumberOfInteractionsForCasesResponse.md)
  - [GetSummaryRequest](docs/GetSummaryRequest.md)
@@ -660,7 +686,6 @@ Class | Method | HTTP request | Description
  - [PropertyType](docs/PropertyType.md)
  - [PropertyWindowTypeEnum](docs/PropertyWindowTypeEnum.md)
  - [PublicJoinAppointmentRequest](docs/PublicJoinAppointmentRequest.md)
- - [QueryAccountBookingsByFlatNumber](docs/QueryAccountBookingsByFlatNumber.md)
  - [QueryAccountDimensionValuesRequest](docs/QueryAccountDimensionValuesRequest.md)
  - [QueryAccountDimensionsRequest](docs/QueryAccountDimensionsRequest.md)
  - [QueryAppointmentSchedulesRequest](docs/QueryAppointmentSchedulesRequest.md)
@@ -668,10 +693,16 @@ Class | Method | HTTP request | Description
  - [QueryApprovalType](docs/QueryApprovalType.md)
  - [QueryApprovalsRequest](docs/QueryApprovalsRequest.md)
  - [QueryApprovalsResponse](docs/QueryApprovalsResponse.md)
+ - [QueryBankAccountBalanceRequest](docs/QueryBankAccountBalanceRequest.md)
+ - [QueryBankAccountBalanceResponse](docs/QueryBankAccountBalanceResponse.md)
  - [QueryBankAccountsRequest](docs/QueryBankAccountsRequest.md)
  - [QueryBankAccountsResponse](docs/QueryBankAccountsResponse.md)
  - [QueryBankTransactionsRequest](docs/QueryBankTransactionsRequest.md)
- - [QueryBookingsRequest](docs/QueryBookingsRequest.md)
+ - [QueryBankTransactionsResponse](docs/QueryBankTransactionsResponse.md)
+ - [QueryBookingPreviewsRequest](docs/QueryBookingPreviewsRequest.md)
+ - [QueryBookingTemplatesRequest](docs/QueryBookingTemplatesRequest.md)
+ - [QueryBookingsByFlatNumberRequest](docs/QueryBookingsByFlatNumberRequest.md)
+ - [QueryBookingsByFlatNumberResponse](docs/QueryBookingsByFlatNumberResponse.md)
  - [QueryBooleanParameter](docs/QueryBooleanParameter.md)
  - [QueryCaseReportingEndpointsRequest](docs/QueryCaseReportingEndpointsRequest.md)
  - [QueryCaseReportingEndpointsResponse](docs/QueryCaseReportingEndpointsResponse.md)
@@ -688,6 +719,8 @@ Class | Method | HTTP request | Description
  - [QueryEntityAccountDimensionValuesResponse](docs/QueryEntityAccountDimensionValuesResponse.md)
  - [QueryExternalUserCasesResponse](docs/QueryExternalUserCasesResponse.md)
  - [QueryExternalUsersResponse](docs/QueryExternalUsersResponse.md)
+ - [QueryFinancialAccountBalancesRequest](docs/QueryFinancialAccountBalancesRequest.md)
+ - [QueryFinancialAccountBalancesResponse](docs/QueryFinancialAccountBalancesResponse.md)
  - [QueryFinancialAccountsRequest](docs/QueryFinancialAccountsRequest.md)
  - [QueryHooksRequest](docs/QueryHooksRequest.md)
  - [QueryHooksResponse](docs/QueryHooksResponse.md)
@@ -727,6 +760,7 @@ Class | Method | HTTP request | Description
  - [ReportResultSchema](docs/ReportResultSchema.md)
  - [ReportResultSchemaAttribute](docs/ReportResultSchemaAttribute.md)
  - [ReportResultTypeEnum](docs/ReportResultTypeEnum.md)
+ - [RevertAccountBookingRequest](docs/RevertAccountBookingRequest.md)
  - [SendNotificationRequest](docs/SendNotificationRequest.md)
  - [ServiceCategoryEnum](docs/ServiceCategoryEnum.md)
  - [ServiceProvider](docs/ServiceProvider.md)

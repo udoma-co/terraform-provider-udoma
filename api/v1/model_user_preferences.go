@@ -27,6 +27,8 @@ type UserPreferences struct {
 	NotifyOnAppointment []NotificationType `json:"notify_on_appointment,omitempty"`
 	// Notify when a user has accessed a sent correspondence.
 	NotifyOnCorrespondenceAccessed []NotificationType `json:"notify_on_correspondence_accessed,omitempty"`
+	// Notify when a handover has been submitted on the tablet app and is  ready for processing.
+	NotifyOnHandoverSubmitted []NotificationType `json:"notify_on_handover_submitted,omitempty"`
 }
 
 // NewUserPreferences instantiates a new UserPreferences object
@@ -174,6 +176,38 @@ func (o *UserPreferences) SetNotifyOnCorrespondenceAccessed(v []NotificationType
 	o.NotifyOnCorrespondenceAccessed = v
 }
 
+// GetNotifyOnHandoverSubmitted returns the NotifyOnHandoverSubmitted field value if set, zero value otherwise.
+func (o *UserPreferences) GetNotifyOnHandoverSubmitted() []NotificationType {
+	if o == nil || IsNil(o.NotifyOnHandoverSubmitted) {
+		var ret []NotificationType
+		return ret
+	}
+	return o.NotifyOnHandoverSubmitted
+}
+
+// GetNotifyOnHandoverSubmittedOk returns a tuple with the NotifyOnHandoverSubmitted field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UserPreferences) GetNotifyOnHandoverSubmittedOk() ([]NotificationType, bool) {
+	if o == nil || IsNil(o.NotifyOnHandoverSubmitted) {
+		return nil, false
+	}
+	return o.NotifyOnHandoverSubmitted, true
+}
+
+// HasNotifyOnHandoverSubmitted returns a boolean if a field has been set.
+func (o *UserPreferences) HasNotifyOnHandoverSubmitted() bool {
+	if o != nil && !IsNil(o.NotifyOnHandoverSubmitted) {
+		return true
+	}
+
+	return false
+}
+
+// SetNotifyOnHandoverSubmitted gets a reference to the given []NotificationType and assigns it to the NotifyOnHandoverSubmitted field.
+func (o *UserPreferences) SetNotifyOnHandoverSubmitted(v []NotificationType) {
+	o.NotifyOnHandoverSubmitted = v
+}
+
 func (o UserPreferences) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -195,6 +229,9 @@ func (o UserPreferences) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.NotifyOnCorrespondenceAccessed) {
 		toSerialize["notify_on_correspondence_accessed"] = o.NotifyOnCorrespondenceAccessed
+	}
+	if !IsNil(o.NotifyOnHandoverSubmitted) {
+		toSerialize["notify_on_handover_submitted"] = o.NotifyOnHandoverSubmitted
 	}
 	return toSerialize, nil
 }

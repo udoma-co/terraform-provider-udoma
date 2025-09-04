@@ -23,10 +23,6 @@ var _ MappedNullable = &AccountDimension{}
 type AccountDimension struct {
 	// Unique and immutable ID attribute of the entity that is generated when the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities or to retrieve it from the backend.
 	Id string `json:"id"`
-	// The date and time the entity was created
-	CreatedAt int64 `json:"created_at"`
-	// The date and time the entity was last updated
-	UpdatedAt int64 `json:"updated_at"`
 	// The name of the dimension
 	Name string `json:"name"`
 	// A short description of the dimension
@@ -52,11 +48,9 @@ type _AccountDimension AccountDimension
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAccountDimension(id string, createdAt int64, updatedAt int64, name string, refType AccountDimensionReferenceTypeEnum) *AccountDimension {
+func NewAccountDimension(id string, name string, refType AccountDimensionReferenceTypeEnum) *AccountDimension {
 	this := AccountDimension{}
 	this.Id = id
-	this.CreatedAt = createdAt
-	this.UpdatedAt = updatedAt
 	this.Name = name
 	this.RefType = refType
 	return &this
@@ -92,54 +86,6 @@ func (o *AccountDimension) GetIdOk() (*string, bool) {
 // SetId sets field value
 func (o *AccountDimension) SetId(v string) {
 	o.Id = v
-}
-
-// GetCreatedAt returns the CreatedAt field value
-func (o *AccountDimension) GetCreatedAt() int64 {
-	if o == nil {
-		var ret int64
-		return ret
-	}
-
-	return o.CreatedAt
-}
-
-// GetCreatedAtOk returns a tuple with the CreatedAt field value
-// and a boolean to check if the value has been set.
-func (o *AccountDimension) GetCreatedAtOk() (*int64, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.CreatedAt, true
-}
-
-// SetCreatedAt sets field value
-func (o *AccountDimension) SetCreatedAt(v int64) {
-	o.CreatedAt = v
-}
-
-// GetUpdatedAt returns the UpdatedAt field value
-func (o *AccountDimension) GetUpdatedAt() int64 {
-	if o == nil {
-		var ret int64
-		return ret
-	}
-
-	return o.UpdatedAt
-}
-
-// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
-// and a boolean to check if the value has been set.
-func (o *AccountDimension) GetUpdatedAtOk() (*int64, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.UpdatedAt, true
-}
-
-// SetUpdatedAt sets field value
-func (o *AccountDimension) SetUpdatedAt(v int64) {
-	o.UpdatedAt = v
 }
 
 // GetName returns the Name field value
@@ -425,8 +371,6 @@ func (o AccountDimension) MarshalJSON() ([]byte, error) {
 func (o AccountDimension) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["id"] = o.Id
-	toSerialize["created_at"] = o.CreatedAt
-	toSerialize["updated_at"] = o.UpdatedAt
 	toSerialize["name"] = o.Name
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
@@ -459,8 +403,6 @@ func (o *AccountDimension) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"id",
-		"created_at",
-		"updated_at",
 		"name",
 		"ref_type",
 	}

@@ -21,6 +21,7 @@ type FormSourceType string
 // List of FormSourceType
 const (
 	FORMSOURCETYPE_APPOINTMENT         FormSourceType = "appointment"
+	FORMSOURCETYPE_BOOKING_TEMPLATE    FormSourceType = "booking_template"
 	FORMSOURCETYPE_CASE                FormSourceType = "case"
 	FORMSOURCETYPE_CASE_FEEDBACK       FormSourceType = "case_feedback"
 	FORMSOURCETYPE_DOCUMENT_GENERATION FormSourceType = "document_generation"
@@ -32,6 +33,7 @@ const (
 // All allowed values of FormSourceType enum
 var AllowedFormSourceTypeEnumValues = []FormSourceType{
 	"appointment",
+	"booking_template",
 	"case",
 	"case_feedback",
 	"document_generation",

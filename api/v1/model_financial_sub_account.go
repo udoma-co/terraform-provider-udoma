@@ -19,11 +19,23 @@ import (
 // checks if the FinancialSubAccount type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &FinancialSubAccount{}
 
-// FinancialSubAccount A sub-account of a financial account that can be used to track financial transactions mapped to a specific entity
+// FinancialSubAccount A sub-account of a financial account that can be used to track financial transactions mapped to a specific entity (dimension). The sub-account holds the flat number, which is a serialized version of the account and its dimensions, the current balance, and the merged dimension and values, in addition to the root account to which it belongs.
 type FinancialSubAccount struct {
-	Account FinancialAccount `json:"account"`
-	// The dimensions that are assigned to the sub-account
-	Dimensions []AccountDimensionValue `json:"dimensions"`
+	// The unique account number, manually set
+	Number int32 `json:"number"`
+	// The name of the account
+	Name string           `json:"name"`
+	Type AccountTypesEnum `json:"type"`
+	// The currency of the booking
+	Currency string `json:"currency"`
+	// The flat number associated with the sub-account, that is the merged representation of the account and its dimensions.
+	FlatNumber string `json:"flat_number"`
+	// The dimensions and their values that are assigned to the sub-account. This is just the expanded version of the flat number.
+	DimensionDefinitions []AccountDimension `json:"dimension_definitions"`
+	// The dimensions and their values that are assigned to the sub-account. This is just the expanded version of the flat number.
+	DimensionValues []AccountDimensionWithValue `json:"dimension_values"`
+	// The current balance of the sub-account, that is the sum of all bookings against it and all its respective sub-accounts.
+	Balance *float64 `json:"balance,omitempty"`
 }
 
 type _FinancialSubAccount FinancialSubAccount
@@ -32,10 +44,15 @@ type _FinancialSubAccount FinancialSubAccount
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewFinancialSubAccount(account FinancialAccount, dimensions []AccountDimensionValue) *FinancialSubAccount {
+func NewFinancialSubAccount(number int32, name string, type_ AccountTypesEnum, currency string, flatNumber string, dimensionDefinitions []AccountDimension, dimensionValues []AccountDimensionWithValue) *FinancialSubAccount {
 	this := FinancialSubAccount{}
-	this.Account = account
-	this.Dimensions = dimensions
+	this.Number = number
+	this.Name = name
+	this.Type = type_
+	this.Currency = currency
+	this.FlatNumber = flatNumber
+	this.DimensionDefinitions = dimensionDefinitions
+	this.DimensionValues = dimensionValues
 	return &this
 }
 
@@ -47,52 +64,204 @@ func NewFinancialSubAccountWithDefaults() *FinancialSubAccount {
 	return &this
 }
 
-// GetAccount returns the Account field value
-func (o *FinancialSubAccount) GetAccount() FinancialAccount {
+// GetNumber returns the Number field value
+func (o *FinancialSubAccount) GetNumber() int32 {
 	if o == nil {
-		var ret FinancialAccount
+		var ret int32
 		return ret
 	}
 
-	return o.Account
+	return o.Number
 }
 
-// GetAccountOk returns a tuple with the Account field value
+// GetNumberOk returns a tuple with the Number field value
 // and a boolean to check if the value has been set.
-func (o *FinancialSubAccount) GetAccountOk() (*FinancialAccount, bool) {
+func (o *FinancialSubAccount) GetNumberOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Account, true
+	return &o.Number, true
 }
 
-// SetAccount sets field value
-func (o *FinancialSubAccount) SetAccount(v FinancialAccount) {
-	o.Account = v
+// SetNumber sets field value
+func (o *FinancialSubAccount) SetNumber(v int32) {
+	o.Number = v
 }
 
-// GetDimensions returns the Dimensions field value
-func (o *FinancialSubAccount) GetDimensions() []AccountDimensionValue {
+// GetName returns the Name field value
+func (o *FinancialSubAccount) GetName() string {
 	if o == nil {
-		var ret []AccountDimensionValue
+		var ret string
 		return ret
 	}
 
-	return o.Dimensions
+	return o.Name
 }
 
-// GetDimensionsOk returns a tuple with the Dimensions field value
+// GetNameOk returns a tuple with the Name field value
 // and a boolean to check if the value has been set.
-func (o *FinancialSubAccount) GetDimensionsOk() ([]AccountDimensionValue, bool) {
+func (o *FinancialSubAccount) GetNameOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.Dimensions, true
+	return &o.Name, true
 }
 
-// SetDimensions sets field value
-func (o *FinancialSubAccount) SetDimensions(v []AccountDimensionValue) {
-	o.Dimensions = v
+// SetName sets field value
+func (o *FinancialSubAccount) SetName(v string) {
+	o.Name = v
+}
+
+// GetType returns the Type field value
+func (o *FinancialSubAccount) GetType() AccountTypesEnum {
+	if o == nil {
+		var ret AccountTypesEnum
+		return ret
+	}
+
+	return o.Type
+}
+
+// GetTypeOk returns a tuple with the Type field value
+// and a boolean to check if the value has been set.
+func (o *FinancialSubAccount) GetTypeOk() (*AccountTypesEnum, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Type, true
+}
+
+// SetType sets field value
+func (o *FinancialSubAccount) SetType(v AccountTypesEnum) {
+	o.Type = v
+}
+
+// GetCurrency returns the Currency field value
+func (o *FinancialSubAccount) GetCurrency() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.Currency
+}
+
+// GetCurrencyOk returns a tuple with the Currency field value
+// and a boolean to check if the value has been set.
+func (o *FinancialSubAccount) GetCurrencyOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Currency, true
+}
+
+// SetCurrency sets field value
+func (o *FinancialSubAccount) SetCurrency(v string) {
+	o.Currency = v
+}
+
+// GetFlatNumber returns the FlatNumber field value
+func (o *FinancialSubAccount) GetFlatNumber() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.FlatNumber
+}
+
+// GetFlatNumberOk returns a tuple with the FlatNumber field value
+// and a boolean to check if the value has been set.
+func (o *FinancialSubAccount) GetFlatNumberOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.FlatNumber, true
+}
+
+// SetFlatNumber sets field value
+func (o *FinancialSubAccount) SetFlatNumber(v string) {
+	o.FlatNumber = v
+}
+
+// GetDimensionDefinitions returns the DimensionDefinitions field value
+func (o *FinancialSubAccount) GetDimensionDefinitions() []AccountDimension {
+	if o == nil {
+		var ret []AccountDimension
+		return ret
+	}
+
+	return o.DimensionDefinitions
+}
+
+// GetDimensionDefinitionsOk returns a tuple with the DimensionDefinitions field value
+// and a boolean to check if the value has been set.
+func (o *FinancialSubAccount) GetDimensionDefinitionsOk() ([]AccountDimension, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.DimensionDefinitions, true
+}
+
+// SetDimensionDefinitions sets field value
+func (o *FinancialSubAccount) SetDimensionDefinitions(v []AccountDimension) {
+	o.DimensionDefinitions = v
+}
+
+// GetDimensionValues returns the DimensionValues field value
+func (o *FinancialSubAccount) GetDimensionValues() []AccountDimensionWithValue {
+	if o == nil {
+		var ret []AccountDimensionWithValue
+		return ret
+	}
+
+	return o.DimensionValues
+}
+
+// GetDimensionValuesOk returns a tuple with the DimensionValues field value
+// and a boolean to check if the value has been set.
+func (o *FinancialSubAccount) GetDimensionValuesOk() ([]AccountDimensionWithValue, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.DimensionValues, true
+}
+
+// SetDimensionValues sets field value
+func (o *FinancialSubAccount) SetDimensionValues(v []AccountDimensionWithValue) {
+	o.DimensionValues = v
+}
+
+// GetBalance returns the Balance field value if set, zero value otherwise.
+func (o *FinancialSubAccount) GetBalance() float64 {
+	if o == nil || IsNil(o.Balance) {
+		var ret float64
+		return ret
+	}
+	return *o.Balance
+}
+
+// GetBalanceOk returns a tuple with the Balance field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *FinancialSubAccount) GetBalanceOk() (*float64, bool) {
+	if o == nil || IsNil(o.Balance) {
+		return nil, false
+	}
+	return o.Balance, true
+}
+
+// HasBalance returns a boolean if a field has been set.
+func (o *FinancialSubAccount) HasBalance() bool {
+	if o != nil && !IsNil(o.Balance) {
+		return true
+	}
+
+	return false
+}
+
+// SetBalance gets a reference to the given float64 and assigns it to the Balance field.
+func (o *FinancialSubAccount) SetBalance(v float64) {
+	o.Balance = &v
 }
 
 func (o FinancialSubAccount) MarshalJSON() ([]byte, error) {
@@ -105,8 +274,16 @@ func (o FinancialSubAccount) MarshalJSON() ([]byte, error) {
 
 func (o FinancialSubAccount) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["account"] = o.Account
-	toSerialize["dimensions"] = o.Dimensions
+	toSerialize["number"] = o.Number
+	toSerialize["name"] = o.Name
+	toSerialize["type"] = o.Type
+	toSerialize["currency"] = o.Currency
+	toSerialize["flat_number"] = o.FlatNumber
+	toSerialize["dimension_definitions"] = o.DimensionDefinitions
+	toSerialize["dimension_values"] = o.DimensionValues
+	if !IsNil(o.Balance) {
+		toSerialize["balance"] = o.Balance
+	}
 	return toSerialize, nil
 }
 
@@ -115,8 +292,13 @@ func (o *FinancialSubAccount) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"account",
-		"dimensions",
+		"number",
+		"name",
+		"type",
+		"currency",
+		"flat_number",
+		"dimension_definitions",
+		"dimension_values",
 	}
 
 	allProperties := make(map[string]interface{})

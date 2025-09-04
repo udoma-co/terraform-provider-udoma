@@ -20,17 +20,19 @@ type UserTypeEnum string
 
 // List of UserTypeEnum
 const (
-	USERTYPEENUM_ANY              UserTypeEnum = "ANY"
-	USERTYPEENUM_TENANT           UserTypeEnum = "TENANT"
-	USERTYPEENUM_MANAGER          UserTypeEnum = "MANAGER"
-	USERTYPEENUM_SERVICE_PROVIDER UserTypeEnum = "SERVICE_PROVIDER"
-	USERTYPEENUM_AUTOMATION       UserTypeEnum = "AUTOMATION"
+	USERTYPEENUM_ANY                UserTypeEnum = "ANY"
+	USERTYPEENUM_TENANT             UserTypeEnum = "TENANT"
+	USERTYPEENUM_APPOINTMENT_TENANT UserTypeEnum = "APPOINTMENT_TENANT"
+	USERTYPEENUM_MANAGER            UserTypeEnum = "MANAGER"
+	USERTYPEENUM_SERVICE_PROVIDER   UserTypeEnum = "SERVICE_PROVIDER"
+	USERTYPEENUM_AUTOMATION         UserTypeEnum = "AUTOMATION"
 )
 
 // All allowed values of UserTypeEnum enum
 var AllowedUserTypeEnumEnumValues = []UserTypeEnum{
 	"ANY",
 	"TENANT",
+	"APPOINTMENT_TENANT",
 	"MANAGER",
 	"SERVICE_PROVIDER",
 	"AUTOMATION",

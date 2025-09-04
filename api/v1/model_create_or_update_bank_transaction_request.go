@@ -22,9 +22,8 @@ var _ MappedNullable = &CreateOrUpdateBankTransactionRequest{}
 // CreateOrUpdateBankTransactionRequest The data required to create a new transaction on a bank account
 type CreateOrUpdateBankTransactionRequest struct {
 	// The timestamp of the transaction
-	Date int64 `json:"date"`
-	// The type of the transaction (e.g. 'deposit', 'withdrawal', etc.)
-	Type string `json:"type"`
+	Date int64           `json:"date"`
+	Type BookingTypeEnum `json:"type"`
 	// The amount of the transaction
 	Amount float64 `json:"amount"`
 	// The description text provided for the transaction
@@ -41,7 +40,7 @@ type _CreateOrUpdateBankTransactionRequest CreateOrUpdateBankTransactionRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateOrUpdateBankTransactionRequest(date int64, type_ string, amount float64, description string, sourceTargetName string, sourceTargetIban string) *CreateOrUpdateBankTransactionRequest {
+func NewCreateOrUpdateBankTransactionRequest(date int64, type_ BookingTypeEnum, amount float64, description string, sourceTargetName string, sourceTargetIban string) *CreateOrUpdateBankTransactionRequest {
 	this := CreateOrUpdateBankTransactionRequest{}
 	this.Date = date
 	this.Type = type_
@@ -85,9 +84,9 @@ func (o *CreateOrUpdateBankTransactionRequest) SetDate(v int64) {
 }
 
 // GetType returns the Type field value
-func (o *CreateOrUpdateBankTransactionRequest) GetType() string {
+func (o *CreateOrUpdateBankTransactionRequest) GetType() BookingTypeEnum {
 	if o == nil {
-		var ret string
+		var ret BookingTypeEnum
 		return ret
 	}
 
@@ -96,7 +95,7 @@ func (o *CreateOrUpdateBankTransactionRequest) GetType() string {
 
 // GetTypeOk returns a tuple with the Type field value
 // and a boolean to check if the value has been set.
-func (o *CreateOrUpdateBankTransactionRequest) GetTypeOk() (*string, bool) {
+func (o *CreateOrUpdateBankTransactionRequest) GetTypeOk() (*BookingTypeEnum, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -104,7 +103,7 @@ func (o *CreateOrUpdateBankTransactionRequest) GetTypeOk() (*string, bool) {
 }
 
 // SetType sets field value
-func (o *CreateOrUpdateBankTransactionRequest) SetType(v string) {
+func (o *CreateOrUpdateBankTransactionRequest) SetType(v BookingTypeEnum) {
 	o.Type = v
 }
 

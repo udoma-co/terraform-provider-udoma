@@ -21,6 +21,8 @@ var _ MappedNullable = &SendNotificationRequest{}
 type SendNotificationRequest struct {
 	// The data to use when running the notification script.
 	Data map[string]interface{} `json:"data,omitempty"`
+	// A list of IDs of attachmens to include in the notification.
+	Attachments []string `json:"attachments,omitempty"`
 }
 
 // NewSendNotificationRequest instantiates a new SendNotificationRequest object
@@ -72,6 +74,38 @@ func (o *SendNotificationRequest) SetData(v map[string]interface{}) {
 	o.Data = v
 }
 
+// GetAttachments returns the Attachments field value if set, zero value otherwise.
+func (o *SendNotificationRequest) GetAttachments() []string {
+	if o == nil || IsNil(o.Attachments) {
+		var ret []string
+		return ret
+	}
+	return o.Attachments
+}
+
+// GetAttachmentsOk returns a tuple with the Attachments field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SendNotificationRequest) GetAttachmentsOk() ([]string, bool) {
+	if o == nil || IsNil(o.Attachments) {
+		return nil, false
+	}
+	return o.Attachments, true
+}
+
+// HasAttachments returns a boolean if a field has been set.
+func (o *SendNotificationRequest) HasAttachments() bool {
+	if o != nil && !IsNil(o.Attachments) {
+		return true
+	}
+
+	return false
+}
+
+// SetAttachments gets a reference to the given []string and assigns it to the Attachments field.
+func (o *SendNotificationRequest) SetAttachments(v []string) {
+	o.Attachments = v
+}
+
 func (o SendNotificationRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -84,6 +118,9 @@ func (o SendNotificationRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Data) {
 		toSerialize["data"] = o.Data
+	}
+	if !IsNil(o.Attachments) {
+		toSerialize["attachments"] = o.Attachments
 	}
 	return toSerialize, nil
 }

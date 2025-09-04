@@ -26,12 +26,8 @@ type CreateOrUpdateFinancialAccountRequest struct {
 	// The name of the account
 	Name string           `json:"name"`
 	Type AccountTypesEnum `json:"type"`
-	// Indicates whether the account is part of the balance sheet. If set to false, the account is part of the profit and loss statement.
-	IsBalance *bool `json:"is_balance,omitempty"`
 	// The currency of the booking
 	Currency string `json:"currency"`
-	// A script to generate booking allocations when passed the total booking value
-	AllocationScript *string `json:"allocation_script,omitempty"`
 	// The IDs of the dimensions that are assigned to the account
 	Dimensions []string `json:"dimensions,omitempty"`
 }
@@ -131,38 +127,6 @@ func (o *CreateOrUpdateFinancialAccountRequest) SetType(v AccountTypesEnum) {
 	o.Type = v
 }
 
-// GetIsBalance returns the IsBalance field value if set, zero value otherwise.
-func (o *CreateOrUpdateFinancialAccountRequest) GetIsBalance() bool {
-	if o == nil || IsNil(o.IsBalance) {
-		var ret bool
-		return ret
-	}
-	return *o.IsBalance
-}
-
-// GetIsBalanceOk returns a tuple with the IsBalance field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateOrUpdateFinancialAccountRequest) GetIsBalanceOk() (*bool, bool) {
-	if o == nil || IsNil(o.IsBalance) {
-		return nil, false
-	}
-	return o.IsBalance, true
-}
-
-// HasIsBalance returns a boolean if a field has been set.
-func (o *CreateOrUpdateFinancialAccountRequest) HasIsBalance() bool {
-	if o != nil && !IsNil(o.IsBalance) {
-		return true
-	}
-
-	return false
-}
-
-// SetIsBalance gets a reference to the given bool and assigns it to the IsBalance field.
-func (o *CreateOrUpdateFinancialAccountRequest) SetIsBalance(v bool) {
-	o.IsBalance = &v
-}
-
 // GetCurrency returns the Currency field value
 func (o *CreateOrUpdateFinancialAccountRequest) GetCurrency() string {
 	if o == nil {
@@ -185,38 +149,6 @@ func (o *CreateOrUpdateFinancialAccountRequest) GetCurrencyOk() (*string, bool) 
 // SetCurrency sets field value
 func (o *CreateOrUpdateFinancialAccountRequest) SetCurrency(v string) {
 	o.Currency = v
-}
-
-// GetAllocationScript returns the AllocationScript field value if set, zero value otherwise.
-func (o *CreateOrUpdateFinancialAccountRequest) GetAllocationScript() string {
-	if o == nil || IsNil(o.AllocationScript) {
-		var ret string
-		return ret
-	}
-	return *o.AllocationScript
-}
-
-// GetAllocationScriptOk returns a tuple with the AllocationScript field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateOrUpdateFinancialAccountRequest) GetAllocationScriptOk() (*string, bool) {
-	if o == nil || IsNil(o.AllocationScript) {
-		return nil, false
-	}
-	return o.AllocationScript, true
-}
-
-// HasAllocationScript returns a boolean if a field has been set.
-func (o *CreateOrUpdateFinancialAccountRequest) HasAllocationScript() bool {
-	if o != nil && !IsNil(o.AllocationScript) {
-		return true
-	}
-
-	return false
-}
-
-// SetAllocationScript gets a reference to the given string and assigns it to the AllocationScript field.
-func (o *CreateOrUpdateFinancialAccountRequest) SetAllocationScript(v string) {
-	o.AllocationScript = &v
 }
 
 // GetDimensions returns the Dimensions field value if set, zero value otherwise.
@@ -264,13 +196,7 @@ func (o CreateOrUpdateFinancialAccountRequest) ToMap() (map[string]interface{}, 
 	toSerialize["number"] = o.Number
 	toSerialize["name"] = o.Name
 	toSerialize["type"] = o.Type
-	if !IsNil(o.IsBalance) {
-		toSerialize["is_balance"] = o.IsBalance
-	}
 	toSerialize["currency"] = o.Currency
-	if !IsNil(o.AllocationScript) {
-		toSerialize["allocation_script"] = o.AllocationScript
-	}
 	if !IsNil(o.Dimensions) {
 		toSerialize["dimensions"] = o.Dimensions
 	}

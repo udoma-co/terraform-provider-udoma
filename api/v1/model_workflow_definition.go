@@ -40,6 +40,8 @@ type WorkflowDefinition struct {
 	InitStep    NullableWorkflowInitStepDefinition `json:"init_step,omitempty"`
 	Steps       []WorkflowStepDefinition           `json:"steps"`
 	Version     *int32                             `json:"version,omitempty"`
+	// A flag indicating whether the entity is deleted. If the entity is deleted, it should not be returned in the results of a query, but it is still kept in the database as it is referenced by other entities.
+	IsDeleted *bool `json:"is_deleted,omitempty"`
 }
 
 type _WorkflowDefinition WorkflowDefinition
@@ -414,6 +416,38 @@ func (o *WorkflowDefinition) SetVersion(v int32) {
 	o.Version = &v
 }
 
+// GetIsDeleted returns the IsDeleted field value if set, zero value otherwise.
+func (o *WorkflowDefinition) GetIsDeleted() bool {
+	if o == nil || IsNil(o.IsDeleted) {
+		var ret bool
+		return ret
+	}
+	return *o.IsDeleted
+}
+
+// GetIsDeletedOk returns a tuple with the IsDeleted field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowDefinition) GetIsDeletedOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsDeleted) {
+		return nil, false
+	}
+	return o.IsDeleted, true
+}
+
+// HasIsDeleted returns a boolean if a field has been set.
+func (o *WorkflowDefinition) HasIsDeleted() bool {
+	if o != nil && !IsNil(o.IsDeleted) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsDeleted gets a reference to the given bool and assigns it to the IsDeleted field.
+func (o *WorkflowDefinition) SetIsDeleted(v bool) {
+	o.IsDeleted = &v
+}
+
 func (o WorkflowDefinition) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -447,6 +481,9 @@ func (o WorkflowDefinition) ToMap() (map[string]interface{}, error) {
 	toSerialize["steps"] = o.Steps
 	if !IsNil(o.Version) {
 		toSerialize["version"] = o.Version
+	}
+	if !IsNil(o.IsDeleted) {
+		toSerialize["is_deleted"] = o.IsDeleted
 	}
 	return toSerialize, nil
 }

@@ -29,8 +29,6 @@ type AccountDimension struct {
 
 type AccountDimensionModel struct {
 	ID              types.String `tfsdk:"id"`
-	CreatedAt       types.Int64  `tfsdk:"created_at"`
-	UpdatedAt       types.Int64  `tfsdk:"updated_at"`
 	Name            types.String `tfsdk:"name"`
 	Description     types.String `tfsdk:"description"`
 	ParentDimension types.String `tfsdk:"parent_dimension"`
@@ -55,14 +53,6 @@ func (faq *AccountDimension) Schema(ctx context.Context, req resource.SchemaRequ
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
-			},
-			"created_at": schema.Int64Attribute{
-				Computed:            true,
-				MarkdownDescription: "The date and time the account was created",
-			},
-			"updated_at": schema.Int64Attribute{
-				Computed:            true,
-				MarkdownDescription: "The date and time the account was last modified",
 			},
 			"name": schema.StringAttribute{
 				Required:            true,
@@ -278,8 +268,6 @@ func (model *AccountDimensionModel) fromAPI(dimension *api.AccountDimension) err
 	}
 
 	model.ID = types.StringValue(dimension.Id)
-	model.CreatedAt = types.Int64Value(dimension.CreatedAt)
-	model.UpdatedAt = types.Int64Value(dimension.UpdatedAt)
 	model.Name = types.StringValue(dimension.Name)
 	model.Description = types.StringPointerValue(dimension.Description)
 	model.PadToSize = types.Int32PointerValue(dimension.PadToSize)
