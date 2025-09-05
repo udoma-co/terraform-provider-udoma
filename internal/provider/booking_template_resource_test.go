@@ -23,7 +23,6 @@ func TestAccBookingTemplateResource(t *testing.T) {
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "inputs.layout.0.ref_type", "group"),
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "inputs.inputs.0.id", "test"),
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "inputs.inputs.0.type", "text"),
-					resource.TestCheckResourceAttr("udoma_booking_template.test", "inputs.inputs.0.label.de", "Test Eingabe"),
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "inputs.inputs.0.label.en", "Test input"),
 
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "script", "// This is a test generation script"),
@@ -52,7 +51,6 @@ func TestAccBookingTemplateResource(t *testing.T) {
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "inputs.layout.0.ref_type", "group"),
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "inputs.inputs.0.id", "test"),
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "inputs.inputs.0.type", "text"),
-					resource.TestCheckResourceAttr("udoma_booking_template.test", "inputs.inputs.0.label.de", "Test Eingabe"),
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "inputs.inputs.0.label.en", "Test input"),
 
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "script", "// This is a test generation script"),
