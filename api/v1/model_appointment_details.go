@@ -17,7 +17,7 @@ import (
 // checks if the AppointmentDetails type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &AppointmentDetails{}
 
-// AppointmentDetails An appointment with tenatn email status
+// AppointmentDetails An appointment with tenant email status
 type AppointmentDetails struct {
 	Appointment *Appointment `json:"appointment,omitempty"`
 	// The status of the email that was used to appoint the meeting.

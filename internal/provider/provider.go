@@ -199,6 +199,7 @@ func (p *UdomaProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewAttachment,
 		NewAppointmentSchedule,
 		NewAppointmentTemplate,
+		NewBookingTemplate,
 		NewCaseReportingEndpoint,
 		NewCaseTemplate,
 		NewCommentTemplate,

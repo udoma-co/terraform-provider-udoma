@@ -45,6 +45,8 @@ type Appointment struct {
 	PropertyAddress *Address `json:"property_address,omitempty"`
 	// Input provided by the user when booking the appointment
 	Data map[string]interface{} `json:"data,omitempty"`
+	// All comments including authors that were made for the appointment.
+	Comments []AppointmentComment `json:"comments"`
 }
 
 type _Appointment Appointment
@@ -53,7 +55,7 @@ type _Appointment Appointment
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppointment(id string, createdAt int64, updatedAt int64, code string, startTime int64, endTime int64, name string) *Appointment {
+func NewAppointment(id string, createdAt int64, updatedAt int64, code string, startTime int64, endTime int64, name string, comments []AppointmentComment) *Appointment {
 	this := Appointment{}
 	this.Id = id
 	this.CreatedAt = createdAt
@@ -62,6 +64,7 @@ func NewAppointment(id string, createdAt int64, updatedAt int64, code string, st
 	this.StartTime = startTime
 	this.EndTime = endTime
 	this.Name = name
+	this.Comments = comments
 	return &this
 }
 
@@ -433,6 +436,30 @@ func (o *Appointment) SetData(v map[string]interface{}) {
 	o.Data = v
 }
 
+// GetComments returns the Comments field value
+func (o *Appointment) GetComments() []AppointmentComment {
+	if o == nil {
+		var ret []AppointmentComment
+		return ret
+	}
+
+	return o.Comments
+}
+
+// GetCommentsOk returns a tuple with the Comments field value
+// and a boolean to check if the value has been set.
+func (o *Appointment) GetCommentsOk() ([]AppointmentComment, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Comments, true
+}
+
+// SetComments sets field value
+func (o *Appointment) SetComments(v []AppointmentComment) {
+	o.Comments = v
+}
+
 func (o Appointment) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -468,6 +495,7 @@ func (o Appointment) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Data) {
 		toSerialize["data"] = o.Data
 	}
+	toSerialize["comments"] = o.Comments
 	return toSerialize, nil
 }
 
@@ -483,6 +511,7 @@ func (o *Appointment) UnmarshalJSON(data []byte) (err error) {
 		"start_time",
 		"end_time",
 		"name",
+		"comments",
 	}
 
 	allProperties := make(map[string]interface{})

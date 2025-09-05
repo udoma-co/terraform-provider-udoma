@@ -32,7 +32,7 @@ type UpdateCompanyProfileRequest struct {
 	// The ID of the image that is used as the company logo.
 	LogoAttachmentRef *string `json:"logo_attachment_ref,omitempty"`
 	// The ID of the image that is used as the company signature.
-	SignatureLogoAttachmentRef *string `json:"signature_logo_attachment_ref,omitempty"`
+	SignatureAttachmentRef *string `json:"signature_attachment_ref,omitempty"`
 }
 
 type _UpdateCompanyProfileRequest UpdateCompanyProfileRequest
@@ -239,36 +239,36 @@ func (o *UpdateCompanyProfileRequest) SetLogoAttachmentRef(v string) {
 	o.LogoAttachmentRef = &v
 }
 
-// GetSignatureLogoAttachmentRef returns the SignatureLogoAttachmentRef field value if set, zero value otherwise.
-func (o *UpdateCompanyProfileRequest) GetSignatureLogoAttachmentRef() string {
-	if o == nil || IsNil(o.SignatureLogoAttachmentRef) {
+// GetSignatureAttachmentRef returns the SignatureAttachmentRef field value if set, zero value otherwise.
+func (o *UpdateCompanyProfileRequest) GetSignatureAttachmentRef() string {
+	if o == nil || IsNil(o.SignatureAttachmentRef) {
 		var ret string
 		return ret
 	}
-	return *o.SignatureLogoAttachmentRef
+	return *o.SignatureAttachmentRef
 }
 
-// GetSignatureLogoAttachmentRefOk returns a tuple with the SignatureLogoAttachmentRef field value if set, nil otherwise
+// GetSignatureAttachmentRefOk returns a tuple with the SignatureAttachmentRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UpdateCompanyProfileRequest) GetSignatureLogoAttachmentRefOk() (*string, bool) {
-	if o == nil || IsNil(o.SignatureLogoAttachmentRef) {
+func (o *UpdateCompanyProfileRequest) GetSignatureAttachmentRefOk() (*string, bool) {
+	if o == nil || IsNil(o.SignatureAttachmentRef) {
 		return nil, false
 	}
-	return o.SignatureLogoAttachmentRef, true
+	return o.SignatureAttachmentRef, true
 }
 
-// HasSignatureLogoAttachmentRef returns a boolean if a field has been set.
-func (o *UpdateCompanyProfileRequest) HasSignatureLogoAttachmentRef() bool {
-	if o != nil && !IsNil(o.SignatureLogoAttachmentRef) {
+// HasSignatureAttachmentRef returns a boolean if a field has been set.
+func (o *UpdateCompanyProfileRequest) HasSignatureAttachmentRef() bool {
+	if o != nil && !IsNil(o.SignatureAttachmentRef) {
 		return true
 	}
 
 	return false
 }
 
-// SetSignatureLogoAttachmentRef gets a reference to the given string and assigns it to the SignatureLogoAttachmentRef field.
-func (o *UpdateCompanyProfileRequest) SetSignatureLogoAttachmentRef(v string) {
-	o.SignatureLogoAttachmentRef = &v
+// SetSignatureAttachmentRef gets a reference to the given string and assigns it to the SignatureAttachmentRef field.
+func (o *UpdateCompanyProfileRequest) SetSignatureAttachmentRef(v string) {
+	o.SignatureAttachmentRef = &v
 }
 
 func (o UpdateCompanyProfileRequest) MarshalJSON() ([]byte, error) {
@@ -297,8 +297,8 @@ func (o UpdateCompanyProfileRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.LogoAttachmentRef) {
 		toSerialize["logo_attachment_ref"] = o.LogoAttachmentRef
 	}
-	if !IsNil(o.SignatureLogoAttachmentRef) {
-		toSerialize["signature_logo_attachment_ref"] = o.SignatureLogoAttachmentRef
+	if !IsNil(o.SignatureAttachmentRef) {
+		toSerialize["signature_attachment_ref"] = o.SignatureAttachmentRef
 	}
 	return toSerialize, nil
 }

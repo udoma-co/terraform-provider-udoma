@@ -21,12 +21,10 @@ var _ MappedNullable = &AccountBookingAllocation{}
 
 // AccountBookingAllocation The allocation of (part of) the amount of a booking to a financial account
 type AccountBookingAllocation struct {
-	// The unique identifier of the financial account
-	AccountRef string `json:"account_ref"`
 	// The split amount that is assigned to the referenced account. The sum of all allocations must add up to the total amount of the booking.
 	Amount float64 `json:"amount"`
 	// A serialized version of dimensions containing account value for the first value and dimensions for the rest in downwards order. They should be separated with '.' Example - \"10000.20.001.02\", where 10000 is the account value, 20, 001, and 02 are dimension values for dimensions that belong to the account.
-	FlatNumber *string `json:"flat_number,omitempty"`
+	FlatNumber string `json:"flat_number"`
 	// The values of the dimensions that are assigned to the booking for the allocation
 	Dimensions []AccountDimensionValueRef `json:"dimensions,omitempty"`
 }
@@ -37,10 +35,10 @@ type _AccountBookingAllocation AccountBookingAllocation
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAccountBookingAllocation(accountRef string, amount float64) *AccountBookingAllocation {
+func NewAccountBookingAllocation(amount float64, flatNumber string) *AccountBookingAllocation {
 	this := AccountBookingAllocation{}
-	this.AccountRef = accountRef
 	this.Amount = amount
+	this.FlatNumber = flatNumber
 	return &this
 }
 
@@ -50,30 +48,6 @@ func NewAccountBookingAllocation(accountRef string, amount float64) *AccountBook
 func NewAccountBookingAllocationWithDefaults() *AccountBookingAllocation {
 	this := AccountBookingAllocation{}
 	return &this
-}
-
-// GetAccountRef returns the AccountRef field value
-func (o *AccountBookingAllocation) GetAccountRef() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.AccountRef
-}
-
-// GetAccountRefOk returns a tuple with the AccountRef field value
-// and a boolean to check if the value has been set.
-func (o *AccountBookingAllocation) GetAccountRefOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.AccountRef, true
-}
-
-// SetAccountRef sets field value
-func (o *AccountBookingAllocation) SetAccountRef(v string) {
-	o.AccountRef = v
 }
 
 // GetAmount returns the Amount field value
@@ -100,36 +74,28 @@ func (o *AccountBookingAllocation) SetAmount(v float64) {
 	o.Amount = v
 }
 
-// GetFlatNumber returns the FlatNumber field value if set, zero value otherwise.
+// GetFlatNumber returns the FlatNumber field value
 func (o *AccountBookingAllocation) GetFlatNumber() string {
-	if o == nil || IsNil(o.FlatNumber) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.FlatNumber
+
+	return o.FlatNumber
 }
 
-// GetFlatNumberOk returns a tuple with the FlatNumber field value if set, nil otherwise
+// GetFlatNumberOk returns a tuple with the FlatNumber field value
 // and a boolean to check if the value has been set.
 func (o *AccountBookingAllocation) GetFlatNumberOk() (*string, bool) {
-	if o == nil || IsNil(o.FlatNumber) {
+	if o == nil {
 		return nil, false
 	}
-	return o.FlatNumber, true
+	return &o.FlatNumber, true
 }
 
-// HasFlatNumber returns a boolean if a field has been set.
-func (o *AccountBookingAllocation) HasFlatNumber() bool {
-	if o != nil && !IsNil(o.FlatNumber) {
-		return true
-	}
-
-	return false
-}
-
-// SetFlatNumber gets a reference to the given string and assigns it to the FlatNumber field.
+// SetFlatNumber sets field value
 func (o *AccountBookingAllocation) SetFlatNumber(v string) {
-	o.FlatNumber = &v
+	o.FlatNumber = v
 }
 
 // GetDimensions returns the Dimensions field value if set, zero value otherwise.
@@ -174,11 +140,8 @@ func (o AccountBookingAllocation) MarshalJSON() ([]byte, error) {
 
 func (o AccountBookingAllocation) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["account_ref"] = o.AccountRef
 	toSerialize["amount"] = o.Amount
-	if !IsNil(o.FlatNumber) {
-		toSerialize["flat_number"] = o.FlatNumber
-	}
+	toSerialize["flat_number"] = o.FlatNumber
 	if !IsNil(o.Dimensions) {
 		toSerialize["dimensions"] = o.Dimensions
 	}
@@ -190,8 +153,8 @@ func (o *AccountBookingAllocation) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"account_ref",
 		"amount",
+		"flat_number",
 	}
 
 	allProperties := make(map[string]interface{})

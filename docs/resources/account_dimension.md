@@ -30,6 +30,4 @@ Resource represents a financial account
 
 ### Read-Only
 
-- `created_at` (Number) The date and time the account was created
 - `id` (String) The unique identifier for the account dimension
-- `updated_at` (Number) The date and time the account was last modified

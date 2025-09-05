@@ -16,27 +16,19 @@ import (
 	"fmt"
 )
 
-// checks if the AccountBooking type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &AccountBooking{}
+// checks if the CreateAccountBookingRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CreateAccountBookingRequest{}
 
-// AccountBooking A booking of a financial transaction
-type AccountBooking struct {
-	// Unique and immutable ID attribute of the entity that is generated when the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities or to retrieve it from the backend.
-	Id string `json:"id"`
-	// The date and time the entity was created
-	CreatedAt int64 `json:"created_at"`
-	// The date and time the entity was last updated
-	UpdatedAt int64 `json:"updated_at"`
+// CreateAccountBookingRequest The data required to create a new booking of a financial transaction
+type CreateAccountBookingRequest struct {
 	// The total amount of the booking, accross all allocations
 	Amount float64 `json:"amount"`
 	// The timestamp of the booking
 	Date int64 `json:"date"`
 	// A short description of the booking
-	Description string `json:"description"`
-	// Information on how the total amount of the booking is allocated to different accounts for the credit
-	Credit []AccountBookingAllocation `json:"credit"`
-	// Information on how the total amount of the booking is allocated to different accounts for the debit
-	Debit []AccountBookingAllocation `json:"debit"`
+	Description string                           `json:"description"`
+	Credit      []CreateAccountBookingAllocation `json:"credit"`
+	Debit       []CreateAccountBookingAllocation `json:"debit"`
 	// Optional reference to a booking that is reverted by this booking
 	RevertRef *string `json:"revert_ref,omitempty"`
 	// Optional reference to a booking that has reverted this booking
@@ -45,17 +37,14 @@ type AccountBooking struct {
 	TransactionRef *string `json:"transaction_ref,omitempty"`
 }
 
-type _AccountBooking AccountBooking
+type _CreateAccountBookingRequest CreateAccountBookingRequest
 
-// NewAccountBooking instantiates a new AccountBooking object
+// NewCreateAccountBookingRequest instantiates a new CreateAccountBookingRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAccountBooking(id string, createdAt int64, updatedAt int64, amount float64, date int64, description string, credit []AccountBookingAllocation, debit []AccountBookingAllocation) *AccountBooking {
-	this := AccountBooking{}
-	this.Id = id
-	this.CreatedAt = createdAt
-	this.UpdatedAt = updatedAt
+func NewCreateAccountBookingRequest(amount float64, date int64, description string, credit []CreateAccountBookingAllocation, debit []CreateAccountBookingAllocation) *CreateAccountBookingRequest {
+	this := CreateAccountBookingRequest{}
 	this.Amount = amount
 	this.Date = date
 	this.Description = description
@@ -64,88 +53,16 @@ func NewAccountBooking(id string, createdAt int64, updatedAt int64, amount float
 	return &this
 }
 
-// NewAccountBookingWithDefaults instantiates a new AccountBooking object
+// NewCreateAccountBookingRequestWithDefaults instantiates a new CreateAccountBookingRequest object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewAccountBookingWithDefaults() *AccountBooking {
-	this := AccountBooking{}
+func NewCreateAccountBookingRequestWithDefaults() *CreateAccountBookingRequest {
+	this := CreateAccountBookingRequest{}
 	return &this
 }
 
-// GetId returns the Id field value
-func (o *AccountBooking) GetId() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Id
-}
-
-// GetIdOk returns a tuple with the Id field value
-// and a boolean to check if the value has been set.
-func (o *AccountBooking) GetIdOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Id, true
-}
-
-// SetId sets field value
-func (o *AccountBooking) SetId(v string) {
-	o.Id = v
-}
-
-// GetCreatedAt returns the CreatedAt field value
-func (o *AccountBooking) GetCreatedAt() int64 {
-	if o == nil {
-		var ret int64
-		return ret
-	}
-
-	return o.CreatedAt
-}
-
-// GetCreatedAtOk returns a tuple with the CreatedAt field value
-// and a boolean to check if the value has been set.
-func (o *AccountBooking) GetCreatedAtOk() (*int64, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.CreatedAt, true
-}
-
-// SetCreatedAt sets field value
-func (o *AccountBooking) SetCreatedAt(v int64) {
-	o.CreatedAt = v
-}
-
-// GetUpdatedAt returns the UpdatedAt field value
-func (o *AccountBooking) GetUpdatedAt() int64 {
-	if o == nil {
-		var ret int64
-		return ret
-	}
-
-	return o.UpdatedAt
-}
-
-// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
-// and a boolean to check if the value has been set.
-func (o *AccountBooking) GetUpdatedAtOk() (*int64, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.UpdatedAt, true
-}
-
-// SetUpdatedAt sets field value
-func (o *AccountBooking) SetUpdatedAt(v int64) {
-	o.UpdatedAt = v
-}
-
 // GetAmount returns the Amount field value
-func (o *AccountBooking) GetAmount() float64 {
+func (o *CreateAccountBookingRequest) GetAmount() float64 {
 	if o == nil {
 		var ret float64
 		return ret
@@ -156,7 +73,7 @@ func (o *AccountBooking) GetAmount() float64 {
 
 // GetAmountOk returns a tuple with the Amount field value
 // and a boolean to check if the value has been set.
-func (o *AccountBooking) GetAmountOk() (*float64, bool) {
+func (o *CreateAccountBookingRequest) GetAmountOk() (*float64, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -164,12 +81,12 @@ func (o *AccountBooking) GetAmountOk() (*float64, bool) {
 }
 
 // SetAmount sets field value
-func (o *AccountBooking) SetAmount(v float64) {
+func (o *CreateAccountBookingRequest) SetAmount(v float64) {
 	o.Amount = v
 }
 
 // GetDate returns the Date field value
-func (o *AccountBooking) GetDate() int64 {
+func (o *CreateAccountBookingRequest) GetDate() int64 {
 	if o == nil {
 		var ret int64
 		return ret
@@ -180,7 +97,7 @@ func (o *AccountBooking) GetDate() int64 {
 
 // GetDateOk returns a tuple with the Date field value
 // and a boolean to check if the value has been set.
-func (o *AccountBooking) GetDateOk() (*int64, bool) {
+func (o *CreateAccountBookingRequest) GetDateOk() (*int64, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -188,12 +105,12 @@ func (o *AccountBooking) GetDateOk() (*int64, bool) {
 }
 
 // SetDate sets field value
-func (o *AccountBooking) SetDate(v int64) {
+func (o *CreateAccountBookingRequest) SetDate(v int64) {
 	o.Date = v
 }
 
 // GetDescription returns the Description field value
-func (o *AccountBooking) GetDescription() string {
+func (o *CreateAccountBookingRequest) GetDescription() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -204,7 +121,7 @@ func (o *AccountBooking) GetDescription() string {
 
 // GetDescriptionOk returns a tuple with the Description field value
 // and a boolean to check if the value has been set.
-func (o *AccountBooking) GetDescriptionOk() (*string, bool) {
+func (o *CreateAccountBookingRequest) GetDescriptionOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -212,14 +129,14 @@ func (o *AccountBooking) GetDescriptionOk() (*string, bool) {
 }
 
 // SetDescription sets field value
-func (o *AccountBooking) SetDescription(v string) {
+func (o *CreateAccountBookingRequest) SetDescription(v string) {
 	o.Description = v
 }
 
 // GetCredit returns the Credit field value
-func (o *AccountBooking) GetCredit() []AccountBookingAllocation {
+func (o *CreateAccountBookingRequest) GetCredit() []CreateAccountBookingAllocation {
 	if o == nil {
-		var ret []AccountBookingAllocation
+		var ret []CreateAccountBookingAllocation
 		return ret
 	}
 
@@ -228,7 +145,7 @@ func (o *AccountBooking) GetCredit() []AccountBookingAllocation {
 
 // GetCreditOk returns a tuple with the Credit field value
 // and a boolean to check if the value has been set.
-func (o *AccountBooking) GetCreditOk() ([]AccountBookingAllocation, bool) {
+func (o *CreateAccountBookingRequest) GetCreditOk() ([]CreateAccountBookingAllocation, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -236,14 +153,14 @@ func (o *AccountBooking) GetCreditOk() ([]AccountBookingAllocation, bool) {
 }
 
 // SetCredit sets field value
-func (o *AccountBooking) SetCredit(v []AccountBookingAllocation) {
+func (o *CreateAccountBookingRequest) SetCredit(v []CreateAccountBookingAllocation) {
 	o.Credit = v
 }
 
 // GetDebit returns the Debit field value
-func (o *AccountBooking) GetDebit() []AccountBookingAllocation {
+func (o *CreateAccountBookingRequest) GetDebit() []CreateAccountBookingAllocation {
 	if o == nil {
-		var ret []AccountBookingAllocation
+		var ret []CreateAccountBookingAllocation
 		return ret
 	}
 
@@ -252,7 +169,7 @@ func (o *AccountBooking) GetDebit() []AccountBookingAllocation {
 
 // GetDebitOk returns a tuple with the Debit field value
 // and a boolean to check if the value has been set.
-func (o *AccountBooking) GetDebitOk() ([]AccountBookingAllocation, bool) {
+func (o *CreateAccountBookingRequest) GetDebitOk() ([]CreateAccountBookingAllocation, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -260,12 +177,12 @@ func (o *AccountBooking) GetDebitOk() ([]AccountBookingAllocation, bool) {
 }
 
 // SetDebit sets field value
-func (o *AccountBooking) SetDebit(v []AccountBookingAllocation) {
+func (o *CreateAccountBookingRequest) SetDebit(v []CreateAccountBookingAllocation) {
 	o.Debit = v
 }
 
 // GetRevertRef returns the RevertRef field value if set, zero value otherwise.
-func (o *AccountBooking) GetRevertRef() string {
+func (o *CreateAccountBookingRequest) GetRevertRef() string {
 	if o == nil || IsNil(o.RevertRef) {
 		var ret string
 		return ret
@@ -275,7 +192,7 @@ func (o *AccountBooking) GetRevertRef() string {
 
 // GetRevertRefOk returns a tuple with the RevertRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AccountBooking) GetRevertRefOk() (*string, bool) {
+func (o *CreateAccountBookingRequest) GetRevertRefOk() (*string, bool) {
 	if o == nil || IsNil(o.RevertRef) {
 		return nil, false
 	}
@@ -283,7 +200,7 @@ func (o *AccountBooking) GetRevertRefOk() (*string, bool) {
 }
 
 // HasRevertRef returns a boolean if a field has been set.
-func (o *AccountBooking) HasRevertRef() bool {
+func (o *CreateAccountBookingRequest) HasRevertRef() bool {
 	if o != nil && !IsNil(o.RevertRef) {
 		return true
 	}
@@ -292,12 +209,12 @@ func (o *AccountBooking) HasRevertRef() bool {
 }
 
 // SetRevertRef gets a reference to the given string and assigns it to the RevertRef field.
-func (o *AccountBooking) SetRevertRef(v string) {
+func (o *CreateAccountBookingRequest) SetRevertRef(v string) {
 	o.RevertRef = &v
 }
 
 // GetRevertedByRef returns the RevertedByRef field value if set, zero value otherwise.
-func (o *AccountBooking) GetRevertedByRef() string {
+func (o *CreateAccountBookingRequest) GetRevertedByRef() string {
 	if o == nil || IsNil(o.RevertedByRef) {
 		var ret string
 		return ret
@@ -307,7 +224,7 @@ func (o *AccountBooking) GetRevertedByRef() string {
 
 // GetRevertedByRefOk returns a tuple with the RevertedByRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AccountBooking) GetRevertedByRefOk() (*string, bool) {
+func (o *CreateAccountBookingRequest) GetRevertedByRefOk() (*string, bool) {
 	if o == nil || IsNil(o.RevertedByRef) {
 		return nil, false
 	}
@@ -315,7 +232,7 @@ func (o *AccountBooking) GetRevertedByRefOk() (*string, bool) {
 }
 
 // HasRevertedByRef returns a boolean if a field has been set.
-func (o *AccountBooking) HasRevertedByRef() bool {
+func (o *CreateAccountBookingRequest) HasRevertedByRef() bool {
 	if o != nil && !IsNil(o.RevertedByRef) {
 		return true
 	}
@@ -324,12 +241,12 @@ func (o *AccountBooking) HasRevertedByRef() bool {
 }
 
 // SetRevertedByRef gets a reference to the given string and assigns it to the RevertedByRef field.
-func (o *AccountBooking) SetRevertedByRef(v string) {
+func (o *CreateAccountBookingRequest) SetRevertedByRef(v string) {
 	o.RevertedByRef = &v
 }
 
 // GetTransactionRef returns the TransactionRef field value if set, zero value otherwise.
-func (o *AccountBooking) GetTransactionRef() string {
+func (o *CreateAccountBookingRequest) GetTransactionRef() string {
 	if o == nil || IsNil(o.TransactionRef) {
 		var ret string
 		return ret
@@ -339,7 +256,7 @@ func (o *AccountBooking) GetTransactionRef() string {
 
 // GetTransactionRefOk returns a tuple with the TransactionRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AccountBooking) GetTransactionRefOk() (*string, bool) {
+func (o *CreateAccountBookingRequest) GetTransactionRefOk() (*string, bool) {
 	if o == nil || IsNil(o.TransactionRef) {
 		return nil, false
 	}
@@ -347,7 +264,7 @@ func (o *AccountBooking) GetTransactionRefOk() (*string, bool) {
 }
 
 // HasTransactionRef returns a boolean if a field has been set.
-func (o *AccountBooking) HasTransactionRef() bool {
+func (o *CreateAccountBookingRequest) HasTransactionRef() bool {
 	if o != nil && !IsNil(o.TransactionRef) {
 		return true
 	}
@@ -356,11 +273,11 @@ func (o *AccountBooking) HasTransactionRef() bool {
 }
 
 // SetTransactionRef gets a reference to the given string and assigns it to the TransactionRef field.
-func (o *AccountBooking) SetTransactionRef(v string) {
+func (o *CreateAccountBookingRequest) SetTransactionRef(v string) {
 	o.TransactionRef = &v
 }
 
-func (o AccountBooking) MarshalJSON() ([]byte, error) {
+func (o CreateAccountBookingRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -368,11 +285,8 @@ func (o AccountBooking) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o AccountBooking) ToMap() (map[string]interface{}, error) {
+func (o CreateAccountBookingRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["id"] = o.Id
-	toSerialize["created_at"] = o.CreatedAt
-	toSerialize["updated_at"] = o.UpdatedAt
 	toSerialize["amount"] = o.Amount
 	toSerialize["date"] = o.Date
 	toSerialize["description"] = o.Description
@@ -390,14 +304,11 @@ func (o AccountBooking) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-func (o *AccountBooking) UnmarshalJSON(data []byte) (err error) {
+func (o *CreateAccountBookingRequest) UnmarshalJSON(data []byte) (err error) {
 	// This validates that all required properties are included in the JSON object
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"id",
-		"created_at",
-		"updated_at",
 		"amount",
 		"date",
 		"description",
@@ -419,53 +330,53 @@ func (o *AccountBooking) UnmarshalJSON(data []byte) (err error) {
 		}
 	}
 
-	varAccountBooking := _AccountBooking{}
+	varCreateAccountBookingRequest := _CreateAccountBookingRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varAccountBooking)
+	err = decoder.Decode(&varCreateAccountBookingRequest)
 
 	if err != nil {
 		return err
 	}
 
-	*o = AccountBooking(varAccountBooking)
+	*o = CreateAccountBookingRequest(varCreateAccountBookingRequest)
 
 	return err
 }
 
-type NullableAccountBooking struct {
-	value *AccountBooking
+type NullableCreateAccountBookingRequest struct {
+	value *CreateAccountBookingRequest
 	isSet bool
 }
 
-func (v NullableAccountBooking) Get() *AccountBooking {
+func (v NullableCreateAccountBookingRequest) Get() *CreateAccountBookingRequest {
 	return v.value
 }
 
-func (v *NullableAccountBooking) Set(val *AccountBooking) {
+func (v *NullableCreateAccountBookingRequest) Set(val *CreateAccountBookingRequest) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableAccountBooking) IsSet() bool {
+func (v NullableCreateAccountBookingRequest) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableAccountBooking) Unset() {
+func (v *NullableCreateAccountBookingRequest) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableAccountBooking(val *AccountBooking) *NullableAccountBooking {
-	return &NullableAccountBooking{value: val, isSet: true}
+func NewNullableCreateAccountBookingRequest(val *CreateAccountBookingRequest) *NullableCreateAccountBookingRequest {
+	return &NullableCreateAccountBookingRequest{value: val, isSet: true}
 }
 
-func (v NullableAccountBooking) MarshalJSON() ([]byte, error) {
+func (v NullableCreateAccountBookingRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableAccountBooking) UnmarshalJSON(src []byte) error {
+func (v *NullableCreateAccountBookingRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

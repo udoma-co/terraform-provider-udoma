@@ -32,12 +32,10 @@ type FinancialAccount struct {
 	// The name of the account
 	Name string           `json:"name"`
 	Type AccountTypesEnum `json:"type"`
-	// Indicates whether the account is part of the balance sheet. If set to false, the account is part of the profit and loss statement.
-	IsBalance *bool `json:"is_balance,omitempty"`
 	// The currency of the booking
 	Currency string `json:"currency"`
-	// A script to generate booking allocations when passed the total booking value
-	AllocationScript *string `json:"allocation_script,omitempty"`
+	// The current balance of the account
+	Balance *float64 `json:"balance,omitempty"`
 	// The dimensions that are assigned to the account
 	Dimensions []AccountDimension `json:"dimensions,omitempty"`
 }
@@ -212,38 +210,6 @@ func (o *FinancialAccount) SetType(v AccountTypesEnum) {
 	o.Type = v
 }
 
-// GetIsBalance returns the IsBalance field value if set, zero value otherwise.
-func (o *FinancialAccount) GetIsBalance() bool {
-	if o == nil || IsNil(o.IsBalance) {
-		var ret bool
-		return ret
-	}
-	return *o.IsBalance
-}
-
-// GetIsBalanceOk returns a tuple with the IsBalance field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *FinancialAccount) GetIsBalanceOk() (*bool, bool) {
-	if o == nil || IsNil(o.IsBalance) {
-		return nil, false
-	}
-	return o.IsBalance, true
-}
-
-// HasIsBalance returns a boolean if a field has been set.
-func (o *FinancialAccount) HasIsBalance() bool {
-	if o != nil && !IsNil(o.IsBalance) {
-		return true
-	}
-
-	return false
-}
-
-// SetIsBalance gets a reference to the given bool and assigns it to the IsBalance field.
-func (o *FinancialAccount) SetIsBalance(v bool) {
-	o.IsBalance = &v
-}
-
 // GetCurrency returns the Currency field value
 func (o *FinancialAccount) GetCurrency() string {
 	if o == nil {
@@ -268,36 +234,36 @@ func (o *FinancialAccount) SetCurrency(v string) {
 	o.Currency = v
 }
 
-// GetAllocationScript returns the AllocationScript field value if set, zero value otherwise.
-func (o *FinancialAccount) GetAllocationScript() string {
-	if o == nil || IsNil(o.AllocationScript) {
-		var ret string
+// GetBalance returns the Balance field value if set, zero value otherwise.
+func (o *FinancialAccount) GetBalance() float64 {
+	if o == nil || IsNil(o.Balance) {
+		var ret float64
 		return ret
 	}
-	return *o.AllocationScript
+	return *o.Balance
 }
 
-// GetAllocationScriptOk returns a tuple with the AllocationScript field value if set, nil otherwise
+// GetBalanceOk returns a tuple with the Balance field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *FinancialAccount) GetAllocationScriptOk() (*string, bool) {
-	if o == nil || IsNil(o.AllocationScript) {
+func (o *FinancialAccount) GetBalanceOk() (*float64, bool) {
+	if o == nil || IsNil(o.Balance) {
 		return nil, false
 	}
-	return o.AllocationScript, true
+	return o.Balance, true
 }
 
-// HasAllocationScript returns a boolean if a field has been set.
-func (o *FinancialAccount) HasAllocationScript() bool {
-	if o != nil && !IsNil(o.AllocationScript) {
+// HasBalance returns a boolean if a field has been set.
+func (o *FinancialAccount) HasBalance() bool {
+	if o != nil && !IsNil(o.Balance) {
 		return true
 	}
 
 	return false
 }
 
-// SetAllocationScript gets a reference to the given string and assigns it to the AllocationScript field.
-func (o *FinancialAccount) SetAllocationScript(v string) {
-	o.AllocationScript = &v
+// SetBalance gets a reference to the given float64 and assigns it to the Balance field.
+func (o *FinancialAccount) SetBalance(v float64) {
+	o.Balance = &v
 }
 
 // GetDimensions returns the Dimensions field value if set, zero value otherwise.
@@ -348,12 +314,9 @@ func (o FinancialAccount) ToMap() (map[string]interface{}, error) {
 	toSerialize["number"] = o.Number
 	toSerialize["name"] = o.Name
 	toSerialize["type"] = o.Type
-	if !IsNil(o.IsBalance) {
-		toSerialize["is_balance"] = o.IsBalance
-	}
 	toSerialize["currency"] = o.Currency
-	if !IsNil(o.AllocationScript) {
-		toSerialize["allocation_script"] = o.AllocationScript
+	if !IsNil(o.Balance) {
+		toSerialize["balance"] = o.Balance
 	}
 	if !IsNil(o.Dimensions) {
 		toSerialize["dimensions"] = o.Dimensions

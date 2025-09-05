@@ -28,9 +28,8 @@ type BankTransaction struct {
 	// The date and time the entity was last updated
 	UpdatedAt int64 `json:"updated_at"`
 	// The timestamp of the transaction
-	Date int64 `json:"date"`
-	// The type of the transaction (e.g. 'deposit', 'withdrawal', etc.)
-	Type string `json:"type"`
+	Date int64           `json:"date"`
+	Type BookingTypeEnum `json:"type"`
 	// The amount of the transaction
 	Amount float64 `json:"amount"`
 	// The description text provided for the transaction
@@ -47,7 +46,7 @@ type _BankTransaction BankTransaction
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewBankTransaction(id string, createdAt int64, updatedAt int64, date int64, type_ string, amount float64, description string, sourceTargetName string, sourceTargetIban string) *BankTransaction {
+func NewBankTransaction(id string, createdAt int64, updatedAt int64, date int64, type_ BookingTypeEnum, amount float64, description string, sourceTargetName string, sourceTargetIban string) *BankTransaction {
 	this := BankTransaction{}
 	this.Id = id
 	this.CreatedAt = createdAt
@@ -166,9 +165,9 @@ func (o *BankTransaction) SetDate(v int64) {
 }
 
 // GetType returns the Type field value
-func (o *BankTransaction) GetType() string {
+func (o *BankTransaction) GetType() BookingTypeEnum {
 	if o == nil {
-		var ret string
+		var ret BookingTypeEnum
 		return ret
 	}
 
@@ -177,7 +176,7 @@ func (o *BankTransaction) GetType() string {
 
 // GetTypeOk returns a tuple with the Type field value
 // and a boolean to check if the value has been set.
-func (o *BankTransaction) GetTypeOk() (*string, bool) {
+func (o *BankTransaction) GetTypeOk() (*BookingTypeEnum, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -185,7 +184,7 @@ func (o *BankTransaction) GetTypeOk() (*string, bool) {
 }
 
 // SetType sets field value
-func (o *BankTransaction) SetType(v string) {
+func (o *BankTransaction) SetType(v BookingTypeEnum) {
 	o.Type = v
 }
 
