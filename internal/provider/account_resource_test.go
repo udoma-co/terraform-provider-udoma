@@ -16,7 +16,6 @@ func TestAccountResource(t *testing.T) {
 					resource.TestCheckResourceAttr("udoma_account.test", "name", "Test Account"),
 					resource.TestCheckResourceAttr("udoma_account.test", "currency", "USD"),
 					resource.TestCheckResourceAttr("udoma_account.test", "number", "128"),
-					resource.TestCheckResourceAttr("udoma_account.test", "is_balance", "true"),
 					resource.TestCheckResourceAttr("udoma_account.test", "type", "asset"),
 				),
 			},
@@ -31,8 +30,7 @@ func TestAccountResource(t *testing.T) {
 					number   = 501
 					name     = "Updated Account"
 					currency = "EUR"
-					is_balance = true
-  					type = "asset"
+  					type 	 = "asset"
 				}
 				`,
 				Check: resource.ComposeTestCheckFunc(
@@ -50,8 +48,7 @@ func testAccAccountConfig() string {
 resource "udoma_account" "test" {
   number   = 128
   name     = "Test Account"
-  is_balance = true
-  type = "asset"
+  type     = "asset"
   currency = "USD"
 }
 `

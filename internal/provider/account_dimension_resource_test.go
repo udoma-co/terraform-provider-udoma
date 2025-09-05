@@ -27,20 +27,20 @@ func TestAccAccountDimensionResource(t *testing.T) {
 			},
 			{
 				Config: `
-				resource udoma_bank_account "test" {
-					account_holder = "updated_test_account"
-					iban 					 = "DE29100100100987654321"
-					bic 					 = "TESTDETTXXX"
-					bank_name 		 = "updated_test_bank"
-					description 	 = "updated_test_description"
+				resource "udoma_account_dimension" "test" {
+					name            = "Updated Account Dimension"
+					description     = "An updated account dimension"
+					ref_type        = "none"
+					required        = true
+					pad_to_size     = 8
 				}
 				`,
 
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify attributes were updated
-					resource.TestCheckResourceAttr("udoma_bank_account.test", "account_holder", "updated_test_account"),
-					resource.TestCheckResourceAttr("udoma_bank_account.test", "bank_name", "updated_test_bank"),
-					resource.TestCheckResourceAttr("udoma_bank_account.test", "description", "updated_test_description"),
+					resource.TestCheckResourceAttr("udoma_account_dimension.test", "name", "Updated Account Dimension"),
+					resource.TestCheckResourceAttr("udoma_account_dimension.test", "description", "An updated account dimension"),
+					resource.TestCheckResourceAttr("udoma_account_dimension.test", "pad_to_size", "8"),
 				),
 			},
 		},
