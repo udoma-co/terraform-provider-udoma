@@ -18,6 +18,7 @@ func TestAccReportDefinitionResource(t *testing.T) {
 					resource.TestCheckResourceAttr("udoma_report_definition.test", "name", "basic report"),
 					resource.TestCheckResourceAttr("udoma_report_definition.test", "description", "Test description"),
 					resource.TestCheckResourceAttr("udoma_report_definition.test", "script", `const ret = { "count": 1 }; return ret;`),
+					resource.TestCheckResourceAttr("udoma_report_definition.test", "env_vars.ENV1", `value1`),
 
 					// Verify dynamic values have any value set in the state.
 					resource.TestCheckResourceAttrSet("udoma_report_definition.test", "id"),
@@ -42,6 +43,10 @@ resource "udoma_report_definition" "test" {
 	name 			= "basic updated report"
 	description 	= "Test updated description"
 	version 		= 2
+
+	env_vars = {
+		"ENV1" = "value1"
+	}
 
 	result_schema = {
 		result_type 		   = "TABLE"
@@ -82,6 +87,10 @@ func resourceDefinitionReportDefinition() string {
 	resource udoma_report_definition "test" {
 		name 			= "basic report"
 		description 	= "Test description"
+
+		env_vars = {
+			"ENV1" = "value1"
+		}
 		
 		result_schema = {
 			result_type 		   = "TABLE"

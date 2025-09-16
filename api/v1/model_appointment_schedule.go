@@ -36,6 +36,8 @@ type AppointmentSchedule struct {
 	// The appointment windows
 	Windows  []AppointmentWindow `json:"windows,omitempty"`
 	Template AppointmentTemplate `json:"template"`
+	// The code used to access the subscription URL for this schedule
+	Code *string `json:"code,omitempty"`
 }
 
 type _AppointmentSchedule AppointmentSchedule
@@ -285,6 +287,38 @@ func (o *AppointmentSchedule) SetTemplate(v AppointmentTemplate) {
 	o.Template = v
 }
 
+// GetCode returns the Code field value if set, zero value otherwise.
+func (o *AppointmentSchedule) GetCode() string {
+	if o == nil || IsNil(o.Code) {
+		var ret string
+		return ret
+	}
+	return *o.Code
+}
+
+// GetCodeOk returns a tuple with the Code field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AppointmentSchedule) GetCodeOk() (*string, bool) {
+	if o == nil || IsNil(o.Code) {
+		return nil, false
+	}
+	return o.Code, true
+}
+
+// HasCode returns a boolean if a field has been set.
+func (o *AppointmentSchedule) HasCode() bool {
+	if o != nil && !IsNil(o.Code) {
+		return true
+	}
+
+	return false
+}
+
+// SetCode gets a reference to the given string and assigns it to the Code field.
+func (o *AppointmentSchedule) SetCode(v string) {
+	o.Code = &v
+}
+
 func (o AppointmentSchedule) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -311,6 +345,9 @@ func (o AppointmentSchedule) ToMap() (map[string]interface{}, error) {
 		toSerialize["windows"] = o.Windows
 	}
 	toSerialize["template"] = o.Template
+	if !IsNil(o.Code) {
+		toSerialize["code"] = o.Code
+	}
 	return toSerialize, nil
 }
 
