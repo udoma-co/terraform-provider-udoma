@@ -17,15 +17,21 @@ Resource represents a hook
 
 ### Required
 
-- `action` (String) The action that should triger the hook
 - `break_on_error` (Boolean) Whether the hook should break on error or not
 - `entity` (String) The type of entity the hook is targeting
+- `name` (String) A name used to identify the hook, mainly for debugging.
 - `priority` (Number) The priority of the hook
 - `script` (String) The script that should be executed when the hook is triggered
 
 ### Optional
 
+- `additional_data` (String) Additional data that can be used by the hook
 - `enabled` (Boolean) Whether the hook is enabled or not
+- `post` (Boolean) Whether to run the script after the action, both pre and post and can true then the script runs twice. At least one must be true.
+- `pre` (Boolean) Whether to run the script before the action, both pre and post and can true then the script runs twice. At least one must be true.
+- `run_on_create` (Boolean) Whether the hook should run on entity create
+- `run_on_delete` (Boolean) Whether the hook should run on entity delete
+- `run_on_update` (Boolean) Whether the hook should run on entity update
 
 ### Read-Only
 

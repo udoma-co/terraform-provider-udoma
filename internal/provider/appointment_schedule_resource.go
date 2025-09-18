@@ -250,14 +250,16 @@ func (app *AppointmentScheduleModel) fromApiResponse(resp *v1.AppointmentSchedul
 	app.ID = types.StringValue(resp.Id)
 	app.Name = types.StringValue(resp.Name)
 
-	mappedDescription := make(map[string]attr.Value)
-	for key, value := range *resp.Description {
-		mappedDescription[key] = types.StringValue(value)
-	}
+	if resp.Description != nil {
+		mappedDescription := make(map[string]attr.Value)
+		for key, value := range *resp.Description {
+			mappedDescription[key] = types.StringValue(value)
+		}
 
-	app.Description, diags = types.MapValue(types.StringType, mappedDescription)
-	if diags.HasError() {
-		return
+		app.Description, diags = types.MapValue(types.StringType, mappedDescription)
+		if diags.HasError() {
+			return
+		}
 	}
 
 	app.TemplateRef = types.StringValue(resp.Template.Id)

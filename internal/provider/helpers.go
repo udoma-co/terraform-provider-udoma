@@ -10,6 +10,20 @@ import (
 	api "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
 )
 
+// omittableInt32Value returns a new value for an int32 field that can be
+// omitted. That is, if the new value is nil and the old value is 0, the
+// returned value is 0. Otherwise, the returned value is the new value.
+// This is useful for fields that are optional and default to 0, i.e.
+// during planing they will have a value of 0, but after apply the API
+// might omit the field if it is 0.
+func omittableInt32Value(newValue *int32, oldValue basetypes.Int32Value) basetypes.Int32Value {
+	if newValue == nil && !oldValue.IsNull() && oldValue.ValueInt32() == 0 {
+		// omitted false value
+		return types.Int32Value(0)
+	}
+	return types.Int32PointerValue(newValue)
+}
+
 // omittableBooleanValue returns a new value for a boolean field that can be
 // omitted. That is, if the new value is nil and the old value is false, the
 // returned value is false. Otherwise, the returned value is the new value.
