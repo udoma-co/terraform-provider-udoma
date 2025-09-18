@@ -149,7 +149,7 @@ Optional:
 - `view_label` (Map of String) Optional label to be displayed when viewing the input field (e.g. 'Name'). This is useful when the label is not suitable to be displayed in a view.
 
 <a id="nestedatt--config--status_config--feedback--form--inputs--display_condition"></a>
-### Nested Schema for `config.status_config.feedback.form.inputs.display_condition`
+### Nested Schema for `config.status_config.feedback.form.inputs.view_label`
 
 Required:
 
@@ -159,7 +159,7 @@ Required:
 
 
 <a id="nestedatt--config--status_config--feedback--form--inputs--items"></a>
-### Nested Schema for `config.status_config.feedback.form.inputs.items`
+### Nested Schema for `config.status_config.feedback.form.inputs.view_label`
 
 Required:
 
@@ -199,7 +199,7 @@ Optional:
 - `top_divider` (Boolean) if true, a divider will be displayed above the group
 
 <a id="nestedatt--config--status_config--feedback--form--groups--items"></a>
-### Nested Schema for `config.status_config.feedback.form.groups.items`
+### Nested Schema for `config.status_config.feedback.form.groups.top_divider`
 
 Required:
 

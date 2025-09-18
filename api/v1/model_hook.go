@@ -26,17 +26,30 @@ type Hook struct {
 	// The date and time the entity was created
 	CreatedAt int64 `json:"created_at"`
 	// The date and time the entity was last updated
-	UpdatedAt int64      `json:"updated_at"`
-	Entity    HookEntity `json:"entity"`
-	Action    HookAction `json:"action"`
-	// The script to run when the action is performed
+	UpdatedAt int64 `json:"updated_at"`
+	// An identifier for the hook used mostly to debug.
+	Name   string     `json:"name"`
+	Entity HookEntity `json:"entity"`
+	// The script to run when the action is performed.
 	Script string `json:"script"`
+	// Some random data to pass to the script when it runs.
+	AdditionalData map[string]interface{} `json:"additional_data,omitempty"`
+	// Whether the script should run on entity create.
+	RunOnCreate *bool `json:"run_on_create,omitempty"`
+	// Whether the script should run on entity update.
+	RunOnUpdate *bool `json:"run_on_update,omitempty"`
+	// Whether the script should run on entity delete.
+	RunOnDelete *bool `json:"run_on_delete,omitempty"`
+	// Whether the script should run before the action
+	Post *bool `json:"post,omitempty"`
+	// Whether the script should run after the action
+	Pre *bool `json:"pre,omitempty"`
 	// This is just the order of execution of the hooks
-	Priority int32 `json:"priority"`
+	Priority *int32 `json:"priority,omitempty"`
 	// Whether the entire event should be cancelled if the script throws an error
 	BreakOnError *bool `json:"break_on_error,omitempty"`
 	// Whether the hook is enabled and should be ran
-	Enabled bool `json:"enabled"`
+	Enabled *bool `json:"enabled,omitempty"`
 }
 
 type _Hook Hook
@@ -45,16 +58,14 @@ type _Hook Hook
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewHook(id string, createdAt int64, updatedAt int64, entity HookEntity, action HookAction, script string, priority int32, enabled bool) *Hook {
+func NewHook(id string, createdAt int64, updatedAt int64, name string, entity HookEntity, script string) *Hook {
 	this := Hook{}
 	this.Id = id
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
+	this.Name = name
 	this.Entity = entity
-	this.Action = action
 	this.Script = script
-	this.Priority = priority
-	this.Enabled = enabled
 	return &this
 }
 
@@ -138,6 +149,30 @@ func (o *Hook) SetUpdatedAt(v int64) {
 	o.UpdatedAt = v
 }
 
+// GetName returns the Name field value
+func (o *Hook) GetName() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.Name
+}
+
+// GetNameOk returns a tuple with the Name field value
+// and a boolean to check if the value has been set.
+func (o *Hook) GetNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Name, true
+}
+
+// SetName sets field value
+func (o *Hook) SetName(v string) {
+	o.Name = v
+}
+
 // GetEntity returns the Entity field value
 func (o *Hook) GetEntity() HookEntity {
 	if o == nil {
@@ -160,30 +195,6 @@ func (o *Hook) GetEntityOk() (*HookEntity, bool) {
 // SetEntity sets field value
 func (o *Hook) SetEntity(v HookEntity) {
 	o.Entity = v
-}
-
-// GetAction returns the Action field value
-func (o *Hook) GetAction() HookAction {
-	if o == nil {
-		var ret HookAction
-		return ret
-	}
-
-	return o.Action
-}
-
-// GetActionOk returns a tuple with the Action field value
-// and a boolean to check if the value has been set.
-func (o *Hook) GetActionOk() (*HookAction, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Action, true
-}
-
-// SetAction sets field value
-func (o *Hook) SetAction(v HookAction) {
-	o.Action = v
 }
 
 // GetScript returns the Script field value
@@ -210,28 +221,228 @@ func (o *Hook) SetScript(v string) {
 	o.Script = v
 }
 
-// GetPriority returns the Priority field value
+// GetAdditionalData returns the AdditionalData field value if set, zero value otherwise.
+func (o *Hook) GetAdditionalData() map[string]interface{} {
+	if o == nil || IsNil(o.AdditionalData) {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.AdditionalData
+}
+
+// GetAdditionalDataOk returns a tuple with the AdditionalData field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Hook) GetAdditionalDataOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.AdditionalData) {
+		return map[string]interface{}{}, false
+	}
+	return o.AdditionalData, true
+}
+
+// HasAdditionalData returns a boolean if a field has been set.
+func (o *Hook) HasAdditionalData() bool {
+	if o != nil && !IsNil(o.AdditionalData) {
+		return true
+	}
+
+	return false
+}
+
+// SetAdditionalData gets a reference to the given map[string]interface{} and assigns it to the AdditionalData field.
+func (o *Hook) SetAdditionalData(v map[string]interface{}) {
+	o.AdditionalData = v
+}
+
+// GetRunOnCreate returns the RunOnCreate field value if set, zero value otherwise.
+func (o *Hook) GetRunOnCreate() bool {
+	if o == nil || IsNil(o.RunOnCreate) {
+		var ret bool
+		return ret
+	}
+	return *o.RunOnCreate
+}
+
+// GetRunOnCreateOk returns a tuple with the RunOnCreate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Hook) GetRunOnCreateOk() (*bool, bool) {
+	if o == nil || IsNil(o.RunOnCreate) {
+		return nil, false
+	}
+	return o.RunOnCreate, true
+}
+
+// HasRunOnCreate returns a boolean if a field has been set.
+func (o *Hook) HasRunOnCreate() bool {
+	if o != nil && !IsNil(o.RunOnCreate) {
+		return true
+	}
+
+	return false
+}
+
+// SetRunOnCreate gets a reference to the given bool and assigns it to the RunOnCreate field.
+func (o *Hook) SetRunOnCreate(v bool) {
+	o.RunOnCreate = &v
+}
+
+// GetRunOnUpdate returns the RunOnUpdate field value if set, zero value otherwise.
+func (o *Hook) GetRunOnUpdate() bool {
+	if o == nil || IsNil(o.RunOnUpdate) {
+		var ret bool
+		return ret
+	}
+	return *o.RunOnUpdate
+}
+
+// GetRunOnUpdateOk returns a tuple with the RunOnUpdate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Hook) GetRunOnUpdateOk() (*bool, bool) {
+	if o == nil || IsNil(o.RunOnUpdate) {
+		return nil, false
+	}
+	return o.RunOnUpdate, true
+}
+
+// HasRunOnUpdate returns a boolean if a field has been set.
+func (o *Hook) HasRunOnUpdate() bool {
+	if o != nil && !IsNil(o.RunOnUpdate) {
+		return true
+	}
+
+	return false
+}
+
+// SetRunOnUpdate gets a reference to the given bool and assigns it to the RunOnUpdate field.
+func (o *Hook) SetRunOnUpdate(v bool) {
+	o.RunOnUpdate = &v
+}
+
+// GetRunOnDelete returns the RunOnDelete field value if set, zero value otherwise.
+func (o *Hook) GetRunOnDelete() bool {
+	if o == nil || IsNil(o.RunOnDelete) {
+		var ret bool
+		return ret
+	}
+	return *o.RunOnDelete
+}
+
+// GetRunOnDeleteOk returns a tuple with the RunOnDelete field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Hook) GetRunOnDeleteOk() (*bool, bool) {
+	if o == nil || IsNil(o.RunOnDelete) {
+		return nil, false
+	}
+	return o.RunOnDelete, true
+}
+
+// HasRunOnDelete returns a boolean if a field has been set.
+func (o *Hook) HasRunOnDelete() bool {
+	if o != nil && !IsNil(o.RunOnDelete) {
+		return true
+	}
+
+	return false
+}
+
+// SetRunOnDelete gets a reference to the given bool and assigns it to the RunOnDelete field.
+func (o *Hook) SetRunOnDelete(v bool) {
+	o.RunOnDelete = &v
+}
+
+// GetPost returns the Post field value if set, zero value otherwise.
+func (o *Hook) GetPost() bool {
+	if o == nil || IsNil(o.Post) {
+		var ret bool
+		return ret
+	}
+	return *o.Post
+}
+
+// GetPostOk returns a tuple with the Post field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Hook) GetPostOk() (*bool, bool) {
+	if o == nil || IsNil(o.Post) {
+		return nil, false
+	}
+	return o.Post, true
+}
+
+// HasPost returns a boolean if a field has been set.
+func (o *Hook) HasPost() bool {
+	if o != nil && !IsNil(o.Post) {
+		return true
+	}
+
+	return false
+}
+
+// SetPost gets a reference to the given bool and assigns it to the Post field.
+func (o *Hook) SetPost(v bool) {
+	o.Post = &v
+}
+
+// GetPre returns the Pre field value if set, zero value otherwise.
+func (o *Hook) GetPre() bool {
+	if o == nil || IsNil(o.Pre) {
+		var ret bool
+		return ret
+	}
+	return *o.Pre
+}
+
+// GetPreOk returns a tuple with the Pre field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Hook) GetPreOk() (*bool, bool) {
+	if o == nil || IsNil(o.Pre) {
+		return nil, false
+	}
+	return o.Pre, true
+}
+
+// HasPre returns a boolean if a field has been set.
+func (o *Hook) HasPre() bool {
+	if o != nil && !IsNil(o.Pre) {
+		return true
+	}
+
+	return false
+}
+
+// SetPre gets a reference to the given bool and assigns it to the Pre field.
+func (o *Hook) SetPre(v bool) {
+	o.Pre = &v
+}
+
+// GetPriority returns the Priority field value if set, zero value otherwise.
 func (o *Hook) GetPriority() int32 {
-	if o == nil {
+	if o == nil || IsNil(o.Priority) {
 		var ret int32
 		return ret
 	}
-
-	return o.Priority
+	return *o.Priority
 }
 
-// GetPriorityOk returns a tuple with the Priority field value
+// GetPriorityOk returns a tuple with the Priority field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Hook) GetPriorityOk() (*int32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Priority) {
 		return nil, false
 	}
-	return &o.Priority, true
+	return o.Priority, true
 }
 
-// SetPriority sets field value
+// HasPriority returns a boolean if a field has been set.
+func (o *Hook) HasPriority() bool {
+	if o != nil && !IsNil(o.Priority) {
+		return true
+	}
+
+	return false
+}
+
+// SetPriority gets a reference to the given int32 and assigns it to the Priority field.
 func (o *Hook) SetPriority(v int32) {
-	o.Priority = v
+	o.Priority = &v
 }
 
 // GetBreakOnError returns the BreakOnError field value if set, zero value otherwise.
@@ -266,28 +477,36 @@ func (o *Hook) SetBreakOnError(v bool) {
 	o.BreakOnError = &v
 }
 
-// GetEnabled returns the Enabled field value
+// GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *Hook) GetEnabled() bool {
-	if o == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
-
-	return o.Enabled
+	return *o.Enabled
 }
 
-// GetEnabledOk returns a tuple with the Enabled field value
+// GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Hook) GetEnabledOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
-	return &o.Enabled, true
+	return o.Enabled, true
 }
 
-// SetEnabled sets field value
+// HasEnabled returns a boolean if a field has been set.
+func (o *Hook) HasEnabled() bool {
+	if o != nil && !IsNil(o.Enabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnabled gets a reference to the given bool and assigns it to the Enabled field.
 func (o *Hook) SetEnabled(v bool) {
-	o.Enabled = v
+	o.Enabled = &v
 }
 
 func (o Hook) MarshalJSON() ([]byte, error) {
@@ -303,14 +522,36 @@ func (o Hook) ToMap() (map[string]interface{}, error) {
 	toSerialize["id"] = o.Id
 	toSerialize["created_at"] = o.CreatedAt
 	toSerialize["updated_at"] = o.UpdatedAt
+	toSerialize["name"] = o.Name
 	toSerialize["entity"] = o.Entity
-	toSerialize["action"] = o.Action
 	toSerialize["script"] = o.Script
-	toSerialize["priority"] = o.Priority
+	if !IsNil(o.AdditionalData) {
+		toSerialize["additional_data"] = o.AdditionalData
+	}
+	if !IsNil(o.RunOnCreate) {
+		toSerialize["run_on_create"] = o.RunOnCreate
+	}
+	if !IsNil(o.RunOnUpdate) {
+		toSerialize["run_on_update"] = o.RunOnUpdate
+	}
+	if !IsNil(o.RunOnDelete) {
+		toSerialize["run_on_delete"] = o.RunOnDelete
+	}
+	if !IsNil(o.Post) {
+		toSerialize["post"] = o.Post
+	}
+	if !IsNil(o.Pre) {
+		toSerialize["pre"] = o.Pre
+	}
+	if !IsNil(o.Priority) {
+		toSerialize["priority"] = o.Priority
+	}
 	if !IsNil(o.BreakOnError) {
 		toSerialize["break_on_error"] = o.BreakOnError
 	}
-	toSerialize["enabled"] = o.Enabled
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
 	return toSerialize, nil
 }
 
@@ -322,11 +563,9 @@ func (o *Hook) UnmarshalJSON(data []byte) (err error) {
 		"id",
 		"created_at",
 		"updated_at",
+		"name",
 		"entity",
-		"action",
 		"script",
-		"priority",
-		"enabled",
 	}
 
 	allProperties := make(map[string]interface{})

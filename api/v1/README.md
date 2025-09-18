@@ -645,7 +645,6 @@ Class | Method | HTTP request | Description
  - [GetSummaryResponse](docs/GetSummaryResponse.md)
  - [GraduatedUpdate](docs/GraduatedUpdate.md)
  - [Hook](docs/Hook.md)
- - [HookAction](docs/HookAction.md)
  - [HookAttributesPartial](docs/HookAttributesPartial.md)
  - [HookEntity](docs/HookEntity.md)
  - [IDUpload](docs/IDUpload.md)

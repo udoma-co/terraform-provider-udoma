@@ -2,9 +2,12 @@ package provider
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 
+	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -30,13 +33,19 @@ type Hook struct {
 }
 
 type HookModel struct {
-	ID           types.String `tfsdk:"id"`
-	Entity       types.String `tfsdk:"entity"`
-	Action       types.String `tfsdk:"action"`
-	Priority     types.Int32  `tfsdk:"priority"`
-	Enabled      types.Bool   `tfsdk:"enabled"`
-	BreakOnError types.Bool   `tfsdk:"break_on_error"`
-	Script       types.String `tfsdk:"script"`
+	ID             types.String         `tfsdk:"id"`
+	Name           types.String         `tfsdk:"name"`
+	Entity         types.String         `tfsdk:"entity"`
+	RunOnCreate    types.Bool           `tfsdk:"run_on_create"`
+	RunOnUpdate    types.Bool           `tfsdk:"run_on_update"`
+	RunOnDelete    types.Bool           `tfsdk:"run_on_delete"`
+	Pre            types.Bool           `tfsdk:"pre"`
+	Post           types.Bool           `tfsdk:"post"`
+	Priority       types.Int32          `tfsdk:"priority"`
+	Enabled        types.Bool           `tfsdk:"enabled"`
+	BreakOnError   types.Bool           `tfsdk:"break_on_error"`
+	Script         types.String         `tfsdk:"script"`
+	AdditionalData jsontypes.Normalized `tfsdk:"additional_data"`
 }
 
 func (hook *Hook) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -55,6 +64,10 @@ func (hook *Hook) Schema(ctx context.Context, req resource.SchemaRequest, resp *
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
+			"name": schema.StringAttribute{
+				Required:    true,
+				Description: "A name used to identify the hook, mainly for debugging.",
+			},
 			"entity": schema.StringAttribute{
 				Required:    true,
 				Description: "The type of entity the hook is targeting",
@@ -69,16 +82,25 @@ func (hook *Hook) Schema(ctx context.Context, req resource.SchemaRequest, resp *
 					),
 				},
 			},
-			"action": schema.StringAttribute{
-				Required:    true,
-				Description: "The action that should triger the hook",
-				Validators: []validator.String{
-					stringvalidator.OneOf(
-						"CREATE",
-						"UPDATE",
-						"DELETE",
-					),
-				},
+			"run_on_create": schema.BoolAttribute{
+				Optional:    true,
+				Description: "Whether the hook should run on entity create",
+			},
+			"run_on_update": schema.BoolAttribute{
+				Optional:    true,
+				Description: "Whether the hook should run on entity update",
+			},
+			"run_on_delete": schema.BoolAttribute{
+				Optional:    true,
+				Description: "Whether the hook should run on entity delete",
+			},
+			"pre": schema.BoolAttribute{
+				Optional:    true,
+				Description: "Whether to run the script before the action, both pre and post and can true then the script runs twice. At least one must be true.",
+			},
+			"post": schema.BoolAttribute{
+				Optional:    true,
+				Description: "Whether to run the script after the action, both pre and post and can true then the script runs twice. At least one must be true.",
 			},
 			"priority": schema.Int32Attribute{
 				Required:    true,
@@ -95,6 +117,11 @@ func (hook *Hook) Schema(ctx context.Context, req resource.SchemaRequest, resp *
 			"script": schema.StringAttribute{
 				Required:    true,
 				Description: "The script that should be executed when the hook is triggered",
+			},
+			"additional_data": schema.StringAttribute{
+				Optional:    true,
+				CustomType:  jsontypes.NormalizedType{},
+				Description: "Additional data that can be used by the hook",
 			},
 		},
 	}
@@ -128,7 +155,18 @@ func (hook *Hook) Create(ctx context.Context, req resource.CreateRequest, resp *
 		return
 	}
 
-	createReq := plan.toAPIRequest()
+	createReq, moreDiags := plan.toAPIRequest()
+	diags.Append(moreDiags...)
+	if diags.HasError() {
+		return
+	}
+
+	if (createReq.Pre == nil || !*createReq.Pre) && (createReq.Post == nil || !*createReq.Post) {
+		diags.AddError(
+			"Invalid Hook Configuration",
+			"At least one of 'pre' or 'post' must be true.",
+		)
+	}
 
 	newHook, _, err := hook.client.GetApi().CreateHook(ctx).CreateOrUpdateHookRequest(createReq).Execute()
 	if err != nil {
@@ -140,7 +178,12 @@ func (hook *Hook) Create(ctx context.Context, req resource.CreateRequest, resp *
 	}
 
 	// update the tf struct with the new values
-	plan.fromAPI(newHook)
+	if err = plan.fromAPI(newHook); err != nil {
+		diags.AddError(
+			"could not read API response",
+			err.Error(),
+		)
+	}
 
 	// Set state to fully populated data
 	diags = resp.State.Set(ctx, plan)
@@ -174,7 +217,12 @@ func (hook *Hook) Read(ctx context.Context, req resource.ReadRequest, resp *reso
 	}
 
 	// update the tf struct with the new values
-	state.fromAPI(gotHook)
+	if err = state.fromAPI(gotHook); err != nil {
+		diags.AddError(
+			"could not read API response",
+			err.Error(),
+		)
+	}
 
 	// Set refreshed state
 	diags = resp.State.Set(ctx, &state)
@@ -194,9 +242,20 @@ func (hook *Hook) Update(ctx context.Context, req resource.UpdateRequest, resp *
 		return
 	}
 
-	createReq := plan.toAPIRequest()
+	updateReq, moreDiags := plan.toAPIRequest()
+	diags.Append(moreDiags...)
+	if diags.HasError() {
+		return
+	}
 
-	newHook, _, err := hook.client.GetApi().UpdateHook(ctx, plan.ID.ValueString()).CreateOrUpdateHookRequest(createReq).Execute()
+	if (updateReq.Pre == nil || !*updateReq.Pre) && (updateReq.Post == nil || !*updateReq.Post) {
+		diags.AddError(
+			"Invalid Hook Configuration",
+			"At least one of 'pre' or 'post' must be true.",
+		)
+	}
+
+	newHook, _, err := hook.client.GetApi().UpdateHook(ctx, plan.ID.ValueString()).CreateOrUpdateHookRequest(updateReq).Execute()
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Updating Hook Entry",
@@ -206,7 +265,12 @@ func (hook *Hook) Update(ctx context.Context, req resource.UpdateRequest, resp *
 	}
 
 	// update the tf struct with the new values
-	plan.fromAPI(newHook)
+	if err = plan.fromAPI(newHook); err != nil {
+		diags.AddError(
+			"could not read API response",
+			err.Error(),
+		)
+	}
 
 	// Set state to fully populated data
 	diags = resp.State.Set(ctx, plan)
@@ -243,23 +307,46 @@ func (hook *Hook) ImportState(ctx context.Context, req resource.ImportStateReque
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
 
-func (hook *HookModel) toAPIRequest() api.CreateOrUpdateHookRequest {
-	return api.CreateOrUpdateHookRequest{
+func (hook *HookModel) toAPIRequest() (api.CreateOrUpdateHookRequest, diag.Diagnostics) {
+	result := api.CreateOrUpdateHookRequest{
+		Name:         hook.Name.ValueString(),
 		Entity:       api.HookEntity(hook.Entity.ValueString()),
-		Action:       api.HookAction(hook.Action.ValueString()),
+		RunOnCreate:  hook.RunOnCreate.ValueBoolPointer(),
+		RunOnUpdate:  hook.RunOnUpdate.ValueBoolPointer(),
+		RunOnDelete:  hook.RunOnDelete.ValueBoolPointer(),
+		Pre:          hook.Pre.ValueBoolPointer(),
+		Post:         hook.Post.ValueBoolPointer(),
 		Script:       hook.Script.ValueString(),
-		Priority:     hook.Priority.ValueInt32(),
-		Enabled:      hook.Enabled.ValueBool(),
+		Priority:     hook.Priority.ValueInt32Pointer(),
+		Enabled:      hook.Enabled.ValueBoolPointer(),
 		BreakOnError: hook.BreakOnError.ValueBoolPointer(),
 	}
+
+	diags := hook.AdditionalData.Unmarshal(&result.AdditionalData)
+
+	return result, diags
 }
 
-func (hook *HookModel) fromAPI(resp *api.Hook) {
+func (hook *HookModel) fromAPI(resp *api.Hook) (err error) {
 	hook.ID = types.StringValue(resp.Id)
+	hook.Name = types.StringValue(resp.Name)
 	hook.Entity = types.StringValue(string(resp.Entity))
-	hook.Action = types.StringValue(string(resp.Action))
+	hook.RunOnCreate = omittableBooleanValue(resp.RunOnCreate, hook.RunOnCreate)
+	hook.RunOnUpdate = omittableBooleanValue(resp.RunOnUpdate, hook.RunOnUpdate)
+	hook.RunOnDelete = omittableBooleanValue(resp.RunOnDelete, hook.RunOnDelete)
+	hook.Pre = omittableBooleanValue(resp.Pre, hook.Pre)
+	hook.Post = omittableBooleanValue(resp.Post, hook.Post)
 	hook.Script = types.StringValue(resp.Script)
-	hook.Priority = types.Int32Value(resp.Priority)
-	hook.Enabled = types.BoolValue(resp.Enabled)
+	hook.Priority = omittableInt32Value(resp.Priority, hook.Priority)
+	hook.Enabled = omittableBooleanValue(resp.Enabled, hook.Enabled)
 	hook.BreakOnError = omittableBooleanValue(resp.BreakOnError, hook.BreakOnError)
+
+	bAdditionalData, err := json.Marshal(resp.AdditionalData)
+	if err != nil {
+		return fmt.Errorf("could not marshal additional_data: %w", err)
+	}
+
+	hook.AdditionalData = jsontypes.NewNormalizedValue(string(bAdditionalData))
+
+	return
 }

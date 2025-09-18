@@ -8,6 +8,7 @@ require (
 	github.com/bluekeyes/go-gitdiff v0.8.1
 	github.com/google/go-cmp v0.6.0
 	github.com/hashicorp/terraform-plugin-framework v1.13.0
+	github.com/hashicorp/terraform-plugin-framework-jsontypes v0.2.0
 	github.com/hashicorp/terraform-plugin-framework-validators v0.15.0
 	github.com/hashicorp/terraform-plugin-go v0.25.0
 	github.com/hashicorp/terraform-plugin-log v0.9.0

@@ -16,7 +16,6 @@ func TestAccHookResource(t *testing.T) {
 				Check: resource.ComposeAggregateTestCheckFunc(
 
 					resource.TestCheckResourceAttr("udoma_hook.test", "entity", "BANK_ACCOUNT"),
-					resource.TestCheckResourceAttr("udoma_hook.test", "action", "CREATE"),
 					resource.TestCheckResourceAttr("udoma_hook.test", "priority", "1"),
 					resource.TestCheckResourceAttr("udoma_hook.test", "enabled", "true"),
 					resource.TestCheckResourceAttr("udoma_hook.test", "break_on_error", "true"),
@@ -48,12 +47,20 @@ func TestAccHookResource(t *testing.T) {
 func resourceDefinitionHook(entity string) string {
 	return `
 	resource udoma_hook "test" {
+		name = "test hook"
 		entity = "` + entity + `"
-		action = "CREATE"
+		run_on_create = true
+		run_on_update = true
 		priority = 1
-		break_on_error = true
+
 		enabled = true
+
+		break_on_error = true
 		script = "data"
+
+		additional_data = jsonencode({
+			some = true
+		})
 	}
 	`
 }
