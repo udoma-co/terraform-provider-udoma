@@ -47,16 +47,17 @@ func TestAccHookResource(t *testing.T) {
 func resourceDefinitionHook(entity string) string {
 	return `
 	resource udoma_hook "test" {
-		name = "test hook"
-		entity = "` + entity + `"
+		name          = "test hook"
+		entity        = "` + entity + `"
 		run_on_create = true
 		run_on_update = true
-		priority = 1
+		pre           = true
+		priority      = 1
 
 		enabled = true
 
 		break_on_error = true
-		script = "data"
+		script         = "data"
 
 		additional_data = jsonencode({
 			some = true

@@ -145,6 +145,24 @@ func (hook *Hook) Configure(ctx context.Context, req resource.ConfigureRequest, 
 	hook.client = cl
 }
 
+func validateHook(req *api.CreateOrUpdateHookRequest) (diags diag.Diagnostics) {
+	if (req.Pre == nil || !*req.Pre) && (req.Post == nil || !*req.Post) {
+		diags.AddError(
+			"Invalid Hook Configuration",
+			"At least one of 'pre' or 'post' must be true.",
+		)
+	}
+
+	if (req.RunOnCreate == nil || !*req.RunOnCreate) && (req.RunOnUpdate == nil || !*req.RunOnUpdate) && (req.RunOnDelete == nil || !*req.RunOnDelete) {
+		diags.AddError(
+			"Invalid Hook Configuration",
+			"At least one of 'run_on_create', 'run_on_update' or 'run_on_delete' must be true.",
+		)
+	}
+
+	return
+}
+
 func (hook *Hook) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 
 	// Retrieve values from plan
@@ -161,11 +179,8 @@ func (hook *Hook) Create(ctx context.Context, req resource.CreateRequest, resp *
 		return
 	}
 
-	if (createReq.Pre == nil || !*createReq.Pre) && (createReq.Post == nil || !*createReq.Post) {
-		diags.AddError(
-			"Invalid Hook Configuration",
-			"At least one of 'pre' or 'post' must be true.",
-		)
+	if diags = validateHook(&createReq); diags.HasError() {
+		return
 	}
 
 	newHook, _, err := hook.client.GetApi().CreateHook(ctx).CreateOrUpdateHookRequest(createReq).Execute()
@@ -248,11 +263,8 @@ func (hook *Hook) Update(ctx context.Context, req resource.UpdateRequest, resp *
 		return
 	}
 
-	if (updateReq.Pre == nil || !*updateReq.Pre) && (updateReq.Post == nil || !*updateReq.Post) {
-		diags.AddError(
-			"Invalid Hook Configuration",
-			"At least one of 'pre' or 'post' must be true.",
-		)
+	if diags = validateHook(&updateReq); diags.HasError() {
+		return
 	}
 
 	newHook, _, err := hook.client.GetApi().UpdateHook(ctx, plan.ID.ValueString()).CreateOrUpdateHookRequest(updateReq).Execute()
