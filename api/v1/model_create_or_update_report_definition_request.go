@@ -27,6 +27,8 @@ type CreateOrUpdateReportDefinitionRequest struct {
 	Description  *string            `json:"description,omitempty"`
 	ResultSchema ReportResultSchema `json:"result_schema"`
 	Parameters   NullableCustomForm `json:"parameters,omitempty"`
+	// a map of values, where the key and values are strings
+	EnvVars *map[string]string `json:"env_vars,omitempty"`
 	// The JS script to execute to generate the report result
 	Script  string `json:"script"`
 	Version *int32 `json:"version,omitempty"`
@@ -177,6 +179,38 @@ func (o *CreateOrUpdateReportDefinitionRequest) UnsetParameters() {
 	o.Parameters.Unset()
 }
 
+// GetEnvVars returns the EnvVars field value if set, zero value otherwise.
+func (o *CreateOrUpdateReportDefinitionRequest) GetEnvVars() map[string]string {
+	if o == nil || IsNil(o.EnvVars) {
+		var ret map[string]string
+		return ret
+	}
+	return *o.EnvVars
+}
+
+// GetEnvVarsOk returns a tuple with the EnvVars field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateReportDefinitionRequest) GetEnvVarsOk() (*map[string]string, bool) {
+	if o == nil || IsNil(o.EnvVars) {
+		return nil, false
+	}
+	return o.EnvVars, true
+}
+
+// HasEnvVars returns a boolean if a field has been set.
+func (o *CreateOrUpdateReportDefinitionRequest) HasEnvVars() bool {
+	if o != nil && !IsNil(o.EnvVars) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnvVars gets a reference to the given map[string]string and assigns it to the EnvVars field.
+func (o *CreateOrUpdateReportDefinitionRequest) SetEnvVars(v map[string]string) {
+	o.EnvVars = &v
+}
+
 // GetScript returns the Script field value
 func (o *CreateOrUpdateReportDefinitionRequest) GetScript() string {
 	if o == nil {
@@ -250,6 +284,9 @@ func (o CreateOrUpdateReportDefinitionRequest) ToMap() (map[string]interface{}, 
 	toSerialize["result_schema"] = o.ResultSchema
 	if o.Parameters.IsSet() {
 		toSerialize["parameters"] = o.Parameters.Get()
+	}
+	if !IsNil(o.EnvVars) {
+		toSerialize["env_vars"] = o.EnvVars
 	}
 	toSerialize["script"] = o.Script
 	if !IsNil(o.Version) {

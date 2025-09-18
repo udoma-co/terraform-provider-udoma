@@ -53,6 +53,7 @@ type reportDefinitionModel struct {
 	UpdatedAt    types.Int64        `tfsdk:"updated_at"`
 	Name         types.String       `tfsdk:"name"`
 	Description  types.String       `tfsdk:"description"`
+	EnvVars      types.Map          `tfsdk:"env_vars"`
 	ResultSchema *resultSchemaModel `tfsdk:"result_schema"`
 	Parameters   *CustomFormModel   `tfsdk:"parameters"`
 	Script       types.String       `tfsdk:"script"`
@@ -100,6 +101,11 @@ func (r *reportDefinition) Schema(ctx context.Context, req resource.SchemaReques
 			"description": schema.StringAttribute{
 				Optional:    true,
 				Description: "The description of the report definition",
+			},
+			"env_vars": schema.MapAttribute{
+				Optional:    true,
+				Description: "Environment variables that will be available to the report script",
+				ElementType: types.StringType,
 			},
 			"result_schema": schema.SingleNestedAttribute{
 				Required:    true,
@@ -389,6 +395,17 @@ func (model *reportDefinitionModel) fromAPI(reportDefinition *api.ReportDefiniti
 	model.Script = types.StringValue(reportDefinition.Script)
 	model.Version = types.Int32PointerValue(reportDefinition.Version)
 
+	if reportDefinition.EnvVars != nil {
+		in := stringMapToValueMap(*reportDefinition.EnvVars)
+		modelValue, diags := types.MapValue(types.StringType, in)
+		if diags.HasError() {
+			return diags
+		}
+		model.EnvVars = modelValue
+	} else {
+		model.EnvVars = types.MapNull(types.StringType)
+	}
+
 	if params := reportDefinition.Parameters.Get(); params != nil {
 		if model.Parameters == nil {
 			model.Parameters = &CustomFormModel{}
@@ -438,6 +455,10 @@ func (model *reportDefinitionModel) toAPIRequest() (api.CreateOrUpdateReportDefi
 		ResultSchema: model.ResultSchema.toAPIRequest(),
 		Script:       model.Script.ValueString(),
 		Version:      model.Version.ValueInt32Pointer(),
+	}
+
+	if envVars := modelMapToStringMap(model.EnvVars); len(envVars) > 0 {
+		reportDefinition.EnvVars = &envVars
 	}
 
 	if model.Parameters != nil {
