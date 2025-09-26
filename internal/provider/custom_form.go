@@ -35,6 +35,7 @@ type CustomFormGroupModel struct {
 	Info          types.Map             `tfsdk:"info"`
 	Subtitle      types.List            `tfsdk:"subtitle"`
 	NestedDisplay types.Bool            `tfsdk:"nested_display"`
+	CompactMode   types.Bool            `tfsdk:"compact_mode"`
 	Items         []CustomFormItemModel `tfsdk:"items"`
 	Target        types.String          `tfsdk:"target"`
 	TopDivider    types.Bool            `tfsdk:"top_divider"`
@@ -179,6 +180,11 @@ func customFormGroupNestedSchema() schema.NestedAttributeObject {
 					"and tablet). This is useful for more complex group that require more space to be displayed. " +
 					"The group will be displayed in a separate screen, and the user will be able to navigate back " +
 					"and forth between the group and the main form.",
+			},
+			"compact_mode": schema.BoolAttribute{
+				Optional: true,
+				Description: "If true, the repeat group will be displayed in compact tabular mode (only used for " +
+					"repeat groups)",
 			},
 			"items": schema.ListNestedAttribute{
 				Required:     true,
@@ -459,6 +465,7 @@ func (group *CustomFormGroupModel) toApiRequest() *v1.FormGroup {
 		Info:          &info,
 		Subtitle:      modelListToStringSlice(group.Subtitle),
 		NestedDisplay: group.NestedDisplay.ValueBoolPointer(),
+		CompactMode:   group.CompactMode.ValueBoolPointer(),
 		Items:         items,
 		Target:        group.Target.ValueStringPointer(),
 		TopDivider:    group.TopDivider.ValueBoolPointer(),
@@ -498,6 +505,10 @@ func (group *CustomFormGroupModel) fromApiResponse(resp *v1.FormGroup) (diags di
 
 	if resp.NestedDisplay != nil {
 		group.NestedDisplay = types.BoolValue(*resp.NestedDisplay)
+	}
+
+	if resp.CompactMode != nil {
+		group.CompactMode = types.BoolValue(*resp.CompactMode)
 	}
 
 	for i := range resp.Items {

@@ -27,6 +27,8 @@ type CreateOrUpdateAccountDimensionValueRequest struct {
 	Id string `json:"id"`
 	// The numeric value under the given dimension. This value is unique for the given dimension. If a parent dimension reference is set, then the value is only unique for the parent dimension value and may be repeated for other parent dimension values.
 	Value *int32 `json:"value,omitempty"`
+	// Optional alias that holds the name of the referenced entity (e.g. property name, tenant name, etc.). This is mainly persisted through automation.
+	Alias *string `json:"alias,omitempty"`
 }
 
 type _CreateOrUpdateAccountDimensionValueRequest CreateOrUpdateAccountDimensionValueRequest
@@ -137,6 +139,38 @@ func (o *CreateOrUpdateAccountDimensionValueRequest) SetValue(v int32) {
 	o.Value = &v
 }
 
+// GetAlias returns the Alias field value if set, zero value otherwise.
+func (o *CreateOrUpdateAccountDimensionValueRequest) GetAlias() string {
+	if o == nil || IsNil(o.Alias) {
+		var ret string
+		return ret
+	}
+	return *o.Alias
+}
+
+// GetAliasOk returns a tuple with the Alias field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateAccountDimensionValueRequest) GetAliasOk() (*string, bool) {
+	if o == nil || IsNil(o.Alias) {
+		return nil, false
+	}
+	return o.Alias, true
+}
+
+// HasAlias returns a boolean if a field has been set.
+func (o *CreateOrUpdateAccountDimensionValueRequest) HasAlias() bool {
+	if o != nil && !IsNil(o.Alias) {
+		return true
+	}
+
+	return false
+}
+
+// SetAlias gets a reference to the given string and assigns it to the Alias field.
+func (o *CreateOrUpdateAccountDimensionValueRequest) SetAlias(v string) {
+	o.Alias = &v
+}
+
 func (o CreateOrUpdateAccountDimensionValueRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -153,6 +187,9 @@ func (o CreateOrUpdateAccountDimensionValueRequest) ToMap() (map[string]interfac
 	toSerialize["id"] = o.Id
 	if !IsNil(o.Value) {
 		toSerialize["value"] = o.Value
+	}
+	if !IsNil(o.Alias) {
+		toSerialize["alias"] = o.Alias
 	}
 	return toSerialize, nil
 }

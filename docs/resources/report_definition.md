@@ -24,6 +24,7 @@ Resource represents a defintion of a report
 ### Optional
 
 - `description` (String) The description of the report definition
+- `env_vars` (Map of String) Environment variables that will be available to the report script
 - `parameters` (Attributes) Optional input definition (see [below for nested schema](#nestedatt--parameters))
 - `version` (Number) The version of the report definition
 
@@ -139,6 +140,7 @@ Required:
 Optional:
 
 - `bottom_divider` (Boolean) if true, a divider will be displayed below the group
+- `compact_mode` (Boolean) If true, the repeat group will be displayed in compact tabular mode (only used for repeat groups)
 - `icon` (String) the icon to display (only used for pages)
 - `info` (Map of String) The info of the group
 - `label` (Map of String) The label of the group

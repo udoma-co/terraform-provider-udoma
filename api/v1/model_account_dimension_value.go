@@ -27,10 +27,10 @@ type AccountDimensionValue struct {
 	Id string `json:"id"`
 	// The numeric value under the given dimension. This value is unique for the given dimension. If a parent dimension reference is set, then the value is only unique for the parent dimension value and may be repeated for other parent dimension values.
 	Value *int32 `json:"value,omitempty"`
+	// Optional alias that holds the name of the referenced entity (e.g. property name, tenant name, etc.). This is mainly persisted through automation.
+	Alias *string `json:"alias,omitempty"`
 	// The unique ID of the dimension, for which this value is defined.
 	DimensionRef string `json:"dimension_ref"`
-	// Optional alias that holds the name of the referenced entity (e.g. property name, tenant name, etc.). This might get returned by the backend, when loading the values and when the reference is known.
-	Alias *string `json:"alias,omitempty"`
 }
 
 type _AccountDimensionValue AccountDimensionValue
@@ -142,30 +142,6 @@ func (o *AccountDimensionValue) SetValue(v int32) {
 	o.Value = &v
 }
 
-// GetDimensionRef returns the DimensionRef field value
-func (o *AccountDimensionValue) GetDimensionRef() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.DimensionRef
-}
-
-// GetDimensionRefOk returns a tuple with the DimensionRef field value
-// and a boolean to check if the value has been set.
-func (o *AccountDimensionValue) GetDimensionRefOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.DimensionRef, true
-}
-
-// SetDimensionRef sets field value
-func (o *AccountDimensionValue) SetDimensionRef(v string) {
-	o.DimensionRef = v
-}
-
 // GetAlias returns the Alias field value if set, zero value otherwise.
 func (o *AccountDimensionValue) GetAlias() string {
 	if o == nil || IsNil(o.Alias) {
@@ -198,6 +174,30 @@ func (o *AccountDimensionValue) SetAlias(v string) {
 	o.Alias = &v
 }
 
+// GetDimensionRef returns the DimensionRef field value
+func (o *AccountDimensionValue) GetDimensionRef() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.DimensionRef
+}
+
+// GetDimensionRefOk returns a tuple with the DimensionRef field value
+// and a boolean to check if the value has been set.
+func (o *AccountDimensionValue) GetDimensionRefOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.DimensionRef, true
+}
+
+// SetDimensionRef sets field value
+func (o *AccountDimensionValue) SetDimensionRef(v string) {
+	o.DimensionRef = v
+}
+
 func (o AccountDimensionValue) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -215,10 +215,10 @@ func (o AccountDimensionValue) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Value) {
 		toSerialize["value"] = o.Value
 	}
-	toSerialize["dimension_ref"] = o.DimensionRef
 	if !IsNil(o.Alias) {
 		toSerialize["alias"] = o.Alias
 	}
+	toSerialize["dimension_ref"] = o.DimensionRef
 	return toSerialize, nil
 }
 

@@ -42,6 +42,8 @@ type FormGroup struct {
 	BottomDivider *bool `json:"bottom_divider,omitempty"`
 	// the minimum number of items that must be submitted in the group (only used for repeat groups)
 	MinSize *int32 `json:"min_size,omitempty"`
+	// if true, the repeat group will be displayed in compact tabular mode (only used for repeat groups)
+	CompactMode *bool `json:"compact_mode,omitempty"`
 	// the icon to display (only used for pages)
 	Icon *string `json:"icon,omitempty"`
 }
@@ -396,6 +398,38 @@ func (o *FormGroup) SetMinSize(v int32) {
 	o.MinSize = &v
 }
 
+// GetCompactMode returns the CompactMode field value if set, zero value otherwise.
+func (o *FormGroup) GetCompactMode() bool {
+	if o == nil || IsNil(o.CompactMode) {
+		var ret bool
+		return ret
+	}
+	return *o.CompactMode
+}
+
+// GetCompactModeOk returns a tuple with the CompactMode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *FormGroup) GetCompactModeOk() (*bool, bool) {
+	if o == nil || IsNil(o.CompactMode) {
+		return nil, false
+	}
+	return o.CompactMode, true
+}
+
+// HasCompactMode returns a boolean if a field has been set.
+func (o *FormGroup) HasCompactMode() bool {
+	if o != nil && !IsNil(o.CompactMode) {
+		return true
+	}
+
+	return false
+}
+
+// SetCompactMode gets a reference to the given bool and assigns it to the CompactMode field.
+func (o *FormGroup) SetCompactMode(v bool) {
+	o.CompactMode = &v
+}
+
 // GetIcon returns the Icon field value if set, zero value otherwise.
 func (o *FormGroup) GetIcon() string {
 	if o == nil || IsNil(o.Icon) {
@@ -464,6 +498,9 @@ func (o FormGroup) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.MinSize) {
 		toSerialize["min_size"] = o.MinSize
+	}
+	if !IsNil(o.CompactMode) {
+		toSerialize["compact_mode"] = o.CompactMode
 	}
 	if !IsNil(o.Icon) {
 		toSerialize["icon"] = o.Icon
