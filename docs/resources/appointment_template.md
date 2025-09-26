@@ -123,6 +123,7 @@ Required:
 Optional:
 
 - `bottom_divider` (Boolean) if true, a divider will be displayed below the group
+- `compact_mode` (Boolean) If true, the repeat group will be displayed in compact tabular mode (only used for repeat groups)
 - `icon` (String) the icon to display (only used for pages)
 - `info` (Map of String) The info of the group
 - `label` (Map of String) The label of the group

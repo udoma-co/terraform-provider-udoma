@@ -149,7 +149,7 @@ Optional:
 - `view_label` (Map of String) Optional label to be displayed when viewing the input field (e.g. 'Name'). This is useful when the label is not suitable to be displayed in a view.
 
 <a id="nestedatt--config--status_config--feedback--form--inputs--display_condition"></a>
-### Nested Schema for `config.status_config.feedback.form.inputs.view_label`
+### Nested Schema for `config.status_config.feedback.form.inputs.display_condition`
 
 Required:
 
@@ -159,7 +159,7 @@ Required:
 
 
 <a id="nestedatt--config--status_config--feedback--form--inputs--items"></a>
-### Nested Schema for `config.status_config.feedback.form.inputs.view_label`
+### Nested Schema for `config.status_config.feedback.form.inputs.items`
 
 Required:
 
@@ -189,6 +189,7 @@ Required:
 Optional:
 
 - `bottom_divider` (Boolean) if true, a divider will be displayed below the group
+- `compact_mode` (Boolean) If true, the repeat group will be displayed in compact tabular mode (only used for repeat groups)
 - `icon` (String) the icon to display (only used for pages)
 - `info` (Map of String) The info of the group
 - `label` (Map of String) The label of the group
@@ -199,7 +200,7 @@ Optional:
 - `top_divider` (Boolean) if true, a divider will be displayed above the group
 
 <a id="nestedatt--config--status_config--feedback--form--groups--items"></a>
-### Nested Schema for `config.status_config.feedback.form.groups.top_divider`
+### Nested Schema for `config.status_config.feedback.form.groups.items`
 
 Required:
 
