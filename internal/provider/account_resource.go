@@ -4,12 +4,14 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	api "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
 	"gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/internal/client"
@@ -70,6 +72,9 @@ func (faq *Account) Schema(ctx context.Context, req resource.SchemaRequest, resp
 			"name": schema.StringAttribute{
 				Required:            true,
 				MarkdownDescription: "The name of the account",
+				Validators: []validator.String{
+					stringvalidator.LengthAtMost(255),
+				},
 			},
 			"type": schema.StringAttribute{
 				Required:            true,
@@ -78,6 +83,9 @@ func (faq *Account) Schema(ctx context.Context, req resource.SchemaRequest, resp
 			"currency": schema.StringAttribute{
 				Required:            true,
 				MarkdownDescription: "The currency of the account",
+				Validators: []validator.String{
+					stringvalidator.LengthAtMost(3),
+				},
 			},
 			"dimensions": schema.ListAttribute{
 				Optional:    true,

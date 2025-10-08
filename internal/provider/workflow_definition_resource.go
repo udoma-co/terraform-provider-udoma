@@ -6,11 +6,13 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	api "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
 	"gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/internal/client"
@@ -88,6 +90,9 @@ func (r *workflowDefinition) Schema(ctx context.Context, req resource.SchemaRequ
 			"name": schema.StringAttribute{
 				Required:    true,
 				Description: "The name of the workflow definition, shown in the admin page",
+				Validators: []validator.String{
+					stringvalidator.LengthAtMost(250),
+				},
 			},
 			"description": schema.StringAttribute{
 				Optional:    true,
@@ -96,6 +101,9 @@ func (r *workflowDefinition) Schema(ctx context.Context, req resource.SchemaRequ
 			"icon": schema.StringAttribute{
 				Optional:    true,
 				Description: "The icon to be displayed on the manual workflow execution page",
+				Validators: []validator.String{
+					stringvalidator.LengthAtMost(50),
+				},
 			},
 			"name_expression": schema.StringAttribute{
 				Optional: true,
@@ -111,6 +119,9 @@ func (r *workflowDefinition) Schema(ctx context.Context, req resource.SchemaRequ
 			"first_step_id": schema.StringAttribute{
 				Required:    true,
 				Description: "The ID of the first step of the workflow",
+				Validators: []validator.String{
+					stringvalidator.LengthAtMost(250),
+				},
 			},
 			"init_step": schema.StringAttribute{
 				CustomType:  tf.JsonObjectType{},

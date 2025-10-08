@@ -113,12 +113,16 @@ func modelListToStringSlice(in basetypes.ListValue) []string {
 	return ret
 }
 
-type EnumType interface {
-	api.CaseStatusEnum | api.CaseActionEnum |
-		api.UserTypeEnum | api.CaseFeedbackModeEnum
+// stringSlice converts a slice of any string-based type to a []string.
+func stringSlice[T ~string](slice []T) []string {
+	result := make([]string, len(slice))
+	for i, v := range slice {
+		result[i] = string(v)
+	}
+	return result
 }
 
-func modelListToEnumSlice[T EnumType](in basetypes.ListValue) []T {
+func modelListToEnumSlice[T ~string](in basetypes.ListValue) []T {
 
 	if in.IsNull() || in.IsUnknown() {
 		return nil
@@ -154,7 +158,7 @@ func stringSliceToValueList(in []string) []attr.Value {
 	return ret
 }
 
-func enumSliceToValueList[T EnumType](in []T) []attr.Value {
+func enumSliceToValueList[T ~string](in []T) []attr.Value {
 	ret := make([]attr.Value, len(in))
 	for i := range in {
 		ret[i] = types.StringValue(string(in[i]))

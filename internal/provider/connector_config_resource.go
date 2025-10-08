@@ -4,11 +4,13 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/internal/client"
 
@@ -52,6 +54,9 @@ func (c *ConnectorConfig) Schema(ctx context.Context, req resource.SchemaRequest
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},
+				Validators: []validator.String{
+					stringvalidator.LengthAtMost(127),
+				},
 			},
 			"enabled": schema.BoolAttribute{
 				Required:    true,
@@ -60,6 +65,9 @@ func (c *ConnectorConfig) Schema(ctx context.Context, req resource.SchemaRequest
 			"description": schema.StringAttribute{
 				Optional:    true,
 				Description: "The description of the connector config",
+				Validators: []validator.String{
+					stringvalidator.LengthAtMost(250),
+				},
 			},
 			"enable_logs": schema.BoolAttribute{
 				Optional:    true,
@@ -68,10 +76,16 @@ func (c *ConnectorConfig) Schema(ctx context.Context, req resource.SchemaRequest
 			"ping_time": schema.StringAttribute{
 				Required:    true,
 				Description: "The ping time of the connector config",
+				Validators: []validator.String{
+					stringvalidator.LengthAtMost(25),
+				},
 			},
 			"sync_time": schema.StringAttribute{
 				Required:    true,
 				Description: "The sync time of the connector config",
+				Validators: []validator.String{
+					stringvalidator.LengthAtMost(25),
+				},
 			},
 		},
 	}

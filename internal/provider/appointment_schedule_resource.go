@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -11,6 +12,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	v1 "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
 	"gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/internal/client"
@@ -60,6 +62,9 @@ func (r *AppointmentSchedule) Schema(ctx context.Context, req resource.SchemaReq
 			"name": schema.StringAttribute{
 				Required:    true,
 				Description: "The name of the appointment schedule",
+				Validators: []validator.String{
+					stringvalidator.LengthAtMost(255),
+				},
 			},
 			"description": schema.MapAttribute{
 				Required:    true,
@@ -69,6 +74,9 @@ func (r *AppointmentSchedule) Schema(ctx context.Context, req resource.SchemaReq
 			"template_ref": schema.StringAttribute{
 				Required:    true,
 				Description: "ID of the template to be used in the schedule",
+				Validators: []validator.String{
+					stringvalidator.LengthAtMost(25),
+				},
 			},
 			"slot_duration": schema.Int64Attribute{
 				Required:    true,
@@ -81,6 +89,9 @@ func (r *AppointmentSchedule) Schema(ctx context.Context, req resource.SchemaReq
 			"color": schema.StringAttribute{
 				Required:    true,
 				Description: "The color to use when displaying the schedule",
+				Validators: []validator.String{
+					stringvalidator.LengthAtMost(31),
+				},
 			},
 		},
 	}

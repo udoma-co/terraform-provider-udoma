@@ -4,11 +4,13 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	api "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
 	"gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/internal/client"
@@ -64,6 +66,9 @@ func (migrator *VersionMigrator) Schema(ctx context.Context, req resource.Schema
 			"ref_id": schema.StringAttribute{
 				Required:    true,
 				Description: "The id of the template for the version migrator",
+				Validators: []validator.String{
+					stringvalidator.LengthAtMost(25),
+				},
 			},
 			"source_version": schema.Int32Attribute{
 				Required:    true,

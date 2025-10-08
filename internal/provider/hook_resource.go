@@ -67,6 +67,9 @@ func (hook *Hook) Schema(ctx context.Context, req resource.SchemaRequest, resp *
 			"name": schema.StringAttribute{
 				Required:    true,
 				Description: "A name used to identify the hook, mainly for debugging.",
+				Validators: []validator.String{
+					stringvalidator.LengthAtMost(255),
+				},
 			},
 			"entity": schema.StringAttribute{
 				Required:    true,

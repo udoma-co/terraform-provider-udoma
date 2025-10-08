@@ -4,11 +4,13 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	api "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
 	"gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/internal/client"
@@ -75,22 +77,37 @@ func (faq *BankAccount) Schema(ctx context.Context, req resource.SchemaRequest, 
 			"account_holder": schema.StringAttribute{
 				Required:    true,
 				Description: "The name of the account holder",
+				Validators: []validator.String{
+					stringvalidator.LengthAtMost(250),
+				},
 			},
 			"iban": schema.StringAttribute{
 				Required:    true,
 				Description: "The IBAN of the bank account",
+				Validators: []validator.String{
+					stringvalidator.LengthAtMost(250),
+				},
 			},
 			"bic": schema.StringAttribute{
 				Optional:    true,
 				Description: "The BIC of the bank account",
+				Validators: []validator.String{
+					stringvalidator.LengthAtMost(250),
+				},
 			},
 			"bank_name": schema.StringAttribute{
 				Optional:    true,
 				Description: "The name of the bank",
+				Validators: []validator.String{
+					stringvalidator.LengthAtMost(250),
+				},
 			},
 			"description": schema.StringAttribute{
 				Optional:    true,
 				Description: "An optional user friendly label, used to identify the account",
+				Validators: []validator.String{
+					stringvalidator.LengthAtMost(250),
+				},
 			},
 		},
 	}
