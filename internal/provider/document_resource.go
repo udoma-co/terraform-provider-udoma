@@ -68,6 +68,9 @@ func (d *Document) Schema(ctx context.Context, req resource.SchemaRequest, resp 
 			"name": schema.StringAttribute{
 				Required:    true,
 				Description: "The name of the document",
+				Validators: []validator.String{
+					stringvalidator.LengthAtMost(255),
+				},
 			},
 			"attachment": schema.StringAttribute{
 				Required:    true,
@@ -79,6 +82,9 @@ func (d *Document) Schema(ctx context.Context, req resource.SchemaRequest, resp 
 			"path": schema.StringAttribute{
 				Optional:    true,
 				Description: "The path of the document in the storage",
+				Validators: []validator.String{
+					stringvalidator.LengthAtMost(255),
+				},
 			},
 			"public": schema.BoolAttribute{
 				Optional:    true,
@@ -99,6 +105,9 @@ func (d *Document) Schema(ctx context.Context, req resource.SchemaRequest, resp 
 				Description: "The identifier of the reference",
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
+				},
+				Validators: []validator.String{
+					stringvalidator.LengthAtMost(25),
 				},
 			},
 		},

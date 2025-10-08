@@ -21,7 +21,7 @@ Resource represents an entrypoint to a workflow
 
 ### Optional
 
-- `app_location` (String) The location in the webapp where the workflow can be strated from
+- `app_location` (String) The location in the webapp where the workflow can be started from
 - `icon` (String) Optional icon to be displayed on the button that will start the workflow execution
 - `init_script` (String) Optional JS script to be executed before the workflow is started
 - `label` (Map of String) The label to be displayed on the button starting the workflow execution

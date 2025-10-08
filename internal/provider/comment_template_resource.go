@@ -4,12 +4,14 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	api "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
 	"gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/internal/client"
@@ -69,6 +71,9 @@ func (c *CommentTemplate) Schema(ctx context.Context, req resource.SchemaRequest
 			"display_name": schema.StringAttribute{
 				Required:    true,
 				Description: "The display name of the comment template",
+				Validators: []validator.String{
+					stringvalidator.LengthAtMost(50),
+				},
 			},
 			"access_list": schema.ListAttribute{
 				Optional:    true,

@@ -4,12 +4,14 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	v1 "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
 	"gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/internal/client"
@@ -66,6 +68,9 @@ func (faq *BookingTemplate) Schema(ctx context.Context, req resource.SchemaReque
 			"name": schema.StringAttribute{
 				Required:    true,
 				Description: "The name of the booking template",
+				Validators: []validator.String{
+					stringvalidator.LengthAtMost(255),
+				},
 			},
 			"description": schema.StringAttribute{
 				Optional:    true,
@@ -74,6 +79,9 @@ func (faq *BookingTemplate) Schema(ctx context.Context, req resource.SchemaReque
 			"icon": schema.StringAttribute{
 				Optional:    true,
 				Description: "An optional icon for the booking template",
+				Validators: []validator.String{
+					stringvalidator.LengthAtMost(255),
+				},
 			},
 			"inputs": schema.SingleNestedAttribute{
 				Required:    true,

@@ -4,11 +4,13 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	api "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
 	"gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/internal/client"
@@ -57,6 +59,9 @@ func (faq *AccountDimension) Schema(ctx context.Context, req resource.SchemaRequ
 			"name": schema.StringAttribute{
 				Required:            true,
 				MarkdownDescription: "The name of the account",
+				Validators: []validator.String{
+					stringvalidator.LengthAtMost(255),
+				},
 			},
 			"description": schema.StringAttribute{
 				Optional:            true,
@@ -69,6 +74,10 @@ func (faq *AccountDimension) Schema(ctx context.Context, req resource.SchemaRequ
 			"ref_type": schema.StringAttribute{
 				Required:            true,
 				MarkdownDescription: "The reference type of the account",
+				Validators: []validator.String{
+					stringvalidator.LengthAtMost(25),
+					stringvalidator.OneOfCaseInsensitive(stringSlice(api.AllowedAccountDimensionReferenceTypeEnumEnumValues)...),
+				},
 			},
 			"required": schema.BoolAttribute{
 				Optional:            true,

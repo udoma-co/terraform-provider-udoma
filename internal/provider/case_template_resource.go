@@ -87,6 +87,9 @@ func (r *CaseTemplate) Schema(ctx context.Context, req resource.SchemaRequest, r
 			"name": schema.StringAttribute{
 				Required:    true,
 				Description: "The name of the case template, shown in the admin page",
+				Validators: []validator.String{
+					stringvalidator.LengthAtMost(255),
+				},
 			},
 			"access": schema.ListAttribute{
 				Required:    true,
@@ -123,6 +126,9 @@ func (r *CaseTemplate) Schema(ctx context.Context, req resource.SchemaRequest, r
 			"icon": schema.StringAttribute{
 				Optional:    true,
 				Description: "The icon to be displayed on the reporting page",
+				Validators: []validator.String{
+					stringvalidator.LengthAtMost(50),
+				},
 			},
 			"custom_inputs": schema.StringAttribute{
 				Required:    true,
