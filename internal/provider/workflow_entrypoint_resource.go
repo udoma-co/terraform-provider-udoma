@@ -99,7 +99,7 @@ func (r *workflowEntrypoint) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"app_location": schema.StringAttribute{
 				Optional:    true,
-				Description: "The location in the webapp where the workflow can be strated from",
+				Description: "The location in the webapp where the workflow can be started from",
 				Validators: []validator.String{
 					stringvalidator.LengthAtMost(25),
 				},
