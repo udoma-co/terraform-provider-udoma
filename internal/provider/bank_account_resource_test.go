@@ -40,6 +40,7 @@ func TestAccBankAccountResource(t *testing.T) {
 					bic 					 = "TESTDETTXXX"
 					bank_name 		 = "updated_test_bank"
 					description 	 = "updated_test_description"
+					cadence        = "monthly_cadence"
 				}
 				`,
 
@@ -64,6 +65,7 @@ func resourceDefinitionBankAccount() string {
 		bic 					 = "TESTDETTXXX"
 		bank_name 		 = "test_bank"
 		description 	 = "test_description"
+		cadence        = "monthly_cadence"
 	}
 	`
 }
