@@ -11,7 +11,9 @@ API version: 1.0
 package v1
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the Signature type satisfies the MappedNullable interface at compile time
@@ -19,28 +21,31 @@ var _ MappedNullable = &Signature{}
 
 // Signature A request, made to yousign, for an electronic document signature.
 type Signature struct {
-	// Unique identifier of the signature request.
-	Id *string `json:"id,omitempty"`
-	// A reference to the account the signature request belongs to.
-	AccountRef *int64 `json:"account_ref,omitempty"`
-	// The unix timestamp of the creation of the object.
-	CreatedAt *int64 `json:"created_at,omitempty"`
-	// A unix timestamp of the last time the object was changed.
-	UpdatedAt *int64 `json:"updated_at,omitempty"`
 	// A reference to the document generation used to generate the document we are signing.
 	DocumentGenerationRef *string              `json:"document_generation_ref,omitempty"`
 	Status                *SignatureStatusType `json:"status,omitempty"`
 	// A timestamp of when the signature request expires.
 	ExpirationDate *int64            `json:"expiration_date,omitempty"`
 	Signers        []SignatureSigner `json:"signers,omitempty"`
+	// Unique and immutable ID attribute of the entity that is generated when the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities or to retrieve it from the backend.
+	Id string `json:"id"`
+	// The date and time the entity was created
+	CreatedAt int64 `json:"created_at"`
+	// The date and time the entity was last updated
+	UpdatedAt int64 `json:"updated_at"`
 }
+
+type _Signature Signature
 
 // NewSignature instantiates a new Signature object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSignature() *Signature {
+func NewSignature(id string, createdAt int64, updatedAt int64) *Signature {
 	this := Signature{}
+	this.Id = id
+	this.CreatedAt = createdAt
+	this.UpdatedAt = updatedAt
 	return &this
 }
 
@@ -50,134 +55,6 @@ func NewSignature() *Signature {
 func NewSignatureWithDefaults() *Signature {
 	this := Signature{}
 	return &this
-}
-
-// GetId returns the Id field value if set, zero value otherwise.
-func (o *Signature) GetId() string {
-	if o == nil || IsNil(o.Id) {
-		var ret string
-		return ret
-	}
-	return *o.Id
-}
-
-// GetIdOk returns a tuple with the Id field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Signature) GetIdOk() (*string, bool) {
-	if o == nil || IsNil(o.Id) {
-		return nil, false
-	}
-	return o.Id, true
-}
-
-// HasId returns a boolean if a field has been set.
-func (o *Signature) HasId() bool {
-	if o != nil && !IsNil(o.Id) {
-		return true
-	}
-
-	return false
-}
-
-// SetId gets a reference to the given string and assigns it to the Id field.
-func (o *Signature) SetId(v string) {
-	o.Id = &v
-}
-
-// GetAccountRef returns the AccountRef field value if set, zero value otherwise.
-func (o *Signature) GetAccountRef() int64 {
-	if o == nil || IsNil(o.AccountRef) {
-		var ret int64
-		return ret
-	}
-	return *o.AccountRef
-}
-
-// GetAccountRefOk returns a tuple with the AccountRef field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Signature) GetAccountRefOk() (*int64, bool) {
-	if o == nil || IsNil(o.AccountRef) {
-		return nil, false
-	}
-	return o.AccountRef, true
-}
-
-// HasAccountRef returns a boolean if a field has been set.
-func (o *Signature) HasAccountRef() bool {
-	if o != nil && !IsNil(o.AccountRef) {
-		return true
-	}
-
-	return false
-}
-
-// SetAccountRef gets a reference to the given int64 and assigns it to the AccountRef field.
-func (o *Signature) SetAccountRef(v int64) {
-	o.AccountRef = &v
-}
-
-// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
-func (o *Signature) GetCreatedAt() int64 {
-	if o == nil || IsNil(o.CreatedAt) {
-		var ret int64
-		return ret
-	}
-	return *o.CreatedAt
-}
-
-// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Signature) GetCreatedAtOk() (*int64, bool) {
-	if o == nil || IsNil(o.CreatedAt) {
-		return nil, false
-	}
-	return o.CreatedAt, true
-}
-
-// HasCreatedAt returns a boolean if a field has been set.
-func (o *Signature) HasCreatedAt() bool {
-	if o != nil && !IsNil(o.CreatedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetCreatedAt gets a reference to the given int64 and assigns it to the CreatedAt field.
-func (o *Signature) SetCreatedAt(v int64) {
-	o.CreatedAt = &v
-}
-
-// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
-func (o *Signature) GetUpdatedAt() int64 {
-	if o == nil || IsNil(o.UpdatedAt) {
-		var ret int64
-		return ret
-	}
-	return *o.UpdatedAt
-}
-
-// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Signature) GetUpdatedAtOk() (*int64, bool) {
-	if o == nil || IsNil(o.UpdatedAt) {
-		return nil, false
-	}
-	return o.UpdatedAt, true
-}
-
-// HasUpdatedAt returns a boolean if a field has been set.
-func (o *Signature) HasUpdatedAt() bool {
-	if o != nil && !IsNil(o.UpdatedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetUpdatedAt gets a reference to the given int64 and assigns it to the UpdatedAt field.
-func (o *Signature) SetUpdatedAt(v int64) {
-	o.UpdatedAt = &v
 }
 
 // GetDocumentGenerationRef returns the DocumentGenerationRef field value if set, zero value otherwise.
@@ -308,6 +185,78 @@ func (o *Signature) SetSigners(v []SignatureSigner) {
 	o.Signers = v
 }
 
+// GetId returns the Id field value
+func (o *Signature) GetId() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.Id
+}
+
+// GetIdOk returns a tuple with the Id field value
+// and a boolean to check if the value has been set.
+func (o *Signature) GetIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Id, true
+}
+
+// SetId sets field value
+func (o *Signature) SetId(v string) {
+	o.Id = v
+}
+
+// GetCreatedAt returns the CreatedAt field value
+func (o *Signature) GetCreatedAt() int64 {
+	if o == nil {
+		var ret int64
+		return ret
+	}
+
+	return o.CreatedAt
+}
+
+// GetCreatedAtOk returns a tuple with the CreatedAt field value
+// and a boolean to check if the value has been set.
+func (o *Signature) GetCreatedAtOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.CreatedAt, true
+}
+
+// SetCreatedAt sets field value
+func (o *Signature) SetCreatedAt(v int64) {
+	o.CreatedAt = v
+}
+
+// GetUpdatedAt returns the UpdatedAt field value
+func (o *Signature) GetUpdatedAt() int64 {
+	if o == nil {
+		var ret int64
+		return ret
+	}
+
+	return o.UpdatedAt
+}
+
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
+// and a boolean to check if the value has been set.
+func (o *Signature) GetUpdatedAtOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.UpdatedAt, true
+}
+
+// SetUpdatedAt sets field value
+func (o *Signature) SetUpdatedAt(v int64) {
+	o.UpdatedAt = v
+}
+
 func (o Signature) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -318,18 +267,6 @@ func (o Signature) MarshalJSON() ([]byte, error) {
 
 func (o Signature) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Id) {
-		toSerialize["id"] = o.Id
-	}
-	if !IsNil(o.AccountRef) {
-		toSerialize["account_ref"] = o.AccountRef
-	}
-	if !IsNil(o.CreatedAt) {
-		toSerialize["created_at"] = o.CreatedAt
-	}
-	if !IsNil(o.UpdatedAt) {
-		toSerialize["updated_at"] = o.UpdatedAt
-	}
 	if !IsNil(o.DocumentGenerationRef) {
 		toSerialize["document_generation_ref"] = o.DocumentGenerationRef
 	}
@@ -342,7 +279,49 @@ func (o Signature) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Signers) {
 		toSerialize["signers"] = o.Signers
 	}
+	toSerialize["id"] = o.Id
+	toSerialize["created_at"] = o.CreatedAt
+	toSerialize["updated_at"] = o.UpdatedAt
 	return toSerialize, nil
+}
+
+func (o *Signature) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"id",
+		"created_at",
+		"updated_at",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varSignature := _Signature{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varSignature)
+
+	if err != nil {
+		return err
+	}
+
+	*o = Signature(varSignature)
+
+	return err
 }
 
 type NullableSignature struct {

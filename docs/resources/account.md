@@ -17,6 +17,7 @@ Resource represents a financial account
 
 ### Required
 
+- `cadence` (String) The cadence at which the account balance is calculated
 - `currency` (String) The currency of the account
 - `name` (String) The name of the account
 - `number` (Number) The unique account number, manually set

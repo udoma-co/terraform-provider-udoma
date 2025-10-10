@@ -30,7 +30,8 @@ func TestAccountResource(t *testing.T) {
 					number   = 501
 					name     = "Updated Account"
 					currency = "EUR"
-  					type 	 = "asset"
+					type 	   = "asset"
+					cadence  = "monthly_cadence"
 				}
 				`,
 				Check: resource.ComposeTestCheckFunc(
@@ -50,6 +51,7 @@ resource "udoma_account" "test" {
   name     = "Test Account"
   type     = "asset"
   currency = "USD"
+	cadence  = "monthly_cadence"
 }
 `
 }

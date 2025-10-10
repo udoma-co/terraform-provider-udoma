@@ -21,7 +21,7 @@ var _ MappedNullable = &FloatNumber{}
 type FloatNumber struct {
 	// the integer value (the part before the decimal point)
 	I *int32 `json:"i,omitempty"`
-	// the fractiopnal value (the part after the decimal point)
+	// the fractional value (the part after the decimal point)
 	F *int32 `json:"f,omitempty"`
 }
 

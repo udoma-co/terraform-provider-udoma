@@ -39,6 +39,7 @@ type AccountModel struct {
 	Type       types.String `tfsdk:"type"`
 	Currency   types.String `tfsdk:"currency"`
 	Dimensions types.List   `tfsdk:"dimensions"`
+	Cadence    types.String `tfsdk:"cadence"`
 }
 
 func (faq *Account) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -91,6 +92,13 @@ func (faq *Account) Schema(ctx context.Context, req resource.SchemaRequest, resp
 				Optional:    true,
 				Description: "The sub dimensions of the account.",
 				ElementType: types.StringType,
+			},
+			"cadence": schema.StringAttribute{
+				Required:    true,
+				Description: "The cadence at which the account balance is calculated",
+				Validators: []validator.String{
+					cadenceValidator{},
+				},
 			},
 		},
 	}
@@ -273,6 +281,7 @@ func (model *AccountModel) fromAPI(account *api.FinancialAccount) (diags diag.Di
 	model.CreatedAt = types.Int64Value(account.CreatedAt)
 	model.UpdatedAt = types.Int64Value(account.UpdatedAt)
 	model.Type = types.StringValue(string(account.Type))
+	model.Cadence = types.StringValue(string(*account.Cadence))
 
 	dimensionIDs := make([]string, len(account.Dimensions))
 	for i := range account.Dimensions {
@@ -298,6 +307,9 @@ func (model *AccountModel) toAPIRequest() (api.CreateOrUpdateFinancialAccountReq
 		Currency:   model.Currency.ValueString(),
 		Dimensions: modelListToStringSlice(model.Dimensions),
 	}
+
+	cadence := api.BalanceCadenceEnum(model.Cadence.ValueString())
+	account.Cadence = &cadence
 
 	return account, nil
 }

@@ -27,7 +27,8 @@ type CreateOrUpdateFinancialAccountRequest struct {
 	Name string           `json:"name"`
 	Type AccountTypesEnum `json:"type"`
 	// The currency of the booking
-	Currency string `json:"currency"`
+	Currency string              `json:"currency"`
+	Cadence  *BalanceCadenceEnum `json:"cadence,omitempty"`
 	// The IDs of the dimensions that are assigned to the account
 	Dimensions []string `json:"dimensions,omitempty"`
 }
@@ -151,6 +152,38 @@ func (o *CreateOrUpdateFinancialAccountRequest) SetCurrency(v string) {
 	o.Currency = v
 }
 
+// GetCadence returns the Cadence field value if set, zero value otherwise.
+func (o *CreateOrUpdateFinancialAccountRequest) GetCadence() BalanceCadenceEnum {
+	if o == nil || IsNil(o.Cadence) {
+		var ret BalanceCadenceEnum
+		return ret
+	}
+	return *o.Cadence
+}
+
+// GetCadenceOk returns a tuple with the Cadence field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateFinancialAccountRequest) GetCadenceOk() (*BalanceCadenceEnum, bool) {
+	if o == nil || IsNil(o.Cadence) {
+		return nil, false
+	}
+	return o.Cadence, true
+}
+
+// HasCadence returns a boolean if a field has been set.
+func (o *CreateOrUpdateFinancialAccountRequest) HasCadence() bool {
+	if o != nil && !IsNil(o.Cadence) {
+		return true
+	}
+
+	return false
+}
+
+// SetCadence gets a reference to the given BalanceCadenceEnum and assigns it to the Cadence field.
+func (o *CreateOrUpdateFinancialAccountRequest) SetCadence(v BalanceCadenceEnum) {
+	o.Cadence = &v
+}
+
 // GetDimensions returns the Dimensions field value if set, zero value otherwise.
 func (o *CreateOrUpdateFinancialAccountRequest) GetDimensions() []string {
 	if o == nil || IsNil(o.Dimensions) {
@@ -197,6 +230,9 @@ func (o CreateOrUpdateFinancialAccountRequest) ToMap() (map[string]interface{}, 
 	toSerialize["name"] = o.Name
 	toSerialize["type"] = o.Type
 	toSerialize["currency"] = o.Currency
+	if !IsNil(o.Cadence) {
+		toSerialize["cadence"] = o.Cadence
+	}
 	if !IsNil(o.Dimensions) {
 		toSerialize["dimensions"] = o.Dimensions
 	}

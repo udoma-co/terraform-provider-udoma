@@ -1400,6 +1400,115 @@ func (a *DefaultAPIService) CreateAccountBookingExecute(r ApiCreateAccountBookin
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiCreateAccountBookingsRequest struct {
+	ctx                         context.Context
+	ApiService                  *DefaultAPIService
+	createAccountBookingRequest *[]CreateAccountBookingRequest
+}
+
+func (r ApiCreateAccountBookingsRequest) CreateAccountBookingRequest(createAccountBookingRequest []CreateAccountBookingRequest) ApiCreateAccountBookingsRequest {
+	r.createAccountBookingRequest = &createAccountBookingRequest
+	return r
+}
+
+func (r ApiCreateAccountBookingsRequest) Execute() (*AccountBooking, *http.Response, error) {
+	return r.ApiService.CreateAccountBookingsExecute(r)
+}
+
+/*
+CreateAccountBookings Create multi booking request
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiCreateAccountBookingsRequest
+*/
+func (a *DefaultAPIService) CreateAccountBookings(ctx context.Context) ApiCreateAccountBookingsRequest {
+	return ApiCreateAccountBookingsRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return AccountBooking
+func (a *DefaultAPIService) CreateAccountBookingsExecute(r ApiCreateAccountBookingsRequest) (*AccountBooking, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *AccountBooking
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateAccountBookings")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/financial/bookings"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createAccountBookingRequest == nil {
+		return localVarReturnValue, nil, reportError("createAccountBookingRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createAccountBookingRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiCreateAccountDimensionRequest struct {
 	ctx                                   context.Context
 	ApiService                            *DefaultAPIService
@@ -22449,6 +22558,114 @@ func (a *DefaultAPIService) LinkCasePropertyExecute(r ApiLinkCasePropertyRequest
 	return localVarHTTPResponse, nil
 }
 
+type ApiLinkHandoverPropertyRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	handoverID string
+	propID     string
+}
+
+func (r ApiLinkHandoverPropertyRequest) Execute() (*PropertyHandover, *http.Response, error) {
+	return r.ApiService.LinkHandoverPropertyExecute(r)
+}
+
+/*
+LinkHandoverProperty Link a property to a finalized handover
+
+Link a property reference to a finalized handover that  doesn't have one yet. Only works for handovers with status DONE and  no existing property_ref.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param handoverID unique generated ID of a property handover
+	@param propID unique generated ID of a property
+	@return ApiLinkHandoverPropertyRequest
+*/
+func (a *DefaultAPIService) LinkHandoverProperty(ctx context.Context, handoverID string, propID string) ApiLinkHandoverPropertyRequest {
+	return ApiLinkHandoverPropertyRequest{
+		ApiService: a,
+		ctx:        ctx,
+		handoverID: handoverID,
+		propID:     propID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return PropertyHandover
+func (a *DefaultAPIService) LinkHandoverPropertyExecute(r ApiLinkHandoverPropertyRequest) (*PropertyHandover, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *PropertyHandover
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.LinkHandoverProperty")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/property-handovers/handovers/{handoverID}/property/{propID}/link"
+	localVarPath = strings.Replace(localVarPath, "{"+"handoverID"+"}", url.PathEscape(parameterValueToString(r.handoverID, "handoverID")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"propID"+"}", url.PathEscape(parameterValueToString(r.propID, "propID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiPersistBookingPreviewRequest struct {
 	ctx              context.Context
 	ApiService       *DefaultAPIService
@@ -27184,6 +27401,119 @@ func (a *DefaultAPIService) QueryBookingsForAccountExecute(r ApiQueryBookingsFor
 	}
 	// body params
 	localVarPostBody = r.queryBookingsByFlatNumberRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiQueryBookingsForStartEndDateRequest struct {
+	ctx                                context.Context
+	ApiService                         *DefaultAPIService
+	flatNumber                         string
+	queryBookingsByStartEndDateRequest *QueryBookingsByStartEndDateRequest
+}
+
+func (r ApiQueryBookingsForStartEndDateRequest) QueryBookingsByStartEndDateRequest(queryBookingsByStartEndDateRequest QueryBookingsByStartEndDateRequest) ApiQueryBookingsForStartEndDateRequest {
+	r.queryBookingsByStartEndDateRequest = &queryBookingsByStartEndDateRequest
+	return r
+}
+
+func (r ApiQueryBookingsForStartEndDateRequest) Execute() (*QueryBookingsByStartEndDateResponse, *http.Response, error) {
+	return r.ApiService.QueryBookingsForStartEndDateExecute(r)
+}
+
+/*
+QueryBookingsForStartEndDate Get the financial account with all its attributes
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param flatNumber flat number of a financial account (number and dimensions)
+	@return ApiQueryBookingsForStartEndDateRequest
+*/
+func (a *DefaultAPIService) QueryBookingsForStartEndDate(ctx context.Context, flatNumber string) ApiQueryBookingsForStartEndDateRequest {
+	return ApiQueryBookingsForStartEndDateRequest{
+		ApiService: a,
+		ctx:        ctx,
+		flatNumber: flatNumber,
+	}
+}
+
+// Execute executes the request
+//
+//	@return QueryBookingsByStartEndDateResponse
+func (a *DefaultAPIService) QueryBookingsForStartEndDateExecute(r ApiQueryBookingsForStartEndDateRequest) (*QueryBookingsByStartEndDateResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *QueryBookingsByStartEndDateResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.QueryBookingsForStartEndDate")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/financial/accounts/{flatNumber}/bookings/date"
+	localVarPath = strings.Replace(localVarPath, "{"+"flatNumber"+"}", url.PathEscape(parameterValueToString(r.flatNumber, "flatNumber")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.queryBookingsByStartEndDateRequest == nil {
+		return localVarReturnValue, nil, reportError("queryBookingsByStartEndDateRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.queryBookingsByStartEndDateRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
