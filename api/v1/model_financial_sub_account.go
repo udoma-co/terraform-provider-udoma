@@ -27,7 +27,8 @@ type FinancialSubAccount struct {
 	Name string           `json:"name"`
 	Type AccountTypesEnum `json:"type"`
 	// The currency of the booking
-	Currency string `json:"currency"`
+	Currency string              `json:"currency"`
+	Cadence  *BalanceCadenceEnum `json:"cadence,omitempty"`
 	// The flat number associated with the sub-account, that is the merged representation of the account and its dimensions.
 	FlatNumber string `json:"flat_number"`
 	// The dimensions and their values that are assigned to the sub-account. This is just the expanded version of the flat number.
@@ -160,6 +161,38 @@ func (o *FinancialSubAccount) SetCurrency(v string) {
 	o.Currency = v
 }
 
+// GetCadence returns the Cadence field value if set, zero value otherwise.
+func (o *FinancialSubAccount) GetCadence() BalanceCadenceEnum {
+	if o == nil || IsNil(o.Cadence) {
+		var ret BalanceCadenceEnum
+		return ret
+	}
+	return *o.Cadence
+}
+
+// GetCadenceOk returns a tuple with the Cadence field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *FinancialSubAccount) GetCadenceOk() (*BalanceCadenceEnum, bool) {
+	if o == nil || IsNil(o.Cadence) {
+		return nil, false
+	}
+	return o.Cadence, true
+}
+
+// HasCadence returns a boolean if a field has been set.
+func (o *FinancialSubAccount) HasCadence() bool {
+	if o != nil && !IsNil(o.Cadence) {
+		return true
+	}
+
+	return false
+}
+
+// SetCadence gets a reference to the given BalanceCadenceEnum and assigns it to the Cadence field.
+func (o *FinancialSubAccount) SetCadence(v BalanceCadenceEnum) {
+	o.Cadence = &v
+}
+
 // GetFlatNumber returns the FlatNumber field value
 func (o *FinancialSubAccount) GetFlatNumber() string {
 	if o == nil {
@@ -278,6 +311,9 @@ func (o FinancialSubAccount) ToMap() (map[string]interface{}, error) {
 	toSerialize["name"] = o.Name
 	toSerialize["type"] = o.Type
 	toSerialize["currency"] = o.Currency
+	if !IsNil(o.Cadence) {
+		toSerialize["cadence"] = o.Cadence
+	}
 	toSerialize["flat_number"] = o.FlatNumber
 	toSerialize["dimension_definitions"] = o.DimensionDefinitions
 	toSerialize["dimension_values"] = o.DimensionValues

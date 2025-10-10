@@ -3,6 +3,7 @@ package provider
 import (
 	"context"
 	"fmt"
+	"slices"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
@@ -16,6 +17,47 @@ import (
 	api "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
 	"gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/internal/client"
 )
+
+type cadenceValidator struct{}
+
+func (cadenceValidator) Description(ctx context.Context) string {
+	str := "Ensures that the provided value is a valid cadence. Only the following values are allowed: "
+
+	str += string(api.AllowedBalanceCadenceEnumEnumValues[0])
+	for i := 1; i < len(api.AllowedBalanceCadenceEnumEnumValues); i++ {
+		str = str + ", " + string(api.AllowedBalanceCadenceEnumEnumValues[i])
+	}
+
+	return str
+}
+
+func (cadenceValidator) MarkdownDescription(ctx context.Context) string {
+	str := "Ensures that the provided value is a valid cadence. " +
+		"Allowed values: `"
+
+	for _, val := range api.AllowedBalanceCadenceEnumEnumValues {
+		str = str + "\n- " + string(val)
+	}
+
+	str = str + "\n`"
+
+	return str
+}
+
+func (cadenceValidator) ValidateString(ctx context.Context, req validator.StringRequest, resp *validator.StringResponse) {
+	value := req.ConfigValue
+	if value.IsNull() || value.IsUnknown() {
+		return
+	}
+
+	str := value.ValueString()
+	if !slices.Contains(api.AllowedBalanceCadenceEnumEnumValues, api.BalanceCadenceEnum(str)) {
+		resp.Diagnostics.AddError(
+			"Cadence not found",
+			fmt.Sprintf("The cadence provided is not one of the allowed values: %v", api.AllowedBalanceCadenceEnumEnumValues),
+		)
+	}
+}
 
 var (
 	_ resource.ResourceWithConfigure   = &Account{}
@@ -39,6 +81,7 @@ type AccountModel struct {
 	Type       types.String `tfsdk:"type"`
 	Currency   types.String `tfsdk:"currency"`
 	Dimensions types.List   `tfsdk:"dimensions"`
+	Cadence    types.String `tfsdk:"cadence"`
 }
 
 func (faq *Account) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -91,6 +134,13 @@ func (faq *Account) Schema(ctx context.Context, req resource.SchemaRequest, resp
 				Optional:    true,
 				Description: "The sub dimensions of the account.",
 				ElementType: types.StringType,
+			},
+			"cadence": schema.StringAttribute{
+				Required:    true,
+				Description: "The cadence at which the account balance is calculated",
+				Validators: []validator.String{
+					cadenceValidator{},
+				},
 			},
 		},
 	}
@@ -273,6 +323,7 @@ func (model *AccountModel) fromAPI(account *api.FinancialAccount) (diags diag.Di
 	model.CreatedAt = types.Int64Value(account.CreatedAt)
 	model.UpdatedAt = types.Int64Value(account.UpdatedAt)
 	model.Type = types.StringValue(string(account.Type))
+	model.Cadence = types.StringValue(string(*account.Cadence))
 
 	dimensionIDs := make([]string, len(account.Dimensions))
 	for i := range account.Dimensions {
@@ -298,6 +349,9 @@ func (model *AccountModel) toAPIRequest() (api.CreateOrUpdateFinancialAccountReq
 		Currency:   model.Currency.ValueString(),
 		Dimensions: modelListToStringSlice(model.Dimensions),
 	}
+
+	cadence := api.BalanceCadenceEnum(model.Cadence.ValueString())
+	account.Cadence = &cadence
 
 	return account, nil
 }

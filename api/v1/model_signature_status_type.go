@@ -23,6 +23,7 @@ const (
 	SIGNATURESTATUSTYPE_INITIATED SignatureStatusType = "initiated"
 	SIGNATURESTATUSTYPE_DONE      SignatureStatusType = "done"
 	SIGNATURESTATUSTYPE_EXPIRED   SignatureStatusType = "expired"
+	SIGNATURESTATUSTYPE_CANCELED  SignatureStatusType = "canceled"
 )
 
 // All allowed values of SignatureStatusType enum
@@ -30,6 +31,7 @@ var AllowedSignatureStatusTypeEnumValues = []SignatureStatusType{
 	"initiated",
 	"done",
 	"expired",
+	"canceled",
 }
 
 func (v *SignatureStatusType) UnmarshalJSON(src []byte) error {

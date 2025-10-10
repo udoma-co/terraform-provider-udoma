@@ -91,6 +91,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**ConfirmAppointment**](docs/DefaultAPI.md#confirmappointment) | **Post** /calendar/appointments/entry/{entryID}/confirm | Confirm an appointment
 *DefaultAPI* | [**ConfirmApproval**](docs/DefaultAPI.md#confirmapproval) | **Post** /approval/{approvalID}/approve | Confirm the approval with the given ID
 *DefaultAPI* | [**CreateAccountBooking**](docs/DefaultAPI.md#createaccountbooking) | **Post** /financial/booking | Create a new booking
+*DefaultAPI* | [**CreateAccountBookings**](docs/DefaultAPI.md#createaccountbookings) | **Post** /financial/bookings | Create multi booking request
 *DefaultAPI* | [**CreateAccountDimension**](docs/DefaultAPI.md#createaccountdimension) | **Post** /financial/account-dimension | Create a new account dimension
 *DefaultAPI* | [**CreateAccountDimensionValue**](docs/DefaultAPI.md#createaccountdimensionvalue) | **Post** /financial/account-dimension/{dimensionID}/value | Create a new account dimension value
 *DefaultAPI* | [**CreateAppointment**](docs/DefaultAPI.md#createappointment) | **Post** /calendar/appointments/schedule/{scheduleID}/appointment | Create new appointment for a given schedule
@@ -298,6 +299,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**InviteToAppointment**](docs/DefaultAPI.md#invitetoappointment) | **Post** /calendar/appointments/entry/{entryID}/invite | Invite a users to an appointment
 *DefaultAPI* | [**LinkAppointmentProperty**](docs/DefaultAPI.md#linkappointmentproperty) | **Post** /calendar/appointments/entry/{entryID}/property/{propID}/link | Link a property to an appointment
 *DefaultAPI* | [**LinkCaseProperty**](docs/DefaultAPI.md#linkcaseproperty) | **Post** /case/{caseID}/property/{propID}/link | Link a property to a case
+*DefaultAPI* | [**LinkHandoverProperty**](docs/DefaultAPI.md#linkhandoverproperty) | **Post** /property-handovers/handovers/{handoverID}/property/{propID}/link | Link a property to a finalized handover
 *DefaultAPI* | [**PersistBookingPreview**](docs/DefaultAPI.md#persistbookingpreview) | **Post** /financial/booking-preview/{bookingPreviewID}/persist | Persist the bookings in the given booking preview
 *DefaultAPI* | [**PreviewCommentTemplate**](docs/DefaultAPI.md#previewcommenttemplate) | **Post** /comment-template/{commentTemplateID}/preview | Preview a comment template returning an example comment.
 *DefaultAPI* | [**PublicAddAppointmentComment**](docs/DefaultAPI.md#publicaddappointmentcomment) | **Post** /public/calendar/appointments/entry/{code}/comment | Send a comment in an appointment.
@@ -340,6 +342,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryBookingPreviews**](docs/DefaultAPI.md#querybookingpreviews) | **Post** /financial/booking-previews | Query all booking previews
 *DefaultAPI* | [**QueryBookingTemplates**](docs/DefaultAPI.md#querybookingtemplates) | **Post** /financial/booking-templates | Query all booking templates
 *DefaultAPI* | [**QueryBookingsForAccount**](docs/DefaultAPI.md#querybookingsforaccount) | **Post** /financial/accounts-by-number/{flatNumber}/bookings | Query bookings for the given account
+*DefaultAPI* | [**QueryBookingsForStartEndDate**](docs/DefaultAPI.md#querybookingsforstartenddate) | **Get** /financial/accounts/{flatNumber}/bookings/date | Get the financial account with all its attributes
 *DefaultAPI* | [**QueryCaseReportingEndpoints**](docs/DefaultAPI.md#querycasereportingendpoints) | **Post** /cases/endpoints | Query all case reporting endpoints for given criteria
 *DefaultAPI* | [**QueryCaseTemplates**](docs/DefaultAPI.md#querycasetemplates) | **Post** /cases/templates | Query all case templates for given criteria
 *DefaultAPI* | [**QueryCases**](docs/DefaultAPI.md#querycases) | **Post** /cases | Query cases for the current user
@@ -464,6 +467,7 @@ Class | Method | HTTP request | Description
  - [Approver](docs/Approver.md)
  - [AssignCaseRequest](docs/AssignCaseRequest.md)
  - [Attachment](docs/Attachment.md)
+ - [BalanceCadenceEnum](docs/BalanceCadenceEnum.md)
  - [BankAccount](docs/BankAccount.md)
  - [BankAccountAttributesPartial](docs/BankAccountAttributesPartial.md)
  - [BankTransaction](docs/BankTransaction.md)
@@ -702,6 +706,8 @@ Class | Method | HTTP request | Description
  - [QueryBookingTemplatesRequest](docs/QueryBookingTemplatesRequest.md)
  - [QueryBookingsByFlatNumberRequest](docs/QueryBookingsByFlatNumberRequest.md)
  - [QueryBookingsByFlatNumberResponse](docs/QueryBookingsByFlatNumberResponse.md)
+ - [QueryBookingsByStartEndDateRequest](docs/QueryBookingsByStartEndDateRequest.md)
+ - [QueryBookingsByStartEndDateResponse](docs/QueryBookingsByStartEndDateResponse.md)
  - [QueryBooleanParameter](docs/QueryBooleanParameter.md)
  - [QueryCaseReportingEndpointsRequest](docs/QueryCaseReportingEndpointsRequest.md)
  - [QueryCaseReportingEndpointsResponse](docs/QueryCaseReportingEndpointsResponse.md)
