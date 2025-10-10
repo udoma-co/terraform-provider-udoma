@@ -18,6 +18,7 @@ Resource represents a bank account
 ### Required
 
 - `account_holder` (String) The name of the account holder
+- `cadence` (String) The cadence at which the account balance is calculated
 - `iban` (String) The IBAN of the bank account
 
 ### Optional

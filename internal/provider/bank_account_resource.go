@@ -40,6 +40,7 @@ type BankAccountModel struct {
 	Bic            types.String `tfsdk:"bic"`
 	BankName       types.String `tfsdk:"bank_name"`
 	Description    types.String `tfsdk:"description"`
+	Cadence        types.String `tfsdk:"cadence"`
 }
 
 func (faq *BankAccount) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -107,6 +108,13 @@ func (faq *BankAccount) Schema(ctx context.Context, req resource.SchemaRequest, 
 				Description: "An optional user friendly label, used to identify the account",
 				Validators: []validator.String{
 					stringvalidator.LengthAtMost(250),
+				},
+			},
+			"cadence": schema.StringAttribute{
+				Required:    true,
+				Description: "The cadence at which the account balance is calculated",
+				Validators: []validator.String{
+					cadenceValidator{},
 				},
 			},
 		},
@@ -304,6 +312,7 @@ func (model *BankAccountModel) fromAPI(bankAccount *api.BankAccount) error {
 	model.Description = omittableStringValue(bankAccount.Description, model.Description)
 	model.CreatedAt = types.Int64Value(bankAccount.CreatedAt)
 	model.UpdatedAt = types.Int64Value(bankAccount.UpdatedAt)
+	model.Cadence = types.StringValue(string(*bankAccount.Cadence))
 
 	return nil
 }
@@ -317,6 +326,9 @@ func (model *BankAccountModel) toAPIRequest() (api.CreateOrUpdateBankAccountRequ
 		BankName:      model.BankName.ValueStringPointer(),
 		Description:   model.Description.ValueStringPointer(),
 	}
+
+	cadence := api.BalanceCadenceEnum(model.Cadence.ValueString())
+	bankAccount.Cadence = &cadence
 
 	return bankAccount, nil
 }

@@ -1,14 +1,62 @@
 package provider
 
 import (
+	"context"
 	"fmt"
+	"slices"
 	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 	api "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
 )
+
+// cadenceValidator is a validator for cadence fields.
+type cadenceValidator struct{}
+
+// Ensure cadenceValidator satisfies the validator.String interface.
+func (cadenceValidator) Description(ctx context.Context) string {
+	str := "Ensures that the provided value is a valid cadence. Only the following values are allowed: "
+
+	str += string(api.AllowedBalanceCadenceEnumEnumValues[0])
+	for i := 1; i < len(api.AllowedBalanceCadenceEnumEnumValues); i++ {
+		str = str + ", " + string(api.AllowedBalanceCadenceEnumEnumValues[i])
+	}
+
+	return str
+}
+
+// Ensure cadenceValidator satisfies the validator.String interface.
+func (cadenceValidator) MarkdownDescription(ctx context.Context) string {
+	str := "Ensures that the provided value is a valid cadence. " +
+		"Allowed values: `"
+
+	for _, val := range api.AllowedBalanceCadenceEnumEnumValues {
+		str = str + "\n- " + string(val)
+	}
+
+	str = str + "\n`"
+
+	return str
+}
+
+// ValidateString checks that the provided value is a valid cadence.
+func (cadenceValidator) ValidateString(ctx context.Context, req validator.StringRequest, resp *validator.StringResponse) {
+	value := req.ConfigValue
+	if value.IsNull() || value.IsUnknown() {
+		return
+	}
+
+	str := value.ValueString()
+	if !slices.Contains(api.AllowedBalanceCadenceEnumEnumValues, api.BalanceCadenceEnum(str)) {
+		resp.Diagnostics.AddError(
+			"Cadence not found",
+			fmt.Sprintf("The cadence provided is not one of the allowed values: %v", api.AllowedBalanceCadenceEnumEnumValues),
+		)
+	}
+}
 
 // omittableInt32Value returns a new value for an int32 field that can be
 // omitted. That is, if the new value is nil and the old value is 0, the

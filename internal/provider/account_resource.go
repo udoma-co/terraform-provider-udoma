@@ -3,7 +3,6 @@ package provider
 import (
 	"context"
 	"fmt"
-	"slices"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
@@ -17,47 +16,6 @@ import (
 	api "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
 	"gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/internal/client"
 )
-
-type cadenceValidator struct{}
-
-func (cadenceValidator) Description(ctx context.Context) string {
-	str := "Ensures that the provided value is a valid cadence. Only the following values are allowed: "
-
-	str += string(api.AllowedBalanceCadenceEnumEnumValues[0])
-	for i := 1; i < len(api.AllowedBalanceCadenceEnumEnumValues); i++ {
-		str = str + ", " + string(api.AllowedBalanceCadenceEnumEnumValues[i])
-	}
-
-	return str
-}
-
-func (cadenceValidator) MarkdownDescription(ctx context.Context) string {
-	str := "Ensures that the provided value is a valid cadence. " +
-		"Allowed values: `"
-
-	for _, val := range api.AllowedBalanceCadenceEnumEnumValues {
-		str = str + "\n- " + string(val)
-	}
-
-	str = str + "\n`"
-
-	return str
-}
-
-func (cadenceValidator) ValidateString(ctx context.Context, req validator.StringRequest, resp *validator.StringResponse) {
-	value := req.ConfigValue
-	if value.IsNull() || value.IsUnknown() {
-		return
-	}
-
-	str := value.ValueString()
-	if !slices.Contains(api.AllowedBalanceCadenceEnumEnumValues, api.BalanceCadenceEnum(str)) {
-		resp.Diagnostics.AddError(
-			"Cadence not found",
-			fmt.Sprintf("The cadence provided is not one of the allowed values: %v", api.AllowedBalanceCadenceEnumEnumValues),
-		)
-	}
-}
 
 var (
 	_ resource.ResourceWithConfigure   = &Account{}
