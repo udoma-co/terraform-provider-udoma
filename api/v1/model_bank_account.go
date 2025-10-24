@@ -40,8 +40,7 @@ type BankAccount struct {
 	// The name of the bank (optional)
 	BankName *string `json:"bank_name,omitempty"`
 	// A user friendly label, used to identify the account (optional)
-	Description *string             `json:"description,omitempty"`
-	Cadence     *BalanceCadenceEnum `json:"cadence,omitempty"`
+	Description *string `json:"description,omitempty"`
 }
 
 type _BankAccount BankAccount
@@ -348,38 +347,6 @@ func (o *BankAccount) SetDescription(v string) {
 	o.Description = &v
 }
 
-// GetCadence returns the Cadence field value if set, zero value otherwise.
-func (o *BankAccount) GetCadence() BalanceCadenceEnum {
-	if o == nil || IsNil(o.Cadence) {
-		var ret BalanceCadenceEnum
-		return ret
-	}
-	return *o.Cadence
-}
-
-// GetCadenceOk returns a tuple with the Cadence field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *BankAccount) GetCadenceOk() (*BalanceCadenceEnum, bool) {
-	if o == nil || IsNil(o.Cadence) {
-		return nil, false
-	}
-	return o.Cadence, true
-}
-
-// HasCadence returns a boolean if a field has been set.
-func (o *BankAccount) HasCadence() bool {
-	if o != nil && !IsNil(o.Cadence) {
-		return true
-	}
-
-	return false
-}
-
-// SetCadence gets a reference to the given BalanceCadenceEnum and assigns it to the Cadence field.
-func (o *BankAccount) SetCadence(v BalanceCadenceEnum) {
-	o.Cadence = &v
-}
-
 func (o BankAccount) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -409,9 +376,6 @@ func (o BankAccount) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
-	}
-	if !IsNil(o.Cadence) {
-		toSerialize["cadence"] = o.Cadence
 	}
 	return toSerialize, nil
 }

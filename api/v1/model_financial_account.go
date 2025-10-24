@@ -33,8 +33,7 @@ type FinancialAccount struct {
 	Name string           `json:"name"`
 	Type AccountTypesEnum `json:"type"`
 	// The currency of the booking
-	Currency string              `json:"currency"`
-	Cadence  *BalanceCadenceEnum `json:"cadence,omitempty"`
+	Currency string `json:"currency"`
 	// The current balance of the account
 	Balance *float64 `json:"balance,omitempty"`
 	// The dimensions that are assigned to the account
@@ -235,38 +234,6 @@ func (o *FinancialAccount) SetCurrency(v string) {
 	o.Currency = v
 }
 
-// GetCadence returns the Cadence field value if set, zero value otherwise.
-func (o *FinancialAccount) GetCadence() BalanceCadenceEnum {
-	if o == nil || IsNil(o.Cadence) {
-		var ret BalanceCadenceEnum
-		return ret
-	}
-	return *o.Cadence
-}
-
-// GetCadenceOk returns a tuple with the Cadence field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *FinancialAccount) GetCadenceOk() (*BalanceCadenceEnum, bool) {
-	if o == nil || IsNil(o.Cadence) {
-		return nil, false
-	}
-	return o.Cadence, true
-}
-
-// HasCadence returns a boolean if a field has been set.
-func (o *FinancialAccount) HasCadence() bool {
-	if o != nil && !IsNil(o.Cadence) {
-		return true
-	}
-
-	return false
-}
-
-// SetCadence gets a reference to the given BalanceCadenceEnum and assigns it to the Cadence field.
-func (o *FinancialAccount) SetCadence(v BalanceCadenceEnum) {
-	o.Cadence = &v
-}
-
 // GetBalance returns the Balance field value if set, zero value otherwise.
 func (o *FinancialAccount) GetBalance() float64 {
 	if o == nil || IsNil(o.Balance) {
@@ -348,9 +315,6 @@ func (o FinancialAccount) ToMap() (map[string]interface{}, error) {
 	toSerialize["name"] = o.Name
 	toSerialize["type"] = o.Type
 	toSerialize["currency"] = o.Currency
-	if !IsNil(o.Cadence) {
-		toSerialize["cadence"] = o.Cadence
-	}
 	if !IsNil(o.Balance) {
 		toSerialize["balance"] = o.Balance
 	}

@@ -91,7 +91,6 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**ConfirmAppointment**](docs/DefaultAPI.md#confirmappointment) | **Post** /calendar/appointments/entry/{entryID}/confirm | Confirm an appointment
 *DefaultAPI* | [**ConfirmApproval**](docs/DefaultAPI.md#confirmapproval) | **Post** /approval/{approvalID}/approve | Confirm the approval with the given ID
 *DefaultAPI* | [**CreateAccountBooking**](docs/DefaultAPI.md#createaccountbooking) | **Post** /financial/booking | Create a new booking
-*DefaultAPI* | [**CreateAccountBookings**](docs/DefaultAPI.md#createaccountbookings) | **Post** /financial/bookings | Create multi booking request
 *DefaultAPI* | [**CreateAccountDimension**](docs/DefaultAPI.md#createaccountdimension) | **Post** /financial/account-dimension | Create a new account dimension
 *DefaultAPI* | [**CreateAccountDimensionValue**](docs/DefaultAPI.md#createaccountdimensionvalue) | **Post** /financial/account-dimension/{dimensionID}/value | Create a new account dimension value
 *DefaultAPI* | [**CreateAppointment**](docs/DefaultAPI.md#createappointment) | **Post** /calendar/appointments/schedule/{scheduleID}/appointment | Create new appointment for a given schedule
@@ -113,6 +112,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateCustomForm**](docs/DefaultAPI.md#createcustomform) | **Post** /custom-form | Create a new custom form
 *DefaultAPI* | [**CreateCustomIDGenerator**](docs/DefaultAPI.md#createcustomidgenerator) | **Post** /id-generator | Create a new customer specififc ID generator
 *DefaultAPI* | [**CreateCustomerScript**](docs/DefaultAPI.md#createcustomerscript) | **Post** /customer-script | Create a new customer specififc JS script
+*DefaultAPI* | [**CreateDataImportTemplate**](docs/DefaultAPI.md#createdataimporttemplate) | **Post** /data-import/template | Create a new data import template
 *DefaultAPI* | [**CreateDocument**](docs/DefaultAPI.md#createdocument) | **Post** /document-repository/entry | Create a new document
 *DefaultAPI* | [**CreateDocumentGeneration**](docs/DefaultAPI.md#createdocumentgeneration) | **Post** /document-generation/document | Create a new document generation for a template
 *DefaultAPI* | [**CreateDocumentTemplate**](docs/DefaultAPI.md#createdocumenttemplate) | **Post** /document-generation/template | Create a new document template
@@ -161,6 +161,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteCustomForm**](docs/DefaultAPI.md#deletecustomform) | **Delete** /custom-form/{formID} | Delete the custom form
 *DefaultAPI* | [**DeleteCustomIDGenerator**](docs/DefaultAPI.md#deletecustomidgenerator) | **Delete** /id-generators/{generatorID} | Delete the custom ID generator with all its related data
 *DefaultAPI* | [**DeleteCustomerScript**](docs/DefaultAPI.md#deletecustomerscript) | **Delete** /customer-scripts/{scriptID} | Delete the script with all its related data
+*DefaultAPI* | [**DeleteDataImportTemplate**](docs/DefaultAPI.md#deletedataimporttemplate) | **Delete** /data-import/template/{templateID} | Delete a data import template
 *DefaultAPI* | [**DeleteDocument**](docs/DefaultAPI.md#deletedocument) | **Delete** /document-repository/entry/{documentID} | Delete a single document
 *DefaultAPI* | [**DeleteDocumentGeneration**](docs/DefaultAPI.md#deletedocumentgeneration) | **Delete** /document-generation/documents/{docID} | Delete an existing document generation
 *DefaultAPI* | [**DeleteDocumentTemplate**](docs/DefaultAPI.md#deletedocumenttemplate) | **Delete** /document-generation/template/{templateID} | Delete a document template
@@ -235,6 +236,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetCustomIDGenerators**](docs/DefaultAPI.md#getcustomidgenerators) | **Get** /id-generators | Get all customer specific ID generators
 *DefaultAPI* | [**GetCustomerScript**](docs/DefaultAPI.md#getcustomerscript) | **Get** /customer-scripts/{scriptID} | Get the script with all its attributes
 *DefaultAPI* | [**GetCustomerScripts**](docs/DefaultAPI.md#getcustomerscripts) | **Get** /customer-scripts | Get all customer specific JS scripts
+*DefaultAPI* | [**GetDataImportTemplate**](docs/DefaultAPI.md#getdataimporttemplate) | **Get** /data-import/template/{templateID} | Get the data import template by ID
 *DefaultAPI* | [**GetDocument**](docs/DefaultAPI.md#getdocument) | **Get** /document-repository/entry/{documentID} | Get an already existing document
 *DefaultAPI* | [**GetDocumentGeneration**](docs/DefaultAPI.md#getdocumentgeneration) | **Get** /document-generation/documents/{docID} | Get a single document generation
 *DefaultAPI* | [**GetDocumentTemplate**](docs/DefaultAPI.md#getdocumenttemplate) | **Get** /document-generation/template/{templateID} | Get a document template
@@ -295,13 +297,14 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetWorkflowExecution**](docs/DefaultAPI.md#getworkflowexecution) | **Get** /workflows/execution/{executionID} | Get workflow execution details
 *DefaultAPI* | [**GetWorkflowExecutionTrigger**](docs/DefaultAPI.md#getworkflowexecutiontrigger) | **Get** /workflows/triggers/{executionID} | Get workflow trigger for an execution
 *DefaultAPI* | [**GetWorkflowTriggersForSource**](docs/DefaultAPI.md#getworkflowtriggersforsource) | **Get** /workflows/trigger/source/{sourceID} | Get workflow triggers for a source
+*DefaultAPI* | [**ImportDataUsingTemplate**](docs/DefaultAPI.md#importdatausingtemplate) | **Post** /data-import/template/{templateID}/import | Import data using the template
 *DefaultAPI* | [**InternalAddPriceIndexPoint**](docs/DefaultAPI.md#internaladdpriceindexpoint) | **Put** /price-index | Push a new value for the inflation index
 *DefaultAPI* | [**InviteToAppointment**](docs/DefaultAPI.md#invitetoappointment) | **Post** /calendar/appointments/entry/{entryID}/invite | Invite a users to an appointment
 *DefaultAPI* | [**LinkAppointmentProperty**](docs/DefaultAPI.md#linkappointmentproperty) | **Post** /calendar/appointments/entry/{entryID}/property/{propID}/link | Link a property to an appointment
 *DefaultAPI* | [**LinkCaseProperty**](docs/DefaultAPI.md#linkcaseproperty) | **Post** /case/{caseID}/property/{propID}/link | Link a property to a case
-*DefaultAPI* | [**LinkHandoverProperty**](docs/DefaultAPI.md#linkhandoverproperty) | **Post** /property-handovers/handovers/{handoverID}/property/{propID}/link | Link a property to a finalized handover
 *DefaultAPI* | [**PersistBookingPreview**](docs/DefaultAPI.md#persistbookingpreview) | **Post** /financial/booking-preview/{bookingPreviewID}/persist | Persist the bookings in the given booking preview
 *DefaultAPI* | [**PreviewCommentTemplate**](docs/DefaultAPI.md#previewcommenttemplate) | **Post** /comment-template/{commentTemplateID}/preview | Preview a comment template returning an example comment.
+*DefaultAPI* | [**PreviewDataImport**](docs/DefaultAPI.md#previewdataimport) | **Post** /data-import/template/{templateID}/preview | Preview a data import template returning an example data import.
 *DefaultAPI* | [**PublicAddAppointmentComment**](docs/DefaultAPI.md#publicaddappointmentcomment) | **Post** /public/calendar/appointments/entry/{code}/comment | Send a comment in an appointment.
 *DefaultAPI* | [**PublicAddCaseComment**](docs/DefaultAPI.md#publicaddcasecomment) | **Post** /public/case/{caseID}/comment | Add new case comment
 *DefaultAPI* | [**PublicCreateAppointment**](docs/DefaultAPI.md#publiccreateappointment) | **Post** /public/calendar/appointments/{scheduleID}/entry | Create a new appointment for the given schedule
@@ -349,6 +352,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryCommentTemplates**](docs/DefaultAPI.md#querycommenttemplates) | **Post** /comment-templates | Query all comment templates for the account
 *DefaultAPI* | [**QueryCorrespondences**](docs/DefaultAPI.md#querycorrespondences) | **Post** /tenant-correspondences | Get all the correspondences
 *DefaultAPI* | [**QueryCustomForms**](docs/DefaultAPI.md#querycustomforms) | **Get** /custom-forms | Get all custom forms
+*DefaultAPI* | [**QueryDataImportTemplates**](docs/DefaultAPI.md#querydataimporttemplates) | **Post** /data-import/templates | Query all data import templates for given criteria
 *DefaultAPI* | [**QueryDocumentGenerations**](docs/DefaultAPI.md#querydocumentgenerations) | **Post** /document-generation/documents | Request a list of document generations
 *DefaultAPI* | [**QueryDocuments**](docs/DefaultAPI.md#querydocuments) | **Post** /document-repository/entries | Query all document for a certain ref type
 *DefaultAPI* | [**QueryExternalUserCases**](docs/DefaultAPI.md#queryexternalusercases) | **Get** /external-users/{userID}/cases | Get the cases the the given user has opened
@@ -402,6 +406,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateCustomForm**](docs/DefaultAPI.md#updatecustomform) | **Put** /custom-form/{formID} | Update the custom form
 *DefaultAPI* | [**UpdateCustomIDGenerator**](docs/DefaultAPI.md#updatecustomidgenerator) | **Put** /id-generators/{generatorID} | Update an already existing ID generator
 *DefaultAPI* | [**UpdateCustomerScript**](docs/DefaultAPI.md#updatecustomerscript) | **Put** /customer-scripts/{scriptID} | Update an already existing script
+*DefaultAPI* | [**UpdateDataImportTemplate**](docs/DefaultAPI.md#updatedataimporttemplate) | **Put** /data-import/template/{templateID} | Update data import template
 *DefaultAPI* | [**UpdateDocument**](docs/DefaultAPI.md#updatedocument) | **Put** /document-repository/entry/{documentID} | Update an already existing document
 *DefaultAPI* | [**UpdateDocumentGeneration**](docs/DefaultAPI.md#updatedocumentgeneration) | **Put** /document-generation/documents/{docID} | Update an already existing document generation
 *DefaultAPI* | [**UpdateDocumentTemplate**](docs/DefaultAPI.md#updatedocumenttemplate) | **Put** /document-generation/template/{templateID} | Update an existing document template
@@ -467,7 +472,6 @@ Class | Method | HTTP request | Description
  - [Approver](docs/Approver.md)
  - [AssignCaseRequest](docs/AssignCaseRequest.md)
  - [Attachment](docs/Attachment.md)
- - [BalanceCadenceEnum](docs/BalanceCadenceEnum.md)
  - [BankAccount](docs/BankAccount.md)
  - [BankAccountAttributesPartial](docs/BankAccountAttributesPartial.md)
  - [BankTransaction](docs/BankTransaction.md)
@@ -552,6 +556,7 @@ Class | Method | HTTP request | Description
  - [CreateOrUpdateCustomFormRequest](docs/CreateOrUpdateCustomFormRequest.md)
  - [CreateOrUpdateCustomIDGeneratorRequest](docs/CreateOrUpdateCustomIDGeneratorRequest.md)
  - [CreateOrUpdateCustomerScriptRequest](docs/CreateOrUpdateCustomerScriptRequest.md)
+ - [CreateOrUpdateDataImportTemplateRequest](docs/CreateOrUpdateDataImportTemplateRequest.md)
  - [CreateOrUpdateDocumentTemplateRequest](docs/CreateOrUpdateDocumentTemplateRequest.md)
  - [CreateOrUpdateFAQEntryRequest](docs/CreateOrUpdateFAQEntryRequest.md)
  - [CreateOrUpdateFeatureFlagConfigRequest](docs/CreateOrUpdateFeatureFlagConfigRequest.md)
@@ -580,6 +585,10 @@ Class | Method | HTTP request | Description
  - [CustomerScript](docs/CustomerScript.md)
  - [CustomerScriptAttributesPartial](docs/CustomerScriptAttributesPartial.md)
  - [CustomerScriptScope](docs/CustomerScriptScope.md)
+ - [DataImportPreview](docs/DataImportPreview.md)
+ - [DataImportPreviewItem](docs/DataImportPreviewItem.md)
+ - [DataImportTemplate](docs/DataImportTemplate.md)
+ - [DataImportTemplatePartial](docs/DataImportTemplatePartial.md)
  - [DisplayCondition](docs/DisplayCondition.md)
  - [Document](docs/Document.md)
  - [DocumentCreateAttributesPartial](docs/DocumentCreateAttributesPartial.md)
@@ -600,6 +609,7 @@ Class | Method | HTTP request | Description
  - [EntityGeneratedAttributesPartial](docs/EntityGeneratedAttributesPartial.md)
  - [EntityGeneratedCodeAttributePartial](docs/EntityGeneratedCodeAttributePartial.md)
  - [EntityGeneratedIDAttributePartial](docs/EntityGeneratedIDAttributePartial.md)
+ - [EntityImportTypeEnum](docs/EntityImportTypeEnum.md)
  - [EntityNameAttributePartial](docs/EntityNameAttributePartial.md)
  - [EntityReference](docs/EntityReference.md)
  - [EntityTimestampsAttributesPartial](docs/EntityTimestampsAttributesPartial.md)
@@ -652,6 +662,8 @@ Class | Method | HTTP request | Description
  - [HookAttributesPartial](docs/HookAttributesPartial.md)
  - [HookEntity](docs/HookEntity.md)
  - [IDUpload](docs/IDUpload.md)
+ - [ImportDataRequest](docs/ImportDataRequest.md)
+ - [ImportDataTypeEnum](docs/ImportDataTypeEnum.md)
  - [InputItem](docs/InputItem.md)
  - [InviteToAppointmentRequest](docs/InviteToAppointmentRequest.md)
  - [IsDeletedAttributePartial](docs/IsDeletedAttributePartial.md)
@@ -668,6 +680,7 @@ Class | Method | HTTP request | Description
  - [NotificationAttributesPartial](docs/NotificationAttributesPartial.md)
  - [NotificationROAttributesPartial](docs/NotificationROAttributesPartial.md)
  - [NotificationType](docs/NotificationType.md)
+ - [PreviewDataImportRequest](docs/PreviewDataImportRequest.md)
  - [PriceIndexPoint](docs/PriceIndexPoint.md)
  - [PriceIndexPointQueryRequest](docs/PriceIndexPointQueryRequest.md)
  - [Property](docs/Property.md)
@@ -717,6 +730,7 @@ Class | Method | HTTP request | Description
  - [QueryCorrespondenceRequest](docs/QueryCorrespondenceRequest.md)
  - [QueryCorrespondenceType](docs/QueryCorrespondenceType.md)
  - [QueryCustomFormsResponse](docs/QueryCustomFormsResponse.md)
+ - [QueryDataImportTemplatesRequest](docs/QueryDataImportTemplatesRequest.md)
  - [QueryDocumentGenerationsRequest](docs/QueryDocumentGenerationsRequest.md)
  - [QueryDocumentGenerationsResponse](docs/QueryDocumentGenerationsResponse.md)
  - [QueryDocumentsRequest](docs/QueryDocumentsRequest.md)
