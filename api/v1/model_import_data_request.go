@@ -21,8 +21,10 @@ var _ MappedNullable = &ImportDataRequest{}
 
 // ImportDataRequest Request to import data from a file. NOTE: We expect the frontend to pass  the pre-processed JSON structure from the preview in the data field. This  avoids re-parsing the file and re-calculating the complex JSON structure.
 type ImportDataRequest struct {
-	// The pre-processed data from the preview, ready to be imported into the system.
+	// The pre-processed data from the preview.
 	Data []DataImportPreviewItem `json:"data"`
+	// Optional data collected from the custom form defined in the template.
+	Parameters map[string]interface{} `json:"parameters,omitempty"`
 }
 
 type _ImportDataRequest ImportDataRequest
@@ -69,6 +71,38 @@ func (o *ImportDataRequest) SetData(v []DataImportPreviewItem) {
 	o.Data = v
 }
 
+// GetParameters returns the Parameters field value if set, zero value otherwise.
+func (o *ImportDataRequest) GetParameters() map[string]interface{} {
+	if o == nil || IsNil(o.Parameters) {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.Parameters
+}
+
+// GetParametersOk returns a tuple with the Parameters field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ImportDataRequest) GetParametersOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.Parameters) {
+		return map[string]interface{}{}, false
+	}
+	return o.Parameters, true
+}
+
+// HasParameters returns a boolean if a field has been set.
+func (o *ImportDataRequest) HasParameters() bool {
+	if o != nil && !IsNil(o.Parameters) {
+		return true
+	}
+
+	return false
+}
+
+// SetParameters gets a reference to the given map[string]interface{} and assigns it to the Parameters field.
+func (o *ImportDataRequest) SetParameters(v map[string]interface{}) {
+	o.Parameters = v
+}
+
 func (o ImportDataRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -80,6 +114,9 @@ func (o ImportDataRequest) MarshalJSON() ([]byte, error) {
 func (o ImportDataRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["data"] = o.Data
+	if !IsNil(o.Parameters) {
+		toSerialize["parameters"] = o.Parameters
+	}
 	return toSerialize, nil
 }
 

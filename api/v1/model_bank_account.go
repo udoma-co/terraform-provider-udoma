@@ -31,7 +31,7 @@ type BankAccount struct {
 	ExternalId *string `json:"external_id,omitempty"`
 	// Optional external source, in case entity was created via backend integration
 	ExternalSource *string `json:"external_source,omitempty"`
-	// The name of the account holder (required)
+	// The name of the account holder (optional)
 	AccountHolder string `json:"account_holder"`
 	// The IBAN of the bank account (required)
 	Iban string `json:"iban"`
@@ -40,7 +40,8 @@ type BankAccount struct {
 	// The name of the bank (optional)
 	BankName *string `json:"bank_name,omitempty"`
 	// A user friendly label, used to identify the account (optional)
-	Description *string `json:"description,omitempty"`
+	Description *string            `json:"description,omitempty"`
+	Cadence     BalanceCadenceEnum `json:"cadence"`
 }
 
 type _BankAccount BankAccount
@@ -49,13 +50,14 @@ type _BankAccount BankAccount
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewBankAccount(id string, createdAt int64, updatedAt int64, accountHolder string, iban string) *BankAccount {
+func NewBankAccount(id string, createdAt int64, updatedAt int64, accountHolder string, iban string, cadence BalanceCadenceEnum) *BankAccount {
 	this := BankAccount{}
 	this.Id = id
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
 	this.AccountHolder = accountHolder
 	this.Iban = iban
+	this.Cadence = cadence
 	return &this
 }
 
@@ -347,6 +349,30 @@ func (o *BankAccount) SetDescription(v string) {
 	o.Description = &v
 }
 
+// GetCadence returns the Cadence field value
+func (o *BankAccount) GetCadence() BalanceCadenceEnum {
+	if o == nil {
+		var ret BalanceCadenceEnum
+		return ret
+	}
+
+	return o.Cadence
+}
+
+// GetCadenceOk returns a tuple with the Cadence field value
+// and a boolean to check if the value has been set.
+func (o *BankAccount) GetCadenceOk() (*BalanceCadenceEnum, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Cadence, true
+}
+
+// SetCadence sets field value
+func (o *BankAccount) SetCadence(v BalanceCadenceEnum) {
+	o.Cadence = v
+}
+
 func (o BankAccount) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -377,6 +403,7 @@ func (o BankAccount) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
 	}
+	toSerialize["cadence"] = o.Cadence
 	return toSerialize, nil
 }
 
@@ -390,6 +417,7 @@ func (o *BankAccount) UnmarshalJSON(data []byte) (err error) {
 		"updated_at",
 		"account_holder",
 		"iban",
+		"cadence",
 	}
 
 	allProperties := make(map[string]interface{})

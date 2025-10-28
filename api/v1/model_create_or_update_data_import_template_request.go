@@ -28,10 +28,9 @@ type CreateOrUpdateDataImportTemplateRequest struct {
 	// An optional icon representing the data import template in the webapp
 	Icon     *string            `json:"icon,omitempty"`
 	FileType ImportDataTypeEnum `json:"file_type"`
-	// Indicates if the first row of the file contains headers. If true, the  first row will be parsed as column names and passed to the data mapper separately. Only used for CSV and TXT file types.
-	HasHeader *bool `json:"has_header,omitempty"`
 	// A JS expression that maps the imported data to the system's data model. It should return an array of objects, each representing a record to be imported.
-	DataMapper string `json:"data_mapper"`
+	DataMapper string             `json:"data_mapper"`
+	Parameters NullableCustomForm `json:"parameters,omitempty"`
 }
 
 type _CreateOrUpdateDataImportTemplateRequest CreateOrUpdateDataImportTemplateRequest
@@ -168,38 +167,6 @@ func (o *CreateOrUpdateDataImportTemplateRequest) SetFileType(v ImportDataTypeEn
 	o.FileType = v
 }
 
-// GetHasHeader returns the HasHeader field value if set, zero value otherwise.
-func (o *CreateOrUpdateDataImportTemplateRequest) GetHasHeader() bool {
-	if o == nil || IsNil(o.HasHeader) {
-		var ret bool
-		return ret
-	}
-	return *o.HasHeader
-}
-
-// GetHasHeaderOk returns a tuple with the HasHeader field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateOrUpdateDataImportTemplateRequest) GetHasHeaderOk() (*bool, bool) {
-	if o == nil || IsNil(o.HasHeader) {
-		return nil, false
-	}
-	return o.HasHeader, true
-}
-
-// HasHasHeader returns a boolean if a field has been set.
-func (o *CreateOrUpdateDataImportTemplateRequest) HasHasHeader() bool {
-	if o != nil && !IsNil(o.HasHeader) {
-		return true
-	}
-
-	return false
-}
-
-// SetHasHeader gets a reference to the given bool and assigns it to the HasHeader field.
-func (o *CreateOrUpdateDataImportTemplateRequest) SetHasHeader(v bool) {
-	o.HasHeader = &v
-}
-
 // GetDataMapper returns the DataMapper field value
 func (o *CreateOrUpdateDataImportTemplateRequest) GetDataMapper() string {
 	if o == nil {
@@ -224,6 +191,49 @@ func (o *CreateOrUpdateDataImportTemplateRequest) SetDataMapper(v string) {
 	o.DataMapper = v
 }
 
+// GetParameters returns the Parameters field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CreateOrUpdateDataImportTemplateRequest) GetParameters() CustomForm {
+	if o == nil || IsNil(o.Parameters.Get()) {
+		var ret CustomForm
+		return ret
+	}
+	return *o.Parameters.Get()
+}
+
+// GetParametersOk returns a tuple with the Parameters field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CreateOrUpdateDataImportTemplateRequest) GetParametersOk() (*CustomForm, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Parameters.Get(), o.Parameters.IsSet()
+}
+
+// HasParameters returns a boolean if a field has been set.
+func (o *CreateOrUpdateDataImportTemplateRequest) HasParameters() bool {
+	if o != nil && o.Parameters.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetParameters gets a reference to the given NullableCustomForm and assigns it to the Parameters field.
+func (o *CreateOrUpdateDataImportTemplateRequest) SetParameters(v CustomForm) {
+	o.Parameters.Set(&v)
+}
+
+// SetParametersNil sets the value for Parameters to be an explicit nil
+func (o *CreateOrUpdateDataImportTemplateRequest) SetParametersNil() {
+	o.Parameters.Set(nil)
+}
+
+// UnsetParameters ensures that no value is present for Parameters, not even an explicit nil
+func (o *CreateOrUpdateDataImportTemplateRequest) UnsetParameters() {
+	o.Parameters.Unset()
+}
+
 func (o CreateOrUpdateDataImportTemplateRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -242,10 +252,10 @@ func (o CreateOrUpdateDataImportTemplateRequest) ToMap() (map[string]interface{}
 		toSerialize["icon"] = o.Icon
 	}
 	toSerialize["file_type"] = o.FileType
-	if !IsNil(o.HasHeader) {
-		toSerialize["has_header"] = o.HasHeader
-	}
 	toSerialize["data_mapper"] = o.DataMapper
+	if o.Parameters.IsSet() {
+		toSerialize["parameters"] = o.Parameters.Get()
+	}
 	return toSerialize, nil
 }
 

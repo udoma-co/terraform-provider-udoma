@@ -33,15 +33,14 @@ type DataImportTemplate struct {
 
 // DataImportTemplateModel describes the resource data model
 type DataImportTemplateModel struct {
-	ID						   types.String     `tfsdk:"id"`
-	CreatedAt   			   types.String     `tfsdk:"created_at"`
-	UpdatedAt  			   types.String     `tfsdk:"updated_at"`
-	Name 				   types.String     `tfsdk:"name"`
-	Description 		  types.String     `tfsdk:"description"`
-	Icon 				   types.String     `tfsdk:"icon"`
-	FileType 			   types.String     `tfsdk:"file_type"`
-	HasHeader 			   types.Bool       `tfsdk:"has_header"`
-	DataMapper 			   types.String     `tfsdk:"data_mapper"`
+	ID          types.String `tfsdk:"id"`
+	CreatedAt   types.String `tfsdk:"created_at"`
+	UpdatedAt   types.String `tfsdk:"updated_at"`
+	Name        types.String `tfsdk:"name"`
+	Description types.String `tfsdk:"description"`
+	Icon        types.String `tfsdk:"icon"`
+	FileType    types.String `tfsdk:"file_type"`
+	DataMapper  types.String `tfsdk:"data_mapper"`
 }
 
 func (r *DataImportTemplate) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -91,10 +90,6 @@ func (r *DataImportTemplate) Schema(ctx context.Context, req resource.SchemaRequ
 				Validators: []validator.String{
 					stringvalidator.OneOf("csv", "txt", "json", "xml", "xlsx", "xls"),
 				},
-			},
-			"has_header": schema.BoolAttribute{
-				Optional:    true,
-				Description: "Indicates if the data import template has a header row.",
 			},
 			"data_mapper": schema.StringAttribute{
 				Computed:    true,
@@ -259,10 +254,6 @@ func (model *DataImportTemplateModel) toApiRequest() *v1.CreateOrUpdateDataImpor
 		ret.Icon = model.Icon.ValueStringPointer()
 	}
 
-	if !model.HasHeader.IsNull() && !model.HasHeader.IsUnknown() {
-		ret.HasHeader = model.HasHeader.ValueBoolPointer()
-	}
-
 	return ret
 }
 
@@ -289,15 +280,8 @@ func (template *DataImportTemplateModel) fromApiResponse(resp *v1.DataImportTemp
 		template.Icon = types.StringNull()
 	}
 
-	if resp.HasHeader != nil {
-		template.HasHeader = types.BoolValue(*resp.HasHeader)
-	} else {
-		template.HasHeader = types.BoolNull()
-	}
-
 	return diags
 }
-
 
 func (r *DataImportTemplate) UpgradeState(ctx context.Context) map[int64]resource.StateUpgrader {
 
@@ -307,7 +291,6 @@ func (r *DataImportTemplate) UpgradeState(ctx context.Context) map[int64]resourc
 		Description types.String `tfsdk:"description"`
 		Icon        types.String `tfsdk:"icon"`
 		FileType    types.String `tfsdk:"file_type"`
-		HasHeader   types.Bool   `tfsdk:"has_header"`
 		DataMapper  types.String `tfsdk:"data_mapper"`
 		CreatedAt   types.String `tfsdk:"created_at"`
 		UpdatedAt   types.String `tfsdk:"updated_at"`
@@ -341,9 +324,6 @@ func (r *DataImportTemplate) UpgradeState(ctx context.Context) map[int64]resourc
 					"file_type": schema.StringAttribute{
 						Computed: true,
 					},
-					"has_header": schema.BoolAttribute{
-						Computed: true,
-					},
 					"data_mapper": schema.StringAttribute{
 						Computed: true,
 					},
@@ -365,7 +345,6 @@ func (r *DataImportTemplate) UpgradeState(ctx context.Context) map[int64]resourc
 					Description: priorState.Description,
 					Icon:        priorState.Icon,
 					FileType:    priorState.FileType,
-					HasHeader:   priorState.HasHeader,
 					DataMapper:  priorState.DataMapper,
 				}
 

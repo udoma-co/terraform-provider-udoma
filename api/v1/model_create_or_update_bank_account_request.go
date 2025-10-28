@@ -21,7 +21,7 @@ var _ MappedNullable = &CreateOrUpdateBankAccountRequest{}
 
 // CreateOrUpdateBankAccountRequest The data required to create a new bank account
 type CreateOrUpdateBankAccountRequest struct {
-	// The name of the account holder (required)
+	// The name of the account holder (optional)
 	AccountHolder string `json:"account_holder"`
 	// The IBAN of the bank account (required)
 	Iban string `json:"iban"`
@@ -30,7 +30,8 @@ type CreateOrUpdateBankAccountRequest struct {
 	// The name of the bank (optional)
 	BankName *string `json:"bank_name,omitempty"`
 	// A user friendly label, used to identify the account (optional)
-	Description *string `json:"description,omitempty"`
+	Description *string            `json:"description,omitempty"`
+	Cadence     BalanceCadenceEnum `json:"cadence"`
 }
 
 type _CreateOrUpdateBankAccountRequest CreateOrUpdateBankAccountRequest
@@ -39,10 +40,11 @@ type _CreateOrUpdateBankAccountRequest CreateOrUpdateBankAccountRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateOrUpdateBankAccountRequest(accountHolder string, iban string) *CreateOrUpdateBankAccountRequest {
+func NewCreateOrUpdateBankAccountRequest(accountHolder string, iban string, cadence BalanceCadenceEnum) *CreateOrUpdateBankAccountRequest {
 	this := CreateOrUpdateBankAccountRequest{}
 	this.AccountHolder = accountHolder
 	this.Iban = iban
+	this.Cadence = cadence
 	return &this
 }
 
@@ -198,6 +200,30 @@ func (o *CreateOrUpdateBankAccountRequest) SetDescription(v string) {
 	o.Description = &v
 }
 
+// GetCadence returns the Cadence field value
+func (o *CreateOrUpdateBankAccountRequest) GetCadence() BalanceCadenceEnum {
+	if o == nil {
+		var ret BalanceCadenceEnum
+		return ret
+	}
+
+	return o.Cadence
+}
+
+// GetCadenceOk returns a tuple with the Cadence field value
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateBankAccountRequest) GetCadenceOk() (*BalanceCadenceEnum, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Cadence, true
+}
+
+// SetCadence sets field value
+func (o *CreateOrUpdateBankAccountRequest) SetCadence(v BalanceCadenceEnum) {
+	o.Cadence = v
+}
+
 func (o CreateOrUpdateBankAccountRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -219,6 +245,7 @@ func (o CreateOrUpdateBankAccountRequest) ToMap() (map[string]interface{}, error
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
 	}
+	toSerialize["cadence"] = o.Cadence
 	return toSerialize, nil
 }
 
@@ -229,6 +256,7 @@ func (o *CreateOrUpdateBankAccountRequest) UnmarshalJSON(data []byte) (err error
 	requiredProperties := []string{
 		"account_holder",
 		"iban",
+		"cadence",
 	}
 
 	allProperties := make(map[string]interface{})

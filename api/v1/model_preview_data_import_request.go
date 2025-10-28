@@ -23,6 +23,8 @@ var _ MappedNullable = &PreviewDataImportRequest{}
 type PreviewDataImportRequest struct {
 	// Reference to a previously uploaded attachment containing the data file  to be imported.
 	AttachmentRef string `json:"attachment_ref"`
+	// Optional data collected from the custom form defined in the template.  This data will be available in the data_mapper for processing the import.
+	Parameters map[string]interface{} `json:"parameters,omitempty"`
 }
 
 type _PreviewDataImportRequest PreviewDataImportRequest
@@ -69,6 +71,38 @@ func (o *PreviewDataImportRequest) SetAttachmentRef(v string) {
 	o.AttachmentRef = v
 }
 
+// GetParameters returns the Parameters field value if set, zero value otherwise.
+func (o *PreviewDataImportRequest) GetParameters() map[string]interface{} {
+	if o == nil || IsNil(o.Parameters) {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.Parameters
+}
+
+// GetParametersOk returns a tuple with the Parameters field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PreviewDataImportRequest) GetParametersOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.Parameters) {
+		return map[string]interface{}{}, false
+	}
+	return o.Parameters, true
+}
+
+// HasParameters returns a boolean if a field has been set.
+func (o *PreviewDataImportRequest) HasParameters() bool {
+	if o != nil && !IsNil(o.Parameters) {
+		return true
+	}
+
+	return false
+}
+
+// SetParameters gets a reference to the given map[string]interface{} and assigns it to the Parameters field.
+func (o *PreviewDataImportRequest) SetParameters(v map[string]interface{}) {
+	o.Parameters = v
+}
+
 func (o PreviewDataImportRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -80,6 +114,9 @@ func (o PreviewDataImportRequest) MarshalJSON() ([]byte, error) {
 func (o PreviewDataImportRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["attachment_ref"] = o.AttachmentRef
+	if !IsNil(o.Parameters) {
+		toSerialize["parameters"] = o.Parameters
+	}
 	return toSerialize, nil
 }
 
