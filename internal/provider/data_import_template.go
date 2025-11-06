@@ -34,8 +34,8 @@ type DataImportTemplate struct {
 // DataImportTemplateModel describes the resource data model
 type DataImportTemplateModel struct {
 	ID          types.String `tfsdk:"id"`
-	CreatedAt   types.String `tfsdk:"created_at"`
-	UpdatedAt   types.String `tfsdk:"updated_at"`
+	CreatedAt   types.Int64  `tfsdk:"created_at"`
+	UpdatedAt   types.Int64  `tfsdk:"updated_at"`
 	Name        types.String `tfsdk:"name"`
 	Description types.String `tfsdk:"description"`
 	Icon        types.String `tfsdk:"icon"`
@@ -58,11 +58,11 @@ func (r *DataImportTemplate) Schema(ctx context.Context, req resource.SchemaRequ
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
-			"created_at": schema.StringAttribute{
+			"created_at": schema.Int64Attribute{
 				Computed:    true,
 				Description: "The creation timestamp of the data import template.",
 			},
-			"updated_at": schema.StringAttribute{
+			"updated_at": schema.Int64Attribute{
 				Computed:    true,
 				Description: "The last update timestamp of the data import template.",
 			},
@@ -192,7 +192,7 @@ func (r *DataImportTemplate) Update(ctx context.Context, req resource.UpdateRequ
 	templateReq := plan.toApiRequest()
 	id := plan.ID.ValueString()
 
-	_, _, err := r.client.GetApi().
+	updatedTemplate, _, err := r.client.GetApi().
 		UpdateDataImportTemplate(ctx, id).
 		CreateOrUpdateDataImportTemplateRequest(*templateReq).
 		Execute()
@@ -204,16 +204,7 @@ func (r *DataImportTemplate) Update(ctx context.Context, req resource.UpdateRequ
 		return
 	}
 
-	newTemplate, _, err := r.client.GetApi().GetDataImportTemplate(ctx, id).Execute()
-	if err != nil {
-		resp.Diagnostics.AddError(
-			"Failed to read updated Data Import Template",
-			err.Error(),
-		)
-		return
-	}
-
-	diags = plan.fromApiResponse(newTemplate)
+	diags = plan.fromApiResponse(updatedTemplate)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -250,126 +241,33 @@ func (r *DataImportTemplate) ImportState(ctx context.Context, req resource.Impor
 }
 
 func (model *DataImportTemplateModel) toApiRequest() *v1.CreateOrUpdateDataImportTemplateRequest {
+
 	req := &v1.CreateOrUpdateDataImportTemplateRequest{
-		Name:       model.Name.ValueString(),
-		FileType:   v1.ImportDataTypeEnum(model.FileType.ValueString()),
-		DataMapper: model.DataMapper.ValueString(),
+		Name:        model.Name.ValueString(),
+		FileType:    v1.ImportDataTypeEnum(model.FileType.ValueString()),
+		Icon:        model.Icon.ValueStringPointer(),
+		Description: model.Description.ValueStringPointer(),
+		DataMapper:  model.DataMapper.ValueString(),
 	}
-
-	desc := model.Description.ValueString()
-	req.Description = &desc
-
-	icon := model.Icon.ValueString()
-	req.Icon = &icon
 
 	return req
 }
 
 func (template *DataImportTemplateModel) fromApiResponse(resp *v1.DataImportTemplate) (diags diag.Diagnostics) {
+
 	if resp == nil {
 		diags.AddError("Invalid API response", "Received nil DataImportTemplate response from API")
 		return
 	}
 
 	template.ID = types.StringValue(resp.Id)
+	template.CreatedAt = types.Int64Value(resp.CreatedAt)
+	template.UpdatedAt = types.Int64Value(resp.UpdatedAt)
 	template.Name = types.StringValue(resp.Name)
 	template.FileType = types.StringValue(string(resp.FileType))
 	template.DataMapper = types.StringValue(resp.DataMapper)
-
-	if resp.Description != nil {
-		template.Description = types.StringValue(*resp.Description)
-	} else {
-		template.Description = types.StringNull()
-	}
-
-	if resp.Icon != nil {
-		template.Icon = types.StringValue(*resp.Icon)
-	} else {
-		template.Icon = types.StringNull()
-	}
-
-	if resp.CreatedAt != 0 {
-		template.CreatedAt = types.StringValue(fmt.Sprintf("%d", resp.CreatedAt))
-	} else {
-		template.CreatedAt = types.StringNull()
-	}
-
-	if resp.UpdatedAt != 0 {
-		template.UpdatedAt = types.StringValue(fmt.Sprintf("%d", resp.UpdatedAt))
-	} else {
-		template.UpdatedAt = types.StringNull()
-	}
+	template.Icon = omittableStringValue(resp.Icon, template.Icon)
+	template.Description = omittableStringValue(resp.Description, template.Description)
 
 	return diags
-}
-
-func (r *DataImportTemplate) UpgradeState(ctx context.Context) map[int64]resource.StateUpgrader {
-
-	type DataImportTemplateModelV0 struct {
-		ID          types.String `tfsdk:"id"`
-		Name        types.String `tfsdk:"name"`
-		Description types.String `tfsdk:"description"`
-		Icon        types.String `tfsdk:"icon"`
-		FileType    types.String `tfsdk:"file_type"`
-		DataMapper  types.String `tfsdk:"data_mapper"`
-		CreatedAt   types.String `tfsdk:"created_at"`
-		UpdatedAt   types.String `tfsdk:"updated_at"`
-	}
-
-	return map[int64]resource.StateUpgrader{
-		0: {
-			PriorSchema: &schema.Schema{
-				Attributes: map[string]schema.Attribute{
-					"id": schema.StringAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.UseStateForUnknown(),
-						},
-					},
-					"created_at": schema.StringAttribute{
-						Computed: true,
-					},
-					"updated_at": schema.StringAttribute{
-						Computed: true,
-					},
-					"name": schema.StringAttribute{
-						Required: true,
-					},
-					"description": schema.StringAttribute{
-						Optional: true,
-					},
-					"icon": schema.StringAttribute{
-						Optional: true,
-					},
-					"file_type": schema.StringAttribute{
-						Computed: true,
-					},
-					"data_mapper": schema.StringAttribute{
-						Computed: true,
-					},
-				},
-			},
-			StateUpgrader: func(ctx context.Context, req resource.UpgradeStateRequest, resp *resource.UpgradeStateResponse) {
-				var priorState DataImportTemplateModelV0
-				diags := req.State.Get(ctx, &priorState)
-				resp.Diagnostics.Append(diags...)
-				if resp.Diagnostics.HasError() {
-					return
-				}
-
-				upgradedState := DataImportTemplateModel{
-					ID:          priorState.ID,
-					CreatedAt:   priorState.CreatedAt,
-					UpdatedAt:   priorState.UpdatedAt,
-					Name:        priorState.Name,
-					Description: priorState.Description,
-					Icon:        priorState.Icon,
-					FileType:    priorState.FileType,
-					DataMapper:  priorState.DataMapper,
-				}
-
-				resp.Diagnostics.Append(resp.State.Set(ctx, upgradedState)...)
-			},
-		},
-	}
 }
