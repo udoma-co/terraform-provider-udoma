@@ -41,7 +41,7 @@ func TestAccDataImportTemplateResource(t *testing.T) {
 				Config: resourceDefinitionDataImportTemplate("Customer Import Updated"),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr("udoma_data_import_template.test", "name", "Customer Import Updated"),
-					resource.TestCheckResourceAttr("udoma_data_import_template.test", "description", "Template for importing customer data updated"),
+					resource.TestCheckResourceAttr("udoma_data_import_template.test", "description", "Template for importing customer data"),
 				),
 			},
 		},
