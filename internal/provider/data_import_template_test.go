@@ -54,6 +54,8 @@ resource "udoma_data_import_template" "test" {
   name        = "%s"
   description = "Template for importing customer data"
   icon        = "fa fa-upload"
+  file_type   = "csv"
+  data_mapper = "return [];"
 }
 `, name)
 }

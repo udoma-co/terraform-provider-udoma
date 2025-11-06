@@ -85,14 +85,14 @@ func (r *DataImportTemplate) Schema(ctx context.Context, req resource.SchemaRequ
 				Description: "The icon of the data import template.",
 			},
 			"file_type": schema.StringAttribute{
-				Computed:    true,
+				Required:    true,
 				Description: "The file type of the data import template (csv, txt, json, xml, xlsx, xls).",
 				Validators: []validator.String{
 					stringvalidator.OneOf("csv", "txt", "json", "xml", "xlsx", "xls"),
 				},
 			},
 			"data_mapper": schema.StringAttribute{
-				Computed:    true,
+				Required:    true,
 				Description: "A JS expression that maps imported data to the system’s data model.",
 			},
 		},
@@ -182,8 +182,6 @@ func (r *DataImportTemplate) Read(ctx context.Context, req resource.ReadRequest,
 }
 
 func (r *DataImportTemplate) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-
-	// Retrieve values from plan
 	var plan DataImportTemplateModel
 	diags := req.Plan.Get(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
@@ -194,11 +192,23 @@ func (r *DataImportTemplate) Update(ctx context.Context, req resource.UpdateRequ
 	templateReq := plan.toApiRequest()
 	id := plan.ID.ValueString()
 
-	newTemplate, _, err := r.client.GetApi().UpdateDataImportTemplate(ctx, id).CreateOrUpdateDataImportTemplateRequest(*templateReq).Execute()
+	_, _, err := r.client.GetApi().
+		UpdateDataImportTemplate(ctx, id).
+		CreateOrUpdateDataImportTemplateRequest(*templateReq).
+		Execute()
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error Updating Data Import Template",
 			fmt.Sprintf("Could not update entity in Udoma, unexpected error: %s", getApiErrorMessage(err)),
+		)
+		return
+	}
+
+	newTemplate, _, err := r.client.GetApi().GetDataImportTemplate(ctx, id).Execute()
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"Failed to read updated Data Import Template",
+			err.Error(),
 		)
 		return
 	}
@@ -212,6 +222,7 @@ func (r *DataImportTemplate) Update(ctx context.Context, req resource.UpdateRequ
 	diags = resp.State.Set(ctx, plan)
 	resp.Diagnostics.Append(diags...)
 }
+
 
 func (r *DataImportTemplate) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
 
@@ -240,21 +251,16 @@ func (r *DataImportTemplate) ImportState(ctx context.Context, req resource.Impor
 }
 
 func (model *DataImportTemplateModel) toApiRequest() *v1.CreateOrUpdateDataImportTemplateRequest {
-	ret := &v1.CreateOrUpdateDataImportTemplateRequest{
+	req := &v1.CreateOrUpdateDataImportTemplateRequest{
 		Name:       model.Name.ValueString(),
 		FileType:   v1.ImportDataTypeEnum(model.FileType.ValueString()),
 		DataMapper: model.DataMapper.ValueString(),
 	}
 
-	if !model.Description.IsNull() && !model.Description.IsUnknown() {
-		ret.Description = model.Description.ValueStringPointer()
-	}
+	req.Description = model.Description.ValueString()
+	req.Icon = model.Icon.ValueString()
 
-	if !model.Icon.IsNull() && !model.Icon.IsUnknown() {
-		ret.Icon = model.Icon.ValueStringPointer()
-	}
-
-	return ret
+	return req
 }
 
 func (template *DataImportTemplateModel) fromApiResponse(resp *v1.DataImportTemplate) (diags diag.Diagnostics) {
@@ -278,6 +284,18 @@ func (template *DataImportTemplateModel) fromApiResponse(resp *v1.DataImportTemp
 		template.Icon = types.StringValue(*resp.Icon)
 	} else {
 		template.Icon = types.StringNull()
+	}
+
+	if resp.CreatedAt != 0 {
+		template.CreatedAt = types.StringValue(fmt.Sprintf("%d", resp.CreatedAt))
+	} else {
+		template.CreatedAt = types.StringNull()
+	}
+
+	if resp.UpdatedAt != 0 {
+		template.UpdatedAt = types.StringValue(fmt.Sprintf("%d", resp.UpdatedAt))
+	} else {
+		template.UpdatedAt = types.StringNull()
 	}
 
 	return diags
