@@ -19,8 +19,8 @@ var _ MappedNullable = &UploadInvoiceAttachmentResponse{}
 
 // UploadInvoiceAttachmentResponse struct for UploadInvoiceAttachmentResponse
 type UploadInvoiceAttachmentResponse struct {
-	Attachment     *Attachment     `json:"attachment,omitempty"`
-	PartialInvoice *PartialInvoice `json:"partial_invoice,omitempty"`
+	Attachment      *Attachment      `json:"attachment,omitempty"`
+	InvoiceAnalysis *InvoiceAnalysis `json:"invoice_analysis,omitempty"`
 }
 
 // NewUploadInvoiceAttachmentResponse instantiates a new UploadInvoiceAttachmentResponse object
@@ -72,36 +72,36 @@ func (o *UploadInvoiceAttachmentResponse) SetAttachment(v Attachment) {
 	o.Attachment = &v
 }
 
-// GetPartialInvoice returns the PartialInvoice field value if set, zero value otherwise.
-func (o *UploadInvoiceAttachmentResponse) GetPartialInvoice() PartialInvoice {
-	if o == nil || IsNil(o.PartialInvoice) {
-		var ret PartialInvoice
+// GetInvoiceAnalysis returns the InvoiceAnalysis field value if set, zero value otherwise.
+func (o *UploadInvoiceAttachmentResponse) GetInvoiceAnalysis() InvoiceAnalysis {
+	if o == nil || IsNil(o.InvoiceAnalysis) {
+		var ret InvoiceAnalysis
 		return ret
 	}
-	return *o.PartialInvoice
+	return *o.InvoiceAnalysis
 }
 
-// GetPartialInvoiceOk returns a tuple with the PartialInvoice field value if set, nil otherwise
+// GetInvoiceAnalysisOk returns a tuple with the InvoiceAnalysis field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UploadInvoiceAttachmentResponse) GetPartialInvoiceOk() (*PartialInvoice, bool) {
-	if o == nil || IsNil(o.PartialInvoice) {
+func (o *UploadInvoiceAttachmentResponse) GetInvoiceAnalysisOk() (*InvoiceAnalysis, bool) {
+	if o == nil || IsNil(o.InvoiceAnalysis) {
 		return nil, false
 	}
-	return o.PartialInvoice, true
+	return o.InvoiceAnalysis, true
 }
 
-// HasPartialInvoice returns a boolean if a field has been set.
-func (o *UploadInvoiceAttachmentResponse) HasPartialInvoice() bool {
-	if o != nil && !IsNil(o.PartialInvoice) {
+// HasInvoiceAnalysis returns a boolean if a field has been set.
+func (o *UploadInvoiceAttachmentResponse) HasInvoiceAnalysis() bool {
+	if o != nil && !IsNil(o.InvoiceAnalysis) {
 		return true
 	}
 
 	return false
 }
 
-// SetPartialInvoice gets a reference to the given PartialInvoice and assigns it to the PartialInvoice field.
-func (o *UploadInvoiceAttachmentResponse) SetPartialInvoice(v PartialInvoice) {
-	o.PartialInvoice = &v
+// SetInvoiceAnalysis gets a reference to the given InvoiceAnalysis and assigns it to the InvoiceAnalysis field.
+func (o *UploadInvoiceAttachmentResponse) SetInvoiceAnalysis(v InvoiceAnalysis) {
+	o.InvoiceAnalysis = &v
 }
 
 func (o UploadInvoiceAttachmentResponse) MarshalJSON() ([]byte, error) {
@@ -117,8 +117,8 @@ func (o UploadInvoiceAttachmentResponse) ToMap() (map[string]interface{}, error)
 	if !IsNil(o.Attachment) {
 		toSerialize["attachment"] = o.Attachment
 	}
-	if !IsNil(o.PartialInvoice) {
-		toSerialize["partial_invoice"] = o.PartialInvoice
+	if !IsNil(o.InvoiceAnalysis) {
+		toSerialize["invoice_analysis"] = o.InvoiceAnalysis
 	}
 	return toSerialize, nil
 }

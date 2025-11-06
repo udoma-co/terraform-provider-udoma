@@ -40,6 +40,9 @@ type CreateOrUpdateServiceProvider struct {
 	// optional list of categories, in which the company is providing services
 	Categories []ServiceCategoryEnum `json:"categories,omitempty"`
 	Address    *Address              `json:"address,omitempty"`
+	// optional VAT ID of the company
+	VatId       *string      `json:"vat_id,omitempty"`
+	BankDetails *BankDetails `json:"bank_details,omitempty"`
 }
 
 type _CreateOrUpdateServiceProvider CreateOrUpdateServiceProvider
@@ -374,6 +377,70 @@ func (o *CreateOrUpdateServiceProvider) SetAddress(v Address) {
 	o.Address = &v
 }
 
+// GetVatId returns the VatId field value if set, zero value otherwise.
+func (o *CreateOrUpdateServiceProvider) GetVatId() string {
+	if o == nil || IsNil(o.VatId) {
+		var ret string
+		return ret
+	}
+	return *o.VatId
+}
+
+// GetVatIdOk returns a tuple with the VatId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateServiceProvider) GetVatIdOk() (*string, bool) {
+	if o == nil || IsNil(o.VatId) {
+		return nil, false
+	}
+	return o.VatId, true
+}
+
+// HasVatId returns a boolean if a field has been set.
+func (o *CreateOrUpdateServiceProvider) HasVatId() bool {
+	if o != nil && !IsNil(o.VatId) {
+		return true
+	}
+
+	return false
+}
+
+// SetVatId gets a reference to the given string and assigns it to the VatId field.
+func (o *CreateOrUpdateServiceProvider) SetVatId(v string) {
+	o.VatId = &v
+}
+
+// GetBankDetails returns the BankDetails field value if set, zero value otherwise.
+func (o *CreateOrUpdateServiceProvider) GetBankDetails() BankDetails {
+	if o == nil || IsNil(o.BankDetails) {
+		var ret BankDetails
+		return ret
+	}
+	return *o.BankDetails
+}
+
+// GetBankDetailsOk returns a tuple with the BankDetails field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateServiceProvider) GetBankDetailsOk() (*BankDetails, bool) {
+	if o == nil || IsNil(o.BankDetails) {
+		return nil, false
+	}
+	return o.BankDetails, true
+}
+
+// HasBankDetails returns a boolean if a field has been set.
+func (o *CreateOrUpdateServiceProvider) HasBankDetails() bool {
+	if o != nil && !IsNil(o.BankDetails) {
+		return true
+	}
+
+	return false
+}
+
+// SetBankDetails gets a reference to the given BankDetails and assigns it to the BankDetails field.
+func (o *CreateOrUpdateServiceProvider) SetBankDetails(v BankDetails) {
+	o.BankDetails = &v
+}
+
 func (o CreateOrUpdateServiceProvider) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -411,6 +478,12 @@ func (o CreateOrUpdateServiceProvider) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Address) {
 		toSerialize["address"] = o.Address
+	}
+	if !IsNil(o.VatId) {
+		toSerialize["vat_id"] = o.VatId
+	}
+	if !IsNil(o.BankDetails) {
+		toSerialize["bank_details"] = o.BankDetails
 	}
 	return toSerialize, nil
 }

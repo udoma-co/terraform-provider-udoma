@@ -14,36 +14,36 @@ import (
 	"encoding/json"
 )
 
-// checks if the QueryPartialInvoicesRequest type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &QueryPartialInvoicesRequest{}
+// checks if the QueryInvoiceAnalysesRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &QueryInvoiceAnalysesRequest{}
 
-// QueryPartialInvoicesRequest The data required to query invoices
-type QueryPartialInvoicesRequest struct {
+// QueryInvoiceAnalysesRequest The data required to query invoice analyses
+type QueryInvoiceAnalysesRequest struct {
 	// The maximum number of entities to return from the query
 	Limit *int32 `json:"limit,omitempty"`
 	// The number of entities to skip before returning the result
 	Offset *int32 `json:"offset,omitempty"`
 }
 
-// NewQueryPartialInvoicesRequest instantiates a new QueryPartialInvoicesRequest object
+// NewQueryInvoiceAnalysesRequest instantiates a new QueryInvoiceAnalysesRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewQueryPartialInvoicesRequest() *QueryPartialInvoicesRequest {
-	this := QueryPartialInvoicesRequest{}
+func NewQueryInvoiceAnalysesRequest() *QueryInvoiceAnalysesRequest {
+	this := QueryInvoiceAnalysesRequest{}
 	return &this
 }
 
-// NewQueryPartialInvoicesRequestWithDefaults instantiates a new QueryPartialInvoicesRequest object
+// NewQueryInvoiceAnalysesRequestWithDefaults instantiates a new QueryInvoiceAnalysesRequest object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewQueryPartialInvoicesRequestWithDefaults() *QueryPartialInvoicesRequest {
-	this := QueryPartialInvoicesRequest{}
+func NewQueryInvoiceAnalysesRequestWithDefaults() *QueryInvoiceAnalysesRequest {
+	this := QueryInvoiceAnalysesRequest{}
 	return &this
 }
 
 // GetLimit returns the Limit field value if set, zero value otherwise.
-func (o *QueryPartialInvoicesRequest) GetLimit() int32 {
+func (o *QueryInvoiceAnalysesRequest) GetLimit() int32 {
 	if o == nil || IsNil(o.Limit) {
 		var ret int32
 		return ret
@@ -53,7 +53,7 @@ func (o *QueryPartialInvoicesRequest) GetLimit() int32 {
 
 // GetLimitOk returns a tuple with the Limit field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *QueryPartialInvoicesRequest) GetLimitOk() (*int32, bool) {
+func (o *QueryInvoiceAnalysesRequest) GetLimitOk() (*int32, bool) {
 	if o == nil || IsNil(o.Limit) {
 		return nil, false
 	}
@@ -61,7 +61,7 @@ func (o *QueryPartialInvoicesRequest) GetLimitOk() (*int32, bool) {
 }
 
 // HasLimit returns a boolean if a field has been set.
-func (o *QueryPartialInvoicesRequest) HasLimit() bool {
+func (o *QueryInvoiceAnalysesRequest) HasLimit() bool {
 	if o != nil && !IsNil(o.Limit) {
 		return true
 	}
@@ -70,12 +70,12 @@ func (o *QueryPartialInvoicesRequest) HasLimit() bool {
 }
 
 // SetLimit gets a reference to the given int32 and assigns it to the Limit field.
-func (o *QueryPartialInvoicesRequest) SetLimit(v int32) {
+func (o *QueryInvoiceAnalysesRequest) SetLimit(v int32) {
 	o.Limit = &v
 }
 
 // GetOffset returns the Offset field value if set, zero value otherwise.
-func (o *QueryPartialInvoicesRequest) GetOffset() int32 {
+func (o *QueryInvoiceAnalysesRequest) GetOffset() int32 {
 	if o == nil || IsNil(o.Offset) {
 		var ret int32
 		return ret
@@ -85,7 +85,7 @@ func (o *QueryPartialInvoicesRequest) GetOffset() int32 {
 
 // GetOffsetOk returns a tuple with the Offset field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *QueryPartialInvoicesRequest) GetOffsetOk() (*int32, bool) {
+func (o *QueryInvoiceAnalysesRequest) GetOffsetOk() (*int32, bool) {
 	if o == nil || IsNil(o.Offset) {
 		return nil, false
 	}
@@ -93,7 +93,7 @@ func (o *QueryPartialInvoicesRequest) GetOffsetOk() (*int32, bool) {
 }
 
 // HasOffset returns a boolean if a field has been set.
-func (o *QueryPartialInvoicesRequest) HasOffset() bool {
+func (o *QueryInvoiceAnalysesRequest) HasOffset() bool {
 	if o != nil && !IsNil(o.Offset) {
 		return true
 	}
@@ -102,11 +102,11 @@ func (o *QueryPartialInvoicesRequest) HasOffset() bool {
 }
 
 // SetOffset gets a reference to the given int32 and assigns it to the Offset field.
-func (o *QueryPartialInvoicesRequest) SetOffset(v int32) {
+func (o *QueryInvoiceAnalysesRequest) SetOffset(v int32) {
 	o.Offset = &v
 }
 
-func (o QueryPartialInvoicesRequest) MarshalJSON() ([]byte, error) {
+func (o QueryInvoiceAnalysesRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -114,7 +114,7 @@ func (o QueryPartialInvoicesRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o QueryPartialInvoicesRequest) ToMap() (map[string]interface{}, error) {
+func (o QueryInvoiceAnalysesRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Limit) {
 		toSerialize["limit"] = o.Limit
@@ -125,38 +125,38 @@ func (o QueryPartialInvoicesRequest) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-type NullableQueryPartialInvoicesRequest struct {
-	value *QueryPartialInvoicesRequest
+type NullableQueryInvoiceAnalysesRequest struct {
+	value *QueryInvoiceAnalysesRequest
 	isSet bool
 }
 
-func (v NullableQueryPartialInvoicesRequest) Get() *QueryPartialInvoicesRequest {
+func (v NullableQueryInvoiceAnalysesRequest) Get() *QueryInvoiceAnalysesRequest {
 	return v.value
 }
 
-func (v *NullableQueryPartialInvoicesRequest) Set(val *QueryPartialInvoicesRequest) {
+func (v *NullableQueryInvoiceAnalysesRequest) Set(val *QueryInvoiceAnalysesRequest) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableQueryPartialInvoicesRequest) IsSet() bool {
+func (v NullableQueryInvoiceAnalysesRequest) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableQueryPartialInvoicesRequest) Unset() {
+func (v *NullableQueryInvoiceAnalysesRequest) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableQueryPartialInvoicesRequest(val *QueryPartialInvoicesRequest) *NullableQueryPartialInvoicesRequest {
-	return &NullableQueryPartialInvoicesRequest{value: val, isSet: true}
+func NewNullableQueryInvoiceAnalysesRequest(val *QueryInvoiceAnalysesRequest) *NullableQueryInvoiceAnalysesRequest {
+	return &NullableQueryInvoiceAnalysesRequest{value: val, isSet: true}
 }
 
-func (v NullableQueryPartialInvoicesRequest) MarshalJSON() ([]byte, error) {
+func (v NullableQueryInvoiceAnalysesRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableQueryPartialInvoicesRequest) UnmarshalJSON(src []byte) error {
+func (v *NullableQueryInvoiceAnalysesRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

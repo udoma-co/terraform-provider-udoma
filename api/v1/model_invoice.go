@@ -33,28 +33,31 @@ type Invoice struct {
 	IssueDate int64 `json:"issue_date"`
 	// Timestamp of the invoice due date.
 	DueDate *int64 `json:"due_date,omitempty"`
+	// The subtotal before taxes and fees.
+	SubtotalAmount *float64 `json:"subtotal_amount,omitempty"`
+	// The total amount due on the invoice
+	TotalAmount *float64 `json:"total_amount,omitempty"`
+	// The tax rate applied to the invoice.
+	TaxRate *float64 `json:"tax_rate,omitempty"`
+	// The total tax amount applied to the invoice
+	TaxAmount *float64 `json:"tax_amount,omitempty"`
 	// Currency of the invoice
-	Currency string `json:"currency"`
-	// Reference to the invoice PDF/JPEG. One of partial_invoice_ref or attachment_ref must be supplied.
-	AttachmentRef *string `json:"attachment_ref,omitempty"`
-	// Reference to the partial invoice containing PDF/JPEG. One of partial_invoice_ref or attachment_ref must be supplied.
-	PartialInvoiceRef  *string      `json:"partial_invoice_ref,omitempty"`
-	BankAccountDetails *BankDetails `json:"bank_account_details,omitempty"`
+	Currency *string             `json:"currency,omitempty"`
+	Vendor   NullableContactData `json:"vendor"`
+	// Optional VAT number of the vendor issuing the invoice.
+	VendorVatNumber *string `json:"vendor_vat_number,omitempty"`
+	// Optional customer number referenced in the invoice.
+	CustomerNumber *string      `json:"customer_number,omitempty"`
+	BankDetails    *BankDetails `json:"bank_details,omitempty"`
 	// Optional reference to the provider that issued the invoice.
 	ServiceProviderRef *string `json:"service_provider_ref,omitempty"`
+	// Reference to the invoice PDF/JPEG.
+	AttachmentRef *string `json:"attachment_ref,omitempty"`
 	// Optional reference to the booking that was created when the invoice was booked.
 	BookingRef    *string                  `json:"booking_ref,omitempty"`
 	PaymentStatus InvoicePaymentStatusEnum `json:"payment_status"`
 	// Optional reference to the payment booking that was created when the invoice was paid.
 	PaymentBookingRef *string `json:"payment_booking_ref,omitempty"`
-	// The subtotal before taxes and fees.
-	SubtotalAmount float64 `json:"subtotal_amount"`
-	// The total tax amount applied to the invoice
-	TaxAmount *float64 `json:"tax_amount,omitempty"`
-	// The total amount due on the invoice
-	TotalAmount float64 `json:"total_amount"`
-	// The tax rate applied to the invoice.
-	TaxRate float64 `json:"tax_rate"`
 }
 
 type _Invoice Invoice
@@ -63,18 +66,15 @@ type _Invoice Invoice
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewInvoice(id string, createdAt int64, updatedAt int64, number string, issueDate int64, currency string, paymentStatus InvoicePaymentStatusEnum, subtotalAmount float64, totalAmount float64, taxRate float64) *Invoice {
+func NewInvoice(id string, createdAt int64, updatedAt int64, number string, issueDate int64, vendor NullableContactData, paymentStatus InvoicePaymentStatusEnum) *Invoice {
 	this := Invoice{}
 	this.Id = id
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
 	this.Number = number
 	this.IssueDate = issueDate
-	this.Currency = currency
+	this.Vendor = vendor
 	this.PaymentStatus = paymentStatus
-	this.SubtotalAmount = subtotalAmount
-	this.TotalAmount = totalAmount
-	this.TaxRate = taxRate
 	return &this
 }
 
@@ -238,124 +238,286 @@ func (o *Invoice) SetDueDate(v int64) {
 	o.DueDate = &v
 }
 
-// GetCurrency returns the Currency field value
+// GetSubtotalAmount returns the SubtotalAmount field value if set, zero value otherwise.
+func (o *Invoice) GetSubtotalAmount() float64 {
+	if o == nil || IsNil(o.SubtotalAmount) {
+		var ret float64
+		return ret
+	}
+	return *o.SubtotalAmount
+}
+
+// GetSubtotalAmountOk returns a tuple with the SubtotalAmount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Invoice) GetSubtotalAmountOk() (*float64, bool) {
+	if o == nil || IsNil(o.SubtotalAmount) {
+		return nil, false
+	}
+	return o.SubtotalAmount, true
+}
+
+// HasSubtotalAmount returns a boolean if a field has been set.
+func (o *Invoice) HasSubtotalAmount() bool {
+	if o != nil && !IsNil(o.SubtotalAmount) {
+		return true
+	}
+
+	return false
+}
+
+// SetSubtotalAmount gets a reference to the given float64 and assigns it to the SubtotalAmount field.
+func (o *Invoice) SetSubtotalAmount(v float64) {
+	o.SubtotalAmount = &v
+}
+
+// GetTotalAmount returns the TotalAmount field value if set, zero value otherwise.
+func (o *Invoice) GetTotalAmount() float64 {
+	if o == nil || IsNil(o.TotalAmount) {
+		var ret float64
+		return ret
+	}
+	return *o.TotalAmount
+}
+
+// GetTotalAmountOk returns a tuple with the TotalAmount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Invoice) GetTotalAmountOk() (*float64, bool) {
+	if o == nil || IsNil(o.TotalAmount) {
+		return nil, false
+	}
+	return o.TotalAmount, true
+}
+
+// HasTotalAmount returns a boolean if a field has been set.
+func (o *Invoice) HasTotalAmount() bool {
+	if o != nil && !IsNil(o.TotalAmount) {
+		return true
+	}
+
+	return false
+}
+
+// SetTotalAmount gets a reference to the given float64 and assigns it to the TotalAmount field.
+func (o *Invoice) SetTotalAmount(v float64) {
+	o.TotalAmount = &v
+}
+
+// GetTaxRate returns the TaxRate field value if set, zero value otherwise.
+func (o *Invoice) GetTaxRate() float64 {
+	if o == nil || IsNil(o.TaxRate) {
+		var ret float64
+		return ret
+	}
+	return *o.TaxRate
+}
+
+// GetTaxRateOk returns a tuple with the TaxRate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Invoice) GetTaxRateOk() (*float64, bool) {
+	if o == nil || IsNil(o.TaxRate) {
+		return nil, false
+	}
+	return o.TaxRate, true
+}
+
+// HasTaxRate returns a boolean if a field has been set.
+func (o *Invoice) HasTaxRate() bool {
+	if o != nil && !IsNil(o.TaxRate) {
+		return true
+	}
+
+	return false
+}
+
+// SetTaxRate gets a reference to the given float64 and assigns it to the TaxRate field.
+func (o *Invoice) SetTaxRate(v float64) {
+	o.TaxRate = &v
+}
+
+// GetTaxAmount returns the TaxAmount field value if set, zero value otherwise.
+func (o *Invoice) GetTaxAmount() float64 {
+	if o == nil || IsNil(o.TaxAmount) {
+		var ret float64
+		return ret
+	}
+	return *o.TaxAmount
+}
+
+// GetTaxAmountOk returns a tuple with the TaxAmount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Invoice) GetTaxAmountOk() (*float64, bool) {
+	if o == nil || IsNil(o.TaxAmount) {
+		return nil, false
+	}
+	return o.TaxAmount, true
+}
+
+// HasTaxAmount returns a boolean if a field has been set.
+func (o *Invoice) HasTaxAmount() bool {
+	if o != nil && !IsNil(o.TaxAmount) {
+		return true
+	}
+
+	return false
+}
+
+// SetTaxAmount gets a reference to the given float64 and assigns it to the TaxAmount field.
+func (o *Invoice) SetTaxAmount(v float64) {
+	o.TaxAmount = &v
+}
+
+// GetCurrency returns the Currency field value if set, zero value otherwise.
 func (o *Invoice) GetCurrency() string {
-	if o == nil {
+	if o == nil || IsNil(o.Currency) {
 		var ret string
 		return ret
 	}
-
-	return o.Currency
+	return *o.Currency
 }
 
-// GetCurrencyOk returns a tuple with the Currency field value
+// GetCurrencyOk returns a tuple with the Currency field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Invoice) GetCurrencyOk() (*string, bool) {
+	if o == nil || IsNil(o.Currency) {
+		return nil, false
+	}
+	return o.Currency, true
+}
+
+// HasCurrency returns a boolean if a field has been set.
+func (o *Invoice) HasCurrency() bool {
+	if o != nil && !IsNil(o.Currency) {
+		return true
+	}
+
+	return false
+}
+
+// SetCurrency gets a reference to the given string and assigns it to the Currency field.
+func (o *Invoice) SetCurrency(v string) {
+	o.Currency = &v
+}
+
+// GetVendor returns the Vendor field value
+// If the value is explicit nil, the zero value for ContactData will be returned
+func (o *Invoice) GetVendor() ContactData {
+	if o == nil || o.Vendor.Get() == nil {
+		var ret ContactData
+		return ret
+	}
+
+	return *o.Vendor.Get()
+}
+
+// GetVendorOk returns a tuple with the Vendor field value
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Invoice) GetVendorOk() (*ContactData, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Currency, true
+	return o.Vendor.Get(), o.Vendor.IsSet()
 }
 
-// SetCurrency sets field value
-func (o *Invoice) SetCurrency(v string) {
-	o.Currency = v
+// SetVendor sets field value
+func (o *Invoice) SetVendor(v ContactData) {
+	o.Vendor.Set(&v)
 }
 
-// GetAttachmentRef returns the AttachmentRef field value if set, zero value otherwise.
-func (o *Invoice) GetAttachmentRef() string {
-	if o == nil || IsNil(o.AttachmentRef) {
+// GetVendorVatNumber returns the VendorVatNumber field value if set, zero value otherwise.
+func (o *Invoice) GetVendorVatNumber() string {
+	if o == nil || IsNil(o.VendorVatNumber) {
 		var ret string
 		return ret
 	}
-	return *o.AttachmentRef
+	return *o.VendorVatNumber
 }
 
-// GetAttachmentRefOk returns a tuple with the AttachmentRef field value if set, nil otherwise
+// GetVendorVatNumberOk returns a tuple with the VendorVatNumber field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Invoice) GetAttachmentRefOk() (*string, bool) {
-	if o == nil || IsNil(o.AttachmentRef) {
+func (o *Invoice) GetVendorVatNumberOk() (*string, bool) {
+	if o == nil || IsNil(o.VendorVatNumber) {
 		return nil, false
 	}
-	return o.AttachmentRef, true
+	return o.VendorVatNumber, true
 }
 
-// HasAttachmentRef returns a boolean if a field has been set.
-func (o *Invoice) HasAttachmentRef() bool {
-	if o != nil && !IsNil(o.AttachmentRef) {
+// HasVendorVatNumber returns a boolean if a field has been set.
+func (o *Invoice) HasVendorVatNumber() bool {
+	if o != nil && !IsNil(o.VendorVatNumber) {
 		return true
 	}
 
 	return false
 }
 
-// SetAttachmentRef gets a reference to the given string and assigns it to the AttachmentRef field.
-func (o *Invoice) SetAttachmentRef(v string) {
-	o.AttachmentRef = &v
+// SetVendorVatNumber gets a reference to the given string and assigns it to the VendorVatNumber field.
+func (o *Invoice) SetVendorVatNumber(v string) {
+	o.VendorVatNumber = &v
 }
 
-// GetPartialInvoiceRef returns the PartialInvoiceRef field value if set, zero value otherwise.
-func (o *Invoice) GetPartialInvoiceRef() string {
-	if o == nil || IsNil(o.PartialInvoiceRef) {
+// GetCustomerNumber returns the CustomerNumber field value if set, zero value otherwise.
+func (o *Invoice) GetCustomerNumber() string {
+	if o == nil || IsNil(o.CustomerNumber) {
 		var ret string
 		return ret
 	}
-	return *o.PartialInvoiceRef
+	return *o.CustomerNumber
 }
 
-// GetPartialInvoiceRefOk returns a tuple with the PartialInvoiceRef field value if set, nil otherwise
+// GetCustomerNumberOk returns a tuple with the CustomerNumber field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Invoice) GetPartialInvoiceRefOk() (*string, bool) {
-	if o == nil || IsNil(o.PartialInvoiceRef) {
+func (o *Invoice) GetCustomerNumberOk() (*string, bool) {
+	if o == nil || IsNil(o.CustomerNumber) {
 		return nil, false
 	}
-	return o.PartialInvoiceRef, true
+	return o.CustomerNumber, true
 }
 
-// HasPartialInvoiceRef returns a boolean if a field has been set.
-func (o *Invoice) HasPartialInvoiceRef() bool {
-	if o != nil && !IsNil(o.PartialInvoiceRef) {
+// HasCustomerNumber returns a boolean if a field has been set.
+func (o *Invoice) HasCustomerNumber() bool {
+	if o != nil && !IsNil(o.CustomerNumber) {
 		return true
 	}
 
 	return false
 }
 
-// SetPartialInvoiceRef gets a reference to the given string and assigns it to the PartialInvoiceRef field.
-func (o *Invoice) SetPartialInvoiceRef(v string) {
-	o.PartialInvoiceRef = &v
+// SetCustomerNumber gets a reference to the given string and assigns it to the CustomerNumber field.
+func (o *Invoice) SetCustomerNumber(v string) {
+	o.CustomerNumber = &v
 }
 
-// GetBankAccountDetails returns the BankAccountDetails field value if set, zero value otherwise.
-func (o *Invoice) GetBankAccountDetails() BankDetails {
-	if o == nil || IsNil(o.BankAccountDetails) {
+// GetBankDetails returns the BankDetails field value if set, zero value otherwise.
+func (o *Invoice) GetBankDetails() BankDetails {
+	if o == nil || IsNil(o.BankDetails) {
 		var ret BankDetails
 		return ret
 	}
-	return *o.BankAccountDetails
+	return *o.BankDetails
 }
 
-// GetBankAccountDetailsOk returns a tuple with the BankAccountDetails field value if set, nil otherwise
+// GetBankDetailsOk returns a tuple with the BankDetails field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Invoice) GetBankAccountDetailsOk() (*BankDetails, bool) {
-	if o == nil || IsNil(o.BankAccountDetails) {
+func (o *Invoice) GetBankDetailsOk() (*BankDetails, bool) {
+	if o == nil || IsNil(o.BankDetails) {
 		return nil, false
 	}
-	return o.BankAccountDetails, true
+	return o.BankDetails, true
 }
 
-// HasBankAccountDetails returns a boolean if a field has been set.
-func (o *Invoice) HasBankAccountDetails() bool {
-	if o != nil && !IsNil(o.BankAccountDetails) {
+// HasBankDetails returns a boolean if a field has been set.
+func (o *Invoice) HasBankDetails() bool {
+	if o != nil && !IsNil(o.BankDetails) {
 		return true
 	}
 
 	return false
 }
 
-// SetBankAccountDetails gets a reference to the given BankDetails and assigns it to the BankAccountDetails field.
-func (o *Invoice) SetBankAccountDetails(v BankDetails) {
-	o.BankAccountDetails = &v
+// SetBankDetails gets a reference to the given BankDetails and assigns it to the BankDetails field.
+func (o *Invoice) SetBankDetails(v BankDetails) {
+	o.BankDetails = &v
 }
 
 // GetServiceProviderRef returns the ServiceProviderRef field value if set, zero value otherwise.
@@ -388,6 +550,38 @@ func (o *Invoice) HasServiceProviderRef() bool {
 // SetServiceProviderRef gets a reference to the given string and assigns it to the ServiceProviderRef field.
 func (o *Invoice) SetServiceProviderRef(v string) {
 	o.ServiceProviderRef = &v
+}
+
+// GetAttachmentRef returns the AttachmentRef field value if set, zero value otherwise.
+func (o *Invoice) GetAttachmentRef() string {
+	if o == nil || IsNil(o.AttachmentRef) {
+		var ret string
+		return ret
+	}
+	return *o.AttachmentRef
+}
+
+// GetAttachmentRefOk returns a tuple with the AttachmentRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Invoice) GetAttachmentRefOk() (*string, bool) {
+	if o == nil || IsNil(o.AttachmentRef) {
+		return nil, false
+	}
+	return o.AttachmentRef, true
+}
+
+// HasAttachmentRef returns a boolean if a field has been set.
+func (o *Invoice) HasAttachmentRef() bool {
+	if o != nil && !IsNil(o.AttachmentRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetAttachmentRef gets a reference to the given string and assigns it to the AttachmentRef field.
+func (o *Invoice) SetAttachmentRef(v string) {
+	o.AttachmentRef = &v
 }
 
 // GetBookingRef returns the BookingRef field value if set, zero value otherwise.
@@ -478,110 +672,6 @@ func (o *Invoice) SetPaymentBookingRef(v string) {
 	o.PaymentBookingRef = &v
 }
 
-// GetSubtotalAmount returns the SubtotalAmount field value
-func (o *Invoice) GetSubtotalAmount() float64 {
-	if o == nil {
-		var ret float64
-		return ret
-	}
-
-	return o.SubtotalAmount
-}
-
-// GetSubtotalAmountOk returns a tuple with the SubtotalAmount field value
-// and a boolean to check if the value has been set.
-func (o *Invoice) GetSubtotalAmountOk() (*float64, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.SubtotalAmount, true
-}
-
-// SetSubtotalAmount sets field value
-func (o *Invoice) SetSubtotalAmount(v float64) {
-	o.SubtotalAmount = v
-}
-
-// GetTaxAmount returns the TaxAmount field value if set, zero value otherwise.
-func (o *Invoice) GetTaxAmount() float64 {
-	if o == nil || IsNil(o.TaxAmount) {
-		var ret float64
-		return ret
-	}
-	return *o.TaxAmount
-}
-
-// GetTaxAmountOk returns a tuple with the TaxAmount field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Invoice) GetTaxAmountOk() (*float64, bool) {
-	if o == nil || IsNil(o.TaxAmount) {
-		return nil, false
-	}
-	return o.TaxAmount, true
-}
-
-// HasTaxAmount returns a boolean if a field has been set.
-func (o *Invoice) HasTaxAmount() bool {
-	if o != nil && !IsNil(o.TaxAmount) {
-		return true
-	}
-
-	return false
-}
-
-// SetTaxAmount gets a reference to the given float64 and assigns it to the TaxAmount field.
-func (o *Invoice) SetTaxAmount(v float64) {
-	o.TaxAmount = &v
-}
-
-// GetTotalAmount returns the TotalAmount field value
-func (o *Invoice) GetTotalAmount() float64 {
-	if o == nil {
-		var ret float64
-		return ret
-	}
-
-	return o.TotalAmount
-}
-
-// GetTotalAmountOk returns a tuple with the TotalAmount field value
-// and a boolean to check if the value has been set.
-func (o *Invoice) GetTotalAmountOk() (*float64, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.TotalAmount, true
-}
-
-// SetTotalAmount sets field value
-func (o *Invoice) SetTotalAmount(v float64) {
-	o.TotalAmount = v
-}
-
-// GetTaxRate returns the TaxRate field value
-func (o *Invoice) GetTaxRate() float64 {
-	if o == nil {
-		var ret float64
-		return ret
-	}
-
-	return o.TaxRate
-}
-
-// GetTaxRateOk returns a tuple with the TaxRate field value
-// and a boolean to check if the value has been set.
-func (o *Invoice) GetTaxRateOk() (*float64, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.TaxRate, true
-}
-
-// SetTaxRate sets field value
-func (o *Invoice) SetTaxRate(v float64) {
-	o.TaxRate = v
-}
-
 func (o Invoice) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -600,18 +690,36 @@ func (o Invoice) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.DueDate) {
 		toSerialize["due_date"] = o.DueDate
 	}
-	toSerialize["currency"] = o.Currency
-	if !IsNil(o.AttachmentRef) {
-		toSerialize["attachment_ref"] = o.AttachmentRef
+	if !IsNil(o.SubtotalAmount) {
+		toSerialize["subtotal_amount"] = o.SubtotalAmount
 	}
-	if !IsNil(o.PartialInvoiceRef) {
-		toSerialize["partial_invoice_ref"] = o.PartialInvoiceRef
+	if !IsNil(o.TotalAmount) {
+		toSerialize["total_amount"] = o.TotalAmount
 	}
-	if !IsNil(o.BankAccountDetails) {
-		toSerialize["bank_account_details"] = o.BankAccountDetails
+	if !IsNil(o.TaxRate) {
+		toSerialize["tax_rate"] = o.TaxRate
+	}
+	if !IsNil(o.TaxAmount) {
+		toSerialize["tax_amount"] = o.TaxAmount
+	}
+	if !IsNil(o.Currency) {
+		toSerialize["currency"] = o.Currency
+	}
+	toSerialize["vendor"] = o.Vendor.Get()
+	if !IsNil(o.VendorVatNumber) {
+		toSerialize["vendor_vat_number"] = o.VendorVatNumber
+	}
+	if !IsNil(o.CustomerNumber) {
+		toSerialize["customer_number"] = o.CustomerNumber
+	}
+	if !IsNil(o.BankDetails) {
+		toSerialize["bank_details"] = o.BankDetails
 	}
 	if !IsNil(o.ServiceProviderRef) {
 		toSerialize["service_provider_ref"] = o.ServiceProviderRef
+	}
+	if !IsNil(o.AttachmentRef) {
+		toSerialize["attachment_ref"] = o.AttachmentRef
 	}
 	if !IsNil(o.BookingRef) {
 		toSerialize["booking_ref"] = o.BookingRef
@@ -620,12 +728,6 @@ func (o Invoice) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.PaymentBookingRef) {
 		toSerialize["payment_booking_ref"] = o.PaymentBookingRef
 	}
-	toSerialize["subtotal_amount"] = o.SubtotalAmount
-	if !IsNil(o.TaxAmount) {
-		toSerialize["tax_amount"] = o.TaxAmount
-	}
-	toSerialize["total_amount"] = o.TotalAmount
-	toSerialize["tax_rate"] = o.TaxRate
 	return toSerialize, nil
 }
 
@@ -639,11 +741,8 @@ func (o *Invoice) UnmarshalJSON(data []byte) (err error) {
 		"updated_at",
 		"number",
 		"issue_date",
-		"currency",
+		"vendor",
 		"payment_status",
-		"subtotal_amount",
-		"total_amount",
-		"tax_rate",
 	}
 
 	allProperties := make(map[string]interface{})

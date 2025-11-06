@@ -223,7 +223,6 @@ func (r *DataImportTemplate) Update(ctx context.Context, req resource.UpdateRequ
 	resp.Diagnostics.Append(diags...)
 }
 
-
 func (r *DataImportTemplate) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
 
 	var state DataImportTemplateModel
@@ -257,8 +256,11 @@ func (model *DataImportTemplateModel) toApiRequest() *v1.CreateOrUpdateDataImpor
 		DataMapper: model.DataMapper.ValueString(),
 	}
 
-	req.Description = model.Description.ValueString()
-	req.Icon = model.Icon.ValueString()
+	desc := model.Description.ValueString()
+	req.Description = &desc
+
+	icon := model.Icon.ValueString()
+	req.Icon = &icon
 
 	return req
 }
