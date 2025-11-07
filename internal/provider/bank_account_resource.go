@@ -312,7 +312,7 @@ func (model *BankAccountModel) fromAPI(bankAccount *api.BankAccount) error {
 	model.Description = omittableStringValue(bankAccount.Description, model.Description)
 	model.CreatedAt = types.Int64Value(bankAccount.CreatedAt)
 	model.UpdatedAt = types.Int64Value(bankAccount.UpdatedAt)
-	model.Cadence = types.StringValue(string(*bankAccount.Cadence))
+	model.Cadence = types.StringValue(string(bankAccount.Cadence))
 
 	return nil
 }
@@ -328,7 +328,7 @@ func (model *BankAccountModel) toAPIRequest() (api.CreateOrUpdateBankAccountRequ
 	}
 
 	cadence := api.BalanceCadenceEnum(model.Cadence.ValueString())
-	bankAccount.Cadence = &cadence
+	bankAccount.Cadence = cadence
 
 	return bankAccount, nil
 }

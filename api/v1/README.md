@@ -113,6 +113,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateCustomForm**](docs/DefaultAPI.md#createcustomform) | **Post** /custom-form | Create a new custom form
 *DefaultAPI* | [**CreateCustomIDGenerator**](docs/DefaultAPI.md#createcustomidgenerator) | **Post** /id-generator | Create a new customer specififc ID generator
 *DefaultAPI* | [**CreateCustomerScript**](docs/DefaultAPI.md#createcustomerscript) | **Post** /customer-script | Create a new customer specififc JS script
+*DefaultAPI* | [**CreateDataImportTemplate**](docs/DefaultAPI.md#createdataimporttemplate) | **Post** /data-import/template | Create a new data import template
 *DefaultAPI* | [**CreateDocument**](docs/DefaultAPI.md#createdocument) | **Post** /document-repository/entry | Create a new document
 *DefaultAPI* | [**CreateDocumentGeneration**](docs/DefaultAPI.md#createdocumentgeneration) | **Post** /document-generation/document | Create a new document generation for a template
 *DefaultAPI* | [**CreateDocumentTemplate**](docs/DefaultAPI.md#createdocumenttemplate) | **Post** /document-generation/template | Create a new document template
@@ -120,6 +121,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateFeatureFlagConfig**](docs/DefaultAPI.md#createfeatureflagconfig) | **Post** /feature-flags/config | Create a new feature flag configuration
 *DefaultAPI* | [**CreateFinancialAccount**](docs/DefaultAPI.md#createfinancialaccount) | **Post** /financial/account | Create a new financial account
 *DefaultAPI* | [**CreateHook**](docs/DefaultAPI.md#createhook) | **Post** /hook | Create a new hook
+*DefaultAPI* | [**CreateInvoice**](docs/DefaultAPI.md#createinvoice) | **Post** /invoice | Create invoice request
 *DefaultAPI* | [**CreateMeter**](docs/DefaultAPI.md#createmeter) | **Post** /meter/{propID} | Create a new meter for a property
 *DefaultAPI* | [**CreateMeterReading**](docs/DefaultAPI.md#createmeterreading) | **Post** /meter/{meterID}/readings | Create a new meter reading for a meter
 *DefaultAPI* | [**CreateNote**](docs/DefaultAPI.md#createnote) | **Post** /note | Create a new note
@@ -161,6 +163,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteCustomForm**](docs/DefaultAPI.md#deletecustomform) | **Delete** /custom-form/{formID} | Delete the custom form
 *DefaultAPI* | [**DeleteCustomIDGenerator**](docs/DefaultAPI.md#deletecustomidgenerator) | **Delete** /id-generators/{generatorID} | Delete the custom ID generator with all its related data
 *DefaultAPI* | [**DeleteCustomerScript**](docs/DefaultAPI.md#deletecustomerscript) | **Delete** /customer-scripts/{scriptID} | Delete the script with all its related data
+*DefaultAPI* | [**DeleteDataImportTemplate**](docs/DefaultAPI.md#deletedataimporttemplate) | **Delete** /data-import/template/{templateID} | Delete a data import template
 *DefaultAPI* | [**DeleteDocument**](docs/DefaultAPI.md#deletedocument) | **Delete** /document-repository/entry/{documentID} | Delete a single document
 *DefaultAPI* | [**DeleteDocumentGeneration**](docs/DefaultAPI.md#deletedocumentgeneration) | **Delete** /document-generation/documents/{docID} | Delete an existing document generation
 *DefaultAPI* | [**DeleteDocumentTemplate**](docs/DefaultAPI.md#deletedocumenttemplate) | **Delete** /document-generation/template/{templateID} | Delete a document template
@@ -168,6 +171,8 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteFeatureFlagConfig**](docs/DefaultAPI.md#deletefeatureflagconfig) | **Delete** /feature-flags/config/{entryID} | Delete a feature flag config
 *DefaultAPI* | [**DeleteFinancialAccount**](docs/DefaultAPI.md#deletefinancialaccount) | **Delete** /financial/accounts/{accountID} | Delete the financial account with all its related data
 *DefaultAPI* | [**DeleteHook**](docs/DefaultAPI.md#deletehook) | **Delete** /hook/{hookID} | Delete hook with all its related data
+*DefaultAPI* | [**DeleteInvoice**](docs/DefaultAPI.md#deleteinvoice) | **Delete** /invoice/{invoiceID} | Delete invoice
+*DefaultAPI* | [**DeleteInvoiceAnalysis**](docs/DefaultAPI.md#deleteinvoiceanalysis) | **Delete** /invoice-analysis/{invoiceAnalysisID} | Delete invoice analysis
 *DefaultAPI* | [**DeleteMeter**](docs/DefaultAPI.md#deletemeter) | **Delete** /meter/{meterID} | Delete meter
 *DefaultAPI* | [**DeleteMeterReading**](docs/DefaultAPI.md#deletemeterreading) | **Delete** /meter/{meterID}/reading/{readingID} | Delete meter reading
 *DefaultAPI* | [**DeleteNote**](docs/DefaultAPI.md#deletenote) | **Delete** /notes/{noteID} | Delete note
@@ -199,6 +204,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GenerateDocumentPDF**](docs/DefaultAPI.md#generatedocumentpdf) | **Post** /document-generation/documents/{docID}/generate-pdf | Generate a PDF for the document generation
 *DefaultAPI* | [**GenerateDocumentText**](docs/DefaultAPI.md#generatedocumenttext) | **Post** /document-generation/documents/{docID}/generate-text | Generate the text for the document, based on template and input data 
 *DefaultAPI* | [**GenerateESignatureForDocument**](docs/DefaultAPI.md#generateesignaturefordocument) | **Get** /document-generation/documents/{docID}/esignature/generate | Get the singing status for the document
+*DefaultAPI* | [**GenerateISO20022Invoice**](docs/DefaultAPI.md#generateiso20022invoice) | **Post** /invoice/{invoiceID}/iso20022pain001 | Generate ISO 20022 XML for invoice payment
 *DefaultAPI* | [**GetAccountBooking**](docs/DefaultAPI.md#getaccountbooking) | **Get** /financial/bookings/{bookingID} | Get the booking with all its attributes
 *DefaultAPI* | [**GetAccountDimension**](docs/DefaultAPI.md#getaccountdimension) | **Get** /financial/account-dimension/{dimensionID} | Get the account dimension with all its attributes
 *DefaultAPI* | [**GetAccountDimensionValue**](docs/DefaultAPI.md#getaccountdimensionvalue) | **Get** /financial/account-dimension/{dimensionID}/value/{refID} | Get the account dimension value for a refID with all its attributes
@@ -235,6 +241,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetCustomIDGenerators**](docs/DefaultAPI.md#getcustomidgenerators) | **Get** /id-generators | Get all customer specific ID generators
 *DefaultAPI* | [**GetCustomerScript**](docs/DefaultAPI.md#getcustomerscript) | **Get** /customer-scripts/{scriptID} | Get the script with all its attributes
 *DefaultAPI* | [**GetCustomerScripts**](docs/DefaultAPI.md#getcustomerscripts) | **Get** /customer-scripts | Get all customer specific JS scripts
+*DefaultAPI* | [**GetDataImportTemplate**](docs/DefaultAPI.md#getdataimporttemplate) | **Get** /data-import/template/{templateID} | Get the data import template by ID
 *DefaultAPI* | [**GetDocument**](docs/DefaultAPI.md#getdocument) | **Get** /document-repository/entry/{documentID} | Get an already existing document
 *DefaultAPI* | [**GetDocumentGeneration**](docs/DefaultAPI.md#getdocumentgeneration) | **Get** /document-generation/documents/{docID} | Get a single document generation
 *DefaultAPI* | [**GetDocumentTemplate**](docs/DefaultAPI.md#getdocumenttemplate) | **Get** /document-generation/template/{templateID} | Get a document template
@@ -253,6 +260,8 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetFinancialAccountByFlatNumber**](docs/DefaultAPI.md#getfinancialaccountbyflatnumber) | **Get** /financial/accounts-by-number/{flatNumber} | Get financial account by flat number
 *DefaultAPI* | [**GetFinancialAccountsByRef**](docs/DefaultAPI.md#getfinancialaccountsbyref) | **Post** /financial/account/by-ref/{refType}/{refID} | Get the financial account for a given ref type and ref ID
 *DefaultAPI* | [**GetHook**](docs/DefaultAPI.md#gethook) | **Get** /hook/{hookID} | Get hook with all its attributes
+*DefaultAPI* | [**GetInvoice**](docs/DefaultAPI.md#getinvoice) | **Get** /invoice/{invoiceID} | Get invoice
+*DefaultAPI* | [**GetInvoiceAnalysis**](docs/DefaultAPI.md#getinvoiceanalysis) | **Get** /invoice-analysis/{invoiceAnalysisID} | Load an invoice analysis
 *DefaultAPI* | [**GetLatestPriceIndexPoint**](docs/DefaultAPI.md#getlatestpriceindexpoint) | **Get** /price-index/latest/{countryCode} | Get the current latest PriceIndexPoint
 *DefaultAPI* | [**GetMeter**](docs/DefaultAPI.md#getmeter) | **Get** /meter/{meterID} | Get meter
 *DefaultAPI* | [**GetMeterReading**](docs/DefaultAPI.md#getmeterreading) | **Get** /meter/{meterID}/reading/{readingID} | Get meter reading
@@ -295,6 +304,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetWorkflowExecution**](docs/DefaultAPI.md#getworkflowexecution) | **Get** /workflows/execution/{executionID} | Get workflow execution details
 *DefaultAPI* | [**GetWorkflowExecutionTrigger**](docs/DefaultAPI.md#getworkflowexecutiontrigger) | **Get** /workflows/triggers/{executionID} | Get workflow trigger for an execution
 *DefaultAPI* | [**GetWorkflowTriggersForSource**](docs/DefaultAPI.md#getworkflowtriggersforsource) | **Get** /workflows/trigger/source/{sourceID} | Get workflow triggers for a source
+*DefaultAPI* | [**ImportDataUsingTemplate**](docs/DefaultAPI.md#importdatausingtemplate) | **Post** /data-import/template/{templateID}/import | Import data using the template
 *DefaultAPI* | [**InternalAddPriceIndexPoint**](docs/DefaultAPI.md#internaladdpriceindexpoint) | **Put** /price-index | Push a new value for the inflation index
 *DefaultAPI* | [**InviteToAppointment**](docs/DefaultAPI.md#invitetoappointment) | **Post** /calendar/appointments/entry/{entryID}/invite | Invite a users to an appointment
 *DefaultAPI* | [**LinkAppointmentProperty**](docs/DefaultAPI.md#linkappointmentproperty) | **Post** /calendar/appointments/entry/{entryID}/property/{propID}/link | Link a property to an appointment
@@ -302,6 +312,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**LinkHandoverProperty**](docs/DefaultAPI.md#linkhandoverproperty) | **Post** /property-handovers/handovers/{handoverID}/property/{propID}/link | Link a property to a finalized handover
 *DefaultAPI* | [**PersistBookingPreview**](docs/DefaultAPI.md#persistbookingpreview) | **Post** /financial/booking-preview/{bookingPreviewID}/persist | Persist the bookings in the given booking preview
 *DefaultAPI* | [**PreviewCommentTemplate**](docs/DefaultAPI.md#previewcommenttemplate) | **Post** /comment-template/{commentTemplateID}/preview | Preview a comment template returning an example comment.
+*DefaultAPI* | [**PreviewDataImport**](docs/DefaultAPI.md#previewdataimport) | **Post** /data-import/template/{templateID}/preview | Preview a data import template returning an example data import.
 *DefaultAPI* | [**PublicAddAppointmentComment**](docs/DefaultAPI.md#publicaddappointmentcomment) | **Post** /public/calendar/appointments/entry/{code}/comment | Send a comment in an appointment.
 *DefaultAPI* | [**PublicAddCaseComment**](docs/DefaultAPI.md#publicaddcasecomment) | **Post** /public/case/{caseID}/comment | Add new case comment
 *DefaultAPI* | [**PublicCreateAppointment**](docs/DefaultAPI.md#publiccreateappointment) | **Post** /public/calendar/appointments/{scheduleID}/entry | Create a new appointment for the given schedule
@@ -349,6 +360,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryCommentTemplates**](docs/DefaultAPI.md#querycommenttemplates) | **Post** /comment-templates | Query all comment templates for the account
 *DefaultAPI* | [**QueryCorrespondences**](docs/DefaultAPI.md#querycorrespondences) | **Post** /tenant-correspondences | Get all the correspondences
 *DefaultAPI* | [**QueryCustomForms**](docs/DefaultAPI.md#querycustomforms) | **Get** /custom-forms | Get all custom forms
+*DefaultAPI* | [**QueryDataImportTemplates**](docs/DefaultAPI.md#querydataimporttemplates) | **Post** /data-import/templates | Query all data import templates for given criteria
 *DefaultAPI* | [**QueryDocumentGenerations**](docs/DefaultAPI.md#querydocumentgenerations) | **Post** /document-generation/documents | Request a list of document generations
 *DefaultAPI* | [**QueryDocuments**](docs/DefaultAPI.md#querydocuments) | **Post** /document-repository/entries | Query all document for a certain ref type
 *DefaultAPI* | [**QueryExternalUserCases**](docs/DefaultAPI.md#queryexternalusercases) | **Get** /external-users/{userID}/cases | Get the cases the the given user has opened
@@ -356,6 +368,8 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryFinancialAccountBalances**](docs/DefaultAPI.md#queryfinancialaccountbalances) | **Post** /financial/balances | Query the current balances of all financial accounts
 *DefaultAPI* | [**QueryFinancialAccounts**](docs/DefaultAPI.md#queryfinancialaccounts) | **Post** /financial/accounts | Query all financial accounts
 *DefaultAPI* | [**QueryHooks**](docs/DefaultAPI.md#queryhooks) | **Post** /hooks | Query hooks
+*DefaultAPI* | [**QueryInvoiceAnalyses**](docs/DefaultAPI.md#queryinvoiceanalyses) | **Post** /invoice-analyses | Query invoice analyses
+*DefaultAPI* | [**QueryInvoices**](docs/DefaultAPI.md#queryinvoices) | **Post** /invoices | Query invoices
 *DefaultAPI* | [**QueryNotesForEntity**](docs/DefaultAPI.md#querynotesforentity) | **Get** /notes/by-reference/{refID} | List notes
 *DefaultAPI* | [**QueryNotifications**](docs/DefaultAPI.md#querynotifications) | **Post** /notifications | Query notifications
 *DefaultAPI* | [**QueryProperties**](docs/DefaultAPI.md#queryproperties) | **Post** /properties | Query properties
@@ -402,6 +416,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateCustomForm**](docs/DefaultAPI.md#updatecustomform) | **Put** /custom-form/{formID} | Update the custom form
 *DefaultAPI* | [**UpdateCustomIDGenerator**](docs/DefaultAPI.md#updatecustomidgenerator) | **Put** /id-generators/{generatorID} | Update an already existing ID generator
 *DefaultAPI* | [**UpdateCustomerScript**](docs/DefaultAPI.md#updatecustomerscript) | **Put** /customer-scripts/{scriptID} | Update an already existing script
+*DefaultAPI* | [**UpdateDataImportTemplate**](docs/DefaultAPI.md#updatedataimporttemplate) | **Put** /data-import/template/{templateID} | Update data import template
 *DefaultAPI* | [**UpdateDocument**](docs/DefaultAPI.md#updatedocument) | **Put** /document-repository/entry/{documentID} | Update an already existing document
 *DefaultAPI* | [**UpdateDocumentGeneration**](docs/DefaultAPI.md#updatedocumentgeneration) | **Put** /document-generation/documents/{docID} | Update an already existing document generation
 *DefaultAPI* | [**UpdateDocumentTemplate**](docs/DefaultAPI.md#updatedocumenttemplate) | **Put** /document-generation/template/{templateID} | Update an existing document template
@@ -409,6 +424,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateFeatureFlagConfig**](docs/DefaultAPI.md#updatefeatureflagconfig) | **Put** /feature-flags/config/{entryID} | Update an existing feature flag config
 *DefaultAPI* | [**UpdateFinancialAccount**](docs/DefaultAPI.md#updatefinancialaccount) | **Put** /financial/accounts/{accountID} | Update an already existing financial account
 *DefaultAPI* | [**UpdateHook**](docs/DefaultAPI.md#updatehook) | **Put** /hook/{hookID} | Update an already hook
+*DefaultAPI* | [**UpdateInvoice**](docs/DefaultAPI.md#updateinvoice) | **Put** /invoice/{invoiceID} | Update invoice
 *DefaultAPI* | [**UpdateMeter**](docs/DefaultAPI.md#updatemeter) | **Put** /meter/{meterID} | Update meter
 *DefaultAPI* | [**UpdateMeterReading**](docs/DefaultAPI.md#updatemeterreading) | **Put** /meter/{meterID}/reading/{readingID} | Update meter reading
 *DefaultAPI* | [**UpdateNote**](docs/DefaultAPI.md#updatenote) | **Put** /notes/{noteID} | Update note
@@ -427,6 +443,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateWorkflowDefinition**](docs/DefaultAPI.md#updateworkflowdefinition) | **Put** /workflows/definition/{definitionID} | Update workflow definition
 *DefaultAPI* | [**UpdateWorkflowEntrypoint**](docs/DefaultAPI.md#updateworkflowentrypoint) | **Put** /workflows/entrypoint/{entrypointID} | Update workflow entry point
 *DefaultAPI* | [**UploadAttachment**](docs/DefaultAPI.md#uploadattachment) | **Post** /attachment | Upload new file attachment
+*DefaultAPI* | [**UploadInvoiceAnalysisAttachment**](docs/DefaultAPI.md#uploadinvoiceanalysisattachment) | **Post** /invoice-analysis/attachment | Upload new file invoice attachment
 *DefaultAPI* | [**ValidateCustomForm**](docs/DefaultAPI.md#validatecustomform) | **Post** /custom-form/{formID}/validate | Validate a custom form
 *DefaultAPI* | [**ValidateUserEmail**](docs/DefaultAPI.md#validateuseremail) | **Post** /email/validation | Validate user&#39;s email and point out problems if there are any
 *DefaultAPI* | [**ValidateWorkflowEntrypoint**](docs/DefaultAPI.md#validateworkflowentrypoint) | **Post** /workflows/entrypoint/{entrypointID}/validate | Run the workflow entrypoint validations
@@ -470,8 +487,10 @@ Class | Method | HTTP request | Description
  - [BalanceCadenceEnum](docs/BalanceCadenceEnum.md)
  - [BankAccount](docs/BankAccount.md)
  - [BankAccountAttributesPartial](docs/BankAccountAttributesPartial.md)
+ - [BankDetails](docs/BankDetails.md)
  - [BankTransaction](docs/BankTransaction.md)
  - [BankTransactionAttributesPartial](docs/BankTransactionAttributesPartial.md)
+ - [Base64Response](docs/Base64Response.md)
  - [BookingPreview](docs/BookingPreview.md)
  - [BookingPreviewPartial](docs/BookingPreviewPartial.md)
  - [BookingPreviewSourceTypeEnum](docs/BookingPreviewSourceTypeEnum.md)
@@ -552,11 +571,13 @@ Class | Method | HTTP request | Description
  - [CreateOrUpdateCustomFormRequest](docs/CreateOrUpdateCustomFormRequest.md)
  - [CreateOrUpdateCustomIDGeneratorRequest](docs/CreateOrUpdateCustomIDGeneratorRequest.md)
  - [CreateOrUpdateCustomerScriptRequest](docs/CreateOrUpdateCustomerScriptRequest.md)
+ - [CreateOrUpdateDataImportTemplateRequest](docs/CreateOrUpdateDataImportTemplateRequest.md)
  - [CreateOrUpdateDocumentTemplateRequest](docs/CreateOrUpdateDocumentTemplateRequest.md)
  - [CreateOrUpdateFAQEntryRequest](docs/CreateOrUpdateFAQEntryRequest.md)
  - [CreateOrUpdateFeatureFlagConfigRequest](docs/CreateOrUpdateFeatureFlagConfigRequest.md)
  - [CreateOrUpdateFinancialAccountRequest](docs/CreateOrUpdateFinancialAccountRequest.md)
  - [CreateOrUpdateHookRequest](docs/CreateOrUpdateHookRequest.md)
+ - [CreateOrUpdateInvoiceRequest](docs/CreateOrUpdateInvoiceRequest.md)
  - [CreateOrUpdateMeterReadingRequest](docs/CreateOrUpdateMeterReadingRequest.md)
  - [CreateOrUpdateMeterRequest](docs/CreateOrUpdateMeterRequest.md)
  - [CreateOrUpdatePropertyHandoverRequest](docs/CreateOrUpdatePropertyHandoverRequest.md)
@@ -580,6 +601,10 @@ Class | Method | HTTP request | Description
  - [CustomerScript](docs/CustomerScript.md)
  - [CustomerScriptAttributesPartial](docs/CustomerScriptAttributesPartial.md)
  - [CustomerScriptScope](docs/CustomerScriptScope.md)
+ - [DataImportPreview](docs/DataImportPreview.md)
+ - [DataImportPreviewItem](docs/DataImportPreviewItem.md)
+ - [DataImportTemplate](docs/DataImportTemplate.md)
+ - [DataImportTemplatePartial](docs/DataImportTemplatePartial.md)
  - [DisplayCondition](docs/DisplayCondition.md)
  - [Document](docs/Document.md)
  - [DocumentCreateAttributesPartial](docs/DocumentCreateAttributesPartial.md)
@@ -600,6 +625,7 @@ Class | Method | HTTP request | Description
  - [EntityGeneratedAttributesPartial](docs/EntityGeneratedAttributesPartial.md)
  - [EntityGeneratedCodeAttributePartial](docs/EntityGeneratedCodeAttributePartial.md)
  - [EntityGeneratedIDAttributePartial](docs/EntityGeneratedIDAttributePartial.md)
+ - [EntityImportTypeEnum](docs/EntityImportTypeEnum.md)
  - [EntityNameAttributePartial](docs/EntityNameAttributePartial.md)
  - [EntityReference](docs/EntityReference.md)
  - [EntityTimestampsAttributesPartial](docs/EntityTimestampsAttributesPartial.md)
@@ -635,6 +661,7 @@ Class | Method | HTTP request | Description
  - [FormValidationRequest](docs/FormValidationRequest.md)
  - [FormValidationResponse](docs/FormValidationResponse.md)
  - [GenerateCaseReportingEndpointNoticeRequest](docs/GenerateCaseReportingEndpointNoticeRequest.md)
+ - [GenerateISO20022InvoiceRequest](docs/GenerateISO20022InvoiceRequest.md)
  - [GetAppointmentInfoResponse](docs/GetAppointmentInfoResponse.md)
  - [GetCorrespondenceDocumentResponse](docs/GetCorrespondenceDocumentResponse.md)
  - [GetCorrespondenceStatusResponse](docs/GetCorrespondenceStatusResponse.md)
@@ -652,8 +679,15 @@ Class | Method | HTTP request | Description
  - [HookAttributesPartial](docs/HookAttributesPartial.md)
  - [HookEntity](docs/HookEntity.md)
  - [IDUpload](docs/IDUpload.md)
+ - [ImportDataRequest](docs/ImportDataRequest.md)
+ - [ImportDataTypeEnum](docs/ImportDataTypeEnum.md)
  - [InputItem](docs/InputItem.md)
  - [InviteToAppointmentRequest](docs/InviteToAppointmentRequest.md)
+ - [Invoice](docs/Invoice.md)
+ - [InvoiceAnalysis](docs/InvoiceAnalysis.md)
+ - [InvoiceAnalysisStatusEnum](docs/InvoiceAnalysisStatusEnum.md)
+ - [InvoiceData](docs/InvoiceData.md)
+ - [InvoicePaymentStatusEnum](docs/InvoicePaymentStatusEnum.md)
  - [IsDeletedAttributePartial](docs/IsDeletedAttributePartial.md)
  - [LogRequest](docs/LogRequest.md)
  - [MandatoryMessage](docs/MandatoryMessage.md)
@@ -668,6 +702,7 @@ Class | Method | HTTP request | Description
  - [NotificationAttributesPartial](docs/NotificationAttributesPartial.md)
  - [NotificationROAttributesPartial](docs/NotificationROAttributesPartial.md)
  - [NotificationType](docs/NotificationType.md)
+ - [PreviewDataImportRequest](docs/PreviewDataImportRequest.md)
  - [PriceIndexPoint](docs/PriceIndexPoint.md)
  - [PriceIndexPointQueryRequest](docs/PriceIndexPointQueryRequest.md)
  - [Property](docs/Property.md)
@@ -717,6 +752,7 @@ Class | Method | HTTP request | Description
  - [QueryCorrespondenceRequest](docs/QueryCorrespondenceRequest.md)
  - [QueryCorrespondenceType](docs/QueryCorrespondenceType.md)
  - [QueryCustomFormsResponse](docs/QueryCustomFormsResponse.md)
+ - [QueryDataImportTemplatesRequest](docs/QueryDataImportTemplatesRequest.md)
  - [QueryDocumentGenerationsRequest](docs/QueryDocumentGenerationsRequest.md)
  - [QueryDocumentGenerationsResponse](docs/QueryDocumentGenerationsResponse.md)
  - [QueryDocumentsRequest](docs/QueryDocumentsRequest.md)
@@ -729,6 +765,8 @@ Class | Method | HTTP request | Description
  - [QueryFinancialAccountsRequest](docs/QueryFinancialAccountsRequest.md)
  - [QueryHooksRequest](docs/QueryHooksRequest.md)
  - [QueryHooksResponse](docs/QueryHooksResponse.md)
+ - [QueryInvoiceAnalysesRequest](docs/QueryInvoiceAnalysesRequest.md)
+ - [QueryInvoicesRequest](docs/QueryInvoicesRequest.md)
  - [QueryLimitAttributesPartial](docs/QueryLimitAttributesPartial.md)
  - [QueryNotificationsRequest](docs/QueryNotificationsRequest.md)
  - [QueryNotificationsResponse](docs/QueryNotificationsResponse.md)
@@ -802,6 +840,7 @@ Class | Method | HTTP request | Description
  - [UpdateNotificationRequest](docs/UpdateNotificationRequest.md)
  - [UpdateTenancyRequest](docs/UpdateTenancyRequest.md)
  - [UpdateUserPreferencesRequest](docs/UpdateUserPreferencesRequest.md)
+ - [UploadInvoiceAttachmentResponse](docs/UploadInvoiceAttachmentResponse.md)
  - [UserPreferences](docs/UserPreferences.md)
  - [UserPreferencesAttributesPartial](docs/UserPreferencesAttributesPartial.md)
  - [UserReference](docs/UserReference.md)

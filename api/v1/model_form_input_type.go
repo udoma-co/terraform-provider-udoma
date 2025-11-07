@@ -38,6 +38,7 @@ const (
 	FORMINPUTTYPE_PROPERTY_REF         FormInputType = "property_ref"
 	FORMINPUTTYPE_OWNER_REF            FormInputType = "owner_ref"
 	FORMINPUTTYPE_TENANT_REF           FormInputType = "tenant_ref"
+	FORMINPUTTYPE_BANK_ACCOUNT_REF     FormInputType = "bank_account_ref"
 	FORMINPUTTYPE_REPORTER             FormInputType = "reporter"
 	FORMINPUTTYPE_PROPERTY             FormInputType = "property"
 	FORMINPUTTYPE_CASE_PARTY           FormInputType = "case_party"
@@ -64,6 +65,7 @@ var AllowedFormInputTypeEnumValues = []FormInputType{
 	"property_ref",
 	"owner_ref",
 	"tenant_ref",
+	"bank_account_ref",
 	"reporter",
 	"property",
 	"case_party",

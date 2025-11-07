@@ -50,6 +50,9 @@ type ServiceProvider struct {
 	// optional list of categories, in which the company is providing services
 	Categories []ServiceCategoryEnum `json:"categories,omitempty"`
 	Address    *Address              `json:"address,omitempty"`
+	// optional VAT ID of the company
+	VatId       *string      `json:"vat_id,omitempty"`
+	BankDetails *BankDetails `json:"bank_details,omitempty"`
 	// Indicates whether the service provider has an active account with Udoma. If so, it will be possible to assign cases directly to them.
 	Connected *bool `json:"connected,omitempty"`
 }
@@ -525,6 +528,70 @@ func (o *ServiceProvider) SetAddress(v Address) {
 	o.Address = &v
 }
 
+// GetVatId returns the VatId field value if set, zero value otherwise.
+func (o *ServiceProvider) GetVatId() string {
+	if o == nil || IsNil(o.VatId) {
+		var ret string
+		return ret
+	}
+	return *o.VatId
+}
+
+// GetVatIdOk returns a tuple with the VatId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ServiceProvider) GetVatIdOk() (*string, bool) {
+	if o == nil || IsNil(o.VatId) {
+		return nil, false
+	}
+	return o.VatId, true
+}
+
+// HasVatId returns a boolean if a field has been set.
+func (o *ServiceProvider) HasVatId() bool {
+	if o != nil && !IsNil(o.VatId) {
+		return true
+	}
+
+	return false
+}
+
+// SetVatId gets a reference to the given string and assigns it to the VatId field.
+func (o *ServiceProvider) SetVatId(v string) {
+	o.VatId = &v
+}
+
+// GetBankDetails returns the BankDetails field value if set, zero value otherwise.
+func (o *ServiceProvider) GetBankDetails() BankDetails {
+	if o == nil || IsNil(o.BankDetails) {
+		var ret BankDetails
+		return ret
+	}
+	return *o.BankDetails
+}
+
+// GetBankDetailsOk returns a tuple with the BankDetails field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ServiceProvider) GetBankDetailsOk() (*BankDetails, bool) {
+	if o == nil || IsNil(o.BankDetails) {
+		return nil, false
+	}
+	return o.BankDetails, true
+}
+
+// HasBankDetails returns a boolean if a field has been set.
+func (o *ServiceProvider) HasBankDetails() bool {
+	if o != nil && !IsNil(o.BankDetails) {
+		return true
+	}
+
+	return false
+}
+
+// SetBankDetails gets a reference to the given BankDetails and assigns it to the BankDetails field.
+func (o *ServiceProvider) SetBankDetails(v BankDetails) {
+	o.BankDetails = &v
+}
+
 // GetConnected returns the Connected field value if set, zero value otherwise.
 func (o *ServiceProvider) GetConnected() bool {
 	if o == nil || IsNil(o.Connected) {
@@ -603,6 +670,12 @@ func (o ServiceProvider) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Address) {
 		toSerialize["address"] = o.Address
+	}
+	if !IsNil(o.VatId) {
+		toSerialize["vat_id"] = o.VatId
+	}
+	if !IsNil(o.BankDetails) {
+		toSerialize["bank_details"] = o.BankDetails
 	}
 	if !IsNil(o.Connected) {
 		toSerialize["connected"] = o.Connected
