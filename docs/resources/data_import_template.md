@@ -17,17 +17,17 @@ description: |-
 
 ### Required
 
+- `file_type` (String) The file type of the data import template (csv, txt, json, xml, xlsx, xls).
 - `name` (String) The name of the data import template.
 
 ### Optional
 
+- `data_mapper` (String) A JS expression that maps imported data to the system’s data model.
 - `description` (String) The description of the data import template.
 - `icon` (String) The icon of the data import template.
 
 ### Read-Only
 
-- `created_at` (String) The creation timestamp of the data import template.
-- `data_mapper` (String) A JS expression that maps imported data to the system’s data model.
-- `file_type` (String) The file type of the data import template (csv, txt, json, xml, xlsx, xls).
+- `created_at` (Number) The creation timestamp of the data import template.
 - `id` (String) The ID of the data import template.
-- `updated_at` (String) The last update timestamp of the data import template.
+- `updated_at` (Number) The last update timestamp of the data import template.
