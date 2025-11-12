@@ -92,7 +92,7 @@ func (r *DataImportTemplate) Schema(ctx context.Context, req resource.SchemaRequ
 				},
 			},
 			"data_mapper": schema.StringAttribute{
-				Required:    true,
+				Optional:    true,
 				Description: "A JS expression that maps imported data to the system’s data model.",
 			},
 		},
