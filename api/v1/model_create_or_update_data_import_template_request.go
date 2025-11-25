@@ -28,8 +28,8 @@ type CreateOrUpdateDataImportTemplateRequest struct {
 	// An optional icon representing the data import template in the webapp
 	Icon     *string            `json:"icon,omitempty"`
 	FileType ImportDataTypeEnum `json:"file_type"`
-	// A JS expression that maps the imported data to the system's data model. It should return an array of objects, each representing a record to be imported.
-	DataMapper string             `json:"data_mapper"`
+	// A JS expression that maps the imported data to the system's data model. It should return an array of objects, each representing a record to be imported. Optional for MT940 files as they have a strict structure, but required for all other file types.
+	DataMapper *string            `json:"data_mapper,omitempty"`
 	Parameters NullableCustomForm `json:"parameters,omitempty"`
 }
 
@@ -39,11 +39,10 @@ type _CreateOrUpdateDataImportTemplateRequest CreateOrUpdateDataImportTemplateRe
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateOrUpdateDataImportTemplateRequest(name string, fileType ImportDataTypeEnum, dataMapper string) *CreateOrUpdateDataImportTemplateRequest {
+func NewCreateOrUpdateDataImportTemplateRequest(name string, fileType ImportDataTypeEnum) *CreateOrUpdateDataImportTemplateRequest {
 	this := CreateOrUpdateDataImportTemplateRequest{}
 	this.Name = name
 	this.FileType = fileType
-	this.DataMapper = dataMapper
 	return &this
 }
 
@@ -167,28 +166,36 @@ func (o *CreateOrUpdateDataImportTemplateRequest) SetFileType(v ImportDataTypeEn
 	o.FileType = v
 }
 
-// GetDataMapper returns the DataMapper field value
+// GetDataMapper returns the DataMapper field value if set, zero value otherwise.
 func (o *CreateOrUpdateDataImportTemplateRequest) GetDataMapper() string {
-	if o == nil {
+	if o == nil || IsNil(o.DataMapper) {
 		var ret string
 		return ret
 	}
-
-	return o.DataMapper
+	return *o.DataMapper
 }
 
-// GetDataMapperOk returns a tuple with the DataMapper field value
+// GetDataMapperOk returns a tuple with the DataMapper field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateDataImportTemplateRequest) GetDataMapperOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.DataMapper) {
 		return nil, false
 	}
-	return &o.DataMapper, true
+	return o.DataMapper, true
 }
 
-// SetDataMapper sets field value
+// HasDataMapper returns a boolean if a field has been set.
+func (o *CreateOrUpdateDataImportTemplateRequest) HasDataMapper() bool {
+	if o != nil && !IsNil(o.DataMapper) {
+		return true
+	}
+
+	return false
+}
+
+// SetDataMapper gets a reference to the given string and assigns it to the DataMapper field.
 func (o *CreateOrUpdateDataImportTemplateRequest) SetDataMapper(v string) {
-	o.DataMapper = v
+	o.DataMapper = &v
 }
 
 // GetParameters returns the Parameters field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -252,7 +259,9 @@ func (o CreateOrUpdateDataImportTemplateRequest) ToMap() (map[string]interface{}
 		toSerialize["icon"] = o.Icon
 	}
 	toSerialize["file_type"] = o.FileType
-	toSerialize["data_mapper"] = o.DataMapper
+	if !IsNil(o.DataMapper) {
+		toSerialize["data_mapper"] = o.DataMapper
+	}
 	if o.Parameters.IsSet() {
 		toSerialize["parameters"] = o.Parameters.Get()
 	}
@@ -266,7 +275,6 @@ func (o *CreateOrUpdateDataImportTemplateRequest) UnmarshalJSON(data []byte) (er
 	requiredProperties := []string{
 		"name",
 		"file_type",
-		"data_mapper",
 	}
 
 	allProperties := make(map[string]interface{})

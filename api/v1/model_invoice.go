@@ -47,10 +47,20 @@ type Invoice struct {
 	// Optional VAT number of the vendor issuing the invoice.
 	VendorVatNumber *string `json:"vendor_vat_number,omitempty"`
 	// Optional customer number referenced in the invoice.
-	CustomerNumber *string      `json:"customer_number,omitempty"`
-	BankDetails    *BankDetails `json:"bank_details,omitempty"`
+	CustomerNumber *string `json:"customer_number,omitempty"`
+	// Optional meter number referenced in the invoice. This is typically used for utility invoices.
+	MeterNumber       *string      `json:"meter_number,omitempty"`
+	VendorBankDetails *BankDetails `json:"vendor_bank_details,omitempty"`
+	// Optional property address for which the invoice is issued. This is typically detected as a single line
+	PropertyAddress *string `json:"property_address,omitempty"`
+	// Optional reference to the property for which the invoice is issued. This can be set by the user based on the property_address.
+	PropertyRef *string `json:"property_ref,omitempty"`
 	// Optional reference to the provider that issued the invoice.
 	ServiceProviderRef *string `json:"service_provider_ref,omitempty"`
+	// Optional reference to the bank account from which the invoice will be paid.
+	PaymentBankAccountRef *string `json:"payment_bank_account_ref,omitempty"`
+	// Optional reference to the meter that this invoice is associated with.  This is typically used for utility invoices.
+	MeterRef *string `json:"meter_ref,omitempty"`
 	// Reference to the invoice PDF/JPEG.
 	AttachmentRef *string `json:"attachment_ref,omitempty"`
 	// Optional reference to the booking that was created when the invoice was booked.
@@ -58,6 +68,8 @@ type Invoice struct {
 	PaymentStatus InvoicePaymentStatusEnum `json:"payment_status"`
 	// Optional reference to the payment booking that was created when the invoice was paid.
 	PaymentBookingRef *string `json:"payment_booking_ref,omitempty"`
+	// Whether the invoice has been archived. Archived invoices are typically hidden from default views.
+	Archived *bool `json:"archived,omitempty"`
 }
 
 type _Invoice Invoice
@@ -488,36 +500,132 @@ func (o *Invoice) SetCustomerNumber(v string) {
 	o.CustomerNumber = &v
 }
 
-// GetBankDetails returns the BankDetails field value if set, zero value otherwise.
-func (o *Invoice) GetBankDetails() BankDetails {
-	if o == nil || IsNil(o.BankDetails) {
-		var ret BankDetails
+// GetMeterNumber returns the MeterNumber field value if set, zero value otherwise.
+func (o *Invoice) GetMeterNumber() string {
+	if o == nil || IsNil(o.MeterNumber) {
+		var ret string
 		return ret
 	}
-	return *o.BankDetails
+	return *o.MeterNumber
 }
 
-// GetBankDetailsOk returns a tuple with the BankDetails field value if set, nil otherwise
+// GetMeterNumberOk returns a tuple with the MeterNumber field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Invoice) GetBankDetailsOk() (*BankDetails, bool) {
-	if o == nil || IsNil(o.BankDetails) {
+func (o *Invoice) GetMeterNumberOk() (*string, bool) {
+	if o == nil || IsNil(o.MeterNumber) {
 		return nil, false
 	}
-	return o.BankDetails, true
+	return o.MeterNumber, true
 }
 
-// HasBankDetails returns a boolean if a field has been set.
-func (o *Invoice) HasBankDetails() bool {
-	if o != nil && !IsNil(o.BankDetails) {
+// HasMeterNumber returns a boolean if a field has been set.
+func (o *Invoice) HasMeterNumber() bool {
+	if o != nil && !IsNil(o.MeterNumber) {
 		return true
 	}
 
 	return false
 }
 
-// SetBankDetails gets a reference to the given BankDetails and assigns it to the BankDetails field.
-func (o *Invoice) SetBankDetails(v BankDetails) {
-	o.BankDetails = &v
+// SetMeterNumber gets a reference to the given string and assigns it to the MeterNumber field.
+func (o *Invoice) SetMeterNumber(v string) {
+	o.MeterNumber = &v
+}
+
+// GetVendorBankDetails returns the VendorBankDetails field value if set, zero value otherwise.
+func (o *Invoice) GetVendorBankDetails() BankDetails {
+	if o == nil || IsNil(o.VendorBankDetails) {
+		var ret BankDetails
+		return ret
+	}
+	return *o.VendorBankDetails
+}
+
+// GetVendorBankDetailsOk returns a tuple with the VendorBankDetails field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Invoice) GetVendorBankDetailsOk() (*BankDetails, bool) {
+	if o == nil || IsNil(o.VendorBankDetails) {
+		return nil, false
+	}
+	return o.VendorBankDetails, true
+}
+
+// HasVendorBankDetails returns a boolean if a field has been set.
+func (o *Invoice) HasVendorBankDetails() bool {
+	if o != nil && !IsNil(o.VendorBankDetails) {
+		return true
+	}
+
+	return false
+}
+
+// SetVendorBankDetails gets a reference to the given BankDetails and assigns it to the VendorBankDetails field.
+func (o *Invoice) SetVendorBankDetails(v BankDetails) {
+	o.VendorBankDetails = &v
+}
+
+// GetPropertyAddress returns the PropertyAddress field value if set, zero value otherwise.
+func (o *Invoice) GetPropertyAddress() string {
+	if o == nil || IsNil(o.PropertyAddress) {
+		var ret string
+		return ret
+	}
+	return *o.PropertyAddress
+}
+
+// GetPropertyAddressOk returns a tuple with the PropertyAddress field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Invoice) GetPropertyAddressOk() (*string, bool) {
+	if o == nil || IsNil(o.PropertyAddress) {
+		return nil, false
+	}
+	return o.PropertyAddress, true
+}
+
+// HasPropertyAddress returns a boolean if a field has been set.
+func (o *Invoice) HasPropertyAddress() bool {
+	if o != nil && !IsNil(o.PropertyAddress) {
+		return true
+	}
+
+	return false
+}
+
+// SetPropertyAddress gets a reference to the given string and assigns it to the PropertyAddress field.
+func (o *Invoice) SetPropertyAddress(v string) {
+	o.PropertyAddress = &v
+}
+
+// GetPropertyRef returns the PropertyRef field value if set, zero value otherwise.
+func (o *Invoice) GetPropertyRef() string {
+	if o == nil || IsNil(o.PropertyRef) {
+		var ret string
+		return ret
+	}
+	return *o.PropertyRef
+}
+
+// GetPropertyRefOk returns a tuple with the PropertyRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Invoice) GetPropertyRefOk() (*string, bool) {
+	if o == nil || IsNil(o.PropertyRef) {
+		return nil, false
+	}
+	return o.PropertyRef, true
+}
+
+// HasPropertyRef returns a boolean if a field has been set.
+func (o *Invoice) HasPropertyRef() bool {
+	if o != nil && !IsNil(o.PropertyRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetPropertyRef gets a reference to the given string and assigns it to the PropertyRef field.
+func (o *Invoice) SetPropertyRef(v string) {
+	o.PropertyRef = &v
 }
 
 // GetServiceProviderRef returns the ServiceProviderRef field value if set, zero value otherwise.
@@ -550,6 +658,70 @@ func (o *Invoice) HasServiceProviderRef() bool {
 // SetServiceProviderRef gets a reference to the given string and assigns it to the ServiceProviderRef field.
 func (o *Invoice) SetServiceProviderRef(v string) {
 	o.ServiceProviderRef = &v
+}
+
+// GetPaymentBankAccountRef returns the PaymentBankAccountRef field value if set, zero value otherwise.
+func (o *Invoice) GetPaymentBankAccountRef() string {
+	if o == nil || IsNil(o.PaymentBankAccountRef) {
+		var ret string
+		return ret
+	}
+	return *o.PaymentBankAccountRef
+}
+
+// GetPaymentBankAccountRefOk returns a tuple with the PaymentBankAccountRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Invoice) GetPaymentBankAccountRefOk() (*string, bool) {
+	if o == nil || IsNil(o.PaymentBankAccountRef) {
+		return nil, false
+	}
+	return o.PaymentBankAccountRef, true
+}
+
+// HasPaymentBankAccountRef returns a boolean if a field has been set.
+func (o *Invoice) HasPaymentBankAccountRef() bool {
+	if o != nil && !IsNil(o.PaymentBankAccountRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetPaymentBankAccountRef gets a reference to the given string and assigns it to the PaymentBankAccountRef field.
+func (o *Invoice) SetPaymentBankAccountRef(v string) {
+	o.PaymentBankAccountRef = &v
+}
+
+// GetMeterRef returns the MeterRef field value if set, zero value otherwise.
+func (o *Invoice) GetMeterRef() string {
+	if o == nil || IsNil(o.MeterRef) {
+		var ret string
+		return ret
+	}
+	return *o.MeterRef
+}
+
+// GetMeterRefOk returns a tuple with the MeterRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Invoice) GetMeterRefOk() (*string, bool) {
+	if o == nil || IsNil(o.MeterRef) {
+		return nil, false
+	}
+	return o.MeterRef, true
+}
+
+// HasMeterRef returns a boolean if a field has been set.
+func (o *Invoice) HasMeterRef() bool {
+	if o != nil && !IsNil(o.MeterRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetMeterRef gets a reference to the given string and assigns it to the MeterRef field.
+func (o *Invoice) SetMeterRef(v string) {
+	o.MeterRef = &v
 }
 
 // GetAttachmentRef returns the AttachmentRef field value if set, zero value otherwise.
@@ -672,6 +844,38 @@ func (o *Invoice) SetPaymentBookingRef(v string) {
 	o.PaymentBookingRef = &v
 }
 
+// GetArchived returns the Archived field value if set, zero value otherwise.
+func (o *Invoice) GetArchived() bool {
+	if o == nil || IsNil(o.Archived) {
+		var ret bool
+		return ret
+	}
+	return *o.Archived
+}
+
+// GetArchivedOk returns a tuple with the Archived field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Invoice) GetArchivedOk() (*bool, bool) {
+	if o == nil || IsNil(o.Archived) {
+		return nil, false
+	}
+	return o.Archived, true
+}
+
+// HasArchived returns a boolean if a field has been set.
+func (o *Invoice) HasArchived() bool {
+	if o != nil && !IsNil(o.Archived) {
+		return true
+	}
+
+	return false
+}
+
+// SetArchived gets a reference to the given bool and assigns it to the Archived field.
+func (o *Invoice) SetArchived(v bool) {
+	o.Archived = &v
+}
+
 func (o Invoice) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -712,11 +916,26 @@ func (o Invoice) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.CustomerNumber) {
 		toSerialize["customer_number"] = o.CustomerNumber
 	}
-	if !IsNil(o.BankDetails) {
-		toSerialize["bank_details"] = o.BankDetails
+	if !IsNil(o.MeterNumber) {
+		toSerialize["meter_number"] = o.MeterNumber
+	}
+	if !IsNil(o.VendorBankDetails) {
+		toSerialize["vendor_bank_details"] = o.VendorBankDetails
+	}
+	if !IsNil(o.PropertyAddress) {
+		toSerialize["property_address"] = o.PropertyAddress
+	}
+	if !IsNil(o.PropertyRef) {
+		toSerialize["property_ref"] = o.PropertyRef
 	}
 	if !IsNil(o.ServiceProviderRef) {
 		toSerialize["service_provider_ref"] = o.ServiceProviderRef
+	}
+	if !IsNil(o.PaymentBankAccountRef) {
+		toSerialize["payment_bank_account_ref"] = o.PaymentBankAccountRef
+	}
+	if !IsNil(o.MeterRef) {
+		toSerialize["meter_ref"] = o.MeterRef
 	}
 	if !IsNil(o.AttachmentRef) {
 		toSerialize["attachment_ref"] = o.AttachmentRef
@@ -727,6 +946,9 @@ func (o Invoice) ToMap() (map[string]interface{}, error) {
 	toSerialize["payment_status"] = o.PaymentStatus
 	if !IsNil(o.PaymentBookingRef) {
 		toSerialize["payment_booking_ref"] = o.PaymentBookingRef
+	}
+	if !IsNil(o.Archived) {
+		toSerialize["archived"] = o.Archived
 	}
 	return toSerialize, nil
 }

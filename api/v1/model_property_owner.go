@@ -46,6 +46,8 @@ type PropertyOwner struct {
 	Address     *Address `json:"address,omitempty"`
 	// the reference to the bank account of the owner
 	BankAccountRef *string `json:"bank_account_ref,omitempty"`
+	// Extensions data for this property owner, keyed by extension key
+	Extensions *map[string]map[string]interface{} `json:"extensions,omitempty"`
 }
 
 type _PropertyOwner PropertyOwner
@@ -462,6 +464,38 @@ func (o *PropertyOwner) SetBankAccountRef(v string) {
 	o.BankAccountRef = &v
 }
 
+// GetExtensions returns the Extensions field value if set, zero value otherwise.
+func (o *PropertyOwner) GetExtensions() map[string]map[string]interface{} {
+	if o == nil || IsNil(o.Extensions) {
+		var ret map[string]map[string]interface{}
+		return ret
+	}
+	return *o.Extensions
+}
+
+// GetExtensionsOk returns a tuple with the Extensions field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PropertyOwner) GetExtensionsOk() (*map[string]map[string]interface{}, bool) {
+	if o == nil || IsNil(o.Extensions) {
+		return nil, false
+	}
+	return o.Extensions, true
+}
+
+// HasExtensions returns a boolean if a field has been set.
+func (o *PropertyOwner) HasExtensions() bool {
+	if o != nil && !IsNil(o.Extensions) {
+		return true
+	}
+
+	return false
+}
+
+// SetExtensions gets a reference to the given map[string]map[string]interface{} and assigns it to the Extensions field.
+func (o *PropertyOwner) SetExtensions(v map[string]map[string]interface{}) {
+	o.Extensions = &v
+}
+
 func (o PropertyOwner) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -504,6 +538,9 @@ func (o PropertyOwner) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.BankAccountRef) {
 		toSerialize["bank_account_ref"] = o.BankAccountRef
+	}
+	if !IsNil(o.Extensions) {
+		toSerialize["extensions"] = o.Extensions
 	}
 	return toSerialize, nil
 }

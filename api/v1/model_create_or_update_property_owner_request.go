@@ -34,6 +34,8 @@ type CreateOrUpdatePropertyOwnerRequest struct {
 	Address     *Address `json:"address,omitempty"`
 	// the reference to the bank account of the owner
 	BankAccountRef *string `json:"bank_account_ref,omitempty"`
+	// Extensions data for this property owner, keyed by extension key
+	Extensions *map[string]map[string]interface{} `json:"extensions,omitempty"`
 }
 
 // NewCreateOrUpdatePropertyOwnerRequest instantiates a new CreateOrUpdatePropertyOwnerRequest object
@@ -309,6 +311,38 @@ func (o *CreateOrUpdatePropertyOwnerRequest) SetBankAccountRef(v string) {
 	o.BankAccountRef = &v
 }
 
+// GetExtensions returns the Extensions field value if set, zero value otherwise.
+func (o *CreateOrUpdatePropertyOwnerRequest) GetExtensions() map[string]map[string]interface{} {
+	if o == nil || IsNil(o.Extensions) {
+		var ret map[string]map[string]interface{}
+		return ret
+	}
+	return *o.Extensions
+}
+
+// GetExtensionsOk returns a tuple with the Extensions field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdatePropertyOwnerRequest) GetExtensionsOk() (*map[string]map[string]interface{}, bool) {
+	if o == nil || IsNil(o.Extensions) {
+		return nil, false
+	}
+	return o.Extensions, true
+}
+
+// HasExtensions returns a boolean if a field has been set.
+func (o *CreateOrUpdatePropertyOwnerRequest) HasExtensions() bool {
+	if o != nil && !IsNil(o.Extensions) {
+		return true
+	}
+
+	return false
+}
+
+// SetExtensions gets a reference to the given map[string]map[string]interface{} and assigns it to the Extensions field.
+func (o *CreateOrUpdatePropertyOwnerRequest) SetExtensions(v map[string]map[string]interface{}) {
+	o.Extensions = &v
+}
+
 func (o CreateOrUpdatePropertyOwnerRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -342,6 +376,9 @@ func (o CreateOrUpdatePropertyOwnerRequest) ToMap() (map[string]interface{}, err
 	}
 	if !IsNil(o.BankAccountRef) {
 		toSerialize["bank_account_ref"] = o.BankAccountRef
+	}
+	if !IsNil(o.Extensions) {
+		toSerialize["extensions"] = o.Extensions
 	}
 	return toSerialize, nil
 }

@@ -23,6 +23,7 @@ const (
 	INVOICEANALYSISSTATUSENUM_IN_PROGRESS InvoiceAnalysisStatusEnum = "IN_PROGRESS"
 	INVOICEANALYSISSTATUSENUM_SUCCESS     InvoiceAnalysisStatusEnum = "SUCCESS"
 	INVOICEANALYSISSTATUSENUM_FAILURE     InvoiceAnalysisStatusEnum = "FAILURE"
+	INVOICEANALYSISSTATUSENUM_PROCESSED   InvoiceAnalysisStatusEnum = "PROCESSED"
 )
 
 // All allowed values of InvoiceAnalysisStatusEnum enum
@@ -30,6 +31,7 @@ var AllowedInvoiceAnalysisStatusEnumEnumValues = []InvoiceAnalysisStatusEnum{
 	"IN_PROGRESS",
 	"SUCCESS",
 	"FAILURE",
+	"PROCESSED",
 }
 
 func (v *InvoiceAnalysisStatusEnum) UnmarshalJSON(src []byte) error {

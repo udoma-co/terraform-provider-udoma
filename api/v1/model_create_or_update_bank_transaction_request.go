@@ -32,6 +32,8 @@ type CreateOrUpdateBankTransactionRequest struct {
 	SourceTargetName string `json:"source_target_name"`
 	// The IBAN of the source/target account of the transaction
 	SourceTargetIban string `json:"source_target_iban"`
+	// An external identifier for the transaction, e.g. provided by the bank
+	ExternalId *string `json:"external_id,omitempty"`
 }
 
 type _CreateOrUpdateBankTransactionRequest CreateOrUpdateBankTransactionRequest
@@ -203,6 +205,38 @@ func (o *CreateOrUpdateBankTransactionRequest) SetSourceTargetIban(v string) {
 	o.SourceTargetIban = v
 }
 
+// GetExternalId returns the ExternalId field value if set, zero value otherwise.
+func (o *CreateOrUpdateBankTransactionRequest) GetExternalId() string {
+	if o == nil || IsNil(o.ExternalId) {
+		var ret string
+		return ret
+	}
+	return *o.ExternalId
+}
+
+// GetExternalIdOk returns a tuple with the ExternalId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateBankTransactionRequest) GetExternalIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ExternalId) {
+		return nil, false
+	}
+	return o.ExternalId, true
+}
+
+// HasExternalId returns a boolean if a field has been set.
+func (o *CreateOrUpdateBankTransactionRequest) HasExternalId() bool {
+	if o != nil && !IsNil(o.ExternalId) {
+		return true
+	}
+
+	return false
+}
+
+// SetExternalId gets a reference to the given string and assigns it to the ExternalId field.
+func (o *CreateOrUpdateBankTransactionRequest) SetExternalId(v string) {
+	o.ExternalId = &v
+}
+
 func (o CreateOrUpdateBankTransactionRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -219,6 +253,9 @@ func (o CreateOrUpdateBankTransactionRequest) ToMap() (map[string]interface{}, e
 	toSerialize["description"] = o.Description
 	toSerialize["source_target_name"] = o.SourceTargetName
 	toSerialize["source_target_iban"] = o.SourceTargetIban
+	if !IsNil(o.ExternalId) {
+		toSerialize["external_id"] = o.ExternalId
+	}
 	return toSerialize, nil
 }
 

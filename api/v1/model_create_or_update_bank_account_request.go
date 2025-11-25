@@ -29,9 +29,13 @@ type CreateOrUpdateBankAccountRequest struct {
 	Bic *string `json:"bic,omitempty"`
 	// The name of the bank (optional)
 	BankName *string `json:"bank_name,omitempty"`
+	// The ID of the external bank (optional)
+	ExternalId *string `json:"external_id,omitempty"`
 	// A user friendly label, used to identify the account (optional)
 	Description *string            `json:"description,omitempty"`
 	Cadence     BalanceCadenceEnum `json:"cadence"`
+	// An external identifier for the bank account, e.g. provided by the bank
+	ExternalBankId *string `json:"external_bank_id,omitempty"`
 }
 
 type _CreateOrUpdateBankAccountRequest CreateOrUpdateBankAccountRequest
@@ -168,6 +172,38 @@ func (o *CreateOrUpdateBankAccountRequest) SetBankName(v string) {
 	o.BankName = &v
 }
 
+// GetExternalId returns the ExternalId field value if set, zero value otherwise.
+func (o *CreateOrUpdateBankAccountRequest) GetExternalId() string {
+	if o == nil || IsNil(o.ExternalId) {
+		var ret string
+		return ret
+	}
+	return *o.ExternalId
+}
+
+// GetExternalIdOk returns a tuple with the ExternalId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateBankAccountRequest) GetExternalIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ExternalId) {
+		return nil, false
+	}
+	return o.ExternalId, true
+}
+
+// HasExternalId returns a boolean if a field has been set.
+func (o *CreateOrUpdateBankAccountRequest) HasExternalId() bool {
+	if o != nil && !IsNil(o.ExternalId) {
+		return true
+	}
+
+	return false
+}
+
+// SetExternalId gets a reference to the given string and assigns it to the ExternalId field.
+func (o *CreateOrUpdateBankAccountRequest) SetExternalId(v string) {
+	o.ExternalId = &v
+}
+
 // GetDescription returns the Description field value if set, zero value otherwise.
 func (o *CreateOrUpdateBankAccountRequest) GetDescription() string {
 	if o == nil || IsNil(o.Description) {
@@ -224,6 +260,38 @@ func (o *CreateOrUpdateBankAccountRequest) SetCadence(v BalanceCadenceEnum) {
 	o.Cadence = v
 }
 
+// GetExternalBankId returns the ExternalBankId field value if set, zero value otherwise.
+func (o *CreateOrUpdateBankAccountRequest) GetExternalBankId() string {
+	if o == nil || IsNil(o.ExternalBankId) {
+		var ret string
+		return ret
+	}
+	return *o.ExternalBankId
+}
+
+// GetExternalBankIdOk returns a tuple with the ExternalBankId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateBankAccountRequest) GetExternalBankIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ExternalBankId) {
+		return nil, false
+	}
+	return o.ExternalBankId, true
+}
+
+// HasExternalBankId returns a boolean if a field has been set.
+func (o *CreateOrUpdateBankAccountRequest) HasExternalBankId() bool {
+	if o != nil && !IsNil(o.ExternalBankId) {
+		return true
+	}
+
+	return false
+}
+
+// SetExternalBankId gets a reference to the given string and assigns it to the ExternalBankId field.
+func (o *CreateOrUpdateBankAccountRequest) SetExternalBankId(v string) {
+	o.ExternalBankId = &v
+}
+
 func (o CreateOrUpdateBankAccountRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -242,10 +310,16 @@ func (o CreateOrUpdateBankAccountRequest) ToMap() (map[string]interface{}, error
 	if !IsNil(o.BankName) {
 		toSerialize["bank_name"] = o.BankName
 	}
+	if !IsNil(o.ExternalId) {
+		toSerialize["external_id"] = o.ExternalId
+	}
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
 	}
 	toSerialize["cadence"] = o.Cadence
+	if !IsNil(o.ExternalBankId) {
+		toSerialize["external_bank_id"] = o.ExternalBankId
+	}
 	return toSerialize, nil
 }
 

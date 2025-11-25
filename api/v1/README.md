@@ -83,6 +83,8 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**ArchiveCase**](docs/DefaultAPI.md#archivecase) | **Post** /case/{caseID}/archive | Mark the case as archived
 *DefaultAPI* | [**ArchiveCorrespondence**](docs/DefaultAPI.md#archivecorrespondence) | **Post** /tenant-correspondence/{corrID}/archive | Archive a tenant correspondence.
 *DefaultAPI* | [**ArchiveDocumentGeneration**](docs/DefaultAPI.md#archivedocumentgeneration) | **Post** /document-generation/documents/{docID}/archive | Move the document generation to the archive
+*DefaultAPI* | [**ArchiveInvoice**](docs/DefaultAPI.md#archiveinvoice) | **Post** /invoice/{invoiceID}/archive | Mark invoice as archived
+*DefaultAPI* | [**ArchiveInvoices**](docs/DefaultAPI.md#archiveinvoices) | **Post** /invoices/batch/archive | Mark multiple invoices as archived
 *DefaultAPI* | [**ArchivePropertyHandover**](docs/DefaultAPI.md#archivepropertyhandover) | **Put** /property-handovers/handovers/{handoverID}/archive | Archive a property handover
 *DefaultAPI* | [**ArchiveWorkflowExecution**](docs/DefaultAPI.md#archiveworkflowexecution) | **Put** /workflows/execution/{executionID}/archive | Archive a workflow execution
 *DefaultAPI* | [**AssignCase**](docs/DefaultAPI.md#assigncase) | **Post** /case/{caseID}/assign | Assign case to a service provider
@@ -99,6 +101,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateAppointmentTemplate**](docs/DefaultAPI.md#createappointmenttemplate) | **Post** /calendar/appointments/template | Create new appointment template
 *DefaultAPI* | [**CreateApproval**](docs/DefaultAPI.md#createapproval) | **Post** /approval | Create a new approval
 *DefaultAPI* | [**CreateBankAccount**](docs/DefaultAPI.md#createbankaccount) | **Post** /bank-account | Create new bank account
+*DefaultAPI* | [**CreateBankConnection**](docs/DefaultAPI.md#createbankconnection) | **Post** /bank-account/{accountID}/connection | Create a new bank connection
 *DefaultAPI* | [**CreateBankTransaction**](docs/DefaultAPI.md#createbanktransaction) | **Post** /bank-account/{accountID}/bank-transaction | Create a new bank transaction
 *DefaultAPI* | [**CreateBookingTemplate**](docs/DefaultAPI.md#createbookingtemplate) | **Post** /financial/booking-template | Create a new booking template
 *DefaultAPI* | [**CreateBulkAccountDimensionValues**](docs/DefaultAPI.md#createbulkaccountdimensionvalues) | **Post** /financial/account-dimension/{dimensionID}/value/bulk | Create a set of new account dimension values
@@ -117,6 +120,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateDocument**](docs/DefaultAPI.md#createdocument) | **Post** /document-repository/entry | Create a new document
 *DefaultAPI* | [**CreateDocumentGeneration**](docs/DefaultAPI.md#createdocumentgeneration) | **Post** /document-generation/document | Create a new document generation for a template
 *DefaultAPI* | [**CreateDocumentTemplate**](docs/DefaultAPI.md#createdocumenttemplate) | **Post** /document-generation/template | Create a new document template
+*DefaultAPI* | [**CreateEntityExtension**](docs/DefaultAPI.md#createentityextension) | **Post** /entity-extension | Create a new entity extension
 *DefaultAPI* | [**CreateFAQEntry**](docs/DefaultAPI.md#createfaqentry) | **Post** /faqs/entry | Create a new FAQ entry
 *DefaultAPI* | [**CreateFeatureFlagConfig**](docs/DefaultAPI.md#createfeatureflagconfig) | **Post** /feature-flags/config | Create a new feature flag configuration
 *DefaultAPI* | [**CreateFinancialAccount**](docs/DefaultAPI.md#createfinancialaccount) | **Post** /financial/account | Create a new financial account
@@ -147,7 +151,8 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteAppointmentTemplate**](docs/DefaultAPI.md#deleteappointmenttemplate) | **Delete** /calendar/appointments/template/{templateID} | Delete an appointment template
 *DefaultAPI* | [**DeleteApproval**](docs/DefaultAPI.md#deleteapproval) | **Delete** /approval/{approvalID} | Delete an already existing approval
 *DefaultAPI* | [**DeleteBankAccount**](docs/DefaultAPI.md#deletebankaccount) | **Delete** /bank-account/{accountID} | Delete an already existing bank account
-*DefaultAPI* | [**DeleteBankTransaction**](docs/DefaultAPI.md#deletebanktransaction) | **Delete** /bank-account/transaction/{transactionID} | Delete the bank transaction with all its related data
+*DefaultAPI* | [**DeleteBankConnection**](docs/DefaultAPI.md#deletebankconnection) | **Delete** /bank-connection/{bankConnectionID} | Delete the bank connection
+*DefaultAPI* | [**DeleteBankTransaction**](docs/DefaultAPI.md#deletebanktransaction) | **Delete** /bank-account-transaction/{transactionID} | Delete the bank transaction with all its related data
 *DefaultAPI* | [**DeleteBookingPreview**](docs/DefaultAPI.md#deletebookingpreview) | **Delete** /financial/booking-preview/{bookingPreviewID} | Delete the booking preview
 *DefaultAPI* | [**DeleteBookingTemplate**](docs/DefaultAPI.md#deletebookingtemplate) | **Delete** /financial/booking-template/{bookingTemplateID} | Delete the booking template with all its related data
 *DefaultAPI* | [**DeleteCase**](docs/DefaultAPI.md#deletecase) | **Delete** /case/{caseID} | Delete case
@@ -167,6 +172,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteDocument**](docs/DefaultAPI.md#deletedocument) | **Delete** /document-repository/entry/{documentID} | Delete a single document
 *DefaultAPI* | [**DeleteDocumentGeneration**](docs/DefaultAPI.md#deletedocumentgeneration) | **Delete** /document-generation/documents/{docID} | Delete an existing document generation
 *DefaultAPI* | [**DeleteDocumentTemplate**](docs/DefaultAPI.md#deletedocumenttemplate) | **Delete** /document-generation/template/{templateID} | Delete a document template
+*DefaultAPI* | [**DeleteEntityExtension**](docs/DefaultAPI.md#deleteentityextension) | **Delete** /entity-extension/{extensionID} | Delete an entity extension
 *DefaultAPI* | [**DeleteFAQEntry**](docs/DefaultAPI.md#deletefaqentry) | **Delete** /faqs/entry/{entryID} | Delete a FAQ entry
 *DefaultAPI* | [**DeleteFeatureFlagConfig**](docs/DefaultAPI.md#deletefeatureflagconfig) | **Delete** /feature-flags/config/{entryID} | Delete a feature flag config
 *DefaultAPI* | [**DeleteFinancialAccount**](docs/DefaultAPI.md#deletefinancialaccount) | **Delete** /financial/accounts/{accountID} | Delete the financial account with all its related data
@@ -199,12 +205,12 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**ExecuteWorkflowEntrypoint**](docs/DefaultAPI.md#executeworkflowentrypoint) | **Post** /workflows/entrypoint/{entrypointID}/execute | Execute the workflow entry point
 *DefaultAPI* | [**ExecuteWorkflowExecutionStep**](docs/DefaultAPI.md#executeworkflowexecutionstep) | **Post** /workflows/execution/{executionID} | Execute workflow execution step
 *DefaultAPI* | [**Feedback**](docs/DefaultAPI.md#feedback) | **Post** /feedback | User feedback about the product
+*DefaultAPI* | [**FinalizeInvoiceAnalysis**](docs/DefaultAPI.md#finalizeinvoiceanalysis) | **Post** /invoice-analysis/{invoiceAnalysisID}/finalize | Finalize invoice analysis and create invoices
 *DefaultAPI* | [**GenerateAccountDimensionValues**](docs/DefaultAPI.md#generateaccountdimensionvalues) | **Post** /financial/account-dimension/{dimensionID}/values/generate | Generate the account dimension values for the given dimension
 *DefaultAPI* | [**GenerateCaseReportingEndpointNotice**](docs/DefaultAPI.md#generatecasereportingendpointnotice) | **Post** /cases/endpoints/{endpointID}/notice | Generate a PDF for a notice of the case reporting endpoint
 *DefaultAPI* | [**GenerateDocumentPDF**](docs/DefaultAPI.md#generatedocumentpdf) | **Post** /document-generation/documents/{docID}/generate-pdf | Generate a PDF for the document generation
 *DefaultAPI* | [**GenerateDocumentText**](docs/DefaultAPI.md#generatedocumenttext) | **Post** /document-generation/documents/{docID}/generate-text | Generate the text for the document, based on template and input data 
 *DefaultAPI* | [**GenerateESignatureForDocument**](docs/DefaultAPI.md#generateesignaturefordocument) | **Get** /document-generation/documents/{docID}/esignature/generate | Get the singing status for the document
-*DefaultAPI* | [**GenerateISO20022Invoice**](docs/DefaultAPI.md#generateiso20022invoice) | **Post** /invoice/{invoiceID}/iso20022pain001 | Generate ISO 20022 XML for invoice payment
 *DefaultAPI* | [**GetAccountBooking**](docs/DefaultAPI.md#getaccountbooking) | **Get** /financial/bookings/{bookingID} | Get the booking with all its attributes
 *DefaultAPI* | [**GetAccountDimension**](docs/DefaultAPI.md#getaccountdimension) | **Get** /financial/account-dimension/{dimensionID} | Get the account dimension with all its attributes
 *DefaultAPI* | [**GetAccountDimensionValue**](docs/DefaultAPI.md#getaccountdimensionvalue) | **Get** /financial/account-dimension/{dimensionID}/value/{refID} | Get the account dimension value for a refID with all its attributes
@@ -218,7 +224,8 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetApprovalsByRefId**](docs/DefaultAPI.md#getapprovalsbyrefid) | **Get** /approval/by-ref/{refID} | Get the approvals for the given entity ID
 *DefaultAPI* | [**GetAttachment**](docs/DefaultAPI.md#getattachment) | **Get** /attachment/{attachmentID} | Get a file attachment
 *DefaultAPI* | [**GetBankAccount**](docs/DefaultAPI.md#getbankaccount) | **Get** /bank-account/{accountID} | Get the bank account with the given ID
-*DefaultAPI* | [**GetBankTransaction**](docs/DefaultAPI.md#getbanktransaction) | **Get** /bank-account/transaction/{transactionID} | Get the bank transaction with all its attributes
+*DefaultAPI* | [**GetBankConnection**](docs/DefaultAPI.md#getbankconnection) | **Get** /bank-account/{accountID}/connection | Get the bank connection for a specific bank
+*DefaultAPI* | [**GetBankTransaction**](docs/DefaultAPI.md#getbanktransaction) | **Get** /bank-account-transaction/{transactionID} | Get the bank transaction with all its attributes
 *DefaultAPI* | [**GetBookingPreview**](docs/DefaultAPI.md#getbookingpreview) | **Get** /financial/booking-preview/{bookingPreviewID} | Get the booking preview with all its attributes
 *DefaultAPI* | [**GetBookingTemplate**](docs/DefaultAPI.md#getbookingtemplate) | **Get** /financial/booking-template/{bookingTemplateID} | Get the booking template with all its attributes
 *DefaultAPI* | [**GetCase**](docs/DefaultAPI.md#getcase) | **Get** /case/{caseID} | Get case details
@@ -248,6 +255,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetDocumentTemplates**](docs/DefaultAPI.md#getdocumenttemplates) | **Get** /document-generation/templates | Get all available document templates
 *DefaultAPI* | [**GetESignatureForDocument**](docs/DefaultAPI.md#getesignaturefordocument) | **Get** /document-generation/documents/{docID}/esignature | Get the singing status for the document
 *DefaultAPI* | [**GetEmailStatus**](docs/DefaultAPI.md#getemailstatus) | **Get** /email/status/{email} | Get the status of the email
+*DefaultAPI* | [**GetEntityExtension**](docs/DefaultAPI.md#getentityextension) | **Get** /entity-extension/{extensionID} | Get the entity extension by ID
 *DefaultAPI* | [**GetEsignatureInformation**](docs/DefaultAPI.md#getesignatureinformation) | **Get** /public/document-generation/esignature/{code}/info | Get information about an esignature
 *DefaultAPI* | [**GetExternalUser**](docs/DefaultAPI.md#getexternaluser) | **Get** /external-users/{userID} | Get information about external user
 *DefaultAPI* | [**GetExternalUserCasesCount**](docs/DefaultAPI.md#getexternalusercasescount) | **Get** /external-users/{userID}/cases/count | Get the number of cases the the given user has opened
@@ -304,12 +312,15 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetWorkflowExecution**](docs/DefaultAPI.md#getworkflowexecution) | **Get** /workflows/execution/{executionID} | Get workflow execution details
 *DefaultAPI* | [**GetWorkflowExecutionTrigger**](docs/DefaultAPI.md#getworkflowexecutiontrigger) | **Get** /workflows/triggers/{executionID} | Get workflow trigger for an execution
 *DefaultAPI* | [**GetWorkflowTriggersForSource**](docs/DefaultAPI.md#getworkflowtriggersforsource) | **Get** /workflows/trigger/source/{sourceID} | Get workflow triggers for a source
+*DefaultAPI* | [**ImportBankConnectionTransactions**](docs/DefaultAPI.md#importbankconnectiontransactions) | **Post** /bank-connection/{bankConnectionID}/transactions/import | Import transactions from bank connection
 *DefaultAPI* | [**ImportDataUsingTemplate**](docs/DefaultAPI.md#importdatausingtemplate) | **Post** /data-import/template/{templateID}/import | Import data using the template
 *DefaultAPI* | [**InternalAddPriceIndexPoint**](docs/DefaultAPI.md#internaladdpriceindexpoint) | **Put** /price-index | Push a new value for the inflation index
 *DefaultAPI* | [**InviteToAppointment**](docs/DefaultAPI.md#invitetoappointment) | **Post** /calendar/appointments/entry/{entryID}/invite | Invite a users to an appointment
 *DefaultAPI* | [**LinkAppointmentProperty**](docs/DefaultAPI.md#linkappointmentproperty) | **Post** /calendar/appointments/entry/{entryID}/property/{propID}/link | Link a property to an appointment
 *DefaultAPI* | [**LinkCaseProperty**](docs/DefaultAPI.md#linkcaseproperty) | **Post** /case/{caseID}/property/{propID}/link | Link a property to a case
 *DefaultAPI* | [**LinkHandoverProperty**](docs/DefaultAPI.md#linkhandoverproperty) | **Post** /property-handovers/handovers/{handoverID}/property/{propID}/link | Link a property to a finalized handover
+*DefaultAPI* | [**MarkInvoiceAsPaid**](docs/DefaultAPI.md#markinvoiceaspaid) | **Post** /invoice/{invoiceID}/mark-paid | Mark invoice as paid
+*DefaultAPI* | [**MarkInvoicesAsPaid**](docs/DefaultAPI.md#markinvoicesaspaid) | **Post** /invoices/batch/mark-paid | Mark multiple invoices as paid
 *DefaultAPI* | [**PersistBookingPreview**](docs/DefaultAPI.md#persistbookingpreview) | **Post** /financial/booking-preview/{bookingPreviewID}/persist | Persist the bookings in the given booking preview
 *DefaultAPI* | [**PreviewCommentTemplate**](docs/DefaultAPI.md#previewcommenttemplate) | **Post** /comment-template/{commentTemplateID}/preview | Preview a comment template returning an example comment.
 *DefaultAPI* | [**PreviewDataImport**](docs/DefaultAPI.md#previewdataimport) | **Post** /data-import/template/{templateID}/preview | Preview a data import template returning an example data import.
@@ -349,7 +360,9 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryArchivedDocumentGenerations**](docs/DefaultAPI.md#queryarchiveddocumentgenerations) | **Post** /document-generation/documents/archive | Request a list of archived document generations
 *DefaultAPI* | [**QueryBankAccountBalance**](docs/DefaultAPI.md#querybankaccountbalance) | **Post** /bank-account/{accountID}/balance | Query the balance of the bank account with the given ID
 *DefaultAPI* | [**QueryBankAccounts**](docs/DefaultAPI.md#querybankaccounts) | **Post** /bank-accounts | Query bank accounts
+*DefaultAPI* | [**QueryBankConnectionTransactions**](docs/DefaultAPI.md#querybankconnectiontransactions) | **Post** /bank-account/{accountID}/connection/transactions | Get the bank connection transactions
 *DefaultAPI* | [**QueryBankTransactions**](docs/DefaultAPI.md#querybanktransactions) | **Post** /bank-account/{accountID}/bank-transactions | Query all bank transactions for a given account
+*DefaultAPI* | [**QueryBanks**](docs/DefaultAPI.md#querybanks) | **Post** /banks | Get all banks
 *DefaultAPI* | [**QueryBookingPreviews**](docs/DefaultAPI.md#querybookingpreviews) | **Post** /financial/booking-previews | Query all booking previews
 *DefaultAPI* | [**QueryBookingTemplates**](docs/DefaultAPI.md#querybookingtemplates) | **Post** /financial/booking-templates | Query all booking templates
 *DefaultAPI* | [**QueryBookingsForAccount**](docs/DefaultAPI.md#querybookingsforaccount) | **Post** /financial/accounts-by-number/{flatNumber}/bookings | Query bookings for the given account
@@ -363,6 +376,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryDataImportTemplates**](docs/DefaultAPI.md#querydataimporttemplates) | **Post** /data-import/templates | Query all data import templates for given criteria
 *DefaultAPI* | [**QueryDocumentGenerations**](docs/DefaultAPI.md#querydocumentgenerations) | **Post** /document-generation/documents | Request a list of document generations
 *DefaultAPI* | [**QueryDocuments**](docs/DefaultAPI.md#querydocuments) | **Post** /document-repository/entries | Query all document for a certain ref type
+*DefaultAPI* | [**QueryEntityExtensions**](docs/DefaultAPI.md#queryentityextensions) | **Post** /entity-extensions | Query all entity extensions for given criteria
 *DefaultAPI* | [**QueryExternalUserCases**](docs/DefaultAPI.md#queryexternalusercases) | **Get** /external-users/{userID}/cases | Get the cases the the given user has opened
 *DefaultAPI* | [**QueryExternalUsers**](docs/DefaultAPI.md#queryexternalusers) | **Get** /external-users | Get a list of external users who reported to the current manager
 *DefaultAPI* | [**QueryFinancialAccountBalances**](docs/DefaultAPI.md#queryfinancialaccountbalances) | **Post** /financial/balances | Query the current balances of all financial accounts
@@ -383,6 +397,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryVersionMigrators**](docs/DefaultAPI.md#queryversionmigrators) | **Post** /version-migrators | Query all version migrators
 *DefaultAPI* | [**QueryWorkflowDefinitions**](docs/DefaultAPI.md#queryworkflowdefinitions) | **Post** /workflows/definitions | Query all workflow definitions
 *DefaultAPI* | [**QueryWorkflowExecutions**](docs/DefaultAPI.md#queryworkflowexecutions) | **Post** /workflows/executions | Get a list of all workflow executions, matching the criteria in the request 
+*DefaultAPI* | [**ReattachInvoiceAnalysisPages**](docs/DefaultAPI.md#reattachinvoiceanalysispages) | **Put** /invoice-analysis/{invoiceAnalysisID}/reattach/{invoiceID} | Reattach invoice analysis pages
 *DefaultAPI* | [**RejectApproval**](docs/DefaultAPI.md#rejectapproval) | **Post** /approval/{approvalID}/reject | Reject the approval with the given ID
 *DefaultAPI* | [**RequestESignaturesForDocument**](docs/DefaultAPI.md#requestesignaturesfordocument) | **Post** /document-generation/documents/{docID}/esignature | Trigger a signing request for a document
 *DefaultAPI* | [**RerunReportExecution**](docs/DefaultAPI.md#rerunreportexecution) | **Post** /report/executions/{executionID}/rerun | Rerun the report execution with the same parameters
@@ -403,7 +418,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateAppointmentSchedule**](docs/DefaultAPI.md#updateappointmentschedule) | **Put** /calendar/appointments/schedule/{scheduleID} | Update appointment schedule
 *DefaultAPI* | [**UpdateAppointmentTemplate**](docs/DefaultAPI.md#updateappointmenttemplate) | **Put** /calendar/appointments/template/{templateID} | Update appointment template
 *DefaultAPI* | [**UpdateBankAccount**](docs/DefaultAPI.md#updatebankaccount) | **Put** /bank-account/{accountID} | Update the attributes of the already existing bank account
-*DefaultAPI* | [**UpdateBankTransaction**](docs/DefaultAPI.md#updatebanktransaction) | **Put** /bank-account/transaction/{transactionID} | Update an already existing bank transaction
+*DefaultAPI* | [**UpdateBankTransaction**](docs/DefaultAPI.md#updatebanktransaction) | **Put** /bank-account-transaction/{transactionID} | Update an already existing bank transaction
 *DefaultAPI* | [**UpdateBookingTemplate**](docs/DefaultAPI.md#updatebookingtemplate) | **Put** /financial/booking-template/{bookingTemplateID} | Update an already existing booking template
 *DefaultAPI* | [**UpdateCase**](docs/DefaultAPI.md#updatecase) | **Put** /case/{caseID} | Update case
 *DefaultAPI* | [**UpdateCaseReportingEndpoint**](docs/DefaultAPI.md#updatecasereportingendpoint) | **Put** /cases/endpoints/{endpointID} | Update the case reporting endpoint by ID
@@ -420,11 +435,14 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateDocument**](docs/DefaultAPI.md#updatedocument) | **Put** /document-repository/entry/{documentID} | Update an already existing document
 *DefaultAPI* | [**UpdateDocumentGeneration**](docs/DefaultAPI.md#updatedocumentgeneration) | **Put** /document-generation/documents/{docID} | Update an already existing document generation
 *DefaultAPI* | [**UpdateDocumentTemplate**](docs/DefaultAPI.md#updatedocumenttemplate) | **Put** /document-generation/template/{templateID} | Update an existing document template
+*DefaultAPI* | [**UpdateEntityExtension**](docs/DefaultAPI.md#updateentityextension) | **Put** /entity-extension/{extensionID} | Update entity extension
 *DefaultAPI* | [**UpdateFAQEntry**](docs/DefaultAPI.md#updatefaqentry) | **Put** /faqs/entry/{entryID} | Update an existing FAQ entry
 *DefaultAPI* | [**UpdateFeatureFlagConfig**](docs/DefaultAPI.md#updatefeatureflagconfig) | **Put** /feature-flags/config/{entryID} | Update an existing feature flag config
 *DefaultAPI* | [**UpdateFinancialAccount**](docs/DefaultAPI.md#updatefinancialaccount) | **Put** /financial/accounts/{accountID} | Update an already existing financial account
 *DefaultAPI* | [**UpdateHook**](docs/DefaultAPI.md#updatehook) | **Put** /hook/{hookID} | Update an already hook
 *DefaultAPI* | [**UpdateInvoice**](docs/DefaultAPI.md#updateinvoice) | **Put** /invoice/{invoiceID} | Update invoice
+*DefaultAPI* | [**UpdateInvoiceAnalysis**](docs/DefaultAPI.md#updateinvoiceanalysis) | **Put** /invoice-analysis/{invoiceAnalysisID} | Update invoice analysis
+*DefaultAPI* | [**UpdateInvoiceAnalysisData**](docs/DefaultAPI.md#updateinvoiceanalysisdata) | **Put** /invoice-analysis/{invoiceAnalysisID}/data/{invoiceID} | Update invoice analysis data
 *DefaultAPI* | [**UpdateMeter**](docs/DefaultAPI.md#updatemeter) | **Put** /meter/{meterID} | Update meter
 *DefaultAPI* | [**UpdateMeterReading**](docs/DefaultAPI.md#updatemeterreading) | **Put** /meter/{meterID}/reading/{readingID} | Update meter reading
 *DefaultAPI* | [**UpdateNote**](docs/DefaultAPI.md#updatenote) | **Put** /notes/{noteID} | Update note
@@ -485,12 +503,15 @@ Class | Method | HTTP request | Description
  - [AssignCaseRequest](docs/AssignCaseRequest.md)
  - [Attachment](docs/Attachment.md)
  - [BalanceCadenceEnum](docs/BalanceCadenceEnum.md)
+ - [Bank](docs/Bank.md)
  - [BankAccount](docs/BankAccount.md)
  - [BankAccountAttributesPartial](docs/BankAccountAttributesPartial.md)
+ - [BankConnectionStatusEnum](docs/BankConnectionStatusEnum.md)
+ - [BankConnectionTransactionImportTypeEnum](docs/BankConnectionTransactionImportTypeEnum.md)
  - [BankDetails](docs/BankDetails.md)
  - [BankTransaction](docs/BankTransaction.md)
  - [BankTransactionAttributesPartial](docs/BankTransactionAttributesPartial.md)
- - [Base64Response](docs/Base64Response.md)
+ - [BatchInvoiceOperationResponse](docs/BatchInvoiceOperationResponse.md)
  - [BookingPreview](docs/BookingPreview.md)
  - [BookingPreviewPartial](docs/BookingPreviewPartial.md)
  - [BookingPreviewSourceTypeEnum](docs/BookingPreviewSourceTypeEnum.md)
@@ -545,6 +566,7 @@ Class | Method | HTTP request | Description
  - [CreateAccountBookingAllocation](docs/CreateAccountBookingAllocation.md)
  - [CreateAccountBookingRequest](docs/CreateAccountBookingRequest.md)
  - [CreateApprovalRequest](docs/CreateApprovalRequest.md)
+ - [CreateBankConnectionResponse](docs/CreateBankConnectionResponse.md)
  - [CreateBulkAccountDimensionValuesRequest](docs/CreateBulkAccountDimensionValuesRequest.md)
  - [CreateCaseCommentRequest](docs/CreateCaseCommentRequest.md)
  - [CreateCaseRequest](docs/CreateCaseRequest.md)
@@ -573,6 +595,7 @@ Class | Method | HTTP request | Description
  - [CreateOrUpdateCustomerScriptRequest](docs/CreateOrUpdateCustomerScriptRequest.md)
  - [CreateOrUpdateDataImportTemplateRequest](docs/CreateOrUpdateDataImportTemplateRequest.md)
  - [CreateOrUpdateDocumentTemplateRequest](docs/CreateOrUpdateDocumentTemplateRequest.md)
+ - [CreateOrUpdateEntityExtensionRequest](docs/CreateOrUpdateEntityExtensionRequest.md)
  - [CreateOrUpdateFAQEntryRequest](docs/CreateOrUpdateFAQEntryRequest.md)
  - [CreateOrUpdateFeatureFlagConfigRequest](docs/CreateOrUpdateFeatureFlagConfigRequest.md)
  - [CreateOrUpdateFinancialAccountRequest](docs/CreateOrUpdateFinancialAccountRequest.md)
@@ -621,6 +644,9 @@ Class | Method | HTTP request | Description
  - [EmailStatusResponse](docs/EmailStatusResponse.md)
  - [EmailValidationRequest](docs/EmailValidationRequest.md)
  - [EmailValidationResponse](docs/EmailValidationResponse.md)
+ - [EntityExtension](docs/EntityExtension.md)
+ - [EntityExtensionAttributesPartial](docs/EntityExtensionAttributesPartial.md)
+ - [EntityExtensionTypeEnum](docs/EntityExtensionTypeEnum.md)
  - [EntityExternalReferenceAttributesPartial](docs/EntityExternalReferenceAttributesPartial.md)
  - [EntityGeneratedAttributesPartial](docs/EntityGeneratedAttributesPartial.md)
  - [EntityGeneratedCodeAttributePartial](docs/EntityGeneratedCodeAttributePartial.md)
@@ -661,8 +687,8 @@ Class | Method | HTTP request | Description
  - [FormValidationRequest](docs/FormValidationRequest.md)
  - [FormValidationResponse](docs/FormValidationResponse.md)
  - [GenerateCaseReportingEndpointNoticeRequest](docs/GenerateCaseReportingEndpointNoticeRequest.md)
- - [GenerateISO20022InvoiceRequest](docs/GenerateISO20022InvoiceRequest.md)
  - [GetAppointmentInfoResponse](docs/GetAppointmentInfoResponse.md)
+ - [GetBankConnectionResponse](docs/GetBankConnectionResponse.md)
  - [GetCorrespondenceDocumentResponse](docs/GetCorrespondenceDocumentResponse.md)
  - [GetCorrespondenceStatusResponse](docs/GetCorrespondenceStatusResponse.md)
  - [GetExternalUserCasesCountResponse](docs/GetExternalUserCasesCountResponse.md)
@@ -679,6 +705,8 @@ Class | Method | HTTP request | Description
  - [HookAttributesPartial](docs/HookAttributesPartial.md)
  - [HookEntity](docs/HookEntity.md)
  - [IDUpload](docs/IDUpload.md)
+ - [ImportBankConnectionTransactionRequest](docs/ImportBankConnectionTransactionRequest.md)
+ - [ImportBankConnectionTransactionResponse](docs/ImportBankConnectionTransactionResponse.md)
  - [ImportDataRequest](docs/ImportDataRequest.md)
  - [ImportDataTypeEnum](docs/ImportDataTypeEnum.md)
  - [InputItem](docs/InputItem.md)
@@ -687,10 +715,12 @@ Class | Method | HTTP request | Description
  - [InvoiceAnalysis](docs/InvoiceAnalysis.md)
  - [InvoiceAnalysisStatusEnum](docs/InvoiceAnalysisStatusEnum.md)
  - [InvoiceData](docs/InvoiceData.md)
+ - [InvoiceDocumentAnalysis](docs/InvoiceDocumentAnalysis.md)
  - [InvoicePaymentStatusEnum](docs/InvoicePaymentStatusEnum.md)
  - [IsDeletedAttributePartial](docs/IsDeletedAttributePartial.md)
  - [LogRequest](docs/LogRequest.md)
  - [MandatoryMessage](docs/MandatoryMessage.md)
+ - [MarkInvoiceAsPaidRequest](docs/MarkInvoiceAsPaidRequest.md)
  - [Meter](docs/Meter.md)
  - [MeterAttributesPartial](docs/MeterAttributesPartial.md)
  - [MeterReading](docs/MeterReading.md)
@@ -735,8 +765,11 @@ Class | Method | HTTP request | Description
  - [QueryBankAccountBalanceResponse](docs/QueryBankAccountBalanceResponse.md)
  - [QueryBankAccountsRequest](docs/QueryBankAccountsRequest.md)
  - [QueryBankAccountsResponse](docs/QueryBankAccountsResponse.md)
+ - [QueryBankConnectionTransactionsRequest](docs/QueryBankConnectionTransactionsRequest.md)
+ - [QueryBankConnectionTransactionsResponse](docs/QueryBankConnectionTransactionsResponse.md)
  - [QueryBankTransactionsRequest](docs/QueryBankTransactionsRequest.md)
  - [QueryBankTransactionsResponse](docs/QueryBankTransactionsResponse.md)
+ - [QueryBanksRequest](docs/QueryBanksRequest.md)
  - [QueryBookingPreviewsRequest](docs/QueryBookingPreviewsRequest.md)
  - [QueryBookingTemplatesRequest](docs/QueryBookingTemplatesRequest.md)
  - [QueryBookingsByFlatNumberRequest](docs/QueryBookingsByFlatNumberRequest.md)
@@ -758,6 +791,8 @@ Class | Method | HTTP request | Description
  - [QueryDocumentsRequest](docs/QueryDocumentsRequest.md)
  - [QueryEntityAccountDimensionValuesRequest](docs/QueryEntityAccountDimensionValuesRequest.md)
  - [QueryEntityAccountDimensionValuesResponse](docs/QueryEntityAccountDimensionValuesResponse.md)
+ - [QueryEntityExtensionsRequest](docs/QueryEntityExtensionsRequest.md)
+ - [QueryEntityExtensionsResponse](docs/QueryEntityExtensionsResponse.md)
  - [QueryExternalUserCasesResponse](docs/QueryExternalUserCasesResponse.md)
  - [QueryExternalUsersResponse](docs/QueryExternalUsersResponse.md)
  - [QueryFinancialAccountBalancesRequest](docs/QueryFinancialAccountBalancesRequest.md)
@@ -789,6 +824,8 @@ Class | Method | HTTP request | Description
  - [QueryWorkflowDefinitionsResponse](docs/QueryWorkflowDefinitionsResponse.md)
  - [QueryWorkflowExecutionsRequest](docs/QueryWorkflowExecutionsRequest.md)
  - [QueryWorkflowExecutionsResponse](docs/QueryWorkflowExecutionsResponse.md)
+ - [ReattachActionEnum](docs/ReattachActionEnum.md)
+ - [ReattachInvoiceAnalysisRequest](docs/ReattachInvoiceAnalysisRequest.md)
  - [RejectApprovalRequest](docs/RejectApprovalRequest.md)
  - [RentData](docs/RentData.md)
  - [RentDetails](docs/RentDetails.md)
@@ -836,6 +873,7 @@ Class | Method | HTTP request | Description
  - [UpdateConnectorConfigRequest](docs/UpdateConnectorConfigRequest.md)
  - [UpdateDocumentRequest](docs/UpdateDocumentRequest.md)
  - [UpdateExternalUserRequest](docs/UpdateExternalUserRequest.md)
+ - [UpdateInvoiceAnalysisRequest](docs/UpdateInvoiceAnalysisRequest.md)
  - [UpdateNoteRequest](docs/UpdateNoteRequest.md)
  - [UpdateNotificationRequest](docs/UpdateNotificationRequest.md)
  - [UpdateTenancyRequest](docs/UpdateTenancyRequest.md)

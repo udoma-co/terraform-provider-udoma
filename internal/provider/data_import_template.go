@@ -247,7 +247,7 @@ func (model *DataImportTemplateModel) toApiRequest() *v1.CreateOrUpdateDataImpor
 		FileType:    v1.ImportDataTypeEnum(model.FileType.ValueString()),
 		Icon:        model.Icon.ValueStringPointer(),
 		Description: model.Description.ValueStringPointer(),
-		DataMapper:  model.DataMapper.ValueString(),
+		DataMapper:  model.DataMapper.ValueStringPointer(),
 	}
 
 	return req
@@ -265,7 +265,7 @@ func (template *DataImportTemplateModel) fromApiResponse(resp *v1.DataImportTemp
 	template.UpdatedAt = types.Int64Value(resp.UpdatedAt)
 	template.Name = types.StringValue(resp.Name)
 	template.FileType = types.StringValue(string(resp.FileType))
-	template.DataMapper = types.StringValue(resp.DataMapper)
+	template.DataMapper = omittableStringValue(resp.DataMapper, template.DataMapper)
 	template.Icon = omittableStringValue(resp.Icon, template.Icon)
 	template.Description = omittableStringValue(resp.Description, template.Description)
 

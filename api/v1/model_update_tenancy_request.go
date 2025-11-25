@@ -28,6 +28,8 @@ type UpdateTenancyRequest struct {
 	RentDetails RentDetails `json:"rent_details"`
 	// Options to extend the contract if it's fixed term.
 	ExtensionOptions []int64 `json:"extension_options,omitempty"`
+	// Extensions data for this tenancy, keyed by extension key
+	Extensions *map[string]map[string]interface{} `json:"extensions,omitempty"`
 }
 
 type _UpdateTenancyRequest UpdateTenancyRequest
@@ -163,6 +165,38 @@ func (o *UpdateTenancyRequest) SetExtensionOptions(v []int64) {
 	o.ExtensionOptions = v
 }
 
+// GetExtensions returns the Extensions field value if set, zero value otherwise.
+func (o *UpdateTenancyRequest) GetExtensions() map[string]map[string]interface{} {
+	if o == nil || IsNil(o.Extensions) {
+		var ret map[string]map[string]interface{}
+		return ret
+	}
+	return *o.Extensions
+}
+
+// GetExtensionsOk returns a tuple with the Extensions field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateTenancyRequest) GetExtensionsOk() (*map[string]map[string]interface{}, bool) {
+	if o == nil || IsNil(o.Extensions) {
+		return nil, false
+	}
+	return o.Extensions, true
+}
+
+// HasExtensions returns a boolean if a field has been set.
+func (o *UpdateTenancyRequest) HasExtensions() bool {
+	if o != nil && !IsNil(o.Extensions) {
+		return true
+	}
+
+	return false
+}
+
+// SetExtensions gets a reference to the given map[string]map[string]interface{} and assigns it to the Extensions field.
+func (o *UpdateTenancyRequest) SetExtensions(v map[string]map[string]interface{}) {
+	o.Extensions = &v
+}
+
 func (o UpdateTenancyRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -180,6 +214,9 @@ func (o UpdateTenancyRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize["rent_details"] = o.RentDetails
 	if !IsNil(o.ExtensionOptions) {
 		toSerialize["extension_options"] = o.ExtensionOptions
+	}
+	if !IsNil(o.Extensions) {
+		toSerialize["extensions"] = o.Extensions
 	}
 	return toSerialize, nil
 }
