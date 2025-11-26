@@ -3,7 +3,6 @@ package provider
 import (
 	"context"
 	"fmt"
-	"log"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
@@ -38,9 +37,9 @@ type EntityExtensionModel struct {
 	Name           types.String `tfsdk:"name"`
 	Description    types.String `tfsdk:"description"`
 	Entity         types.String `tfsdk:"entity"`
-	Sequence       types.Int64  `tfsdk:"sequence"`
+	Sequence       types.Int32  `tfsdk:"sequence"`
 	Key            types.String `tfsdk:"key"`
-	Version        types.Int64  `tfsdk:"version"`
+	Version        types.Int32  `tfsdk:"version"`
 	FormDefinition *CustomFormModel `tfsdk:"form_definition"`
 }
 
@@ -88,7 +87,7 @@ func (r *EntityExtension) Schema(ctx context.Context, req resource.SchemaRequest
 					stringvalidator.OneOf("property", "tenant", "service_provider", "tenancy", "owner"),
 				},
 			},
-			"sequence": schema.Int64Attribute{
+			"sequence": schema.Int32Attribute{
 				Optional:    true,
 				Description: "The order in which extensions should be displayed in the UI. Lower numbers appear first.",
 			},
@@ -99,51 +98,14 @@ func (r *EntityExtension) Schema(ctx context.Context, req resource.SchemaRequest
 					stringvalidator.LengthAtMost(255),
 				},
 			},
-			"version": schema.Int64Attribute{
+			"version": schema.Int32Attribute{
 				Optional:    true,
 				Description: "The version number of this extension definition.",
 			},
 			"form_definition": schema.SingleNestedAttribute{
 				Required: true,
 				Description: "The custom form definition.",
-				Attributes: map[string]schema.Attribute{
-					"layout": schema.ListNestedAttribute{
-						Optional: true,
-						NestedObject: schema.NestedAttributeObject{
-							Attributes: map[string]schema.Attribute{
-								"ref_id": schema.StringAttribute{
-									Required: true,
-								},
-								"ref_type": schema.StringAttribute{
-									Required: true,
-								},
-							},
-						},
-					},
-					"inputs": schema.ListNestedAttribute{
-						Optional: true,
-						NestedObject: schema.NestedAttributeObject{
-							Attributes: map[string]schema.Attribute{
-							},
-						},
-					},
-
-					"groups": schema.ListNestedAttribute{
-						Optional: true,
-						NestedObject: schema.NestedAttributeObject{
-							Attributes: map[string]schema.Attribute{
-							},
-						},
-					},
-
-					"validation": schema.ListNestedAttribute{
-						Optional: true,
-						NestedObject: schema.NestedAttributeObject{
-							Attributes: map[string]schema.Attribute{
-							},
-						},
-					},
-				},
+				Attributes: CustomFormNestedSchema(),
 			},
 		},
 	}
@@ -178,13 +140,7 @@ func (r *EntityExtension) Create(ctx context.Context, req resource.CreateRequest
 		return
 	}
 
-	apiReq, toApiDiags := plan.toApiRequest()
-	resp.Diagnostics.Append(toApiDiags...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	log.Printf("API Request: %+v", apiReq)
+	apiReq := plan.toApiRequest()
 
 	created, _, err := r.client.GetApi().
 		CreateEntityExtension(ctx).
@@ -249,11 +205,7 @@ func (r *EntityExtension) Update(ctx context.Context, req resource.UpdateRequest
 		return
 	}
 
-	apiReq, toApiDiags := plan.toApiRequest()
-	resp.Diagnostics.Append(toApiDiags...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	apiReq := plan.toApiRequest()
 
 	id := plan.ID.ValueString()
 
@@ -304,104 +256,46 @@ func (r *EntityExtension) ImportState(ctx context.Context, req resource.ImportSt
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
 
-func (model *EntityExtensionModel) toApiRequest() (*v1.CreateOrUpdateEntityExtensionRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	// Convert form_definition to API type
-	cf := model.FormDefinition.toApiRequest()
-
-	// Ensure slices are not nil
-	if cf.Layout == nil {
-		cf.Layout = []v1.FormItem{}
-	}
-	if cf.Inputs == nil {
-		cf.Inputs = []v1.FormInput{}
-	}
-	if cf.Groups == nil {
-		cf.Groups = []v1.FormGroup{}
-	}
-	if cf.Validations == nil {
-		cf.Validations = []v1.FormValidation{}
-	}
+func (model *EntityExtensionModel) toApiRequest() (*v1.CreateOrUpdateEntityExtensionRequest) {
+	form := model.FormDefinition.toApiRequest()
 
 	req := &v1.CreateOrUpdateEntityExtensionRequest{
-		Name:           model.Name.ValueString(),
-		Key:            model.Key.ValueString(),
-		Entity:         v1.EntityExtensionTypeEnum(model.Entity.ValueString()),
-		FormDefinition: *v1.NewNullableCustomForm(&cf),
+		Name:        	model.Name.ValueString(),
+		Description: 	model.Description.ValueStringPointer(),
+		Entity: 	 	v1.EntityExtensionTypeEnum(model.Entity.ValueString()),
+		Sequence:    	model.Sequence.ValueInt32Pointer(),
+		Key:         	model.Key.ValueString(),
+		Version: 	 	model.Version.ValueInt32Pointer(),
+		FormDefinition: *v1.NewNullableCustomForm(&form),
 	}
+	return req
 
-	if !model.Description.IsNull() {
-		desc := model.Description.ValueString()
-		req.Description = &desc
-	}
-	if !model.Sequence.IsNull() {
-		seq := int32(model.Sequence.ValueInt64())
-		req.Sequence = &seq
-	}
-	if !model.Version.IsNull() {
-		ver := int32(model.Version.ValueInt64())
-		req.Version = &ver
-	}
-
-	return req, diags
 }
 
-func (model *EntityExtensionModel) fromApiResponse(resp *v1.EntityExtension) diag.Diagnostics {
-	var diags diag.Diagnostics
+func (model *EntityExtensionModel) fromApiResponse(resp *v1.EntityExtension) (diags diag.Diagnostics) {
+    model.ID = types.StringValue(resp.Id)
+    model.Name = types.StringValue(resp.Name)
 
-	model.ID = types.StringValue(resp.Id)
-	model.Name = types.StringValue(resp.Name)
-	model.Entity = types.StringValue(string(resp.Entity))
-	model.Key = types.StringValue(resp.Key)
-	model.CreatedAt = types.Int64Value(int64(resp.CreatedAt))
-	model.UpdatedAt = types.Int64Value(int64(resp.UpdatedAt))
+    model.Description = omittableStringValue(resp.Description, model.Description)
+    model.Sequence = types.Int32PointerValue(resp.Sequence)
+    model.Version = types.Int32PointerValue(resp.Version)
 
-	if resp.Description != nil {
-		model.Description = types.StringValue(*resp.Description)
-	} else {
-		model.Description = types.StringNull()
-	}
+    model.Entity = types.StringValue(string(resp.Entity))
+    model.Key = types.StringValue(resp.Key)
 
-	if resp.Sequence != nil {
-		model.Sequence = types.Int64Value(int64(*resp.Sequence))
-	} else {
-		model.Sequence = types.Int64Null()
-	}
+    model.CreatedAt = types.Int64Value(int64(resp.CreatedAt))
+    model.UpdatedAt = types.Int64Value(int64(resp.UpdatedAt))
 
-	if resp.Version != nil {
-		model.Version = types.Int64Value(int64(*resp.Version))
-	} else {
-		model.Version = types.Int64Null()
-	}
+    if model.FormDefinition == nil {
+        model.FormDefinition = &CustomFormModel{}
+    }
 
-	form := &CustomFormModel{
-		Layout:     []CustomFormItemModel{},
-		Input:      []CustomFormInputModel{},
-		Group:      []CustomFormGroupModel{},
-		Validation: []CustomFormValidationModel{},
-	}
+    if resp.FormDefinition.IsSet() && resp.FormDefinition.Get() != nil {
+        diags = model.FormDefinition.fromApiResponse(resp.FormDefinition.Get())
+        if diags.HasError() {
+            return diags
+        }
+    }
 
-	if resp.FormDefinition.IsSet() && resp.FormDefinition.Get() != nil {
-		cf := resp.FormDefinition.Get()
-		form.fromApiResponse(cf)
-
-		// Ensure slices are initialized to empty
-		if form.Layout == nil {
-			form.Layout = []CustomFormItemModel{}
-		}
-		if form.Input == nil {
-			form.Input = []CustomFormInputModel{}
-		}
-		if form.Group == nil {
-			form.Group = []CustomFormGroupModel{}
-		}
-		if form.Validation == nil {
-			form.Validation = []CustomFormValidationModel{}
-		}
-	}
-
-	model.FormDefinition = form
-
-	return diags
+    return
 }
