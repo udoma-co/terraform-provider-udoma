@@ -3,7 +3,6 @@ package provider
 import (
 	"context"
 	"fmt"
-	"encoding/json"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
@@ -42,7 +41,7 @@ type EntityExtensionModel struct {
 	Sequence       types.Int64  `tfsdk:"sequence"`
 	Key            types.String `tfsdk:"key"`
 	Version        types.Int64  `tfsdk:"version"`
-	FormDefinition types.String `tfsdk:"form_definition"`
+	FormDefinition *CustomFormModel `tfsdk:"form_definition"`
 }
 
 func (r *EntityExtension) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -104,11 +103,46 @@ func (r *EntityExtension) Schema(ctx context.Context, req resource.SchemaRequest
 				Optional:    true,
 				Description: "The version number of this extension definition.",
 			},
-			"form_definition": schema.StringAttribute{
-				Required:    true,
-				Description: "The custom form definition used to collect data (JSON string). Use jsonencode() in HCL.",
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.UseStateForUnknown(),
+			"form_definition": schema.SingleNestedAttribute{
+				Required: true,
+				Description: "The custom form definition.",
+				Attributes: map[string]schema.Attribute{
+					"layout": schema.ListNestedAttribute{
+						Optional: true,
+						NestedObject: schema.NestedAttributeObject{
+							Attributes: map[string]schema.Attribute{
+								"ref_id": schema.StringAttribute{
+									Required: true,
+								},
+								"ref_type": schema.StringAttribute{
+									Required: true,
+								},
+							},
+						},
+					},
+					"inputs": schema.ListNestedAttribute{
+						Optional: true,
+						NestedObject: schema.NestedAttributeObject{
+							Attributes: map[string]schema.Attribute{
+							},
+						},
+					},
+
+					"groups": schema.ListNestedAttribute{
+						Optional: true,
+						NestedObject: schema.NestedAttributeObject{
+							Attributes: map[string]schema.Attribute{
+							},
+						},
+					},
+
+					"validation": schema.ListNestedAttribute{
+						Optional: true,
+						NestedObject: schema.NestedAttributeObject{
+							Attributes: map[string]schema.Attribute{
+							},
+						},
+					},
 				},
 			},
 		},
@@ -271,97 +305,103 @@ func (r *EntityExtension) ImportState(ctx context.Context, req resource.ImportSt
 }
 
 func (model *EntityExtensionModel) toApiRequest() (*v1.CreateOrUpdateEntityExtensionRequest, diag.Diagnostics) {
-    var diags diag.Diagnostics
-    req := &v1.CreateOrUpdateEntityExtensionRequest{
-        Name:   model.Name.ValueString(),
-        Key:    model.Key.ValueString(),
-        Entity: v1.EntityExtensionTypeEnum(model.Entity.ValueString()),
-    }
+	var diags diag.Diagnostics
 
-    // form_definition is required
-    if model.FormDefinition.IsNull() || model.FormDefinition.IsUnknown() {
-        diags.AddError(
-            "form_definition is required",
-            "Terraform field 'form_definition' cannot be null or unknown.",
-        )
-        return req, diags
-    }
+	// Convert form_definition to API type
+	cf := model.FormDefinition.toApiRequest()
 
-    var cf v1.CustomForm
-    if err := json.Unmarshal([]byte(model.FormDefinition.ValueString()), &cf); err != nil {
-        diags.AddError(
-            "Invalid JSON in form_definition",
-            fmt.Sprintf("Error parsing form_definition: %s", err.Error()),
-        )
-        return req, diags
-    }
+	// Ensure slices are not nil
+	if cf.Layout == nil {
+		cf.Layout = []v1.FormItem{}
+	}
+	if cf.Inputs == nil {
+		cf.Inputs = []v1.FormInput{}
+	}
+	if cf.Groups == nil {
+		cf.Groups = []v1.FormGroup{}
+	}
+	if cf.Validations == nil {
+		cf.Validations = []v1.FormValidation{}
+	}
 
-    // Wrap into NullableCustomForm for API
-    var ncf v1.NullableCustomForm
-    ncf.Set(&cf)
-    req.FormDefinition = ncf
+	req := &v1.CreateOrUpdateEntityExtensionRequest{
+		Name:           model.Name.ValueString(),
+		Key:            model.Key.ValueString(),
+		Entity:         v1.EntityExtensionTypeEnum(model.Entity.ValueString()),
+		FormDefinition: *v1.NewNullableCustomForm(&cf),
+	}
 
-    // Set optional fields if provided
-    if !model.Description.IsNull() {
-        desc := model.Description.ValueString()
+	if !model.Description.IsNull() {
+		desc := model.Description.ValueString()
 		req.Description = &desc
-    }
-    if !model.Sequence.IsNull() {
-        sequence := int32(model.Sequence.ValueInt64())
-        req.Sequence = &sequence
-    }
-    if !model.Version.IsNull() {
-        version := int32(model.Version.ValueInt64())
-        req.Version = &version
-    }
+	}
+	if !model.Sequence.IsNull() {
+		seq := int32(model.Sequence.ValueInt64())
+		req.Sequence = &seq
+	}
+	if !model.Version.IsNull() {
+		ver := int32(model.Version.ValueInt64())
+		req.Version = &ver
+	}
 
-    return req, diags
+	return req, diags
 }
 
 func (model *EntityExtensionModel) fromApiResponse(resp *v1.EntityExtension) diag.Diagnostics {
-    var diags diag.Diagnostics
+	var diags diag.Diagnostics
 
-    model.ID = types.StringValue(resp.Id)
-    model.Name = types.StringValue(resp.Name)
-    model.Entity = types.StringValue(string(resp.Entity))
-    model.Key = types.StringValue(resp.Key)
+	model.ID = types.StringValue(resp.Id)
+	model.Name = types.StringValue(resp.Name)
+	model.Entity = types.StringValue(string(resp.Entity))
+	model.Key = types.StringValue(resp.Key)
 	model.CreatedAt = types.Int64Value(int64(resp.CreatedAt))
 	model.UpdatedAt = types.Int64Value(int64(resp.UpdatedAt))
-	
+
 	if resp.Description != nil {
-        model.Description = types.StringValue(*resp.Description)
-    }
+		model.Description = types.StringValue(*resp.Description)
+	} else {
+		model.Description = types.StringNull()
+	}
 
 	if resp.Sequence != nil {
 		model.Sequence = types.Int64Value(int64(*resp.Sequence))
+	} else {
+		model.Sequence = types.Int64Null()
 	}
 
 	if resp.Version != nil {
 		model.Version = types.Int64Value(int64(*resp.Version))
+	} else {
+		model.Version = types.Int64Null()
 	}
 
-    if resp.FormDefinition.IsSet() {
+	form := &CustomFormModel{
+		Layout:     []CustomFormItemModel{},
+		Input:      []CustomFormInputModel{},
+		Group:      []CustomFormGroupModel{},
+		Validation: []CustomFormValidationModel{},
+	}
+
+	if resp.FormDefinition.IsSet() && resp.FormDefinition.Get() != nil {
 		cf := resp.FormDefinition.Get()
+		form.fromApiResponse(cf)
 
-		if cf.Groups == nil {
-			cf.Groups = []v1.FormGroup{}
+		// Ensure slices are initialized to empty
+		if form.Layout == nil {
+			form.Layout = []CustomFormItemModel{}
 		}
-		if cf.Validations == nil {
-			cf.Validations = []v1.FormValidation{}
+		if form.Input == nil {
+			form.Input = []CustomFormInputModel{}
 		}
-
-		b, err := json.Marshal(cf)
-		if err != nil {
-			diags.AddError(
-				"Error marshaling form_definition",
-				fmt.Sprintf("Could not marshal form_definition to JSON: %v", err),
-			)
-		} else {
-			model.FormDefinition = types.StringValue(string(b))
+		if form.Group == nil {
+			form.Group = []CustomFormGroupModel{}
 		}
-	} else if model.FormDefinition.IsUnknown() || model.FormDefinition.IsNull() {
-		model.FormDefinition = types.StringNull()
+		if form.Validation == nil {
+			form.Validation = []CustomFormValidationModel{}
+		}
 	}
 
-    return diags
+	model.FormDefinition = form
+
+	return diags
 }

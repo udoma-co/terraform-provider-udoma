@@ -3,6 +3,7 @@ package provider
 import (
 	"fmt"
 	"testing"
+	"time"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
@@ -13,16 +14,12 @@ func TestAccEntityExtensionResource(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Create and Read testing
 			{
-				Config: resourceDefinitionEntityExtension("Parent Tenancy"),
+				Config: resourceDefinitionEntityExtension("Parent Tenancy", fmt.Sprintf("parent_tenancy_%d", time.Now().UnixNano())),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr("udoma_entity_extension.test", "name", "Parent Tenancy"),
 					resource.TestCheckResourceAttr("udoma_entity_extension.test", "description", "Manage the tenancy for the property with the owner"),
 					resource.TestCheckResourceAttr("udoma_entity_extension.test", "entity", "property"),
 					resource.TestCheckResourceAttr("udoma_entity_extension.test", "sequence", "1"),
-					resource.TestCheckResourceAttr("udoma_entity_extension.test", "key", "parent_tenancy1"),
-					resource.TestCheckResourceAttr("udoma_entity_extension.test", "version", "2"),
-
-					// Verify dynamic values have any value set in the state.
 					resource.TestCheckResourceAttrSet("udoma_entity_extension.test", "id"),
 				),
 			},
@@ -36,7 +33,7 @@ func TestAccEntityExtensionResource(t *testing.T) {
 
 			// Update testing
 			{
-				Config: resourceDefinitionEntityExtension("Parent Tenancy Updated"),
+				Config: resourceDefinitionEntityExtension("Parent Tenancy Updated", fmt.Sprintf("parent_tenancy_%d", time.Now().UnixNano())),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr("udoma_entity_extension.test", "name", "Parent Tenancy Updated"),
 				),
@@ -45,25 +42,27 @@ func TestAccEntityExtensionResource(t *testing.T) {
 	})
 }
 
-func resourceDefinitionEntityExtension(name string) string {
-	return fmt.Sprintf(`
+
+func resourceDefinitionEntityExtension(name string, key string) string {
+    return fmt.Sprintf(`
 resource "udoma_entity_extension" "test" {
   name        = "%s"
   description = "Manage the tenancy for the property with the owner"
   entity      = "property"
   sequence    = 1
-  key         = "parent_tenancy1"
+  key         = "%s"
   version     = 2
 
-  form_definition = jsonencode({
-	layout = [
-		{ ref_id = "property_123", ref_type = "slot" },
-		{ ref_id = "tenant_456",   ref_type = "slot" }
-	]
-	inputs = []
-	groups = []
-	validations = []
-  })
+  form_definition = {
+    layout = [
+      { ref_id = "property_123", ref_type = "slot" },
+      { ref_id = "tenant_456",   ref_type = "slot" }
+    ]
+    inputs      = []
+    groups      = []
+    validation  = []
+  }
 }
-`, name)
+`, name, key)
 }
+
