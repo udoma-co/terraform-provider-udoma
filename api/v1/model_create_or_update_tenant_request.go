@@ -33,6 +33,8 @@ type CreateOrUpdateTenantRequest struct {
 	Email string `json:"email"`
 	// The phone number of the tenant. Not directly used by the system, but can be used by managers and service providers to contact the tenant.
 	PhoneNumber string `json:"phone_number"`
+	// Extensions data for this tenant, keyed by extension key
+	Extensions *map[string]map[string]interface{} `json:"extensions,omitempty"`
 }
 
 type _CreateOrUpdateTenantRequest CreateOrUpdateTenantRequest
@@ -218,6 +220,38 @@ func (o *CreateOrUpdateTenantRequest) SetPhoneNumber(v string) {
 	o.PhoneNumber = v
 }
 
+// GetExtensions returns the Extensions field value if set, zero value otherwise.
+func (o *CreateOrUpdateTenantRequest) GetExtensions() map[string]map[string]interface{} {
+	if o == nil || IsNil(o.Extensions) {
+		var ret map[string]map[string]interface{}
+		return ret
+	}
+	return *o.Extensions
+}
+
+// GetExtensionsOk returns a tuple with the Extensions field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateTenantRequest) GetExtensionsOk() (*map[string]map[string]interface{}, bool) {
+	if o == nil || IsNil(o.Extensions) {
+		return nil, false
+	}
+	return o.Extensions, true
+}
+
+// HasExtensions returns a boolean if a field has been set.
+func (o *CreateOrUpdateTenantRequest) HasExtensions() bool {
+	if o != nil && !IsNil(o.Extensions) {
+		return true
+	}
+
+	return false
+}
+
+// SetExtensions gets a reference to the given map[string]map[string]interface{} and assigns it to the Extensions field.
+func (o *CreateOrUpdateTenantRequest) SetExtensions(v map[string]map[string]interface{}) {
+	o.Extensions = &v
+}
+
 func (o CreateOrUpdateTenantRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -238,6 +272,9 @@ func (o CreateOrUpdateTenantRequest) ToMap() (map[string]interface{}, error) {
 	}
 	toSerialize["email"] = o.Email
 	toSerialize["phone_number"] = o.PhoneNumber
+	if !IsNil(o.Extensions) {
+		toSerialize["extensions"] = o.Extensions
+	}
 	return toSerialize, nil
 }
 

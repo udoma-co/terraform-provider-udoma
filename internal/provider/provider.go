@@ -222,6 +222,7 @@ func (p *UdomaProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewAccount,
 		NewVersionMigrator,
 		NewDataImportTemplate,
+		NewEntityExtension,
 	}
 }
 

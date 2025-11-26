@@ -20,12 +20,13 @@ type ImportDataTypeEnum string
 
 // List of ImportDataTypeEnum
 const (
-	IMPORTDATATYPEENUM_CSV  ImportDataTypeEnum = "csv"
-	IMPORTDATATYPEENUM_TXT  ImportDataTypeEnum = "txt"
-	IMPORTDATATYPEENUM_JSON ImportDataTypeEnum = "json"
-	IMPORTDATATYPEENUM_XML  ImportDataTypeEnum = "xml"
-	IMPORTDATATYPEENUM_XLSX ImportDataTypeEnum = "xlsx"
-	IMPORTDATATYPEENUM_XLS  ImportDataTypeEnum = "xls"
+	IMPORTDATATYPEENUM_CSV   ImportDataTypeEnum = "csv"
+	IMPORTDATATYPEENUM_TXT   ImportDataTypeEnum = "txt"
+	IMPORTDATATYPEENUM_JSON  ImportDataTypeEnum = "json"
+	IMPORTDATATYPEENUM_XML   ImportDataTypeEnum = "xml"
+	IMPORTDATATYPEENUM_XLSX  ImportDataTypeEnum = "xlsx"
+	IMPORTDATATYPEENUM_XLS   ImportDataTypeEnum = "xls"
+	IMPORTDATATYPEENUM_MT940 ImportDataTypeEnum = "mt940"
 )
 
 // All allowed values of ImportDataTypeEnum enum
@@ -36,6 +37,7 @@ var AllowedImportDataTypeEnumEnumValues = []ImportDataTypeEnum{
 	"xml",
 	"xlsx",
 	"xls",
+	"mt940",
 }
 
 func (v *ImportDataTypeEnum) UnmarshalJSON(src []byte) error {

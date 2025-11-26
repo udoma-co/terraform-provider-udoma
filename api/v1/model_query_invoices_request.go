@@ -22,7 +22,8 @@ type QueryInvoicesRequest struct {
 	// The maximum number of entities to return from the query
 	Limit *int32 `json:"limit,omitempty"`
 	// The number of entities to skip before returning the result
-	Offset *int32 `json:"offset,omitempty"`
+	Offset   *int32                 `json:"offset,omitempty"`
+	Archived *QueryBooleanParameter `json:"archived,omitempty"`
 }
 
 // NewQueryInvoicesRequest instantiates a new QueryInvoicesRequest object
@@ -106,6 +107,38 @@ func (o *QueryInvoicesRequest) SetOffset(v int32) {
 	o.Offset = &v
 }
 
+// GetArchived returns the Archived field value if set, zero value otherwise.
+func (o *QueryInvoicesRequest) GetArchived() QueryBooleanParameter {
+	if o == nil || IsNil(o.Archived) {
+		var ret QueryBooleanParameter
+		return ret
+	}
+	return *o.Archived
+}
+
+// GetArchivedOk returns a tuple with the Archived field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryInvoicesRequest) GetArchivedOk() (*QueryBooleanParameter, bool) {
+	if o == nil || IsNil(o.Archived) {
+		return nil, false
+	}
+	return o.Archived, true
+}
+
+// HasArchived returns a boolean if a field has been set.
+func (o *QueryInvoicesRequest) HasArchived() bool {
+	if o != nil && !IsNil(o.Archived) {
+		return true
+	}
+
+	return false
+}
+
+// SetArchived gets a reference to the given QueryBooleanParameter and assigns it to the Archived field.
+func (o *QueryInvoicesRequest) SetArchived(v QueryBooleanParameter) {
+	o.Archived = &v
+}
+
 func (o QueryInvoicesRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -121,6 +154,9 @@ func (o QueryInvoicesRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Offset) {
 		toSerialize["offset"] = o.Offset
+	}
+	if !IsNil(o.Archived) {
+		toSerialize["archived"] = o.Archived
 	}
 	return toSerialize, nil
 }

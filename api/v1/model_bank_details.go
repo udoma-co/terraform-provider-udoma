@@ -27,6 +27,8 @@ type BankDetails struct {
 	Bic *string `json:"bic,omitempty"`
 	// The name of the bank (optional)
 	BankName *string `json:"bank_name,omitempty"`
+	// The ID of the external bank (optional)
+	ExternalId *string `json:"external_id,omitempty"`
 	// A user friendly label, used to identify the account (optional)
 	Description *string `json:"description,omitempty"`
 }
@@ -176,6 +178,38 @@ func (o *BankDetails) SetBankName(v string) {
 	o.BankName = &v
 }
 
+// GetExternalId returns the ExternalId field value if set, zero value otherwise.
+func (o *BankDetails) GetExternalId() string {
+	if o == nil || IsNil(o.ExternalId) {
+		var ret string
+		return ret
+	}
+	return *o.ExternalId
+}
+
+// GetExternalIdOk returns a tuple with the ExternalId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BankDetails) GetExternalIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ExternalId) {
+		return nil, false
+	}
+	return o.ExternalId, true
+}
+
+// HasExternalId returns a boolean if a field has been set.
+func (o *BankDetails) HasExternalId() bool {
+	if o != nil && !IsNil(o.ExternalId) {
+		return true
+	}
+
+	return false
+}
+
+// SetExternalId gets a reference to the given string and assigns it to the ExternalId field.
+func (o *BankDetails) SetExternalId(v string) {
+	o.ExternalId = &v
+}
+
 // GetDescription returns the Description field value if set, zero value otherwise.
 func (o *BankDetails) GetDescription() string {
 	if o == nil || IsNil(o.Description) {
@@ -229,6 +263,9 @@ func (o BankDetails) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.BankName) {
 		toSerialize["bank_name"] = o.BankName
+	}
+	if !IsNil(o.ExternalId) {
+		toSerialize["external_id"] = o.ExternalId
 	}
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description

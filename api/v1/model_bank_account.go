@@ -27,7 +27,7 @@ type BankAccount struct {
 	CreatedAt int64 `json:"created_at"`
 	// The date and time the entity was last updated
 	UpdatedAt int64 `json:"updated_at"`
-	// Optional external ID, in case entity was created via backend integration
+	// The ID of the external bank (optional)
 	ExternalId *string `json:"external_id,omitempty"`
 	// Optional external source, in case entity was created via backend integration
 	ExternalSource *string `json:"external_source,omitempty"`
@@ -42,6 +42,8 @@ type BankAccount struct {
 	// A user friendly label, used to identify the account (optional)
 	Description *string            `json:"description,omitempty"`
 	Cadence     BalanceCadenceEnum `json:"cadence"`
+	// An external identifier for the bank account, e.g. provided by the bank
+	ExternalBankId *string `json:"external_bank_id,omitempty"`
 }
 
 type _BankAccount BankAccount
@@ -373,6 +375,38 @@ func (o *BankAccount) SetCadence(v BalanceCadenceEnum) {
 	o.Cadence = v
 }
 
+// GetExternalBankId returns the ExternalBankId field value if set, zero value otherwise.
+func (o *BankAccount) GetExternalBankId() string {
+	if o == nil || IsNil(o.ExternalBankId) {
+		var ret string
+		return ret
+	}
+	return *o.ExternalBankId
+}
+
+// GetExternalBankIdOk returns a tuple with the ExternalBankId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BankAccount) GetExternalBankIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ExternalBankId) {
+		return nil, false
+	}
+	return o.ExternalBankId, true
+}
+
+// HasExternalBankId returns a boolean if a field has been set.
+func (o *BankAccount) HasExternalBankId() bool {
+	if o != nil && !IsNil(o.ExternalBankId) {
+		return true
+	}
+
+	return false
+}
+
+// SetExternalBankId gets a reference to the given string and assigns it to the ExternalBankId field.
+func (o *BankAccount) SetExternalBankId(v string) {
+	o.ExternalBankId = &v
+}
+
 func (o BankAccount) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -404,6 +438,9 @@ func (o BankAccount) ToMap() (map[string]interface{}, error) {
 		toSerialize["description"] = o.Description
 	}
 	toSerialize["cadence"] = o.Cadence
+	if !IsNil(o.ExternalBankId) {
+		toSerialize["external_bank_id"] = o.ExternalBankId
+	}
 	return toSerialize, nil
 }
 

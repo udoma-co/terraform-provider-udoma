@@ -34,6 +34,8 @@ type CreateOrUpdatePropertyRequest struct {
 	// Optional reference to the parent property (e.g. building) of this property
 	ParentRef *string          `json:"parent_ref,omitempty"`
 	Details   *PropertyDetails `json:"details,omitempty"`
+	// Extensions data for this property, keyed by extension key
+	Extensions *map[string]map[string]interface{} `json:"extensions,omitempty"`
 }
 
 type _CreateOrUpdatePropertyRequest CreateOrUpdatePropertyRequest
@@ -297,6 +299,38 @@ func (o *CreateOrUpdatePropertyRequest) SetDetails(v PropertyDetails) {
 	o.Details = &v
 }
 
+// GetExtensions returns the Extensions field value if set, zero value otherwise.
+func (o *CreateOrUpdatePropertyRequest) GetExtensions() map[string]map[string]interface{} {
+	if o == nil || IsNil(o.Extensions) {
+		var ret map[string]map[string]interface{}
+		return ret
+	}
+	return *o.Extensions
+}
+
+// GetExtensionsOk returns a tuple with the Extensions field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdatePropertyRequest) GetExtensionsOk() (*map[string]map[string]interface{}, bool) {
+	if o == nil || IsNil(o.Extensions) {
+		return nil, false
+	}
+	return o.Extensions, true
+}
+
+// HasExtensions returns a boolean if a field has been set.
+func (o *CreateOrUpdatePropertyRequest) HasExtensions() bool {
+	if o != nil && !IsNil(o.Extensions) {
+		return true
+	}
+
+	return false
+}
+
+// SetExtensions gets a reference to the given map[string]map[string]interface{} and assigns it to the Extensions field.
+func (o *CreateOrUpdatePropertyRequest) SetExtensions(v map[string]map[string]interface{}) {
+	o.Extensions = &v
+}
+
 func (o CreateOrUpdatePropertyRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -326,6 +360,9 @@ func (o CreateOrUpdatePropertyRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Details) {
 		toSerialize["details"] = o.Details
+	}
+	if !IsNil(o.Extensions) {
+		toSerialize["extensions"] = o.Extensions
 	}
 	return toSerialize, nil
 }
