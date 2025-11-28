@@ -36,6 +36,8 @@ type BookingTemplate struct {
 	Inputs NullableCustomForm `json:"inputs"`
 	// A script that can be used to generate the booking based on the provided input
 	Script string `json:"script"`
+	// a map of values, where the key and values are strings
+	EnvVars *map[string]string `json:"env_vars,omitempty"`
 	// A flag indicating whether the entity is deleted. If the entity is deleted, it should not be returned in the results of a query, but it is still kept in the database as it is referenced by other entities.
 	IsDeleted *bool `json:"is_deleted,omitempty"`
 }
@@ -275,6 +277,38 @@ func (o *BookingTemplate) SetScript(v string) {
 	o.Script = v
 }
 
+// GetEnvVars returns the EnvVars field value if set, zero value otherwise.
+func (o *BookingTemplate) GetEnvVars() map[string]string {
+	if o == nil || IsNil(o.EnvVars) {
+		var ret map[string]string
+		return ret
+	}
+	return *o.EnvVars
+}
+
+// GetEnvVarsOk returns a tuple with the EnvVars field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BookingTemplate) GetEnvVarsOk() (*map[string]string, bool) {
+	if o == nil || IsNil(o.EnvVars) {
+		return nil, false
+	}
+	return o.EnvVars, true
+}
+
+// HasEnvVars returns a boolean if a field has been set.
+func (o *BookingTemplate) HasEnvVars() bool {
+	if o != nil && !IsNil(o.EnvVars) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnvVars gets a reference to the given map[string]string and assigns it to the EnvVars field.
+func (o *BookingTemplate) SetEnvVars(v map[string]string) {
+	o.EnvVars = &v
+}
+
 // GetIsDeleted returns the IsDeleted field value if set, zero value otherwise.
 func (o *BookingTemplate) GetIsDeleted() bool {
 	if o == nil || IsNil(o.IsDeleted) {
@@ -329,6 +363,9 @@ func (o BookingTemplate) ToMap() (map[string]interface{}, error) {
 	}
 	toSerialize["inputs"] = o.Inputs.Get()
 	toSerialize["script"] = o.Script
+	if !IsNil(o.EnvVars) {
+		toSerialize["env_vars"] = o.EnvVars
+	}
 	if !IsNil(o.IsDeleted) {
 		toSerialize["is_deleted"] = o.IsDeleted
 	}
