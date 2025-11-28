@@ -29,6 +29,8 @@ type UserPreferences struct {
 	NotifyOnCorrespondenceAccessed []NotificationType `json:"notify_on_correspondence_accessed,omitempty"`
 	// Notify when a handover has been submitted on the tablet app and is  ready for processing.
 	NotifyOnHandoverSubmitted []NotificationType `json:"notify_on_handover_submitted,omitempty"`
+	// Notify when a signature has been signed by all signers and is considered done.
+	NotifyOnSignatureDone []NotificationType `json:"notify_on_signature_done,omitempty"`
 }
 
 // NewUserPreferences instantiates a new UserPreferences object
@@ -208,6 +210,38 @@ func (o *UserPreferences) SetNotifyOnHandoverSubmitted(v []NotificationType) {
 	o.NotifyOnHandoverSubmitted = v
 }
 
+// GetNotifyOnSignatureDone returns the NotifyOnSignatureDone field value if set, zero value otherwise.
+func (o *UserPreferences) GetNotifyOnSignatureDone() []NotificationType {
+	if o == nil || IsNil(o.NotifyOnSignatureDone) {
+		var ret []NotificationType
+		return ret
+	}
+	return o.NotifyOnSignatureDone
+}
+
+// GetNotifyOnSignatureDoneOk returns a tuple with the NotifyOnSignatureDone field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UserPreferences) GetNotifyOnSignatureDoneOk() ([]NotificationType, bool) {
+	if o == nil || IsNil(o.NotifyOnSignatureDone) {
+		return nil, false
+	}
+	return o.NotifyOnSignatureDone, true
+}
+
+// HasNotifyOnSignatureDone returns a boolean if a field has been set.
+func (o *UserPreferences) HasNotifyOnSignatureDone() bool {
+	if o != nil && !IsNil(o.NotifyOnSignatureDone) {
+		return true
+	}
+
+	return false
+}
+
+// SetNotifyOnSignatureDone gets a reference to the given []NotificationType and assigns it to the NotifyOnSignatureDone field.
+func (o *UserPreferences) SetNotifyOnSignatureDone(v []NotificationType) {
+	o.NotifyOnSignatureDone = v
+}
+
 func (o UserPreferences) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -232,6 +266,9 @@ func (o UserPreferences) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.NotifyOnHandoverSubmitted) {
 		toSerialize["notify_on_handover_submitted"] = o.NotifyOnHandoverSubmitted
+	}
+	if !IsNil(o.NotifyOnSignatureDone) {
+		toSerialize["notify_on_signature_done"] = o.NotifyOnSignatureDone
 	}
 	return toSerialize, nil
 }

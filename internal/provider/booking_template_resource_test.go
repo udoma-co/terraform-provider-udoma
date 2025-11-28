@@ -25,6 +25,10 @@ func TestAccBookingTemplateResource(t *testing.T) {
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "inputs.inputs.0.type", "text"),
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "inputs.inputs.0.label.en", "Test input"),
 
+					resource.TestCheckResourceAttr("udoma_booking_template.test", "env_vars.FOO", "bar"),
+					resource.TestCheckResourceAttr("udoma_booking_template.test", "env_vars.TEST2", "value"),
+
+
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "script", "// This is a test generation script"),
 
 					// Verify dynamic values have any value set in the state.
@@ -52,6 +56,10 @@ func TestAccBookingTemplateResource(t *testing.T) {
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "inputs.inputs.0.id", "test"),
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "inputs.inputs.0.type", "text"),
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "inputs.inputs.0.label.en", "Test input"),
+
+					resource.TestCheckResourceAttr("udoma_booking_template.test", "env_vars.FOO", "bar"),
+					resource.TestCheckResourceAttr("udoma_booking_template.test", "env_vars.TEST2", "value"),
+
 
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "script", "// This is a test generation script"),
 				),
@@ -97,6 +105,11 @@ func resourceDefinitionBookingTemplate(name, description string) string {
 					}
 				}
 			]
+		}
+
+		env_vars = {
+			FOO   = "bar"
+			TEST2 = "value"
 		}
 
 		script = "// This is a test generation script"

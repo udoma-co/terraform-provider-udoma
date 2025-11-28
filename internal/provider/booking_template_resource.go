@@ -13,6 +13,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/hashicorp/terraform-plugin-framework/attr"
 	v1 "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
 	"gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/internal/client"
 )
@@ -39,6 +40,7 @@ type BookingTemplateModel struct {
 	Icon        types.String     `tfsdk:"icon"`
 	Inputs      *CustomFormModel `tfsdk:"inputs"`
 	Script      types.String     `tfsdk:"script"`
+	EnvVars     types.Map        `tfsdk:"env_vars"`
 }
 
 func (faq *BookingTemplate) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -91,6 +93,11 @@ func (faq *BookingTemplate) Schema(ctx context.Context, req resource.SchemaReque
 			"script": schema.StringAttribute{
 				Required:    true,
 				Description: "The JS script that generates the bookings",
+			},
+			"env_vars": schema.MapAttribute{
+				ElementType: types.StringType,
+				Optional:    true,
+				Description: "Environment variables available to the script",
 			},
 		},
 	}
@@ -285,6 +292,18 @@ func (model *BookingTemplateModel) fromApiResponse(bookingTemplate *v1.BookingTe
 	}
 	diags = model.Inputs.fromApiResponse(bookingTemplate.Inputs.Get())
 
+	model.EnvVars = types.MapNull(types.StringType)
+
+	if bookingTemplate.EnvVars != nil {
+		envMap := map[string]attr.Value{}
+
+		for k, v := range *bookingTemplate.EnvVars {
+			envMap[k] = types.StringValue(v)
+		}
+
+		model.EnvVars = types.MapValueMust(types.StringType, envMap)
+	}
+
 	return nil
 }
 
@@ -297,6 +316,19 @@ func (model *BookingTemplateModel) toApiRequest() (v1.CreateOrUpdateBookingTempl
 		Icon:        model.Icon.ValueStringPointer(),
 		Inputs:      *v1.NewNullableCustomForm(&form),
 		Script:      model.Script.ValueString(),
+	}
+
+	if !model.EnvVars.IsNull() && !model.EnvVars.IsUnknown() {
+		envVars := make(map[string]string)
+
+		for k, v := range model.EnvVars.Elements() {
+			strVal := v.(types.String)
+			envVars[k] = strVal.ValueString()
+		}
+
+		bookingTemplate.EnvVars = &envVars
+	} else {
+		bookingTemplate.EnvVars = nil
 	}
 
 	return bookingTemplate, nil
