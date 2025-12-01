@@ -63,6 +63,9 @@ func TestAccBookingTemplateResource(t *testing.T) {
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "env_vars.FOO", "bar"),
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "env_vars.TEST2", "value"),
 
+					resource.TestCheckResourceAttr("udoma_booking_template.test", "trigger_source", "invoice"),
+
+					resource.TestCheckResourceAttr("udoma_booking_template.test", "init_script", "// This is a test init script"),
 
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "script", "// This is a test generation script"),
 				),
@@ -111,15 +114,11 @@ func resourceDefinitionBookingTemplate(name, description string) string {
 				}
 			]
 		}
-<<<<<<< HEAD
-=======
 
 		env_vars = {
 			FOO   = "bar"
 			TEST2 = "value"
 		}
-
->>>>>>> fdc409d (Added env_vars field in booking_template (#89))
 		script = "// This is a test generation script"
 	}
 	`
