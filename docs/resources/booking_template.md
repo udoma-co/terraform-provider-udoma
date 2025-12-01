@@ -25,6 +25,8 @@ Resource represents a booking template
 
 - `description` (String) An optional user friendly label, used to identify the booking template
 - `icon` (String) An optional icon for the booking template
+- `init_script` (String) An optional script that can be used to prepare data and populate the custom form when the template is triggered
+- `trigger_source` (String) The source from which this template can be triggered. Defaults to 'manual' if not specified
 
 ### Read-Only
 

@@ -22,7 +22,8 @@ type QueryBookingTemplatesRequest struct {
 	// The maximum number of entities to return from the query
 	Limit *int32 `json:"limit,omitempty"`
 	// The number of entities to skip before returning the result
-	Offset *int32 `json:"offset,omitempty"`
+	Offset        *int32                            `json:"offset,omitempty"`
+	TriggerSource *BookingTemplateTriggerSourceEnum `json:"trigger_source,omitempty"`
 }
 
 // NewQueryBookingTemplatesRequest instantiates a new QueryBookingTemplatesRequest object
@@ -106,6 +107,38 @@ func (o *QueryBookingTemplatesRequest) SetOffset(v int32) {
 	o.Offset = &v
 }
 
+// GetTriggerSource returns the TriggerSource field value if set, zero value otherwise.
+func (o *QueryBookingTemplatesRequest) GetTriggerSource() BookingTemplateTriggerSourceEnum {
+	if o == nil || IsNil(o.TriggerSource) {
+		var ret BookingTemplateTriggerSourceEnum
+		return ret
+	}
+	return *o.TriggerSource
+}
+
+// GetTriggerSourceOk returns a tuple with the TriggerSource field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryBookingTemplatesRequest) GetTriggerSourceOk() (*BookingTemplateTriggerSourceEnum, bool) {
+	if o == nil || IsNil(o.TriggerSource) {
+		return nil, false
+	}
+	return o.TriggerSource, true
+}
+
+// HasTriggerSource returns a boolean if a field has been set.
+func (o *QueryBookingTemplatesRequest) HasTriggerSource() bool {
+	if o != nil && !IsNil(o.TriggerSource) {
+		return true
+	}
+
+	return false
+}
+
+// SetTriggerSource gets a reference to the given BookingTemplateTriggerSourceEnum and assigns it to the TriggerSource field.
+func (o *QueryBookingTemplatesRequest) SetTriggerSource(v BookingTemplateTriggerSourceEnum) {
+	o.TriggerSource = &v
+}
+
 func (o QueryBookingTemplatesRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -121,6 +154,9 @@ func (o QueryBookingTemplatesRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Offset) {
 		toSerialize["offset"] = o.Offset
+	}
+	if !IsNil(o.TriggerSource) {
+		toSerialize["trigger_source"] = o.TriggerSource
 	}
 	return toSerialize, nil
 }

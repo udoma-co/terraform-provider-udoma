@@ -32,10 +32,15 @@ type BookingTemplate struct {
 	// A short description of the template
 	Description *string `json:"description,omitempty"`
 	// An optional icon that can be used to visually identify the template
-	Icon   *string            `json:"icon,omitempty"`
-	Inputs NullableCustomForm `json:"inputs"`
+	Icon          *string                           `json:"icon,omitempty"`
+	TriggerSource *BookingTemplateTriggerSourceEnum `json:"trigger_source,omitempty"`
+	Inputs        NullableCustomForm                `json:"inputs"`
+	// An optional script that can be used to prepare data and populate the custom form when the template is triggered.
+	InitScript *string `json:"init_script,omitempty"`
 	// A script that can be used to generate the booking based on the provided input
 	Script string `json:"script"`
+	// a map of values, where the key and values are strings
+	EnvVars *map[string]string `json:"env_vars,omitempty"`
 	// A flag indicating whether the entity is deleted. If the entity is deleted, it should not be returned in the results of a query, but it is still kept in the database as it is referenced by other entities.
 	IsDeleted *bool `json:"is_deleted,omitempty"`
 }
@@ -225,6 +230,38 @@ func (o *BookingTemplate) SetIcon(v string) {
 	o.Icon = &v
 }
 
+// GetTriggerSource returns the TriggerSource field value if set, zero value otherwise.
+func (o *BookingTemplate) GetTriggerSource() BookingTemplateTriggerSourceEnum {
+	if o == nil || IsNil(o.TriggerSource) {
+		var ret BookingTemplateTriggerSourceEnum
+		return ret
+	}
+	return *o.TriggerSource
+}
+
+// GetTriggerSourceOk returns a tuple with the TriggerSource field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BookingTemplate) GetTriggerSourceOk() (*BookingTemplateTriggerSourceEnum, bool) {
+	if o == nil || IsNil(o.TriggerSource) {
+		return nil, false
+	}
+	return o.TriggerSource, true
+}
+
+// HasTriggerSource returns a boolean if a field has been set.
+func (o *BookingTemplate) HasTriggerSource() bool {
+	if o != nil && !IsNil(o.TriggerSource) {
+		return true
+	}
+
+	return false
+}
+
+// SetTriggerSource gets a reference to the given BookingTemplateTriggerSourceEnum and assigns it to the TriggerSource field.
+func (o *BookingTemplate) SetTriggerSource(v BookingTemplateTriggerSourceEnum) {
+	o.TriggerSource = &v
+}
+
 // GetInputs returns the Inputs field value
 // If the value is explicit nil, the zero value for CustomForm will be returned
 func (o *BookingTemplate) GetInputs() CustomForm {
@@ -251,6 +288,38 @@ func (o *BookingTemplate) SetInputs(v CustomForm) {
 	o.Inputs.Set(&v)
 }
 
+// GetInitScript returns the InitScript field value if set, zero value otherwise.
+func (o *BookingTemplate) GetInitScript() string {
+	if o == nil || IsNil(o.InitScript) {
+		var ret string
+		return ret
+	}
+	return *o.InitScript
+}
+
+// GetInitScriptOk returns a tuple with the InitScript field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BookingTemplate) GetInitScriptOk() (*string, bool) {
+	if o == nil || IsNil(o.InitScript) {
+		return nil, false
+	}
+	return o.InitScript, true
+}
+
+// HasInitScript returns a boolean if a field has been set.
+func (o *BookingTemplate) HasInitScript() bool {
+	if o != nil && !IsNil(o.InitScript) {
+		return true
+	}
+
+	return false
+}
+
+// SetInitScript gets a reference to the given string and assigns it to the InitScript field.
+func (o *BookingTemplate) SetInitScript(v string) {
+	o.InitScript = &v
+}
+
 // GetScript returns the Script field value
 func (o *BookingTemplate) GetScript() string {
 	if o == nil {
@@ -273,6 +342,38 @@ func (o *BookingTemplate) GetScriptOk() (*string, bool) {
 // SetScript sets field value
 func (o *BookingTemplate) SetScript(v string) {
 	o.Script = v
+}
+
+// GetEnvVars returns the EnvVars field value if set, zero value otherwise.
+func (o *BookingTemplate) GetEnvVars() map[string]string {
+	if o == nil || IsNil(o.EnvVars) {
+		var ret map[string]string
+		return ret
+	}
+	return *o.EnvVars
+}
+
+// GetEnvVarsOk returns a tuple with the EnvVars field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BookingTemplate) GetEnvVarsOk() (*map[string]string, bool) {
+	if o == nil || IsNil(o.EnvVars) {
+		return nil, false
+	}
+	return o.EnvVars, true
+}
+
+// HasEnvVars returns a boolean if a field has been set.
+func (o *BookingTemplate) HasEnvVars() bool {
+	if o != nil && !IsNil(o.EnvVars) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnvVars gets a reference to the given map[string]string and assigns it to the EnvVars field.
+func (o *BookingTemplate) SetEnvVars(v map[string]string) {
+	o.EnvVars = &v
 }
 
 // GetIsDeleted returns the IsDeleted field value if set, zero value otherwise.
@@ -327,8 +428,17 @@ func (o BookingTemplate) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Icon) {
 		toSerialize["icon"] = o.Icon
 	}
+	if !IsNil(o.TriggerSource) {
+		toSerialize["trigger_source"] = o.TriggerSource
+	}
 	toSerialize["inputs"] = o.Inputs.Get()
+	if !IsNil(o.InitScript) {
+		toSerialize["init_script"] = o.InitScript
+	}
 	toSerialize["script"] = o.Script
+	if !IsNil(o.EnvVars) {
+		toSerialize["env_vars"] = o.EnvVars
+	}
 	if !IsNil(o.IsDeleted) {
 		toSerialize["is_deleted"] = o.IsDeleted
 	}

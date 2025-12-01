@@ -517,6 +517,7 @@ Class | Method | HTTP request | Description
  - [BookingPreviewSourceTypeEnum](docs/BookingPreviewSourceTypeEnum.md)
  - [BookingTemplate](docs/BookingTemplate.md)
  - [BookingTemplatePartial](docs/BookingTemplatePartial.md)
+ - [BookingTemplateTriggerSourceEnum](docs/BookingTemplateTriggerSourceEnum.md)
  - [BookingTypeEnum](docs/BookingTypeEnum.md)
  - [Case](docs/Case.md)
  - [CaseActionEnum](docs/CaseActionEnum.md)

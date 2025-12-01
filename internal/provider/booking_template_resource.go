@@ -37,7 +37,9 @@ type BookingTemplateModel struct {
 	Name        types.String     `tfsdk:"name"`
 	Description types.String     `tfsdk:"description"`
 	Icon        types.String     `tfsdk:"icon"`
+	TriggerSource types.String   `tfsdk:"trigger_source"`
 	Inputs      *CustomFormModel `tfsdk:"inputs"`
+	InitScript  types.String     `tfsdk:"init_script"`
 	Script      types.String     `tfsdk:"script"`
 }
 
@@ -83,10 +85,25 @@ func (faq *BookingTemplate) Schema(ctx context.Context, req resource.SchemaReque
 					stringvalidator.LengthAtMost(255),
 				},
 			},
+			"trigger_source": schema.StringAttribute{
+				Optional:    true,
+				Description: "The source from which this template can be triggered. Defaults to 'manual' if not specified",
+				Validators: []validator.String{
+					stringvalidator.OneOf(
+						"manual",
+						"invoice",
+						"bank_transaction",
+					),
+				},
+			},
 			"inputs": schema.SingleNestedAttribute{
 				Required:    true,
 				Description: "A custom form to collect data with",
 				Attributes:  CustomFormNestedSchema(),
+			},
+			"init_script": schema.StringAttribute{
+				Optional:    true,
+				Description: "An optional script that can be used to prepare data and populate the custom form when the template is triggered",
 			},
 			"script": schema.StringAttribute{
 				Required:    true,
@@ -279,7 +296,16 @@ func (model *BookingTemplateModel) fromApiResponse(bookingTemplate *v1.BookingTe
 	model.Description = omittableStringValue(bookingTemplate.Description, model.Description)
 	model.Icon = omittableStringValue(bookingTemplate.Icon, model.Icon)
 	model.Script = types.StringValue(bookingTemplate.Script)
+	model.InitScript = omittableStringValue(bookingTemplate.InitScript, model.InitScript)
 
+	var triggerSourcePtr *string
+	if bookingTemplate.TriggerSource != nil {
+		enumValue := string(*bookingTemplate.TriggerSource)
+		triggerSourcePtr = &enumValue
+	}
+
+	model.TriggerSource = omittableStringValue(triggerSourcePtr, model.TriggerSource)
+	
 	if model.Inputs == nil {
 		model.Inputs = &CustomFormModel{}
 	}
@@ -289,15 +315,24 @@ func (model *BookingTemplateModel) fromApiResponse(bookingTemplate *v1.BookingTe
 }
 
 func (model *BookingTemplateModel) toApiRequest() (v1.CreateOrUpdateBookingTemplateRequest, error) {
-
 	form := model.Inputs.toApiRequest()
+
 	bookingTemplate := v1.CreateOrUpdateBookingTemplateRequest{
 		Name:        model.Name.ValueString(),
 		Description: model.Description.ValueStringPointer(),
 		Icon:        model.Icon.ValueStringPointer(),
 		Inputs:      *v1.NewNullableCustomForm(&form),
+		InitScript:  model.InitScript.ValueStringPointer(),
 		Script:      model.Script.ValueString(),
+		TriggerSource: func() *v1.BookingTemplateTriggerSourceEnum {
+			if model.TriggerSource.ValueString() == "" {
+				return nil
+			}
+			enumValue := v1.BookingTemplateTriggerSourceEnum(model.TriggerSource.ValueString())
+			return &enumValue
+		}(),
 	}
 
 	return bookingTemplate, nil
 }
+
