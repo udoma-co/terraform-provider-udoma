@@ -24,6 +24,7 @@ Resource represents a booking template
 ### Optional
 
 - `description` (String) An optional user friendly label, used to identify the booking template
+- `env_vars` (Map of String) Environment variables available to the script
 - `icon` (String) An optional icon for the booking template
 
 ### Read-Only

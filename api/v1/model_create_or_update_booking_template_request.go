@@ -30,6 +30,8 @@ type CreateOrUpdateBookingTemplateRequest struct {
 	Inputs NullableCustomForm `json:"inputs"`
 	// A script that can be used to generate the booking based on the provided input
 	Script string `json:"script"`
+	// a map of values, where the key and values are strings
+	EnvVars *map[string]string `json:"env_vars,omitempty"`
 }
 
 type _CreateOrUpdateBookingTemplateRequest CreateOrUpdateBookingTemplateRequest
@@ -192,6 +194,38 @@ func (o *CreateOrUpdateBookingTemplateRequest) SetScript(v string) {
 	o.Script = v
 }
 
+// GetEnvVars returns the EnvVars field value if set, zero value otherwise.
+func (o *CreateOrUpdateBookingTemplateRequest) GetEnvVars() map[string]string {
+	if o == nil || IsNil(o.EnvVars) {
+		var ret map[string]string
+		return ret
+	}
+	return *o.EnvVars
+}
+
+// GetEnvVarsOk returns a tuple with the EnvVars field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateBookingTemplateRequest) GetEnvVarsOk() (*map[string]string, bool) {
+	if o == nil || IsNil(o.EnvVars) {
+		return nil, false
+	}
+	return o.EnvVars, true
+}
+
+// HasEnvVars returns a boolean if a field has been set.
+func (o *CreateOrUpdateBookingTemplateRequest) HasEnvVars() bool {
+	if o != nil && !IsNil(o.EnvVars) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnvVars gets a reference to the given map[string]string and assigns it to the EnvVars field.
+func (o *CreateOrUpdateBookingTemplateRequest) SetEnvVars(v map[string]string) {
+	o.EnvVars = &v
+}
+
 func (o CreateOrUpdateBookingTemplateRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -211,6 +245,9 @@ func (o CreateOrUpdateBookingTemplateRequest) ToMap() (map[string]interface{}, e
 	}
 	toSerialize["inputs"] = o.Inputs.Get()
 	toSerialize["script"] = o.Script
+	if !IsNil(o.EnvVars) {
+		toSerialize["env_vars"] = o.EnvVars
+	}
 	return toSerialize, nil
 }
 
