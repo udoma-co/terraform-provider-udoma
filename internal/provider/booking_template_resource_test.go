@@ -57,21 +57,6 @@ func TestAccBookingTemplateResource(t *testing.T) {
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "inputs.inputs.0.type", "text"),
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "inputs.inputs.0.label.en", "Test input"),
 
-					resource.TestCheckResourceAttr("udoma_booking_template.test", "trigger_source", "invoice"),
-
-					resource.TestCheckResourceAttr("udoma_booking_template.test", "init_script", "// This is a test init script"),
-					resource.TestCheckResourceAttr("udoma_booking_template.test", "env_vars.FOO", "bar"),
-					resource.TestCheckResourceAttr("udoma_booking_template.test", "env_vars.TEST2", "value"),
-
-					resource.TestCheckResourceAttr("udoma_booking_template.test", "trigger_source", "invoice"),
-
-					resource.TestCheckResourceAttr("udoma_booking_template.test", "init_script", "// This is a test init script"),
-					resource.TestCheckResourceAttr("udoma_booking_template.test", "env_vars.FOO", "bar"),
-					resource.TestCheckResourceAttr("udoma_booking_template.test", "env_vars.TEST2", "value"),
-
-					resource.TestCheckResourceAttr("udoma_booking_template.test", "trigger_source", "invoice"),
-
-					resource.TestCheckResourceAttr("udoma_booking_template.test", "init_script", "// This is a test init script"),
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "env_vars.FOO", "bar"),
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "env_vars.TEST2", "value"),
 
