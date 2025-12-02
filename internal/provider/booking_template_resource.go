@@ -365,6 +365,19 @@ func (model *BookingTemplateModel) toApiRequest() (v1.CreateOrUpdateBookingTempl
 		bookingTemplate.EnvVars = nil
 	}
 
+	if !model.EnvVars.IsNull() && !model.EnvVars.IsUnknown() {
+		envVars := make(map[string]string)
+
+		for k, v := range model.EnvVars.Elements() {
+			strVal := v.(types.String)
+			envVars[k] = strVal.ValueString()
+		}
+
+		bookingTemplate.EnvVars = &envVars
+	} else {
+		bookingTemplate.EnvVars = nil
+	}
+
 	return bookingTemplate, nil
 }
 
