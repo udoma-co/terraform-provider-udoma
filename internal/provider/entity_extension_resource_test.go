@@ -42,9 +42,8 @@ func TestAccEntityExtensionResource(t *testing.T) {
 	})
 }
 
-
 func resourceDefinitionEntityExtension(name string, key string) string {
-    return fmt.Sprintf(`
+	return fmt.Sprintf(`
 resource "udoma_entity_extension" "test" {
   name        = "%s"
   description = "Manage the tenancy for the property with the owner"
@@ -65,4 +64,3 @@ resource "udoma_entity_extension" "test" {
 }
 `, name, key)
 }
-

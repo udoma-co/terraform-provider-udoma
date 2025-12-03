@@ -60,6 +60,9 @@ func TestAccBookingTemplateResource(t *testing.T) {
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "env_vars.FOO", "bar"),
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "env_vars.TEST2", "value"),
 
+					resource.TestCheckResourceAttr("udoma_booking_template.test", "trigger_source", "invoice"),
+
+					resource.TestCheckResourceAttr("udoma_booking_template.test", "init_script", "// This is a test init script"),
 
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "script", "// This is a test generation script"),
 				),
@@ -76,7 +79,9 @@ func resourceDefinitionBookingTemplate(name, description string) string {
 		name        = "` + name + `"
 		description = "` + description + `"
 		icon		= "fa-solid fa-plus"
-
+		trigger_source = "invoice"
+		init_script = "// This is a test init script"
+		
 		inputs = {
 			"layout" = [
 				{

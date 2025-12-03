@@ -31,15 +31,15 @@ type EntityExtension struct {
 }
 
 type EntityExtensionModel struct {
-	ID             types.String `tfsdk:"id"`
-	CreatedAt      types.Int64  `tfsdk:"created_at"`
-	UpdatedAt      types.Int64  `tfsdk:"updated_at"`
-	Name           types.String `tfsdk:"name"`
-	Description    types.String `tfsdk:"description"`
-	Entity         types.String `tfsdk:"entity"`
-	Sequence       types.Int32  `tfsdk:"sequence"`
-	Key            types.String `tfsdk:"key"`
-	Version        types.Int32  `tfsdk:"version"`
+	ID             types.String     `tfsdk:"id"`
+	CreatedAt      types.Int64      `tfsdk:"created_at"`
+	UpdatedAt      types.Int64      `tfsdk:"updated_at"`
+	Name           types.String     `tfsdk:"name"`
+	Description    types.String     `tfsdk:"description"`
+	Entity         types.String     `tfsdk:"entity"`
+	Sequence       types.Int32      `tfsdk:"sequence"`
+	Key            types.String     `tfsdk:"key"`
+	Version        types.Int32      `tfsdk:"version"`
 	FormDefinition *CustomFormModel `tfsdk:"form_definition"`
 }
 
@@ -103,9 +103,9 @@ func (r *EntityExtension) Schema(ctx context.Context, req resource.SchemaRequest
 				Description: "The version number of this extension definition.",
 			},
 			"form_definition": schema.SingleNestedAttribute{
-				Required: true,
+				Required:    true,
 				Description: "The custom form definition.",
-				Attributes: CustomFormNestedSchema(),
+				Attributes:  CustomFormNestedSchema(),
 			},
 		},
 	}
@@ -256,16 +256,16 @@ func (r *EntityExtension) ImportState(ctx context.Context, req resource.ImportSt
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
 
-func (model *EntityExtensionModel) toApiRequest() (*v1.CreateOrUpdateEntityExtensionRequest) {
+func (model *EntityExtensionModel) toApiRequest() *v1.CreateOrUpdateEntityExtensionRequest {
 	form := model.FormDefinition.toApiRequest()
 
 	req := &v1.CreateOrUpdateEntityExtensionRequest{
-		Name:        	model.Name.ValueString(),
-		Description: 	model.Description.ValueStringPointer(),
-		Entity: 	 	v1.EntityExtensionTypeEnum(model.Entity.ValueString()),
-		Sequence:    	model.Sequence.ValueInt32Pointer(),
-		Key:         	model.Key.ValueString(),
-		Version: 	 	model.Version.ValueInt32Pointer(),
+		Name:           model.Name.ValueString(),
+		Description:    model.Description.ValueStringPointer(),
+		Entity:         v1.EntityExtensionTypeEnum(model.Entity.ValueString()),
+		Sequence:       model.Sequence.ValueInt32Pointer(),
+		Key:            model.Key.ValueString(),
+		Version:        model.Version.ValueInt32Pointer(),
 		FormDefinition: *v1.NewNullableCustomForm(&form),
 	}
 	return req
@@ -273,29 +273,29 @@ func (model *EntityExtensionModel) toApiRequest() (*v1.CreateOrUpdateEntityExten
 }
 
 func (model *EntityExtensionModel) fromApiResponse(resp *v1.EntityExtension) (diags diag.Diagnostics) {
-    model.ID = types.StringValue(resp.Id)
-    model.Name = types.StringValue(resp.Name)
+	model.ID = types.StringValue(resp.Id)
+	model.Name = types.StringValue(resp.Name)
 
-    model.Description = omittableStringValue(resp.Description, model.Description)
-    model.Sequence = types.Int32PointerValue(resp.Sequence)
-    model.Version = types.Int32PointerValue(resp.Version)
+	model.Description = omittableStringValue(resp.Description, model.Description)
+	model.Sequence = types.Int32PointerValue(resp.Sequence)
+	model.Version = types.Int32PointerValue(resp.Version)
 
-    model.Entity = types.StringValue(string(resp.Entity))
-    model.Key = types.StringValue(resp.Key)
+	model.Entity = types.StringValue(string(resp.Entity))
+	model.Key = types.StringValue(resp.Key)
 
-    model.CreatedAt = types.Int64Value(int64(resp.CreatedAt))
-    model.UpdatedAt = types.Int64Value(int64(resp.UpdatedAt))
+	model.CreatedAt = types.Int64Value(int64(resp.CreatedAt))
+	model.UpdatedAt = types.Int64Value(int64(resp.UpdatedAt))
 
-    if model.FormDefinition == nil {
-        model.FormDefinition = &CustomFormModel{}
-    }
+	if model.FormDefinition == nil {
+		model.FormDefinition = &CustomFormModel{}
+	}
 
-    if resp.FormDefinition.IsSet() && resp.FormDefinition.Get() != nil {
-        diags = model.FormDefinition.fromApiResponse(resp.FormDefinition.Get())
-        if diags.HasError() {
-            return diags
-        }
-    }
+	if resp.FormDefinition.IsSet() && resp.FormDefinition.Get() != nil {
+		diags = model.FormDefinition.fromApiResponse(resp.FormDefinition.Get())
+		if diags.HasError() {
+			return diags
+		}
+	}
 
-    return
+	return
 }
