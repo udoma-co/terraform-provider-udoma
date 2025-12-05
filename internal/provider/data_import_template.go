@@ -88,7 +88,7 @@ func (r *DataImportTemplate) Schema(ctx context.Context, req resource.SchemaRequ
 				Required:    true,
 				Description: "The file type of the data import template (csv, txt, json, xml, xlsx, xls).",
 				Validators: []validator.String{
-					stringvalidator.OneOf("csv", "txt", "json", "xml", "xlsx", "xls"),
+					stringvalidator.OneOf("csv", "txt", "json", "xml", "xlsx", "xls", "mt940"),
 				},
 			},
 			"data_mapper": schema.StringAttribute{
