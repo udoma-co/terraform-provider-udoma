@@ -126,6 +126,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateFinancialAccount**](docs/DefaultAPI.md#createfinancialaccount) | **Post** /financial/account | Create a new financial account
 *DefaultAPI* | [**CreateHook**](docs/DefaultAPI.md#createhook) | **Post** /hook | Create a new hook
 *DefaultAPI* | [**CreateInvoice**](docs/DefaultAPI.md#createinvoice) | **Post** /invoice | Create invoice request
+*DefaultAPI* | [**CreateInvoiceDataMapper**](docs/DefaultAPI.md#createinvoicedatamapper) | **Post** /invoice-data-mapper | Create an invoice data mapper
 *DefaultAPI* | [**CreateMeter**](docs/DefaultAPI.md#createmeter) | **Post** /meter/{propID} | Create a new meter for a property
 *DefaultAPI* | [**CreateMeterReading**](docs/DefaultAPI.md#createmeterreading) | **Post** /meter/{meterID}/readings | Create a new meter reading for a meter
 *DefaultAPI* | [**CreateNote**](docs/DefaultAPI.md#createnote) | **Post** /note | Create a new note
@@ -179,6 +180,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteHook**](docs/DefaultAPI.md#deletehook) | **Delete** /hook/{hookID} | Delete hook with all its related data
 *DefaultAPI* | [**DeleteInvoice**](docs/DefaultAPI.md#deleteinvoice) | **Delete** /invoice/{invoiceID} | Delete invoice
 *DefaultAPI* | [**DeleteInvoiceAnalysis**](docs/DefaultAPI.md#deleteinvoiceanalysis) | **Delete** /invoice-analysis/{invoiceAnalysisID} | Delete invoice analysis
+*DefaultAPI* | [**DeleteInvoiceDataMapper**](docs/DefaultAPI.md#deleteinvoicedatamapper) | **Delete** /invoice-data-mapper/{invoiceDataMapperID} | Delete invoice data mapper
 *DefaultAPI* | [**DeleteMeter**](docs/DefaultAPI.md#deletemeter) | **Delete** /meter/{meterID} | Delete meter
 *DefaultAPI* | [**DeleteMeterReading**](docs/DefaultAPI.md#deletemeterreading) | **Delete** /meter/{meterID}/reading/{readingID} | Delete meter reading
 *DefaultAPI* | [**DeleteNote**](docs/DefaultAPI.md#deletenote) | **Delete** /notes/{noteID} | Delete note
@@ -270,6 +272,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetHook**](docs/DefaultAPI.md#gethook) | **Get** /hook/{hookID} | Get hook with all its attributes
 *DefaultAPI* | [**GetInvoice**](docs/DefaultAPI.md#getinvoice) | **Get** /invoice/{invoiceID} | Get invoice
 *DefaultAPI* | [**GetInvoiceAnalysis**](docs/DefaultAPI.md#getinvoiceanalysis) | **Get** /invoice-analysis/{invoiceAnalysisID} | Load an invoice analysis
+*DefaultAPI* | [**GetInvoiceDataMapper**](docs/DefaultAPI.md#getinvoicedatamapper) | **Get** /invoice-data-mapper/{invoiceDataMapperID} | Get invoice data mapper
 *DefaultAPI* | [**GetLatestPriceIndexPoint**](docs/DefaultAPI.md#getlatestpriceindexpoint) | **Get** /price-index/latest/{countryCode} | Get the current latest PriceIndexPoint
 *DefaultAPI* | [**GetMeter**](docs/DefaultAPI.md#getmeter) | **Get** /meter/{meterID} | Get meter
 *DefaultAPI* | [**GetMeterReading**](docs/DefaultAPI.md#getmeterreading) | **Get** /meter/{meterID}/reading/{readingID} | Get meter reading
@@ -383,6 +386,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryFinancialAccounts**](docs/DefaultAPI.md#queryfinancialaccounts) | **Post** /financial/accounts | Query all financial accounts
 *DefaultAPI* | [**QueryHooks**](docs/DefaultAPI.md#queryhooks) | **Post** /hooks | Query hooks
 *DefaultAPI* | [**QueryInvoiceAnalyses**](docs/DefaultAPI.md#queryinvoiceanalyses) | **Post** /invoice-analyses | Query invoice analyses
+*DefaultAPI* | [**QueryInvoiceDataMappers**](docs/DefaultAPI.md#queryinvoicedatamappers) | **Post** /invoice-data-mappers | Query invoice data mappers
 *DefaultAPI* | [**QueryInvoices**](docs/DefaultAPI.md#queryinvoices) | **Post** /invoices | Query invoices
 *DefaultAPI* | [**QueryNotesForEntity**](docs/DefaultAPI.md#querynotesforentity) | **Get** /notes/by-reference/{refID} | List notes
 *DefaultAPI* | [**QueryNotifications**](docs/DefaultAPI.md#querynotifications) | **Post** /notifications | Query notifications
@@ -443,6 +447,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateInvoice**](docs/DefaultAPI.md#updateinvoice) | **Put** /invoice/{invoiceID} | Update invoice
 *DefaultAPI* | [**UpdateInvoiceAnalysis**](docs/DefaultAPI.md#updateinvoiceanalysis) | **Put** /invoice-analysis/{invoiceAnalysisID} | Update invoice analysis
 *DefaultAPI* | [**UpdateInvoiceAnalysisData**](docs/DefaultAPI.md#updateinvoiceanalysisdata) | **Put** /invoice-analysis/{invoiceAnalysisID}/data/{invoiceID} | Update invoice analysis data
+*DefaultAPI* | [**UpdateInvoiceDataMapper**](docs/DefaultAPI.md#updateinvoicedatamapper) | **Put** /invoice-data-mapper/{invoiceDataMapperID} | Update invoice data mapper
 *DefaultAPI* | [**UpdateMeter**](docs/DefaultAPI.md#updatemeter) | **Put** /meter/{meterID} | Update meter
 *DefaultAPI* | [**UpdateMeterReading**](docs/DefaultAPI.md#updatemeterreading) | **Put** /meter/{meterID}/reading/{readingID} | Update meter reading
 *DefaultAPI* | [**UpdateNote**](docs/DefaultAPI.md#updatenote) | **Put** /notes/{noteID} | Update note
@@ -601,6 +606,7 @@ Class | Method | HTTP request | Description
  - [CreateOrUpdateFeatureFlagConfigRequest](docs/CreateOrUpdateFeatureFlagConfigRequest.md)
  - [CreateOrUpdateFinancialAccountRequest](docs/CreateOrUpdateFinancialAccountRequest.md)
  - [CreateOrUpdateHookRequest](docs/CreateOrUpdateHookRequest.md)
+ - [CreateOrUpdateInvoiceDataMapperRequest](docs/CreateOrUpdateInvoiceDataMapperRequest.md)
  - [CreateOrUpdateInvoiceRequest](docs/CreateOrUpdateInvoiceRequest.md)
  - [CreateOrUpdateMeterReadingRequest](docs/CreateOrUpdateMeterReadingRequest.md)
  - [CreateOrUpdateMeterRequest](docs/CreateOrUpdateMeterRequest.md)
@@ -716,6 +722,9 @@ Class | Method | HTTP request | Description
  - [InvoiceAnalysis](docs/InvoiceAnalysis.md)
  - [InvoiceAnalysisStatusEnum](docs/InvoiceAnalysisStatusEnum.md)
  - [InvoiceData](docs/InvoiceData.md)
+ - [InvoiceDataMapper](docs/InvoiceDataMapper.md)
+ - [InvoiceDataMapperAttributesPartial](docs/InvoiceDataMapperAttributesPartial.md)
+ - [InvoiceDataMapperEntrypointEnum](docs/InvoiceDataMapperEntrypointEnum.md)
  - [InvoiceDocumentAnalysis](docs/InvoiceDocumentAnalysis.md)
  - [InvoicePaymentStatusEnum](docs/InvoicePaymentStatusEnum.md)
  - [IsDeletedAttributePartial](docs/IsDeletedAttributePartial.md)
@@ -802,6 +811,7 @@ Class | Method | HTTP request | Description
  - [QueryHooksRequest](docs/QueryHooksRequest.md)
  - [QueryHooksResponse](docs/QueryHooksResponse.md)
  - [QueryInvoiceAnalysesRequest](docs/QueryInvoiceAnalysesRequest.md)
+ - [QueryInvoiceDataMappersRequest](docs/QueryInvoiceDataMappersRequest.md)
  - [QueryInvoicesRequest](docs/QueryInvoicesRequest.md)
  - [QueryLimitAttributesPartial](docs/QueryLimitAttributesPartial.md)
  - [QueryNotificationsRequest](docs/QueryNotificationsRequest.md)

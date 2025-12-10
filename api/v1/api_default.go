@@ -5218,6 +5218,116 @@ func (a *DefaultAPIService) CreateInvoiceExecute(r ApiCreateInvoiceRequest) (*In
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiCreateInvoiceDataMapperRequest struct {
+	ctx                                    context.Context
+	ApiService                             *DefaultAPIService
+	createOrUpdateInvoiceDataMapperRequest *CreateOrUpdateInvoiceDataMapperRequest
+}
+
+// Data mapper to be created
+func (r ApiCreateInvoiceDataMapperRequest) CreateOrUpdateInvoiceDataMapperRequest(createOrUpdateInvoiceDataMapperRequest CreateOrUpdateInvoiceDataMapperRequest) ApiCreateInvoiceDataMapperRequest {
+	r.createOrUpdateInvoiceDataMapperRequest = &createOrUpdateInvoiceDataMapperRequest
+	return r
+}
+
+func (r ApiCreateInvoiceDataMapperRequest) Execute() (*InvoiceDataMapper, *http.Response, error) {
+	return r.ApiService.CreateInvoiceDataMapperExecute(r)
+}
+
+/*
+CreateInvoiceDataMapper Create an invoice data mapper
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiCreateInvoiceDataMapperRequest
+*/
+func (a *DefaultAPIService) CreateInvoiceDataMapper(ctx context.Context) ApiCreateInvoiceDataMapperRequest {
+	return ApiCreateInvoiceDataMapperRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return InvoiceDataMapper
+func (a *DefaultAPIService) CreateInvoiceDataMapperExecute(r ApiCreateInvoiceDataMapperRequest) (*InvoiceDataMapper, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *InvoiceDataMapper
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateInvoiceDataMapper")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/invoice-data-mapper"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createOrUpdateInvoiceDataMapperRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdateInvoiceDataMapperRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrUpdateInvoiceDataMapperRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiCreateMeterRequest struct {
 	ctx                        context.Context
 	ApiService                 *DefaultAPIService
@@ -10350,6 +10460,98 @@ func (a *DefaultAPIService) DeleteInvoiceAnalysisExecute(r ApiDeleteInvoiceAnaly
 
 	localVarPath := localBasePath + "/invoice-analysis/{invoiceAnalysisID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"invoiceAnalysisID"+"}", url.PathEscape(parameterValueToString(r.invoiceAnalysisID, "invoiceAnalysisID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDeleteInvoiceDataMapperRequest struct {
+	ctx                 context.Context
+	ApiService          *DefaultAPIService
+	invoiceDataMapperID string
+}
+
+func (r ApiDeleteInvoiceDataMapperRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteInvoiceDataMapperExecute(r)
+}
+
+/*
+DeleteInvoiceDataMapper Delete invoice data mapper
+
+Delete an invoice data mapper by id
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param invoiceDataMapperID unique generated ID of an invoice data mapper
+	@return ApiDeleteInvoiceDataMapperRequest
+*/
+func (a *DefaultAPIService) DeleteInvoiceDataMapper(ctx context.Context, invoiceDataMapperID string) ApiDeleteInvoiceDataMapperRequest {
+	return ApiDeleteInvoiceDataMapperRequest{
+		ApiService:          a,
+		ctx:                 ctx,
+		invoiceDataMapperID: invoiceDataMapperID,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DeleteInvoiceDataMapperExecute(r ApiDeleteInvoiceDataMapperRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteInvoiceDataMapper")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/invoice-data-mapper/{invoiceDataMapperID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"invoiceDataMapperID"+"}", url.PathEscape(parameterValueToString(r.invoiceDataMapperID, "invoiceDataMapperID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -19453,6 +19655,110 @@ func (a *DefaultAPIService) GetInvoiceAnalysisExecute(r ApiGetInvoiceAnalysisReq
 
 	localVarPath := localBasePath + "/invoice-analysis/{invoiceAnalysisID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"invoiceAnalysisID"+"}", url.PathEscape(parameterValueToString(r.invoiceAnalysisID, "invoiceAnalysisID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetInvoiceDataMapperRequest struct {
+	ctx                 context.Context
+	ApiService          *DefaultAPIService
+	invoiceDataMapperID string
+}
+
+func (r ApiGetInvoiceDataMapperRequest) Execute() (*InvoiceDataMapper, *http.Response, error) {
+	return r.ApiService.GetInvoiceDataMapperExecute(r)
+}
+
+/*
+GetInvoiceDataMapper Get invoice data mapper
+
+Get a invoice data mapper by ID
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param invoiceDataMapperID unique generated ID of an invoice data mapper
+	@return ApiGetInvoiceDataMapperRequest
+*/
+func (a *DefaultAPIService) GetInvoiceDataMapper(ctx context.Context, invoiceDataMapperID string) ApiGetInvoiceDataMapperRequest {
+	return ApiGetInvoiceDataMapperRequest{
+		ApiService:          a,
+		ctx:                 ctx,
+		invoiceDataMapperID: invoiceDataMapperID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return InvoiceDataMapper
+func (a *DefaultAPIService) GetInvoiceDataMapperExecute(r ApiGetInvoiceDataMapperRequest) (*InvoiceDataMapper, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *InvoiceDataMapper
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetInvoiceDataMapper")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/invoice-data-mapper/{invoiceDataMapperID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"invoiceDataMapperID"+"}", url.PathEscape(parameterValueToString(r.invoiceDataMapperID, "invoiceDataMapperID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -31738,6 +32044,116 @@ func (a *DefaultAPIService) QueryInvoiceAnalysesExecute(r ApiQueryInvoiceAnalyse
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiQueryInvoiceDataMappersRequest struct {
+	ctx                            context.Context
+	ApiService                     *DefaultAPIService
+	queryInvoiceDataMappersRequest *QueryInvoiceDataMappersRequest
+}
+
+// Query parameters
+func (r ApiQueryInvoiceDataMappersRequest) QueryInvoiceDataMappersRequest(queryInvoiceDataMappersRequest QueryInvoiceDataMappersRequest) ApiQueryInvoiceDataMappersRequest {
+	r.queryInvoiceDataMappersRequest = &queryInvoiceDataMappersRequest
+	return r
+}
+
+func (r ApiQueryInvoiceDataMappersRequest) Execute() ([]InvoiceDataMapper, *http.Response, error) {
+	return r.ApiService.QueryInvoiceDataMappersExecute(r)
+}
+
+/*
+QueryInvoiceDataMappers Query invoice data mappers
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiQueryInvoiceDataMappersRequest
+*/
+func (a *DefaultAPIService) QueryInvoiceDataMappers(ctx context.Context) ApiQueryInvoiceDataMappersRequest {
+	return ApiQueryInvoiceDataMappersRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return []InvoiceDataMapper
+func (a *DefaultAPIService) QueryInvoiceDataMappersExecute(r ApiQueryInvoiceDataMappersRequest) ([]InvoiceDataMapper, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []InvoiceDataMapper
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.QueryInvoiceDataMappers")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/invoice-data-mappers"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.queryInvoiceDataMappersRequest == nil {
+		return localVarReturnValue, nil, reportError("queryInvoiceDataMappersRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.queryInvoiceDataMappersRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiQueryInvoicesRequest struct {
 	ctx                  context.Context
 	ApiService           *DefaultAPIService
@@ -38307,6 +38723,122 @@ func (a *DefaultAPIService) UpdateInvoiceAnalysisDataExecute(r ApiUpdateInvoiceA
 	}
 	// body params
 	localVarPostBody = r.invoiceDocumentAnalysis
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdateInvoiceDataMapperRequest struct {
+	ctx                                    context.Context
+	ApiService                             *DefaultAPIService
+	invoiceDataMapperID                    string
+	createOrUpdateInvoiceDataMapperRequest *CreateOrUpdateInvoiceDataMapperRequest
+}
+
+// Data mapper to be updated
+func (r ApiUpdateInvoiceDataMapperRequest) CreateOrUpdateInvoiceDataMapperRequest(createOrUpdateInvoiceDataMapperRequest CreateOrUpdateInvoiceDataMapperRequest) ApiUpdateInvoiceDataMapperRequest {
+	r.createOrUpdateInvoiceDataMapperRequest = &createOrUpdateInvoiceDataMapperRequest
+	return r
+}
+
+func (r ApiUpdateInvoiceDataMapperRequest) Execute() (*InvoiceDataMapper, *http.Response, error) {
+	return r.ApiService.UpdateInvoiceDataMapperExecute(r)
+}
+
+/*
+UpdateInvoiceDataMapper Update invoice data mapper
+
+Update an invoice data mapper by id
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param invoiceDataMapperID unique generated ID of an invoice data mapper
+	@return ApiUpdateInvoiceDataMapperRequest
+*/
+func (a *DefaultAPIService) UpdateInvoiceDataMapper(ctx context.Context, invoiceDataMapperID string) ApiUpdateInvoiceDataMapperRequest {
+	return ApiUpdateInvoiceDataMapperRequest{
+		ApiService:          a,
+		ctx:                 ctx,
+		invoiceDataMapperID: invoiceDataMapperID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return InvoiceDataMapper
+func (a *DefaultAPIService) UpdateInvoiceDataMapperExecute(r ApiUpdateInvoiceDataMapperRequest) (*InvoiceDataMapper, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *InvoiceDataMapper
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdateInvoiceDataMapper")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/invoice-data-mapper/{invoiceDataMapperID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"invoiceDataMapperID"+"}", url.PathEscape(parameterValueToString(r.invoiceDataMapperID, "invoiceDataMapperID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createOrUpdateInvoiceDataMapperRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdateInvoiceDataMapperRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrUpdateInvoiceDataMapperRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

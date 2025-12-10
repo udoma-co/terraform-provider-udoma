@@ -28,7 +28,6 @@ func TestAccBookingTemplateResource(t *testing.T) {
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "env_vars.FOO", "bar"),
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "env_vars.TEST2", "value"),
 
-
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "script", "// This is a test generation script"),
 
 					// Verify dynamic values have any value set in the state.

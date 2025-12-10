@@ -20,12 +20,15 @@ type MeterTypeEnum string
 
 // List of MeterTypeEnum
 const (
-	METERTYPEENUM_OTHER       MeterTypeEnum = "OTHER"
-	METERTYPEENUM_WARM_WATER  MeterTypeEnum = "WARM_WATER"
-	METERTYPEENUM_COLD_WATER  MeterTypeEnum = "COLD_WATER"
-	METERTYPEENUM_ELECTRICITY MeterTypeEnum = "ELECTRICITY"
-	METERTYPEENUM_GAS         MeterTypeEnum = "GAS"
-	METERTYPEENUM_HEATER      MeterTypeEnum = "HEATER"
+	METERTYPEENUM_OTHER            MeterTypeEnum = "OTHER"
+	METERTYPEENUM_WARM_WATER       MeterTypeEnum = "WARM_WATER"
+	METERTYPEENUM_COLD_WATER       MeterTypeEnum = "COLD_WATER"
+	METERTYPEENUM_ELECTRICITY      MeterTypeEnum = "ELECTRICITY"
+	METERTYPEENUM_GAS              MeterTypeEnum = "GAS"
+	METERTYPEENUM_HEATER           MeterTypeEnum = "HEATER"
+	METERTYPEENUM_DUAL_RATE_HT     MeterTypeEnum = "DUAL_RATE_HT"
+	METERTYPEENUM_DUAL_RATE_NT     MeterTypeEnum = "DUAL_RATE_NT"
+	METERTYPEENUM_DISTRICT_HEATING MeterTypeEnum = "DISTRICT_HEATING"
 )
 
 // All allowed values of MeterTypeEnum enum
@@ -36,6 +39,9 @@ var AllowedMeterTypeEnumEnumValues = []MeterTypeEnum{
 	"ELECTRICITY",
 	"GAS",
 	"HEATER",
+	"DUAL_RATE_HT",
+	"DUAL_RATE_NT",
+	"DISTRICT_HEATING",
 }
 
 func (v *MeterTypeEnum) UnmarshalJSON(src []byte) error {

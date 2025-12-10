@@ -210,6 +210,7 @@ func (p *UdomaProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewDocument,
 		NewDocumentTemplate,
 		NewHook,
+		NewInvoiceDataMapper,
 		NewNotification,
 		NewPropertyHandoverTemplate,
 		NewReportDefinition,

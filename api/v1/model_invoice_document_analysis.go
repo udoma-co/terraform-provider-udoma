@@ -24,7 +24,7 @@ type InvoiceDocumentAnalysis struct {
 	// The unique invoice number, set by the issuer.
 	Number string `json:"number"`
 	// Timestamp of the invoice creation date.
-	IssueDate int64 `json:"issue_date"`
+	IssueDate *int64 `json:"issue_date,omitempty"`
 	// Timestamp of the invoice due date.
 	DueDate *int64 `json:"due_date,omitempty"`
 	// The subtotal before taxes and fees.
@@ -73,10 +73,9 @@ type _InvoiceDocumentAnalysis InvoiceDocumentAnalysis
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewInvoiceDocumentAnalysis(number string, issueDate int64, vendor NullableContactData, id string, attachmentRef string, pages []int32, confidence float32) *InvoiceDocumentAnalysis {
+func NewInvoiceDocumentAnalysis(number string, vendor NullableContactData, id string, attachmentRef string, pages []int32, confidence float32) *InvoiceDocumentAnalysis {
 	this := InvoiceDocumentAnalysis{}
 	this.Number = number
-	this.IssueDate = issueDate
 	this.Vendor = vendor
 	this.Id = id
 	this.AttachmentRef = attachmentRef
@@ -117,28 +116,36 @@ func (o *InvoiceDocumentAnalysis) SetNumber(v string) {
 	o.Number = v
 }
 
-// GetIssueDate returns the IssueDate field value
+// GetIssueDate returns the IssueDate field value if set, zero value otherwise.
 func (o *InvoiceDocumentAnalysis) GetIssueDate() int64 {
-	if o == nil {
+	if o == nil || IsNil(o.IssueDate) {
 		var ret int64
 		return ret
 	}
-
-	return o.IssueDate
+	return *o.IssueDate
 }
 
-// GetIssueDateOk returns a tuple with the IssueDate field value
+// GetIssueDateOk returns a tuple with the IssueDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *InvoiceDocumentAnalysis) GetIssueDateOk() (*int64, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.IssueDate) {
 		return nil, false
 	}
-	return &o.IssueDate, true
+	return o.IssueDate, true
 }
 
-// SetIssueDate sets field value
+// HasIssueDate returns a boolean if a field has been set.
+func (o *InvoiceDocumentAnalysis) HasIssueDate() bool {
+	if o != nil && !IsNil(o.IssueDate) {
+		return true
+	}
+
+	return false
+}
+
+// SetIssueDate gets a reference to the given int64 and assigns it to the IssueDate field.
 func (o *InvoiceDocumentAnalysis) SetIssueDate(v int64) {
-	o.IssueDate = v
+	o.IssueDate = &v
 }
 
 // GetDueDate returns the DueDate field value if set, zero value otherwise.
@@ -786,7 +793,9 @@ func (o InvoiceDocumentAnalysis) MarshalJSON() ([]byte, error) {
 func (o InvoiceDocumentAnalysis) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["number"] = o.Number
-	toSerialize["issue_date"] = o.IssueDate
+	if !IsNil(o.IssueDate) {
+		toSerialize["issue_date"] = o.IssueDate
+	}
 	if !IsNil(o.DueDate) {
 		toSerialize["due_date"] = o.DueDate
 	}
@@ -849,7 +858,6 @@ func (o *InvoiceDocumentAnalysis) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"number",
-		"issue_date",
 		"vendor",
 		"id",
 		"attachment_ref",
