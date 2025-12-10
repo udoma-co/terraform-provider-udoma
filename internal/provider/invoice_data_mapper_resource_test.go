@@ -12,13 +12,13 @@ func TestInvoiceDataMapperResource(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: resourceDefinitionInvoiceDataMapper("BEFORE_DATA_PARSING"),
+				Config: resourceDefinitionInvoiceDataMapper("AFTER_EXTRACT_DOCUMENTS"),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr("udoma_invoice_data_mapper.test", "name", "hello"),
 					resource.TestCheckResourceAttr("udoma_invoice_data_mapper.test", "description", "Hello description"),
 					resource.TestCheckResourceAttr("udoma_invoice_data_mapper.test", "priority", "100"),
 					resource.TestCheckResourceAttr("udoma_invoice_data_mapper.test", "script", "console.log(42)"),
-					resource.TestCheckResourceAttr("udoma_invoice_data_mapper.test", "entrypoint", "BEFORE_DATA_PARSING"),
+					resource.TestCheckResourceAttr("udoma_invoice_data_mapper.test", "entrypoint", "AFTER_EXTRACT_DOCUMENTS"),
 				),
 			},
 			// ImportState testing
@@ -29,14 +29,14 @@ func TestInvoiceDataMapperResource(t *testing.T) {
 			},
 			// Update and Read testing
 			{
-				Config: resourceDefinitionInvoiceDataMapper("AFTER_DATA_PARSING"),
+				Config: resourceDefinitionInvoiceDataMapper("AFTER_PROCESS_DOCUMENTS"),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify attributes were updated
 					resource.TestCheckResourceAttr("udoma_invoice_data_mapper.test", "name", "hello"),
 					resource.TestCheckResourceAttr("udoma_invoice_data_mapper.test", "description", "Hello description"),
 					resource.TestCheckResourceAttr("udoma_invoice_data_mapper.test", "priority", "100"),
 					resource.TestCheckResourceAttr("udoma_invoice_data_mapper.test", "script", "console.log(42)"),
-					resource.TestCheckResourceAttr("udoma_invoice_data_mapper.test", "entrypoint", "AFTER_DATA_PARSING"),
+					resource.TestCheckResourceAttr("udoma_invoice_data_mapper.test", "entrypoint", "AFTER_PROCESS_DOCUMENTS"),
 				),
 			},
 		},
