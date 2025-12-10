@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -13,7 +14,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/hashicorp/terraform-plugin-framework/attr"
 	v1 "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
 	"gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/internal/client"
 )
@@ -32,17 +32,17 @@ type BookingTemplate struct {
 }
 
 type BookingTemplateModel struct {
-	ID          types.String     `tfsdk:"id"`
-	CreatedAt   types.Int64      `tfsdk:"created_at"`
-	UpdatedAt   types.Int64      `tfsdk:"updated_at"`
-	Name        types.String     `tfsdk:"name"`
-	Description types.String     `tfsdk:"description"`
-	Icon        types.String     `tfsdk:"icon"`
-	TriggerSource types.String   `tfsdk:"trigger_source"`
-	Inputs      *CustomFormModel `tfsdk:"inputs"`
-	InitScript  types.String     `tfsdk:"init_script"`
-	Script      types.String     `tfsdk:"script"`
-	EnvVars     types.Map        `tfsdk:"env_vars"`
+	ID            types.String     `tfsdk:"id"`
+	CreatedAt     types.Int64      `tfsdk:"created_at"`
+	UpdatedAt     types.Int64      `tfsdk:"updated_at"`
+	Name          types.String     `tfsdk:"name"`
+	Description   types.String     `tfsdk:"description"`
+	Icon          types.String     `tfsdk:"icon"`
+	TriggerSource types.String     `tfsdk:"trigger_source"`
+	Inputs        *CustomFormModel `tfsdk:"inputs"`
+	InitScript    types.String     `tfsdk:"init_script"`
+	Script        types.String     `tfsdk:"script"`
+	EnvVars       types.Map        `tfsdk:"env_vars"`
 }
 
 func (faq *BookingTemplate) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -312,7 +312,7 @@ func (model *BookingTemplateModel) fromApiResponse(bookingTemplate *v1.BookingTe
 	}
 
 	model.TriggerSource = omittableStringValue(triggerSourcePtr, model.TriggerSource)
-	
+
 	if model.Inputs == nil {
 		model.Inputs = &CustomFormModel{}
 	}
@@ -380,4 +380,3 @@ func (model *BookingTemplateModel) toApiRequest() (v1.CreateOrUpdateBookingTempl
 
 	return bookingTemplate, nil
 }
-

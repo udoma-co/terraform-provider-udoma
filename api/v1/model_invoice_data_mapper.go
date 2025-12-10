@@ -31,6 +31,8 @@ type InvoiceDataMapper struct {
 	Name string `json:"name"`
 	// A text description of what the invoice data mapper does.
 	Description *string `json:"description,omitempty"`
+	// Served to order mappers before running them, order is descending, i.e. higher priority executes before lower priority.
+	Priority int32 `json:"priority"`
 	// The script to run that remaps invoice data.
 	Script     string                          `json:"script"`
 	Entrypoint InvoiceDataMapperEntrypointEnum `json:"entrypoint"`
@@ -42,12 +44,13 @@ type _InvoiceDataMapper InvoiceDataMapper
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewInvoiceDataMapper(id string, createdAt int64, updatedAt int64, name string, script string, entrypoint InvoiceDataMapperEntrypointEnum) *InvoiceDataMapper {
+func NewInvoiceDataMapper(id string, createdAt int64, updatedAt int64, name string, priority int32, script string, entrypoint InvoiceDataMapperEntrypointEnum) *InvoiceDataMapper {
 	this := InvoiceDataMapper{}
 	this.Id = id
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
 	this.Name = name
+	this.Priority = priority
 	this.Script = script
 	this.Entrypoint = entrypoint
 	return &this
@@ -189,6 +192,30 @@ func (o *InvoiceDataMapper) SetDescription(v string) {
 	o.Description = &v
 }
 
+// GetPriority returns the Priority field value
+func (o *InvoiceDataMapper) GetPriority() int32 {
+	if o == nil {
+		var ret int32
+		return ret
+	}
+
+	return o.Priority
+}
+
+// GetPriorityOk returns a tuple with the Priority field value
+// and a boolean to check if the value has been set.
+func (o *InvoiceDataMapper) GetPriorityOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Priority, true
+}
+
+// SetPriority sets field value
+func (o *InvoiceDataMapper) SetPriority(v int32) {
+	o.Priority = v
+}
+
 // GetScript returns the Script field value
 func (o *InvoiceDataMapper) GetScript() string {
 	if o == nil {
@@ -254,6 +281,7 @@ func (o InvoiceDataMapper) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
 	}
+	toSerialize["priority"] = o.Priority
 	toSerialize["script"] = o.Script
 	toSerialize["entrypoint"] = o.Entrypoint
 	return toSerialize, nil
@@ -268,6 +296,7 @@ func (o *InvoiceDataMapper) UnmarshalJSON(data []byte) (err error) {
 		"created_at",
 		"updated_at",
 		"name",
+		"priority",
 		"script",
 		"entrypoint",
 	}

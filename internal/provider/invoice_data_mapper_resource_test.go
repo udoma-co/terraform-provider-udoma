@@ -16,6 +16,7 @@ func TestInvoiceDataMapperResource(t *testing.T) {
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr("udoma_invoice_data_mapper.test", "name", "hello"),
 					resource.TestCheckResourceAttr("udoma_invoice_data_mapper.test", "description", "Hello description"),
+					resource.TestCheckResourceAttr("udoma_invoice_data_mapper.test", "priority", "100"),
 					resource.TestCheckResourceAttr("udoma_invoice_data_mapper.test", "script", "console.log(42)"),
 					resource.TestCheckResourceAttr("udoma_invoice_data_mapper.test", "entrypoint", "BEFORE_DATA_PARSING"),
 				),
@@ -33,6 +34,7 @@ func TestInvoiceDataMapperResource(t *testing.T) {
 					// Verify attributes were updated
 					resource.TestCheckResourceAttr("udoma_invoice_data_mapper.test", "name", "hello"),
 					resource.TestCheckResourceAttr("udoma_invoice_data_mapper.test", "description", "Hello description"),
+					resource.TestCheckResourceAttr("udoma_invoice_data_mapper.test", "priority", "100"),
 					resource.TestCheckResourceAttr("udoma_invoice_data_mapper.test", "script", "console.log(42)"),
 					resource.TestCheckResourceAttr("udoma_invoice_data_mapper.test", "entrypoint", "AFTER_DATA_PARSING"),
 				),
@@ -46,6 +48,7 @@ func resourceDefinitionInvoiceDataMapper(entrypoint api.InvoiceDataMapperEntrypo
 	resource udoma_invoice_data_mapper "test" {
 		name = "hello"
 		description = "Hello description"
+		priority = 100
 		entrypoint = "` + string(entrypoint) + `"
 		script = "console.log(42)"
 	}`

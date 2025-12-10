@@ -33,6 +33,7 @@ type InvoiceDataMapperModel struct {
 	ID          types.String `tfsdk:"id"`
 	Name        types.String `tfsdk:"name"`
 	Description types.String `tfsdk:"description"`
+	Priority    types.Int32  `tfsdk:"priority"`
 	Script      types.String `tfsdk:"script"`
 	Entrypoint  types.String `tfsdk:"entrypoint"`
 }
@@ -66,6 +67,10 @@ func (idm *InvoiceDataMapper) Schema(ctx context.Context, req resource.SchemaReq
 				Validators: []validator.String{
 					stringvalidator.LengthAtMost(512),
 				},
+			},
+			"priority": schema.Int32Attribute{
+				Required:    true,
+				Description: "Served to order mappers before running them, order is descending, i.e. higher priority executes before lower priority.",
 			},
 			"script": schema.StringAttribute{
 				Required:    true,
@@ -253,6 +258,7 @@ func (model *InvoiceDataMapperModel) fromAPI(invoiceDataMapper *api.InvoiceDataM
 	model.ID = types.StringValue(invoiceDataMapper.Id)
 	model.Name = types.StringValue(invoiceDataMapper.Name)
 	model.Description = omittableStringValue(invoiceDataMapper.Description, model.Description)
+	model.Priority = types.Int32Value(invoiceDataMapper.Priority)
 	model.Script = types.StringValue(invoiceDataMapper.Script)
 	model.Entrypoint = types.StringValue(string(invoiceDataMapper.Entrypoint))
 
@@ -263,6 +269,7 @@ func (model *InvoiceDataMapperModel) toAPIRequest() api.CreateOrUpdateInvoiceDat
 	return api.CreateOrUpdateInvoiceDataMapperRequest{
 		Script:      model.Script.ValueString(),
 		Entrypoint:  api.InvoiceDataMapperEntrypointEnum(model.Entrypoint.ValueString()),
+		Priority:    model.Priority.ValueInt32(),
 		Name:        model.Name.ValueString(),
 		Description: model.Description.ValueStringPointer(),
 	}

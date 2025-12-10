@@ -19,6 +19,7 @@ Resource represents an invoice data mapper
 
 - `entrypoint` (String) When to run the script, either before or after data processing
 - `name` (String) Some name used to identify the invoice mapper. No unique requirement.
+- `priority` (Number) Served to order mappers before running them, order is descending, i.e. higher priority executes before lower priority.
 - `script` (String) The script that executes to remap invoice analyses
 
 ### Optional

@@ -30,7 +30,7 @@ type Invoice struct {
 	// The unique invoice number, set by the issuer.
 	Number string `json:"number"`
 	// Timestamp of the invoice creation date.
-	IssueDate int64 `json:"issue_date"`
+	IssueDate *int64 `json:"issue_date,omitempty"`
 	// Timestamp of the invoice due date.
 	DueDate *int64 `json:"due_date,omitempty"`
 	// The subtotal before taxes and fees.
@@ -78,13 +78,12 @@ type _Invoice Invoice
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewInvoice(id string, createdAt int64, updatedAt int64, number string, issueDate int64, vendor NullableContactData, paymentStatus InvoicePaymentStatusEnum) *Invoice {
+func NewInvoice(id string, createdAt int64, updatedAt int64, number string, vendor NullableContactData, paymentStatus InvoicePaymentStatusEnum) *Invoice {
 	this := Invoice{}
 	this.Id = id
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
 	this.Number = number
-	this.IssueDate = issueDate
 	this.Vendor = vendor
 	this.PaymentStatus = paymentStatus
 	return &this
@@ -194,28 +193,36 @@ func (o *Invoice) SetNumber(v string) {
 	o.Number = v
 }
 
-// GetIssueDate returns the IssueDate field value
+// GetIssueDate returns the IssueDate field value if set, zero value otherwise.
 func (o *Invoice) GetIssueDate() int64 {
-	if o == nil {
+	if o == nil || IsNil(o.IssueDate) {
 		var ret int64
 		return ret
 	}
-
-	return o.IssueDate
+	return *o.IssueDate
 }
 
-// GetIssueDateOk returns a tuple with the IssueDate field value
+// GetIssueDateOk returns a tuple with the IssueDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Invoice) GetIssueDateOk() (*int64, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.IssueDate) {
 		return nil, false
 	}
-	return &o.IssueDate, true
+	return o.IssueDate, true
 }
 
-// SetIssueDate sets field value
+// HasIssueDate returns a boolean if a field has been set.
+func (o *Invoice) HasIssueDate() bool {
+	if o != nil && !IsNil(o.IssueDate) {
+		return true
+	}
+
+	return false
+}
+
+// SetIssueDate gets a reference to the given int64 and assigns it to the IssueDate field.
 func (o *Invoice) SetIssueDate(v int64) {
-	o.IssueDate = v
+	o.IssueDate = &v
 }
 
 // GetDueDate returns the DueDate field value if set, zero value otherwise.
@@ -890,7 +897,9 @@ func (o Invoice) ToMap() (map[string]interface{}, error) {
 	toSerialize["created_at"] = o.CreatedAt
 	toSerialize["updated_at"] = o.UpdatedAt
 	toSerialize["number"] = o.Number
-	toSerialize["issue_date"] = o.IssueDate
+	if !IsNil(o.IssueDate) {
+		toSerialize["issue_date"] = o.IssueDate
+	}
 	if !IsNil(o.DueDate) {
 		toSerialize["due_date"] = o.DueDate
 	}
@@ -962,7 +971,6 @@ func (o *Invoice) UnmarshalJSON(data []byte) (err error) {
 		"created_at",
 		"updated_at",
 		"number",
-		"issue_date",
 		"vendor",
 		"payment_status",
 	}
