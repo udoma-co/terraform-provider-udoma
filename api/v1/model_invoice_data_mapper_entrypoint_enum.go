@@ -20,14 +20,16 @@ type InvoiceDataMapperEntrypointEnum string
 
 // List of InvoiceDataMapperEntrypointEnum
 const (
-	INVOICEDATAMAPPERENTRYPOINTENUM_BEFORE_DATA_PARSING InvoiceDataMapperEntrypointEnum = "BEFORE_DATA_PARSING"
-	INVOICEDATAMAPPERENTRYPOINTENUM_AFTER_DATA_PARSING  InvoiceDataMapperEntrypointEnum = "AFTER_DATA_PARSING"
+	INVOICEDATAMAPPERENTRYPOINTENUM_RAW_DATA                InvoiceDataMapperEntrypointEnum = "RAW_DATA"
+	INVOICEDATAMAPPERENTRYPOINTENUM_AFTER_EXTRACT_DOCUMENTS InvoiceDataMapperEntrypointEnum = "AFTER_EXTRACT_DOCUMENTS"
+	INVOICEDATAMAPPERENTRYPOINTENUM_AFTER_PROCESS_DOCUMENTS InvoiceDataMapperEntrypointEnum = "AFTER_PROCESS_DOCUMENTS"
 )
 
 // All allowed values of InvoiceDataMapperEntrypointEnum enum
 var AllowedInvoiceDataMapperEntrypointEnumEnumValues = []InvoiceDataMapperEntrypointEnum{
-	"BEFORE_DATA_PARSING",
-	"AFTER_DATA_PARSING",
+	"RAW_DATA",
+	"AFTER_EXTRACT_DOCUMENTS",
+	"AFTER_PROCESS_DOCUMENTS",
 }
 
 func (v *InvoiceDataMapperEntrypointEnum) UnmarshalJSON(src []byte) error {
