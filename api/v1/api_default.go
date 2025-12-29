@@ -13284,6 +13284,121 @@ func (a *DefaultAPIService) GenerateAccountDimensionValuesExecute(r ApiGenerateA
 	return localVarHTTPResponse, nil
 }
 
+type ApiGenerateCaseCommentRequest struct {
+	ctx                      context.Context
+	ApiService               *DefaultAPIService
+	caseID                   string
+	generateAiCommentRequest *GenerateAiCommentRequest
+}
+
+func (r ApiGenerateCaseCommentRequest) GenerateAiCommentRequest(generateAiCommentRequest GenerateAiCommentRequest) ApiGenerateCaseCommentRequest {
+	r.generateAiCommentRequest = &generateAiCommentRequest
+	return r
+}
+
+func (r ApiGenerateCaseCommentRequest) Execute() (*GenerateAiCommentResponse, *http.Response, error) {
+	return r.ApiService.GenerateCaseCommentExecute(r)
+}
+
+/*
+GenerateCaseComment Generate AI comment suggestions
+
+Generate AI-powered comment suggestions based on conversation history
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param caseID unique generated ID of a case
+	@return ApiGenerateCaseCommentRequest
+*/
+func (a *DefaultAPIService) GenerateCaseComment(ctx context.Context, caseID string) ApiGenerateCaseCommentRequest {
+	return ApiGenerateCaseCommentRequest{
+		ApiService: a,
+		ctx:        ctx,
+		caseID:     caseID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return GenerateAiCommentResponse
+func (a *DefaultAPIService) GenerateCaseCommentExecute(r ApiGenerateCaseCommentRequest) (*GenerateAiCommentResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GenerateAiCommentResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GenerateCaseComment")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/case/{caseID}/comment/generate"
+	localVarPath = strings.Replace(localVarPath, "{"+"caseID"+"}", url.PathEscape(parameterValueToString(r.caseID, "caseID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.generateAiCommentRequest == nil {
+		return localVarReturnValue, nil, reportError("generateAiCommentRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.generateAiCommentRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGenerateCaseReportingEndpointNoticeRequest struct {
 	ctx                                        context.Context
 	ApiService                                 *DefaultAPIService
@@ -13360,6 +13475,110 @@ func (a *DefaultAPIService) GenerateCaseReportingEndpointNoticeExecute(r ApiGene
 	}
 	// body params
 	localVarPostBody = r.generateCaseReportingEndpointNoticeRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGenerateCaseSummaryRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	caseID     string
+}
+
+func (r ApiGenerateCaseSummaryRequest) Execute() (*GenerateAiSummaryResponse, *http.Response, error) {
+	return r.ApiService.GenerateCaseSummaryExecute(r)
+}
+
+/*
+GenerateCaseSummary Generate AI summary suggestions
+
+Generate AI-powered summary
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param caseID unique generated ID of a case
+	@return ApiGenerateCaseSummaryRequest
+*/
+func (a *DefaultAPIService) GenerateCaseSummary(ctx context.Context, caseID string) ApiGenerateCaseSummaryRequest {
+	return ApiGenerateCaseSummaryRequest{
+		ApiService: a,
+		ctx:        ctx,
+		caseID:     caseID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return GenerateAiSummaryResponse
+func (a *DefaultAPIService) GenerateCaseSummaryExecute(r ApiGenerateCaseSummaryRequest) (*GenerateAiSummaryResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GenerateAiSummaryResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GenerateCaseSummary")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/case/{caseID}/summary/generate"
+	localVarPath = strings.Replace(localVarPath, "{"+"caseID"+"}", url.PathEscape(parameterValueToString(r.caseID, "caseID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -13666,6 +13885,117 @@ func (a *DefaultAPIService) GenerateESignatureForDocumentExecute(r ApiGenerateES
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGenerateSignaturePreviewPDFRequest struct {
+	ctx                                context.Context
+	ApiService                         *DefaultAPIService
+	generateSignaturePreviewPDFRequest *GenerateSignaturePreviewPDFRequest
+}
+
+func (r ApiGenerateSignaturePreviewPDFRequest) GenerateSignaturePreviewPDFRequest(generateSignaturePreviewPDFRequest GenerateSignaturePreviewPDFRequest) ApiGenerateSignaturePreviewPDFRequest {
+	r.generateSignaturePreviewPDFRequest = &generateSignaturePreviewPDFRequest
+	return r
+}
+
+func (r ApiGenerateSignaturePreviewPDFRequest) Execute() (*DocumentPDFResponse, *http.Response, error) {
+	return r.ApiService.GenerateSignaturePreviewPDFExecute(r)
+}
+
+/*
+GenerateSignaturePreviewPDF Generate a signature preview PDF
+
+Generate a PDF preview for a signature using the static signature preview template. The signature image is provided directly as base64-encoded data.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGenerateSignaturePreviewPDFRequest
+*/
+func (a *DefaultAPIService) GenerateSignaturePreviewPDF(ctx context.Context) ApiGenerateSignaturePreviewPDFRequest {
+	return ApiGenerateSignaturePreviewPDFRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return DocumentPDFResponse
+func (a *DefaultAPIService) GenerateSignaturePreviewPDFExecute(r ApiGenerateSignaturePreviewPDFRequest) (*DocumentPDFResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *DocumentPDFResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GenerateSignaturePreviewPDF")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/document-generation/signature-preview"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.generateSignaturePreviewPDFRequest == nil {
+		return localVarReturnValue, nil, reportError("generateSignaturePreviewPDFRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.generateSignaturePreviewPDFRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

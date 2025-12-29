@@ -20,11 +20,12 @@ type CustomerScriptScope string
 
 // List of CustomerScriptScope
 const (
-	CUSTOMERSCRIPTSCOPE_GLOBAL     CustomerScriptScope = "GLOBAL"
-	CUSTOMERSCRIPTSCOPE_DOCUMENT   CustomerScriptScope = "DOCUMENT"
-	CUSTOMERSCRIPTSCOPE_WORKFLOW   CustomerScriptScope = "WORKFLOW"
-	CUSTOMERSCRIPTSCOPE_REPORT     CustomerScriptScope = "REPORT"
-	CUSTOMERSCRIPTSCOPE_VALIDATION CustomerScriptScope = "VALIDATION"
+	CUSTOMERSCRIPTSCOPE_GLOBAL              CustomerScriptScope = "GLOBAL"
+	CUSTOMERSCRIPTSCOPE_DOCUMENT            CustomerScriptScope = "DOCUMENT"
+	CUSTOMERSCRIPTSCOPE_WORKFLOW            CustomerScriptScope = "WORKFLOW"
+	CUSTOMERSCRIPTSCOPE_REPORT              CustomerScriptScope = "REPORT"
+	CUSTOMERSCRIPTSCOPE_VALIDATION          CustomerScriptScope = "VALIDATION"
+	CUSTOMERSCRIPTSCOPE_INVOICE_DATA_MAPPER CustomerScriptScope = "INVOICE_DATA_MAPPER"
 )
 
 // All allowed values of CustomerScriptScope enum
@@ -34,6 +35,7 @@ var AllowedCustomerScriptScopeEnumValues = []CustomerScriptScope{
 	"WORKFLOW",
 	"REPORT",
 	"VALIDATION",
+	"INVOICE_DATA_MAPPER",
 }
 
 func (v *CustomerScriptScope) UnmarshalJSON(src []byte) error {

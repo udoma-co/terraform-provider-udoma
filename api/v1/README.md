@@ -209,10 +209,13 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**Feedback**](docs/DefaultAPI.md#feedback) | **Post** /feedback | User feedback about the product
 *DefaultAPI* | [**FinalizeInvoiceAnalysis**](docs/DefaultAPI.md#finalizeinvoiceanalysis) | **Post** /invoice-analysis/{invoiceAnalysisID}/finalize | Finalize invoice analysis and create invoices
 *DefaultAPI* | [**GenerateAccountDimensionValues**](docs/DefaultAPI.md#generateaccountdimensionvalues) | **Post** /financial/account-dimension/{dimensionID}/values/generate | Generate the account dimension values for the given dimension
+*DefaultAPI* | [**GenerateCaseComment**](docs/DefaultAPI.md#generatecasecomment) | **Post** /case/{caseID}/comment/generate | Generate AI comment suggestions
 *DefaultAPI* | [**GenerateCaseReportingEndpointNotice**](docs/DefaultAPI.md#generatecasereportingendpointnotice) | **Post** /cases/endpoints/{endpointID}/notice | Generate a PDF for a notice of the case reporting endpoint
+*DefaultAPI* | [**GenerateCaseSummary**](docs/DefaultAPI.md#generatecasesummary) | **Get** /case/{caseID}/summary/generate | Generate AI summary suggestions
 *DefaultAPI* | [**GenerateDocumentPDF**](docs/DefaultAPI.md#generatedocumentpdf) | **Post** /document-generation/documents/{docID}/generate-pdf | Generate a PDF for the document generation
 *DefaultAPI* | [**GenerateDocumentText**](docs/DefaultAPI.md#generatedocumenttext) | **Post** /document-generation/documents/{docID}/generate-text | Generate the text for the document, based on template and input data 
 *DefaultAPI* | [**GenerateESignatureForDocument**](docs/DefaultAPI.md#generateesignaturefordocument) | **Get** /document-generation/documents/{docID}/esignature/generate | Get the singing status for the document
+*DefaultAPI* | [**GenerateSignaturePreviewPDF**](docs/DefaultAPI.md#generatesignaturepreviewpdf) | **Post** /document-generation/signature-preview | Generate a signature preview PDF
 *DefaultAPI* | [**GetAccountBooking**](docs/DefaultAPI.md#getaccountbooking) | **Get** /financial/bookings/{bookingID} | Get the booking with all its attributes
 *DefaultAPI* | [**GetAccountDimension**](docs/DefaultAPI.md#getaccountdimension) | **Get** /financial/account-dimension/{dimensionID} | Get the account dimension with all its attributes
 *DefaultAPI* | [**GetAccountDimensionValue**](docs/DefaultAPI.md#getaccountdimensionvalue) | **Get** /financial/account-dimension/{dimensionID}/value/{refID} | Get the account dimension value for a refID with all its attributes
@@ -693,7 +696,11 @@ Class | Method | HTTP request | Description
  - [FormValidationError](docs/FormValidationError.md)
  - [FormValidationRequest](docs/FormValidationRequest.md)
  - [FormValidationResponse](docs/FormValidationResponse.md)
+ - [GenerateAiCommentRequest](docs/GenerateAiCommentRequest.md)
+ - [GenerateAiCommentResponse](docs/GenerateAiCommentResponse.md)
+ - [GenerateAiSummaryResponse](docs/GenerateAiSummaryResponse.md)
  - [GenerateCaseReportingEndpointNoticeRequest](docs/GenerateCaseReportingEndpointNoticeRequest.md)
+ - [GenerateSignaturePreviewPDFRequest](docs/GenerateSignaturePreviewPDFRequest.md)
  - [GetAppointmentInfoResponse](docs/GetAppointmentInfoResponse.md)
  - [GetBankConnectionResponse](docs/GetBankConnectionResponse.md)
  - [GetCorrespondenceDocumentResponse](docs/GetCorrespondenceDocumentResponse.md)
