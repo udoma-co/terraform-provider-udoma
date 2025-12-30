@@ -23,9 +23,9 @@ type QueryCasesRequest struct {
 	Archived  *bool                  `json:"archived,omitempty"`
 	CreatedAt NullableQueryTimeRange `json:"created_at,omitempty"`
 	UpdatedAt NullableQueryTimeRange `json:"updated_at,omitempty"`
-	// List of statuses that the returned cases should currently have.  If empty, all cases will be returned.
+	// List of statuses that the returned cases should currently have. If empty, all cases will be returned.
 	CurrentStatus []CaseStatusEnum `json:"current_status,omitempty"`
-	// List of statuses that the returned cases should have had in the past.  If empty, all cases will be returned.
+	// List of statuses that the returned cases should have had in the past. If empty, all cases will be returned.
 	PastStatus []CaseStatusEnum `json:"past_status,omitempty"`
 	// List of template IDs that the returned cases should have been created with. If empty, all cases will be returned.
 	TemplateRefs []string `json:"template_refs,omitempty"`

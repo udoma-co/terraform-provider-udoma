@@ -20,13 +20,21 @@ var _ MappedNullable = &PropertyDetails{}
 // PropertyDetails Holds extra details about a property
 type PropertyDetails struct {
 	// Floor/storey of a building.
-	Floor            *string                  `json:"floor,omitempty"`
-	Area             *float32                 `json:"area,omitempty"`
-	Rooms            *float32                 `json:"rooms,omitempty"`
-	Bedrooms         *float32                 `json:"bedrooms,omitempty"`
-	Bathrooms        *float32                 `json:"bathrooms,omitempty"`
-	Balcony          *float32                 `json:"balcony,omitempty"`
-	ConstructionYear *float32                 `json:"construction_year,omitempty"`
+	Floor *string `json:"floor,omitempty"`
+	// The total area of the property in square meters.
+	Area *float32 `json:"area,omitempty"`
+	// The allocation factor (or \"Umlageschlüssel\") of the property. This is used to calculate the share of common costs that are allocated to this property.
+	AllocationFactor *float32 `json:"allocation_factor,omitempty"`
+	// Number of rooms in the property. Can be a float value (e.g. 2.5 rooms), which is commonly used to indicate number of proper rooms (bedroom, living  room) and a smaller room (e.g. kitchenette, small office, etc.).
+	Rooms *float32 `json:"rooms,omitempty"`
+	// Number of bedrooms in the property. This typically includes living rooms  as well.
+	Bedrooms *int32 `json:"bedrooms,omitempty"`
+	// Number of bathrooms in the property
+	Bathrooms *int32 `json:"bathrooms,omitempty"`
+	// Number of balconies present in the property
+	Balconies *int32 `json:"balconies,omitempty"`
+	// Year when the property/building was constructed
+	ConstructionYear *int32                   `json:"construction_year,omitempty"`
 	Parking          *PropertyParkingTypeEnum `json:"parking,omitempty"`
 	// List of Floor types present in a property
 	FloorType []PropertyFloorTypeEnum `json:"floor_type,omitempty"`
@@ -120,6 +128,38 @@ func (o *PropertyDetails) SetArea(v float32) {
 	o.Area = &v
 }
 
+// GetAllocationFactor returns the AllocationFactor field value if set, zero value otherwise.
+func (o *PropertyDetails) GetAllocationFactor() float32 {
+	if o == nil || IsNil(o.AllocationFactor) {
+		var ret float32
+		return ret
+	}
+	return *o.AllocationFactor
+}
+
+// GetAllocationFactorOk returns a tuple with the AllocationFactor field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PropertyDetails) GetAllocationFactorOk() (*float32, bool) {
+	if o == nil || IsNil(o.AllocationFactor) {
+		return nil, false
+	}
+	return o.AllocationFactor, true
+}
+
+// HasAllocationFactor returns a boolean if a field has been set.
+func (o *PropertyDetails) HasAllocationFactor() bool {
+	if o != nil && !IsNil(o.AllocationFactor) {
+		return true
+	}
+
+	return false
+}
+
+// SetAllocationFactor gets a reference to the given float32 and assigns it to the AllocationFactor field.
+func (o *PropertyDetails) SetAllocationFactor(v float32) {
+	o.AllocationFactor = &v
+}
+
 // GetRooms returns the Rooms field value if set, zero value otherwise.
 func (o *PropertyDetails) GetRooms() float32 {
 	if o == nil || IsNil(o.Rooms) {
@@ -153,9 +193,9 @@ func (o *PropertyDetails) SetRooms(v float32) {
 }
 
 // GetBedrooms returns the Bedrooms field value if set, zero value otherwise.
-func (o *PropertyDetails) GetBedrooms() float32 {
+func (o *PropertyDetails) GetBedrooms() int32 {
 	if o == nil || IsNil(o.Bedrooms) {
-		var ret float32
+		var ret int32
 		return ret
 	}
 	return *o.Bedrooms
@@ -163,7 +203,7 @@ func (o *PropertyDetails) GetBedrooms() float32 {
 
 // GetBedroomsOk returns a tuple with the Bedrooms field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PropertyDetails) GetBedroomsOk() (*float32, bool) {
+func (o *PropertyDetails) GetBedroomsOk() (*int32, bool) {
 	if o == nil || IsNil(o.Bedrooms) {
 		return nil, false
 	}
@@ -179,15 +219,15 @@ func (o *PropertyDetails) HasBedrooms() bool {
 	return false
 }
 
-// SetBedrooms gets a reference to the given float32 and assigns it to the Bedrooms field.
-func (o *PropertyDetails) SetBedrooms(v float32) {
+// SetBedrooms gets a reference to the given int32 and assigns it to the Bedrooms field.
+func (o *PropertyDetails) SetBedrooms(v int32) {
 	o.Bedrooms = &v
 }
 
 // GetBathrooms returns the Bathrooms field value if set, zero value otherwise.
-func (o *PropertyDetails) GetBathrooms() float32 {
+func (o *PropertyDetails) GetBathrooms() int32 {
 	if o == nil || IsNil(o.Bathrooms) {
-		var ret float32
+		var ret int32
 		return ret
 	}
 	return *o.Bathrooms
@@ -195,7 +235,7 @@ func (o *PropertyDetails) GetBathrooms() float32 {
 
 // GetBathroomsOk returns a tuple with the Bathrooms field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PropertyDetails) GetBathroomsOk() (*float32, bool) {
+func (o *PropertyDetails) GetBathroomsOk() (*int32, bool) {
 	if o == nil || IsNil(o.Bathrooms) {
 		return nil, false
 	}
@@ -211,47 +251,47 @@ func (o *PropertyDetails) HasBathrooms() bool {
 	return false
 }
 
-// SetBathrooms gets a reference to the given float32 and assigns it to the Bathrooms field.
-func (o *PropertyDetails) SetBathrooms(v float32) {
+// SetBathrooms gets a reference to the given int32 and assigns it to the Bathrooms field.
+func (o *PropertyDetails) SetBathrooms(v int32) {
 	o.Bathrooms = &v
 }
 
-// GetBalcony returns the Balcony field value if set, zero value otherwise.
-func (o *PropertyDetails) GetBalcony() float32 {
-	if o == nil || IsNil(o.Balcony) {
-		var ret float32
+// GetBalconies returns the Balconies field value if set, zero value otherwise.
+func (o *PropertyDetails) GetBalconies() int32 {
+	if o == nil || IsNil(o.Balconies) {
+		var ret int32
 		return ret
 	}
-	return *o.Balcony
+	return *o.Balconies
 }
 
-// GetBalconyOk returns a tuple with the Balcony field value if set, nil otherwise
+// GetBalconiesOk returns a tuple with the Balconies field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PropertyDetails) GetBalconyOk() (*float32, bool) {
-	if o == nil || IsNil(o.Balcony) {
+func (o *PropertyDetails) GetBalconiesOk() (*int32, bool) {
+	if o == nil || IsNil(o.Balconies) {
 		return nil, false
 	}
-	return o.Balcony, true
+	return o.Balconies, true
 }
 
-// HasBalcony returns a boolean if a field has been set.
-func (o *PropertyDetails) HasBalcony() bool {
-	if o != nil && !IsNil(o.Balcony) {
+// HasBalconies returns a boolean if a field has been set.
+func (o *PropertyDetails) HasBalconies() bool {
+	if o != nil && !IsNil(o.Balconies) {
 		return true
 	}
 
 	return false
 }
 
-// SetBalcony gets a reference to the given float32 and assigns it to the Balcony field.
-func (o *PropertyDetails) SetBalcony(v float32) {
-	o.Balcony = &v
+// SetBalconies gets a reference to the given int32 and assigns it to the Balconies field.
+func (o *PropertyDetails) SetBalconies(v int32) {
+	o.Balconies = &v
 }
 
 // GetConstructionYear returns the ConstructionYear field value if set, zero value otherwise.
-func (o *PropertyDetails) GetConstructionYear() float32 {
+func (o *PropertyDetails) GetConstructionYear() int32 {
 	if o == nil || IsNil(o.ConstructionYear) {
-		var ret float32
+		var ret int32
 		return ret
 	}
 	return *o.ConstructionYear
@@ -259,7 +299,7 @@ func (o *PropertyDetails) GetConstructionYear() float32 {
 
 // GetConstructionYearOk returns a tuple with the ConstructionYear field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PropertyDetails) GetConstructionYearOk() (*float32, bool) {
+func (o *PropertyDetails) GetConstructionYearOk() (*int32, bool) {
 	if o == nil || IsNil(o.ConstructionYear) {
 		return nil, false
 	}
@@ -275,8 +315,8 @@ func (o *PropertyDetails) HasConstructionYear() bool {
 	return false
 }
 
-// SetConstructionYear gets a reference to the given float32 and assigns it to the ConstructionYear field.
-func (o *PropertyDetails) SetConstructionYear(v float32) {
+// SetConstructionYear gets a reference to the given int32 and assigns it to the ConstructionYear field.
+func (o *PropertyDetails) SetConstructionYear(v int32) {
 	o.ConstructionYear = &v
 }
 
@@ -488,6 +528,9 @@ func (o PropertyDetails) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Area) {
 		toSerialize["area"] = o.Area
 	}
+	if !IsNil(o.AllocationFactor) {
+		toSerialize["allocation_factor"] = o.AllocationFactor
+	}
 	if !IsNil(o.Rooms) {
 		toSerialize["rooms"] = o.Rooms
 	}
@@ -497,8 +540,8 @@ func (o PropertyDetails) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Bathrooms) {
 		toSerialize["bathrooms"] = o.Bathrooms
 	}
-	if !IsNil(o.Balcony) {
-		toSerialize["balcony"] = o.Balcony
+	if !IsNil(o.Balconies) {
+		toSerialize["balconies"] = o.Balconies
 	}
 	if !IsNil(o.ConstructionYear) {
 		toSerialize["construction_year"] = o.ConstructionYear

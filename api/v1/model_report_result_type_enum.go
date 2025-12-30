@@ -22,12 +22,14 @@ type ReportResultTypeEnum string
 const (
 	REPORTRESULTTYPEENUM_OBJECT ReportResultTypeEnum = "OBJECT"
 	REPORTRESULTTYPEENUM_TABLE  ReportResultTypeEnum = "TABLE"
+	REPORTRESULTTYPEENUM_PDF    ReportResultTypeEnum = "PDF"
 )
 
 // All allowed values of ReportResultTypeEnum enum
 var AllowedReportResultTypeEnumEnumValues = []ReportResultTypeEnum{
 	"OBJECT",
 	"TABLE",
+	"PDF",
 }
 
 func (v *ReportResultTypeEnum) UnmarshalJSON(src []byte) error {

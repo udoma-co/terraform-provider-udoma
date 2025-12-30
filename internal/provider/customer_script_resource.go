@@ -91,7 +91,7 @@ func (r *customerScript) Schema(ctx context.Context, req resource.SchemaRequest,
 				Optional:    true,
 				Description: "The scope where the customer script will be available",
 				Validators: []validator.String{
-					stringvalidator.LengthAtMost(25),
+					stringvalidator.OneOfCaseInsensitive(stringSlice(api.AllowedCustomerScriptScopeEnumValues)...),
 				},
 			},
 			"script": schema.StringAttribute{

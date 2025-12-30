@@ -122,13 +122,16 @@ func (r *reportDefinition) Schema(ctx context.Context, req resource.SchemaReques
 					"result_type": schema.StringAttribute{
 						Required:    true,
 						Description: "The type of the result (object, table).",
+						Validators: []validator.String{
+							stringvalidator.OneOfCaseInsensitive(stringSlice(api.AllowedReportResultTypeEnumEnumValues)...),
+						},
 					},
 					"table_row_id_attribute": schema.StringAttribute{
 						Optional:    true,
 						Description: "The attribute that will be used as the row identifier in the table",
 					},
 					"attributes": schema.ListNestedAttribute{
-						Required:    true,
+						Optional:    true,
 						Description: "The attributes of the result",
 						NestedObject: schema.NestedAttributeObject{
 							Attributes: map[string]schema.Attribute{
@@ -355,6 +358,13 @@ func (model *resultSchemaModel) fromAPI(resp *api.ReportResultSchema) (diags dia
 
 	model.ResultType = types.StringValue(string(resp.ResultType))
 	model.TableRowIdAttribute = types.StringPointerValue(resp.TableRowIdAttribute)
+	if len(resp.Attributes) == 0 {
+		if len(model.Attributes) > 0 {
+			model.Attributes = []resultSchemaAttributeModel{}
+		}
+		return
+	}
+
 	oldAttributes := model.Attributes
 	model.Attributes = make([]resultSchemaAttributeModel, len(resp.Attributes))
 
@@ -472,6 +482,10 @@ func (model *reportDefinitionModel) toAPIRequest() (api.CreateOrUpdateReportDefi
 	if model.Parameters != nil {
 		parameters := model.Parameters.toApiRequest()
 		reportDefinition.Parameters = *api.NewNullableCustomForm(&parameters)
+	}
+
+	if model.ResultSchema != nil {
+		reportDefinition.ResultSchema = model.ResultSchema.toAPIRequest()
 	}
 
 	return reportDefinition, nil

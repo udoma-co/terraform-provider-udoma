@@ -24,8 +24,8 @@ type ReportResultSchema struct {
 	ResultType ReportResultTypeEnum `json:"result_type"`
 	// The attribute that will be used as the ID of each item in the result set.  When set, the table will be clickable and the value of the respective  attribute can be used to navigate to the detail view of the item.
 	TableRowIdAttribute *string `json:"table_row_id_attribute,omitempty"`
-	// The attributes within the result. Each attribute will be displayed  as a column in the UI, if the result is a list, or as a field if not.
-	Attributes []ReportResultSchemaAttribute `json:"attributes"`
+	// The attributes within the result. Each attribute will be displayed  as a column in the UI, if the result is a list, or as a field if not. Array must be empty, if the result type is PDF.
+	Attributes []ReportResultSchemaAttribute `json:"attributes,omitempty"`
 }
 
 type _ReportResultSchema ReportResultSchema
@@ -34,10 +34,9 @@ type _ReportResultSchema ReportResultSchema
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewReportResultSchema(resultType ReportResultTypeEnum, attributes []ReportResultSchemaAttribute) *ReportResultSchema {
+func NewReportResultSchema(resultType ReportResultTypeEnum) *ReportResultSchema {
 	this := ReportResultSchema{}
 	this.ResultType = resultType
-	this.Attributes = attributes
 	return &this
 }
 
@@ -105,26 +104,34 @@ func (o *ReportResultSchema) SetTableRowIdAttribute(v string) {
 	o.TableRowIdAttribute = &v
 }
 
-// GetAttributes returns the Attributes field value
+// GetAttributes returns the Attributes field value if set, zero value otherwise.
 func (o *ReportResultSchema) GetAttributes() []ReportResultSchemaAttribute {
-	if o == nil {
+	if o == nil || IsNil(o.Attributes) {
 		var ret []ReportResultSchemaAttribute
 		return ret
 	}
-
 	return o.Attributes
 }
 
-// GetAttributesOk returns a tuple with the Attributes field value
+// GetAttributesOk returns a tuple with the Attributes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReportResultSchema) GetAttributesOk() ([]ReportResultSchemaAttribute, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Attributes) {
 		return nil, false
 	}
 	return o.Attributes, true
 }
 
-// SetAttributes sets field value
+// HasAttributes returns a boolean if a field has been set.
+func (o *ReportResultSchema) HasAttributes() bool {
+	if o != nil && !IsNil(o.Attributes) {
+		return true
+	}
+
+	return false
+}
+
+// SetAttributes gets a reference to the given []ReportResultSchemaAttribute and assigns it to the Attributes field.
 func (o *ReportResultSchema) SetAttributes(v []ReportResultSchemaAttribute) {
 	o.Attributes = v
 }
@@ -143,7 +150,9 @@ func (o ReportResultSchema) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.TableRowIdAttribute) {
 		toSerialize["table_row_id_attribute"] = o.TableRowIdAttribute
 	}
-	toSerialize["attributes"] = o.Attributes
+	if !IsNil(o.Attributes) {
+		toSerialize["attributes"] = o.Attributes
+	}
 	return toSerialize, nil
 }
 
@@ -153,7 +162,6 @@ func (o *ReportResultSchema) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"result_type",
-		"attributes",
 	}
 
 	allProperties := make(map[string]interface{})
