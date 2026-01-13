@@ -41,6 +41,8 @@ type DocumentGeneration struct {
 	PdfUrl *string `json:"pdf_url,omitempty"`
 	// The date and time the document was generated
 	PdfGenerationDate *int64 `json:"pdf_generation_date,omitempty"`
+	// True if the document has been sent by mail
+	MailSent *bool `json:"mail_sent,omitempty"`
 }
 
 type _DocumentGeneration DocumentGeneration
@@ -347,6 +349,38 @@ func (o *DocumentGeneration) SetPdfGenerationDate(v int64) {
 	o.PdfGenerationDate = &v
 }
 
+// GetMailSent returns the MailSent field value if set, zero value otherwise.
+func (o *DocumentGeneration) GetMailSent() bool {
+	if o == nil || IsNil(o.MailSent) {
+		var ret bool
+		return ret
+	}
+	return *o.MailSent
+}
+
+// GetMailSentOk returns a tuple with the MailSent field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DocumentGeneration) GetMailSentOk() (*bool, bool) {
+	if o == nil || IsNil(o.MailSent) {
+		return nil, false
+	}
+	return o.MailSent, true
+}
+
+// HasMailSent returns a boolean if a field has been set.
+func (o *DocumentGeneration) HasMailSent() bool {
+	if o != nil && !IsNil(o.MailSent) {
+		return true
+	}
+
+	return false
+}
+
+// SetMailSent gets a reference to the given bool and assigns it to the MailSent field.
+func (o *DocumentGeneration) SetMailSent(v bool) {
+	o.MailSent = &v
+}
+
 func (o DocumentGeneration) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -376,6 +410,9 @@ func (o DocumentGeneration) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.PdfGenerationDate) {
 		toSerialize["pdf_generation_date"] = o.PdfGenerationDate
+	}
+	if !IsNil(o.MailSent) {
+		toSerialize["mail_sent"] = o.MailSent
 	}
 	return toSerialize, nil
 }

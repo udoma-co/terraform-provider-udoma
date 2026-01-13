@@ -40,11 +40,11 @@ Resource represents a defintion of a report
 
 Required:
 
-- `attributes` (Attributes List) The attributes of the result (see [below for nested schema](#nestedatt--result_schema--attributes))
 - `result_type` (String) The type of the result (object, table).
 
 Optional:
 
+- `attributes` (Attributes List) The attributes of the result (see [below for nested schema](#nestedatt--result_schema--attributes))
 - `table_row_id_attribute` (String) The attribute that will be used as the row identifier in the table
 
 <a id="nestedatt--result_schema--attributes"></a>

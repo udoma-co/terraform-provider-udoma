@@ -32,7 +32,7 @@ type DocumentTemplate struct {
 	NameExpression *string `json:"name_expression,omitempty"`
 	// The source of the template, used to generate the document
 	Content string             `json:"content"`
-	Inputs  NullableCustomForm `json:"inputs"`
+	Inputs  NullableCustomForm `json:"inputs,omitempty"`
 	// The script we run to generate the object used in the template
 	PlaceholdersScript *string                                        `json:"placeholders_script,omitempty"`
 	Signatures         NullableDocumentTemplateSignatureConfiguration `json:"signatures,omitempty"`
@@ -47,12 +47,11 @@ type _DocumentTemplate DocumentTemplate
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDocumentTemplate(id string, name string, content string, inputs NullableCustomForm) *DocumentTemplate {
+func NewDocumentTemplate(id string, name string, content string) *DocumentTemplate {
 	this := DocumentTemplate{}
 	this.Id = id
 	this.Name = name
 	this.Content = content
-	this.Inputs = inputs
 	return &this
 }
 
@@ -243,18 +242,16 @@ func (o *DocumentTemplate) SetContent(v string) {
 	o.Content = v
 }
 
-// GetInputs returns the Inputs field value
-// If the value is explicit nil, the zero value for CustomForm will be returned
+// GetInputs returns the Inputs field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *DocumentTemplate) GetInputs() CustomForm {
-	if o == nil || o.Inputs.Get() == nil {
+	if o == nil || IsNil(o.Inputs.Get()) {
 		var ret CustomForm
 		return ret
 	}
-
 	return *o.Inputs.Get()
 }
 
-// GetInputsOk returns a tuple with the Inputs field value
+// GetInputsOk returns a tuple with the Inputs field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *DocumentTemplate) GetInputsOk() (*CustomForm, bool) {
@@ -264,9 +261,28 @@ func (o *DocumentTemplate) GetInputsOk() (*CustomForm, bool) {
 	return o.Inputs.Get(), o.Inputs.IsSet()
 }
 
-// SetInputs sets field value
+// HasInputs returns a boolean if a field has been set.
+func (o *DocumentTemplate) HasInputs() bool {
+	if o != nil && o.Inputs.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetInputs gets a reference to the given NullableCustomForm and assigns it to the Inputs field.
 func (o *DocumentTemplate) SetInputs(v CustomForm) {
 	o.Inputs.Set(&v)
+}
+
+// SetInputsNil sets the value for Inputs to be an explicit nil
+func (o *DocumentTemplate) SetInputsNil() {
+	o.Inputs.Set(nil)
+}
+
+// UnsetInputs ensures that no value is present for Inputs, not even an explicit nil
+func (o *DocumentTemplate) UnsetInputs() {
+	o.Inputs.Unset()
 }
 
 // GetPlaceholdersScript returns the PlaceholdersScript field value if set, zero value otherwise.
@@ -430,7 +446,9 @@ func (o DocumentTemplate) ToMap() (map[string]interface{}, error) {
 		toSerialize["name_expression"] = o.NameExpression
 	}
 	toSerialize["content"] = o.Content
-	toSerialize["inputs"] = o.Inputs.Get()
+	if o.Inputs.IsSet() {
+		toSerialize["inputs"] = o.Inputs.Get()
+	}
 	if !IsNil(o.PlaceholdersScript) {
 		toSerialize["placeholders_script"] = o.PlaceholdersScript
 	}
@@ -454,7 +472,6 @@ func (o *DocumentTemplate) UnmarshalJSON(data []byte) (err error) {
 		"id",
 		"name",
 		"content",
-		"inputs",
 	}
 
 	allProperties := make(map[string]interface{})

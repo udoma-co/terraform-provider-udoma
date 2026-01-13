@@ -121,7 +121,7 @@ func (r *documentTemplate) Schema(ctx context.Context, req resource.SchemaReques
 			},
 			"inputs": schema.StringAttribute{
 				CustomType:  tf.JsonObjectType{},
-				Required:    true,
+				Optional:    true,
 				Description: "The JSON serialised form definition of the template",
 			},
 			"placeholders_script": schema.StringAttribute{
