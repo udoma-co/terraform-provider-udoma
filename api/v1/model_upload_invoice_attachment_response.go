@@ -21,6 +21,9 @@ var _ MappedNullable = &UploadInvoiceAttachmentResponse{}
 type UploadInvoiceAttachmentResponse struct {
 	Attachment      *Attachment      `json:"attachment,omitempty"`
 	InvoiceAnalysis *InvoiceAnalysis `json:"invoice_analysis,omitempty"`
+	// if true then the returned analysis is erechnung
+	IsErechnung              *bool                     `json:"is_erechnung,omitempty"`
+	InvoiceErechnungAnalysis *InvoiceAnalysisERechnung `json:"invoice_erechnung_analysis,omitempty"`
 }
 
 // NewUploadInvoiceAttachmentResponse instantiates a new UploadInvoiceAttachmentResponse object
@@ -104,6 +107,70 @@ func (o *UploadInvoiceAttachmentResponse) SetInvoiceAnalysis(v InvoiceAnalysis) 
 	o.InvoiceAnalysis = &v
 }
 
+// GetIsErechnung returns the IsErechnung field value if set, zero value otherwise.
+func (o *UploadInvoiceAttachmentResponse) GetIsErechnung() bool {
+	if o == nil || IsNil(o.IsErechnung) {
+		var ret bool
+		return ret
+	}
+	return *o.IsErechnung
+}
+
+// GetIsErechnungOk returns a tuple with the IsErechnung field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UploadInvoiceAttachmentResponse) GetIsErechnungOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsErechnung) {
+		return nil, false
+	}
+	return o.IsErechnung, true
+}
+
+// HasIsErechnung returns a boolean if a field has been set.
+func (o *UploadInvoiceAttachmentResponse) HasIsErechnung() bool {
+	if o != nil && !IsNil(o.IsErechnung) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsErechnung gets a reference to the given bool and assigns it to the IsErechnung field.
+func (o *UploadInvoiceAttachmentResponse) SetIsErechnung(v bool) {
+	o.IsErechnung = &v
+}
+
+// GetInvoiceErechnungAnalysis returns the InvoiceErechnungAnalysis field value if set, zero value otherwise.
+func (o *UploadInvoiceAttachmentResponse) GetInvoiceErechnungAnalysis() InvoiceAnalysisERechnung {
+	if o == nil || IsNil(o.InvoiceErechnungAnalysis) {
+		var ret InvoiceAnalysisERechnung
+		return ret
+	}
+	return *o.InvoiceErechnungAnalysis
+}
+
+// GetInvoiceErechnungAnalysisOk returns a tuple with the InvoiceErechnungAnalysis field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UploadInvoiceAttachmentResponse) GetInvoiceErechnungAnalysisOk() (*InvoiceAnalysisERechnung, bool) {
+	if o == nil || IsNil(o.InvoiceErechnungAnalysis) {
+		return nil, false
+	}
+	return o.InvoiceErechnungAnalysis, true
+}
+
+// HasInvoiceErechnungAnalysis returns a boolean if a field has been set.
+func (o *UploadInvoiceAttachmentResponse) HasInvoiceErechnungAnalysis() bool {
+	if o != nil && !IsNil(o.InvoiceErechnungAnalysis) {
+		return true
+	}
+
+	return false
+}
+
+// SetInvoiceErechnungAnalysis gets a reference to the given InvoiceAnalysisERechnung and assigns it to the InvoiceErechnungAnalysis field.
+func (o *UploadInvoiceAttachmentResponse) SetInvoiceErechnungAnalysis(v InvoiceAnalysisERechnung) {
+	o.InvoiceErechnungAnalysis = &v
+}
+
 func (o UploadInvoiceAttachmentResponse) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -119,6 +186,12 @@ func (o UploadInvoiceAttachmentResponse) ToMap() (map[string]interface{}, error)
 	}
 	if !IsNil(o.InvoiceAnalysis) {
 		toSerialize["invoice_analysis"] = o.InvoiceAnalysis
+	}
+	if !IsNil(o.IsErechnung) {
+		toSerialize["is_erechnung"] = o.IsErechnung
+	}
+	if !IsNil(o.InvoiceErechnungAnalysis) {
+		toSerialize["invoice_erechnung_analysis"] = o.InvoiceErechnungAnalysis
 	}
 	return toSerialize, nil
 }

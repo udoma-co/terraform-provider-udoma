@@ -19,7 +19,7 @@ import (
 // checks if the GenerateSignaturePreviewPDFRequest type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &GenerateSignaturePreviewPDFRequest{}
 
-// GenerateSignaturePreviewPDFRequest Request to generate a signature preview PDF.  The signature image is provided directly as base64-encoded data. Uses the static signature preview template.
+// GenerateSignaturePreviewPDFRequest Request to generate a signature preview PDF. The signature image is provided directly as base64-encoded data. Uses the static signature preview template.
 type GenerateSignaturePreviewPDFRequest struct {
 	// The signature image as base64-encoded string
 	SignatureImage string `json:"signature_image"`

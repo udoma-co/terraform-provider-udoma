@@ -180,6 +180,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteHook**](docs/DefaultAPI.md#deletehook) | **Delete** /hook/{hookID} | Delete hook with all its related data
 *DefaultAPI* | [**DeleteInvoice**](docs/DefaultAPI.md#deleteinvoice) | **Delete** /invoice/{invoiceID} | Delete invoice
 *DefaultAPI* | [**DeleteInvoiceAnalysis**](docs/DefaultAPI.md#deleteinvoiceanalysis) | **Delete** /invoice-analysis/{invoiceAnalysisID} | Delete invoice analysis
+*DefaultAPI* | [**DeleteInvoiceAnalysisERechnung**](docs/DefaultAPI.md#deleteinvoiceanalysiserechnung) | **Delete** /invoice-analysis-erechnung/{invoiceAnalysisERechnungID} | Delete invoice analysis erechnung
 *DefaultAPI* | [**DeleteInvoiceDataMapper**](docs/DefaultAPI.md#deleteinvoicedatamapper) | **Delete** /invoice-data-mapper/{invoiceDataMapperID} | Delete invoice data mapper
 *DefaultAPI* | [**DeleteMeter**](docs/DefaultAPI.md#deletemeter) | **Delete** /meter/{meterID} | Delete meter
 *DefaultAPI* | [**DeleteMeterReading**](docs/DefaultAPI.md#deletemeterreading) | **Delete** /meter/{meterID}/reading/{readingID} | Delete meter reading
@@ -208,6 +209,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**ExecuteWorkflowExecutionStep**](docs/DefaultAPI.md#executeworkflowexecutionstep) | **Post** /workflows/execution/{executionID} | Execute workflow execution step
 *DefaultAPI* | [**Feedback**](docs/DefaultAPI.md#feedback) | **Post** /feedback | User feedback about the product
 *DefaultAPI* | [**FinalizeInvoiceAnalysis**](docs/DefaultAPI.md#finalizeinvoiceanalysis) | **Post** /invoice-analysis/{invoiceAnalysisID}/finalize | Finalize invoice analysis and create invoices
+*DefaultAPI* | [**FinalizeInvoiceAnalysisERechnung**](docs/DefaultAPI.md#finalizeinvoiceanalysiserechnung) | **Post** /invoice-analysis-erechnung/{invoiceAnalysisERechnungID}/finalize | Finalize invoice erechnung analysis and create an invoice out of it
 *DefaultAPI* | [**GenerateAccountDimensionValues**](docs/DefaultAPI.md#generateaccountdimensionvalues) | **Post** /financial/account-dimension/{dimensionID}/values/generate | Generate the account dimension values for the given dimension
 *DefaultAPI* | [**GenerateCaseComment**](docs/DefaultAPI.md#generatecasecomment) | **Post** /case/{caseID}/comment/generate | Generate AI comment suggestions
 *DefaultAPI* | [**GenerateCaseReportingEndpointNotice**](docs/DefaultAPI.md#generatecasereportingendpointnotice) | **Post** /cases/endpoints/{endpointID}/notice | Generate a PDF for a notice of the case reporting endpoint
@@ -256,6 +258,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetDataImportTemplate**](docs/DefaultAPI.md#getdataimporttemplate) | **Get** /data-import/template/{templateID} | Get the data import template by ID
 *DefaultAPI* | [**GetDocument**](docs/DefaultAPI.md#getdocument) | **Get** /document-repository/entry/{documentID} | Get an already existing document
 *DefaultAPI* | [**GetDocumentGeneration**](docs/DefaultAPI.md#getdocumentgeneration) | **Get** /document-generation/documents/{docID} | Get a single document generation
+*DefaultAPI* | [**GetDocumentMailStatus**](docs/DefaultAPI.md#getdocumentmailstatus) | **Get** /document-generation/documents/{docID}/mail-status | Get the mail status of the document generation
 *DefaultAPI* | [**GetDocumentTemplate**](docs/DefaultAPI.md#getdocumenttemplate) | **Get** /document-generation/template/{templateID} | Get a document template
 *DefaultAPI* | [**GetDocumentTemplates**](docs/DefaultAPI.md#getdocumenttemplates) | **Get** /document-generation/templates | Get all available document templates
 *DefaultAPI* | [**GetESignatureForDocument**](docs/DefaultAPI.md#getesignaturefordocument) | **Get** /document-generation/documents/{docID}/esignature | Get the singing status for the document
@@ -275,6 +278,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetHook**](docs/DefaultAPI.md#gethook) | **Get** /hook/{hookID} | Get hook with all its attributes
 *DefaultAPI* | [**GetInvoice**](docs/DefaultAPI.md#getinvoice) | **Get** /invoice/{invoiceID} | Get invoice
 *DefaultAPI* | [**GetInvoiceAnalysis**](docs/DefaultAPI.md#getinvoiceanalysis) | **Get** /invoice-analysis/{invoiceAnalysisID} | Load an invoice analysis
+*DefaultAPI* | [**GetInvoiceAnalysisERechnung**](docs/DefaultAPI.md#getinvoiceanalysiserechnung) | **Get** /invoice-analysis-erechnung/{invoiceAnalysisERechnungID} | Get invoice analysis erechnung
 *DefaultAPI* | [**GetInvoiceDataMapper**](docs/DefaultAPI.md#getinvoicedatamapper) | **Get** /invoice-data-mapper/{invoiceDataMapperID} | Get invoice data mapper
 *DefaultAPI* | [**GetLatestPriceIndexPoint**](docs/DefaultAPI.md#getlatestpriceindexpoint) | **Get** /price-index/latest/{countryCode} | Get the current latest PriceIndexPoint
 *DefaultAPI* | [**GetMeter**](docs/DefaultAPI.md#getmeter) | **Get** /meter/{meterID} | Get meter
@@ -411,6 +415,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**ResetConnectorQuery**](docs/DefaultAPI.md#resetconnectorquery) | **Put** /connector/query/{queryID}/reset | Get the query for the current account
 *DefaultAPI* | [**RevertAccountBooking**](docs/DefaultAPI.md#revertaccountbooking) | **Post** /financial/bookings/{bookingID}/revert | Revert a previously created booking
 *DefaultAPI* | [**SendAppointmentScheduleInvitation**](docs/DefaultAPI.md#sendappointmentscheduleinvitation) | **Post** /calendar/appointments/schedule/{scheduleID}/invitation | Send invitation to recepients after creating a new appointment schedule
+*DefaultAPI* | [**SendDocumentViaMail**](docs/DefaultAPI.md#senddocumentviamail) | **Post** /document-generation/documents/{docID}/send-via-mail | Send the document generation via physical mail
 *DefaultAPI* | [**SendNotification**](docs/DefaultAPI.md#sendnotification) | **Post** /notification/{notificationName}/send | Send notification
 *DefaultAPI* | [**StartWorkflowExecution**](docs/DefaultAPI.md#startworkflowexecution) | **Post** /workflows/execution | Start a new workflow execution
 *DefaultAPI* | [**SubmitPropertyHandover**](docs/DefaultAPI.md#submitpropertyhandover) | **Post** /property-handovers/handovers/{handoverID}/submit | Submit the data for a property handover
@@ -470,6 +475,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateWorkflowEntrypoint**](docs/DefaultAPI.md#updateworkflowentrypoint) | **Put** /workflows/entrypoint/{entrypointID} | Update workflow entry point
 *DefaultAPI* | [**UploadAttachment**](docs/DefaultAPI.md#uploadattachment) | **Post** /attachment | Upload new file attachment
 *DefaultAPI* | [**UploadInvoiceAnalysisAttachment**](docs/DefaultAPI.md#uploadinvoiceanalysisattachment) | **Post** /invoice-analysis/attachment | Upload new file invoice attachment
+*DefaultAPI* | [**UploadInvoiceAnalysisAttachmentVision**](docs/DefaultAPI.md#uploadinvoiceanalysisattachmentvision) | **Post** /invoice-analysis/attachment-vision | Upload new file invoice attachment
 *DefaultAPI* | [**ValidateCustomForm**](docs/DefaultAPI.md#validatecustomform) | **Post** /custom-form/{formID}/validate | Validate a custom form
 *DefaultAPI* | [**ValidateUserEmail**](docs/DefaultAPI.md#validateuseremail) | **Post** /email/validation | Validate user&#39;s email and point out problems if there are any
 *DefaultAPI* | [**ValidateWorkflowEntrypoint**](docs/DefaultAPI.md#validateworkflowentrypoint) | **Post** /workflows/entrypoint/{entrypointID}/validate | Run the workflow entrypoint validations
@@ -680,6 +686,7 @@ Class | Method | HTTP request | Description
  - [FeatureFlagScopeEnum](docs/FeatureFlagScopeEnum.md)
  - [FeedbackRequest](docs/FeedbackRequest.md)
  - [FeedbackType](docs/FeedbackType.md)
+ - [FinalizeERechnungInvoiceAnalysisRequest](docs/FinalizeERechnungInvoiceAnalysisRequest.md)
  - [FinancialAccount](docs/FinancialAccount.md)
  - [FinancialAccountAttributesPartial](docs/FinancialAccountAttributesPartial.md)
  - [FinancialSubAccount](docs/FinancialSubAccount.md)
@@ -727,15 +734,18 @@ Class | Method | HTTP request | Description
  - [InviteToAppointmentRequest](docs/InviteToAppointmentRequest.md)
  - [Invoice](docs/Invoice.md)
  - [InvoiceAnalysis](docs/InvoiceAnalysis.md)
+ - [InvoiceAnalysisERechnung](docs/InvoiceAnalysisERechnung.md)
  - [InvoiceAnalysisStatusEnum](docs/InvoiceAnalysisStatusEnum.md)
  - [InvoiceData](docs/InvoiceData.md)
  - [InvoiceDataMapper](docs/InvoiceDataMapper.md)
  - [InvoiceDataMapperAttributesPartial](docs/InvoiceDataMapperAttributesPartial.md)
  - [InvoiceDataMapperEntrypointEnum](docs/InvoiceDataMapperEntrypointEnum.md)
  - [InvoiceDocumentAnalysis](docs/InvoiceDocumentAnalysis.md)
+ - [InvoiceERechnungAnalysisStatusEnum](docs/InvoiceERechnungAnalysisStatusEnum.md)
  - [InvoicePaymentStatusEnum](docs/InvoicePaymentStatusEnum.md)
  - [IsDeletedAttributePartial](docs/IsDeletedAttributePartial.md)
  - [LogRequest](docs/LogRequest.md)
+ - [MailStatusResponse](docs/MailStatusResponse.md)
  - [MandatoryMessage](docs/MandatoryMessage.md)
  - [MarkInvoiceAsPaidRequest](docs/MarkInvoiceAsPaidRequest.md)
  - [Meter](docs/Meter.md)
@@ -818,6 +828,7 @@ Class | Method | HTTP request | Description
  - [QueryHooksRequest](docs/QueryHooksRequest.md)
  - [QueryHooksResponse](docs/QueryHooksResponse.md)
  - [QueryInvoiceAnalysesRequest](docs/QueryInvoiceAnalysesRequest.md)
+ - [QueryInvoiceAnalysesResponse](docs/QueryInvoiceAnalysesResponse.md)
  - [QueryInvoiceDataMappersRequest](docs/QueryInvoiceDataMappersRequest.md)
  - [QueryInvoicesRequest](docs/QueryInvoicesRequest.md)
  - [QueryLimitAttributesPartial](docs/QueryLimitAttributesPartial.md)
