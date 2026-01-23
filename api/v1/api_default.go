@@ -1504,7 +1504,7 @@ func (r ApiCreateAccountBookingRequest) CreateAccountBookingRequest(createAccoun
 	return r
 }
 
-func (r ApiCreateAccountBookingRequest) Execute() (*AccountBooking, *http.Response, error) {
+func (r ApiCreateAccountBookingRequest) Execute() (*BookingPreview, *http.Response, error) {
 	return r.ApiService.CreateAccountBookingExecute(r)
 }
 
@@ -1523,13 +1523,13 @@ func (a *DefaultAPIService) CreateAccountBooking(ctx context.Context) ApiCreateA
 
 // Execute executes the request
 //
-//	@return AccountBooking
-func (a *DefaultAPIService) CreateAccountBookingExecute(r ApiCreateAccountBookingRequest) (*AccountBooking, *http.Response, error) {
+//	@return BookingPreview
+func (a *DefaultAPIService) CreateAccountBookingExecute(r ApiCreateAccountBookingRequest) (*BookingPreview, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *AccountBooking
+		localVarReturnValue *BookingPreview
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateAccountBooking")
@@ -1613,7 +1613,7 @@ func (r ApiCreateAccountBookingsRequest) CreateAccountBookingRequest(createAccou
 	return r
 }
 
-func (r ApiCreateAccountBookingsRequest) Execute() (*AccountBooking, *http.Response, error) {
+func (r ApiCreateAccountBookingsRequest) Execute() ([]BookingPreview, *http.Response, error) {
 	return r.ApiService.CreateAccountBookingsExecute(r)
 }
 
@@ -1632,13 +1632,13 @@ func (a *DefaultAPIService) CreateAccountBookings(ctx context.Context) ApiCreate
 
 // Execute executes the request
 //
-//	@return AccountBooking
-func (a *DefaultAPIService) CreateAccountBookingsExecute(r ApiCreateAccountBookingsRequest) (*AccountBooking, *http.Response, error) {
+//	@return []BookingPreview
+func (a *DefaultAPIService) CreateAccountBookingsExecute(r ApiCreateAccountBookingsRequest) ([]BookingPreview, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *AccountBooking
+		localVarReturnValue []BookingPreview
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateAccountBookings")
@@ -6409,6 +6409,120 @@ func (a *DefaultAPIService) CreateReportDefinitionExecute(r ApiCreateReportDefin
 	}
 	// body params
 	localVarPostBody = r.createOrUpdateReportDefinitionRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiCreateReportEntrypointRequest struct {
+	ctx                                   context.Context
+	ApiService                            *DefaultAPIService
+	definitionID                          string
+	createOrUpdateReportEntrypointRequest *CreateOrUpdateReportEntrypointRequest
+}
+
+// Report entry point to be created
+func (r ApiCreateReportEntrypointRequest) CreateOrUpdateReportEntrypointRequest(createOrUpdateReportEntrypointRequest CreateOrUpdateReportEntrypointRequest) ApiCreateReportEntrypointRequest {
+	r.createOrUpdateReportEntrypointRequest = &createOrUpdateReportEntrypointRequest
+	return r
+}
+
+func (r ApiCreateReportEntrypointRequest) Execute() (*ReportEntrypoint, *http.Response, error) {
+	return r.ApiService.CreateReportEntrypointExecute(r)
+}
+
+/*
+CreateReportEntrypoint Create a new report entry point for the report definition
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param definitionID unique generated ID of a report definition
+	@return ApiCreateReportEntrypointRequest
+*/
+func (a *DefaultAPIService) CreateReportEntrypoint(ctx context.Context, definitionID string) ApiCreateReportEntrypointRequest {
+	return ApiCreateReportEntrypointRequest{
+		ApiService:   a,
+		ctx:          ctx,
+		definitionID: definitionID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return ReportEntrypoint
+func (a *DefaultAPIService) CreateReportEntrypointExecute(r ApiCreateReportEntrypointRequest) (*ReportEntrypoint, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ReportEntrypoint
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateReportEntrypoint")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/report/definition/{definitionID}/entrypoint"
+	localVarPath = strings.Replace(localVarPath, "{"+"definitionID"+"}", url.PathEscape(parameterValueToString(r.definitionID, "definitionID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createOrUpdateReportEntrypointRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdateReportEntrypointRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrUpdateReportEntrypointRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -11568,6 +11682,96 @@ func (a *DefaultAPIService) DeleteReportDefinitionExecute(r ApiDeleteReportDefin
 
 	localVarPath := localBasePath + "/report/{definitionID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"definitionID"+"}", url.PathEscape(parameterValueToString(r.definitionID, "definitionID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDeleteReportEntrypointRequest struct {
+	ctx          context.Context
+	ApiService   *DefaultAPIService
+	entrypointID string
+}
+
+func (r ApiDeleteReportEntrypointRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteReportEntrypointExecute(r)
+}
+
+/*
+DeleteReportEntrypoint Delete report entry point
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param entrypointID unique generated ID of a report entry point
+	@return ApiDeleteReportEntrypointRequest
+*/
+func (a *DefaultAPIService) DeleteReportEntrypoint(ctx context.Context, entrypointID string) ApiDeleteReportEntrypointRequest {
+	return ApiDeleteReportEntrypointRequest{
+		ApiService:   a,
+		ctx:          ctx,
+		entrypointID: entrypointID,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DeleteReportEntrypointExecute(r ApiDeleteReportEntrypointRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteReportEntrypoint")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/reports/entrypoint/{entrypointID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"entrypointID"+"}", url.PathEscape(parameterValueToString(r.entrypointID, "entrypointID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -22846,6 +23050,308 @@ func (a *DefaultAPIService) GetReportDefinitionsExecute(r ApiGetReportDefinition
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetReportEntrypointRequest struct {
+	ctx          context.Context
+	ApiService   *DefaultAPIService
+	entrypointID string
+}
+
+func (r ApiGetReportEntrypointRequest) Execute() (*ReportEntrypoint, *http.Response, error) {
+	return r.ApiService.GetReportEntrypointExecute(r)
+}
+
+/*
+GetReportEntrypoint Get the entry point for the report definition
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param entrypointID unique generated ID of a report entry point
+	@return ApiGetReportEntrypointRequest
+*/
+func (a *DefaultAPIService) GetReportEntrypoint(ctx context.Context, entrypointID string) ApiGetReportEntrypointRequest {
+	return ApiGetReportEntrypointRequest{
+		ApiService:   a,
+		ctx:          ctx,
+		entrypointID: entrypointID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return ReportEntrypoint
+func (a *DefaultAPIService) GetReportEntrypointExecute(r ApiGetReportEntrypointRequest) (*ReportEntrypoint, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ReportEntrypoint
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetReportEntrypoint")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/reports/entrypoint/{entrypointID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"entrypointID"+"}", url.PathEscape(parameterValueToString(r.entrypointID, "entrypointID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetReportEntrypointsRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+}
+
+func (r ApiGetReportEntrypointsRequest) Execute() ([]ReportEntrypoint, *http.Response, error) {
+	return r.ApiService.GetReportEntrypointsExecute(r)
+}
+
+/*
+GetReportEntrypoints Get all report entry points
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetReportEntrypointsRequest
+*/
+func (a *DefaultAPIService) GetReportEntrypoints(ctx context.Context) ApiGetReportEntrypointsRequest {
+	return ApiGetReportEntrypointsRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return []ReportEntrypoint
+func (a *DefaultAPIService) GetReportEntrypointsExecute(r ApiGetReportEntrypointsRequest) ([]ReportEntrypoint, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []ReportEntrypoint
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetReportEntrypoints")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/reports/entrypoints"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetReportEntrypointsForDefinitionRequest struct {
+	ctx          context.Context
+	ApiService   *DefaultAPIService
+	definitionID string
+}
+
+func (r ApiGetReportEntrypointsForDefinitionRequest) Execute() ([]ReportEntrypoint, *http.Response, error) {
+	return r.ApiService.GetReportEntrypointsForDefinitionExecute(r)
+}
+
+/*
+GetReportEntrypointsForDefinition Get the report entry points for the report definition
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param definitionID unique generated ID of a report definition
+	@return ApiGetReportEntrypointsForDefinitionRequest
+*/
+func (a *DefaultAPIService) GetReportEntrypointsForDefinition(ctx context.Context, definitionID string) ApiGetReportEntrypointsForDefinitionRequest {
+	return ApiGetReportEntrypointsForDefinitionRequest{
+		ApiService:   a,
+		ctx:          ctx,
+		definitionID: definitionID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return []ReportEntrypoint
+func (a *DefaultAPIService) GetReportEntrypointsForDefinitionExecute(r ApiGetReportEntrypointsForDefinitionRequest) ([]ReportEntrypoint, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []ReportEntrypoint
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetReportEntrypointsForDefinition")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/report/definition/{definitionID}/entrypoints"
+	localVarPath = strings.Replace(localVarPath, "{"+"definitionID"+"}", url.PathEscape(parameterValueToString(r.definitionID, "definitionID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetReportExecutionRequest struct {
 	ctx         context.Context
 	ApiService  *DefaultAPIService
@@ -25081,6 +25587,119 @@ func (a *DefaultAPIService) ImportDataUsingTemplateExecute(r ApiImportDataUsingT
 	}
 	// body params
 	localVarPostBody = r.importDataRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiInitBookingTemplateRequest struct {
+	ctx                        context.Context
+	ApiService                 *DefaultAPIService
+	bookingTemplateID          string
+	initBookingTemplateRequest *InitBookingTemplateRequest
+}
+
+func (r ApiInitBookingTemplateRequest) InitBookingTemplateRequest(initBookingTemplateRequest InitBookingTemplateRequest) ApiInitBookingTemplateRequest {
+	r.initBookingTemplateRequest = &initBookingTemplateRequest
+	return r
+}
+
+func (r ApiInitBookingTemplateRequest) Execute() (*InitBookingTemplateResponse, *http.Response, error) {
+	return r.ApiService.InitBookingTemplateExecute(r)
+}
+
+/*
+InitBookingTemplate Execute a booking template and create a booking preview
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param bookingTemplateID unique generated ID of a booking template
+	@return ApiInitBookingTemplateRequest
+*/
+func (a *DefaultAPIService) InitBookingTemplate(ctx context.Context, bookingTemplateID string) ApiInitBookingTemplateRequest {
+	return ApiInitBookingTemplateRequest{
+		ApiService:        a,
+		ctx:               ctx,
+		bookingTemplateID: bookingTemplateID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return InitBookingTemplateResponse
+func (a *DefaultAPIService) InitBookingTemplateExecute(r ApiInitBookingTemplateRequest) (*InitBookingTemplateResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *InitBookingTemplateResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.InitBookingTemplate")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/financial/booking-template/{bookingTemplateID}/init"
+	localVarPath = strings.Replace(localVarPath, "{"+"bookingTemplateID"+"}", url.PathEscape(parameterValueToString(r.bookingTemplateID, "bookingTemplateID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.initBookingTemplateRequest == nil {
+		return localVarReturnValue, nil, reportError("initBookingTemplateRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.initBookingTemplateRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -34529,6 +35148,115 @@ func (a *DefaultAPIService) ReattachInvoiceAnalysisPagesExecute(r ApiReattachInv
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiReceiveEmailInvoiceRequest struct {
+	ctx                        context.Context
+	ApiService                 *DefaultAPIService
+	receiveEmailInvoiceRequest *ReceiveEmailInvoiceRequest
+}
+
+func (r ApiReceiveEmailInvoiceRequest) ReceiveEmailInvoiceRequest(receiveEmailInvoiceRequest ReceiveEmailInvoiceRequest) ApiReceiveEmailInvoiceRequest {
+	r.receiveEmailInvoiceRequest = &receiveEmailInvoiceRequest
+	return r
+}
+
+func (r ApiReceiveEmailInvoiceRequest) Execute() (*ReceiveEmailInvoiceResponse, *http.Response, error) {
+	return r.ApiService.ReceiveEmailInvoiceExecute(r)
+}
+
+/*
+ReceiveEmailInvoice Receive email invoices
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiReceiveEmailInvoiceRequest
+*/
+func (a *DefaultAPIService) ReceiveEmailInvoice(ctx context.Context) ApiReceiveEmailInvoiceRequest {
+	return ApiReceiveEmailInvoiceRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return ReceiveEmailInvoiceResponse
+func (a *DefaultAPIService) ReceiveEmailInvoiceExecute(r ApiReceiveEmailInvoiceRequest) (*ReceiveEmailInvoiceResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ReceiveEmailInvoiceResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ReceiveEmailInvoice")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/tenant-correspondence/email-invoices"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.receiveEmailInvoiceRequest == nil {
+		return localVarReturnValue, nil, reportError("receiveEmailInvoiceRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.receiveEmailInvoiceRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiRejectApprovalRequest struct {
 	ctx                   context.Context
 	ApiService            *DefaultAPIService
@@ -36831,6 +37559,119 @@ func (a *DefaultAPIService) UpdateBankTransactionExecute(r ApiUpdateBankTransact
 	}
 	// body params
 	localVarPostBody = r.createOrUpdateBankTransactionRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdateBookingPreviewRequest struct {
+	ctx                         context.Context
+	ApiService                  *DefaultAPIService
+	bookingPreviewID            string
+	updateBookingPreviewRequest *UpdateBookingPreviewRequest
+}
+
+func (r ApiUpdateBookingPreviewRequest) UpdateBookingPreviewRequest(updateBookingPreviewRequest UpdateBookingPreviewRequest) ApiUpdateBookingPreviewRequest {
+	r.updateBookingPreviewRequest = &updateBookingPreviewRequest
+	return r
+}
+
+func (r ApiUpdateBookingPreviewRequest) Execute() (*BookingPreview, *http.Response, error) {
+	return r.ApiService.UpdateBookingPreviewExecute(r)
+}
+
+/*
+UpdateBookingPreview Update the booking preview with all its attributes
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param bookingPreviewID unique generated ID of a booking execution
+	@return ApiUpdateBookingPreviewRequest
+*/
+func (a *DefaultAPIService) UpdateBookingPreview(ctx context.Context, bookingPreviewID string) ApiUpdateBookingPreviewRequest {
+	return ApiUpdateBookingPreviewRequest{
+		ApiService:       a,
+		ctx:              ctx,
+		bookingPreviewID: bookingPreviewID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return BookingPreview
+func (a *DefaultAPIService) UpdateBookingPreviewExecute(r ApiUpdateBookingPreviewRequest) (*BookingPreview, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *BookingPreview
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdateBookingPreview")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/financial/booking-preview/{bookingPreviewID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"bookingPreviewID"+"}", url.PathEscape(parameterValueToString(r.bookingPreviewID, "bookingPreviewID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.updateBookingPreviewRequest == nil {
+		return localVarReturnValue, nil, reportError("updateBookingPreviewRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.updateBookingPreviewRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -40868,6 +41709,120 @@ func (a *DefaultAPIService) UpdateReportDefinitionExecute(r ApiUpdateReportDefin
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiUpdateReportEntrypointRequest struct {
+	ctx                                   context.Context
+	ApiService                            *DefaultAPIService
+	entrypointID                          string
+	createOrUpdateReportEntrypointRequest *CreateOrUpdateReportEntrypointRequest
+}
+
+// Report entry point to be updated
+func (r ApiUpdateReportEntrypointRequest) CreateOrUpdateReportEntrypointRequest(createOrUpdateReportEntrypointRequest CreateOrUpdateReportEntrypointRequest) ApiUpdateReportEntrypointRequest {
+	r.createOrUpdateReportEntrypointRequest = &createOrUpdateReportEntrypointRequest
+	return r
+}
+
+func (r ApiUpdateReportEntrypointRequest) Execute() (*ReportEntrypoint, *http.Response, error) {
+	return r.ApiService.UpdateReportEntrypointExecute(r)
+}
+
+/*
+UpdateReportEntrypoint Update report entry point
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param entrypointID unique generated ID of a report entry point
+	@return ApiUpdateReportEntrypointRequest
+*/
+func (a *DefaultAPIService) UpdateReportEntrypoint(ctx context.Context, entrypointID string) ApiUpdateReportEntrypointRequest {
+	return ApiUpdateReportEntrypointRequest{
+		ApiService:   a,
+		ctx:          ctx,
+		entrypointID: entrypointID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return ReportEntrypoint
+func (a *DefaultAPIService) UpdateReportEntrypointExecute(r ApiUpdateReportEntrypointRequest) (*ReportEntrypoint, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ReportEntrypoint
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdateReportEntrypoint")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/reports/entrypoint/{entrypointID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"entrypointID"+"}", url.PathEscape(parameterValueToString(r.entrypointID, "entrypointID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createOrUpdateReportEntrypointRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdateReportEntrypointRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrUpdateReportEntrypointRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiUpdateServiceProviderRequest struct {
 	ctx                           context.Context
 	ApiService                    *DefaultAPIService
@@ -41986,6 +42941,115 @@ func (a *DefaultAPIService) UploadInvoiceAnalysisAttachmentVisionExecute(r ApiUp
 		dataLocalVarFile.Close()
 		formFiles = append(formFiles, formFile{fileBytes: dataLocalVarFileBytes, fileName: dataLocalVarFileName, formFileName: dataLocalVarFormFileName})
 	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiValidateBankAccountIbanRequest struct {
+	ctx                            context.Context
+	ApiService                     *DefaultAPIService
+	validateBankAccountIbanRequest *ValidateBankAccountIbanRequest
+}
+
+func (r ApiValidateBankAccountIbanRequest) ValidateBankAccountIbanRequest(validateBankAccountIbanRequest ValidateBankAccountIbanRequest) ApiValidateBankAccountIbanRequest {
+	r.validateBankAccountIbanRequest = &validateBankAccountIbanRequest
+	return r
+}
+
+func (r ApiValidateBankAccountIbanRequest) Execute() (*ValidateBankAccountIbanResponse, *http.Response, error) {
+	return r.ApiService.ValidateBankAccountIbanExecute(r)
+}
+
+/*
+ValidateBankAccountIban Validate a bank account IBAN
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiValidateBankAccountIbanRequest
+*/
+func (a *DefaultAPIService) ValidateBankAccountIban(ctx context.Context) ApiValidateBankAccountIbanRequest {
+	return ApiValidateBankAccountIbanRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return ValidateBankAccountIbanResponse
+func (a *DefaultAPIService) ValidateBankAccountIbanExecute(r ApiValidateBankAccountIbanRequest) (*ValidateBankAccountIbanResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ValidateBankAccountIbanResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ValidateBankAccountIban")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/bank-account-iban/validate"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.validateBankAccountIbanRequest == nil {
+		return localVarReturnValue, nil, reportError("validateBankAccountIbanRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.validateBankAccountIbanRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

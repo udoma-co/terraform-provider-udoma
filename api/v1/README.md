@@ -137,6 +137,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreatePropertyOwner**](docs/DefaultAPI.md#createpropertyowner) | **Post** /owner | Create a new property owner
 *DefaultAPI* | [**CreateRentUpdate**](docs/DefaultAPI.md#createrentupdate) | **Post** /tenancy/{tenancyID}/rent-updates | Create new rent update for the tenancy
 *DefaultAPI* | [**CreateReportDefinition**](docs/DefaultAPI.md#createreportdefinition) | **Post** /report | Create a new report definition
+*DefaultAPI* | [**CreateReportEntrypoint**](docs/DefaultAPI.md#createreportentrypoint) | **Post** /report/definition/{definitionID}/entrypoint | Create a new report entry point for the report definition
 *DefaultAPI* | [**CreateServiceProvider**](docs/DefaultAPI.md#createserviceprovider) | **Post** /service-provider | Create a new service provider for the current account
 *DefaultAPI* | [**CreateTenancy**](docs/DefaultAPI.md#createtenancy) | **Post** /property/{propID}/tenancy | Create new tenancy for the property
 *DefaultAPI* | [**CreateTenant**](docs/DefaultAPI.md#createtenant) | **Post** /tenant | Create a new tenant and optionally invites them to join the platform 
@@ -192,6 +193,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeletePropertyOwner**](docs/DefaultAPI.md#deletepropertyowner) | **Delete** /owner/{ownerID} | Delete property owner
 *DefaultAPI* | [**DeleteRentUpdate**](docs/DefaultAPI.md#deleterentupdate) | **Delete** /rent-update/{rentUpdateID} | Delete the rent update with the given ID
 *DefaultAPI* | [**DeleteReportDefinition**](docs/DefaultAPI.md#deletereportdefinition) | **Delete** /report/{definitionID} | 
+*DefaultAPI* | [**DeleteReportEntrypoint**](docs/DefaultAPI.md#deletereportentrypoint) | **Delete** /reports/entrypoint/{entrypointID} | Delete report entry point
 *DefaultAPI* | [**DeleteReportExecution**](docs/DefaultAPI.md#deletereportexecution) | **Delete** /report/executions/{executionID} | 
 *DefaultAPI* | [**DeleteServiceProvider**](docs/DefaultAPI.md#deleteserviceprovider) | **Delete** /service-provider/{serviceProviderID} | Delete the service provider
 *DefaultAPI* | [**DeleteTenancy**](docs/DefaultAPI.md#deletetenancy) | **Delete** /tenancy/{tenancyID} | Delete the tenancy with the given ID
@@ -302,6 +304,9 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetRentUpdates**](docs/DefaultAPI.md#getrentupdates) | **Get** /tenancy/{tenancyID}/rent-updates | Get all tenancy rent updates
 *DefaultAPI* | [**GetReportDefinition**](docs/DefaultAPI.md#getreportdefinition) | **Get** /report/{definitionID} | 
 *DefaultAPI* | [**GetReportDefinitions**](docs/DefaultAPI.md#getreportdefinitions) | **Get** /reports | 
+*DefaultAPI* | [**GetReportEntrypoint**](docs/DefaultAPI.md#getreportentrypoint) | **Get** /reports/entrypoint/{entrypointID} | Get the entry point for the report definition
+*DefaultAPI* | [**GetReportEntrypoints**](docs/DefaultAPI.md#getreportentrypoints) | **Get** /reports/entrypoints | Get all report entry points
+*DefaultAPI* | [**GetReportEntrypointsForDefinition**](docs/DefaultAPI.md#getreportentrypointsfordefinition) | **Get** /report/definition/{definitionID}/entrypoints | Get the report entry points for the report definition
 *DefaultAPI* | [**GetReportExecution**](docs/DefaultAPI.md#getreportexecution) | **Get** /report/executions/{executionID} | Get report execution details
 *DefaultAPI* | [**GetReportExecutions**](docs/DefaultAPI.md#getreportexecutions) | **Post** /reports/executions | Get all executions that match the given criteria
 *DefaultAPI* | [**GetServiceProvider**](docs/DefaultAPI.md#getserviceprovider) | **Get** /service-provider/{serviceProviderID} | Get the service provider with the given ID
@@ -324,6 +329,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetWorkflowTriggersForSource**](docs/DefaultAPI.md#getworkflowtriggersforsource) | **Get** /workflows/trigger/source/{sourceID} | Get workflow triggers for a source
 *DefaultAPI* | [**ImportBankConnectionTransactions**](docs/DefaultAPI.md#importbankconnectiontransactions) | **Post** /bank-connection/{bankConnectionID}/transactions/import | Import transactions from bank connection
 *DefaultAPI* | [**ImportDataUsingTemplate**](docs/DefaultAPI.md#importdatausingtemplate) | **Post** /data-import/template/{templateID}/import | Import data using the template
+*DefaultAPI* | [**InitBookingTemplate**](docs/DefaultAPI.md#initbookingtemplate) | **Post** /financial/booking-template/{bookingTemplateID}/init | Execute a booking template and create a booking preview
 *DefaultAPI* | [**InternalAddPriceIndexPoint**](docs/DefaultAPI.md#internaladdpriceindexpoint) | **Put** /price-index | Push a new value for the inflation index
 *DefaultAPI* | [**InviteToAppointment**](docs/DefaultAPI.md#invitetoappointment) | **Post** /calendar/appointments/entry/{entryID}/invite | Invite a users to an appointment
 *DefaultAPI* | [**LinkAppointmentProperty**](docs/DefaultAPI.md#linkappointmentproperty) | **Post** /calendar/appointments/entry/{entryID}/property/{propID}/link | Link a property to an appointment
@@ -409,6 +415,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryWorkflowDefinitions**](docs/DefaultAPI.md#queryworkflowdefinitions) | **Post** /workflows/definitions | Query all workflow definitions
 *DefaultAPI* | [**QueryWorkflowExecutions**](docs/DefaultAPI.md#queryworkflowexecutions) | **Post** /workflows/executions | Get a list of all workflow executions, matching the criteria in the request 
 *DefaultAPI* | [**ReattachInvoiceAnalysisPages**](docs/DefaultAPI.md#reattachinvoiceanalysispages) | **Put** /invoice-analysis/{invoiceAnalysisID}/reattach/{invoiceID} | Reattach invoice analysis pages
+*DefaultAPI* | [**ReceiveEmailInvoice**](docs/DefaultAPI.md#receiveemailinvoice) | **Post** /tenant-correspondence/email-invoices | Receive email invoices
 *DefaultAPI* | [**RejectApproval**](docs/DefaultAPI.md#rejectapproval) | **Post** /approval/{approvalID}/reject | Reject the approval with the given ID
 *DefaultAPI* | [**RequestESignaturesForDocument**](docs/DefaultAPI.md#requestesignaturesfordocument) | **Post** /document-generation/documents/{docID}/esignature | Trigger a signing request for a document
 *DefaultAPI* | [**RerunReportExecution**](docs/DefaultAPI.md#rerunreportexecution) | **Post** /report/executions/{executionID}/rerun | Rerun the report execution with the same parameters
@@ -431,6 +438,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateAppointmentTemplate**](docs/DefaultAPI.md#updateappointmenttemplate) | **Put** /calendar/appointments/template/{templateID} | Update appointment template
 *DefaultAPI* | [**UpdateBankAccount**](docs/DefaultAPI.md#updatebankaccount) | **Put** /bank-account/{accountID} | Update the attributes of the already existing bank account
 *DefaultAPI* | [**UpdateBankTransaction**](docs/DefaultAPI.md#updatebanktransaction) | **Put** /bank-account-transaction/{transactionID} | Update an already existing bank transaction
+*DefaultAPI* | [**UpdateBookingPreview**](docs/DefaultAPI.md#updatebookingpreview) | **Put** /financial/booking-preview/{bookingPreviewID} | Update the booking preview with all its attributes
 *DefaultAPI* | [**UpdateBookingTemplate**](docs/DefaultAPI.md#updatebookingtemplate) | **Put** /financial/booking-template/{bookingTemplateID} | Update an already existing booking template
 *DefaultAPI* | [**UpdateCase**](docs/DefaultAPI.md#updatecase) | **Put** /case/{caseID} | Update case
 *DefaultAPI* | [**UpdateCaseReportingEndpoint**](docs/DefaultAPI.md#updatecasereportingendpoint) | **Put** /cases/endpoints/{endpointID} | Update the case reporting endpoint by ID
@@ -466,6 +474,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdatePropertyOwner**](docs/DefaultAPI.md#updatepropertyowner) | **Put** /owner/{ownerID} | Update property owner
 *DefaultAPI* | [**UpdateRentUpdate**](docs/DefaultAPI.md#updaterentupdate) | **Put** /rent-update/{rentUpdateID} | Update the rent update with the given ID
 *DefaultAPI* | [**UpdateReportDefinition**](docs/DefaultAPI.md#updatereportdefinition) | **Put** /report/{definitionID} | 
+*DefaultAPI* | [**UpdateReportEntrypoint**](docs/DefaultAPI.md#updatereportentrypoint) | **Put** /reports/entrypoint/{entrypointID} | Update report entry point
 *DefaultAPI* | [**UpdateServiceProvider**](docs/DefaultAPI.md#updateserviceprovider) | **Put** /service-provider/{serviceProviderID} | Update the attributes of the service provider
 *DefaultAPI* | [**UpdateTenancy**](docs/DefaultAPI.md#updatetenancy) | **Put** /tenancy/{tenancyID} | Update the tenancy with the given ID
 *DefaultAPI* | [**UpdateTenant**](docs/DefaultAPI.md#updatetenant) | **Put** /tenant/{tenantID} | Update tenant information
@@ -476,6 +485,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UploadAttachment**](docs/DefaultAPI.md#uploadattachment) | **Post** /attachment | Upload new file attachment
 *DefaultAPI* | [**UploadInvoiceAnalysisAttachment**](docs/DefaultAPI.md#uploadinvoiceanalysisattachment) | **Post** /invoice-analysis/attachment | Upload new file invoice attachment
 *DefaultAPI* | [**UploadInvoiceAnalysisAttachmentVision**](docs/DefaultAPI.md#uploadinvoiceanalysisattachmentvision) | **Post** /invoice-analysis/attachment-vision | Upload new file invoice attachment
+*DefaultAPI* | [**ValidateBankAccountIban**](docs/DefaultAPI.md#validatebankaccountiban) | **Post** /bank-account-iban/validate | Validate a bank account IBAN
 *DefaultAPI* | [**ValidateCustomForm**](docs/DefaultAPI.md#validatecustomform) | **Post** /custom-form/{formID}/validate | Validate a custom form
 *DefaultAPI* | [**ValidateUserEmail**](docs/DefaultAPI.md#validateuseremail) | **Post** /email/validation | Validate user&#39;s email and point out problems if there are any
 *DefaultAPI* | [**ValidateWorkflowEntrypoint**](docs/DefaultAPI.md#validateworkflowentrypoint) | **Post** /workflows/entrypoint/{entrypointID}/validate | Run the workflow entrypoint validations
@@ -516,6 +526,7 @@ Class | Method | HTTP request | Description
  - [Approver](docs/Approver.md)
  - [AssignCaseRequest](docs/AssignCaseRequest.md)
  - [Attachment](docs/Attachment.md)
+ - [Attachment1](docs/Attachment1.md)
  - [BalanceCadenceEnum](docs/BalanceCadenceEnum.md)
  - [Bank](docs/Bank.md)
  - [BankAccount](docs/BankAccount.md)
@@ -526,6 +537,7 @@ Class | Method | HTTP request | Description
  - [BankTransaction](docs/BankTransaction.md)
  - [BankTransactionAttributesPartial](docs/BankTransactionAttributesPartial.md)
  - [BatchInvoiceOperationResponse](docs/BatchInvoiceOperationResponse.md)
+ - [BookingInitialisationStatusEnum](docs/BookingInitialisationStatusEnum.md)
  - [BookingPreview](docs/BookingPreview.md)
  - [BookingPreviewPartial](docs/BookingPreviewPartial.md)
  - [BookingPreviewSourceTypeEnum](docs/BookingPreviewSourceTypeEnum.md)
@@ -625,6 +637,7 @@ Class | Method | HTTP request | Description
  - [CreateOrUpdatePropertyRequest](docs/CreateOrUpdatePropertyRequest.md)
  - [CreateOrUpdateRentUpdateRequest](docs/CreateOrUpdateRentUpdateRequest.md)
  - [CreateOrUpdateReportDefinitionRequest](docs/CreateOrUpdateReportDefinitionRequest.md)
+ - [CreateOrUpdateReportEntrypointRequest](docs/CreateOrUpdateReportEntrypointRequest.md)
  - [CreateOrUpdateServiceProvider](docs/CreateOrUpdateServiceProvider.md)
  - [CreateOrUpdateTenantRequest](docs/CreateOrUpdateTenantRequest.md)
  - [CreateOrUpdateVersionMigratorRequest](docs/CreateOrUpdateVersionMigratorRequest.md)
@@ -730,6 +743,8 @@ Class | Method | HTTP request | Description
  - [ImportBankConnectionTransactionResponse](docs/ImportBankConnectionTransactionResponse.md)
  - [ImportDataRequest](docs/ImportDataRequest.md)
  - [ImportDataTypeEnum](docs/ImportDataTypeEnum.md)
+ - [InitBookingTemplateRequest](docs/InitBookingTemplateRequest.md)
+ - [InitBookingTemplateResponse](docs/InitBookingTemplateResponse.md)
  - [InputItem](docs/InputItem.md)
  - [InviteToAppointmentRequest](docs/InviteToAppointmentRequest.md)
  - [Invoice](docs/Invoice.md)
@@ -855,6 +870,8 @@ Class | Method | HTTP request | Description
  - [QueryWorkflowExecutionsResponse](docs/QueryWorkflowExecutionsResponse.md)
  - [ReattachActionEnum](docs/ReattachActionEnum.md)
  - [ReattachInvoiceAnalysisRequest](docs/ReattachInvoiceAnalysisRequest.md)
+ - [ReceiveEmailInvoiceRequest](docs/ReceiveEmailInvoiceRequest.md)
+ - [ReceiveEmailInvoiceResponse](docs/ReceiveEmailInvoiceResponse.md)
  - [RejectApprovalRequest](docs/RejectApprovalRequest.md)
  - [RentData](docs/RentData.md)
  - [RentDetails](docs/RentDetails.md)
@@ -864,6 +881,9 @@ Class | Method | HTTP request | Description
  - [RentUpdateMask](docs/RentUpdateMask.md)
  - [ReportDefinition](docs/ReportDefinition.md)
  - [ReportDefinitionAttributesPartial](docs/ReportDefinitionAttributesPartial.md)
+ - [ReportEntrypoint](docs/ReportEntrypoint.md)
+ - [ReportEntrypointAttributesPartial](docs/ReportEntrypointAttributesPartial.md)
+ - [ReportEntrypointLocation](docs/ReportEntrypointLocation.md)
  - [ReportExecution](docs/ReportExecution.md)
  - [ReportExecutionStatusEnum](docs/ReportExecutionStatusEnum.md)
  - [ReportResultSchema](docs/ReportResultSchema.md)
@@ -896,6 +916,7 @@ Class | Method | HTTP request | Description
  - [TimeSlotAttributesPartial](docs/TimeSlotAttributesPartial.md)
  - [TipTapDocument](docs/TipTapDocument.md)
  - [UnssignCaseRequest](docs/UnssignCaseRequest.md)
+ - [UpdateBookingPreviewRequest](docs/UpdateBookingPreviewRequest.md)
  - [UpdateCaseRequest](docs/UpdateCaseRequest.md)
  - [UpdateCaseStatusRequest](docs/UpdateCaseStatusRequest.md)
  - [UpdateCompanyProfileRequest](docs/UpdateCompanyProfileRequest.md)
@@ -912,6 +933,8 @@ Class | Method | HTTP request | Description
  - [UserPreferencesAttributesPartial](docs/UserPreferencesAttributesPartial.md)
  - [UserReference](docs/UserReference.md)
  - [UserTypeEnum](docs/UserTypeEnum.md)
+ - [ValidateBankAccountIbanRequest](docs/ValidateBankAccountIbanRequest.md)
+ - [ValidateBankAccountIbanResponse](docs/ValidateBankAccountIbanResponse.md)
  - [VersionMigrator](docs/VersionMigrator.md)
  - [VersionMigratorAttributesPartial](docs/VersionMigratorAttributesPartial.md)
  - [WorkflowDefinition](docs/WorkflowDefinition.md)
