@@ -22,12 +22,14 @@ type ServiceCategoryEnum string
 const (
 	SERVICECATEGORYENUM_OTHERS                           ServiceCategoryEnum = "OTHERS"
 	SERVICECATEGORYENUM_ARCHITECT                        ServiceCategoryEnum = "ARCHITECT"
+	SERVICECATEGORYENUM_ATTORNEY                         ServiceCategoryEnum = "ATTORNEY"
 	SERVICECATEGORYENUM_CARPENTER                        ServiceCategoryEnum = "CARPENTER"
 	SERVICECATEGORYENUM_CHIMNEY_SWEEP                    ServiceCategoryEnum = "CHIMNEY_SWEEP"
 	SERVICECATEGORYENUM_CLEANING_AND_WASTE_DISPOSAL      ServiceCategoryEnum = "CLEANING_AND_WASTE_DISPOSAL"
 	SERVICECATEGORYENUM_DOORS_AND_WINDOWS                ServiceCategoryEnum = "DOORS_AND_WINDOWS"
 	SERVICECATEGORYENUM_ELECTRICIAN                      ServiceCategoryEnum = "ELECTRICIAN"
 	SERVICECATEGORYENUM_ELEVATOR_AND_LIFT                ServiceCategoryEnum = "ELEVATOR_AND_LIFT"
+	SERVICECATEGORYENUM_ENERGY_SUPPLIER                  ServiceCategoryEnum = "ENERGY_SUPPLIER"
 	SERVICECATEGORYENUM_FLOORING                         ServiceCategoryEnum = "FLOORING"
 	SERVICECATEGORYENUM_GARDENING                        ServiceCategoryEnum = "GARDENING"
 	SERVICECATEGORYENUM_HEATING                          ServiceCategoryEnum = "HEATING"
@@ -51,12 +53,14 @@ const (
 var AllowedServiceCategoryEnumEnumValues = []ServiceCategoryEnum{
 	"OTHERS",
 	"ARCHITECT",
+	"ATTORNEY",
 	"CARPENTER",
 	"CHIMNEY_SWEEP",
 	"CLEANING_AND_WASTE_DISPOSAL",
 	"DOORS_AND_WINDOWS",
 	"ELECTRICIAN",
 	"ELEVATOR_AND_LIFT",
+	"ENERGY_SUPPLIER",
 	"FLOORING",
 	"GARDENING",
 	"HEATING",

@@ -41,8 +41,9 @@ type CreateOrUpdateServiceProvider struct {
 	Categories []ServiceCategoryEnum `json:"categories,omitempty"`
 	Address    *Address              `json:"address,omitempty"`
 	// optional VAT ID of the company
-	VatId       *string      `json:"vat_id,omitempty"`
-	BankDetails *BankDetails `json:"bank_details,omitempty"`
+	VatId *string `json:"vat_id,omitempty"`
+	// optional list of bank accounts of the company
+	BankDetails []BankDetails `json:"bank_details,omitempty"`
 	// Extensions data for this service provider, keyed by extension key
 	Extensions *map[string]map[string]interface{} `json:"extensions,omitempty"`
 }
@@ -412,17 +413,17 @@ func (o *CreateOrUpdateServiceProvider) SetVatId(v string) {
 }
 
 // GetBankDetails returns the BankDetails field value if set, zero value otherwise.
-func (o *CreateOrUpdateServiceProvider) GetBankDetails() BankDetails {
+func (o *CreateOrUpdateServiceProvider) GetBankDetails() []BankDetails {
 	if o == nil || IsNil(o.BankDetails) {
-		var ret BankDetails
+		var ret []BankDetails
 		return ret
 	}
-	return *o.BankDetails
+	return o.BankDetails
 }
 
 // GetBankDetailsOk returns a tuple with the BankDetails field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CreateOrUpdateServiceProvider) GetBankDetailsOk() (*BankDetails, bool) {
+func (o *CreateOrUpdateServiceProvider) GetBankDetailsOk() ([]BankDetails, bool) {
 	if o == nil || IsNil(o.BankDetails) {
 		return nil, false
 	}
@@ -438,9 +439,9 @@ func (o *CreateOrUpdateServiceProvider) HasBankDetails() bool {
 	return false
 }
 
-// SetBankDetails gets a reference to the given BankDetails and assigns it to the BankDetails field.
-func (o *CreateOrUpdateServiceProvider) SetBankDetails(v BankDetails) {
-	o.BankDetails = &v
+// SetBankDetails gets a reference to the given []BankDetails and assigns it to the BankDetails field.
+func (o *CreateOrUpdateServiceProvider) SetBankDetails(v []BankDetails) {
+	o.BankDetails = v
 }
 
 // GetExtensions returns the Extensions field value if set, zero value otherwise.
