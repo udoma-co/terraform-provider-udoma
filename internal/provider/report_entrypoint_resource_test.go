@@ -28,9 +28,9 @@ func TestAccReportEntrypointResource(t *testing.T) {
 
 			// ImportState testing
 			{
-				ResourceName:         "udoma_report_entrypoint.test",
-				ImportState:          true,
-				ImportStateVerify:    true,
+				ResourceName:            "udoma_report_entrypoint.test",
+				ImportState:             true,
+				ImportStateVerify:       true,
 				ImportStateVerifyIgnore: []string{"last_updated"},
 			},
 

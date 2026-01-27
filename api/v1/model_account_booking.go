@@ -36,13 +36,14 @@ type AccountBooking struct {
 	// Information on how the total amount of the booking is allocated to different accounts for the credit
 	Credit []AccountBookingAllocation `json:"credit"`
 	// Information on how the total amount of the booking is allocated to different accounts for the debit
-	Debit []AccountBookingAllocation `json:"debit"`
+	Debit   []AccountBookingAllocation `json:"debit"`
+	RefType *BookingSourceEnum         `json:"ref_type,omitempty"`
+	// Optional ID of the source based on which the preview was created.
+	RefId *string `json:"ref_id,omitempty"`
 	// Optional reference to a booking that is reverted by this booking
 	RevertRef *string `json:"revert_ref,omitempty"`
 	// Optional reference to a booking that has reverted this booking
 	RevertedByRef *string `json:"reverted_by_ref,omitempty"`
-	// Optional reference to the source transaction, if the booking was made based on a transaction
-	TransactionRef *string `json:"transaction_ref,omitempty"`
 }
 
 type _AccountBooking AccountBooking
@@ -264,6 +265,70 @@ func (o *AccountBooking) SetDebit(v []AccountBookingAllocation) {
 	o.Debit = v
 }
 
+// GetRefType returns the RefType field value if set, zero value otherwise.
+func (o *AccountBooking) GetRefType() BookingSourceEnum {
+	if o == nil || IsNil(o.RefType) {
+		var ret BookingSourceEnum
+		return ret
+	}
+	return *o.RefType
+}
+
+// GetRefTypeOk returns a tuple with the RefType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AccountBooking) GetRefTypeOk() (*BookingSourceEnum, bool) {
+	if o == nil || IsNil(o.RefType) {
+		return nil, false
+	}
+	return o.RefType, true
+}
+
+// HasRefType returns a boolean if a field has been set.
+func (o *AccountBooking) HasRefType() bool {
+	if o != nil && !IsNil(o.RefType) {
+		return true
+	}
+
+	return false
+}
+
+// SetRefType gets a reference to the given BookingSourceEnum and assigns it to the RefType field.
+func (o *AccountBooking) SetRefType(v BookingSourceEnum) {
+	o.RefType = &v
+}
+
+// GetRefId returns the RefId field value if set, zero value otherwise.
+func (o *AccountBooking) GetRefId() string {
+	if o == nil || IsNil(o.RefId) {
+		var ret string
+		return ret
+	}
+	return *o.RefId
+}
+
+// GetRefIdOk returns a tuple with the RefId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AccountBooking) GetRefIdOk() (*string, bool) {
+	if o == nil || IsNil(o.RefId) {
+		return nil, false
+	}
+	return o.RefId, true
+}
+
+// HasRefId returns a boolean if a field has been set.
+func (o *AccountBooking) HasRefId() bool {
+	if o != nil && !IsNil(o.RefId) {
+		return true
+	}
+
+	return false
+}
+
+// SetRefId gets a reference to the given string and assigns it to the RefId field.
+func (o *AccountBooking) SetRefId(v string) {
+	o.RefId = &v
+}
+
 // GetRevertRef returns the RevertRef field value if set, zero value otherwise.
 func (o *AccountBooking) GetRevertRef() string {
 	if o == nil || IsNil(o.RevertRef) {
@@ -328,38 +393,6 @@ func (o *AccountBooking) SetRevertedByRef(v string) {
 	o.RevertedByRef = &v
 }
 
-// GetTransactionRef returns the TransactionRef field value if set, zero value otherwise.
-func (o *AccountBooking) GetTransactionRef() string {
-	if o == nil || IsNil(o.TransactionRef) {
-		var ret string
-		return ret
-	}
-	return *o.TransactionRef
-}
-
-// GetTransactionRefOk returns a tuple with the TransactionRef field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *AccountBooking) GetTransactionRefOk() (*string, bool) {
-	if o == nil || IsNil(o.TransactionRef) {
-		return nil, false
-	}
-	return o.TransactionRef, true
-}
-
-// HasTransactionRef returns a boolean if a field has been set.
-func (o *AccountBooking) HasTransactionRef() bool {
-	if o != nil && !IsNil(o.TransactionRef) {
-		return true
-	}
-
-	return false
-}
-
-// SetTransactionRef gets a reference to the given string and assigns it to the TransactionRef field.
-func (o *AccountBooking) SetTransactionRef(v string) {
-	o.TransactionRef = &v
-}
-
 func (o AccountBooking) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -378,14 +411,17 @@ func (o AccountBooking) ToMap() (map[string]interface{}, error) {
 	toSerialize["description"] = o.Description
 	toSerialize["credit"] = o.Credit
 	toSerialize["debit"] = o.Debit
+	if !IsNil(o.RefType) {
+		toSerialize["ref_type"] = o.RefType
+	}
+	if !IsNil(o.RefId) {
+		toSerialize["ref_id"] = o.RefId
+	}
 	if !IsNil(o.RevertRef) {
 		toSerialize["revert_ref"] = o.RevertRef
 	}
 	if !IsNil(o.RevertedByRef) {
 		toSerialize["reverted_by_ref"] = o.RevertedByRef
-	}
-	if !IsNil(o.TransactionRef) {
-		toSerialize["transaction_ref"] = o.TransactionRef
 	}
 	return toSerialize, nil
 }

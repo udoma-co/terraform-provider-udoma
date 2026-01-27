@@ -16,39 +16,39 @@ import (
 	"fmt"
 )
 
-// checks if the Attachment1 type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &Attachment1{}
+// checks if the EmailInvoiceAttachment type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &EmailInvoiceAttachment{}
 
-// Attachment1 struct for Attachment1
-type Attachment1 struct {
+// EmailInvoiceAttachment struct for EmailInvoiceAttachment
+type EmailInvoiceAttachment struct {
 	Filename string `json:"filename"`
-	// Base64-encoded file content
-	Content string `json:"content"`
+	// S3 URL where the attachment content is stored
+	Url string `json:"url"`
 }
 
-type _Attachment1 Attachment1
+type _EmailInvoiceAttachment EmailInvoiceAttachment
 
-// NewAttachment1 instantiates a new Attachment1 object
+// NewEmailInvoiceAttachment instantiates a new EmailInvoiceAttachment object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAttachment1(filename string, content string) *Attachment1 {
-	this := Attachment1{}
+func NewEmailInvoiceAttachment(filename string, url string) *EmailInvoiceAttachment {
+	this := EmailInvoiceAttachment{}
 	this.Filename = filename
-	this.Content = content
+	this.Url = url
 	return &this
 }
 
-// NewAttachment1WithDefaults instantiates a new Attachment1 object
+// NewEmailInvoiceAttachmentWithDefaults instantiates a new EmailInvoiceAttachment object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewAttachment1WithDefaults() *Attachment1 {
-	this := Attachment1{}
+func NewEmailInvoiceAttachmentWithDefaults() *EmailInvoiceAttachment {
+	this := EmailInvoiceAttachment{}
 	return &this
 }
 
 // GetFilename returns the Filename field value
-func (o *Attachment1) GetFilename() string {
+func (o *EmailInvoiceAttachment) GetFilename() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -59,7 +59,7 @@ func (o *Attachment1) GetFilename() string {
 
 // GetFilenameOk returns a tuple with the Filename field value
 // and a boolean to check if the value has been set.
-func (o *Attachment1) GetFilenameOk() (*string, bool) {
+func (o *EmailInvoiceAttachment) GetFilenameOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -67,35 +67,35 @@ func (o *Attachment1) GetFilenameOk() (*string, bool) {
 }
 
 // SetFilename sets field value
-func (o *Attachment1) SetFilename(v string) {
+func (o *EmailInvoiceAttachment) SetFilename(v string) {
 	o.Filename = v
 }
 
-// GetContent returns the Content field value
-func (o *Attachment1) GetContent() string {
+// GetUrl returns the Url field value
+func (o *EmailInvoiceAttachment) GetUrl() string {
 	if o == nil {
 		var ret string
 		return ret
 	}
 
-	return o.Content
+	return o.Url
 }
 
-// GetContentOk returns a tuple with the Content field value
+// GetUrlOk returns a tuple with the Url field value
 // and a boolean to check if the value has been set.
-func (o *Attachment1) GetContentOk() (*string, bool) {
+func (o *EmailInvoiceAttachment) GetUrlOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Content, true
+	return &o.Url, true
 }
 
-// SetContent sets field value
-func (o *Attachment1) SetContent(v string) {
-	o.Content = v
+// SetUrl sets field value
+func (o *EmailInvoiceAttachment) SetUrl(v string) {
+	o.Url = v
 }
 
-func (o Attachment1) MarshalJSON() ([]byte, error) {
+func (o EmailInvoiceAttachment) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -103,20 +103,20 @@ func (o Attachment1) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o Attachment1) ToMap() (map[string]interface{}, error) {
+func (o EmailInvoiceAttachment) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["filename"] = o.Filename
-	toSerialize["content"] = o.Content
+	toSerialize["url"] = o.Url
 	return toSerialize, nil
 }
 
-func (o *Attachment1) UnmarshalJSON(data []byte) (err error) {
+func (o *EmailInvoiceAttachment) UnmarshalJSON(data []byte) (err error) {
 	// This validates that all required properties are included in the JSON object
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"filename",
-		"content",
+		"url",
 	}
 
 	allProperties := make(map[string]interface{})
@@ -133,53 +133,53 @@ func (o *Attachment1) UnmarshalJSON(data []byte) (err error) {
 		}
 	}
 
-	varAttachment1 := _Attachment1{}
+	varEmailInvoiceAttachment := _EmailInvoiceAttachment{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varAttachment1)
+	err = decoder.Decode(&varEmailInvoiceAttachment)
 
 	if err != nil {
 		return err
 	}
 
-	*o = Attachment1(varAttachment1)
+	*o = EmailInvoiceAttachment(varEmailInvoiceAttachment)
 
 	return err
 }
 
-type NullableAttachment1 struct {
-	value *Attachment1
+type NullableEmailInvoiceAttachment struct {
+	value *EmailInvoiceAttachment
 	isSet bool
 }
 
-func (v NullableAttachment1) Get() *Attachment1 {
+func (v NullableEmailInvoiceAttachment) Get() *EmailInvoiceAttachment {
 	return v.value
 }
 
-func (v *NullableAttachment1) Set(val *Attachment1) {
+func (v *NullableEmailInvoiceAttachment) Set(val *EmailInvoiceAttachment) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableAttachment1) IsSet() bool {
+func (v NullableEmailInvoiceAttachment) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableAttachment1) Unset() {
+func (v *NullableEmailInvoiceAttachment) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableAttachment1(val *Attachment1) *NullableAttachment1 {
-	return &NullableAttachment1{value: val, isSet: true}
+func NewNullableEmailInvoiceAttachment(val *EmailInvoiceAttachment) *NullableEmailInvoiceAttachment {
+	return &NullableEmailInvoiceAttachment{value: val, isSet: true}
 }
 
-func (v NullableAttachment1) MarshalJSON() ([]byte, error) {
+func (v NullableEmailInvoiceAttachment) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableAttachment1) UnmarshalJSON(src []byte) error {
+func (v *NullableEmailInvoiceAttachment) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

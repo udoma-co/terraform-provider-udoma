@@ -23,12 +23,14 @@ var _ MappedNullable = &CreateOrUpdateBookingTemplateRequest{}
 type CreateOrUpdateBookingTemplateRequest struct {
 	// The name of the template
 	Name string `json:"name"`
+	// An optional expression that can be used to dynamically generate the name of the booking preview based on the input data
+	NameExpression *string `json:"name_expression,omitempty"`
 	// A short description of the template
 	Description *string `json:"description,omitempty"`
 	// An optional icon that can be used to visually identify the template
-	Icon          *string                           `json:"icon,omitempty"`
-	TriggerSource *BookingTemplateTriggerSourceEnum `json:"trigger_source,omitempty"`
-	Inputs        NullableCustomForm                `json:"inputs"`
+	Icon          *string            `json:"icon,omitempty"`
+	TriggerSource *BookingSourceEnum `json:"trigger_source,omitempty"`
+	Inputs        NullableCustomForm `json:"inputs"`
 	// An optional script that can be used to prepare data and populate the custom form when the template is triggered.
 	InitScript *string `json:"init_script,omitempty"`
 	// A script that can be used to generate the booking based on the provided input
@@ -81,6 +83,38 @@ func (o *CreateOrUpdateBookingTemplateRequest) GetNameOk() (*string, bool) {
 // SetName sets field value
 func (o *CreateOrUpdateBookingTemplateRequest) SetName(v string) {
 	o.Name = v
+}
+
+// GetNameExpression returns the NameExpression field value if set, zero value otherwise.
+func (o *CreateOrUpdateBookingTemplateRequest) GetNameExpression() string {
+	if o == nil || IsNil(o.NameExpression) {
+		var ret string
+		return ret
+	}
+	return *o.NameExpression
+}
+
+// GetNameExpressionOk returns a tuple with the NameExpression field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateBookingTemplateRequest) GetNameExpressionOk() (*string, bool) {
+	if o == nil || IsNil(o.NameExpression) {
+		return nil, false
+	}
+	return o.NameExpression, true
+}
+
+// HasNameExpression returns a boolean if a field has been set.
+func (o *CreateOrUpdateBookingTemplateRequest) HasNameExpression() bool {
+	if o != nil && !IsNil(o.NameExpression) {
+		return true
+	}
+
+	return false
+}
+
+// SetNameExpression gets a reference to the given string and assigns it to the NameExpression field.
+func (o *CreateOrUpdateBookingTemplateRequest) SetNameExpression(v string) {
+	o.NameExpression = &v
 }
 
 // GetDescription returns the Description field value if set, zero value otherwise.
@@ -148,9 +182,9 @@ func (o *CreateOrUpdateBookingTemplateRequest) SetIcon(v string) {
 }
 
 // GetTriggerSource returns the TriggerSource field value if set, zero value otherwise.
-func (o *CreateOrUpdateBookingTemplateRequest) GetTriggerSource() BookingTemplateTriggerSourceEnum {
+func (o *CreateOrUpdateBookingTemplateRequest) GetTriggerSource() BookingSourceEnum {
 	if o == nil || IsNil(o.TriggerSource) {
-		var ret BookingTemplateTriggerSourceEnum
+		var ret BookingSourceEnum
 		return ret
 	}
 	return *o.TriggerSource
@@ -158,7 +192,7 @@ func (o *CreateOrUpdateBookingTemplateRequest) GetTriggerSource() BookingTemplat
 
 // GetTriggerSourceOk returns a tuple with the TriggerSource field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CreateOrUpdateBookingTemplateRequest) GetTriggerSourceOk() (*BookingTemplateTriggerSourceEnum, bool) {
+func (o *CreateOrUpdateBookingTemplateRequest) GetTriggerSourceOk() (*BookingSourceEnum, bool) {
 	if o == nil || IsNil(o.TriggerSource) {
 		return nil, false
 	}
@@ -174,8 +208,8 @@ func (o *CreateOrUpdateBookingTemplateRequest) HasTriggerSource() bool {
 	return false
 }
 
-// SetTriggerSource gets a reference to the given BookingTemplateTriggerSourceEnum and assigns it to the TriggerSource field.
-func (o *CreateOrUpdateBookingTemplateRequest) SetTriggerSource(v BookingTemplateTriggerSourceEnum) {
+// SetTriggerSource gets a reference to the given BookingSourceEnum and assigns it to the TriggerSource field.
+func (o *CreateOrUpdateBookingTemplateRequest) SetTriggerSource(v BookingSourceEnum) {
 	o.TriggerSource = &v
 }
 
@@ -304,6 +338,9 @@ func (o CreateOrUpdateBookingTemplateRequest) MarshalJSON() ([]byte, error) {
 func (o CreateOrUpdateBookingTemplateRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["name"] = o.Name
+	if !IsNil(o.NameExpression) {
+		toSerialize["name_expression"] = o.NameExpression
+	}
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
 	}

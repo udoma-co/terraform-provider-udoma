@@ -21,9 +21,9 @@ var _ MappedNullable = &ReceiveEmailInvoiceRequest{}
 
 // ReceiveEmailInvoiceRequest struct for ReceiveEmailInvoiceRequest
 type ReceiveEmailInvoiceRequest struct {
-	From        string        `json:"from"`
-	To          []string      `json:"to"`
-	Attachments []Attachment1 `json:"attachments"`
+	From        string                   `json:"from"`
+	To          string                   `json:"to"`
+	Attachments []EmailInvoiceAttachment `json:"attachments"`
 }
 
 type _ReceiveEmailInvoiceRequest ReceiveEmailInvoiceRequest
@@ -32,7 +32,7 @@ type _ReceiveEmailInvoiceRequest ReceiveEmailInvoiceRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewReceiveEmailInvoiceRequest(from string, to []string, attachments []Attachment1) *ReceiveEmailInvoiceRequest {
+func NewReceiveEmailInvoiceRequest(from string, to string, attachments []EmailInvoiceAttachment) *ReceiveEmailInvoiceRequest {
 	this := ReceiveEmailInvoiceRequest{}
 	this.From = from
 	this.To = to
@@ -73,9 +73,9 @@ func (o *ReceiveEmailInvoiceRequest) SetFrom(v string) {
 }
 
 // GetTo returns the To field value
-func (o *ReceiveEmailInvoiceRequest) GetTo() []string {
+func (o *ReceiveEmailInvoiceRequest) GetTo() string {
 	if o == nil {
-		var ret []string
+		var ret string
 		return ret
 	}
 
@@ -84,22 +84,22 @@ func (o *ReceiveEmailInvoiceRequest) GetTo() []string {
 
 // GetToOk returns a tuple with the To field value
 // and a boolean to check if the value has been set.
-func (o *ReceiveEmailInvoiceRequest) GetToOk() ([]string, bool) {
+func (o *ReceiveEmailInvoiceRequest) GetToOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.To, true
+	return &o.To, true
 }
 
 // SetTo sets field value
-func (o *ReceiveEmailInvoiceRequest) SetTo(v []string) {
+func (o *ReceiveEmailInvoiceRequest) SetTo(v string) {
 	o.To = v
 }
 
 // GetAttachments returns the Attachments field value
-func (o *ReceiveEmailInvoiceRequest) GetAttachments() []Attachment1 {
+func (o *ReceiveEmailInvoiceRequest) GetAttachments() []EmailInvoiceAttachment {
 	if o == nil {
-		var ret []Attachment1
+		var ret []EmailInvoiceAttachment
 		return ret
 	}
 
@@ -108,7 +108,7 @@ func (o *ReceiveEmailInvoiceRequest) GetAttachments() []Attachment1 {
 
 // GetAttachmentsOk returns a tuple with the Attachments field value
 // and a boolean to check if the value has been set.
-func (o *ReceiveEmailInvoiceRequest) GetAttachmentsOk() ([]Attachment1, bool) {
+func (o *ReceiveEmailInvoiceRequest) GetAttachmentsOk() ([]EmailInvoiceAttachment, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -116,7 +116,7 @@ func (o *ReceiveEmailInvoiceRequest) GetAttachmentsOk() ([]Attachment1, bool) {
 }
 
 // SetAttachments sets field value
-func (o *ReceiveEmailInvoiceRequest) SetAttachments(v []Attachment1) {
+func (o *ReceiveEmailInvoiceRequest) SetAttachments(v []EmailInvoiceAttachment) {
 	o.Attachments = v
 }
 

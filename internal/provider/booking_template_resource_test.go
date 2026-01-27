@@ -16,6 +16,7 @@ func TestAccBookingTemplateResource(t *testing.T) {
 				Check: resource.ComposeAggregateTestCheckFunc(
 
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "name", "test_template"),
+					resource.TestCheckResourceAttr("udoma_booking_template.test", "name_expression", "test_expression"),
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "description", "test_description"),
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "icon", "fa-solid fa-plus"),
 
@@ -47,6 +48,7 @@ func TestAccBookingTemplateResource(t *testing.T) {
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify attributes were updated
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "name", "updated_name"),
+					resource.TestCheckResourceAttr("udoma_booking_template.test", "name_expression", "updated_expression"),
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "description", "updated_description"),
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "icon", "fa-solid fa-plus"),
 
@@ -76,6 +78,7 @@ func resourceDefinitionBookingTemplate(name, description string) string {
 	return `
 	resource udoma_booking_template "test" {
 		name        = "` + name + `"
+		name_expression = "test_expression"
 		description = "` + description + `"
 		icon		= "fa-solid fa-plus"
 		trigger_source = "invoice"

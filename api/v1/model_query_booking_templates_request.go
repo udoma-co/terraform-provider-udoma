@@ -22,8 +22,8 @@ type QueryBookingTemplatesRequest struct {
 	// The maximum number of entities to return from the query
 	Limit *int32 `json:"limit,omitempty"`
 	// The number of entities to skip before returning the result
-	Offset        *int32                            `json:"offset,omitempty"`
-	TriggerSource *BookingTemplateTriggerSourceEnum `json:"trigger_source,omitempty"`
+	Offset        *int32             `json:"offset,omitempty"`
+	TriggerSource *BookingSourceEnum `json:"trigger_source,omitempty"`
 }
 
 // NewQueryBookingTemplatesRequest instantiates a new QueryBookingTemplatesRequest object
@@ -108,9 +108,9 @@ func (o *QueryBookingTemplatesRequest) SetOffset(v int32) {
 }
 
 // GetTriggerSource returns the TriggerSource field value if set, zero value otherwise.
-func (o *QueryBookingTemplatesRequest) GetTriggerSource() BookingTemplateTriggerSourceEnum {
+func (o *QueryBookingTemplatesRequest) GetTriggerSource() BookingSourceEnum {
 	if o == nil || IsNil(o.TriggerSource) {
-		var ret BookingTemplateTriggerSourceEnum
+		var ret BookingSourceEnum
 		return ret
 	}
 	return *o.TriggerSource
@@ -118,7 +118,7 @@ func (o *QueryBookingTemplatesRequest) GetTriggerSource() BookingTemplateTrigger
 
 // GetTriggerSourceOk returns a tuple with the TriggerSource field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *QueryBookingTemplatesRequest) GetTriggerSourceOk() (*BookingTemplateTriggerSourceEnum, bool) {
+func (o *QueryBookingTemplatesRequest) GetTriggerSourceOk() (*BookingSourceEnum, bool) {
 	if o == nil || IsNil(o.TriggerSource) {
 		return nil, false
 	}
@@ -134,8 +134,8 @@ func (o *QueryBookingTemplatesRequest) HasTriggerSource() bool {
 	return false
 }
 
-// SetTriggerSource gets a reference to the given BookingTemplateTriggerSourceEnum and assigns it to the TriggerSource field.
-func (o *QueryBookingTemplatesRequest) SetTriggerSource(v BookingTemplateTriggerSourceEnum) {
+// SetTriggerSource gets a reference to the given BookingSourceEnum and assigns it to the TriggerSource field.
+func (o *QueryBookingTemplatesRequest) SetTriggerSource(v BookingSourceEnum) {
 	o.TriggerSource = &v
 }
 

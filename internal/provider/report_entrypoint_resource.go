@@ -124,47 +124,46 @@ func (r *reportEntrypoint) Configure(ctx context.Context, req resource.Configure
 }
 
 func (r *reportEntrypoint) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-    var plan reportEntrypointModel
-    diags := req.Plan.Get(ctx, &plan)
-    resp.Diagnostics.Append(diags...)
-    if resp.Diagnostics.HasError() {
-        return
-    }
+	var plan reportEntrypointModel
+	diags := req.Plan.Get(ctx, &plan)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
-    createReq, err := plan.toAPIRequest()
-    if err != nil {
-        resp.Diagnostics.AddError(
-            "Error Creating Report Entrypoint",
-            "Could not create API request, unexpected error: "+err.Error(),
-        )
-        return
-    }
+	createReq, err := plan.toAPIRequest()
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"Error Creating Report Entrypoint",
+			"Could not create API request, unexpected error: "+err.Error(),
+		)
+		return
+	}
 
-    // Use the report_definition_ref to construct the correct API endpoint
-    definitionID := plan.ReportDefinitionRef.ValueString()
-    newEntrypoint, _, err := r.client.GetApi().CreateReportEntrypoint(ctx, definitionID).CreateOrUpdateReportEntrypointRequest(createReq).Execute()
-    if err != nil {
-        resp.Diagnostics.AddError(
-            "Error Creating Report Entrypoint",
-            "Could not create entity in Udoma, unexpected error: "+getApiErrorMessage(err),
-        )
-        return
-    }
+	// Use the report_definition_ref to construct the correct API endpoint
+	definitionID := plan.ReportDefinitionRef.ValueString()
+	newEntrypoint, _, err := r.client.GetApi().CreateReportEntrypoint(ctx, definitionID).CreateOrUpdateReportEntrypointRequest(createReq).Execute()
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"Error Creating Report Entrypoint",
+			"Could not create entity in Udoma, unexpected error: "+getApiErrorMessage(err),
+		)
+		return
+	}
 
-    // Update the Terraform state with the new values
-    diags = plan.fromAPI(newEntrypoint)
-    resp.Diagnostics.Append(diags...)
-    if resp.Diagnostics.HasError() {
-        return
-    }
+	// Update the Terraform state with the new values
+	diags = plan.fromAPI(newEntrypoint)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
-    plan.LastUpdated = types.StringValue(time.Now().Format(time.RFC850))
+	plan.LastUpdated = types.StringValue(time.Now().Format(time.RFC850))
 
-    // Set state to fully populated data
-    diags = resp.State.Set(ctx, plan)
-    resp.Diagnostics.Append(diags...)
+	// Set state to fully populated data
+	diags = resp.State.Set(ctx, plan)
+	resp.Diagnostics.Append(diags...)
 }
-
 
 func (r *reportEntrypoint) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
 	var state reportEntrypointModel

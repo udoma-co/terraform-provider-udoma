@@ -66,8 +66,6 @@ type Invoice struct {
 	// Optional reference to the booking that was created when the invoice was booked.
 	BookingRef    *string                  `json:"booking_ref,omitempty"`
 	PaymentStatus InvoicePaymentStatusEnum `json:"payment_status"`
-	// Optional reference to the payment booking that was created when the invoice was paid.
-	PaymentBookingRef *string `json:"payment_booking_ref,omitempty"`
 	// Whether the invoice has been archived. Archived invoices are typically hidden from default views.
 	Archived *bool `json:"archived,omitempty"`
 }
@@ -819,38 +817,6 @@ func (o *Invoice) SetPaymentStatus(v InvoicePaymentStatusEnum) {
 	o.PaymentStatus = v
 }
 
-// GetPaymentBookingRef returns the PaymentBookingRef field value if set, zero value otherwise.
-func (o *Invoice) GetPaymentBookingRef() string {
-	if o == nil || IsNil(o.PaymentBookingRef) {
-		var ret string
-		return ret
-	}
-	return *o.PaymentBookingRef
-}
-
-// GetPaymentBookingRefOk returns a tuple with the PaymentBookingRef field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Invoice) GetPaymentBookingRefOk() (*string, bool) {
-	if o == nil || IsNil(o.PaymentBookingRef) {
-		return nil, false
-	}
-	return o.PaymentBookingRef, true
-}
-
-// HasPaymentBookingRef returns a boolean if a field has been set.
-func (o *Invoice) HasPaymentBookingRef() bool {
-	if o != nil && !IsNil(o.PaymentBookingRef) {
-		return true
-	}
-
-	return false
-}
-
-// SetPaymentBookingRef gets a reference to the given string and assigns it to the PaymentBookingRef field.
-func (o *Invoice) SetPaymentBookingRef(v string) {
-	o.PaymentBookingRef = &v
-}
-
 // GetArchived returns the Archived field value if set, zero value otherwise.
 func (o *Invoice) GetArchived() bool {
 	if o == nil || IsNil(o.Archived) {
@@ -953,9 +919,6 @@ func (o Invoice) ToMap() (map[string]interface{}, error) {
 		toSerialize["booking_ref"] = o.BookingRef
 	}
 	toSerialize["payment_status"] = o.PaymentStatus
-	if !IsNil(o.PaymentBookingRef) {
-		toSerialize["payment_booking_ref"] = o.PaymentBookingRef
-	}
 	if !IsNil(o.Archived) {
 		toSerialize["archived"] = o.Archived
 	}

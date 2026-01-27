@@ -32,17 +32,18 @@ type BookingTemplate struct {
 }
 
 type BookingTemplateModel struct {
-	ID            types.String     `tfsdk:"id"`
-	CreatedAt     types.Int64      `tfsdk:"created_at"`
-	UpdatedAt     types.Int64      `tfsdk:"updated_at"`
-	Name          types.String     `tfsdk:"name"`
-	Description   types.String     `tfsdk:"description"`
-	Icon          types.String     `tfsdk:"icon"`
-	TriggerSource types.String     `tfsdk:"trigger_source"`
-	Inputs        *CustomFormModel `tfsdk:"inputs"`
-	InitScript    types.String     `tfsdk:"init_script"`
-	Script        types.String     `tfsdk:"script"`
-	EnvVars       types.Map        `tfsdk:"env_vars"`
+	ID             types.String     `tfsdk:"id"`
+	CreatedAt      types.Int64      `tfsdk:"created_at"`
+	UpdatedAt      types.Int64      `tfsdk:"updated_at"`
+	Name           types.String     `tfsdk:"name"`
+	NameExpression types.String     `tfsdk:"name_expression"`
+	Description    types.String     `tfsdk:"description"`
+	Icon           types.String     `tfsdk:"icon"`
+	TriggerSource  types.String     `tfsdk:"trigger_source"`
+	Inputs         *CustomFormModel `tfsdk:"inputs"`
+	InitScript     types.String     `tfsdk:"init_script"`
+	Script         types.String     `tfsdk:"script"`
+	EnvVars        types.Map        `tfsdk:"env_vars"`
 }
 
 func (faq *BookingTemplate) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -72,6 +73,13 @@ func (faq *BookingTemplate) Schema(ctx context.Context, req resource.SchemaReque
 			"name": schema.StringAttribute{
 				Required:    true,
 				Description: "The name of the booking template",
+				Validators: []validator.String{
+					stringvalidator.LengthAtMost(255),
+				},
+			},
+			"name_expression": schema.StringAttribute{
+				Optional:    true,
+				Description: "An optional expression that can be used to dynamically generate the name of the booking preview based on the input data",
 				Validators: []validator.String{
 					stringvalidator.LengthAtMost(255),
 				},
@@ -301,6 +309,7 @@ func (model *BookingTemplateModel) fromApiResponse(bookingTemplate *v1.BookingTe
 	model.UpdatedAt = types.Int64Value(bookingTemplate.UpdatedAt)
 	model.Name = types.StringValue(bookingTemplate.Name)
 	model.Description = omittableStringValue(bookingTemplate.Description, model.Description)
+	model.NameExpression = omittableStringValue(bookingTemplate.NameExpression, model.NameExpression)
 	model.Icon = omittableStringValue(bookingTemplate.Icon, model.Icon)
 	model.Script = types.StringValue(bookingTemplate.Script)
 	model.InitScript = omittableStringValue(bookingTemplate.InitScript, model.InitScript)
@@ -338,16 +347,17 @@ func (model *BookingTemplateModel) toApiRequest() (v1.CreateOrUpdateBookingTempl
 
 	bookingTemplate := v1.CreateOrUpdateBookingTemplateRequest{
 		Name:        model.Name.ValueString(),
+		NameExpression: model.NameExpression.ValueStringPointer(),
 		Description: model.Description.ValueStringPointer(),
 		Icon:        model.Icon.ValueStringPointer(),
 		Inputs:      *v1.NewNullableCustomForm(&form),
 		InitScript:  model.InitScript.ValueStringPointer(),
 		Script:      model.Script.ValueString(),
-		TriggerSource: func() *v1.BookingTemplateTriggerSourceEnum {
+		TriggerSource: func() *v1.BookingSourceEnum {
 			if model.TriggerSource.ValueString() == "" {
 				return nil
 			}
-			enumValue := v1.BookingTemplateTriggerSourceEnum(model.TriggerSource.ValueString())
+			enumValue := v1.BookingSourceEnum(model.TriggerSource.ValueString())
 			return &enumValue
 		}(),
 	}
