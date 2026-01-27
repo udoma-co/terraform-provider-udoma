@@ -20,14 +20,16 @@ type PropertyHandoverStatusEnum string
 
 // List of PropertyHandoverStatusEnum
 const (
-	PROPERTYHANDOVERSTATUSENUM_PENDING PropertyHandoverStatusEnum = "PENDING"
-	PROPERTYHANDOVERSTATUSENUM_DONE    PropertyHandoverStatusEnum = "DONE"
+	PROPERTYHANDOVERSTATUSENUM_PENDING   PropertyHandoverStatusEnum = "PENDING"
+	PROPERTYHANDOVERSTATUSENUM_DONE      PropertyHandoverStatusEnum = "DONE"
+	PROPERTYHANDOVERSTATUSENUM_FINALIZED PropertyHandoverStatusEnum = "FINALIZED"
 )
 
 // All allowed values of PropertyHandoverStatusEnum enum
 var AllowedPropertyHandoverStatusEnumEnumValues = []PropertyHandoverStatusEnum{
 	"PENDING",
 	"DONE",
+	"FINALIZED",
 }
 
 func (v *PropertyHandoverStatusEnum) UnmarshalJSON(src []byte) error {

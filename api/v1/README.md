@@ -212,6 +212,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**Feedback**](docs/DefaultAPI.md#feedback) | **Post** /feedback | User feedback about the product
 *DefaultAPI* | [**FinalizeInvoiceAnalysis**](docs/DefaultAPI.md#finalizeinvoiceanalysis) | **Post** /invoice-analysis/{invoiceAnalysisID}/finalize | Finalize invoice analysis and create invoices
 *DefaultAPI* | [**FinalizeInvoiceAnalysisERechnung**](docs/DefaultAPI.md#finalizeinvoiceanalysiserechnung) | **Post** /invoice-analysis-erechnung/{invoiceAnalysisERechnungID}/finalize | Finalize invoice erechnung analysis and create an invoice out of it
+*DefaultAPI* | [**FinalizePropertyHandover**](docs/DefaultAPI.md#finalizepropertyhandover) | **Put** /property-handovers/handovers/{handoverID}/finalize | Finalize a property handover
 *DefaultAPI* | [**GenerateAccountDimensionValues**](docs/DefaultAPI.md#generateaccountdimensionvalues) | **Post** /financial/account-dimension/{dimensionID}/values/generate | Generate the account dimension values for the given dimension
 *DefaultAPI* | [**GenerateCaseComment**](docs/DefaultAPI.md#generatecasecomment) | **Post** /case/{caseID}/comment/generate | Generate AI comment suggestions
 *DefaultAPI* | [**GenerateCaseReportingEndpointNotice**](docs/DefaultAPI.md#generatecasereportingendpointnotice) | **Post** /cases/endpoints/{endpointID}/notice | Generate a PDF for a notice of the case reporting endpoint
@@ -331,6 +332,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**ImportDataUsingTemplate**](docs/DefaultAPI.md#importdatausingtemplate) | **Post** /data-import/template/{templateID}/import | Import data using the template
 *DefaultAPI* | [**InitBookingTemplate**](docs/DefaultAPI.md#initbookingtemplate) | **Post** /financial/booking-template/{bookingTemplateID}/init | Execute a booking template and create a booking preview
 *DefaultAPI* | [**InternalAddPriceIndexPoint**](docs/DefaultAPI.md#internaladdpriceindexpoint) | **Put** /price-index | Push a new value for the inflation index
+*DefaultAPI* | [**InternalReceiveEmailInvoice**](docs/DefaultAPI.md#internalreceiveemailinvoice) | **Post** /email-invoices | Receive email invoices
 *DefaultAPI* | [**InviteToAppointment**](docs/DefaultAPI.md#invitetoappointment) | **Post** /calendar/appointments/entry/{entryID}/invite | Invite a users to an appointment
 *DefaultAPI* | [**LinkAppointmentProperty**](docs/DefaultAPI.md#linkappointmentproperty) | **Post** /calendar/appointments/entry/{entryID}/property/{propID}/link | Link a property to an appointment
 *DefaultAPI* | [**LinkCaseProperty**](docs/DefaultAPI.md#linkcaseproperty) | **Post** /case/{caseID}/property/{propID}/link | Link a property to a case
@@ -415,7 +417,6 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryWorkflowDefinitions**](docs/DefaultAPI.md#queryworkflowdefinitions) | **Post** /workflows/definitions | Query all workflow definitions
 *DefaultAPI* | [**QueryWorkflowExecutions**](docs/DefaultAPI.md#queryworkflowexecutions) | **Post** /workflows/executions | Get a list of all workflow executions, matching the criteria in the request 
 *DefaultAPI* | [**ReattachInvoiceAnalysisPages**](docs/DefaultAPI.md#reattachinvoiceanalysispages) | **Put** /invoice-analysis/{invoiceAnalysisID}/reattach/{invoiceID} | Reattach invoice analysis pages
-*DefaultAPI* | [**ReceiveEmailInvoice**](docs/DefaultAPI.md#receiveemailinvoice) | **Post** /tenant-correspondence/email-invoices | Receive email invoices
 *DefaultAPI* | [**RejectApproval**](docs/DefaultAPI.md#rejectapproval) | **Post** /approval/{approvalID}/reject | Reject the approval with the given ID
 *DefaultAPI* | [**RequestESignaturesForDocument**](docs/DefaultAPI.md#requestesignaturesfordocument) | **Post** /document-generation/documents/{docID}/esignature | Trigger a signing request for a document
 *DefaultAPI* | [**RerunReportExecution**](docs/DefaultAPI.md#rerunreportexecution) | **Post** /report/executions/{executionID}/rerun | Rerun the report execution with the same parameters
@@ -526,7 +527,6 @@ Class | Method | HTTP request | Description
  - [Approver](docs/Approver.md)
  - [AssignCaseRequest](docs/AssignCaseRequest.md)
  - [Attachment](docs/Attachment.md)
- - [Attachment1](docs/Attachment1.md)
  - [BalanceCadenceEnum](docs/BalanceCadenceEnum.md)
  - [Bank](docs/Bank.md)
  - [BankAccount](docs/BankAccount.md)
@@ -540,10 +540,9 @@ Class | Method | HTTP request | Description
  - [BookingInitialisationStatusEnum](docs/BookingInitialisationStatusEnum.md)
  - [BookingPreview](docs/BookingPreview.md)
  - [BookingPreviewPartial](docs/BookingPreviewPartial.md)
- - [BookingPreviewSourceTypeEnum](docs/BookingPreviewSourceTypeEnum.md)
+ - [BookingSourceEnum](docs/BookingSourceEnum.md)
  - [BookingTemplate](docs/BookingTemplate.md)
  - [BookingTemplatePartial](docs/BookingTemplatePartial.md)
- - [BookingTemplateTriggerSourceEnum](docs/BookingTemplateTriggerSourceEnum.md)
  - [BookingTypeEnum](docs/BookingTypeEnum.md)
  - [Case](docs/Case.md)
  - [CaseActionEnum](docs/CaseActionEnum.md)
@@ -670,6 +669,7 @@ Class | Method | HTTP request | Description
  - [DocumentTemplateSignatureConfiguration](docs/DocumentTemplateSignatureConfiguration.md)
  - [DocumentTemplateSignerDefinition](docs/DocumentTemplateSignerDefinition.md)
  - [DocumentUpdateAttributesPartial](docs/DocumentUpdateAttributesPartial.md)
+ - [EmailInvoiceAttachment](docs/EmailInvoiceAttachment.md)
  - [EmailStatusResponse](docs/EmailStatusResponse.md)
  - [EmailValidationRequest](docs/EmailValidationRequest.md)
  - [EmailValidationResponse](docs/EmailValidationResponse.md)
@@ -762,7 +762,6 @@ Class | Method | HTTP request | Description
  - [LogRequest](docs/LogRequest.md)
  - [MailStatusResponse](docs/MailStatusResponse.md)
  - [MandatoryMessage](docs/MandatoryMessage.md)
- - [MarkInvoiceAsPaidRequest](docs/MarkInvoiceAsPaidRequest.md)
  - [Meter](docs/Meter.md)
  - [MeterAttributesPartial](docs/MeterAttributesPartial.md)
  - [MeterReading](docs/MeterReading.md)

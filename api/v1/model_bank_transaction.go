@@ -40,6 +40,10 @@ type BankTransaction struct {
 	SourceTargetIban string `json:"source_target_iban"`
 	// An external identifier for the transaction, e.g. provided by the bank
 	ExternalId *string `json:"external_id,omitempty"`
+	// The ID of the bank account this transaction belongs to
+	BankAccountRef *string `json:"bank_account_ref,omitempty"`
+	// Optional reference to associated booking or booking preview
+	BookingRef *string `json:"booking_ref,omitempty"`
 }
 
 type _BankTransaction BankTransaction
@@ -318,6 +322,70 @@ func (o *BankTransaction) SetExternalId(v string) {
 	o.ExternalId = &v
 }
 
+// GetBankAccountRef returns the BankAccountRef field value if set, zero value otherwise.
+func (o *BankTransaction) GetBankAccountRef() string {
+	if o == nil || IsNil(o.BankAccountRef) {
+		var ret string
+		return ret
+	}
+	return *o.BankAccountRef
+}
+
+// GetBankAccountRefOk returns a tuple with the BankAccountRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BankTransaction) GetBankAccountRefOk() (*string, bool) {
+	if o == nil || IsNil(o.BankAccountRef) {
+		return nil, false
+	}
+	return o.BankAccountRef, true
+}
+
+// HasBankAccountRef returns a boolean if a field has been set.
+func (o *BankTransaction) HasBankAccountRef() bool {
+	if o != nil && !IsNil(o.BankAccountRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetBankAccountRef gets a reference to the given string and assigns it to the BankAccountRef field.
+func (o *BankTransaction) SetBankAccountRef(v string) {
+	o.BankAccountRef = &v
+}
+
+// GetBookingRef returns the BookingRef field value if set, zero value otherwise.
+func (o *BankTransaction) GetBookingRef() string {
+	if o == nil || IsNil(o.BookingRef) {
+		var ret string
+		return ret
+	}
+	return *o.BookingRef
+}
+
+// GetBookingRefOk returns a tuple with the BookingRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BankTransaction) GetBookingRefOk() (*string, bool) {
+	if o == nil || IsNil(o.BookingRef) {
+		return nil, false
+	}
+	return o.BookingRef, true
+}
+
+// HasBookingRef returns a boolean if a field has been set.
+func (o *BankTransaction) HasBookingRef() bool {
+	if o != nil && !IsNil(o.BookingRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetBookingRef gets a reference to the given string and assigns it to the BookingRef field.
+func (o *BankTransaction) SetBookingRef(v string) {
+	o.BookingRef = &v
+}
+
 func (o BankTransaction) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -339,6 +407,12 @@ func (o BankTransaction) ToMap() (map[string]interface{}, error) {
 	toSerialize["source_target_iban"] = o.SourceTargetIban
 	if !IsNil(o.ExternalId) {
 		toSerialize["external_id"] = o.ExternalId
+	}
+	if !IsNil(o.BankAccountRef) {
+		toSerialize["bank_account_ref"] = o.BankAccountRef
+	}
+	if !IsNil(o.BookingRef) {
+		toSerialize["booking_ref"] = o.BookingRef
 	}
 	return toSerialize, nil
 }

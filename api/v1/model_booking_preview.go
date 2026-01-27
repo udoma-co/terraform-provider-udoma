@@ -26,12 +26,18 @@ type BookingPreview struct {
 	// The date and time the entity was created
 	CreatedAt int64 `json:"created_at"`
 	// The date and time the entity was last updated
-	UpdatedAt  int64                        `json:"updated_at"`
-	SourceType BookingPreviewSourceTypeEnum `json:"source_type"`
-	// Optional ID of the template or transaction based on which the preview was created. Empty for manual previews.
-	SourceRef *string `json:"source_ref,omitempty"`
+	UpdatedAt int64 `json:"updated_at"`
+	// A short description of the preview
+	Description string `json:"description"`
+	// Optional ID of the template that was used to create this preview. Empty for manual previews.
+	TemplateRef *string            `json:"template_ref,omitempty"`
+	RefType     *BookingSourceEnum `json:"ref_type,omitempty"`
+	// Optional ID of the source based on which the preview was created.
+	RefId *string `json:"ref_id,omitempty"`
 	// For bookings based on a template, this holds the data that was provided when the template was executed
 	InputData map[string]interface{} `json:"input_data,omitempty"`
+	// The total amount of all bookings in the preview
+	TotalAmount float64 `json:"total_amount"`
 	// Preview of the bookings that will be created as result of this preview
 	Bookings []AccountBooking `json:"bookings"`
 	// Indicates whether the preview has been persisted (i.e. the bookings have been created in the system)
@@ -44,12 +50,13 @@ type _BookingPreview BookingPreview
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewBookingPreview(id string, createdAt int64, updatedAt int64, sourceType BookingPreviewSourceTypeEnum, bookings []AccountBooking) *BookingPreview {
+func NewBookingPreview(id string, createdAt int64, updatedAt int64, description string, totalAmount float64, bookings []AccountBooking) *BookingPreview {
 	this := BookingPreview{}
 	this.Id = id
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
-	this.SourceType = sourceType
+	this.Description = description
+	this.TotalAmount = totalAmount
 	this.Bookings = bookings
 	return &this
 }
@@ -134,60 +141,124 @@ func (o *BookingPreview) SetUpdatedAt(v int64) {
 	o.UpdatedAt = v
 }
 
-// GetSourceType returns the SourceType field value
-func (o *BookingPreview) GetSourceType() BookingPreviewSourceTypeEnum {
+// GetDescription returns the Description field value
+func (o *BookingPreview) GetDescription() string {
 	if o == nil {
-		var ret BookingPreviewSourceTypeEnum
-		return ret
-	}
-
-	return o.SourceType
-}
-
-// GetSourceTypeOk returns a tuple with the SourceType field value
-// and a boolean to check if the value has been set.
-func (o *BookingPreview) GetSourceTypeOk() (*BookingPreviewSourceTypeEnum, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.SourceType, true
-}
-
-// SetSourceType sets field value
-func (o *BookingPreview) SetSourceType(v BookingPreviewSourceTypeEnum) {
-	o.SourceType = v
-}
-
-// GetSourceRef returns the SourceRef field value if set, zero value otherwise.
-func (o *BookingPreview) GetSourceRef() string {
-	if o == nil || IsNil(o.SourceRef) {
 		var ret string
 		return ret
 	}
-	return *o.SourceRef
+
+	return o.Description
 }
 
-// GetSourceRefOk returns a tuple with the SourceRef field value if set, nil otherwise
+// GetDescriptionOk returns a tuple with the Description field value
 // and a boolean to check if the value has been set.
-func (o *BookingPreview) GetSourceRefOk() (*string, bool) {
-	if o == nil || IsNil(o.SourceRef) {
+func (o *BookingPreview) GetDescriptionOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.SourceRef, true
+	return &o.Description, true
 }
 
-// HasSourceRef returns a boolean if a field has been set.
-func (o *BookingPreview) HasSourceRef() bool {
-	if o != nil && !IsNil(o.SourceRef) {
+// SetDescription sets field value
+func (o *BookingPreview) SetDescription(v string) {
+	o.Description = v
+}
+
+// GetTemplateRef returns the TemplateRef field value if set, zero value otherwise.
+func (o *BookingPreview) GetTemplateRef() string {
+	if o == nil || IsNil(o.TemplateRef) {
+		var ret string
+		return ret
+	}
+	return *o.TemplateRef
+}
+
+// GetTemplateRefOk returns a tuple with the TemplateRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BookingPreview) GetTemplateRefOk() (*string, bool) {
+	if o == nil || IsNil(o.TemplateRef) {
+		return nil, false
+	}
+	return o.TemplateRef, true
+}
+
+// HasTemplateRef returns a boolean if a field has been set.
+func (o *BookingPreview) HasTemplateRef() bool {
+	if o != nil && !IsNil(o.TemplateRef) {
 		return true
 	}
 
 	return false
 }
 
-// SetSourceRef gets a reference to the given string and assigns it to the SourceRef field.
-func (o *BookingPreview) SetSourceRef(v string) {
-	o.SourceRef = &v
+// SetTemplateRef gets a reference to the given string and assigns it to the TemplateRef field.
+func (o *BookingPreview) SetTemplateRef(v string) {
+	o.TemplateRef = &v
+}
+
+// GetRefType returns the RefType field value if set, zero value otherwise.
+func (o *BookingPreview) GetRefType() BookingSourceEnum {
+	if o == nil || IsNil(o.RefType) {
+		var ret BookingSourceEnum
+		return ret
+	}
+	return *o.RefType
+}
+
+// GetRefTypeOk returns a tuple with the RefType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BookingPreview) GetRefTypeOk() (*BookingSourceEnum, bool) {
+	if o == nil || IsNil(o.RefType) {
+		return nil, false
+	}
+	return o.RefType, true
+}
+
+// HasRefType returns a boolean if a field has been set.
+func (o *BookingPreview) HasRefType() bool {
+	if o != nil && !IsNil(o.RefType) {
+		return true
+	}
+
+	return false
+}
+
+// SetRefType gets a reference to the given BookingSourceEnum and assigns it to the RefType field.
+func (o *BookingPreview) SetRefType(v BookingSourceEnum) {
+	o.RefType = &v
+}
+
+// GetRefId returns the RefId field value if set, zero value otherwise.
+func (o *BookingPreview) GetRefId() string {
+	if o == nil || IsNil(o.RefId) {
+		var ret string
+		return ret
+	}
+	return *o.RefId
+}
+
+// GetRefIdOk returns a tuple with the RefId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BookingPreview) GetRefIdOk() (*string, bool) {
+	if o == nil || IsNil(o.RefId) {
+		return nil, false
+	}
+	return o.RefId, true
+}
+
+// HasRefId returns a boolean if a field has been set.
+func (o *BookingPreview) HasRefId() bool {
+	if o != nil && !IsNil(o.RefId) {
+		return true
+	}
+
+	return false
+}
+
+// SetRefId gets a reference to the given string and assigns it to the RefId field.
+func (o *BookingPreview) SetRefId(v string) {
+	o.RefId = &v
 }
 
 // GetInputData returns the InputData field value if set, zero value otherwise.
@@ -220,6 +291,30 @@ func (o *BookingPreview) HasInputData() bool {
 // SetInputData gets a reference to the given map[string]interface{} and assigns it to the InputData field.
 func (o *BookingPreview) SetInputData(v map[string]interface{}) {
 	o.InputData = v
+}
+
+// GetTotalAmount returns the TotalAmount field value
+func (o *BookingPreview) GetTotalAmount() float64 {
+	if o == nil {
+		var ret float64
+		return ret
+	}
+
+	return o.TotalAmount
+}
+
+// GetTotalAmountOk returns a tuple with the TotalAmount field value
+// and a boolean to check if the value has been set.
+func (o *BookingPreview) GetTotalAmountOk() (*float64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.TotalAmount, true
+}
+
+// SetTotalAmount sets field value
+func (o *BookingPreview) SetTotalAmount(v float64) {
+	o.TotalAmount = v
 }
 
 // GetBookings returns the Bookings field value
@@ -291,13 +386,20 @@ func (o BookingPreview) ToMap() (map[string]interface{}, error) {
 	toSerialize["id"] = o.Id
 	toSerialize["created_at"] = o.CreatedAt
 	toSerialize["updated_at"] = o.UpdatedAt
-	toSerialize["source_type"] = o.SourceType
-	if !IsNil(o.SourceRef) {
-		toSerialize["source_ref"] = o.SourceRef
+	toSerialize["description"] = o.Description
+	if !IsNil(o.TemplateRef) {
+		toSerialize["template_ref"] = o.TemplateRef
+	}
+	if !IsNil(o.RefType) {
+		toSerialize["ref_type"] = o.RefType
+	}
+	if !IsNil(o.RefId) {
+		toSerialize["ref_id"] = o.RefId
 	}
 	if !IsNil(o.InputData) {
 		toSerialize["input_data"] = o.InputData
 	}
+	toSerialize["total_amount"] = o.TotalAmount
 	toSerialize["bookings"] = o.Bookings
 	if !IsNil(o.Persisted) {
 		toSerialize["persisted"] = o.Persisted
@@ -313,7 +415,8 @@ func (o *BookingPreview) UnmarshalJSON(data []byte) (err error) {
 		"id",
 		"created_at",
 		"updated_at",
-		"source_type",
+		"description",
+		"total_amount",
 		"bookings",
 	}
 

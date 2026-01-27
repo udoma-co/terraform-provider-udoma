@@ -27,6 +27,7 @@ Resource represents a booking template
 - `env_vars` (Map of String) Environment variables available to the script
 - `icon` (String) An optional icon for the booking template
 - `init_script` (String) An optional script that can be used to prepare data and populate the custom form when the template is triggered
+- `name_expression` (String) An optional expression that can be used to dynamically generate the name of the booking preview based on the input data
 - `trigger_source` (String) The source from which this template can be triggered. Defaults to 'manual' if not specified
 
 ### Read-Only

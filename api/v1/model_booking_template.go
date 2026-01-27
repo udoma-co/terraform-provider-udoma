@@ -29,12 +29,14 @@ type BookingTemplate struct {
 	UpdatedAt int64 `json:"updated_at"`
 	// The name of the template
 	Name string `json:"name"`
+	// An optional expression that can be used to dynamically generate the name of the booking preview based on the input data
+	NameExpression *string `json:"name_expression,omitempty"`
 	// A short description of the template
 	Description *string `json:"description,omitempty"`
 	// An optional icon that can be used to visually identify the template
-	Icon          *string                           `json:"icon,omitempty"`
-	TriggerSource *BookingTemplateTriggerSourceEnum `json:"trigger_source,omitempty"`
-	Inputs        NullableCustomForm                `json:"inputs"`
+	Icon          *string            `json:"icon,omitempty"`
+	TriggerSource *BookingSourceEnum `json:"trigger_source,omitempty"`
+	Inputs        NullableCustomForm `json:"inputs"`
 	// An optional script that can be used to prepare data and populate the custom form when the template is triggered.
 	InitScript *string `json:"init_script,omitempty"`
 	// A script that can be used to generate the booking based on the provided input
@@ -166,6 +168,38 @@ func (o *BookingTemplate) SetName(v string) {
 	o.Name = v
 }
 
+// GetNameExpression returns the NameExpression field value if set, zero value otherwise.
+func (o *BookingTemplate) GetNameExpression() string {
+	if o == nil || IsNil(o.NameExpression) {
+		var ret string
+		return ret
+	}
+	return *o.NameExpression
+}
+
+// GetNameExpressionOk returns a tuple with the NameExpression field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BookingTemplate) GetNameExpressionOk() (*string, bool) {
+	if o == nil || IsNil(o.NameExpression) {
+		return nil, false
+	}
+	return o.NameExpression, true
+}
+
+// HasNameExpression returns a boolean if a field has been set.
+func (o *BookingTemplate) HasNameExpression() bool {
+	if o != nil && !IsNil(o.NameExpression) {
+		return true
+	}
+
+	return false
+}
+
+// SetNameExpression gets a reference to the given string and assigns it to the NameExpression field.
+func (o *BookingTemplate) SetNameExpression(v string) {
+	o.NameExpression = &v
+}
+
 // GetDescription returns the Description field value if set, zero value otherwise.
 func (o *BookingTemplate) GetDescription() string {
 	if o == nil || IsNil(o.Description) {
@@ -231,9 +265,9 @@ func (o *BookingTemplate) SetIcon(v string) {
 }
 
 // GetTriggerSource returns the TriggerSource field value if set, zero value otherwise.
-func (o *BookingTemplate) GetTriggerSource() BookingTemplateTriggerSourceEnum {
+func (o *BookingTemplate) GetTriggerSource() BookingSourceEnum {
 	if o == nil || IsNil(o.TriggerSource) {
-		var ret BookingTemplateTriggerSourceEnum
+		var ret BookingSourceEnum
 		return ret
 	}
 	return *o.TriggerSource
@@ -241,7 +275,7 @@ func (o *BookingTemplate) GetTriggerSource() BookingTemplateTriggerSourceEnum {
 
 // GetTriggerSourceOk returns a tuple with the TriggerSource field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *BookingTemplate) GetTriggerSourceOk() (*BookingTemplateTriggerSourceEnum, bool) {
+func (o *BookingTemplate) GetTriggerSourceOk() (*BookingSourceEnum, bool) {
 	if o == nil || IsNil(o.TriggerSource) {
 		return nil, false
 	}
@@ -257,8 +291,8 @@ func (o *BookingTemplate) HasTriggerSource() bool {
 	return false
 }
 
-// SetTriggerSource gets a reference to the given BookingTemplateTriggerSourceEnum and assigns it to the TriggerSource field.
-func (o *BookingTemplate) SetTriggerSource(v BookingTemplateTriggerSourceEnum) {
+// SetTriggerSource gets a reference to the given BookingSourceEnum and assigns it to the TriggerSource field.
+func (o *BookingTemplate) SetTriggerSource(v BookingSourceEnum) {
 	o.TriggerSource = &v
 }
 
@@ -422,6 +456,9 @@ func (o BookingTemplate) ToMap() (map[string]interface{}, error) {
 	toSerialize["created_at"] = o.CreatedAt
 	toSerialize["updated_at"] = o.UpdatedAt
 	toSerialize["name"] = o.Name
+	if !IsNil(o.NameExpression) {
+		toSerialize["name_expression"] = o.NameExpression
+	}
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
 	}
