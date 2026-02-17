@@ -32,8 +32,10 @@ type CreateOrUpdateBankAccountRequest struct {
 	// The ID of the external bank (optional)
 	ExternalId *string `json:"external_id,omitempty"`
 	// A user friendly label, used to identify the account (optional)
-	Description *string            `json:"description,omitempty"`
-	Cadence     BalanceCadenceEnum `json:"cadence"`
+	Description *string `json:"description,omitempty"`
+	// The category of the bank account indicates what type of transactions are  expected to be booked on the account and can be used for automatic booking.
+	Categories []BankAccountCategoryEnum `json:"categories,omitempty"`
+	Cadence    BalanceCadenceEnum        `json:"cadence"`
 	// An external identifier for the bank account, e.g. provided by the bank
 	ExternalBankId *string `json:"external_bank_id,omitempty"`
 }
@@ -236,6 +238,38 @@ func (o *CreateOrUpdateBankAccountRequest) SetDescription(v string) {
 	o.Description = &v
 }
 
+// GetCategories returns the Categories field value if set, zero value otherwise.
+func (o *CreateOrUpdateBankAccountRequest) GetCategories() []BankAccountCategoryEnum {
+	if o == nil || IsNil(o.Categories) {
+		var ret []BankAccountCategoryEnum
+		return ret
+	}
+	return o.Categories
+}
+
+// GetCategoriesOk returns a tuple with the Categories field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateBankAccountRequest) GetCategoriesOk() ([]BankAccountCategoryEnum, bool) {
+	if o == nil || IsNil(o.Categories) {
+		return nil, false
+	}
+	return o.Categories, true
+}
+
+// HasCategories returns a boolean if a field has been set.
+func (o *CreateOrUpdateBankAccountRequest) HasCategories() bool {
+	if o != nil && !IsNil(o.Categories) {
+		return true
+	}
+
+	return false
+}
+
+// SetCategories gets a reference to the given []BankAccountCategoryEnum and assigns it to the Categories field.
+func (o *CreateOrUpdateBankAccountRequest) SetCategories(v []BankAccountCategoryEnum) {
+	o.Categories = v
+}
+
 // GetCadence returns the Cadence field value
 func (o *CreateOrUpdateBankAccountRequest) GetCadence() BalanceCadenceEnum {
 	if o == nil {
@@ -315,6 +349,9 @@ func (o CreateOrUpdateBankAccountRequest) ToMap() (map[string]interface{}, error
 	}
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
+	}
+	if !IsNil(o.Categories) {
+		toSerialize["categories"] = o.Categories
 	}
 	toSerialize["cadence"] = o.Cadence
 	if !IsNil(o.ExternalBankId) {

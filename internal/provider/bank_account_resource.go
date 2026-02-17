@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -12,6 +13,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 	api "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
 	"gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/internal/client"
 )
@@ -40,6 +42,7 @@ type BankAccountModel struct {
 	Bic            types.String `tfsdk:"bic"`
 	BankName       types.String `tfsdk:"bank_name"`
 	Description    types.String `tfsdk:"description"`
+	Categories     types.List   `tfsdk:"categories"`
 	Cadence        types.String `tfsdk:"cadence"`
 }
 
@@ -108,6 +111,21 @@ func (faq *BankAccount) Schema(ctx context.Context, req resource.SchemaRequest, 
 				Description: "An optional user friendly label, used to identify the account",
 				Validators: []validator.String{
 					stringvalidator.LengthAtMost(250),
+				},
+			},
+			"categories": schema.ListAttribute{
+				ElementType: types.StringType,
+				Optional:    true,
+				Description: "List of categories assigned to the account",
+				Validators: []validator.List{
+					listvalidator.UniqueValues(),
+					listvalidator.ValueStringsAre(stringvalidator.OneOf(
+						string(api.BANKACCOUNTCATEGORYENUM_DEPOSIT),
+						string(api.BANKACCOUNTCATEGORYENUM_EXPENSES),
+						string(api.BANKACCOUNTCATEGORYENUM_OTHERS),
+						string(api.BANKACCOUNTCATEGORYENUM_PROVISIONS),
+						string(api.BANKACCOUNTCATEGORYENUM_RENT_PAYMENT),
+					)),
 				},
 			},
 			"cadence": schema.StringAttribute{
@@ -314,6 +332,16 @@ func (model *BankAccountModel) fromAPI(bankAccount *api.BankAccount) error {
 	model.UpdatedAt = types.Int64Value(bankAccount.UpdatedAt)
 	model.Cadence = types.StringValue(string(bankAccount.Cadence))
 
+	if len(bankAccount.Categories) != 0 {
+		categories, diags := types.ListValue(types.StringType, enumSliceToValueList(bankAccount.Categories))
+		if diags.HasError() {
+			return fmt.Errorf("error converting categories to list: %s", diags.Errors())
+		}
+		model.Categories = categories
+	} else {
+		model.Categories = basetypes.NewListNull(types.StringType)
+	}
+
 	return nil
 }
 
@@ -325,10 +353,9 @@ func (model *BankAccountModel) toAPIRequest() (api.CreateOrUpdateBankAccountRequ
 		Bic:           model.Bic.ValueStringPointer(),
 		BankName:      model.BankName.ValueStringPointer(),
 		Description:   model.Description.ValueStringPointer(),
+		Categories:    modelListToEnumSlice[api.BankAccountCategoryEnum](model.Categories),
+		Cadence:       api.BalanceCadenceEnum(model.Cadence.ValueString()),
 	}
-
-	cadence := api.BalanceCadenceEnum(model.Cadence.ValueString())
-	bankAccount.Cadence = cadence
 
 	return bankAccount, nil
 }

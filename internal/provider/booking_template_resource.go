@@ -346,13 +346,13 @@ func (model *BookingTemplateModel) toApiRequest() (v1.CreateOrUpdateBookingTempl
 	form := model.Inputs.toApiRequest()
 
 	bookingTemplate := v1.CreateOrUpdateBookingTemplateRequest{
-		Name:        model.Name.ValueString(),
+		Name:           model.Name.ValueString(),
 		NameExpression: model.NameExpression.ValueStringPointer(),
-		Description: model.Description.ValueStringPointer(),
-		Icon:        model.Icon.ValueStringPointer(),
-		Inputs:      *v1.NewNullableCustomForm(&form),
-		InitScript:  model.InitScript.ValueStringPointer(),
-		Script:      model.Script.ValueString(),
+		Description:    model.Description.ValueStringPointer(),
+		Icon:           model.Icon.ValueStringPointer(),
+		Inputs:         *v1.NewNullableCustomForm(&form),
+		InitScript:     model.InitScript.ValueStringPointer(),
+		Script:         model.Script.ValueString(),
 		TriggerSource: func() *v1.BookingSourceEnum {
 			if model.TriggerSource.ValueString() == "" {
 				return nil

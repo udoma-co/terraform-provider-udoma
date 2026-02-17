@@ -19,7 +19,7 @@ import (
 // checks if the EntityExtension type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &EntityExtension{}
 
-// EntityExtension An entity extension definition that allows adding custom data fields to core entities (properties, tenants, service providers, tenancies, owners) using custom form definitions.
+// EntityExtension An entity extension definition that allows adding custom data fields to core entities (properties, tenants, service providers, tenancies, owners, inventory items) using custom form definitions.
 type EntityExtension struct {
 	// Unique and immutable ID attribute of the entity that is generated when the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities or to retrieve it from the backend.
 	Id string `json:"id"`

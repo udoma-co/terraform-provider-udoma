@@ -25,6 +25,7 @@ const (
 	ENTITYEXTENSIONTYPEENUM_SERVICE_PROVIDER EntityExtensionTypeEnum = "service_provider"
 	ENTITYEXTENSIONTYPEENUM_TENANCY          EntityExtensionTypeEnum = "tenancy"
 	ENTITYEXTENSIONTYPEENUM_OWNER            EntityExtensionTypeEnum = "owner"
+	ENTITYEXTENSIONTYPEENUM_INVENTORY        EntityExtensionTypeEnum = "inventory"
 )
 
 // All allowed values of EntityExtensionTypeEnum enum
@@ -34,6 +35,7 @@ var AllowedEntityExtensionTypeEnumEnumValues = []EntityExtensionTypeEnum{
 	"service_provider",
 	"tenancy",
 	"owner",
+	"inventory",
 }
 
 func (v *EntityExtensionTypeEnum) UnmarshalJSON(src []byte) error {

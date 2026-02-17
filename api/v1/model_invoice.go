@@ -33,6 +33,8 @@ type Invoice struct {
 	IssueDate *int64 `json:"issue_date,omitempty"`
 	// Timestamp of the invoice due date.
 	DueDate *int64 `json:"due_date,omitempty"`
+	// Optional payment target date for the invoice, defaults to the due date, but can be adjusted manually.
+	PaymentTarget *int64 `json:"payment_target,omitempty"`
 	// The subtotal before taxes and fees.
 	SubtotalAmount *float64 `json:"subtotal_amount,omitempty"`
 	// The total amount due on the invoice
@@ -253,6 +255,38 @@ func (o *Invoice) HasDueDate() bool {
 // SetDueDate gets a reference to the given int64 and assigns it to the DueDate field.
 func (o *Invoice) SetDueDate(v int64) {
 	o.DueDate = &v
+}
+
+// GetPaymentTarget returns the PaymentTarget field value if set, zero value otherwise.
+func (o *Invoice) GetPaymentTarget() int64 {
+	if o == nil || IsNil(o.PaymentTarget) {
+		var ret int64
+		return ret
+	}
+	return *o.PaymentTarget
+}
+
+// GetPaymentTargetOk returns a tuple with the PaymentTarget field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Invoice) GetPaymentTargetOk() (*int64, bool) {
+	if o == nil || IsNil(o.PaymentTarget) {
+		return nil, false
+	}
+	return o.PaymentTarget, true
+}
+
+// HasPaymentTarget returns a boolean if a field has been set.
+func (o *Invoice) HasPaymentTarget() bool {
+	if o != nil && !IsNil(o.PaymentTarget) {
+		return true
+	}
+
+	return false
+}
+
+// SetPaymentTarget gets a reference to the given int64 and assigns it to the PaymentTarget field.
+func (o *Invoice) SetPaymentTarget(v int64) {
+	o.PaymentTarget = &v
 }
 
 // GetSubtotalAmount returns the SubtotalAmount field value if set, zero value otherwise.
@@ -868,6 +902,9 @@ func (o Invoice) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.DueDate) {
 		toSerialize["due_date"] = o.DueDate
+	}
+	if !IsNil(o.PaymentTarget) {
+		toSerialize["payment_target"] = o.PaymentTarget
 	}
 	if !IsNil(o.SubtotalAmount) {
 		toSerialize["subtotal_amount"] = o.SubtotalAmount

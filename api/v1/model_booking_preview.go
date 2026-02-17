@@ -28,7 +28,7 @@ type BookingPreview struct {
 	// The date and time the entity was last updated
 	UpdatedAt int64 `json:"updated_at"`
 	// A short description of the preview
-	Description string `json:"description"`
+	Name *string `json:"name,omitempty"`
 	// Optional ID of the template that was used to create this preview. Empty for manual previews.
 	TemplateRef *string            `json:"template_ref,omitempty"`
 	RefType     *BookingSourceEnum `json:"ref_type,omitempty"`
@@ -50,12 +50,11 @@ type _BookingPreview BookingPreview
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewBookingPreview(id string, createdAt int64, updatedAt int64, description string, totalAmount float64, bookings []AccountBooking) *BookingPreview {
+func NewBookingPreview(id string, createdAt int64, updatedAt int64, totalAmount float64, bookings []AccountBooking) *BookingPreview {
 	this := BookingPreview{}
 	this.Id = id
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
-	this.Description = description
 	this.TotalAmount = totalAmount
 	this.Bookings = bookings
 	return &this
@@ -141,28 +140,36 @@ func (o *BookingPreview) SetUpdatedAt(v int64) {
 	o.UpdatedAt = v
 }
 
-// GetDescription returns the Description field value
-func (o *BookingPreview) GetDescription() string {
-	if o == nil {
+// GetName returns the Name field value if set, zero value otherwise.
+func (o *BookingPreview) GetName() string {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
-
-	return o.Description
+	return *o.Name
 }
 
-// GetDescriptionOk returns a tuple with the Description field value
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *BookingPreview) GetDescriptionOk() (*string, bool) {
-	if o == nil {
+func (o *BookingPreview) GetNameOk() (*string, bool) {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return &o.Description, true
+	return o.Name, true
 }
 
-// SetDescription sets field value
-func (o *BookingPreview) SetDescription(v string) {
-	o.Description = v
+// HasName returns a boolean if a field has been set.
+func (o *BookingPreview) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
+func (o *BookingPreview) SetName(v string) {
+	o.Name = &v
 }
 
 // GetTemplateRef returns the TemplateRef field value if set, zero value otherwise.
@@ -386,7 +393,9 @@ func (o BookingPreview) ToMap() (map[string]interface{}, error) {
 	toSerialize["id"] = o.Id
 	toSerialize["created_at"] = o.CreatedAt
 	toSerialize["updated_at"] = o.UpdatedAt
-	toSerialize["description"] = o.Description
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
 	if !IsNil(o.TemplateRef) {
 		toSerialize["template_ref"] = o.TemplateRef
 	}
@@ -415,7 +424,6 @@ func (o *BookingPreview) UnmarshalJSON(data []byte) (err error) {
 		"id",
 		"created_at",
 		"updated_at",
-		"description",
 		"total_amount",
 		"bookings",
 	}
