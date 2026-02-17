@@ -125,6 +125,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateFeatureFlagConfig**](docs/DefaultAPI.md#createfeatureflagconfig) | **Post** /feature-flags/config | Create a new feature flag configuration
 *DefaultAPI* | [**CreateFinancialAccount**](docs/DefaultAPI.md#createfinancialaccount) | **Post** /financial/account | Create a new financial account
 *DefaultAPI* | [**CreateHook**](docs/DefaultAPI.md#createhook) | **Post** /hook | Create a new hook
+*DefaultAPI* | [**CreateInventoryItem**](docs/DefaultAPI.md#createinventoryitem) | **Post** /property/{propID}/inventory | Create a new inventory item for a property
 *DefaultAPI* | [**CreateInvoice**](docs/DefaultAPI.md#createinvoice) | **Post** /invoice | Create invoice request
 *DefaultAPI* | [**CreateInvoiceDataMapper**](docs/DefaultAPI.md#createinvoicedatamapper) | **Post** /invoice-data-mapper | Create an invoice data mapper
 *DefaultAPI* | [**CreateMeter**](docs/DefaultAPI.md#createmeter) | **Post** /meter/{propID} | Create a new meter for a property
@@ -179,6 +180,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteFeatureFlagConfig**](docs/DefaultAPI.md#deletefeatureflagconfig) | **Delete** /feature-flags/config/{entryID} | Delete a feature flag config
 *DefaultAPI* | [**DeleteFinancialAccount**](docs/DefaultAPI.md#deletefinancialaccount) | **Delete** /financial/accounts/{accountID} | Delete the financial account with all its related data
 *DefaultAPI* | [**DeleteHook**](docs/DefaultAPI.md#deletehook) | **Delete** /hook/{hookID} | Delete hook with all its related data
+*DefaultAPI* | [**DeleteInventoryItem**](docs/DefaultAPI.md#deleteinventoryitem) | **Delete** /inventory/{inventoryItemID} | Delete inventory item
 *DefaultAPI* | [**DeleteInvoice**](docs/DefaultAPI.md#deleteinvoice) | **Delete** /invoice/{invoiceID} | Delete invoice
 *DefaultAPI* | [**DeleteInvoiceAnalysis**](docs/DefaultAPI.md#deleteinvoiceanalysis) | **Delete** /invoice-analysis/{invoiceAnalysisID} | Delete invoice analysis
 *DefaultAPI* | [**DeleteInvoiceAnalysisERechnung**](docs/DefaultAPI.md#deleteinvoiceanalysiserechnung) | **Delete** /invoice-analysis-erechnung/{invoiceAnalysisERechnungID} | Delete invoice analysis erechnung
@@ -232,6 +234,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetAppointmentTemplate**](docs/DefaultAPI.md#getappointmenttemplate) | **Get** /calendar/appointments/template/{templateID} | Get the appointment template by ID
 *DefaultAPI* | [**GetApproval**](docs/DefaultAPI.md#getapproval) | **Get** /approval/{approvalID} | Get the approval with the given ID
 *DefaultAPI* | [**GetApprovalsByRefId**](docs/DefaultAPI.md#getapprovalsbyrefid) | **Get** /approval/by-ref/{refID} | Get the approvals for the given entity ID
+*DefaultAPI* | [**GetArchivalJobSettings**](docs/DefaultAPI.md#getarchivaljobsettings) | **Get** /archival-job/settings | Get the archival job settings details
 *DefaultAPI* | [**GetAttachment**](docs/DefaultAPI.md#getattachment) | **Get** /attachment/{attachmentID} | Get a file attachment
 *DefaultAPI* | [**GetBankAccount**](docs/DefaultAPI.md#getbankaccount) | **Get** /bank-account/{accountID} | Get the bank account with the given ID
 *DefaultAPI* | [**GetBankConnection**](docs/DefaultAPI.md#getbankconnection) | **Get** /bank-account/{accountID}/connection | Get the bank connection for a specific bank
@@ -279,6 +282,8 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetFinancialAccountByFlatNumber**](docs/DefaultAPI.md#getfinancialaccountbyflatnumber) | **Get** /financial/accounts-by-number/{flatNumber} | Get financial account by flat number
 *DefaultAPI* | [**GetFinancialAccountsByRef**](docs/DefaultAPI.md#getfinancialaccountsbyref) | **Post** /financial/account/by-ref/{refType}/{refID} | Get the financial account for a given ref type and ref ID
 *DefaultAPI* | [**GetHook**](docs/DefaultAPI.md#gethook) | **Get** /hook/{hookID} | Get hook with all its attributes
+*DefaultAPI* | [**GetInventoryForProperty**](docs/DefaultAPI.md#getinventoryforproperty) | **Get** /property/{propID}/inventory | List inventory items for a property
+*DefaultAPI* | [**GetInventoryItem**](docs/DefaultAPI.md#getinventoryitem) | **Get** /inventory/{inventoryItemID} | Get inventory item
 *DefaultAPI* | [**GetInvoice**](docs/DefaultAPI.md#getinvoice) | **Get** /invoice/{invoiceID} | Get invoice
 *DefaultAPI* | [**GetInvoiceAnalysis**](docs/DefaultAPI.md#getinvoiceanalysis) | **Get** /invoice-analysis/{invoiceAnalysisID} | Load an invoice analysis
 *DefaultAPI* | [**GetInvoiceAnalysisERechnung**](docs/DefaultAPI.md#getinvoiceanalysiserechnung) | **Get** /invoice-analysis-erechnung/{invoiceAnalysisERechnungID} | Get invoice analysis erechnung
@@ -328,6 +333,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetWorkflowExecution**](docs/DefaultAPI.md#getworkflowexecution) | **Get** /workflows/execution/{executionID} | Get workflow execution details
 *DefaultAPI* | [**GetWorkflowExecutionTrigger**](docs/DefaultAPI.md#getworkflowexecutiontrigger) | **Get** /workflows/triggers/{executionID} | Get workflow trigger for an execution
 *DefaultAPI* | [**GetWorkflowTriggersForSource**](docs/DefaultAPI.md#getworkflowtriggersforsource) | **Get** /workflows/trigger/source/{sourceID} | Get workflow triggers for a source
+*DefaultAPI* | [**HandleUserQuestion**](docs/DefaultAPI.md#handleuserquestion) | **Post** /ai/ask | Ask AI assistant a question
 *DefaultAPI* | [**ImportBankConnectionTransactions**](docs/DefaultAPI.md#importbankconnectiontransactions) | **Post** /bank-connection/{bankConnectionID}/transactions/import | Import transactions from bank connection
 *DefaultAPI* | [**ImportDataUsingTemplate**](docs/DefaultAPI.md#importdatausingtemplate) | **Post** /data-import/template/{templateID}/import | Import data using the template
 *DefaultAPI* | [**InitBookingTemplate**](docs/DefaultAPI.md#initbookingtemplate) | **Post** /financial/booking-template/{bookingTemplateID}/init | Execute a booking template and create a booking preview
@@ -437,6 +443,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateAppointment**](docs/DefaultAPI.md#updateappointment) | **Put** /calendar/appointments/entry/{entryID} | Update appointment
 *DefaultAPI* | [**UpdateAppointmentSchedule**](docs/DefaultAPI.md#updateappointmentschedule) | **Put** /calendar/appointments/schedule/{scheduleID} | Update appointment schedule
 *DefaultAPI* | [**UpdateAppointmentTemplate**](docs/DefaultAPI.md#updateappointmenttemplate) | **Put** /calendar/appointments/template/{templateID} | Update appointment template
+*DefaultAPI* | [**UpdateArchivalJobSettings**](docs/DefaultAPI.md#updatearchivaljobsettings) | **Put** /archival-job/settings | Update archival job settings
 *DefaultAPI* | [**UpdateBankAccount**](docs/DefaultAPI.md#updatebankaccount) | **Put** /bank-account/{accountID} | Update the attributes of the already existing bank account
 *DefaultAPI* | [**UpdateBankTransaction**](docs/DefaultAPI.md#updatebanktransaction) | **Put** /bank-account-transaction/{transactionID} | Update an already existing bank transaction
 *DefaultAPI* | [**UpdateBookingPreview**](docs/DefaultAPI.md#updatebookingpreview) | **Put** /financial/booking-preview/{bookingPreviewID} | Update the booking preview with all its attributes
@@ -461,6 +468,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateFeatureFlagConfig**](docs/DefaultAPI.md#updatefeatureflagconfig) | **Put** /feature-flags/config/{entryID} | Update an existing feature flag config
 *DefaultAPI* | [**UpdateFinancialAccount**](docs/DefaultAPI.md#updatefinancialaccount) | **Put** /financial/accounts/{accountID} | Update an already existing financial account
 *DefaultAPI* | [**UpdateHook**](docs/DefaultAPI.md#updatehook) | **Put** /hook/{hookID} | Update an already hook
+*DefaultAPI* | [**UpdateInventoryItem**](docs/DefaultAPI.md#updateinventoryitem) | **Put** /inventory/{inventoryItemID} | Update inventory item
 *DefaultAPI* | [**UpdateInvoice**](docs/DefaultAPI.md#updateinvoice) | **Put** /invoice/{invoiceID} | Update invoice
 *DefaultAPI* | [**UpdateInvoiceAnalysis**](docs/DefaultAPI.md#updateinvoiceanalysis) | **Put** /invoice-analysis/{invoiceAnalysisID} | Update invoice analysis
 *DefaultAPI* | [**UpdateInvoiceAnalysisData**](docs/DefaultAPI.md#updateinvoiceanalysisdata) | **Put** /invoice-analysis/{invoiceAnalysisID}/data/{invoiceID} | Update invoice analysis data
@@ -494,6 +502,7 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
+ - [AIAssistantResponse](docs/AIAssistantResponse.md)
  - [AccessRecord](docs/AccessRecord.md)
  - [AccessRecordData](docs/AccessRecordData.md)
  - [AccountBalance](docs/AccountBalance.md)
@@ -525,17 +534,22 @@ Class | Method | HTTP request | Description
  - [ApprovalAttributesPartial](docs/ApprovalAttributesPartial.md)
  - [ApprovalStatusEnum](docs/ApprovalStatusEnum.md)
  - [Approver](docs/Approver.md)
+ - [ArchivalJobSettings](docs/ArchivalJobSettings.md)
+ - [ArchivalJobSettingsAttributesPartial](docs/ArchivalJobSettingsAttributesPartial.md)
+ - [AskQuestionRequest](docs/AskQuestionRequest.md)
  - [AssignCaseRequest](docs/AssignCaseRequest.md)
  - [Attachment](docs/Attachment.md)
  - [BalanceCadenceEnum](docs/BalanceCadenceEnum.md)
  - [Bank](docs/Bank.md)
  - [BankAccount](docs/BankAccount.md)
  - [BankAccountAttributesPartial](docs/BankAccountAttributesPartial.md)
+ - [BankAccountCategoryEnum](docs/BankAccountCategoryEnum.md)
  - [BankConnectionStatusEnum](docs/BankConnectionStatusEnum.md)
  - [BankConnectionTransactionImportTypeEnum](docs/BankConnectionTransactionImportTypeEnum.md)
  - [BankDetails](docs/BankDetails.md)
  - [BankTransaction](docs/BankTransaction.md)
  - [BankTransactionAttributesPartial](docs/BankTransactionAttributesPartial.md)
+ - [BankTransactionImport](docs/BankTransactionImport.md)
  - [BatchInvoiceOperationResponse](docs/BatchInvoiceOperationResponse.md)
  - [BookingInitialisationStatusEnum](docs/BookingInitialisationStatusEnum.md)
  - [BookingPreview](docs/BookingPreview.md)
@@ -591,6 +605,7 @@ Class | Method | HTTP request | Description
  - [CorrespondenceStatus](docs/CorrespondenceStatus.md)
  - [CreateAccountBookingAllocation](docs/CreateAccountBookingAllocation.md)
  - [CreateAccountBookingRequest](docs/CreateAccountBookingRequest.md)
+ - [CreateAccountBookingsRequest](docs/CreateAccountBookingsRequest.md)
  - [CreateApprovalRequest](docs/CreateApprovalRequest.md)
  - [CreateBankConnectionResponse](docs/CreateBankConnectionResponse.md)
  - [CreateBulkAccountDimensionValuesRequest](docs/CreateBulkAccountDimensionValuesRequest.md)
@@ -626,6 +641,7 @@ Class | Method | HTTP request | Description
  - [CreateOrUpdateFeatureFlagConfigRequest](docs/CreateOrUpdateFeatureFlagConfigRequest.md)
  - [CreateOrUpdateFinancialAccountRequest](docs/CreateOrUpdateFinancialAccountRequest.md)
  - [CreateOrUpdateHookRequest](docs/CreateOrUpdateHookRequest.md)
+ - [CreateOrUpdateInventoryItemRequest](docs/CreateOrUpdateInventoryItemRequest.md)
  - [CreateOrUpdateInvoiceDataMapperRequest](docs/CreateOrUpdateInvoiceDataMapperRequest.md)
  - [CreateOrUpdateInvoiceRequest](docs/CreateOrUpdateInvoiceRequest.md)
  - [CreateOrUpdateMeterReadingRequest](docs/CreateOrUpdateMeterReadingRequest.md)
@@ -746,6 +762,9 @@ Class | Method | HTTP request | Description
  - [InitBookingTemplateRequest](docs/InitBookingTemplateRequest.md)
  - [InitBookingTemplateResponse](docs/InitBookingTemplateResponse.md)
  - [InputItem](docs/InputItem.md)
+ - [InventoryConditionEnum](docs/InventoryConditionEnum.md)
+ - [InventoryItem](docs/InventoryItem.md)
+ - [InventoryItemAttributesPartial](docs/InventoryItemAttributesPartial.md)
  - [InviteToAppointmentRequest](docs/InviteToAppointmentRequest.md)
  - [Invoice](docs/Invoice.md)
  - [InvoiceAnalysis](docs/InvoiceAnalysis.md)
@@ -915,6 +934,7 @@ Class | Method | HTTP request | Description
  - [TimeSlotAttributesPartial](docs/TimeSlotAttributesPartial.md)
  - [TipTapDocument](docs/TipTapDocument.md)
  - [UnssignCaseRequest](docs/UnssignCaseRequest.md)
+ - [UpdateArchivalJobSettingsRequest](docs/UpdateArchivalJobSettingsRequest.md)
  - [UpdateBookingPreviewRequest](docs/UpdateBookingPreviewRequest.md)
  - [UpdateCaseRequest](docs/UpdateCaseRequest.md)
  - [UpdateCaseStatusRequest](docs/UpdateCaseStatusRequest.md)

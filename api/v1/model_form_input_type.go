@@ -35,6 +35,7 @@ const (
 	FORMINPUTTYPE_BANK_ACCOUNT         FormInputType = "bank_account"
 	FORMINPUTTYPE_YES_NO_OR_VALUE      FormInputType = "yes_no_or_value"
 	FORMINPUTTYPE_SERVICE_PROVIDER_REF FormInputType = "service_provider_ref"
+	FORMINPUTTYPE_TENANCY_REF          FormInputType = "tenancy_ref"
 	FORMINPUTTYPE_PROPERTY_REF         FormInputType = "property_ref"
 	FORMINPUTTYPE_OWNER_REF            FormInputType = "owner_ref"
 	FORMINPUTTYPE_TENANT_REF           FormInputType = "tenant_ref"
@@ -62,6 +63,7 @@ var AllowedFormInputTypeEnumValues = []FormInputType{
 	"bank_account",
 	"yes_no_or_value",
 	"service_provider_ref",
+	"tenancy_ref",
 	"property_ref",
 	"owner_ref",
 	"tenant_ref",

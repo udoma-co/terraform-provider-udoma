@@ -19,8 +19,8 @@ var _ MappedNullable = &QueryBankConnectionTransactionsResponse{}
 
 // QueryBankConnectionTransactionsResponse The response to a query for transactions of a bank account connection
 type QueryBankConnectionTransactionsResponse struct {
-	Transactions []BankTransaction `json:"transactions,omitempty"`
-	TotalPages   *int32            `json:"totalPages,omitempty"`
+	Transactions []BankTransactionImport `json:"transactions,omitempty"`
+	TotalPages   *int32                  `json:"totalPages,omitempty"`
 }
 
 // NewQueryBankConnectionTransactionsResponse instantiates a new QueryBankConnectionTransactionsResponse object
@@ -41,9 +41,9 @@ func NewQueryBankConnectionTransactionsResponseWithDefaults() *QueryBankConnecti
 }
 
 // GetTransactions returns the Transactions field value if set, zero value otherwise.
-func (o *QueryBankConnectionTransactionsResponse) GetTransactions() []BankTransaction {
+func (o *QueryBankConnectionTransactionsResponse) GetTransactions() []BankTransactionImport {
 	if o == nil || IsNil(o.Transactions) {
-		var ret []BankTransaction
+		var ret []BankTransactionImport
 		return ret
 	}
 	return o.Transactions
@@ -51,7 +51,7 @@ func (o *QueryBankConnectionTransactionsResponse) GetTransactions() []BankTransa
 
 // GetTransactionsOk returns a tuple with the Transactions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *QueryBankConnectionTransactionsResponse) GetTransactionsOk() ([]BankTransaction, bool) {
+func (o *QueryBankConnectionTransactionsResponse) GetTransactionsOk() ([]BankTransactionImport, bool) {
 	if o == nil || IsNil(o.Transactions) {
 		return nil, false
 	}
@@ -67,8 +67,8 @@ func (o *QueryBankConnectionTransactionsResponse) HasTransactions() bool {
 	return false
 }
 
-// SetTransactions gets a reference to the given []BankTransaction and assigns it to the Transactions field.
-func (o *QueryBankConnectionTransactionsResponse) SetTransactions(v []BankTransaction) {
+// SetTransactions gets a reference to the given []BankTransactionImport and assigns it to the Transactions field.
+func (o *QueryBankConnectionTransactionsResponse) SetTransactions(v []BankTransactionImport) {
 	o.Transactions = v
 }
 

@@ -29,6 +29,8 @@ type CompanyProfile struct {
 	PhoneNumber *string `json:"phone_number,omitempty"`
 	// URL to the company website. This information can potentially be visible to other users of the platform.
 	Website *string `json:"website,omitempty"`
+	// VAT number of the company.
+	VatNumber *string `json:"vat_number,omitempty"`
 	// The ID of the image that is used as the company logo.
 	LogoAttachmentRef *string `json:"logo_attachment_ref,omitempty"`
 	// The ID of the image that is used as the company signature.
@@ -213,6 +215,38 @@ func (o *CompanyProfile) HasWebsite() bool {
 // SetWebsite gets a reference to the given string and assigns it to the Website field.
 func (o *CompanyProfile) SetWebsite(v string) {
 	o.Website = &v
+}
+
+// GetVatNumber returns the VatNumber field value if set, zero value otherwise.
+func (o *CompanyProfile) GetVatNumber() string {
+	if o == nil || IsNil(o.VatNumber) {
+		var ret string
+		return ret
+	}
+	return *o.VatNumber
+}
+
+// GetVatNumberOk returns a tuple with the VatNumber field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CompanyProfile) GetVatNumberOk() (*string, bool) {
+	if o == nil || IsNil(o.VatNumber) {
+		return nil, false
+	}
+	return o.VatNumber, true
+}
+
+// HasVatNumber returns a boolean if a field has been set.
+func (o *CompanyProfile) HasVatNumber() bool {
+	if o != nil && !IsNil(o.VatNumber) {
+		return true
+	}
+
+	return false
+}
+
+// SetVatNumber gets a reference to the given string and assigns it to the VatNumber field.
+func (o *CompanyProfile) SetVatNumber(v string) {
+	o.VatNumber = &v
 }
 
 // GetLogoAttachmentRef returns the LogoAttachmentRef field value if set, zero value otherwise.
@@ -429,6 +463,9 @@ func (o CompanyProfile) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Website) {
 		toSerialize["website"] = o.Website
+	}
+	if !IsNil(o.VatNumber) {
+		toSerialize["vat_number"] = o.VatNumber
 	}
 	if !IsNil(o.LogoAttachmentRef) {
 		toSerialize["logo_attachment_ref"] = o.LogoAttachmentRef

@@ -25,6 +25,7 @@ Resource represents a bank account
 
 - `bank_name` (String) The name of the bank
 - `bic` (String) The BIC of the bank account
+- `categories` (List of String) List of categories assigned to the account
 - `description` (String) An optional user friendly label, used to identify the account
 
 ### Read-Only

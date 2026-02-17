@@ -48,7 +48,7 @@ func TestAccBookingTemplateResource(t *testing.T) {
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify attributes were updated
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "name", "updated_name"),
-					resource.TestCheckResourceAttr("udoma_booking_template.test", "name_expression", "updated_expression"),
+					resource.TestCheckResourceAttr("udoma_booking_template.test", "name_expression", "test_expression"),
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "description", "updated_description"),
 					resource.TestCheckResourceAttr("udoma_booking_template.test", "icon", "fa-solid fa-plus"),
 

@@ -84,7 +84,14 @@ func (r *EntityExtension) Schema(ctx context.Context, req resource.SchemaRequest
 				Required:    true,
 				Description: "The type of entity this extension applies to (property, tenant, etc.).",
 				Validators: []validator.String{
-					stringvalidator.OneOf("property", "tenant", "service_provider", "tenancy", "owner"),
+					stringvalidator.OneOf(
+						string(v1.ENTITYEXTENSIONTYPEENUM_INVENTORY),
+						string(v1.ENTITYEXTENSIONTYPEENUM_PROPERTY),
+						string(v1.ENTITYEXTENSIONTYPEENUM_TENANT),
+						string(v1.ENTITYEXTENSIONTYPEENUM_SERVICE_PROVIDER),
+						string(v1.ENTITYEXTENSIONTYPEENUM_TENANCY),
+						string(v1.ENTITYEXTENSIONTYPEENUM_OWNER),
+					),
 				},
 			},
 			"sequence": schema.Int32Attribute{
