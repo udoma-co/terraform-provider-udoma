@@ -295,7 +295,7 @@ func (o *CreateAccountBookingRequest) UnmarshalJSON(data []byte) (err error) {
 	varCreateAccountBookingRequest := _CreateAccountBookingRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateAccountBookingRequest)
 
 	if err != nil {

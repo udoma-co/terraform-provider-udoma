@@ -334,7 +334,7 @@ func (o *CommentTemplate) UnmarshalJSON(data []byte) (err error) {
 	varCommentTemplate := _CommentTemplate{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCommentTemplate)
 
 	if err != nil {

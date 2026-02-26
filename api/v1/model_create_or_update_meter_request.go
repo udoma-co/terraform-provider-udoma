@@ -299,7 +299,7 @@ func (o *CreateOrUpdateMeterRequest) UnmarshalJSON(data []byte) (err error) {
 	varCreateOrUpdateMeterRequest := _CreateOrUpdateMeterRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateOrUpdateMeterRequest)
 
 	if err != nil {

@@ -181,7 +181,7 @@ func (o *CreateCaseCommentRequest) UnmarshalJSON(data []byte) (err error) {
 	varCreateCaseCommentRequest := _CreateCaseCommentRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateCaseCommentRequest)
 
 	if err != nil {

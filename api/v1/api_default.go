@@ -4822,7 +4822,7 @@ func (a *DefaultAPIService) CreateFeatureFlagConfigExecute(r ApiCreateFeatureFla
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/feature-flags/config"
+	localVarPath := localBasePath + "/feature-flags/configs"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -27287,6 +27287,688 @@ func (a *DefaultAPIService) MarkInvoicesAsPaidExecute(r ApiMarkInvoicesAsPaidReq
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiOutlookGenerateTenantAnswerRequest struct {
+	ctx                          context.Context
+	ApiService                   *DefaultAPIService
+	tenantID                     string
+	outlookGenerateAnswerRequest *OutlookGenerateAnswerRequest
+}
+
+func (r ApiOutlookGenerateTenantAnswerRequest) OutlookGenerateAnswerRequest(outlookGenerateAnswerRequest OutlookGenerateAnswerRequest) ApiOutlookGenerateTenantAnswerRequest {
+	r.outlookGenerateAnswerRequest = &outlookGenerateAnswerRequest
+	return r
+}
+
+func (r ApiOutlookGenerateTenantAnswerRequest) Execute() (*OutlookGenerateAnswerResponse, *http.Response, error) {
+	return r.ApiService.OutlookGenerateTenantAnswerExecute(r)
+}
+
+/*
+OutlookGenerateTenantAnswer Generate an email answer for a tenant
+
+Generates a pre-filled email reply addressed to the given tenant, optionally incorporating a provided template body.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param tenantID unique generated ID of a tenant
+	@return ApiOutlookGenerateTenantAnswerRequest
+*/
+func (a *DefaultAPIService) OutlookGenerateTenantAnswer(ctx context.Context, tenantID string) ApiOutlookGenerateTenantAnswerRequest {
+	return ApiOutlookGenerateTenantAnswerRequest{
+		ApiService: a,
+		ctx:        ctx,
+		tenantID:   tenantID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return OutlookGenerateAnswerResponse
+func (a *DefaultAPIService) OutlookGenerateTenantAnswerExecute(r ApiOutlookGenerateTenantAnswerRequest) (*OutlookGenerateAnswerResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *OutlookGenerateAnswerResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.OutlookGenerateTenantAnswer")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/outlook/tenants/{tenantID}/generate-answer"
+	localVarPath = strings.Replace(localVarPath, "{"+"tenantID"+"}", url.PathEscape(parameterValueToString(r.tenantID, "tenantID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.outlookGenerateAnswerRequest == nil {
+		return localVarReturnValue, nil, reportError("outlookGenerateAnswerRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.outlookGenerateAnswerRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiOutlookGetProviderRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	email      *string
+}
+
+// The email address of the service provider to look up
+func (r ApiOutlookGetProviderRequest) Email(email string) ApiOutlookGetProviderRequest {
+	r.email = &email
+	return r
+}
+
+func (r ApiOutlookGetProviderRequest) Execute() (*OutlookProviderDetails, *http.Response, error) {
+	return r.ApiService.OutlookGetProviderExecute(r)
+}
+
+/*
+OutlookGetProvider Get service provider by email
+
+Returns the service provider profile for the given email address, including name, contact details and primary service category.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiOutlookGetProviderRequest
+*/
+func (a *DefaultAPIService) OutlookGetProvider(ctx context.Context) ApiOutlookGetProviderRequest {
+	return ApiOutlookGetProviderRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return OutlookProviderDetails
+func (a *DefaultAPIService) OutlookGetProviderExecute(r ApiOutlookGetProviderRequest) (*OutlookProviderDetails, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *OutlookProviderDetails
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.OutlookGetProvider")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/outlook/providers"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.email == nil {
+		return localVarReturnValue, nil, reportError("email is required and must be specified")
+	}
+
+	parameterAddToHeaderOrQuery(localVarQueryParams, "email", r.email, "", "")
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiOutlookGetProviderCasesRequest struct {
+	ctx               context.Context
+	ApiService        *DefaultAPIService
+	serviceProviderID string
+	limit             *int32
+}
+
+// Maximum number of cases to return (default 10, max 100)
+func (r ApiOutlookGetProviderCasesRequest) Limit(limit int32) ApiOutlookGetProviderCasesRequest {
+	r.limit = &limit
+	return r
+}
+
+func (r ApiOutlookGetProviderCasesRequest) Execute() ([]OutlookProviderCaseItem, *http.Response, error) {
+	return r.ApiService.OutlookGetProviderCasesExecute(r)
+}
+
+/*
+OutlookGetProviderCases Get recent cases for a service provider
+
+Returns the most recent cases assigned to the given service provider. Defaults to 10 results, maximum 100.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param serviceProviderID unique generated ID of a service provider
+	@return ApiOutlookGetProviderCasesRequest
+*/
+func (a *DefaultAPIService) OutlookGetProviderCases(ctx context.Context, serviceProviderID string) ApiOutlookGetProviderCasesRequest {
+	return ApiOutlookGetProviderCasesRequest{
+		ApiService:        a,
+		ctx:               ctx,
+		serviceProviderID: serviceProviderID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return []OutlookProviderCaseItem
+func (a *DefaultAPIService) OutlookGetProviderCasesExecute(r ApiOutlookGetProviderCasesRequest) ([]OutlookProviderCaseItem, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []OutlookProviderCaseItem
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.OutlookGetProviderCases")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/outlook/providers/{providerID}/cases"
+	localVarPath = strings.Replace(localVarPath, "{"+"serviceProviderID"+"}", url.PathEscape(parameterValueToString(r.serviceProviderID, "serviceProviderID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "", "")
+	} else {
+		var defaultValue int32 = 10
+		r.limit = &defaultValue
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiOutlookGetSenderTypeRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	email      *string
+}
+
+// The email address of the sender to look up
+func (r ApiOutlookGetSenderTypeRequest) Email(email string) ApiOutlookGetSenderTypeRequest {
+	r.email = &email
+	return r
+}
+
+func (r ApiOutlookGetSenderTypeRequest) Execute() (*OutlookGetSenderTypeResponse, *http.Response, error) {
+	return r.ApiService.OutlookGetSenderTypeExecute(r)
+}
+
+/*
+OutlookGetSenderType Get sender type by email
+
+Looks up an email address and returns whether it belongs to a known tenant, service provider, or is unknown for the authenticated account.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiOutlookGetSenderTypeRequest
+*/
+func (a *DefaultAPIService) OutlookGetSenderType(ctx context.Context) ApiOutlookGetSenderTypeRequest {
+	return ApiOutlookGetSenderTypeRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return OutlookGetSenderTypeResponse
+func (a *DefaultAPIService) OutlookGetSenderTypeExecute(r ApiOutlookGetSenderTypeRequest) (*OutlookGetSenderTypeResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *OutlookGetSenderTypeResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.OutlookGetSenderType")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/outlook/sender-type"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.email == nil {
+		return localVarReturnValue, nil, reportError("email is required and must be specified")
+	}
+
+	parameterAddToHeaderOrQuery(localVarQueryParams, "email", r.email, "", "")
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiOutlookGetTenantRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	email      *string
+}
+
+// The email address of the tenant to look up
+func (r ApiOutlookGetTenantRequest) Email(email string) ApiOutlookGetTenantRequest {
+	r.email = &email
+	return r
+}
+
+func (r ApiOutlookGetTenantRequest) Execute() (*OutlookTenantDetails, *http.Response, error) {
+	return r.ApiService.OutlookGetTenantExecute(r)
+}
+
+/*
+OutlookGetTenant Get tenant by email
+
+Returns the tenant profile for the given email address, including their name, contact details and formatted property address.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiOutlookGetTenantRequest
+*/
+func (a *DefaultAPIService) OutlookGetTenant(ctx context.Context) ApiOutlookGetTenantRequest {
+	return ApiOutlookGetTenantRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return OutlookTenantDetails
+func (a *DefaultAPIService) OutlookGetTenantExecute(r ApiOutlookGetTenantRequest) (*OutlookTenantDetails, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *OutlookTenantDetails
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.OutlookGetTenant")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/outlook/tenants"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.email == nil {
+		return localVarReturnValue, nil, reportError("email is required and must be specified")
+	}
+
+	parameterAddToHeaderOrQuery(localVarQueryParams, "email", r.email, "", "")
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiOutlookGetTenantCasesRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	tenantID   string
+	limit      *int32
+}
+
+// Maximum number of cases to return (default 5, max 100)
+func (r ApiOutlookGetTenantCasesRequest) Limit(limit int32) ApiOutlookGetTenantCasesRequest {
+	r.limit = &limit
+	return r
+}
+
+func (r ApiOutlookGetTenantCasesRequest) Execute() ([]OutlookTenantCaseItem, *http.Response, error) {
+	return r.ApiService.OutlookGetTenantCasesExecute(r)
+}
+
+/*
+OutlookGetTenantCases Get recent cases for a tenant
+
+Returns the most recent cases associated with the given tenant. Defaults to 5 results, maximum 100.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param tenantID unique generated ID of a tenant
+	@return ApiOutlookGetTenantCasesRequest
+*/
+func (a *DefaultAPIService) OutlookGetTenantCases(ctx context.Context, tenantID string) ApiOutlookGetTenantCasesRequest {
+	return ApiOutlookGetTenantCasesRequest{
+		ApiService: a,
+		ctx:        ctx,
+		tenantID:   tenantID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return []OutlookTenantCaseItem
+func (a *DefaultAPIService) OutlookGetTenantCasesExecute(r ApiOutlookGetTenantCasesRequest) ([]OutlookTenantCaseItem, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []OutlookTenantCaseItem
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.OutlookGetTenantCases")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/outlook/tenants/{tenantID}/cases"
+	localVarPath = strings.Replace(localVarPath, "{"+"tenantID"+"}", url.PathEscape(parameterValueToString(r.tenantID, "tenantID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "", "")
+	} else {
+		var defaultValue int32 = 5
+		r.limit = &defaultValue
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiPersistBookingPreviewRequest struct {
 	ctx              context.Context
 	ApiService       *DefaultAPIService
@@ -27797,8 +28479,8 @@ func (a *DefaultAPIService) PublicAddCaseCommentExecute(r ApiPublicAddCaseCommen
 		return localVarReturnValue, nil, reportError("createCaseCommentRequest is required and must be specified")
 	}
 
-	parameterAddToHeaderOrQuery(localVarQueryParams, "code", r.code, "")
-	parameterAddToHeaderOrQuery(localVarQueryParams, "challenge", r.challenge, "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "code", r.code, "", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "challenge", r.challenge, "", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -27933,8 +28615,8 @@ func (a *DefaultAPIService) PublicCreateAppointmentExecute(r ApiPublicCreateAppo
 		return localVarReturnValue, nil, reportError("createOrUpdateAppointmentRequest is required and must be specified")
 	}
 
-	parameterAddToHeaderOrQuery(localVarQueryParams, "challenge", r.challenge, "")
-	parameterAddToHeaderOrQuery(localVarQueryParams, "locale", r.locale, "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "challenge", r.challenge, "", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "locale", r.locale, "", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -28075,9 +28757,9 @@ func (a *DefaultAPIService) PublicCreateCaseExecute(r ApiPublicCreateCaseRequest
 		return localVarReturnValue, nil, reportError("createCaseRequest is required and must be specified")
 	}
 
-	parameterAddToHeaderOrQuery(localVarQueryParams, "code", r.code, "")
-	parameterAddToHeaderOrQuery(localVarQueryParams, "challenge", r.challenge, "")
-	parameterAddToHeaderOrQuery(localVarQueryParams, "locale", r.locale, "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "code", r.code, "", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "challenge", r.challenge, "", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "locale", r.locale, "", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -28199,7 +28881,7 @@ func (a *DefaultAPIService) PublicDeleteAppointmentExecute(r ApiPublicDeleteAppo
 		return nil, reportError("mandatoryMessage is required and must be specified")
 	}
 
-	parameterAddToHeaderOrQuery(localVarQueryParams, "challenge", r.challenge, "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "challenge", r.challenge, "", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -28412,8 +29094,8 @@ func (a *DefaultAPIService) PublicDeleteCaseCommentExecute(r ApiPublicDeleteCase
 		return nil, reportError("challenge is required and must be specified")
 	}
 
-	parameterAddToHeaderOrQuery(localVarQueryParams, "code", r.code, "")
-	parameterAddToHeaderOrQuery(localVarQueryParams, "challenge", r.challenge, "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "code", r.code, "", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "challenge", r.challenge, "", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -28929,7 +29611,7 @@ func (a *DefaultAPIService) PublicGetAttachmentExecute(r ApiPublicGetAttachmentR
 		return localVarReturnValue, nil, reportError("code is required and must be specified")
 	}
 
-	parameterAddToHeaderOrQuery(localVarQueryParams, "code", r.code, "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "code", r.code, "", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -29040,7 +29722,7 @@ func (a *DefaultAPIService) PublicGetCaseExecute(r ApiPublicGetCaseRequest) (*Ca
 		return localVarReturnValue, nil, reportError("code is required and must be specified")
 	}
 
-	parameterAddToHeaderOrQuery(localVarQueryParams, "code", r.code, "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "code", r.code, "", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -29251,7 +29933,7 @@ func (a *DefaultAPIService) PublicGetCorrespondenceDocumentExecute(r ApiPublicGe
 		return localVarReturnValue, nil, reportError("code is required and must be specified")
 	}
 
-	parameterAddToHeaderOrQuery(localVarQueryParams, "code", r.code, "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "code", r.code, "", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -29360,7 +30042,7 @@ func (a *DefaultAPIService) PublicGetCorrespondenceStatusExecute(r ApiPublicGetC
 		return localVarReturnValue, nil, reportError("code is required and must be specified")
 	}
 
-	parameterAddToHeaderOrQuery(localVarQueryParams, "code", r.code, "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "code", r.code, "", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -29471,7 +30153,7 @@ func (a *DefaultAPIService) PublicGetExternalUserExecute(r ApiPublicGetExternalU
 		return localVarReturnValue, nil, reportError("code is required and must be specified")
 	}
 
-	parameterAddToHeaderOrQuery(localVarQueryParams, "code", r.code, "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "code", r.code, "", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -29582,7 +30264,7 @@ func (a *DefaultAPIService) PublicGetManagerCompanyProfileExecute(r ApiPublicGet
 		return localVarReturnValue, nil, reportError("code is required and must be specified")
 	}
 
-	parameterAddToHeaderOrQuery(localVarQueryParams, "code", r.code, "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "code", r.code, "", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -29705,7 +30387,7 @@ func (a *DefaultAPIService) PublicJoinAppointmentExecute(r ApiPublicJoinAppointm
 		return localVarReturnValue, nil, reportError("publicJoinAppointmentRequest is required and must be specified")
 	}
 
-	parameterAddToHeaderOrQuery(localVarQueryParams, "locale", r.locale, "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "locale", r.locale, "", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -29828,7 +30510,7 @@ func (a *DefaultAPIService) PublicUpdateCaseExecute(r ApiPublicUpdateCaseRequest
 		return localVarReturnValue, nil, reportError("updateCaseRequest is required and must be specified")
 	}
 
-	parameterAddToHeaderOrQuery(localVarQueryParams, "code", r.code, "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "code", r.code, "", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -29964,8 +30646,8 @@ func (a *DefaultAPIService) PublicUpdateCaseStatusExecute(r ApiPublicUpdateCaseS
 		return localVarReturnValue, nil, reportError("updateCaseStatusRequest is required and must be specified")
 	}
 
-	parameterAddToHeaderOrQuery(localVarQueryParams, "code", r.code, "")
-	parameterAddToHeaderOrQuery(localVarQueryParams, "challenge", r.challenge, "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "code", r.code, "", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "challenge", r.challenge, "", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -30087,7 +30769,7 @@ func (a *DefaultAPIService) PublicUpdateExternalUserExecute(r ApiPublicUpdateExt
 		return localVarReturnValue, nil, reportError("updateExternalUserRequest is required and must be specified")
 	}
 
-	parameterAddToHeaderOrQuery(localVarQueryParams, "code", r.code, "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "code", r.code, "", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -30216,8 +30898,8 @@ func (a *DefaultAPIService) PublicUploadAttachmentExecute(r ApiPublicUploadAttac
 		return localVarReturnValue, nil, reportError("challenge is required and must be specified")
 	}
 
-	parameterAddToHeaderOrQuery(localVarQueryParams, "code", r.code, "")
-	parameterAddToHeaderOrQuery(localVarQueryParams, "challenge", r.challenge, "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "code", r.code, "", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "challenge", r.challenge, "", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"multipart/form-data"}
 
@@ -30351,7 +31033,7 @@ func (a *DefaultAPIService) PublicValidateFormDataExecute(r ApiPublicValidateFor
 		return localVarReturnValue, nil, reportError("formValidationRequest is required and must be specified")
 	}
 
-	parameterAddToHeaderOrQuery(localVarQueryParams, "challenge", r.challenge, "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "challenge", r.challenge, "", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -30472,7 +31154,7 @@ func (a *DefaultAPIService) PublicValidateUserEmailExecute(r ApiPublicValidateUs
 		return localVarReturnValue, nil, reportError("emailValidationRequest is required and must be specified")
 	}
 
-	parameterAddToHeaderOrQuery(localVarQueryParams, "challenge", r.challenge, "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "challenge", r.challenge, "", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 

@@ -458,7 +458,7 @@ func (o *AccountBooking) UnmarshalJSON(data []byte) (err error) {
 	varAccountBooking := _AccountBooking{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varAccountBooking)
 
 	if err != nil {

@@ -333,7 +333,7 @@ func (o *CaseComment) UnmarshalJSON(data []byte) (err error) {
 	varCaseComment := _CaseComment{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCaseComment)
 
 	if err != nil {

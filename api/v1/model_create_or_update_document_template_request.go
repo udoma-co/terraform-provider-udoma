@@ -425,7 +425,7 @@ func (o *CreateOrUpdateDocumentTemplateRequest) UnmarshalJSON(data []byte) (err 
 	varCreateOrUpdateDocumentTemplateRequest := _CreateOrUpdateDocumentTemplateRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateOrUpdateDocumentTemplateRequest)
 
 	if err != nil {

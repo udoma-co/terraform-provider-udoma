@@ -313,7 +313,7 @@ func (o *CreateOrUpdateWorkflowEntrypointRequest) UnmarshalJSON(data []byte) (er
 	varCreateOrUpdateWorkflowEntrypointRequest := _CreateOrUpdateWorkflowEntrypointRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateOrUpdateWorkflowEntrypointRequest)
 
 	if err != nil {

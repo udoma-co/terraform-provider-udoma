@@ -247,7 +247,7 @@ func (o *CreateOrUpdateCommentTemplateRequest) UnmarshalJSON(data []byte) (err e
 	varCreateOrUpdateCommentTemplateRequest := _CreateOrUpdateCommentTemplateRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateOrUpdateCommentTemplateRequest)
 
 	if err != nil {

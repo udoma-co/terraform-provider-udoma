@@ -181,7 +181,7 @@ func (o *UpdateCaseRequest) UnmarshalJSON(data []byte) (err error) {
 	varUpdateCaseRequest := _UpdateCaseRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varUpdateCaseRequest)
 
 	if err != nil {

@@ -613,7 +613,7 @@ func (o *CaseTemplate) UnmarshalJSON(data []byte) (err error) {
 	varCaseTemplate := _CaseTemplate{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCaseTemplate)
 
 	if err != nil {

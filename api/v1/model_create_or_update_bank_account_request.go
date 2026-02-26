@@ -37,7 +37,8 @@ type CreateOrUpdateBankAccountRequest struct {
 	Categories []BankAccountCategoryEnum `json:"categories,omitempty"`
 	Cadence    BalanceCadenceEnum        `json:"cadence"`
 	// An external identifier for the bank account, e.g. provided by the bank
-	ExternalBankId *string `json:"external_bank_id,omitempty"`
+	ExternalBankId   *string                          `json:"external_bank_id,omitempty"`
+	AutoImportConfig *BankTransactionAutoImportConfig `json:"auto_import_config,omitempty"`
 }
 
 type _CreateOrUpdateBankAccountRequest CreateOrUpdateBankAccountRequest
@@ -326,6 +327,38 @@ func (o *CreateOrUpdateBankAccountRequest) SetExternalBankId(v string) {
 	o.ExternalBankId = &v
 }
 
+// GetAutoImportConfig returns the AutoImportConfig field value if set, zero value otherwise.
+func (o *CreateOrUpdateBankAccountRequest) GetAutoImportConfig() BankTransactionAutoImportConfig {
+	if o == nil || IsNil(o.AutoImportConfig) {
+		var ret BankTransactionAutoImportConfig
+		return ret
+	}
+	return *o.AutoImportConfig
+}
+
+// GetAutoImportConfigOk returns a tuple with the AutoImportConfig field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateBankAccountRequest) GetAutoImportConfigOk() (*BankTransactionAutoImportConfig, bool) {
+	if o == nil || IsNil(o.AutoImportConfig) {
+		return nil, false
+	}
+	return o.AutoImportConfig, true
+}
+
+// HasAutoImportConfig returns a boolean if a field has been set.
+func (o *CreateOrUpdateBankAccountRequest) HasAutoImportConfig() bool {
+	if o != nil && !IsNil(o.AutoImportConfig) {
+		return true
+	}
+
+	return false
+}
+
+// SetAutoImportConfig gets a reference to the given BankTransactionAutoImportConfig and assigns it to the AutoImportConfig field.
+func (o *CreateOrUpdateBankAccountRequest) SetAutoImportConfig(v BankTransactionAutoImportConfig) {
+	o.AutoImportConfig = &v
+}
+
 func (o CreateOrUpdateBankAccountRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -357,6 +390,9 @@ func (o CreateOrUpdateBankAccountRequest) ToMap() (map[string]interface{}, error
 	if !IsNil(o.ExternalBankId) {
 		toSerialize["external_bank_id"] = o.ExternalBankId
 	}
+	if !IsNil(o.AutoImportConfig) {
+		toSerialize["auto_import_config"] = o.AutoImportConfig
+	}
 	return toSerialize, nil
 }
 
@@ -387,7 +423,7 @@ func (o *CreateOrUpdateBankAccountRequest) UnmarshalJSON(data []byte) (err error
 	varCreateOrUpdateBankAccountRequest := _CreateOrUpdateBankAccountRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateOrUpdateBankAccountRequest)
 
 	if err != nil {

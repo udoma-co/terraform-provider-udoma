@@ -174,7 +174,7 @@ func (o *CaseReportingEndpointCategory) UnmarshalJSON(data []byte) (err error) {
 	varCaseReportingEndpointCategory := _CaseReportingEndpointCategory{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCaseReportingEndpointCategory)
 
 	if err != nil {

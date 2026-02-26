@@ -247,7 +247,7 @@ func (o *UpdateTenancyRequest) UnmarshalJSON(data []byte) (err error) {
 	varUpdateTenancyRequest := _UpdateTenancyRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varUpdateTenancyRequest)
 
 	if err != nil {

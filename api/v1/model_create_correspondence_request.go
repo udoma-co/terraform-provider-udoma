@@ -240,7 +240,7 @@ func (o *CreateCorrespondenceRequest) UnmarshalJSON(data []byte) (err error) {
 	varCreateCorrespondenceRequest := _CreateCorrespondenceRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateCorrespondenceRequest)
 
 	if err != nil {

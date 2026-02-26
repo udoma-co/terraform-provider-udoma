@@ -202,7 +202,7 @@ func (o *WorkflowExecutionStepResult) UnmarshalJSON(data []byte) (err error) {
 	varWorkflowExecutionStepResult := _WorkflowExecutionStepResult{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varWorkflowExecutionStepResult)
 
 	if err != nil {

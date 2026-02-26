@@ -498,7 +498,7 @@ func (o *CreateOrUpdateHookRequest) UnmarshalJSON(data []byte) (err error) {
 	varCreateOrUpdateHookRequest := _CreateOrUpdateHookRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateOrUpdateHookRequest)
 
 	if err != nil {

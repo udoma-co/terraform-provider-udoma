@@ -323,7 +323,7 @@ func (o *Form) UnmarshalJSON(data []byte) (err error) {
 	varForm := _Form{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varForm)
 
 	if err != nil {

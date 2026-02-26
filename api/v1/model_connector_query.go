@@ -451,7 +451,7 @@ func (o *ConnectorQuery) UnmarshalJSON(data []byte) (err error) {
 	varConnectorQuery := _ConnectorQuery{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varConnectorQuery)
 
 	if err != nil {

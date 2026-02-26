@@ -277,7 +277,7 @@ func (o *CreateConnectorConfigRequest) UnmarshalJSON(data []byte) (err error) {
 	varCreateConnectorConfigRequest := _CreateConnectorConfigRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateConnectorConfigRequest)
 
 	if err != nil {

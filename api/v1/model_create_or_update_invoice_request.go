@@ -803,7 +803,7 @@ func (o *CreateOrUpdateInvoiceRequest) UnmarshalJSON(data []byte) (err error) {
 	varCreateOrUpdateInvoiceRequest := _CreateOrUpdateInvoiceRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateOrUpdateInvoiceRequest)
 
 	if err != nil {

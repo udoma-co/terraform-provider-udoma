@@ -165,7 +165,7 @@ func (o *CaseAutomaticActionConfig) UnmarshalJSON(data []byte) (err error) {
 	varCaseAutomaticActionConfig := _CaseAutomaticActionConfig{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCaseAutomaticActionConfig)
 
 	if err != nil {

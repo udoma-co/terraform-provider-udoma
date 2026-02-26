@@ -143,7 +143,7 @@ func (o *QueryBookingsByStartEndDateRequest) UnmarshalJSON(data []byte) (err err
 	varQueryBookingsByStartEndDateRequest := _QueryBookingsByStartEndDateRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varQueryBookingsByStartEndDateRequest)
 
 	if err != nil {

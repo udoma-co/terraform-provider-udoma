@@ -231,7 +231,7 @@ func (o *CreateOrUpdateInvoiceDataMapperRequest) UnmarshalJSON(data []byte) (err
 	varCreateOrUpdateInvoiceDataMapperRequest := _CreateOrUpdateInvoiceDataMapperRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateOrUpdateInvoiceDataMapperRequest)
 
 	if err != nil {

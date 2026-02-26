@@ -992,7 +992,7 @@ func (o *Invoice) UnmarshalJSON(data []byte) (err error) {
 	varInvoice := _Invoice{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varInvoice)
 
 	if err != nil {

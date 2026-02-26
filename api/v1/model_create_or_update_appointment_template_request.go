@@ -470,7 +470,7 @@ func (o *CreateOrUpdateAppointmentTemplateRequest) UnmarshalJSON(data []byte) (e
 	varCreateOrUpdateAppointmentTemplateRequest := _CreateOrUpdateAppointmentTemplateRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateOrUpdateAppointmentTemplateRequest)
 
 	if err != nil {

@@ -330,7 +330,7 @@ func (o *MeterReading) UnmarshalJSON(data []byte) (err error) {
 	varMeterReading := _MeterReading{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varMeterReading)
 
 	if err != nil {

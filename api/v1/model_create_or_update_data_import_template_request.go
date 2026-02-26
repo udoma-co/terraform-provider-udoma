@@ -294,7 +294,7 @@ func (o *CreateOrUpdateDataImportTemplateRequest) UnmarshalJSON(data []byte) (er
 	varCreateOrUpdateDataImportTemplateRequest := _CreateOrUpdateDataImportTemplateRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateOrUpdateDataImportTemplateRequest)
 
 	if err != nil {

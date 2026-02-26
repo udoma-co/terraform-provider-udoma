@@ -108,7 +108,7 @@ func (o *ValidateBankAccountIbanRequest) UnmarshalJSON(data []byte) (err error) 
 	varValidateBankAccountIbanRequest := _ValidateBankAccountIbanRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varValidateBankAccountIbanRequest)
 
 	if err != nil {

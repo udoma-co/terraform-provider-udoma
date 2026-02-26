@@ -108,7 +108,7 @@ func (o *RejectApprovalRequest) UnmarshalJSON(data []byte) (err error) {
 	varRejectApprovalRequest := _RejectApprovalRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varRejectApprovalRequest)
 
 	if err != nil {

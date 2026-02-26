@@ -363,7 +363,7 @@ func (o *RentUpdate) UnmarshalJSON(data []byte) (err error) {
 	varRentUpdate := _RentUpdate{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varRentUpdate)
 
 	if err != nil {

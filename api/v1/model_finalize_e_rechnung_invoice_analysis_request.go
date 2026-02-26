@@ -107,7 +107,7 @@ func (o *FinalizeERechnungInvoiceAnalysisRequest) UnmarshalJSON(data []byte) (er
 	varFinalizeERechnungInvoiceAnalysisRequest := _FinalizeERechnungInvoiceAnalysisRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varFinalizeERechnungInvoiceAnalysisRequest)
 
 	if err != nil {

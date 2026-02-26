@@ -173,7 +173,7 @@ func (o *CreateOrUpdateRentUpdateRequest) UnmarshalJSON(data []byte) (err error)
 	varCreateOrUpdateRentUpdateRequest := _CreateOrUpdateRentUpdateRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateOrUpdateRentUpdateRequest)
 
 	if err != nil {

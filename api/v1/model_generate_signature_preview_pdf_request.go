@@ -108,7 +108,7 @@ func (o *GenerateSignaturePreviewPDFRequest) UnmarshalJSON(data []byte) (err err
 	varGenerateSignaturePreviewPDFRequest := _GenerateSignaturePreviewPDFRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varGenerateSignaturePreviewPDFRequest)
 
 	if err != nil {

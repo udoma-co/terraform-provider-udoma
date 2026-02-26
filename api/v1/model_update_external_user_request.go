@@ -403,7 +403,7 @@ func (o *UpdateExternalUserRequest) UnmarshalJSON(data []byte) (err error) {
 	varUpdateExternalUserRequest := _UpdateExternalUserRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varUpdateExternalUserRequest)
 
 	if err != nil {

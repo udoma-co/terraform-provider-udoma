@@ -13,8 +13,10 @@ generate-client:
 	docker run --rm \
 		-v "${PWD}/api/v1/spec:/local/api:ro" \
 		-v "${PWD}/gen:/local/gen" \
+		-v "${PWD}/templates:/templates" \
 		-u "$(shell id -u):$(shell id -g)" \
-		openapitools/openapi-generator-cli:v7.3.0 generate -g go --additional-properties=enumClassPrefix=true \
+		openapitools/openapi-generator-cli:v7.8.0 generate -g go --additional-properties=enumClassPrefix=true \
+		-c /templates/config-go.yaml \
 		-i /local/api/udoma-openapi.yml \
 		-o /local/gen \
 		--additional-properties=packageName=v1

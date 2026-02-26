@@ -136,7 +136,7 @@ func (o *GetCorrespondenceDocumentResponse) UnmarshalJSON(data []byte) (err erro
 	varGetCorrespondenceDocumentResponse := _GetCorrespondenceDocumentResponse{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varGetCorrespondenceDocumentResponse)
 
 	if err != nil {

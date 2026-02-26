@@ -267,7 +267,7 @@ func (o *CreateOrUpdateFinancialAccountRequest) UnmarshalJSON(data []byte) (err 
 	varCreateOrUpdateFinancialAccountRequest := _CreateOrUpdateFinancialAccountRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateOrUpdateFinancialAccountRequest)
 
 	if err != nil {

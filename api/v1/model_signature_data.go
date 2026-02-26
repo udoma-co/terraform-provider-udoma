@@ -136,7 +136,7 @@ func (o *SignatureData) UnmarshalJSON(data []byte) (err error) {
 	varSignatureData := _SignatureData{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varSignatureData)
 
 	if err != nil {

@@ -289,7 +289,7 @@ func (o *CreateOrUpdateBankTransactionRequest) UnmarshalJSON(data []byte) (err e
 	varCreateOrUpdateBankTransactionRequest := _CreateOrUpdateBankTransactionRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateOrUpdateBankTransactionRequest)
 
 	if err != nil {

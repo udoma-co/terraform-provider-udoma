@@ -240,7 +240,7 @@ func (o *CreateCaseRequest) UnmarshalJSON(data []byte) (err error) {
 	varCreateCaseRequest := _CreateCaseRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateCaseRequest)
 
 	if err != nil {

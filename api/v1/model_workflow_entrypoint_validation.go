@@ -137,7 +137,7 @@ func (o *WorkflowEntrypointValidation) UnmarshalJSON(data []byte) (err error) {
 	varWorkflowEntrypointValidation := _WorkflowEntrypointValidation{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varWorkflowEntrypointValidation)
 
 	if err != nil {

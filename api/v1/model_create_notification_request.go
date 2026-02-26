@@ -314,7 +314,7 @@ func (o *CreateNotificationRequest) UnmarshalJSON(data []byte) (err error) {
 	varCreateNotificationRequest := _CreateNotificationRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateNotificationRequest)
 
 	if err != nil {

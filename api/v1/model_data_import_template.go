@@ -381,7 +381,7 @@ func (o *DataImportTemplate) UnmarshalJSON(data []byte) (err error) {
 	varDataImportTemplate := _DataImportTemplate{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varDataImportTemplate)
 
 	if err != nil {

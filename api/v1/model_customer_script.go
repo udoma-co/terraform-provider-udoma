@@ -297,7 +297,7 @@ func (o *CustomerScript) UnmarshalJSON(data []byte) (err error) {
 	varCustomerScript := _CustomerScript{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCustomerScript)
 
 	if err != nil {

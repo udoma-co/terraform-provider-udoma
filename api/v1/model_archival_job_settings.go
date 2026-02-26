@@ -359,7 +359,7 @@ func (o *ArchivalJobSettings) UnmarshalJSON(data []byte) (err error) {
 	varArchivalJobSettings := _ArchivalJobSettings{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varArchivalJobSettings)
 
 	if err != nil {

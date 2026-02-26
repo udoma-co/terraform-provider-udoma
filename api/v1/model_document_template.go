@@ -491,7 +491,7 @@ func (o *DocumentTemplate) UnmarshalJSON(data []byte) (err error) {
 	varDocumentTemplate := _DocumentTemplate{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varDocumentTemplate)
 
 	if err != nil {

@@ -400,7 +400,7 @@ func (o *WorkflowEntrypoint) UnmarshalJSON(data []byte) (err error) {
 	varWorkflowEntrypoint := _WorkflowEntrypoint{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varWorkflowEntrypoint)
 
 	if err != nil {

@@ -391,7 +391,7 @@ func (o *FinancialAccount) UnmarshalJSON(data []byte) (err error) {
 	varFinancialAccount := _FinancialAccount{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varFinancialAccount)
 
 	if err != nil {

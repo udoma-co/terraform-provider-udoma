@@ -145,7 +145,7 @@ func (o *ImportDataRequest) UnmarshalJSON(data []byte) (err error) {
 	varImportDataRequest := _ImportDataRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varImportDataRequest)
 
 	if err != nil {

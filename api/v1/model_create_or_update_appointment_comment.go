@@ -173,7 +173,7 @@ func (o *CreateOrUpdateAppointmentComment) UnmarshalJSON(data []byte) (err error
 	varCreateOrUpdateAppointmentComment := _CreateOrUpdateAppointmentComment{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateOrUpdateAppointmentComment)
 
 	if err != nil {

@@ -435,7 +435,7 @@ func (o *PropertyHandover) UnmarshalJSON(data []byte) (err error) {
 	varPropertyHandover := _PropertyHandover{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPropertyHandover)
 
 	if err != nil {

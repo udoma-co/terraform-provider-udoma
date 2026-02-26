@@ -136,7 +136,7 @@ func (o *EmailInvoiceAttachment) UnmarshalJSON(data []byte) (err error) {
 	varEmailInvoiceAttachment := _EmailInvoiceAttachment{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varEmailInvoiceAttachment)
 
 	if err != nil {
