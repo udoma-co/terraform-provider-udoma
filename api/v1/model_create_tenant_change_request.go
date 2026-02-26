@@ -137,7 +137,7 @@ func (o *CreateTenantChangeRequest) UnmarshalJSON(data []byte) (err error) {
 	varCreateTenantChangeRequest := _CreateTenantChangeRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateTenantChangeRequest)
 
 	if err != nil {

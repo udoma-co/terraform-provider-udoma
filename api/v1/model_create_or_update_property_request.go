@@ -393,7 +393,7 @@ func (o *CreateOrUpdatePropertyRequest) UnmarshalJSON(data []byte) (err error) {
 	varCreateOrUpdatePropertyRequest := _CreateOrUpdatePropertyRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateOrUpdatePropertyRequest)
 
 	if err != nil {

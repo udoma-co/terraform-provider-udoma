@@ -358,7 +358,7 @@ func (o *CreateOrUpdateInventoryItemRequest) UnmarshalJSON(data []byte) (err err
 	varCreateOrUpdateInventoryItemRequest := _CreateOrUpdateInventoryItemRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateOrUpdateInventoryItemRequest)
 
 	if err != nil {

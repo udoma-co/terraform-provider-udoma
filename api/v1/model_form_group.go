@@ -535,7 +535,7 @@ func (o *FormGroup) UnmarshalJSON(data []byte) (err error) {
 	varFormGroup := _FormGroup{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varFormGroup)
 
 	if err != nil {

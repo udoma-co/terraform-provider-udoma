@@ -174,7 +174,7 @@ func (o *CreateOrUpdateCustomIDGeneratorRequest) UnmarshalJSON(data []byte) (err
 	varCreateOrUpdateCustomIDGeneratorRequest := _CreateOrUpdateCustomIDGeneratorRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateOrUpdateCustomIDGeneratorRequest)
 
 	if err != nil {

@@ -585,7 +585,7 @@ func (o *Hook) UnmarshalJSON(data []byte) (err error) {
 	varHook := _Hook{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varHook)
 
 	if err != nil {

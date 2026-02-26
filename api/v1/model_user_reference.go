@@ -174,7 +174,7 @@ func (o *UserReference) UnmarshalJSON(data []byte) (err error) {
 	varUserReference := _UserReference{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varUserReference)
 
 	if err != nil {

@@ -108,7 +108,7 @@ func (o *CustomFormValidationRequest) UnmarshalJSON(data []byte) (err error) {
 	varCustomFormValidationRequest := _CustomFormValidationRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCustomFormValidationRequest)
 
 	if err != nil {

@@ -165,7 +165,7 @@ func (o *DisplayCondition) UnmarshalJSON(data []byte) (err error) {
 	varDisplayCondition := _DisplayCondition{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varDisplayCondition)
 
 	if err != nil {

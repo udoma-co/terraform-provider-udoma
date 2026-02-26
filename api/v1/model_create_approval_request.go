@@ -240,7 +240,7 @@ func (o *CreateApprovalRequest) UnmarshalJSON(data []byte) (err error) {
 	varCreateApprovalRequest := _CreateApprovalRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateApprovalRequest)
 
 	if err != nil {

@@ -210,7 +210,7 @@ func (o *CreateOrUpdateReportEntrypointRequest) UnmarshalJSON(data []byte) (err 
 	varCreateOrUpdateReportEntrypointRequest := _CreateOrUpdateReportEntrypointRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateOrUpdateReportEntrypointRequest)
 
 	if err != nil {

@@ -333,7 +333,7 @@ func (o *ReportExecution) UnmarshalJSON(data []byte) (err error) {
 	varReportExecution := _ReportExecution{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varReportExecution)
 
 	if err != nil {

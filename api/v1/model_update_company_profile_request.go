@@ -365,7 +365,7 @@ func (o *UpdateCompanyProfileRequest) UnmarshalJSON(data []byte) (err error) {
 	varUpdateCompanyProfileRequest := _UpdateCompanyProfileRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varUpdateCompanyProfileRequest)
 
 	if err != nil {

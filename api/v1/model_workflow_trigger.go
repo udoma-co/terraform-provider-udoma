@@ -346,7 +346,7 @@ func (o *WorkflowTrigger) UnmarshalJSON(data []byte) (err error) {
 	varWorkflowTrigger := _WorkflowTrigger{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varWorkflowTrigger)
 
 	if err != nil {

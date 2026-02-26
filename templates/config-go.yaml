@@ -1,0 +1,5 @@
+---
+templateDir: /templates/go
+additionalProperties:
+  enumClassPrefix: true
+  packageName: v3

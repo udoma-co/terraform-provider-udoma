@@ -409,7 +409,7 @@ func (o *ReportDefinition) UnmarshalJSON(data []byte) (err error) {
 	varReportDefinition := _ReportDefinition{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varReportDefinition)
 
 	if err != nil {

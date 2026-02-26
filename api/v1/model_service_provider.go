@@ -749,7 +749,7 @@ func (o *ServiceProvider) UnmarshalJSON(data []byte) (err error) {
 	varServiceProvider := _ServiceProvider{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varServiceProvider)
 
 	if err != nil {

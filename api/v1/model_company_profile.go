@@ -513,7 +513,7 @@ func (o *CompanyProfile) UnmarshalJSON(data []byte) (err error) {
 	varCompanyProfile := _CompanyProfile{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCompanyProfile)
 
 	if err != nil {

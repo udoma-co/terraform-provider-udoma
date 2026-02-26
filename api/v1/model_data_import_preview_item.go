@@ -136,7 +136,7 @@ func (o *DataImportPreviewItem) UnmarshalJSON(data []byte) (err error) {
 	varDataImportPreviewItem := _DataImportPreviewItem{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varDataImportPreviewItem)
 
 	if err != nil {

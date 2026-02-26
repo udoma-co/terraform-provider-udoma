@@ -280,7 +280,7 @@ func (o *InvoiceAnalysisERechnung) UnmarshalJSON(data []byte) (err error) {
 	varInvoiceAnalysisERechnung := _InvoiceAnalysisERechnung{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varInvoiceAnalysisERechnung)
 
 	if err != nil {

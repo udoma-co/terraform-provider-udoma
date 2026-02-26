@@ -572,7 +572,7 @@ func (o *PropertyOwner) UnmarshalJSON(data []byte) (err error) {
 	varPropertyOwner := _PropertyOwner{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPropertyOwner)
 
 	if err != nil {

@@ -446,7 +446,7 @@ func (o *DocumentGeneration) UnmarshalJSON(data []byte) (err error) {
 	varDocumentGeneration := _DocumentGeneration{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varDocumentGeneration)
 
 	if err != nil {

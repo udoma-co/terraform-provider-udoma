@@ -290,7 +290,7 @@ func (o *VersionMigrator) UnmarshalJSON(data []byte) (err error) {
 	varVersionMigrator := _VersionMigrator{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varVersionMigrator)
 
 	if err != nil {

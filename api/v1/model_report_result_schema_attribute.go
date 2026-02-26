@@ -203,7 +203,7 @@ func (o *ReportResultSchemaAttribute) UnmarshalJSON(data []byte) (err error) {
 	varReportResultSchemaAttribute := _ReportResultSchemaAttribute{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varReportResultSchemaAttribute)
 
 	if err != nil {

@@ -239,7 +239,7 @@ func (o *CreateOrUpdateFeatureFlagConfigRequest) UnmarshalJSON(data []byte) (err
 	varCreateOrUpdateFeatureFlagConfigRequest := _CreateOrUpdateFeatureFlagConfigRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateOrUpdateFeatureFlagConfigRequest)
 
 	if err != nil {

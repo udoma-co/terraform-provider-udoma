@@ -107,7 +107,7 @@ func (o *ReceiveEmailInvoiceResponse) UnmarshalJSON(data []byte) (err error) {
 	varReceiveEmailInvoiceResponse := _ReceiveEmailInvoiceResponse{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varReceiveEmailInvoiceResponse)
 
 	if err != nil {

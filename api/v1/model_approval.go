@@ -617,7 +617,7 @@ func (o *Approval) UnmarshalJSON(data []byte) (err error) {
 	varApproval := _Approval{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varApproval)
 
 	if err != nil {

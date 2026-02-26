@@ -137,7 +137,7 @@ func (o *EntityReference) UnmarshalJSON(data []byte) (err error) {
 	varEntityReference := _EntityReference{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varEntityReference)
 
 	if err != nil {

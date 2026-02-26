@@ -445,7 +445,7 @@ func (o *BookingPreview) UnmarshalJSON(data []byte) (err error) {
 	varBookingPreview := _BookingPreview{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varBookingPreview)
 
 	if err != nil {

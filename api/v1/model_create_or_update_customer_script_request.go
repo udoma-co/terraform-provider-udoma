@@ -210,7 +210,7 @@ func (o *CreateOrUpdateCustomerScriptRequest) UnmarshalJSON(data []byte) (err er
 	varCreateOrUpdateCustomerScriptRequest := _CreateOrUpdateCustomerScriptRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateOrUpdateCustomerScriptRequest)
 
 	if err != nil {

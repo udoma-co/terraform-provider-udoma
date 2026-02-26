@@ -137,7 +137,7 @@ func (o *CreateNoteRequest) UnmarshalJSON(data []byte) (err error) {
 	varCreateNoteRequest := _CreateNoteRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateNoteRequest)
 
 	if err != nil {

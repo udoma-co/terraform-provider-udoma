@@ -212,7 +212,7 @@ func (o *CaseFeedbackConfig) UnmarshalJSON(data []byte) (err error) {
 	varCaseFeedbackConfig := _CaseFeedbackConfig{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCaseFeedbackConfig)
 
 	if err != nil {

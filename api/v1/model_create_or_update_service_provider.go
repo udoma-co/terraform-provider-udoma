@@ -551,7 +551,7 @@ func (o *CreateOrUpdateServiceProvider) UnmarshalJSON(data []byte) (err error) {
 	varCreateOrUpdateServiceProvider := _CreateOrUpdateServiceProvider{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateOrUpdateServiceProvider)
 
 	if err != nil {

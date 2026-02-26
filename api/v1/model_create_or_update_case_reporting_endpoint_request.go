@@ -256,7 +256,7 @@ func (o *CreateOrUpdateCaseReportingEndpointRequest) UnmarshalJSON(data []byte) 
 	varCreateOrUpdateCaseReportingEndpointRequest := _CreateOrUpdateCaseReportingEndpointRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateOrUpdateCaseReportingEndpointRequest)
 
 	if err != nil {

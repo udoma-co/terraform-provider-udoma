@@ -256,7 +256,7 @@ func (o *WorkflowStepPrerunActionDefinition) UnmarshalJSON(data []byte) (err err
 	varWorkflowStepPrerunActionDefinition := _WorkflowStepPrerunActionDefinition{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varWorkflowStepPrerunActionDefinition)
 
 	if err != nil {

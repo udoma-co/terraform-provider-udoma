@@ -108,7 +108,7 @@ func (o *ExecuteBookingTemplateRequest) UnmarshalJSON(data []byte) (err error) {
 	varExecuteBookingTemplateRequest := _ExecuteBookingTemplateRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varExecuteBookingTemplateRequest)
 
 	if err != nil {

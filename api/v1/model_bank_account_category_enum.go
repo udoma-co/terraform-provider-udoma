@@ -15,7 +15,7 @@ import (
 	"fmt"
 )
 
-// BankAccountCategoryEnum The category of the bank account indicates what type of transactions are  expected to be booked on the account and can be used for automatic booking.
+// BankAccountCategoryEnum The category of the bank account indicates what type of transactions are expected to be booked on the account and can be used for automatic booking.
 type BankAccountCategoryEnum string
 
 // List of BankAccountCategoryEnum

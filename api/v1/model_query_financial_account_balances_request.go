@@ -145,7 +145,7 @@ func (o *QueryFinancialAccountBalancesRequest) UnmarshalJSON(data []byte) (err e
 	varQueryFinancialAccountBalancesRequest := _QueryFinancialAccountBalancesRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varQueryFinancialAccountBalancesRequest)
 
 	if err != nil {

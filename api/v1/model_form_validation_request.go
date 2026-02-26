@@ -165,7 +165,7 @@ func (o *FormValidationRequest) UnmarshalJSON(data []byte) (err error) {
 	varFormValidationRequest := _FormValidationRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varFormValidationRequest)
 
 	if err != nil {

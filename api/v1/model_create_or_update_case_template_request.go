@@ -489,7 +489,7 @@ func (o *CreateOrUpdateCaseTemplateRequest) UnmarshalJSON(data []byte) (err erro
 	varCreateOrUpdateCaseTemplateRequest := _CreateOrUpdateCaseTemplateRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateOrUpdateCaseTemplateRequest)
 
 	if err != nil {

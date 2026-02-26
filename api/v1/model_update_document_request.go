@@ -182,7 +182,7 @@ func (o *UpdateDocumentRequest) UnmarshalJSON(data []byte) (err error) {
 	varUpdateDocumentRequest := _UpdateDocumentRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varUpdateDocumentRequest)
 
 	if err != nil {

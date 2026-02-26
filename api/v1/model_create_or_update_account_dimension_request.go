@@ -321,7 +321,7 @@ func (o *CreateOrUpdateAccountDimensionRequest) UnmarshalJSON(data []byte) (err 
 	varCreateOrUpdateAccountDimensionRequest := _CreateOrUpdateAccountDimensionRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateOrUpdateAccountDimensionRequest)
 
 	if err != nil {

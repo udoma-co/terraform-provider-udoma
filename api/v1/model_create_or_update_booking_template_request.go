@@ -388,7 +388,7 @@ func (o *CreateOrUpdateBookingTemplateRequest) UnmarshalJSON(data []byte) (err e
 	varCreateOrUpdateBookingTemplateRequest := _CreateOrUpdateBookingTemplateRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateOrUpdateBookingTemplateRequest)
 
 	if err != nil {

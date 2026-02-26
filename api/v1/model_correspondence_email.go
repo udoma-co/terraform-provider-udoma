@@ -137,7 +137,7 @@ func (o *CorrespondenceEmail) UnmarshalJSON(data []byte) (err error) {
 	varCorrespondenceEmail := _CorrespondenceEmail{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCorrespondenceEmail)
 
 	if err != nil {

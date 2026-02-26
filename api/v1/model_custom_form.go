@@ -211,7 +211,7 @@ func (o *CustomForm) UnmarshalJSON(data []byte) (err error) {
 	varCustomForm := _CustomForm{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCustomForm)
 
 	if err != nil {

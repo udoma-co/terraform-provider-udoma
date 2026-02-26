@@ -326,7 +326,7 @@ func (o *ReportEntrypoint) UnmarshalJSON(data []byte) (err error) {
 	varReportEntrypoint := _ReportEntrypoint{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varReportEntrypoint)
 
 	if err != nil {

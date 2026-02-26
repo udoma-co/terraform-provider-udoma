@@ -394,7 +394,7 @@ func (o *CreateOrUpdateWorkflowDefinitionRequest) UnmarshalJSON(data []byte) (er
 	varCreateOrUpdateWorkflowDefinitionRequest := _CreateOrUpdateWorkflowDefinitionRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateOrUpdateWorkflowDefinitionRequest)
 
 	if err != nil {

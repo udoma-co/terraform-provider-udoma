@@ -414,7 +414,7 @@ func (o *Meter) UnmarshalJSON(data []byte) (err error) {
 	varMeter := _Meter{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varMeter)
 
 	if err != nil {

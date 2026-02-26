@@ -536,7 +536,7 @@ func (o *AppointmentTemplate) UnmarshalJSON(data []byte) (err error) {
 	varAppointmentTemplate := _AppointmentTemplate{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varAppointmentTemplate)
 
 	if err != nil {

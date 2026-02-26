@@ -211,7 +211,7 @@ func (o *AppointmentWindow) UnmarshalJSON(data []byte) (err error) {
 	varAppointmentWindow := _AppointmentWindow{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varAppointmentWindow)
 
 	if err != nil {

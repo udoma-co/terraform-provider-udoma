@@ -172,7 +172,7 @@ func (o *ReattachInvoiceAnalysisRequest) UnmarshalJSON(data []byte) (err error) 
 	varReattachInvoiceAnalysisRequest := _ReattachInvoiceAnalysisRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varReattachInvoiceAnalysisRequest)
 
 	if err != nil {

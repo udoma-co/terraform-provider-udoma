@@ -108,7 +108,7 @@ func (o *AskQuestionRequest) UnmarshalJSON(data []byte) (err error) {
 	varAskQuestionRequest := _AskQuestionRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varAskQuestionRequest)
 
 	if err != nil {

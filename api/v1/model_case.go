@@ -611,7 +611,7 @@ func (o *Case) UnmarshalJSON(data []byte) (err error) {
 	varCase := _Case{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCase)
 
 	if err != nil {

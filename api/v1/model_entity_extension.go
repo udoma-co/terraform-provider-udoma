@@ -393,7 +393,7 @@ func (o *EntityExtension) UnmarshalJSON(data []byte) (err error) {
 	varEntityExtension := _EntityExtension{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varEntityExtension)
 
 	if err != nil {

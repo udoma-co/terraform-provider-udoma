@@ -137,7 +137,7 @@ func (o *InputItem) UnmarshalJSON(data []byte) (err error) {
 	varInputItem := _InputItem{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varInputItem)
 
 	if err != nil {

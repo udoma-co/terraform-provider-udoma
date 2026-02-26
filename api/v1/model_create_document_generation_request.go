@@ -182,7 +182,7 @@ func (o *CreateDocumentGenerationRequest) UnmarshalJSON(data []byte) (err error)
 	varCreateDocumentGenerationRequest := _CreateDocumentGenerationRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateDocumentGenerationRequest)
 
 	if err != nil {

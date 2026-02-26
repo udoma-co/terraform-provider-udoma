@@ -174,7 +174,7 @@ func (o *AccountBookingAllocation) UnmarshalJSON(data []byte) (err error) {
 	varAccountBookingAllocation := _AccountBookingAllocation{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varAccountBookingAllocation)
 
 	if err != nil {

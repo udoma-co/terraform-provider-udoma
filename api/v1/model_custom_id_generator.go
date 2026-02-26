@@ -261,7 +261,7 @@ func (o *CustomIDGenerator) UnmarshalJSON(data []byte) (err error) {
 	varCustomIDGenerator := _CustomIDGenerator{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCustomIDGenerator)
 
 	if err != nil {

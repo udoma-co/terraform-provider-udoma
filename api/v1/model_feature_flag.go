@@ -174,7 +174,7 @@ func (o *FeatureFlag) UnmarshalJSON(data []byte) (err error) {
 	varFeatureFlag := _FeatureFlag{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varFeatureFlag)
 
 	if err != nil {

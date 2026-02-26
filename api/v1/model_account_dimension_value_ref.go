@@ -145,7 +145,7 @@ func (o *AccountDimensionValueRef) UnmarshalJSON(data []byte) (err error) {
 	varAccountDimensionValueRef := _AccountDimensionValueRef{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varAccountDimensionValueRef)
 
 	if err != nil {

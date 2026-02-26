@@ -276,7 +276,7 @@ func (o *CreateDocumentRequest) UnmarshalJSON(data []byte) (err error) {
 	varCreateDocumentRequest := _CreateDocumentRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateDocumentRequest)
 
 	if err != nil {

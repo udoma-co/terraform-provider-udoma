@@ -306,7 +306,7 @@ func (o *CreateOrUpdateEntityExtensionRequest) UnmarshalJSON(data []byte) (err e
 	varCreateOrUpdateEntityExtensionRequest := _CreateOrUpdateEntityExtensionRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
+	// decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCreateOrUpdateEntityExtensionRequest)
 
 	if err != nil {
