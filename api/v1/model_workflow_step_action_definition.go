@@ -39,6 +39,8 @@ type WorkflowStepActionDefinition struct {
 	ButtonModifier *string `json:"button_modifier,omitempty"`
 	// An optional JS expression that determines whether the action can be executed or  not. If not set, this will default to true. If the expression returns false, the action will not show up in the UI.
 	CanBeExecutedExpression *string `json:"can_be_executed_expression,omitempty"`
+	// Indicates whether the client should include the user provided data in the request when executing the action. Typically this will be set to false in actions that skip a step. When set to false, forms will also not be validated on the client  side.
+	CollectData *bool `json:"collect_data,omitempty"`
 	// the ID of the next step of the workflow
 	NextStepId *string `json:"next_step_id,omitempty"`
 }
@@ -336,6 +338,38 @@ func (o *WorkflowStepActionDefinition) SetCanBeExecutedExpression(v string) {
 	o.CanBeExecutedExpression = &v
 }
 
+// GetCollectData returns the CollectData field value if set, zero value otherwise.
+func (o *WorkflowStepActionDefinition) GetCollectData() bool {
+	if o == nil || IsNil(o.CollectData) {
+		var ret bool
+		return ret
+	}
+	return *o.CollectData
+}
+
+// GetCollectDataOk returns a tuple with the CollectData field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowStepActionDefinition) GetCollectDataOk() (*bool, bool) {
+	if o == nil || IsNil(o.CollectData) {
+		return nil, false
+	}
+	return o.CollectData, true
+}
+
+// HasCollectData returns a boolean if a field has been set.
+func (o *WorkflowStepActionDefinition) HasCollectData() bool {
+	if o != nil && !IsNil(o.CollectData) {
+		return true
+	}
+
+	return false
+}
+
+// SetCollectData gets a reference to the given bool and assigns it to the CollectData field.
+func (o *WorkflowStepActionDefinition) SetCollectData(v bool) {
+	o.CollectData = &v
+}
+
 // GetNextStepId returns the NextStepId field value if set, zero value otherwise.
 func (o *WorkflowStepActionDefinition) GetNextStepId() string {
 	if o == nil || IsNil(o.NextStepId) {
@@ -400,6 +434,9 @@ func (o WorkflowStepActionDefinition) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.CanBeExecutedExpression) {
 		toSerialize["can_be_executed_expression"] = o.CanBeExecutedExpression
+	}
+	if !IsNil(o.CollectData) {
+		toSerialize["collect_data"] = o.CollectData
 	}
 	if !IsNil(o.NextStepId) {
 		toSerialize["next_step_id"] = o.NextStepId

@@ -22,8 +22,8 @@ var _ MappedNullable = &WorkflowExecutionResponse{}
 // WorkflowExecutionResponse a response for starting or executing a step in a workflow execution
 type WorkflowExecutionResponse struct {
 	Success bool `json:"success"`
-	// the result of the workflow execution as JSON
-	Result string `json:"result"`
+	// the result of the workflow execution
+	Result map[string]interface{} `json:"result"`
 	// the ID of the next step of the workflow execution
 	NextStep *string `json:"next_step,omitempty"`
 	// optional ID of an entity that the app should navigate to. This can be used when the workflow execution creates a new entity and the user is supposed to be redirected to that entity.
@@ -37,7 +37,7 @@ type _WorkflowExecutionResponse WorkflowExecutionResponse
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewWorkflowExecutionResponse(success bool, result string) *WorkflowExecutionResponse {
+func NewWorkflowExecutionResponse(success bool, result map[string]interface{}) *WorkflowExecutionResponse {
 	this := WorkflowExecutionResponse{}
 	this.Success = success
 	this.Result = result
@@ -77,9 +77,9 @@ func (o *WorkflowExecutionResponse) SetSuccess(v bool) {
 }
 
 // GetResult returns the Result field value
-func (o *WorkflowExecutionResponse) GetResult() string {
+func (o *WorkflowExecutionResponse) GetResult() map[string]interface{} {
 	if o == nil {
-		var ret string
+		var ret map[string]interface{}
 		return ret
 	}
 
@@ -88,15 +88,15 @@ func (o *WorkflowExecutionResponse) GetResult() string {
 
 // GetResultOk returns a tuple with the Result field value
 // and a boolean to check if the value has been set.
-func (o *WorkflowExecutionResponse) GetResultOk() (*string, bool) {
+func (o *WorkflowExecutionResponse) GetResultOk() (map[string]interface{}, bool) {
 	if o == nil {
-		return nil, false
+		return map[string]interface{}{}, false
 	}
-	return &o.Result, true
+	return o.Result, true
 }
 
 // SetResult sets field value
-func (o *WorkflowExecutionResponse) SetResult(v string) {
+func (o *WorkflowExecutionResponse) SetResult(v map[string]interface{}) {
 	o.Result = v
 }
 

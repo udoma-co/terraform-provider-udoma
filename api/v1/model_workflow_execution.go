@@ -38,8 +38,8 @@ type WorkflowExecution struct {
 	CurrentStep string `json:"current_step"`
 	// the name of the step that is the current step of the workflow execution. This is used in the UI to display the current step, without loading the step definition.
 	CurrentStepName *string `json:"current_step_name,omitempty"`
-	// the data collected and generated during the workflow execution, serialiased as JSON
-	Context *string `json:"context,omitempty"`
+	// the data collected and generated during the workflow execution
+	Context map[string]interface{} `json:"context,omitempty"`
 	// the steps of the workflow execution, including the result of the execution of each step
 	Steps       []WorkflowExecutionStep       `json:"steps"`
 	StepHistory []WorkflowExecutionStepResult `json:"step_history,omitempty"`
@@ -305,19 +305,19 @@ func (o *WorkflowExecution) SetCurrentStepName(v string) {
 }
 
 // GetContext returns the Context field value if set, zero value otherwise.
-func (o *WorkflowExecution) GetContext() string {
+func (o *WorkflowExecution) GetContext() map[string]interface{} {
 	if o == nil || IsNil(o.Context) {
-		var ret string
+		var ret map[string]interface{}
 		return ret
 	}
-	return *o.Context
+	return o.Context
 }
 
 // GetContextOk returns a tuple with the Context field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *WorkflowExecution) GetContextOk() (*string, bool) {
+func (o *WorkflowExecution) GetContextOk() (map[string]interface{}, bool) {
 	if o == nil || IsNil(o.Context) {
-		return nil, false
+		return map[string]interface{}{}, false
 	}
 	return o.Context, true
 }
@@ -331,9 +331,9 @@ func (o *WorkflowExecution) HasContext() bool {
 	return false
 }
 
-// SetContext gets a reference to the given string and assigns it to the Context field.
-func (o *WorkflowExecution) SetContext(v string) {
-	o.Context = &v
+// SetContext gets a reference to the given map[string]interface{} and assigns it to the Context field.
+func (o *WorkflowExecution) SetContext(v map[string]interface{}) {
+	o.Context = v
 }
 
 // GetSteps returns the Steps field value
