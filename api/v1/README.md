@@ -348,7 +348,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**MarkInvoicesAsPaid**](docs/DefaultAPI.md#markinvoicesaspaid) | **Post** /invoices/batch/mark-paid | Mark multiple invoices as paid
 *DefaultAPI* | [**OutlookGenerateTenantAnswer**](docs/DefaultAPI.md#outlookgeneratetenantanswer) | **Post** /outlook/tenants/{tenantID}/generate-answer | Generate an email answer for a tenant
 *DefaultAPI* | [**OutlookGetProvider**](docs/DefaultAPI.md#outlookgetprovider) | **Get** /outlook/providers | Get service provider by email
-*DefaultAPI* | [**OutlookGetProviderCases**](docs/DefaultAPI.md#outlookgetprovidercases) | **Get** /outlook/providers/{providerID}/cases | Get recent cases for a service provider
+*DefaultAPI* | [**OutlookGetProviderCases**](docs/DefaultAPI.md#outlookgetprovidercases) | **Get** /outlook/providers/{serviceProviderID}/cases | Get recent cases for a service provider
 *DefaultAPI* | [**OutlookGetSenderType**](docs/DefaultAPI.md#outlookgetsendertype) | **Get** /outlook/sender-type | Get sender type by email
 *DefaultAPI* | [**OutlookGetTenant**](docs/DefaultAPI.md#outlookgettenant) | **Get** /outlook/tenants | Get tenant by email
 *DefaultAPI* | [**OutlookGetTenantCases**](docs/DefaultAPI.md#outlookgettenantcases) | **Get** /outlook/tenants/{tenantID}/cases | Get recent cases for a tenant
@@ -438,7 +438,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**SendAppointmentScheduleInvitation**](docs/DefaultAPI.md#sendappointmentscheduleinvitation) | **Post** /calendar/appointments/schedule/{scheduleID}/invitation | Send invitation to recepients after creating a new appointment schedule
 *DefaultAPI* | [**SendDocumentViaMail**](docs/DefaultAPI.md#senddocumentviamail) | **Post** /document-generation/documents/{docID}/send-via-mail | Send the document generation via physical mail
 *DefaultAPI* | [**SendNotification**](docs/DefaultAPI.md#sendnotification) | **Post** /notification/{notificationName}/send | Send notification
-*DefaultAPI* | [**StartWorkflowExecution**](docs/DefaultAPI.md#startworkflowexecution) | **Post** /workflows/execution | Start a new workflow execution
+*DefaultAPI* | [**StartWorkflowExecution**](docs/DefaultAPI.md#startworkflowexecution) | **Post** /workflows/definition/{definitionID}/execute | Start a new workflow execution
 *DefaultAPI* | [**SubmitPropertyHandover**](docs/DefaultAPI.md#submitpropertyhandover) | **Post** /property-handovers/handovers/{handoverID}/submit | Submit the data for a property handover
 *DefaultAPI* | [**SyncConnectorData**](docs/DefaultAPI.md#syncconnectordata) | **Post** /connector/sync | Sync the next batch of connector data.
 *DefaultAPI* | [**TestDocumentTemplatePlaceholders**](docs/DefaultAPI.md#testdocumenttemplateplaceholders) | **Post** /document-generation/template/{templateID}/placeholders | Test placeholder generation for given template and data
@@ -550,6 +550,8 @@ Class | Method | HTTP request | Description
  - [Bank](docs/Bank.md)
  - [BankAccount](docs/BankAccount.md)
  - [BankAccountAttributesPartial](docs/BankAccountAttributesPartial.md)
+ - [BankAccountAutoBookingConfig](docs/BankAccountAutoBookingConfig.md)
+ - [BankAccountAutoBookingRule](docs/BankAccountAutoBookingRule.md)
  - [BankAccountCategoryEnum](docs/BankAccountCategoryEnum.md)
  - [BankConnectionStatusEnum](docs/BankConnectionStatusEnum.md)
  - [BankConnectionTransactionImportTypeEnum](docs/BankConnectionTransactionImportTypeEnum.md)
@@ -717,7 +719,6 @@ Class | Method | HTTP request | Description
  - [ExecuteCommentTemplateResponse](docs/ExecuteCommentTemplateResponse.md)
  - [ExecuteReportRequest](docs/ExecuteReportRequest.md)
  - [ExecuteWorkflowEntrypointRequest](docs/ExecuteWorkflowEntrypointRequest.md)
- - [ExecuteWorkflowStepRequest](docs/ExecuteWorkflowStepRequest.md)
  - [ExternalUserData](docs/ExternalUserData.md)
  - [FAQEntry](docs/FAQEntry.md)
  - [FaqEntryAttributesPartial](docs/FaqEntryAttributesPartial.md)
@@ -943,7 +944,7 @@ Class | Method | HTTP request | Description
  - [SignatureStatusType](docs/SignatureStatusType.md)
  - [SignerNotificationTypeEnum](docs/SignerNotificationTypeEnum.md)
  - [SignerStatusType](docs/SignerStatusType.md)
- - [StartWorkflowExecutionRequest](docs/StartWorkflowExecutionRequest.md)
+ - [StepExecutionRequestPartials](docs/StepExecutionRequestPartials.md)
  - [SubmitPropertyHandoverRequest](docs/SubmitPropertyHandoverRequest.md)
  - [Tenancy](docs/Tenancy.md)
  - [TenancyAttributesPartial](docs/TenancyAttributesPartial.md)
@@ -984,6 +985,7 @@ Class | Method | HTTP request | Description
  - [WorkflowEntrypointAttributesPartial](docs/WorkflowEntrypointAttributesPartial.md)
  - [WorkflowEntrypointFilter](docs/WorkflowEntrypointFilter.md)
  - [WorkflowEntrypointLocation](docs/WorkflowEntrypointLocation.md)
+ - [WorkflowEntrypointRepeatability](docs/WorkflowEntrypointRepeatability.md)
  - [WorkflowEntrypointValidation](docs/WorkflowEntrypointValidation.md)
  - [WorkflowEntrypointValidationResult](docs/WorkflowEntrypointValidationResult.md)
  - [WorkflowEntrypointValidationSeverity](docs/WorkflowEntrypointValidationSeverity.md)
@@ -993,11 +995,13 @@ Class | Method | HTTP request | Description
  - [WorkflowExecutionStep](docs/WorkflowExecutionStep.md)
  - [WorkflowExecutionStepResult](docs/WorkflowExecutionStepResult.md)
  - [WorkflowInitStepDefinition](docs/WorkflowInitStepDefinition.md)
+ - [WorkflowInitStepExecutionRequest](docs/WorkflowInitStepExecutionRequest.md)
  - [WorkflowStepAction](docs/WorkflowStepAction.md)
  - [WorkflowStepActionAttributesPartial](docs/WorkflowStepActionAttributesPartial.md)
  - [WorkflowStepActionDefinition](docs/WorkflowStepActionDefinition.md)
  - [WorkflowStepDefinition](docs/WorkflowStepDefinition.md)
  - [WorkflowStepDefinitionAttributesPartial](docs/WorkflowStepDefinitionAttributesPartial.md)
+ - [WorkflowStepExecutionRequest](docs/WorkflowStepExecutionRequest.md)
  - [WorkflowStepPrerunActionDefinition](docs/WorkflowStepPrerunActionDefinition.md)
  - [WorkflowTrigger](docs/WorkflowTrigger.md)
  - [YesNoOrValue](docs/YesNoOrValue.md)

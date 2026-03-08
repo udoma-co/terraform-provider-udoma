@@ -30,10 +30,9 @@ type CreateOrUpdateWorkflowDefinitionRequest struct {
 	// a map of values, where the key and values are strings
 	EnvVars *map[string]string `json:"env_vars,omitempty"`
 	// ID of the first step of the workflow, which will be executed when the  workflow is started. If the workflow is started via a manual trigger, the init_step will be executed ahead of that.
-	FirstStepId string                             `json:"first_step_id"`
-	InitStep    NullableWorkflowInitStepDefinition `json:"init_step,omitempty"`
-	Steps       []WorkflowStepDefinition           `json:"steps"`
-	Version     *int32                             `json:"version,omitempty"`
+	FirstStepId string                   `json:"first_step_id"`
+	Steps       []WorkflowStepDefinition `json:"steps"`
+	Version     *int32                   `json:"version,omitempty"`
 }
 
 type _CreateOrUpdateWorkflowDefinitionRequest CreateOrUpdateWorkflowDefinitionRequest
@@ -234,49 +233,6 @@ func (o *CreateOrUpdateWorkflowDefinitionRequest) SetFirstStepId(v string) {
 	o.FirstStepId = v
 }
 
-// GetInitStep returns the InitStep field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *CreateOrUpdateWorkflowDefinitionRequest) GetInitStep() WorkflowInitStepDefinition {
-	if o == nil || IsNil(o.InitStep.Get()) {
-		var ret WorkflowInitStepDefinition
-		return ret
-	}
-	return *o.InitStep.Get()
-}
-
-// GetInitStepOk returns a tuple with the InitStep field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *CreateOrUpdateWorkflowDefinitionRequest) GetInitStepOk() (*WorkflowInitStepDefinition, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.InitStep.Get(), o.InitStep.IsSet()
-}
-
-// HasInitStep returns a boolean if a field has been set.
-func (o *CreateOrUpdateWorkflowDefinitionRequest) HasInitStep() bool {
-	if o != nil && o.InitStep.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetInitStep gets a reference to the given NullableWorkflowInitStepDefinition and assigns it to the InitStep field.
-func (o *CreateOrUpdateWorkflowDefinitionRequest) SetInitStep(v WorkflowInitStepDefinition) {
-	o.InitStep.Set(&v)
-}
-
-// SetInitStepNil sets the value for InitStep to be an explicit nil
-func (o *CreateOrUpdateWorkflowDefinitionRequest) SetInitStepNil() {
-	o.InitStep.Set(nil)
-}
-
-// UnsetInitStep ensures that no value is present for InitStep, not even an explicit nil
-func (o *CreateOrUpdateWorkflowDefinitionRequest) UnsetInitStep() {
-	o.InitStep.Unset()
-}
-
 // GetSteps returns the Steps field value
 func (o *CreateOrUpdateWorkflowDefinitionRequest) GetSteps() []WorkflowStepDefinition {
 	if o == nil {
@@ -357,9 +313,6 @@ func (o CreateOrUpdateWorkflowDefinitionRequest) ToMap() (map[string]interface{}
 		toSerialize["env_vars"] = o.EnvVars
 	}
 	toSerialize["first_step_id"] = o.FirstStepId
-	if o.InitStep.IsSet() {
-		toSerialize["init_step"] = o.InitStep.Get()
-	}
 	toSerialize["steps"] = o.Steps
 	if !IsNil(o.Version) {
 		toSerialize["version"] = o.Version

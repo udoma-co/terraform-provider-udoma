@@ -47,15 +47,13 @@ type workflowDefinitionModel struct {
 	NameExpression types.String       `tfsdk:"name_expression"`
 	EnvVars        types.Map          `tfsdk:"env_vars"`
 	FirstStepID    types.String       `tfsdk:"first_step_id"`
-	InitStep       tf.JsonObjectValue `tfsdk:"init_step"`
 	Steps          tf.JsonObjectValue `tfsdk:"steps"`
 	Version        types.Int32        `tfsdk:"version"`
 }
 
 func NewWorkflowDefinitionModelNull() *workflowDefinitionModel {
 	return &workflowDefinitionModel{
-		InitStep: tf.NewJsonObjectNull(),
-		Steps:    tf.NewJsonObjectNull(),
+		Steps: tf.NewJsonObjectNull(),
 	}
 }
 
@@ -122,11 +120,6 @@ func (r *workflowDefinition) Schema(ctx context.Context, req resource.SchemaRequ
 				Validators: []validator.String{
 					stringvalidator.LengthAtMost(250),
 				},
-			},
-			"init_step": schema.StringAttribute{
-				CustomType:  tf.JsonObjectType{},
-				Optional:    true,
-				Description: "Optional JSON serialised initial step definition",
 			},
 			"steps": schema.StringAttribute{
 				CustomType:  tf.JsonObjectType{},
@@ -348,15 +341,6 @@ func (model *workflowDefinitionModel) fromAPI(workflowDefinition *api.WorkflowDe
 		model.EnvVars = modelValue
 	}
 
-	if workflowDefinition.InitStep.IsSet() {
-		step := workflowDefinition.InitStep.Get()
-		jsonData, err := json.Marshal(step)
-		if err != nil {
-			return fmt.Errorf("failed to marshal init step: %w", err)
-		}
-		model.InitStep = tf.NewJsonObjectValue(string(jsonData))
-	}
-
 	steps, err := json.Marshal(workflowDefinition.Steps)
 	if err != nil {
 		return fmt.Errorf("failed to marshal steps: %w", err)
@@ -379,16 +363,6 @@ func (model *workflowDefinitionModel) toAPIRequest() (api.CreateOrUpdateWorkflow
 
 	if envVars := modelMapToStringMap(model.EnvVars); len(envVars) > 0 {
 		workflowDefinition.EnvVars = &envVars
-	}
-
-	if !model.InitStep.IsNull() && !model.InitStep.IsUnknown() {
-		var jsonVal *api.WorkflowInitStepDefinition
-		if diag := model.InitStep.Unmarshal(&jsonVal); diag.HasError() {
-			return workflowDefinition, fmt.Errorf("failed to unmarshal initial step: %v", diag)
-		}
-		if jsonVal != nil {
-			workflowDefinition.InitStep = *api.NewNullableWorkflowInitStepDefinition(jsonVal)
-		}
 	}
 
 	if !model.Steps.IsNull() && !model.Steps.IsUnknown() {

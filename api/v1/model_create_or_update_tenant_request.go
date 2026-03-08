@@ -30,9 +30,11 @@ type CreateOrUpdateTenantRequest struct {
 	// Name of the company. Only used in case tenancy is between lessor and a company, otherwise this field is empty.
 	Company *string `json:"company,omitempty"`
 	// The email address of the tenant. Used for sending communication to them, as well as used for invitations.
-	Email string `json:"email"`
+	Email *string `json:"email,omitempty"`
 	// The phone number of the tenant. Not directly used by the system, but can be used by managers and service providers to contact the tenant.
-	PhoneNumber string `json:"phone_number"`
+	PhoneNumber *string      `json:"phone_number,omitempty"`
+	Address     *Address     `json:"address,omitempty"`
+	BankDetails *BankDetails `json:"bank_details,omitempty"`
 	// Extensions data for this tenant, keyed by extension key
 	Extensions *map[string]map[string]interface{} `json:"extensions,omitempty"`
 }
@@ -43,12 +45,10 @@ type _CreateOrUpdateTenantRequest CreateOrUpdateTenantRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateOrUpdateTenantRequest(firstName string, lastName string, email string, phoneNumber string) *CreateOrUpdateTenantRequest {
+func NewCreateOrUpdateTenantRequest(firstName string, lastName string) *CreateOrUpdateTenantRequest {
 	this := CreateOrUpdateTenantRequest{}
 	this.FirstName = firstName
 	this.LastName = lastName
-	this.Email = email
-	this.PhoneNumber = phoneNumber
 	return &this
 }
 
@@ -172,52 +172,132 @@ func (o *CreateOrUpdateTenantRequest) SetCompany(v string) {
 	o.Company = &v
 }
 
-// GetEmail returns the Email field value
+// GetEmail returns the Email field value if set, zero value otherwise.
 func (o *CreateOrUpdateTenantRequest) GetEmail() string {
-	if o == nil {
+	if o == nil || IsNil(o.Email) {
 		var ret string
 		return ret
 	}
-
-	return o.Email
+	return *o.Email
 }
 
-// GetEmailOk returns a tuple with the Email field value
+// GetEmailOk returns a tuple with the Email field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateTenantRequest) GetEmailOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Email) {
 		return nil, false
 	}
-	return &o.Email, true
+	return o.Email, true
 }
 
-// SetEmail sets field value
+// HasEmail returns a boolean if a field has been set.
+func (o *CreateOrUpdateTenantRequest) HasEmail() bool {
+	if o != nil && !IsNil(o.Email) {
+		return true
+	}
+
+	return false
+}
+
+// SetEmail gets a reference to the given string and assigns it to the Email field.
 func (o *CreateOrUpdateTenantRequest) SetEmail(v string) {
-	o.Email = v
+	o.Email = &v
 }
 
-// GetPhoneNumber returns the PhoneNumber field value
+// GetPhoneNumber returns the PhoneNumber field value if set, zero value otherwise.
 func (o *CreateOrUpdateTenantRequest) GetPhoneNumber() string {
-	if o == nil {
+	if o == nil || IsNil(o.PhoneNumber) {
 		var ret string
 		return ret
 	}
-
-	return o.PhoneNumber
+	return *o.PhoneNumber
 }
 
-// GetPhoneNumberOk returns a tuple with the PhoneNumber field value
+// GetPhoneNumberOk returns a tuple with the PhoneNumber field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdateTenantRequest) GetPhoneNumberOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.PhoneNumber) {
 		return nil, false
 	}
-	return &o.PhoneNumber, true
+	return o.PhoneNumber, true
 }
 
-// SetPhoneNumber sets field value
+// HasPhoneNumber returns a boolean if a field has been set.
+func (o *CreateOrUpdateTenantRequest) HasPhoneNumber() bool {
+	if o != nil && !IsNil(o.PhoneNumber) {
+		return true
+	}
+
+	return false
+}
+
+// SetPhoneNumber gets a reference to the given string and assigns it to the PhoneNumber field.
 func (o *CreateOrUpdateTenantRequest) SetPhoneNumber(v string) {
-	o.PhoneNumber = v
+	o.PhoneNumber = &v
+}
+
+// GetAddress returns the Address field value if set, zero value otherwise.
+func (o *CreateOrUpdateTenantRequest) GetAddress() Address {
+	if o == nil || IsNil(o.Address) {
+		var ret Address
+		return ret
+	}
+	return *o.Address
+}
+
+// GetAddressOk returns a tuple with the Address field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateTenantRequest) GetAddressOk() (*Address, bool) {
+	if o == nil || IsNil(o.Address) {
+		return nil, false
+	}
+	return o.Address, true
+}
+
+// HasAddress returns a boolean if a field has been set.
+func (o *CreateOrUpdateTenantRequest) HasAddress() bool {
+	if o != nil && !IsNil(o.Address) {
+		return true
+	}
+
+	return false
+}
+
+// SetAddress gets a reference to the given Address and assigns it to the Address field.
+func (o *CreateOrUpdateTenantRequest) SetAddress(v Address) {
+	o.Address = &v
+}
+
+// GetBankDetails returns the BankDetails field value if set, zero value otherwise.
+func (o *CreateOrUpdateTenantRequest) GetBankDetails() BankDetails {
+	if o == nil || IsNil(o.BankDetails) {
+		var ret BankDetails
+		return ret
+	}
+	return *o.BankDetails
+}
+
+// GetBankDetailsOk returns a tuple with the BankDetails field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateTenantRequest) GetBankDetailsOk() (*BankDetails, bool) {
+	if o == nil || IsNil(o.BankDetails) {
+		return nil, false
+	}
+	return o.BankDetails, true
+}
+
+// HasBankDetails returns a boolean if a field has been set.
+func (o *CreateOrUpdateTenantRequest) HasBankDetails() bool {
+	if o != nil && !IsNil(o.BankDetails) {
+		return true
+	}
+
+	return false
+}
+
+// SetBankDetails gets a reference to the given BankDetails and assigns it to the BankDetails field.
+func (o *CreateOrUpdateTenantRequest) SetBankDetails(v BankDetails) {
+	o.BankDetails = &v
 }
 
 // GetExtensions returns the Extensions field value if set, zero value otherwise.
@@ -270,8 +350,18 @@ func (o CreateOrUpdateTenantRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Company) {
 		toSerialize["company"] = o.Company
 	}
-	toSerialize["email"] = o.Email
-	toSerialize["phone_number"] = o.PhoneNumber
+	if !IsNil(o.Email) {
+		toSerialize["email"] = o.Email
+	}
+	if !IsNil(o.PhoneNumber) {
+		toSerialize["phone_number"] = o.PhoneNumber
+	}
+	if !IsNil(o.Address) {
+		toSerialize["address"] = o.Address
+	}
+	if !IsNil(o.BankDetails) {
+		toSerialize["bank_details"] = o.BankDetails
+	}
 	if !IsNil(o.Extensions) {
 		toSerialize["extensions"] = o.Extensions
 	}
@@ -285,8 +375,6 @@ func (o *CreateOrUpdateTenantRequest) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"first_name",
 		"last_name",
-		"email",
-		"phone_number",
 	}
 
 	allProperties := make(map[string]interface{})

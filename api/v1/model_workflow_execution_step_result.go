@@ -26,8 +26,8 @@ type WorkflowExecutionStepResult struct {
 	Action string `json:"action"`
 	// The timestamp of when the workflow step execution was executed
 	ExecutedAt int64 `json:"executed_at"`
-	// the result of the workflow step execution as JSON
-	Data *string `json:"data,omitempty"`
+	// the result of the workflow step execution
+	Data map[string]interface{} `json:"data,omitempty"`
 }
 
 type _WorkflowExecutionStepResult WorkflowExecutionStepResult
@@ -125,19 +125,19 @@ func (o *WorkflowExecutionStepResult) SetExecutedAt(v int64) {
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *WorkflowExecutionStepResult) GetData() string {
+func (o *WorkflowExecutionStepResult) GetData() map[string]interface{} {
 	if o == nil || IsNil(o.Data) {
-		var ret string
+		var ret map[string]interface{}
 		return ret
 	}
-	return *o.Data
+	return o.Data
 }
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *WorkflowExecutionStepResult) GetDataOk() (*string, bool) {
+func (o *WorkflowExecutionStepResult) GetDataOk() (map[string]interface{}, bool) {
 	if o == nil || IsNil(o.Data) {
-		return nil, false
+		return map[string]interface{}{}, false
 	}
 	return o.Data, true
 }
@@ -151,9 +151,9 @@ func (o *WorkflowExecutionStepResult) HasData() bool {
 	return false
 }
 
-// SetData gets a reference to the given string and assigns it to the Data field.
-func (o *WorkflowExecutionStepResult) SetData(v string) {
-	o.Data = &v
+// SetData gets a reference to the given map[string]interface{} and assigns it to the Data field.
+func (o *WorkflowExecutionStepResult) SetData(v map[string]interface{}) {
+	o.Data = v
 }
 
 func (o WorkflowExecutionStepResult) MarshalJSON() ([]byte, error) {

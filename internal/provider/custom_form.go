@@ -668,7 +668,9 @@ func (input *CustomFormInputModel) fromApiResponse(resp *v1.FormInput) (diags di
 		if len(input.Items) <= i {
 			input.Items = append(input.Items, CustomFormInputItemModel{})
 		}
-		input.Items[i].fromApiResponse(&resp.Items[i])
+		if diags = input.Items[i].fromApiResponse(&resp.Items[i]); diags.HasError() {
+			return
+		}
 	}
 
 	if resp.DisplayCondition.IsSet() {

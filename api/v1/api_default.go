@@ -13403,15 +13403,15 @@ func (a *DefaultAPIService) ExecuteWorkflowEntrypointExecute(r ApiExecuteWorkflo
 }
 
 type ApiExecuteWorkflowExecutionStepRequest struct {
-	ctx                        context.Context
-	ApiService                 *DefaultAPIService
-	executionID                string
-	executeWorkflowStepRequest *ExecuteWorkflowStepRequest
+	ctx                          context.Context
+	ApiService                   *DefaultAPIService
+	executionID                  string
+	workflowStepExecutionRequest *WorkflowStepExecutionRequest
 }
 
 // Workflow execution step to be updated
-func (r ApiExecuteWorkflowExecutionStepRequest) ExecuteWorkflowStepRequest(executeWorkflowStepRequest ExecuteWorkflowStepRequest) ApiExecuteWorkflowExecutionStepRequest {
-	r.executeWorkflowStepRequest = &executeWorkflowStepRequest
+func (r ApiExecuteWorkflowExecutionStepRequest) WorkflowStepExecutionRequest(workflowStepExecutionRequest WorkflowStepExecutionRequest) ApiExecuteWorkflowExecutionStepRequest {
+	r.workflowStepExecutionRequest = &workflowStepExecutionRequest
 	return r
 }
 
@@ -13456,8 +13456,8 @@ func (a *DefaultAPIService) ExecuteWorkflowExecutionStepExecute(r ApiExecuteWork
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.executeWorkflowStepRequest == nil {
-		return localVarReturnValue, nil, reportError("executeWorkflowStepRequest is required and must be specified")
+	if r.workflowStepExecutionRequest == nil {
+		return localVarReturnValue, nil, reportError("workflowStepExecutionRequest is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -13478,7 +13478,7 @@ func (a *DefaultAPIService) ExecuteWorkflowExecutionStepExecute(r ApiExecuteWork
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.executeWorkflowStepRequest
+	localVarPostBody = r.workflowStepExecutionRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -27563,7 +27563,7 @@ func (a *DefaultAPIService) OutlookGetProviderCasesExecute(r ApiOutlookGetProvid
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/outlook/providers/{providerID}/cases"
+	localVarPath := localBasePath + "/outlook/providers/{serviceProviderID}/cases"
 	localVarPath = strings.Replace(localVarPath, "{"+"serviceProviderID"+"}", url.PathEscape(parameterValueToString(r.serviceProviderID, "serviceProviderID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -37494,15 +37494,9 @@ func (a *DefaultAPIService) SendNotificationExecute(r ApiSendNotificationRequest
 }
 
 type ApiStartWorkflowExecutionRequest struct {
-	ctx                           context.Context
-	ApiService                    *DefaultAPIService
-	startWorkflowExecutionRequest *StartWorkflowExecutionRequest
-}
-
-// Workflow execution to be started
-func (r ApiStartWorkflowExecutionRequest) StartWorkflowExecutionRequest(startWorkflowExecutionRequest StartWorkflowExecutionRequest) ApiStartWorkflowExecutionRequest {
-	r.startWorkflowExecutionRequest = &startWorkflowExecutionRequest
-	return r
+	ctx          context.Context
+	ApiService   *DefaultAPIService
+	definitionID string
 }
 
 func (r ApiStartWorkflowExecutionRequest) Execute() (*WorkflowExecutionResponse, *http.Response, error) {
@@ -37513,12 +37507,14 @@ func (r ApiStartWorkflowExecutionRequest) Execute() (*WorkflowExecutionResponse,
 StartWorkflowExecution Start a new workflow execution
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param definitionID unique generated ID of a workflow definition
 	@return ApiStartWorkflowExecutionRequest
 */
-func (a *DefaultAPIService) StartWorkflowExecution(ctx context.Context) ApiStartWorkflowExecutionRequest {
+func (a *DefaultAPIService) StartWorkflowExecution(ctx context.Context, definitionID string) ApiStartWorkflowExecutionRequest {
 	return ApiStartWorkflowExecutionRequest{
-		ApiService: a,
-		ctx:        ctx,
+		ApiService:   a,
+		ctx:          ctx,
+		definitionID: definitionID,
 	}
 }
 
@@ -37538,17 +37534,15 @@ func (a *DefaultAPIService) StartWorkflowExecutionExecute(r ApiStartWorkflowExec
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/workflows/execution"
+	localVarPath := localBasePath + "/workflows/definition/{definitionID}/execute"
+	localVarPath = strings.Replace(localVarPath, "{"+"definitionID"+"}", url.PathEscape(parameterValueToString(r.definitionID, "definitionID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.startWorkflowExecutionRequest == nil {
-		return localVarReturnValue, nil, reportError("startWorkflowExecutionRequest is required and must be specified")
-	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
+	localVarHTTPContentTypes := []string{}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -37564,8 +37558,6 @@ func (a *DefaultAPIService) StartWorkflowExecutionExecute(r ApiStartWorkflowExec
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	// body params
-	localVarPostBody = r.startWorkflowExecutionRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

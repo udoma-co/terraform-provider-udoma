@@ -31,9 +31,11 @@ type CreateOrUpdateWorkflowEntrypointRequest struct {
 	// Optional icon of the entrypoint
 	Icon *string `json:"icon,omitempty"`
 	// a map of values, where the key and values are strings
-	Label map[string]string `json:"label"`
+	Label      map[string]string               `json:"label"`
+	Repeatable WorkflowEntrypointRepeatability `json:"repeatable"`
 	// optional JS script to be executed before the workflow is started
-	InitScript *string `json:"init_script,omitempty"`
+	InitScript *string                            `json:"init_script,omitempty"`
+	InitStep   NullableWorkflowInitStepDefinition `json:"init_step,omitempty"`
 }
 
 type _CreateOrUpdateWorkflowEntrypointRequest CreateOrUpdateWorkflowEntrypointRequest
@@ -42,11 +44,12 @@ type _CreateOrUpdateWorkflowEntrypointRequest CreateOrUpdateWorkflowEntrypointRe
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateOrUpdateWorkflowEntrypointRequest(workflowDefinitionRef string, appLocation WorkflowEntrypointLocation, label map[string]string) *CreateOrUpdateWorkflowEntrypointRequest {
+func NewCreateOrUpdateWorkflowEntrypointRequest(workflowDefinitionRef string, appLocation WorkflowEntrypointLocation, label map[string]string, repeatable WorkflowEntrypointRepeatability) *CreateOrUpdateWorkflowEntrypointRequest {
 	this := CreateOrUpdateWorkflowEntrypointRequest{}
 	this.WorkflowDefinitionRef = workflowDefinitionRef
 	this.AppLocation = appLocation
 	this.Label = label
+	this.Repeatable = repeatable
 	return &this
 }
 
@@ -226,6 +229,30 @@ func (o *CreateOrUpdateWorkflowEntrypointRequest) SetLabel(v map[string]string) 
 	o.Label = v
 }
 
+// GetRepeatable returns the Repeatable field value
+func (o *CreateOrUpdateWorkflowEntrypointRequest) GetRepeatable() WorkflowEntrypointRepeatability {
+	if o == nil {
+		var ret WorkflowEntrypointRepeatability
+		return ret
+	}
+
+	return o.Repeatable
+}
+
+// GetRepeatableOk returns a tuple with the Repeatable field value
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateWorkflowEntrypointRequest) GetRepeatableOk() (*WorkflowEntrypointRepeatability, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Repeatable, true
+}
+
+// SetRepeatable sets field value
+func (o *CreateOrUpdateWorkflowEntrypointRequest) SetRepeatable(v WorkflowEntrypointRepeatability) {
+	o.Repeatable = v
+}
+
 // GetInitScript returns the InitScript field value if set, zero value otherwise.
 func (o *CreateOrUpdateWorkflowEntrypointRequest) GetInitScript() string {
 	if o == nil || IsNil(o.InitScript) {
@@ -258,6 +285,49 @@ func (o *CreateOrUpdateWorkflowEntrypointRequest) SetInitScript(v string) {
 	o.InitScript = &v
 }
 
+// GetInitStep returns the InitStep field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CreateOrUpdateWorkflowEntrypointRequest) GetInitStep() WorkflowInitStepDefinition {
+	if o == nil || IsNil(o.InitStep.Get()) {
+		var ret WorkflowInitStepDefinition
+		return ret
+	}
+	return *o.InitStep.Get()
+}
+
+// GetInitStepOk returns a tuple with the InitStep field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CreateOrUpdateWorkflowEntrypointRequest) GetInitStepOk() (*WorkflowInitStepDefinition, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.InitStep.Get(), o.InitStep.IsSet()
+}
+
+// HasInitStep returns a boolean if a field has been set.
+func (o *CreateOrUpdateWorkflowEntrypointRequest) HasInitStep() bool {
+	if o != nil && o.InitStep.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetInitStep gets a reference to the given NullableWorkflowInitStepDefinition and assigns it to the InitStep field.
+func (o *CreateOrUpdateWorkflowEntrypointRequest) SetInitStep(v WorkflowInitStepDefinition) {
+	o.InitStep.Set(&v)
+}
+
+// SetInitStepNil sets the value for InitStep to be an explicit nil
+func (o *CreateOrUpdateWorkflowEntrypointRequest) SetInitStepNil() {
+	o.InitStep.Set(nil)
+}
+
+// UnsetInitStep ensures that no value is present for InitStep, not even an explicit nil
+func (o *CreateOrUpdateWorkflowEntrypointRequest) UnsetInitStep() {
+	o.InitStep.Unset()
+}
+
 func (o CreateOrUpdateWorkflowEntrypointRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -280,8 +350,12 @@ func (o CreateOrUpdateWorkflowEntrypointRequest) ToMap() (map[string]interface{}
 		toSerialize["icon"] = o.Icon
 	}
 	toSerialize["label"] = o.Label
+	toSerialize["repeatable"] = o.Repeatable
 	if !IsNil(o.InitScript) {
 		toSerialize["init_script"] = o.InitScript
+	}
+	if o.InitStep.IsSet() {
+		toSerialize["init_step"] = o.InitStep.Get()
 	}
 	return toSerialize, nil
 }
@@ -294,6 +368,7 @@ func (o *CreateOrUpdateWorkflowEntrypointRequest) UnmarshalJSON(data []byte) (er
 		"workflow_definition_ref",
 		"app_location",
 		"label",
+		"repeatable",
 	}
 
 	allProperties := make(map[string]interface{})

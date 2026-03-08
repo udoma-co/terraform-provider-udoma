@@ -2,6 +2,7 @@ package provider
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"time"
 
@@ -15,6 +16,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	api "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
 	"gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/internal/client"
+	"gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/internal/tf"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
@@ -52,11 +54,13 @@ type workflowEntrypointModel struct {
 	UpdatedAt             types.Int64                    `tfsdk:"updated_at"`
 	WorkflowDefinitionRef types.String                   `tfsdk:"workflow_definition_ref"`
 	AppLocation           types.String                   `tfsdk:"app_location"`
+	Repeatable            types.String                   `tfsdk:"repeatable"`
 	LocationFilters       []workflowEntrypointFilter     `tfsdk:"location_filters"`
 	Validations           []workflowEntrypointValidation `tfsdk:"validations"`
 	Icon                  types.String                   `tfsdk:"icon"`
 	Label                 types.Map                      `tfsdk:"label"`
 	InitScript            types.String                   `tfsdk:"init_script"`
+	InitStep              tf.JsonObjectValue             `tfsdk:"init_step"`
 }
 
 func (r *workflowEntrypoint) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -116,6 +120,14 @@ func (r *workflowEntrypoint) Schema(ctx context.Context, req resource.SchemaRequ
 					be started via this entrypoint. Depending on the result, the workflow
 					can be started or not.`,
 			},
+			"repeatable": schema.StringAttribute{
+				Required: true,
+				// default only works with computed attributes
+				// Default:  stringdefault.StaticString("allow"),
+				Validators: []validator.String{
+					stringvalidator.OneOfCaseInsensitive(stringSlice(api.AllowedWorkflowEntrypointRepeatabilityEnumValues)...),
+				},
+			},
 			"icon": schema.StringAttribute{
 				Optional:    true,
 				Description: "Optional icon to be displayed on the button that will start the workflow execution",
@@ -128,6 +140,11 @@ func (r *workflowEntrypoint) Schema(ctx context.Context, req resource.SchemaRequ
 			"init_script": schema.StringAttribute{
 				Optional:    true,
 				Description: "Optional JS script to be executed before the workflow is started",
+			},
+			"init_step": schema.StringAttribute{
+				CustomType:  tf.JsonObjectType{},
+				Optional:    true,
+				Description: "Optional JSON serialised initial step definition",
 			},
 		},
 	}
@@ -204,7 +221,14 @@ func (r *workflowEntrypoint) Create(ctx context.Context, req resource.CreateRequ
 		return
 	}
 
-	createReq, _ := plan.toAPIRequest()
+	createReq, err := plan.toAPIRequest()
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"Error Creating Workflow Entrypoint",
+			"Could not prepare API request, unexpected error: "+err.Error(),
+		)
+		return
+	}
 
 	newlyCreatedWorkflowEntrypoint, _, err := r.client.GetApi().CreateWorkflowEntrypoint(ctx, createReq.WorkflowDefinitionRef).CreateOrUpdateWorkflowEntrypointRequest(createReq).Execute()
 	if err != nil {
@@ -284,7 +308,14 @@ func (r *workflowEntrypoint) Update(ctx context.Context, req resource.UpdateRequ
 		return
 	}
 
-	createReq, _ := plan.toAPIRequest()
+	createReq, err := plan.toAPIRequest()
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"Error Updating Workflow Entrypoint",
+			"Could not prepare API request, unexpected error: "+err.Error(),
+		)
+		return
+	}
 
 	id := plan.ID.ValueString()
 
@@ -366,6 +397,7 @@ func (model *workflowEntrypointModel) fromAPI(workflowEntrypoint *api.WorkflowEn
 	model.UpdatedAt = types.Int64Value(workflowEntrypoint.UpdatedAt)
 	model.WorkflowDefinitionRef = types.StringValue(workflowEntrypoint.WorkflowDefinitionRef)
 	model.AppLocation = types.StringValue(string(workflowEntrypoint.AppLocation))
+	model.Repeatable = types.StringValue(string(workflowEntrypoint.Repeatable))
 	model.Icon = omittableStringValue(workflowEntrypoint.Icon, model.Icon)
 
 	in := stringMapToValueMap(workflowEntrypoint.Label)
@@ -389,6 +421,15 @@ func (model *workflowEntrypointModel) fromAPI(workflowEntrypoint *api.WorkflowEn
 			model.Validations = append(model.Validations, workflowEntrypointValidation{})
 		}
 		model.Validations[i].fromApi(&workflowEntrypoint.Validations[i])
+	}
+
+	if workflowEntrypoint.InitStep.IsSet() {
+		step := workflowEntrypoint.InitStep.Get()
+		jsonData, err := json.Marshal(step)
+		if err != nil {
+			return fmt.Errorf("failed to marshal init step: %w", err)
+		}
+		model.InitStep = tf.NewJsonObjectValue(string(jsonData))
 	}
 
 	return nil
@@ -433,6 +474,21 @@ func (model *workflowEntrypointModel) toAPIRequest() (api.CreateOrUpdateWorkflow
 	if !model.AppLocation.IsNull() && !model.AppLocation.IsUnknown() {
 		location := api.WorkflowEntrypointLocation(model.AppLocation.ValueString())
 		workflowEntrypoint.AppLocation = location
+	}
+
+	if !model.Repeatable.IsNull() && !model.Repeatable.IsUnknown() {
+		repeatability := api.WorkflowEntrypointRepeatability(model.Repeatable.ValueString())
+		workflowEntrypoint.Repeatable = repeatability
+	}
+
+	if !model.InitStep.IsNull() && !model.InitStep.IsUnknown() {
+		var jsonVal *api.WorkflowInitStepDefinition
+		if diag := model.InitStep.Unmarshal(&jsonVal); diag.HasError() {
+			return workflowEntrypoint, fmt.Errorf("failed to unmarshal initial step: %v", diag)
+		}
+		if jsonVal != nil {
+			workflowEntrypoint.InitStep = *api.NewNullableWorkflowInitStepDefinition(jsonVal)
+		}
 	}
 
 	return workflowEntrypoint, nil

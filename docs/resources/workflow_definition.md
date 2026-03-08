@@ -25,7 +25,6 @@ Resource represents a defintion of a workflow
 - `description` (String) The description of the workflow definition
 - `env_vars` (Map of String) A map of environment variables to be set for the workflow execution
 - `icon` (String) The icon to be displayed on the manual workflow execution page
-- `init_step` (String) Optional JSON serialised initial step definition
 - `name_expression` (String) An optional JS expression to be used to compute the name of 
 				the workflow execution. If not set, the name of the definition will be used
 				for new executions

@@ -29,8 +29,8 @@ type WorkflowStepAction struct {
 	Label string `json:"label"`
 	// optional button modifier of the action
 	ButtonModifier *string `json:"button_modifier,omitempty"`
-	// the ID of the next step of the workflow
-	NextStepId string `json:"next_step_id"`
+	// Indicates whether the client should include the user provided data in the request when executing the action. Typically this will be set to false in actions that skip a step. When set to false, forms will also not be validated on the client  side.
+	CollectData *bool `json:"collect_data,omitempty"`
 }
 
 type _WorkflowStepAction WorkflowStepAction
@@ -39,11 +39,10 @@ type _WorkflowStepAction WorkflowStepAction
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewWorkflowStepAction(id string, label string, nextStepId string) *WorkflowStepAction {
+func NewWorkflowStepAction(id string, label string) *WorkflowStepAction {
 	this := WorkflowStepAction{}
 	this.Id = id
 	this.Label = label
-	this.NextStepId = nextStepId
 	return &this
 }
 
@@ -167,28 +166,36 @@ func (o *WorkflowStepAction) SetButtonModifier(v string) {
 	o.ButtonModifier = &v
 }
 
-// GetNextStepId returns the NextStepId field value
-func (o *WorkflowStepAction) GetNextStepId() string {
-	if o == nil {
-		var ret string
+// GetCollectData returns the CollectData field value if set, zero value otherwise.
+func (o *WorkflowStepAction) GetCollectData() bool {
+	if o == nil || IsNil(o.CollectData) {
+		var ret bool
 		return ret
 	}
-
-	return o.NextStepId
+	return *o.CollectData
 }
 
-// GetNextStepIdOk returns a tuple with the NextStepId field value
+// GetCollectDataOk returns a tuple with the CollectData field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *WorkflowStepAction) GetNextStepIdOk() (*string, bool) {
-	if o == nil {
+func (o *WorkflowStepAction) GetCollectDataOk() (*bool, bool) {
+	if o == nil || IsNil(o.CollectData) {
 		return nil, false
 	}
-	return &o.NextStepId, true
+	return o.CollectData, true
 }
 
-// SetNextStepId sets field value
-func (o *WorkflowStepAction) SetNextStepId(v string) {
-	o.NextStepId = v
+// HasCollectData returns a boolean if a field has been set.
+func (o *WorkflowStepAction) HasCollectData() bool {
+	if o != nil && !IsNil(o.CollectData) {
+		return true
+	}
+
+	return false
+}
+
+// SetCollectData gets a reference to the given bool and assigns it to the CollectData field.
+func (o *WorkflowStepAction) SetCollectData(v bool) {
+	o.CollectData = &v
 }
 
 func (o WorkflowStepAction) MarshalJSON() ([]byte, error) {
@@ -209,7 +216,9 @@ func (o WorkflowStepAction) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.ButtonModifier) {
 		toSerialize["button_modifier"] = o.ButtonModifier
 	}
-	toSerialize["next_step_id"] = o.NextStepId
+	if !IsNil(o.CollectData) {
+		toSerialize["collect_data"] = o.CollectData
+	}
 	return toSerialize, nil
 }
 
@@ -220,7 +229,6 @@ func (o *WorkflowStepAction) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"id",
 		"label",
-		"next_step_id",
 	}
 
 	allProperties := make(map[string]interface{})

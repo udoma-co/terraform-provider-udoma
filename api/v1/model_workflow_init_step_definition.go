@@ -28,8 +28,8 @@ type WorkflowInitStepDefinition struct {
 	// a parameter of a workflow step or step action. The value of the parameter is contextual and can vary in type and meaning depending on the step or action that uses it. If used in a step, the parameter will be available in the UI and will not be interpreted, i.e. JS expressions are not allowed. In actions however, the parameter might be interpreted as a JS expression, if the action type requires it.
 	Parameters map[string]interface{} `json:"parameters,omitempty"`
 	// a map of values, where the key and values are strings
-	DynamicParameters *map[string]string                         `json:"dynamic_parameters,omitempty"`
-	Action            NullableWorkflowStepPrerunActionDefinition `json:"action"`
+	DynamicParameters *map[string]string             `json:"dynamic_parameters,omitempty"`
+	Actions           []WorkflowStepActionDefinition `json:"actions,omitempty"`
 }
 
 type _WorkflowInitStepDefinition WorkflowInitStepDefinition
@@ -38,11 +38,10 @@ type _WorkflowInitStepDefinition WorkflowInitStepDefinition
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewWorkflowInitStepDefinition(id string, type_ string, action NullableWorkflowStepPrerunActionDefinition) *WorkflowInitStepDefinition {
+func NewWorkflowInitStepDefinition(id string, type_ string) *WorkflowInitStepDefinition {
 	this := WorkflowInitStepDefinition{}
 	this.Id = id
 	this.Type = type_
-	this.Action = action
 	return &this
 }
 
@@ -166,30 +165,36 @@ func (o *WorkflowInitStepDefinition) SetDynamicParameters(v map[string]string) {
 	o.DynamicParameters = &v
 }
 
-// GetAction returns the Action field value
-// If the value is explicit nil, the zero value for WorkflowStepPrerunActionDefinition will be returned
-func (o *WorkflowInitStepDefinition) GetAction() WorkflowStepPrerunActionDefinition {
-	if o == nil || o.Action.Get() == nil {
-		var ret WorkflowStepPrerunActionDefinition
+// GetActions returns the Actions field value if set, zero value otherwise.
+func (o *WorkflowInitStepDefinition) GetActions() []WorkflowStepActionDefinition {
+	if o == nil || IsNil(o.Actions) {
+		var ret []WorkflowStepActionDefinition
 		return ret
 	}
-
-	return *o.Action.Get()
+	return o.Actions
 }
 
-// GetActionOk returns a tuple with the Action field value
+// GetActionsOk returns a tuple with the Actions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *WorkflowInitStepDefinition) GetActionOk() (*WorkflowStepPrerunActionDefinition, bool) {
-	if o == nil {
+func (o *WorkflowInitStepDefinition) GetActionsOk() ([]WorkflowStepActionDefinition, bool) {
+	if o == nil || IsNil(o.Actions) {
 		return nil, false
 	}
-	return o.Action.Get(), o.Action.IsSet()
+	return o.Actions, true
 }
 
-// SetAction sets field value
-func (o *WorkflowInitStepDefinition) SetAction(v WorkflowStepPrerunActionDefinition) {
-	o.Action.Set(&v)
+// HasActions returns a boolean if a field has been set.
+func (o *WorkflowInitStepDefinition) HasActions() bool {
+	if o != nil && !IsNil(o.Actions) {
+		return true
+	}
+
+	return false
+}
+
+// SetActions gets a reference to the given []WorkflowStepActionDefinition and assigns it to the Actions field.
+func (o *WorkflowInitStepDefinition) SetActions(v []WorkflowStepActionDefinition) {
+	o.Actions = v
 }
 
 func (o WorkflowInitStepDefinition) MarshalJSON() ([]byte, error) {
@@ -210,7 +215,9 @@ func (o WorkflowInitStepDefinition) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.DynamicParameters) {
 		toSerialize["dynamic_parameters"] = o.DynamicParameters
 	}
-	toSerialize["action"] = o.Action.Get()
+	if !IsNil(o.Actions) {
+		toSerialize["actions"] = o.Actions
+	}
 	return toSerialize, nil
 }
 
@@ -221,7 +228,6 @@ func (o *WorkflowInitStepDefinition) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"id",
 		"type",
-		"action",
 	}
 
 	allProperties := make(map[string]interface{})
