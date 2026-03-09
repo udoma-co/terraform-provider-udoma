@@ -14,6 +14,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 	api "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
 	"gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/internal/client"
 	"gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/internal/tf"
@@ -35,25 +36,33 @@ type workflowDefinition struct {
 	client *client.UdomaClient
 }
 
+// workflowStepGroupModel describes a group of workflow steps.
+type workflowStepGroupModel struct {
+	ID    types.String `tfsdk:"id"`
+	Label types.Map    `tfsdk:"label"`
+}
+
 // workflowDefinitionModel describes the resource data model.
 type workflowDefinitionModel struct {
-	ID             types.String       `tfsdk:"id"`
-	LastUpdated    types.String       `tfsdk:"last_updated"`
-	CreatedAt      types.Int64        `tfsdk:"created_at"`
-	UpdatedAt      types.Int64        `tfsdk:"updated_at"`
-	Name           types.String       `tfsdk:"name"`
-	Description    types.String       `tfsdk:"description"`
-	Icon           types.String       `tfsdk:"icon"`
-	NameExpression types.String       `tfsdk:"name_expression"`
-	EnvVars        types.Map          `tfsdk:"env_vars"`
-	FirstStepID    types.String       `tfsdk:"first_step_id"`
-	Steps          tf.JsonObjectValue `tfsdk:"steps"`
-	Version        types.Int32        `tfsdk:"version"`
+	ID             types.String             `tfsdk:"id"`
+	LastUpdated    types.String             `tfsdk:"last_updated"`
+	CreatedAt      types.Int64              `tfsdk:"created_at"`
+	UpdatedAt      types.Int64              `tfsdk:"updated_at"`
+	Name           types.String             `tfsdk:"name"`
+	Description    types.String             `tfsdk:"description"`
+	Icon           types.String             `tfsdk:"icon"`
+	NameExpression types.String             `tfsdk:"name_expression"`
+	EnvVars        types.Map                `tfsdk:"env_vars"`
+	FirstStepID    types.String             `tfsdk:"first_step_id"`
+	Steps          tf.JsonObjectValue       `tfsdk:"steps"`
+	Version        types.Int32              `tfsdk:"version"`
+	StepGroups     []workflowStepGroupModel `tfsdk:"step_groups"`
 }
 
 func NewWorkflowDefinitionModelNull() *workflowDefinitionModel {
 	return &workflowDefinitionModel{
-		Steps: tf.NewJsonObjectNull(),
+		Steps:      tf.NewJsonObjectNull(),
+		StepGroups: []workflowStepGroupModel{},
 	}
 }
 
@@ -129,6 +138,23 @@ func (r *workflowDefinition) Schema(ctx context.Context, req resource.SchemaRequ
 			"version": schema.Int32Attribute{
 				Optional:    true,
 				Description: "The version of the workflow definition",
+			},
+			"step_groups": schema.ListNestedAttribute{
+				Optional:    true,
+				Description: "Optional groups of workflow steps. Steps with a group will be rendered in the UI as a drawer.",
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"id": schema.StringAttribute{
+							Required:    true,
+							Description: "The ID of the group, unique within the workflow",
+						},
+						"label": schema.MapAttribute{
+							Optional:    true,
+							ElementType: types.StringType,
+							Description: "A map of localised labels for the group",
+						},
+					},
+				},
 			},
 		},
 	}
@@ -347,6 +373,22 @@ func (model *workflowDefinitionModel) fromAPI(workflowDefinition *api.WorkflowDe
 	}
 	model.Steps = tf.NewJsonObjectValue(string(steps))
 
+	if workflowDefinition.StepGroups != nil {
+		model.StepGroups = make([]workflowStepGroupModel, len(workflowDefinition.StepGroups))
+		for i, g := range workflowDefinition.StepGroups {
+			model.StepGroups[i].ID = types.StringValue(g.Id)
+			if g.Label != nil {
+				labelMap, diags := types.MapValue(types.StringType, stringMapToValueMap(*g.Label))
+				if diags.HasError() {
+					return fmt.Errorf("error converting group label to map: %v", diags)
+				}
+				model.StepGroups[i].Label = labelMap
+			} else {
+				model.StepGroups[i].Label = basetypes.NewMapNull(types.StringType)
+			}
+		}
+	}
+
 	return nil
 }
 
@@ -369,6 +411,17 @@ func (model *workflowDefinitionModel) toAPIRequest() (api.CreateOrUpdateWorkflow
 		if diag := model.Steps.Unmarshal(&workflowDefinition.Steps); diag.HasError() {
 			return workflowDefinition, fmt.Errorf("failed to unmarshal steps: %v", diag)
 		}
+	}
+
+	if len(model.StepGroups) > 0 {
+		stepGroups := make([]api.WorkflowStepGroup, len(model.StepGroups))
+		for i, g := range model.StepGroups {
+			stepGroups[i].Id = g.ID.ValueString()
+			if label := modelMapToStringMap(g.Label); len(label) > 0 {
+				stepGroups[i].Label = &label
+			}
+		}
+		workflowDefinition.StepGroups = stepGroups
 	}
 
 	return workflowDefinition, nil

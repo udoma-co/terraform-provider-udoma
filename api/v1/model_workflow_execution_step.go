@@ -24,16 +24,13 @@ type WorkflowExecutionStep struct {
 	// the ID of the step, unique within the workflow
 	Id string `json:"id"`
 	// the type of the step
-	Type string `json:"type"`
-	// The icon of the step (shown in the menu). If empty, the default icon  of the step type will be used.
-	Icon *string `json:"icon,omitempty"`
-	// The name of the step (shown as title and in the menu). If empty, the  default name of the step type will be used.
-	Name string `json:"name"`
+	Type       string           `json:"type"`
+	MenuWidget WidgetDescriptor `json:"menu_widget"`
 	// a parameter of a workflow step or step action. The value of the parameter is contextual and can vary in type and meaning depending on the step or action that uses it. If used in a step, the parameter will be available in the UI and will not be interpreted, i.e. JS expressions are not allowed. In actions however, the parameter might be interpreted as a JS expression, if the action type requires it.
 	Parameters map[string]interface{} `json:"parameters,omitempty"`
-	// Optional name of the group of the step. If a group is provided, steps within the same group will be grouped together in the UI as a drawer.
-	GroupName *string              `json:"group_name,omitempty"`
-	Actions   []WorkflowStepAction `json:"actions"`
+	// Optional ID of the group of the step. If a group is provided, steps within the same group will be grouped together in the UI as a drawer.
+	GroupRef *string              `json:"group_ref,omitempty"`
+	Actions  []WorkflowStepAction `json:"actions"`
 	// Indicates whether the step can be accessed or not. If false, the step will be greyed out in the UI and cannot be executed.
 	Enabled *bool `json:"enabled,omitempty"`
 	// Indicates whether the data in the step can be edited or not.
@@ -48,11 +45,11 @@ type _WorkflowExecutionStep WorkflowExecutionStep
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewWorkflowExecutionStep(id string, type_ string, name string, actions []WorkflowStepAction) *WorkflowExecutionStep {
+func NewWorkflowExecutionStep(id string, type_ string, menuWidget WidgetDescriptor, actions []WorkflowStepAction) *WorkflowExecutionStep {
 	this := WorkflowExecutionStep{}
 	this.Id = id
 	this.Type = type_
-	this.Name = name
+	this.MenuWidget = menuWidget
 	this.Actions = actions
 	return &this
 }
@@ -113,60 +110,28 @@ func (o *WorkflowExecutionStep) SetType(v string) {
 	o.Type = v
 }
 
-// GetIcon returns the Icon field value if set, zero value otherwise.
-func (o *WorkflowExecutionStep) GetIcon() string {
-	if o == nil || IsNil(o.Icon) {
-		var ret string
-		return ret
-	}
-	return *o.Icon
-}
-
-// GetIconOk returns a tuple with the Icon field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *WorkflowExecutionStep) GetIconOk() (*string, bool) {
-	if o == nil || IsNil(o.Icon) {
-		return nil, false
-	}
-	return o.Icon, true
-}
-
-// HasIcon returns a boolean if a field has been set.
-func (o *WorkflowExecutionStep) HasIcon() bool {
-	if o != nil && !IsNil(o.Icon) {
-		return true
-	}
-
-	return false
-}
-
-// SetIcon gets a reference to the given string and assigns it to the Icon field.
-func (o *WorkflowExecutionStep) SetIcon(v string) {
-	o.Icon = &v
-}
-
-// GetName returns the Name field value
-func (o *WorkflowExecutionStep) GetName() string {
+// GetMenuWidget returns the MenuWidget field value
+func (o *WorkflowExecutionStep) GetMenuWidget() WidgetDescriptor {
 	if o == nil {
-		var ret string
+		var ret WidgetDescriptor
 		return ret
 	}
 
-	return o.Name
+	return o.MenuWidget
 }
 
-// GetNameOk returns a tuple with the Name field value
+// GetMenuWidgetOk returns a tuple with the MenuWidget field value
 // and a boolean to check if the value has been set.
-func (o *WorkflowExecutionStep) GetNameOk() (*string, bool) {
+func (o *WorkflowExecutionStep) GetMenuWidgetOk() (*WidgetDescriptor, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Name, true
+	return &o.MenuWidget, true
 }
 
-// SetName sets field value
-func (o *WorkflowExecutionStep) SetName(v string) {
-	o.Name = v
+// SetMenuWidget sets field value
+func (o *WorkflowExecutionStep) SetMenuWidget(v WidgetDescriptor) {
+	o.MenuWidget = v
 }
 
 // GetParameters returns the Parameters field value if set, zero value otherwise.
@@ -201,36 +166,36 @@ func (o *WorkflowExecutionStep) SetParameters(v map[string]interface{}) {
 	o.Parameters = v
 }
 
-// GetGroupName returns the GroupName field value if set, zero value otherwise.
-func (o *WorkflowExecutionStep) GetGroupName() string {
-	if o == nil || IsNil(o.GroupName) {
+// GetGroupRef returns the GroupRef field value if set, zero value otherwise.
+func (o *WorkflowExecutionStep) GetGroupRef() string {
+	if o == nil || IsNil(o.GroupRef) {
 		var ret string
 		return ret
 	}
-	return *o.GroupName
+	return *o.GroupRef
 }
 
-// GetGroupNameOk returns a tuple with the GroupName field value if set, nil otherwise
+// GetGroupRefOk returns a tuple with the GroupRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *WorkflowExecutionStep) GetGroupNameOk() (*string, bool) {
-	if o == nil || IsNil(o.GroupName) {
+func (o *WorkflowExecutionStep) GetGroupRefOk() (*string, bool) {
+	if o == nil || IsNil(o.GroupRef) {
 		return nil, false
 	}
-	return o.GroupName, true
+	return o.GroupRef, true
 }
 
-// HasGroupName returns a boolean if a field has been set.
-func (o *WorkflowExecutionStep) HasGroupName() bool {
-	if o != nil && !IsNil(o.GroupName) {
+// HasGroupRef returns a boolean if a field has been set.
+func (o *WorkflowExecutionStep) HasGroupRef() bool {
+	if o != nil && !IsNil(o.GroupRef) {
 		return true
 	}
 
 	return false
 }
 
-// SetGroupName gets a reference to the given string and assigns it to the GroupName field.
-func (o *WorkflowExecutionStep) SetGroupName(v string) {
-	o.GroupName = &v
+// SetGroupRef gets a reference to the given string and assigns it to the GroupRef field.
+func (o *WorkflowExecutionStep) SetGroupRef(v string) {
+	o.GroupRef = &v
 }
 
 // GetActions returns the Actions field value
@@ -365,15 +330,12 @@ func (o WorkflowExecutionStep) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["id"] = o.Id
 	toSerialize["type"] = o.Type
-	if !IsNil(o.Icon) {
-		toSerialize["icon"] = o.Icon
-	}
-	toSerialize["name"] = o.Name
+	toSerialize["menu_widget"] = o.MenuWidget
 	if !IsNil(o.Parameters) {
 		toSerialize["parameters"] = o.Parameters
 	}
-	if !IsNil(o.GroupName) {
-		toSerialize["group_name"] = o.GroupName
+	if !IsNil(o.GroupRef) {
+		toSerialize["group_ref"] = o.GroupRef
 	}
 	toSerialize["actions"] = o.Actions
 	if !IsNil(o.Enabled) {
@@ -395,7 +357,7 @@ func (o *WorkflowExecutionStep) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"id",
 		"type",
-		"name",
+		"menu_widget",
 		"actions",
 	}
 
