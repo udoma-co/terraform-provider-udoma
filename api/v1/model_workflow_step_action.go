@@ -22,13 +22,8 @@ var _ MappedNullable = &WorkflowStepAction{}
 // WorkflowStepAction an action that can be performed on a workflow execution step. This is derived from the step action definition, however, dynamic data is computed and populated by the backend, before the result is being sent to the client.
 type WorkflowStepAction struct {
 	// the ID of the action
-	Id string `json:"id"`
-	// the icon of the action
-	Icon *string `json:"icon,omitempty"`
-	// the button label for the action
-	Label string `json:"label"`
-	// optional button modifier of the action
-	ButtonModifier *string `json:"button_modifier,omitempty"`
+	Id           string           `json:"id"`
+	ButtonWidget WidgetDescriptor `json:"button_widget"`
 	// Indicates whether the client should include the user provided data in the request when executing the action. Typically this will be set to false in actions that skip a step. When set to false, forms will also not be validated on the client  side.
 	CollectData *bool `json:"collect_data,omitempty"`
 }
@@ -39,10 +34,10 @@ type _WorkflowStepAction WorkflowStepAction
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewWorkflowStepAction(id string, label string) *WorkflowStepAction {
+func NewWorkflowStepAction(id string, buttonWidget WidgetDescriptor) *WorkflowStepAction {
 	this := WorkflowStepAction{}
 	this.Id = id
-	this.Label = label
+	this.ButtonWidget = buttonWidget
 	return &this
 }
 
@@ -78,92 +73,28 @@ func (o *WorkflowStepAction) SetId(v string) {
 	o.Id = v
 }
 
-// GetIcon returns the Icon field value if set, zero value otherwise.
-func (o *WorkflowStepAction) GetIcon() string {
-	if o == nil || IsNil(o.Icon) {
-		var ret string
-		return ret
-	}
-	return *o.Icon
-}
-
-// GetIconOk returns a tuple with the Icon field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *WorkflowStepAction) GetIconOk() (*string, bool) {
-	if o == nil || IsNil(o.Icon) {
-		return nil, false
-	}
-	return o.Icon, true
-}
-
-// HasIcon returns a boolean if a field has been set.
-func (o *WorkflowStepAction) HasIcon() bool {
-	if o != nil && !IsNil(o.Icon) {
-		return true
-	}
-
-	return false
-}
-
-// SetIcon gets a reference to the given string and assigns it to the Icon field.
-func (o *WorkflowStepAction) SetIcon(v string) {
-	o.Icon = &v
-}
-
-// GetLabel returns the Label field value
-func (o *WorkflowStepAction) GetLabel() string {
+// GetButtonWidget returns the ButtonWidget field value
+func (o *WorkflowStepAction) GetButtonWidget() WidgetDescriptor {
 	if o == nil {
-		var ret string
+		var ret WidgetDescriptor
 		return ret
 	}
 
-	return o.Label
+	return o.ButtonWidget
 }
 
-// GetLabelOk returns a tuple with the Label field value
+// GetButtonWidgetOk returns a tuple with the ButtonWidget field value
 // and a boolean to check if the value has been set.
-func (o *WorkflowStepAction) GetLabelOk() (*string, bool) {
+func (o *WorkflowStepAction) GetButtonWidgetOk() (*WidgetDescriptor, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Label, true
+	return &o.ButtonWidget, true
 }
 
-// SetLabel sets field value
-func (o *WorkflowStepAction) SetLabel(v string) {
-	o.Label = v
-}
-
-// GetButtonModifier returns the ButtonModifier field value if set, zero value otherwise.
-func (o *WorkflowStepAction) GetButtonModifier() string {
-	if o == nil || IsNil(o.ButtonModifier) {
-		var ret string
-		return ret
-	}
-	return *o.ButtonModifier
-}
-
-// GetButtonModifierOk returns a tuple with the ButtonModifier field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *WorkflowStepAction) GetButtonModifierOk() (*string, bool) {
-	if o == nil || IsNil(o.ButtonModifier) {
-		return nil, false
-	}
-	return o.ButtonModifier, true
-}
-
-// HasButtonModifier returns a boolean if a field has been set.
-func (o *WorkflowStepAction) HasButtonModifier() bool {
-	if o != nil && !IsNil(o.ButtonModifier) {
-		return true
-	}
-
-	return false
-}
-
-// SetButtonModifier gets a reference to the given string and assigns it to the ButtonModifier field.
-func (o *WorkflowStepAction) SetButtonModifier(v string) {
-	o.ButtonModifier = &v
+// SetButtonWidget sets field value
+func (o *WorkflowStepAction) SetButtonWidget(v WidgetDescriptor) {
+	o.ButtonWidget = v
 }
 
 // GetCollectData returns the CollectData field value if set, zero value otherwise.
@@ -209,13 +140,7 @@ func (o WorkflowStepAction) MarshalJSON() ([]byte, error) {
 func (o WorkflowStepAction) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["id"] = o.Id
-	if !IsNil(o.Icon) {
-		toSerialize["icon"] = o.Icon
-	}
-	toSerialize["label"] = o.Label
-	if !IsNil(o.ButtonModifier) {
-		toSerialize["button_modifier"] = o.ButtonModifier
-	}
+	toSerialize["button_widget"] = o.ButtonWidget
 	if !IsNil(o.CollectData) {
 		toSerialize["collect_data"] = o.CollectData
 	}
@@ -228,7 +153,7 @@ func (o *WorkflowStepAction) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"id",
-		"label",
+		"button_widget",
 	}
 
 	allProperties := make(map[string]interface{})
