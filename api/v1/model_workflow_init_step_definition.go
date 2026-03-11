@@ -29,7 +29,9 @@ type WorkflowInitStepDefinition struct {
 	Parameters map[string]interface{} `json:"parameters,omitempty"`
 	// a map of values, where the key and values are strings
 	DynamicParameters *map[string]string             `json:"dynamic_parameters,omitempty"`
-	Actions           []WorkflowStepActionDefinition `json:"actions,omitempty"`
+	Actions           []WorkflowStepActionDefinition `json:"actions"`
+	// optional JS script that will be executed in the backend to generate the data for the step,  before being sent over to the UI. This can be used to generate dynamic data for the step,  based on the context of the workflow execution.
+	DataScript *string `json:"data_script,omitempty"`
 }
 
 type _WorkflowInitStepDefinition WorkflowInitStepDefinition
@@ -38,10 +40,11 @@ type _WorkflowInitStepDefinition WorkflowInitStepDefinition
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewWorkflowInitStepDefinition(id string, type_ string) *WorkflowInitStepDefinition {
+func NewWorkflowInitStepDefinition(id string, type_ string, actions []WorkflowStepActionDefinition) *WorkflowInitStepDefinition {
 	this := WorkflowInitStepDefinition{}
 	this.Id = id
 	this.Type = type_
+	this.Actions = actions
 	return &this
 }
 
@@ -165,36 +168,60 @@ func (o *WorkflowInitStepDefinition) SetDynamicParameters(v map[string]string) {
 	o.DynamicParameters = &v
 }
 
-// GetActions returns the Actions field value if set, zero value otherwise.
+// GetActions returns the Actions field value
 func (o *WorkflowInitStepDefinition) GetActions() []WorkflowStepActionDefinition {
-	if o == nil || IsNil(o.Actions) {
+	if o == nil {
 		var ret []WorkflowStepActionDefinition
 		return ret
 	}
+
 	return o.Actions
 }
 
-// GetActionsOk returns a tuple with the Actions field value if set, nil otherwise
+// GetActionsOk returns a tuple with the Actions field value
 // and a boolean to check if the value has been set.
 func (o *WorkflowInitStepDefinition) GetActionsOk() ([]WorkflowStepActionDefinition, bool) {
-	if o == nil || IsNil(o.Actions) {
+	if o == nil {
 		return nil, false
 	}
 	return o.Actions, true
 }
 
-// HasActions returns a boolean if a field has been set.
-func (o *WorkflowInitStepDefinition) HasActions() bool {
-	if o != nil && !IsNil(o.Actions) {
+// SetActions sets field value
+func (o *WorkflowInitStepDefinition) SetActions(v []WorkflowStepActionDefinition) {
+	o.Actions = v
+}
+
+// GetDataScript returns the DataScript field value if set, zero value otherwise.
+func (o *WorkflowInitStepDefinition) GetDataScript() string {
+	if o == nil || IsNil(o.DataScript) {
+		var ret string
+		return ret
+	}
+	return *o.DataScript
+}
+
+// GetDataScriptOk returns a tuple with the DataScript field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowInitStepDefinition) GetDataScriptOk() (*string, bool) {
+	if o == nil || IsNil(o.DataScript) {
+		return nil, false
+	}
+	return o.DataScript, true
+}
+
+// HasDataScript returns a boolean if a field has been set.
+func (o *WorkflowInitStepDefinition) HasDataScript() bool {
+	if o != nil && !IsNil(o.DataScript) {
 		return true
 	}
 
 	return false
 }
 
-// SetActions gets a reference to the given []WorkflowStepActionDefinition and assigns it to the Actions field.
-func (o *WorkflowInitStepDefinition) SetActions(v []WorkflowStepActionDefinition) {
-	o.Actions = v
+// SetDataScript gets a reference to the given string and assigns it to the DataScript field.
+func (o *WorkflowInitStepDefinition) SetDataScript(v string) {
+	o.DataScript = &v
 }
 
 func (o WorkflowInitStepDefinition) MarshalJSON() ([]byte, error) {
@@ -215,8 +242,9 @@ func (o WorkflowInitStepDefinition) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.DynamicParameters) {
 		toSerialize["dynamic_parameters"] = o.DynamicParameters
 	}
-	if !IsNil(o.Actions) {
-		toSerialize["actions"] = o.Actions
+	toSerialize["actions"] = o.Actions
+	if !IsNil(o.DataScript) {
+		toSerialize["data_script"] = o.DataScript
 	}
 	return toSerialize, nil
 }
@@ -228,6 +256,7 @@ func (o *WorkflowInitStepDefinition) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"id",
 		"type",
+		"actions",
 	}
 
 	allProperties := make(map[string]interface{})

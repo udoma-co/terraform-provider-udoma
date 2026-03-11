@@ -1004,11 +1004,13 @@ Class | Method | HTTP request | Description
  - [WorkflowStepAction](docs/WorkflowStepAction.md)
  - [WorkflowStepActionAttributesPartial](docs/WorkflowStepActionAttributesPartial.md)
  - [WorkflowStepActionDefinition](docs/WorkflowStepActionDefinition.md)
+ - [WorkflowStepAttributesPartial](docs/WorkflowStepAttributesPartial.md)
  - [WorkflowStepDefinition](docs/WorkflowStepDefinition.md)
  - [WorkflowStepDefinitionAttributesPartial](docs/WorkflowStepDefinitionAttributesPartial.md)
  - [WorkflowStepExecutionRequest](docs/WorkflowStepExecutionRequest.md)
  - [WorkflowStepGroup](docs/WorkflowStepGroup.md)
  - [WorkflowStepPrerunActionDefinition](docs/WorkflowStepPrerunActionDefinition.md)
+ - [WorkflowStepUiAttributesPartial](docs/WorkflowStepUiAttributesPartial.md)
  - [WorkflowTrigger](docs/WorkflowTrigger.md)
  - [YesNoOrValue](docs/YesNoOrValue.md)
 

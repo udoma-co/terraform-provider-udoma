@@ -27,17 +27,21 @@ type WorkflowStepDefinition struct {
 	Type string `json:"type"`
 	// a parameter of a workflow step or step action. The value of the parameter is contextual and can vary in type and meaning depending on the step or action that uses it. If used in a step, the parameter will be available in the UI and will not be interpreted, i.e. JS expressions are not allowed. In actions however, the parameter might be interpreted as a JS expression, if the action type requires it.
 	Parameters map[string]interface{} `json:"parameters,omitempty"`
-	// a map of values, where the key and values are strings
-	DynamicParameters *map[string]string `json:"dynamic_parameters,omitempty"`
-	MenuWidget        WidgetDescriptor   `json:"menu_widget"`
+	MenuWidget WidgetDescriptor       `json:"menu_widget"`
 	// Optional ID of the group of the step. If a group is provided, steps within the same group will be grouped together in the UI as a drawer.
-	GroupRef     *string                                    `json:"group_ref,omitempty"`
+	GroupRef *string `json:"group_ref,omitempty"`
+	// a map of values, where the key and values are strings
+	DynamicParameters *map[string]string             `json:"dynamic_parameters,omitempty"`
+	Actions           []WorkflowStepActionDefinition `json:"actions"`
+	// optional JS script that will be executed in the backend to generate the data for the step,  before being sent over to the UI. This can be used to generate dynamic data for the step,  based on the context of the workflow execution.
+	DataScript   *string                                    `json:"data_script,omitempty"`
 	PrerunAction NullableWorkflowStepPrerunActionDefinition `json:"prerun_action,omitempty"`
+	// optional JS script to be executed once the step becomes the current step  of the workflow execution. This will be executed only once.
+	InitScript *string `json:"init_script,omitempty"`
 	// An optional JS expression that determines whether the step can be executed or  not. If not set, this will default to true, once the previous step has been  executed.
 	EnabledExpression *string `json:"enabled_expression,omitempty"`
 	// An optional JS expression that determines whether the data in the step can be  edited or not. If not set, this will default to false, unless the workflow is completed, in which case it will default to true.
-	ReadonlyExpression *string                        `json:"readonly_expression,omitempty"`
-	Actions            []WorkflowStepActionDefinition `json:"actions"`
+	ReadonlyExpression *string `json:"readonly_expression,omitempty"`
 }
 
 type _WorkflowStepDefinition WorkflowStepDefinition
@@ -143,38 +147,6 @@ func (o *WorkflowStepDefinition) SetParameters(v map[string]interface{}) {
 	o.Parameters = v
 }
 
-// GetDynamicParameters returns the DynamicParameters field value if set, zero value otherwise.
-func (o *WorkflowStepDefinition) GetDynamicParameters() map[string]string {
-	if o == nil || IsNil(o.DynamicParameters) {
-		var ret map[string]string
-		return ret
-	}
-	return *o.DynamicParameters
-}
-
-// GetDynamicParametersOk returns a tuple with the DynamicParameters field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *WorkflowStepDefinition) GetDynamicParametersOk() (*map[string]string, bool) {
-	if o == nil || IsNil(o.DynamicParameters) {
-		return nil, false
-	}
-	return o.DynamicParameters, true
-}
-
-// HasDynamicParameters returns a boolean if a field has been set.
-func (o *WorkflowStepDefinition) HasDynamicParameters() bool {
-	if o != nil && !IsNil(o.DynamicParameters) {
-		return true
-	}
-
-	return false
-}
-
-// SetDynamicParameters gets a reference to the given map[string]string and assigns it to the DynamicParameters field.
-func (o *WorkflowStepDefinition) SetDynamicParameters(v map[string]string) {
-	o.DynamicParameters = &v
-}
-
 // GetMenuWidget returns the MenuWidget field value
 func (o *WorkflowStepDefinition) GetMenuWidget() WidgetDescriptor {
 	if o == nil {
@@ -231,6 +203,94 @@ func (o *WorkflowStepDefinition) SetGroupRef(v string) {
 	o.GroupRef = &v
 }
 
+// GetDynamicParameters returns the DynamicParameters field value if set, zero value otherwise.
+func (o *WorkflowStepDefinition) GetDynamicParameters() map[string]string {
+	if o == nil || IsNil(o.DynamicParameters) {
+		var ret map[string]string
+		return ret
+	}
+	return *o.DynamicParameters
+}
+
+// GetDynamicParametersOk returns a tuple with the DynamicParameters field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowStepDefinition) GetDynamicParametersOk() (*map[string]string, bool) {
+	if o == nil || IsNil(o.DynamicParameters) {
+		return nil, false
+	}
+	return o.DynamicParameters, true
+}
+
+// HasDynamicParameters returns a boolean if a field has been set.
+func (o *WorkflowStepDefinition) HasDynamicParameters() bool {
+	if o != nil && !IsNil(o.DynamicParameters) {
+		return true
+	}
+
+	return false
+}
+
+// SetDynamicParameters gets a reference to the given map[string]string and assigns it to the DynamicParameters field.
+func (o *WorkflowStepDefinition) SetDynamicParameters(v map[string]string) {
+	o.DynamicParameters = &v
+}
+
+// GetActions returns the Actions field value
+func (o *WorkflowStepDefinition) GetActions() []WorkflowStepActionDefinition {
+	if o == nil {
+		var ret []WorkflowStepActionDefinition
+		return ret
+	}
+
+	return o.Actions
+}
+
+// GetActionsOk returns a tuple with the Actions field value
+// and a boolean to check if the value has been set.
+func (o *WorkflowStepDefinition) GetActionsOk() ([]WorkflowStepActionDefinition, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Actions, true
+}
+
+// SetActions sets field value
+func (o *WorkflowStepDefinition) SetActions(v []WorkflowStepActionDefinition) {
+	o.Actions = v
+}
+
+// GetDataScript returns the DataScript field value if set, zero value otherwise.
+func (o *WorkflowStepDefinition) GetDataScript() string {
+	if o == nil || IsNil(o.DataScript) {
+		var ret string
+		return ret
+	}
+	return *o.DataScript
+}
+
+// GetDataScriptOk returns a tuple with the DataScript field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowStepDefinition) GetDataScriptOk() (*string, bool) {
+	if o == nil || IsNil(o.DataScript) {
+		return nil, false
+	}
+	return o.DataScript, true
+}
+
+// HasDataScript returns a boolean if a field has been set.
+func (o *WorkflowStepDefinition) HasDataScript() bool {
+	if o != nil && !IsNil(o.DataScript) {
+		return true
+	}
+
+	return false
+}
+
+// SetDataScript gets a reference to the given string and assigns it to the DataScript field.
+func (o *WorkflowStepDefinition) SetDataScript(v string) {
+	o.DataScript = &v
+}
+
 // GetPrerunAction returns the PrerunAction field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *WorkflowStepDefinition) GetPrerunAction() WorkflowStepPrerunActionDefinition {
 	if o == nil || IsNil(o.PrerunAction.Get()) {
@@ -272,6 +332,38 @@ func (o *WorkflowStepDefinition) SetPrerunActionNil() {
 // UnsetPrerunAction ensures that no value is present for PrerunAction, not even an explicit nil
 func (o *WorkflowStepDefinition) UnsetPrerunAction() {
 	o.PrerunAction.Unset()
+}
+
+// GetInitScript returns the InitScript field value if set, zero value otherwise.
+func (o *WorkflowStepDefinition) GetInitScript() string {
+	if o == nil || IsNil(o.InitScript) {
+		var ret string
+		return ret
+	}
+	return *o.InitScript
+}
+
+// GetInitScriptOk returns a tuple with the InitScript field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowStepDefinition) GetInitScriptOk() (*string, bool) {
+	if o == nil || IsNil(o.InitScript) {
+		return nil, false
+	}
+	return o.InitScript, true
+}
+
+// HasInitScript returns a boolean if a field has been set.
+func (o *WorkflowStepDefinition) HasInitScript() bool {
+	if o != nil && !IsNil(o.InitScript) {
+		return true
+	}
+
+	return false
+}
+
+// SetInitScript gets a reference to the given string and assigns it to the InitScript field.
+func (o *WorkflowStepDefinition) SetInitScript(v string) {
+	o.InitScript = &v
 }
 
 // GetEnabledExpression returns the EnabledExpression field value if set, zero value otherwise.
@@ -338,30 +430,6 @@ func (o *WorkflowStepDefinition) SetReadonlyExpression(v string) {
 	o.ReadonlyExpression = &v
 }
 
-// GetActions returns the Actions field value
-func (o *WorkflowStepDefinition) GetActions() []WorkflowStepActionDefinition {
-	if o == nil {
-		var ret []WorkflowStepActionDefinition
-		return ret
-	}
-
-	return o.Actions
-}
-
-// GetActionsOk returns a tuple with the Actions field value
-// and a boolean to check if the value has been set.
-func (o *WorkflowStepDefinition) GetActionsOk() ([]WorkflowStepActionDefinition, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.Actions, true
-}
-
-// SetActions sets field value
-func (o *WorkflowStepDefinition) SetActions(v []WorkflowStepActionDefinition) {
-	o.Actions = v
-}
-
 func (o WorkflowStepDefinition) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -377,15 +445,22 @@ func (o WorkflowStepDefinition) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Parameters) {
 		toSerialize["parameters"] = o.Parameters
 	}
-	if !IsNil(o.DynamicParameters) {
-		toSerialize["dynamic_parameters"] = o.DynamicParameters
-	}
 	toSerialize["menu_widget"] = o.MenuWidget
 	if !IsNil(o.GroupRef) {
 		toSerialize["group_ref"] = o.GroupRef
 	}
+	if !IsNil(o.DynamicParameters) {
+		toSerialize["dynamic_parameters"] = o.DynamicParameters
+	}
+	toSerialize["actions"] = o.Actions
+	if !IsNil(o.DataScript) {
+		toSerialize["data_script"] = o.DataScript
+	}
 	if o.PrerunAction.IsSet() {
 		toSerialize["prerun_action"] = o.PrerunAction.Get()
+	}
+	if !IsNil(o.InitScript) {
+		toSerialize["init_script"] = o.InitScript
 	}
 	if !IsNil(o.EnabledExpression) {
 		toSerialize["enabled_expression"] = o.EnabledExpression
@@ -393,7 +468,6 @@ func (o WorkflowStepDefinition) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.ReadonlyExpression) {
 		toSerialize["readonly_expression"] = o.ReadonlyExpression
 	}
-	toSerialize["actions"] = o.Actions
 	return toSerialize, nil
 }
 
