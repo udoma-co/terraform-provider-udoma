@@ -1010,7 +1010,6 @@ Class | Method | HTTP request | Description
  - [WorkflowStepExecutionRequest](docs/WorkflowStepExecutionRequest.md)
  - [WorkflowStepGroup](docs/WorkflowStepGroup.md)
  - [WorkflowStepPrerunActionDefinition](docs/WorkflowStepPrerunActionDefinition.md)
- - [WorkflowStepUiAttributesPartial](docs/WorkflowStepUiAttributesPartial.md)
  - [WorkflowTrigger](docs/WorkflowTrigger.md)
  - [YesNoOrValue](docs/YesNoOrValue.md)
 

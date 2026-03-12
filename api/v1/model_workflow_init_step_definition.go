@@ -27,6 +27,9 @@ type WorkflowInitStepDefinition struct {
 	Type string `json:"type"`
 	// a parameter of a workflow step or step action. The value of the parameter is contextual and can vary in type and meaning depending on the step or action that uses it. If used in a step, the parameter will be available in the UI and will not be interpreted, i.e. JS expressions are not allowed. In actions however, the parameter might be interpreted as a JS expression, if the action type requires it.
 	Parameters map[string]interface{} `json:"parameters,omitempty"`
+	MenuWidget WidgetDescriptor       `json:"menu_widget"`
+	// Optional ID of the group of the step. If a group is provided, steps within the same group will be grouped together in the UI as a drawer.
+	GroupRef *string `json:"group_ref,omitempty"`
 	// a map of values, where the key and values are strings
 	DynamicParameters *map[string]string             `json:"dynamic_parameters,omitempty"`
 	Actions           []WorkflowStepActionDefinition `json:"actions"`
@@ -40,10 +43,11 @@ type _WorkflowInitStepDefinition WorkflowInitStepDefinition
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewWorkflowInitStepDefinition(id string, type_ string, actions []WorkflowStepActionDefinition) *WorkflowInitStepDefinition {
+func NewWorkflowInitStepDefinition(id string, type_ string, menuWidget WidgetDescriptor, actions []WorkflowStepActionDefinition) *WorkflowInitStepDefinition {
 	this := WorkflowInitStepDefinition{}
 	this.Id = id
 	this.Type = type_
+	this.MenuWidget = menuWidget
 	this.Actions = actions
 	return &this
 }
@@ -134,6 +138,62 @@ func (o *WorkflowInitStepDefinition) HasParameters() bool {
 // SetParameters gets a reference to the given map[string]interface{} and assigns it to the Parameters field.
 func (o *WorkflowInitStepDefinition) SetParameters(v map[string]interface{}) {
 	o.Parameters = v
+}
+
+// GetMenuWidget returns the MenuWidget field value
+func (o *WorkflowInitStepDefinition) GetMenuWidget() WidgetDescriptor {
+	if o == nil {
+		var ret WidgetDescriptor
+		return ret
+	}
+
+	return o.MenuWidget
+}
+
+// GetMenuWidgetOk returns a tuple with the MenuWidget field value
+// and a boolean to check if the value has been set.
+func (o *WorkflowInitStepDefinition) GetMenuWidgetOk() (*WidgetDescriptor, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.MenuWidget, true
+}
+
+// SetMenuWidget sets field value
+func (o *WorkflowInitStepDefinition) SetMenuWidget(v WidgetDescriptor) {
+	o.MenuWidget = v
+}
+
+// GetGroupRef returns the GroupRef field value if set, zero value otherwise.
+func (o *WorkflowInitStepDefinition) GetGroupRef() string {
+	if o == nil || IsNil(o.GroupRef) {
+		var ret string
+		return ret
+	}
+	return *o.GroupRef
+}
+
+// GetGroupRefOk returns a tuple with the GroupRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowInitStepDefinition) GetGroupRefOk() (*string, bool) {
+	if o == nil || IsNil(o.GroupRef) {
+		return nil, false
+	}
+	return o.GroupRef, true
+}
+
+// HasGroupRef returns a boolean if a field has been set.
+func (o *WorkflowInitStepDefinition) HasGroupRef() bool {
+	if o != nil && !IsNil(o.GroupRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetGroupRef gets a reference to the given string and assigns it to the GroupRef field.
+func (o *WorkflowInitStepDefinition) SetGroupRef(v string) {
+	o.GroupRef = &v
 }
 
 // GetDynamicParameters returns the DynamicParameters field value if set, zero value otherwise.
@@ -239,6 +299,10 @@ func (o WorkflowInitStepDefinition) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Parameters) {
 		toSerialize["parameters"] = o.Parameters
 	}
+	toSerialize["menu_widget"] = o.MenuWidget
+	if !IsNil(o.GroupRef) {
+		toSerialize["group_ref"] = o.GroupRef
+	}
 	if !IsNil(o.DynamicParameters) {
 		toSerialize["dynamic_parameters"] = o.DynamicParameters
 	}
@@ -256,6 +320,7 @@ func (o *WorkflowInitStepDefinition) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"id",
 		"type",
+		"menu_widget",
 		"actions",
 	}
 
