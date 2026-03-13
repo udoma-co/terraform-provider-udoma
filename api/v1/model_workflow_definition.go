@@ -31,6 +31,8 @@ type WorkflowDefinition struct {
 	Description *string `json:"description,omitempty"`
 	// a JS expression that determines the name of the workflow execution
 	NameExpression *string `json:"name_expression,omitempty"`
+	// indicates whether the workflow execution should be transient, i.e.  if it should be deleted after it is finished. This can be used for  workflows that are only used for automating a process and don't  require keeping the history of the workflow execution.
+	Transient *bool `json:"transient,omitempty"`
 	// The icon of the workflow (shown in the menu). If empty, the default icon  of the workflow type will be used.
 	Icon *string `json:"icon,omitempty"`
 	// a map of values, where the key and values are strings
@@ -228,6 +230,38 @@ func (o *WorkflowDefinition) HasNameExpression() bool {
 // SetNameExpression gets a reference to the given string and assigns it to the NameExpression field.
 func (o *WorkflowDefinition) SetNameExpression(v string) {
 	o.NameExpression = &v
+}
+
+// GetTransient returns the Transient field value if set, zero value otherwise.
+func (o *WorkflowDefinition) GetTransient() bool {
+	if o == nil || IsNil(o.Transient) {
+		var ret bool
+		return ret
+	}
+	return *o.Transient
+}
+
+// GetTransientOk returns a tuple with the Transient field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowDefinition) GetTransientOk() (*bool, bool) {
+	if o == nil || IsNil(o.Transient) {
+		return nil, false
+	}
+	return o.Transient, true
+}
+
+// HasTransient returns a boolean if a field has been set.
+func (o *WorkflowDefinition) HasTransient() bool {
+	if o != nil && !IsNil(o.Transient) {
+		return true
+	}
+
+	return false
+}
+
+// SetTransient gets a reference to the given bool and assigns it to the Transient field.
+func (o *WorkflowDefinition) SetTransient(v bool) {
+	o.Transient = &v
 }
 
 // GetIcon returns the Icon field value if set, zero value otherwise.
@@ -457,6 +491,9 @@ func (o WorkflowDefinition) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.NameExpression) {
 		toSerialize["name_expression"] = o.NameExpression
+	}
+	if !IsNil(o.Transient) {
+		toSerialize["transient"] = o.Transient
 	}
 	if !IsNil(o.Icon) {
 		toSerialize["icon"] = o.Icon

@@ -50,6 +50,7 @@ type workflowDefinitionModel struct {
 	UpdatedAt      types.Int64              `tfsdk:"updated_at"`
 	Name           types.String             `tfsdk:"name"`
 	Description    types.String             `tfsdk:"description"`
+	Transient      types.Bool               `tfsdk:"transient"`
 	Icon           types.String             `tfsdk:"icon"`
 	NameExpression types.String             `tfsdk:"name_expression"`
 	EnvVars        types.Map                `tfsdk:"env_vars"`
@@ -104,6 +105,13 @@ func (r *workflowDefinition) Schema(ctx context.Context, req resource.SchemaRequ
 			"description": schema.StringAttribute{
 				Optional:    true,
 				Description: "The description of the workflow definition",
+			},
+			"transient": schema.BoolAttribute{
+				Optional: true,
+				Description: `A check that indicates whether the workflow execution should be transient, 
+					i.e. if it should be deleted after it is finished. This can be used for workflows 
+					that are only used for automating a process and don't require keeping the history 
+					of the workflow execution.`,
 			},
 			"icon": schema.StringAttribute{
 				Optional:    true,
@@ -353,6 +361,7 @@ func (model *workflowDefinitionModel) fromAPI(workflowDefinition *api.WorkflowDe
 	model.UpdatedAt = types.Int64Value(workflowDefinition.UpdatedAt)
 	model.Name = types.StringValue(workflowDefinition.Name)
 	model.Description = omittableStringValue(workflowDefinition.Description, model.Description)
+	model.Transient = omittableBooleanValue(workflowDefinition.Transient, model.Transient)
 	model.Icon = omittableStringValue(workflowDefinition.Icon, model.Icon)
 	model.NameExpression = omittableStringValue(workflowDefinition.NameExpression, model.NameExpression)
 	model.FirstStepID = types.StringValue(workflowDefinition.FirstStepId)
@@ -401,6 +410,7 @@ func (model *workflowDefinitionModel) toAPIRequest() (api.CreateOrUpdateWorkflow
 		NameExpression: model.NameExpression.ValueStringPointer(),
 		FirstStepId:    model.FirstStepID.ValueString(),
 		Version:        model.Version.ValueInt32Pointer(),
+		Transient:      model.Transient.ValueBoolPointer(),
 	}
 
 	if envVars := modelMapToStringMap(model.EnvVars); len(envVars) > 0 {

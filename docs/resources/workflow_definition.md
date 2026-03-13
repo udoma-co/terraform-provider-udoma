@@ -30,6 +30,10 @@ Resource represents a defintion of a workflow
 				for new executions
 - `step_groups` (Attributes List) Optional groups of workflow steps. Steps with a group will be rendered in the UI as a drawer. (see [below for nested schema](#nestedatt--step_groups))
 - `steps` (String) The JSON serialised step definitions
+- `transient` (Boolean) A check that indicates whether the workflow execution should be transient, 
+					i.e. if it should be deleted after it is finished. This can be used for workflows 
+					that are only used for automating a process and don't require keeping the history 
+					of the workflow execution.
 - `version` (Number) The version of the workflow definition
 
 ### Read-Only
