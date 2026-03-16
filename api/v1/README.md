@@ -337,6 +337,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**HandleUserQuestion**](docs/DefaultAPI.md#handleuserquestion) | **Post** /ai/ask | Ask AI assistant a question
 *DefaultAPI* | [**ImportBankConnectionTransactions**](docs/DefaultAPI.md#importbankconnectiontransactions) | **Post** /bank-connection/{bankConnectionID}/transactions/import | Import transactions from bank connection
 *DefaultAPI* | [**ImportDataUsingTemplate**](docs/DefaultAPI.md#importdatausingtemplate) | **Post** /data-import/template/{templateID}/import | Import data using the template
+*DefaultAPI* | [**ImportServiceProvider**](docs/DefaultAPI.md#importserviceprovider) | **Post** /service-provider/import | Extract service provider data from an uploaded document
 *DefaultAPI* | [**InitBookingTemplate**](docs/DefaultAPI.md#initbookingtemplate) | **Post** /financial/booking-template/{bookingTemplateID}/init | Execute a booking template and create a booking preview
 *DefaultAPI* | [**InternalAddPriceIndexPoint**](docs/DefaultAPI.md#internaladdpriceindexpoint) | **Put** /price-index | Push a new value for the inflation index
 *DefaultAPI* | [**InternalReceiveEmailInvoice**](docs/DefaultAPI.md#internalreceiveemailinvoice) | **Post** /email-invoices | Receive email invoices
@@ -348,7 +349,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**MarkInvoicesAsPaid**](docs/DefaultAPI.md#markinvoicesaspaid) | **Post** /invoices/batch/mark-paid | Mark multiple invoices as paid
 *DefaultAPI* | [**OutlookGenerateTenantAnswer**](docs/DefaultAPI.md#outlookgeneratetenantanswer) | **Post** /outlook/tenants/{tenantID}/generate-answer | Generate an email answer for a tenant
 *DefaultAPI* | [**OutlookGetProvider**](docs/DefaultAPI.md#outlookgetprovider) | **Get** /outlook/providers | Get service provider by email
-*DefaultAPI* | [**OutlookGetProviderCases**](docs/DefaultAPI.md#outlookgetprovidercases) | **Get** /outlook/providers/{providerID}/cases | Get recent cases for a service provider
+*DefaultAPI* | [**OutlookGetProviderCases**](docs/DefaultAPI.md#outlookgetprovidercases) | **Get** /outlook/providers/{serviceProviderID}/cases | Get recent cases for a service provider
 *DefaultAPI* | [**OutlookGetSenderType**](docs/DefaultAPI.md#outlookgetsendertype) | **Get** /outlook/sender-type | Get sender type by email
 *DefaultAPI* | [**OutlookGetTenant**](docs/DefaultAPI.md#outlookgettenant) | **Get** /outlook/tenants | Get tenant by email
 *DefaultAPI* | [**OutlookGetTenantCases**](docs/DefaultAPI.md#outlookgettenantcases) | **Get** /outlook/tenants/{tenantID}/cases | Get recent cases for a tenant
@@ -422,6 +423,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryPropertyHandoverTemplates**](docs/DefaultAPI.md#querypropertyhandovertemplates) | **Post** /property-handovers/templates | Query property handover templates
 *DefaultAPI* | [**QueryPropertyHandovers**](docs/DefaultAPI.md#querypropertyhandovers) | **Post** /property-handovers/handovers | Query property handovers
 *DefaultAPI* | [**QueryPropertyOwners**](docs/DefaultAPI.md#querypropertyowners) | **Post** /owners | Query property owners
+*DefaultAPI* | [**QueryPropertyVacancies**](docs/DefaultAPI.md#querypropertyvacancies) | **Post** /property-vacancies | List all property vacancies for a given time period
 *DefaultAPI* | [**QueryServiceProviderCases**](docs/DefaultAPI.md#queryserviceprovidercases) | **Get** /service-provider/{serviceProviderID}/cases | Get the cases the the given service provider has access to
 *DefaultAPI* | [**QueryServiceProviders**](docs/DefaultAPI.md#queryserviceproviders) | **Post** /service-providers | Query all service providers for certain criteria
 *DefaultAPI* | [**QuerySimilarProperties**](docs/DefaultAPI.md#querysimilarproperties) | **Post** /property/similar | Returns properties that match the provided address
@@ -550,6 +552,8 @@ Class | Method | HTTP request | Description
  - [Bank](docs/Bank.md)
  - [BankAccount](docs/BankAccount.md)
  - [BankAccountAttributesPartial](docs/BankAccountAttributesPartial.md)
+ - [BankAccountAutoBookingConfig](docs/BankAccountAutoBookingConfig.md)
+ - [BankAccountAutoBookingRule](docs/BankAccountAutoBookingRule.md)
  - [BankAccountCategoryEnum](docs/BankAccountCategoryEnum.md)
  - [BankConnectionStatusEnum](docs/BankConnectionStatusEnum.md)
  - [BankConnectionTransactionImportTypeEnum](docs/BankConnectionTransactionImportTypeEnum.md)
@@ -894,6 +898,8 @@ Class | Method | HTTP request | Description
  - [QueryPropertyHandoversRequest](docs/QueryPropertyHandoversRequest.md)
  - [QueryPropertyOwnersRequest](docs/QueryPropertyOwnersRequest.md)
  - [QueryPropertyOwnersResponse](docs/QueryPropertyOwnersResponse.md)
+ - [QueryPropertyVacanciesRequest](docs/QueryPropertyVacanciesRequest.md)
+ - [QueryPropertyVacanciesResponse](docs/QueryPropertyVacanciesResponse.md)
  - [QueryReportExecutionsRequest](docs/QueryReportExecutionsRequest.md)
  - [QueryServiceProviderCasesResponse](docs/QueryServiceProviderCasesResponse.md)
  - [QueryServiceProvidersRequest](docs/QueryServiceProvidersRequest.md)

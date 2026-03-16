@@ -32,6 +32,7 @@ func TestAccCaseTemplateResource(t *testing.T) {
 					resource.TestCheckResourceAttr("udoma_case_template.test", "info_text.de", "Test Info Text"),
 					resource.TestCheckResourceAttr("udoma_case_template.test", "info_text.en", "Test info text"),
 					resource.TestCheckResourceAttr("udoma_case_template.test", "confirmation_text.en", "Confirmation text"),
+					resource.TestCheckResourceAttr("udoma_case_template.test", "include_ai_summary", "false"),
 
 					// Verify custom_inputs
 					// TODO
@@ -51,7 +52,7 @@ func TestAccCaseTemplateResource(t *testing.T) {
 				// The last_updated attribute does not exist in the Udoma API,
 				// therefore there is no value for it during import. JSON types
 				// are matched literally, so we need to ignore them.
-				ImportStateVerifyIgnore: []string{"last_updated", "custom_inputs", "config"},
+				ImportStateVerifyIgnore: []string{"last_updated", "custom_inputs", "config", "include_ai_summary"},
 			},
 			// Update and Read testing
 			{
@@ -126,6 +127,7 @@ func resourceDefinitionCaseTemplate(name, nameExpression string, version int32) 
 		confirmation_text = {
 			en = "Confirmation text"
 		}
+		include_ai_summary = false
 	}
 	`
 }
