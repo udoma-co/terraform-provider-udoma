@@ -37,8 +37,9 @@ type CreateOrUpdateBankAccountRequest struct {
 	Categories []BankAccountCategoryEnum `json:"categories,omitempty"`
 	Cadence    BalanceCadenceEnum        `json:"cadence"`
 	// An external identifier for the bank account, e.g. provided by the bank
-	ExternalBankId   *string                          `json:"external_bank_id,omitempty"`
-	AutoImportConfig *BankTransactionAutoImportConfig `json:"auto_import_config,omitempty"`
+	ExternalBankId    *string                          `json:"external_bank_id,omitempty"`
+	AutoImportConfig  *BankTransactionAutoImportConfig `json:"auto_import_config,omitempty"`
+	AutoBookingConfig *BankAccountAutoBookingConfig    `json:"auto_booking_config,omitempty"`
 }
 
 type _CreateOrUpdateBankAccountRequest CreateOrUpdateBankAccountRequest
@@ -359,6 +360,38 @@ func (o *CreateOrUpdateBankAccountRequest) SetAutoImportConfig(v BankTransaction
 	o.AutoImportConfig = &v
 }
 
+// GetAutoBookingConfig returns the AutoBookingConfig field value if set, zero value otherwise.
+func (o *CreateOrUpdateBankAccountRequest) GetAutoBookingConfig() BankAccountAutoBookingConfig {
+	if o == nil || IsNil(o.AutoBookingConfig) {
+		var ret BankAccountAutoBookingConfig
+		return ret
+	}
+	return *o.AutoBookingConfig
+}
+
+// GetAutoBookingConfigOk returns a tuple with the AutoBookingConfig field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateBankAccountRequest) GetAutoBookingConfigOk() (*BankAccountAutoBookingConfig, bool) {
+	if o == nil || IsNil(o.AutoBookingConfig) {
+		return nil, false
+	}
+	return o.AutoBookingConfig, true
+}
+
+// HasAutoBookingConfig returns a boolean if a field has been set.
+func (o *CreateOrUpdateBankAccountRequest) HasAutoBookingConfig() bool {
+	if o != nil && !IsNil(o.AutoBookingConfig) {
+		return true
+	}
+
+	return false
+}
+
+// SetAutoBookingConfig gets a reference to the given BankAccountAutoBookingConfig and assigns it to the AutoBookingConfig field.
+func (o *CreateOrUpdateBankAccountRequest) SetAutoBookingConfig(v BankAccountAutoBookingConfig) {
+	o.AutoBookingConfig = &v
+}
+
 func (o CreateOrUpdateBankAccountRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -392,6 +425,9 @@ func (o CreateOrUpdateBankAccountRequest) ToMap() (map[string]interface{}, error
 	}
 	if !IsNil(o.AutoImportConfig) {
 		toSerialize["auto_import_config"] = o.AutoImportConfig
+	}
+	if !IsNil(o.AutoBookingConfig) {
+		toSerialize["auto_booking_config"] = o.AutoBookingConfig
 	}
 	return toSerialize, nil
 }

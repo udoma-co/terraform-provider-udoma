@@ -53,6 +53,7 @@ type CaseTemplateModel struct {
 	Config           *CaseConfigModel   `tfsdk:"config"`
 	AdCategories     []types.String     `tfsdk:"ad_categories"`
 	ConfirmationText types.Map          `tfsdk:"confirmation_text"`
+	IncludeAiSummary types.Bool         `tfsdk:"include_ai_summary"`
 	Version          types.Int32        `tfsdk:"version"`
 }
 
@@ -159,6 +160,10 @@ func (r *CaseTemplate) Schema(ctx context.Context, req resource.SchemaRequest, r
 				Optional:    true,
 				Description: "Text for the confirmation window before submiting case",
 				ElementType: types.StringType,
+			},
+			"include_ai_summary": schema.BoolAttribute{
+				Optional:    true,
+				Description: "If true, an AI-generated summary of the submitted case data will be included in the new case notification email sent to the property manager.",
 			},
 			"version": schema.Int32Attribute{
 				Optional:    true,
@@ -365,6 +370,7 @@ func (model *CaseTemplateModel) fromAPI(template *api.CaseTemplate) error {
 	model.Name = types.StringValue(template.Name)
 	model.NameExpression = omittableStringValue(template.NameExpression, model.NameExpression)
 	model.Icon = omittableStringValue(template.Icon, model.Icon)
+	model.IncludeAiSummary = omittableBooleanValue(template.IncludeAiSummary, model.IncludeAiSummary)
 	model.Version = types.Int32PointerValue(template.Version)
 
 	model.Access = make([]types.String, len(template.Access))
@@ -417,6 +423,10 @@ func (model *CaseTemplateModel) fromAPI(template *api.CaseTemplate) error {
 			return fmt.Errorf("error converting confirmation text to map: %v", diags)
 		}
 		model.ConfirmationText = modelValue
+	}
+
+	if template.IncludeAiSummary != nil {
+		model.IncludeAiSummary = types.BoolValue(*template.IncludeAiSummary)
 	}
 
 	customInputs, err := json.Marshal(template.CustomInputs)

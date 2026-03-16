@@ -40,7 +40,9 @@ type CreateOrUpdateCaseTemplateRequest struct {
 	AdCategories []CaseTemplateAdCategoryEnum `json:"ad_categories,omitempty"`
 	// a map of values, where the key and values are strings
 	ConfirmationText *map[string]string `json:"confirmation_text,omitempty"`
-	Version          *int32             `json:"version,omitempty"`
+	// If true, an AI-generated summary of the submitted case data will be included in the new case notification email sent to the property manager.
+	IncludeAiSummary *bool  `json:"include_ai_summary,omitempty"`
+	Version          *int32 `json:"version,omitempty"`
 }
 
 type _CreateOrUpdateCaseTemplateRequest CreateOrUpdateCaseTemplateRequest
@@ -388,6 +390,38 @@ func (o *CreateOrUpdateCaseTemplateRequest) SetConfirmationText(v map[string]str
 	o.ConfirmationText = &v
 }
 
+// GetIncludeAiSummary returns the IncludeAiSummary field value if set, zero value otherwise.
+func (o *CreateOrUpdateCaseTemplateRequest) GetIncludeAiSummary() bool {
+	if o == nil || IsNil(o.IncludeAiSummary) {
+		var ret bool
+		return ret
+	}
+	return *o.IncludeAiSummary
+}
+
+// GetIncludeAiSummaryOk returns a tuple with the IncludeAiSummary field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateCaseTemplateRequest) GetIncludeAiSummaryOk() (*bool, bool) {
+	if o == nil || IsNil(o.IncludeAiSummary) {
+		return nil, false
+	}
+	return o.IncludeAiSummary, true
+}
+
+// HasIncludeAiSummary returns a boolean if a field has been set.
+func (o *CreateOrUpdateCaseTemplateRequest) HasIncludeAiSummary() bool {
+	if o != nil && !IsNil(o.IncludeAiSummary) {
+		return true
+	}
+
+	return false
+}
+
+// SetIncludeAiSummary gets a reference to the given bool and assigns it to the IncludeAiSummary field.
+func (o *CreateOrUpdateCaseTemplateRequest) SetIncludeAiSummary(v bool) {
+	o.IncludeAiSummary = &v
+}
+
 // GetVersion returns the Version field value if set, zero value otherwise.
 func (o *CreateOrUpdateCaseTemplateRequest) GetVersion() int32 {
 	if o == nil || IsNil(o.Version) {
@@ -454,6 +488,9 @@ func (o CreateOrUpdateCaseTemplateRequest) ToMap() (map[string]interface{}, erro
 	}
 	if !IsNil(o.ConfirmationText) {
 		toSerialize["confirmation_text"] = o.ConfirmationText
+	}
+	if !IsNil(o.IncludeAiSummary) {
+		toSerialize["include_ai_summary"] = o.IncludeAiSummary
 	}
 	if !IsNil(o.Version) {
 		toSerialize["version"] = o.Version

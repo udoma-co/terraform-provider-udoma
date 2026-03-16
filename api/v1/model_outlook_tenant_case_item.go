@@ -31,6 +31,8 @@ type OutlookTenantCaseItem struct {
 	CreatedAt time.Time `json:"createdAt"`
 	// Optional description of the case
 	Description *string `json:"description,omitempty"`
+	// Property address related to the case
+	Address *string `json:"address,omitempty"`
 }
 
 type _OutlookTenantCaseItem OutlookTenantCaseItem
@@ -184,6 +186,38 @@ func (o *OutlookTenantCaseItem) SetDescription(v string) {
 	o.Description = &v
 }
 
+// GetAddress returns the Address field value if set, zero value otherwise.
+func (o *OutlookTenantCaseItem) GetAddress() string {
+	if o == nil || IsNil(o.Address) {
+		var ret string
+		return ret
+	}
+	return *o.Address
+}
+
+// GetAddressOk returns a tuple with the Address field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OutlookTenantCaseItem) GetAddressOk() (*string, bool) {
+	if o == nil || IsNil(o.Address) {
+		return nil, false
+	}
+	return o.Address, true
+}
+
+// HasAddress returns a boolean if a field has been set.
+func (o *OutlookTenantCaseItem) HasAddress() bool {
+	if o != nil && !IsNil(o.Address) {
+		return true
+	}
+
+	return false
+}
+
+// SetAddress gets a reference to the given string and assigns it to the Address field.
+func (o *OutlookTenantCaseItem) SetAddress(v string) {
+	o.Address = &v
+}
+
 func (o OutlookTenantCaseItem) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -200,6 +234,9 @@ func (o OutlookTenantCaseItem) ToMap() (map[string]interface{}, error) {
 	toSerialize["createdAt"] = o.CreatedAt
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
+	}
+	if !IsNil(o.Address) {
+		toSerialize["address"] = o.Address
 	}
 	return toSerialize, nil
 }
