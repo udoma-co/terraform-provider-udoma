@@ -21,7 +21,10 @@ var _ MappedNullable = &WorkflowExecutionResponse{}
 
 // WorkflowExecutionResponse a response for starting or executing a step in a workflow execution
 type WorkflowExecutionResponse struct {
+	// whether the workflow execution or the step execution was successful or not
 	Success bool `json:"success"`
+	// an optional message that will be set, if the executed action had a test_script and the  script returned false, preventing the execution of the action. The message can be used  to provide feedback to the user on why the action was not executed.
+	Message *string `json:"message,omitempty"`
 	// the result of the workflow execution
 	Result map[string]interface{} `json:"result"`
 	// the ID of the next step of the workflow execution
@@ -74,6 +77,38 @@ func (o *WorkflowExecutionResponse) GetSuccessOk() (*bool, bool) {
 // SetSuccess sets field value
 func (o *WorkflowExecutionResponse) SetSuccess(v bool) {
 	o.Success = v
+}
+
+// GetMessage returns the Message field value if set, zero value otherwise.
+func (o *WorkflowExecutionResponse) GetMessage() string {
+	if o == nil || IsNil(o.Message) {
+		var ret string
+		return ret
+	}
+	return *o.Message
+}
+
+// GetMessageOk returns a tuple with the Message field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowExecutionResponse) GetMessageOk() (*string, bool) {
+	if o == nil || IsNil(o.Message) {
+		return nil, false
+	}
+	return o.Message, true
+}
+
+// HasMessage returns a boolean if a field has been set.
+func (o *WorkflowExecutionResponse) HasMessage() bool {
+	if o != nil && !IsNil(o.Message) {
+		return true
+	}
+
+	return false
+}
+
+// SetMessage gets a reference to the given string and assigns it to the Message field.
+func (o *WorkflowExecutionResponse) SetMessage(v string) {
+	o.Message = &v
 }
 
 // GetResult returns the Result field value
@@ -207,6 +242,9 @@ func (o WorkflowExecutionResponse) MarshalJSON() ([]byte, error) {
 func (o WorkflowExecutionResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["success"] = o.Success
+	if !IsNil(o.Message) {
+		toSerialize["message"] = o.Message
+	}
 	toSerialize["result"] = o.Result
 	if !IsNil(o.NextStep) {
 		toSerialize["next_step"] = o.NextStep

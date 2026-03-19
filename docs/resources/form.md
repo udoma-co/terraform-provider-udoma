@@ -69,11 +69,36 @@ Optional:
 <a id="nestedatt--form_definition--inputs--display_condition"></a>
 ### Nested Schema for `form_definition.inputs.display_condition`
 
-Required:
+Optional:
 
+- `conditions` (Attributes List) a list of conditions that will be evaluated based on the operator provided. This allows for nested conditions (see [below for nested schema](#nestedatt--form_definition--inputs--display_condition--conditions))
 - `operand` (String) the operand of the condition
+- `operator` (String) the logical operator to apply to the conditions when more than one condition is provided
 - `source` (String) the source field, which will be checked
 - `value` (String) the value of the condition, as serialized JSON
+
+<a id="nestedatt--form_definition--inputs--display_condition--conditions"></a>
+### Nested Schema for `form_definition.inputs.display_condition.conditions`
+
+Optional:
+
+- `conditions` (Attributes List) a list of conditions that will be evaluated based on the operator provided. This allows for nested conditions (see [below for nested schema](#nestedatt--form_definition--inputs--display_condition--conditions--conditions))
+- `operand` (String) the operand of the condition
+- `operator` (String) the logical operator to apply to the conditions when more than one condition is provided
+- `source` (String) the source field, which will be checked
+- `value` (String) the value of the condition, as serialized JSON
+
+<a id="nestedatt--form_definition--inputs--display_condition--conditions--conditions"></a>
+### Nested Schema for `form_definition.inputs.display_condition.conditions.conditions`
+
+Optional:
+
+- `operand` (String) the operand of the condition
+- `operator` (String) the logical operator to apply to the conditions when more than one condition is provided
+- `source` (String) the source field, which will be checked
+- `value` (String) the value of the condition, as serialized JSON
+
+
 
 
 <a id="nestedatt--form_definition--inputs--items"></a>

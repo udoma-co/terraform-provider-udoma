@@ -218,7 +218,8 @@ func embedFilesYaml(data []byte, dirName string, diffPatches []*gitdiff.File) ([
 
 	if err := iteratePattern(`src:.*\.yaml`, func(fileName string, pos int, fileData []byte) ([]byte, error) {
 
-		fileData, err := embedFilesYaml(fileData, dirName, diffPatches)
+		newDirName := filepath.Dir(filepath.Join(dirName, fileName))
+		fileData, err := embedFilesYaml(fileData, newDirName, diffPatches)
 		if err != nil {
 			return nil, fmt.Errorf("could not embed nested files: %w", err)
 		}

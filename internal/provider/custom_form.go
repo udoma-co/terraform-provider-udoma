@@ -1,6 +1,8 @@
 package provider
 
 import (
+	"maps"
+
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -55,14 +57,35 @@ type CustomFormInputItemModel struct {
 	Label types.Map    `tfsdk:"label"`
 }
 
-func NewConditionalInputNull() DisplayConditionModel {
+func NewConditionNull() ConditionModel {
+	return ConditionModel{}
+}
+
+type ConditionModel struct {
+	Source  types.String `tfsdk:"source"`
+	Operand types.String `tfsdk:"operand"`
+	Value   types.String `tfsdk:"value"`
+}
+
+func NewCompositeConditionNull() CompositeConditionModel {
+	return CompositeConditionModel{}
+}
+
+type CompositeConditionModel struct {
+	Operator   types.String            `tfsdk:"operator"`
+	Conditions []DisplayConditionModel `tfsdk:"conditions"`
+}
+
+func NewDisplayConditionNull() DisplayConditionModel {
 	return DisplayConditionModel{}
 }
 
 type DisplayConditionModel struct {
-	Source  types.String `tfsdk:"source"`
-	Operand types.String `tfsdk:"operand"`
-	Value   types.String `tfsdk:"value"`
+	Source     types.String            `tfsdk:"source"`
+	Operand    types.String            `tfsdk:"operand"`
+	Value      types.String            `tfsdk:"value"`
+	Operator   types.String            `tfsdk:"operator"`
+	Conditions []DisplayConditionModel `tfsdk:"conditions"`
 }
 
 func NewCustomFormInputNull() CustomFormInputModel {
@@ -309,7 +332,7 @@ func customFormInputNestedSchema() schema.NestedAttributeObject {
 			},
 			"display_condition": schema.SingleNestedAttribute{
 				Optional:   true,
-				Attributes: conditionalInputNestedSchema(),
+				Attributes: displayConditionNestedSchema(),
 				Description: "Optional condition that must be met for the input to be displayed. If the " +
 					"condition is not met, the input will be hidden. This overrides the required " +
 					"attribute.",
@@ -318,21 +341,58 @@ func customFormInputNestedSchema() schema.NestedAttributeObject {
 	}
 }
 
-func conditionalInputNestedSchema() map[string]schema.Attribute {
-	return map[string]schema.Attribute{
-		"source": schema.StringAttribute{
-			Required:    true,
-			Description: "the source field, which will be checked",
-		},
-		"operand": schema.StringAttribute{
-			Required:    true,
-			Description: "the operand of the condition",
-		},
-		"value": schema.StringAttribute{
-			Required:    true,
-			Description: "the value of the condition, as serialized JSON",
-		},
+func displayConditionNestedSchema() map[string]schema.Attribute {
+
+	// terraform does not support recursive schemas. The workaround that we use is
+	// to manually define a nested schema for up to 3 levels of nesting, which should
+	// be enough for most use cases.
+	createConditionsBlock := func(attributeOverrides map[string]schema.Attribute) map[string]schema.Attribute {
+		attributes := map[string]schema.Attribute{
+			// all the attributes aside from the nested ones
+			"source": schema.StringAttribute{
+				Optional:    true,
+				Description: "the source field, which will be checked",
+			},
+			"operand": schema.StringAttribute{
+				Optional:    true,
+				Description: "the operand of the condition",
+			},
+			"value": schema.StringAttribute{
+				Optional:    true,
+				Description: "the value of the condition, as serialized JSON",
+			},
+			"operator": schema.StringAttribute{
+				Optional:    true,
+				Description: "the logical operator to apply to the conditions when more than one condition is provided",
+			},
+		}
+
+		maps.Copy(attributes, attributeOverrides)
+
+		return attributes
 	}
+
+	thirdLevelConditionsBlock := createConditionsBlock(map[string]schema.Attribute{})
+	secondLevelConditionsBlock := createConditionsBlock(map[string]schema.Attribute{
+		"conditions": schema.ListNestedAttribute{
+			Optional: true,
+			NestedObject: schema.NestedAttributeObject{
+				Attributes: thirdLevelConditionsBlock,
+			},
+			Description: "a list of conditions that will be evaluated based on the operator provided. This allows for nested conditions",
+		},
+	})
+	firstLevelConditionsBlock := createConditionsBlock(map[string]schema.Attribute{
+		"conditions": schema.ListNestedAttribute{
+			Optional: true,
+			NestedObject: schema.NestedAttributeObject{
+				Attributes: secondLevelConditionsBlock,
+			},
+			Description: "a list of conditions that will be evaluated based on the operator provided. This allows for nested conditions",
+		},
+	})
+
+	return firstLevelConditionsBlock
 }
 
 func customFormValidationNestedSchema() schema.NestedAttributeObject {
@@ -707,23 +767,61 @@ func (validation *CustomFormValidationModel) fromApiResponse(resp *v1.FormValida
 	return
 }
 
-func (conditional *DisplayConditionModel) toApiRequest() v1.NullableDisplayCondition {
+func (displayCondition *DisplayConditionModel) toApiRequest() v1.NullableDisplayCondition {
+
+	if displayCondition.Operator.ValueString() != "" && len(displayCondition.Conditions) > 0 {
+
+		conditions := make([]v1.DisplayCondition, len(displayCondition.Conditions))
+		for i := range displayCondition.Conditions {
+			conditions[i] = *displayCondition.Conditions[i].toApiRequest().Get()
+		}
+
+		return *v1.NewNullableDisplayCondition(&v1.DisplayCondition{
+			CompositeCondition: &v1.CompositeCondition{
+				Operator:   v1.ConditionOperatorEnum(displayCondition.Operator.ValueString()),
+				Conditions: conditions,
+			},
+		})
+	}
+
 	return *v1.NewNullableDisplayCondition(&v1.DisplayCondition{
-		Source:  conditional.Source.ValueString(),
-		Operand: v1.ConditionOperandEnum(conditional.Operand.ValueString()),
-		Value:   conditional.Value.ValueString(),
+		Condition: &v1.Condition{
+			Source:  displayCondition.Source.ValueString(),
+			Operand: v1.ConditionOperandEnum(displayCondition.Operand.ValueString()),
+			Value:   displayCondition.Value.ValueString(),
+		},
 	})
 }
 
-func (conditional *DisplayConditionModel) fromApiResponse(resp *v1.DisplayCondition) (diags diag.Diagnostics) {
+func (displayCondition *DisplayConditionModel) fromApiResponse(resp *v1.DisplayCondition) (diags diag.Diagnostics) {
 
 	if resp == nil {
 		return
 	}
 
-	conditional.Source = types.StringValue(resp.Source)
-	conditional.Operand = types.StringValue(string(resp.Operand))
-	conditional.Value = types.StringValue(resp.Value)
+	if resp.CompositeCondition != nil {
+
+		displayCondition.Operator = types.StringValue(string(resp.CompositeCondition.Operator))
+
+		for i := range resp.CompositeCondition.Conditions {
+			if len(displayCondition.Conditions) <= i {
+				displayCondition.Conditions = append(displayCondition.Conditions, NewDisplayConditionNull())
+			}
+			moreDiags := displayCondition.Conditions[i].fromApiResponse(&resp.CompositeCondition.Conditions[i])
+			diags.Append(moreDiags...)
+			if diags.HasError() {
+				return
+			}
+		}
+
+		return
+	}
+
+	if resp.Condition != nil {
+		displayCondition.Source = types.StringValue(resp.Condition.Source)
+		displayCondition.Operand = types.StringValue(string(resp.Condition.Operand))
+		displayCondition.Value = types.StringValue(resp.Condition.Value)
+	}
 
 	return
 }

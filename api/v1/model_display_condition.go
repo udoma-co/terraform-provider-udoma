@@ -11,170 +11,115 @@ API version: 1.0
 package v1
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
+	"gopkg.in/validator.v2"
 )
 
-// checks if the DisplayCondition type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &DisplayCondition{}
-
-// DisplayCondition struct for DisplayCondition
+// DisplayCondition - struct for DisplayCondition
 type DisplayCondition struct {
-	// The path to the source data that will be used to evaluate the condition
-	Source  string               `json:"source"`
-	Operand ConditionOperandEnum `json:"operand"`
-	// The value that will be used to compare the source data with, as a JSON  string. This can be a string, number, or boolean.
-	Value string `json:"value"`
+	CompositeCondition *CompositeCondition
+	Condition          *Condition
 }
 
-type _DisplayCondition DisplayCondition
-
-// NewDisplayCondition instantiates a new DisplayCondition object
-// This constructor will assign default values to properties that have it defined,
-// and makes sure properties required by API are set, but the set of arguments
-// will change when the set of required properties is changed
-func NewDisplayCondition(source string, operand ConditionOperandEnum, value string) *DisplayCondition {
-	this := DisplayCondition{}
-	this.Source = source
-	this.Operand = operand
-	this.Value = value
-	return &this
+// CompositeConditionAsDisplayCondition is a convenience function that returns CompositeCondition wrapped in DisplayCondition
+func CompositeConditionAsDisplayCondition(v *CompositeCondition) DisplayCondition {
+	return DisplayCondition{
+		CompositeCondition: v,
+	}
 }
 
-// NewDisplayConditionWithDefaults instantiates a new DisplayCondition object
-// This constructor will only assign default values to properties that have it defined,
-// but it doesn't guarantee that properties required by API are set
-func NewDisplayConditionWithDefaults() *DisplayCondition {
-	this := DisplayCondition{}
-	return &this
+// ConditionAsDisplayCondition is a convenience function that returns Condition wrapped in DisplayCondition
+func ConditionAsDisplayCondition(v *Condition) DisplayCondition {
+	return DisplayCondition{
+		Condition: v,
+	}
 }
 
-// GetSource returns the Source field value
-func (o *DisplayCondition) GetSource() string {
-	if o == nil {
-		var ret string
-		return ret
+// Unmarshal JSON data into one of the pointers in the struct
+func (dst *DisplayCondition) UnmarshalJSON(data []byte) error {
+	var err error
+	// this object is nullable so check if the payload is null or empty string
+	if string(data) == "" || string(data) == "{}" {
+		return nil
 	}
 
-	return o.Source
-}
-
-// GetSourceOk returns a tuple with the Source field value
-// and a boolean to check if the value has been set.
-func (o *DisplayCondition) GetSourceOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Source, true
-}
-
-// SetSource sets field value
-func (o *DisplayCondition) SetSource(v string) {
-	o.Source = v
-}
-
-// GetOperand returns the Operand field value
-func (o *DisplayCondition) GetOperand() ConditionOperandEnum {
-	if o == nil {
-		var ret ConditionOperandEnum
-		return ret
-	}
-
-	return o.Operand
-}
-
-// GetOperandOk returns a tuple with the Operand field value
-// and a boolean to check if the value has been set.
-func (o *DisplayCondition) GetOperandOk() (*ConditionOperandEnum, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Operand, true
-}
-
-// SetOperand sets field value
-func (o *DisplayCondition) SetOperand(v ConditionOperandEnum) {
-	o.Operand = v
-}
-
-// GetValue returns the Value field value
-func (o *DisplayCondition) GetValue() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Value
-}
-
-// GetValueOk returns a tuple with the Value field value
-// and a boolean to check if the value has been set.
-func (o *DisplayCondition) GetValueOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Value, true
-}
-
-// SetValue sets field value
-func (o *DisplayCondition) SetValue(v string) {
-	o.Value = v
-}
-
-func (o DisplayCondition) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
-func (o DisplayCondition) ToMap() (map[string]interface{}, error) {
-	toSerialize := map[string]interface{}{}
-	toSerialize["source"] = o.Source
-	toSerialize["operand"] = o.Operand
-	toSerialize["value"] = o.Value
-	return toSerialize, nil
-}
-
-func (o *DisplayCondition) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"source",
-		"operand",
-		"value",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
+	match := 0
+	// try to unmarshal data into CompositeCondition
+	err = newStrictDecoder(data).Decode(&dst.CompositeCondition)
+	if err == nil {
+		jsonCompositeCondition, _ := json.Marshal(dst.CompositeCondition)
+		if string(jsonCompositeCondition) == "{}" { // empty struct
+			dst.CompositeCondition = nil
+		} else {
+			if err = validator.Validate(dst.CompositeCondition); err != nil {
+				dst.CompositeCondition = nil
+			} else {
+				match++
+			}
 		}
+	} else {
+		dst.CompositeCondition = nil
 	}
 
-	varDisplayCondition := _DisplayCondition{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	// decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varDisplayCondition)
-
-	if err != nil {
-		return err
+	// try to unmarshal data into Condition
+	err = newStrictDecoder(data).Decode(&dst.Condition)
+	if err == nil {
+		jsonCondition, _ := json.Marshal(dst.Condition)
+		if string(jsonCondition) == "{}" { // empty struct
+			dst.Condition = nil
+		} else {
+			if err = validator.Validate(dst.Condition); err != nil {
+				dst.Condition = nil
+			} else {
+				match++
+			}
+		}
+	} else {
+		dst.Condition = nil
 	}
 
-	*o = DisplayCondition(varDisplayCondition)
+	if match > 1 { // more than 1 match
+		// reset to nil
+		dst.CompositeCondition = nil
+		dst.Condition = nil
 
-	return err
+		return fmt.Errorf("data matches more than one schema in oneOf(DisplayCondition)")
+	} else if match == 1 {
+		return nil // exactly one match
+	} else { // no match
+		return fmt.Errorf("data failed to match schemas in oneOf(DisplayCondition)")
+	}
+}
+
+// Marshal data from the first non-nil pointers in the struct to JSON
+func (src DisplayCondition) MarshalJSON() ([]byte, error) {
+	if src.CompositeCondition != nil {
+		return json.Marshal(&src.CompositeCondition)
+	}
+
+	if src.Condition != nil {
+		return json.Marshal(&src.Condition)
+	}
+
+	return nil, nil // no data in oneOf schemas
+}
+
+// Get the actual instance
+func (obj *DisplayCondition) GetActualInstance() interface{} {
+	if obj == nil {
+		return nil
+	}
+	if obj.CompositeCondition != nil {
+		return obj.CompositeCondition
+	}
+
+	if obj.Condition != nil {
+		return obj.Condition
+	}
+
+	// all schemas are nil
+	return nil
 }
 
 type NullableDisplayCondition struct {

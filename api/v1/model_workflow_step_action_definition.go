@@ -27,11 +27,19 @@ type WorkflowStepActionDefinition struct {
 	Parameters map[string]interface{} `json:"parameters,omitempty"`
 	// a map of values, where the key and values are strings
 	DynamicParameters *map[string]string `json:"dynamic_parameters,omitempty"`
+	// optional JS script that will be executed in the backend to determine whether  the action can be executed. If the script returns false and an error message,  the action will not be executed. This can be used to provide better feedback to users on why an action cannot be executed, e.g. due to missing or invalid  data, etc. This will be ignored in init_step actions, as the same functionality can be achieved via the entrypoint validations.
+	TestScript *string `json:"test_script,omitempty"`
+	// optional JS script that will be executed in the backend when the action is  executed. This can be used to perform additional operations during the execution  of the action, e.g. to update some data, send notifications, etc. This replaces the exec_before and exec_after attributes, which are now deprecated, as the step specific logic will be gradually removed from the backend, in favor of using  action execution scripts for better flexibility and maintainability.
+	ExecutionScript *string `json:"execution_script,omitempty"`
 	// Optional JS expression that will be executed before any step- and action-specific logic is executed.
+	// Deprecated
 	ExecBefore *string `json:"exec_before,omitempty"`
 	// Optional JS expression that will be executed after the step- and action-specific logic is executed.
-	ExecAfter    *string          `json:"exec_after,omitempty"`
-	ButtonWidget WidgetDescriptor `json:"button_widget"`
+	// Deprecated
+	ExecAfter *string `json:"exec_after,omitempty"`
+	// a map of values, where the key and values are strings
+	ConfirmationPrompt *map[string]string `json:"confirmation_prompt,omitempty"`
+	ButtonWidget       WidgetDescriptor   `json:"button_widget"`
 	// An optional JS expression that determines whether the action can be executed or  not. If not set, this will default to true. If the expression returns false, the action will not show up in the UI.
 	CanBeExecutedExpression *string `json:"can_be_executed_expression,omitempty"`
 	// Indicates whether the client should include the user provided data in the request when executing the action. Typically this will be set to false in actions that skip a step. When set to false, forms will also not be validated on the client  side.
@@ -149,7 +157,72 @@ func (o *WorkflowStepActionDefinition) SetDynamicParameters(v map[string]string)
 	o.DynamicParameters = &v
 }
 
+// GetTestScript returns the TestScript field value if set, zero value otherwise.
+func (o *WorkflowStepActionDefinition) GetTestScript() string {
+	if o == nil || IsNil(o.TestScript) {
+		var ret string
+		return ret
+	}
+	return *o.TestScript
+}
+
+// GetTestScriptOk returns a tuple with the TestScript field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowStepActionDefinition) GetTestScriptOk() (*string, bool) {
+	if o == nil || IsNil(o.TestScript) {
+		return nil, false
+	}
+	return o.TestScript, true
+}
+
+// HasTestScript returns a boolean if a field has been set.
+func (o *WorkflowStepActionDefinition) HasTestScript() bool {
+	if o != nil && !IsNil(o.TestScript) {
+		return true
+	}
+
+	return false
+}
+
+// SetTestScript gets a reference to the given string and assigns it to the TestScript field.
+func (o *WorkflowStepActionDefinition) SetTestScript(v string) {
+	o.TestScript = &v
+}
+
+// GetExecutionScript returns the ExecutionScript field value if set, zero value otherwise.
+func (o *WorkflowStepActionDefinition) GetExecutionScript() string {
+	if o == nil || IsNil(o.ExecutionScript) {
+		var ret string
+		return ret
+	}
+	return *o.ExecutionScript
+}
+
+// GetExecutionScriptOk returns a tuple with the ExecutionScript field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowStepActionDefinition) GetExecutionScriptOk() (*string, bool) {
+	if o == nil || IsNil(o.ExecutionScript) {
+		return nil, false
+	}
+	return o.ExecutionScript, true
+}
+
+// HasExecutionScript returns a boolean if a field has been set.
+func (o *WorkflowStepActionDefinition) HasExecutionScript() bool {
+	if o != nil && !IsNil(o.ExecutionScript) {
+		return true
+	}
+
+	return false
+}
+
+// SetExecutionScript gets a reference to the given string and assigns it to the ExecutionScript field.
+func (o *WorkflowStepActionDefinition) SetExecutionScript(v string) {
+	o.ExecutionScript = &v
+}
+
 // GetExecBefore returns the ExecBefore field value if set, zero value otherwise.
+// Deprecated
 func (o *WorkflowStepActionDefinition) GetExecBefore() string {
 	if o == nil || IsNil(o.ExecBefore) {
 		var ret string
@@ -160,6 +233,7 @@ func (o *WorkflowStepActionDefinition) GetExecBefore() string {
 
 // GetExecBeforeOk returns a tuple with the ExecBefore field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *WorkflowStepActionDefinition) GetExecBeforeOk() (*string, bool) {
 	if o == nil || IsNil(o.ExecBefore) {
 		return nil, false
@@ -177,11 +251,13 @@ func (o *WorkflowStepActionDefinition) HasExecBefore() bool {
 }
 
 // SetExecBefore gets a reference to the given string and assigns it to the ExecBefore field.
+// Deprecated
 func (o *WorkflowStepActionDefinition) SetExecBefore(v string) {
 	o.ExecBefore = &v
 }
 
 // GetExecAfter returns the ExecAfter field value if set, zero value otherwise.
+// Deprecated
 func (o *WorkflowStepActionDefinition) GetExecAfter() string {
 	if o == nil || IsNil(o.ExecAfter) {
 		var ret string
@@ -192,6 +268,7 @@ func (o *WorkflowStepActionDefinition) GetExecAfter() string {
 
 // GetExecAfterOk returns a tuple with the ExecAfter field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *WorkflowStepActionDefinition) GetExecAfterOk() (*string, bool) {
 	if o == nil || IsNil(o.ExecAfter) {
 		return nil, false
@@ -209,8 +286,41 @@ func (o *WorkflowStepActionDefinition) HasExecAfter() bool {
 }
 
 // SetExecAfter gets a reference to the given string and assigns it to the ExecAfter field.
+// Deprecated
 func (o *WorkflowStepActionDefinition) SetExecAfter(v string) {
 	o.ExecAfter = &v
+}
+
+// GetConfirmationPrompt returns the ConfirmationPrompt field value if set, zero value otherwise.
+func (o *WorkflowStepActionDefinition) GetConfirmationPrompt() map[string]string {
+	if o == nil || IsNil(o.ConfirmationPrompt) {
+		var ret map[string]string
+		return ret
+	}
+	return *o.ConfirmationPrompt
+}
+
+// GetConfirmationPromptOk returns a tuple with the ConfirmationPrompt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowStepActionDefinition) GetConfirmationPromptOk() (*map[string]string, bool) {
+	if o == nil || IsNil(o.ConfirmationPrompt) {
+		return nil, false
+	}
+	return o.ConfirmationPrompt, true
+}
+
+// HasConfirmationPrompt returns a boolean if a field has been set.
+func (o *WorkflowStepActionDefinition) HasConfirmationPrompt() bool {
+	if o != nil && !IsNil(o.ConfirmationPrompt) {
+		return true
+	}
+
+	return false
+}
+
+// SetConfirmationPrompt gets a reference to the given map[string]string and assigns it to the ConfirmationPrompt field.
+func (o *WorkflowStepActionDefinition) SetConfirmationPrompt(v map[string]string) {
+	o.ConfirmationPrompt = &v
 }
 
 // GetButtonWidget returns the ButtonWidget field value
@@ -350,11 +460,20 @@ func (o WorkflowStepActionDefinition) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.DynamicParameters) {
 		toSerialize["dynamic_parameters"] = o.DynamicParameters
 	}
+	if !IsNil(o.TestScript) {
+		toSerialize["test_script"] = o.TestScript
+	}
+	if !IsNil(o.ExecutionScript) {
+		toSerialize["execution_script"] = o.ExecutionScript
+	}
 	if !IsNil(o.ExecBefore) {
 		toSerialize["exec_before"] = o.ExecBefore
 	}
 	if !IsNil(o.ExecAfter) {
 		toSerialize["exec_after"] = o.ExecAfter
+	}
+	if !IsNil(o.ConfirmationPrompt) {
+		toSerialize["confirmation_prompt"] = o.ConfirmationPrompt
 	}
 	toSerialize["button_widget"] = o.ButtonWidget
 	if !IsNil(o.CanBeExecutedExpression) {

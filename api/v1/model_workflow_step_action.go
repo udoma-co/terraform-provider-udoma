@@ -24,6 +24,8 @@ type WorkflowStepAction struct {
 	// the ID of the action
 	Id           string           `json:"id"`
 	ButtonWidget WidgetDescriptor `json:"button_widget"`
+	// a map of values, where the key and values are strings
+	ConfirmationPrompt *map[string]string `json:"confirmation_prompt,omitempty"`
 	// Indicates whether the client should include the user provided data in the request when executing the action. Typically this will be set to false in actions that skip a step. When set to false, forms will also not be validated on the client  side.
 	CollectData *bool `json:"collect_data,omitempty"`
 }
@@ -97,6 +99,38 @@ func (o *WorkflowStepAction) SetButtonWidget(v WidgetDescriptor) {
 	o.ButtonWidget = v
 }
 
+// GetConfirmationPrompt returns the ConfirmationPrompt field value if set, zero value otherwise.
+func (o *WorkflowStepAction) GetConfirmationPrompt() map[string]string {
+	if o == nil || IsNil(o.ConfirmationPrompt) {
+		var ret map[string]string
+		return ret
+	}
+	return *o.ConfirmationPrompt
+}
+
+// GetConfirmationPromptOk returns a tuple with the ConfirmationPrompt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowStepAction) GetConfirmationPromptOk() (*map[string]string, bool) {
+	if o == nil || IsNil(o.ConfirmationPrompt) {
+		return nil, false
+	}
+	return o.ConfirmationPrompt, true
+}
+
+// HasConfirmationPrompt returns a boolean if a field has been set.
+func (o *WorkflowStepAction) HasConfirmationPrompt() bool {
+	if o != nil && !IsNil(o.ConfirmationPrompt) {
+		return true
+	}
+
+	return false
+}
+
+// SetConfirmationPrompt gets a reference to the given map[string]string and assigns it to the ConfirmationPrompt field.
+func (o *WorkflowStepAction) SetConfirmationPrompt(v map[string]string) {
+	o.ConfirmationPrompt = &v
+}
+
 // GetCollectData returns the CollectData field value if set, zero value otherwise.
 func (o *WorkflowStepAction) GetCollectData() bool {
 	if o == nil || IsNil(o.CollectData) {
@@ -141,6 +175,9 @@ func (o WorkflowStepAction) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["id"] = o.Id
 	toSerialize["button_widget"] = o.ButtonWidget
+	if !IsNil(o.ConfirmationPrompt) {
+		toSerialize["confirmation_prompt"] = o.ConfirmationPrompt
+	}
 	if !IsNil(o.CollectData) {
 		toSerialize["collect_data"] = o.CollectData
 	}
