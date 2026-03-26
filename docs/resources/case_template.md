@@ -28,6 +28,7 @@ Resource represents a template for raising cases
 - `confirmation_text` (Map of String) Text for the confirmation window before submiting case
 - `description` (Map of String) The description of the case template, shown in the reporting page
 - `icon` (String) The icon to be displayed on the reporting page
+- `include_ai_priority_assessment` (Boolean) If true, AI will be used to automatically assess the priority of the newly submitted case. High priority cases will have the notification email sent with high importance/priority.
 - `include_ai_summary` (Boolean) If true, an AI-generated summary of the submitted case data will be included in the new case notification email sent to the property manager.
 - `info_text` (Map of String) A longer introduction text, shown in the case specific reporting page
 - `label` (Map of String) The short label to be displayed on the reporting page

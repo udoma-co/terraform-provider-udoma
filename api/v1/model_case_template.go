@@ -47,8 +47,10 @@ type CaseTemplate struct {
 	// a map of values, where the key and values are strings
 	ConfirmationText *map[string]string `json:"confirmation_text,omitempty"`
 	// If true, an AI-generated summary of the submitted case data will be included in the new case notification email sent to the property manager.
-	IncludeAiSummary *bool  `json:"include_ai_summary,omitempty"`
-	Version          *int32 `json:"version,omitempty"`
+	IncludeAiSummary *bool `json:"include_ai_summary,omitempty"`
+	// If true, AI will be used to automatically assess the priority of the newly  submitted case. High priority cases will have the notification email sent with high importance/priority.
+	IncludeAiPriorityAssessment *bool  `json:"include_ai_priority_assessment,omitempty"`
+	Version                     *int32 `json:"version,omitempty"`
 	// A flag indicating whether the entity is deleted. If the entity is deleted, it should not be returned in the results of a query, but it is still kept in the database as it is referenced by other entities.
 	IsDeleted *bool `json:"is_deleted,omitempty"`
 }
@@ -505,6 +507,38 @@ func (o *CaseTemplate) SetIncludeAiSummary(v bool) {
 	o.IncludeAiSummary = &v
 }
 
+// GetIncludeAiPriorityAssessment returns the IncludeAiPriorityAssessment field value if set, zero value otherwise.
+func (o *CaseTemplate) GetIncludeAiPriorityAssessment() bool {
+	if o == nil || IsNil(o.IncludeAiPriorityAssessment) {
+		var ret bool
+		return ret
+	}
+	return *o.IncludeAiPriorityAssessment
+}
+
+// GetIncludeAiPriorityAssessmentOk returns a tuple with the IncludeAiPriorityAssessment field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CaseTemplate) GetIncludeAiPriorityAssessmentOk() (*bool, bool) {
+	if o == nil || IsNil(o.IncludeAiPriorityAssessment) {
+		return nil, false
+	}
+	return o.IncludeAiPriorityAssessment, true
+}
+
+// HasIncludeAiPriorityAssessment returns a boolean if a field has been set.
+func (o *CaseTemplate) HasIncludeAiPriorityAssessment() bool {
+	if o != nil && !IsNil(o.IncludeAiPriorityAssessment) {
+		return true
+	}
+
+	return false
+}
+
+// SetIncludeAiPriorityAssessment gets a reference to the given bool and assigns it to the IncludeAiPriorityAssessment field.
+func (o *CaseTemplate) SetIncludeAiPriorityAssessment(v bool) {
+	o.IncludeAiPriorityAssessment = &v
+}
+
 // GetVersion returns the Version field value if set, zero value otherwise.
 func (o *CaseTemplate) GetVersion() int32 {
 	if o == nil || IsNil(o.Version) {
@@ -609,6 +643,9 @@ func (o CaseTemplate) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.IncludeAiSummary) {
 		toSerialize["include_ai_summary"] = o.IncludeAiSummary
+	}
+	if !IsNil(o.IncludeAiPriorityAssessment) {
+		toSerialize["include_ai_priority_assessment"] = o.IncludeAiPriorityAssessment
 	}
 	if !IsNil(o.Version) {
 		toSerialize["version"] = o.Version

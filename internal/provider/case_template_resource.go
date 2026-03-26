@@ -38,23 +38,24 @@ type CaseTemplate struct {
 
 // CaseTemplateModel describes the resource data model.
 type CaseTemplateModel struct {
-	ID               types.String       `tfsdk:"id"`
-	LastUpdated      types.String       `tfsdk:"last_updated"`
-	CreatedAt        types.Int64        `tfsdk:"created_at"`
-	UpdatedAt        types.Int64        `tfsdk:"updated_at"`
-	Name             types.String       `tfsdk:"name"`
-	Access           []types.String     `tfsdk:"access"`
-	NameExpression   types.String       `tfsdk:"name_expression"`
-	Label            types.Map          `tfsdk:"label"`
-	Description      types.Map          `tfsdk:"description"`
-	InfoText         types.Map          `tfsdk:"info_text"`
-	Icon             types.String       `tfsdk:"icon"`
-	CustomInputs     tf.JsonObjectValue `tfsdk:"custom_inputs"`
-	Config           *CaseConfigModel   `tfsdk:"config"`
-	AdCategories     []types.String     `tfsdk:"ad_categories"`
-	ConfirmationText types.Map          `tfsdk:"confirmation_text"`
-	IncludeAiSummary types.Bool         `tfsdk:"include_ai_summary"`
-	Version          types.Int32        `tfsdk:"version"`
+	ID                          types.String       `tfsdk:"id"`
+	LastUpdated                 types.String       `tfsdk:"last_updated"`
+	CreatedAt                   types.Int64        `tfsdk:"created_at"`
+	UpdatedAt                   types.Int64        `tfsdk:"updated_at"`
+	Name                        types.String       `tfsdk:"name"`
+	Access                      []types.String     `tfsdk:"access"`
+	NameExpression              types.String       `tfsdk:"name_expression"`
+	Label                       types.Map          `tfsdk:"label"`
+	Description                 types.Map          `tfsdk:"description"`
+	InfoText                    types.Map          `tfsdk:"info_text"`
+	Icon                        types.String       `tfsdk:"icon"`
+	CustomInputs                tf.JsonObjectValue `tfsdk:"custom_inputs"`
+	Config                      *CaseConfigModel   `tfsdk:"config"`
+	AdCategories                []types.String     `tfsdk:"ad_categories"`
+	ConfirmationText            types.Map          `tfsdk:"confirmation_text"`
+	IncludeAiPriorityAssessment types.Bool         `tfsdk:"include_ai_priority_assessment"`
+	IncludeAiSummary            types.Bool         `tfsdk:"include_ai_summary"`
+	Version                     types.Int32        `tfsdk:"version"`
 }
 
 func (r *CaseTemplate) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -160,6 +161,10 @@ func (r *CaseTemplate) Schema(ctx context.Context, req resource.SchemaRequest, r
 				Optional:    true,
 				Description: "Text for the confirmation window before submiting case",
 				ElementType: types.StringType,
+			},
+			"include_ai_priority_assessment": schema.BoolAttribute{
+				Optional:    true,
+				Description: "If true, AI will be used to automatically assess the priority of the newly submitted case. High priority cases will have the notification email sent with high importance/priority.",
 			},
 			"include_ai_summary": schema.BoolAttribute{
 				Optional:    true,
@@ -370,6 +375,7 @@ func (model *CaseTemplateModel) fromAPI(template *api.CaseTemplate) error {
 	model.Name = types.StringValue(template.Name)
 	model.NameExpression = omittableStringValue(template.NameExpression, model.NameExpression)
 	model.Icon = omittableStringValue(template.Icon, model.Icon)
+	model.IncludeAiPriorityAssessment = omittableBooleanValue(template.IncludeAiPriorityAssessment, model.IncludeAiPriorityAssessment)
 	model.IncludeAiSummary = omittableBooleanValue(template.IncludeAiSummary, model.IncludeAiSummary)
 	model.Version = types.Int32PointerValue(template.Version)
 
@@ -425,10 +431,6 @@ func (model *CaseTemplateModel) fromAPI(template *api.CaseTemplate) error {
 		model.ConfirmationText = modelValue
 	}
 
-	if template.IncludeAiSummary != nil {
-		model.IncludeAiSummary = types.BoolValue(*template.IncludeAiSummary)
-	}
-
 	customInputs, err := json.Marshal(template.CustomInputs)
 	if err != nil {
 		return fmt.Errorf("failed to marshal custom inputs: %w", err)
@@ -449,10 +451,12 @@ func (model *CaseTemplateModel) fromAPI(template *api.CaseTemplate) error {
 func (model *CaseTemplateModel) toAPIRequest() (api.CreateOrUpdateCaseTemplateRequest, error) {
 
 	template := api.CreateOrUpdateCaseTemplateRequest{
-		Name:           model.Name.ValueString(),
-		NameExpression: model.NameExpression.ValueStringPointer(),
-		Icon:           model.Icon.ValueStringPointer(),
-		Version:        model.Version.ValueInt32Pointer(),
+		Name:                        model.Name.ValueString(),
+		NameExpression:              model.NameExpression.ValueStringPointer(),
+		Icon:                        model.Icon.ValueStringPointer(),
+		IncludeAiPriorityAssessment: model.IncludeAiPriorityAssessment.ValueBoolPointer(),
+		IncludeAiSummary:            model.IncludeAiSummary.ValueBoolPointer(),
+		Version:                     model.Version.ValueInt32Pointer(),
 	}
 
 	if description := modelMapToStringMap(model.Description); len(description) > 0 {

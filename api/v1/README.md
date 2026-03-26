@@ -104,6 +104,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateBankAccount**](docs/DefaultAPI.md#createbankaccount) | **Post** /bank-account | Create new bank account
 *DefaultAPI* | [**CreateBankConnection**](docs/DefaultAPI.md#createbankconnection) | **Post** /bank-account/{accountID}/connection | Create a new bank connection
 *DefaultAPI* | [**CreateBankTransaction**](docs/DefaultAPI.md#createbanktransaction) | **Post** /bank-account/{accountID}/bank-transaction | Create a new bank transaction
+*DefaultAPI* | [**CreateBatchProcessingSession**](docs/DefaultAPI.md#createbatchprocessingsession) | **Post** /batch/processing-session | Create a new session for batch processing of entities
 *DefaultAPI* | [**CreateBookingTemplate**](docs/DefaultAPI.md#createbookingtemplate) | **Post** /financial/booking-template | Create a new booking template
 *DefaultAPI* | [**CreateBulkAccountDimensionValues**](docs/DefaultAPI.md#createbulkaccountdimensionvalues) | **Post** /financial/account-dimension/{dimensionID}/value/bulk | Create a set of new account dimension values
 *DefaultAPI* | [**CreateCase**](docs/DefaultAPI.md#createcase) | **Post** /case | Create a new case
@@ -157,6 +158,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteBankAccount**](docs/DefaultAPI.md#deletebankaccount) | **Delete** /bank-account/{accountID} | Delete an already existing bank account
 *DefaultAPI* | [**DeleteBankConnection**](docs/DefaultAPI.md#deletebankconnection) | **Delete** /bank-connection/{bankConnectionID} | Delete the bank connection
 *DefaultAPI* | [**DeleteBankTransaction**](docs/DefaultAPI.md#deletebanktransaction) | **Delete** /bank-account-transaction/{transactionID} | Delete the bank transaction with all its related data
+*DefaultAPI* | [**DeleteBatchProcessingSession**](docs/DefaultAPI.md#deletebatchprocessingsession) | **Delete** /batch/processing-session/{batchSessionID} | Delete a batch processing session
 *DefaultAPI* | [**DeleteBookingPreview**](docs/DefaultAPI.md#deletebookingpreview) | **Delete** /financial/booking-preview/{bookingPreviewID} | Delete the booking preview
 *DefaultAPI* | [**DeleteBookingTemplate**](docs/DefaultAPI.md#deletebookingtemplate) | **Delete** /financial/booking-template/{bookingTemplateID} | Delete the booking template with all its related data
 *DefaultAPI* | [**DeleteCase**](docs/DefaultAPI.md#deletecase) | **Delete** /case/{caseID} | Delete case
@@ -240,6 +242,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetBankAccount**](docs/DefaultAPI.md#getbankaccount) | **Get** /bank-account/{accountID} | Get the bank account with the given ID
 *DefaultAPI* | [**GetBankConnection**](docs/DefaultAPI.md#getbankconnection) | **Get** /bank-account/{accountID}/connection | Get the bank connection for a specific bank
 *DefaultAPI* | [**GetBankTransaction**](docs/DefaultAPI.md#getbanktransaction) | **Get** /bank-account-transaction/{transactionID} | Get the bank transaction with all its attributes
+*DefaultAPI* | [**GetBatchProcessingSession**](docs/DefaultAPI.md#getbatchprocessingsession) | **Get** /batch/processing-session/{batchSessionID} | Get the batch processing session by ID
 *DefaultAPI* | [**GetBookingPreview**](docs/DefaultAPI.md#getbookingpreview) | **Get** /financial/booking-preview/{bookingPreviewID} | Get the booking preview with all its attributes
 *DefaultAPI* | [**GetBookingTemplate**](docs/DefaultAPI.md#getbookingtemplate) | **Get** /financial/booking-template/{bookingTemplateID} | Get the booking template with all its attributes
 *DefaultAPI* | [**GetCase**](docs/DefaultAPI.md#getcase) | **Get** /case/{caseID} | Get case details
@@ -395,6 +398,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryBankConnectionTransactions**](docs/DefaultAPI.md#querybankconnectiontransactions) | **Post** /bank-account/{accountID}/connection/transactions | Get the bank connection transactions
 *DefaultAPI* | [**QueryBankTransactions**](docs/DefaultAPI.md#querybanktransactions) | **Post** /bank-account/{accountID}/bank-transactions | Query all bank transactions for a given account
 *DefaultAPI* | [**QueryBanks**](docs/DefaultAPI.md#querybanks) | **Post** /banks | Get all banks
+*DefaultAPI* | [**QueryBatchProcessingSessions**](docs/DefaultAPI.md#querybatchprocessingsessions) | **Post** /batch/processing-sessions | Query batch processing sessions for given criteria
 *DefaultAPI* | [**QueryBookingPreviews**](docs/DefaultAPI.md#querybookingpreviews) | **Post** /financial/booking-previews | Query all booking previews
 *DefaultAPI* | [**QueryBookingTemplates**](docs/DefaultAPI.md#querybookingtemplates) | **Post** /financial/booking-templates | Query all booking templates
 *DefaultAPI* | [**QueryBookingsForAccount**](docs/DefaultAPI.md#querybookingsforaccount) | **Post** /financial/accounts-by-number/{flatNumber}/bookings | Query bookings for the given account
@@ -455,6 +459,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateArchivalJobSettings**](docs/DefaultAPI.md#updatearchivaljobsettings) | **Put** /archival-job/settings | Update archival job settings
 *DefaultAPI* | [**UpdateBankAccount**](docs/DefaultAPI.md#updatebankaccount) | **Put** /bank-account/{accountID} | Update the attributes of the already existing bank account
 *DefaultAPI* | [**UpdateBankTransaction**](docs/DefaultAPI.md#updatebanktransaction) | **Put** /bank-account-transaction/{transactionID} | Update an already existing bank transaction
+*DefaultAPI* | [**UpdateBatchProcessingSession**](docs/DefaultAPI.md#updatebatchprocessingsession) | **Put** /batch/processing-session/{batchSessionID} | Update batch processing session
 *DefaultAPI* | [**UpdateBookingPreview**](docs/DefaultAPI.md#updatebookingpreview) | **Put** /financial/booking-preview/{bookingPreviewID} | Update the booking preview with all its attributes
 *DefaultAPI* | [**UpdateBookingTemplate**](docs/DefaultAPI.md#updatebookingtemplate) | **Put** /financial/booking-template/{bookingTemplateID} | Update an already existing booking template
 *DefaultAPI* | [**UpdateCase**](docs/DefaultAPI.md#updatecase) | **Put** /case/{caseID} | Update case
@@ -567,6 +572,12 @@ Class | Method | HTTP request | Description
  - [BankTransactionAutoImportFilterTypeEnum](docs/BankTransactionAutoImportFilterTypeEnum.md)
  - [BankTransactionImport](docs/BankTransactionImport.md)
  - [BatchInvoiceOperationResponse](docs/BatchInvoiceOperationResponse.md)
+ - [BatchItemActionEnum](docs/BatchItemActionEnum.md)
+ - [BatchProcessingRefs](docs/BatchProcessingRefs.md)
+ - [BatchProcessingSession](docs/BatchProcessingSession.md)
+ - [BatchProcessingStatusEnum](docs/BatchProcessingStatusEnum.md)
+ - [BatchProcessingTypeEnum](docs/BatchProcessingTypeEnum.md)
+ - [BatchSessionAttributesPartial](docs/BatchSessionAttributesPartial.md)
  - [BookingInitialisationStatusEnum](docs/BookingInitialisationStatusEnum.md)
  - [BookingPreview](docs/BookingPreview.md)
  - [BookingPreviewPartial](docs/BookingPreviewPartial.md)
@@ -627,6 +638,7 @@ Class | Method | HTTP request | Description
  - [CreateAccountBookingsRequest](docs/CreateAccountBookingsRequest.md)
  - [CreateApprovalRequest](docs/CreateApprovalRequest.md)
  - [CreateBankConnectionResponse](docs/CreateBankConnectionResponse.md)
+ - [CreateBatchProcessingSessionRequest](docs/CreateBatchProcessingSessionRequest.md)
  - [CreateBulkAccountDimensionValuesRequest](docs/CreateBulkAccountDimensionValuesRequest.md)
  - [CreateCaseCommentRequest](docs/CreateCaseCommentRequest.md)
  - [CreateCaseRequest](docs/CreateCaseRequest.md)
@@ -825,6 +837,7 @@ Class | Method | HTTP request | Description
  - [PreviewDataImportRequest](docs/PreviewDataImportRequest.md)
  - [PriceIndexPoint](docs/PriceIndexPoint.md)
  - [PriceIndexPointQueryRequest](docs/PriceIndexPointQueryRequest.md)
+ - [ProcessItemInBatchProcessingSessionRequest](docs/ProcessItemInBatchProcessingSessionRequest.md)
  - [Property](docs/Property.md)
  - [PropertyAttributesPartial](docs/PropertyAttributesPartial.md)
  - [PropertyDetails](docs/PropertyDetails.md)
@@ -860,6 +873,8 @@ Class | Method | HTTP request | Description
  - [QueryBankTransactionsRequest](docs/QueryBankTransactionsRequest.md)
  - [QueryBankTransactionsResponse](docs/QueryBankTransactionsResponse.md)
  - [QueryBanksRequest](docs/QueryBanksRequest.md)
+ - [QueryBatchProcessingSessionsRequest](docs/QueryBatchProcessingSessionsRequest.md)
+ - [QueryBatchProcessingSessionsResponse](docs/QueryBatchProcessingSessionsResponse.md)
  - [QueryBookingPreviewsRequest](docs/QueryBookingPreviewsRequest.md)
  - [QueryBookingTemplatesRequest](docs/QueryBookingTemplatesRequest.md)
  - [QueryBookingsByFlatNumberRequest](docs/QueryBookingsByFlatNumberRequest.md)

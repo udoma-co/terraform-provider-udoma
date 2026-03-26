@@ -2706,6 +2706,116 @@ func (a *DefaultAPIService) CreateBankTransactionExecute(r ApiCreateBankTransact
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiCreateBatchProcessingSessionRequest struct {
+	ctx                                 context.Context
+	ApiService                          *DefaultAPIService
+	createBatchProcessingSessionRequest *CreateBatchProcessingSessionRequest
+}
+
+// Batch session details and operations to be performed
+func (r ApiCreateBatchProcessingSessionRequest) CreateBatchProcessingSessionRequest(createBatchProcessingSessionRequest CreateBatchProcessingSessionRequest) ApiCreateBatchProcessingSessionRequest {
+	r.createBatchProcessingSessionRequest = &createBatchProcessingSessionRequest
+	return r
+}
+
+func (r ApiCreateBatchProcessingSessionRequest) Execute() (*BatchProcessingSession, *http.Response, error) {
+	return r.ApiService.CreateBatchProcessingSessionExecute(r)
+}
+
+/*
+CreateBatchProcessingSession Create a new session for batch processing of entities
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiCreateBatchProcessingSessionRequest
+*/
+func (a *DefaultAPIService) CreateBatchProcessingSession(ctx context.Context) ApiCreateBatchProcessingSessionRequest {
+	return ApiCreateBatchProcessingSessionRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return BatchProcessingSession
+func (a *DefaultAPIService) CreateBatchProcessingSessionExecute(r ApiCreateBatchProcessingSessionRequest) (*BatchProcessingSession, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *BatchProcessingSession
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateBatchProcessingSession")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/batch/processing-session"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createBatchProcessingSessionRequest == nil {
+		return localVarReturnValue, nil, reportError("createBatchProcessingSessionRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createBatchProcessingSessionRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiCreateBookingTemplateRequest struct {
 	ctx                                  context.Context
 	ApiService                           *DefaultAPIService
@@ -8330,6 +8440,96 @@ func (a *DefaultAPIService) DeleteBankTransactionExecute(r ApiDeleteBankTransact
 
 	localVarPath := localBasePath + "/bank-account-transaction/{transactionID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"transactionID"+"}", url.PathEscape(parameterValueToString(r.transactionID, "transactionID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDeleteBatchProcessingSessionRequest struct {
+	ctx            context.Context
+	ApiService     *DefaultAPIService
+	batchSessionID string
+}
+
+func (r ApiDeleteBatchProcessingSessionRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteBatchProcessingSessionExecute(r)
+}
+
+/*
+DeleteBatchProcessingSession Delete a batch processing session
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param batchSessionID unique generated ID of a batch session
+	@return ApiDeleteBatchProcessingSessionRequest
+*/
+func (a *DefaultAPIService) DeleteBatchProcessingSession(ctx context.Context, batchSessionID string) ApiDeleteBatchProcessingSessionRequest {
+	return ApiDeleteBatchProcessingSessionRequest{
+		ApiService:     a,
+		ctx:            ctx,
+		batchSessionID: batchSessionID,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DeleteBatchProcessingSessionExecute(r ApiDeleteBatchProcessingSessionRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteBatchProcessingSession")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/batch/processing-session/{batchSessionID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"batchSessionID"+"}", url.PathEscape(parameterValueToString(r.batchSessionID, "batchSessionID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -16333,6 +16533,108 @@ func (a *DefaultAPIService) GetBankTransactionExecute(r ApiGetBankTransactionReq
 
 	localVarPath := localBasePath + "/bank-account-transaction/{transactionID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"transactionID"+"}", url.PathEscape(parameterValueToString(r.transactionID, "transactionID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetBatchProcessingSessionRequest struct {
+	ctx            context.Context
+	ApiService     *DefaultAPIService
+	batchSessionID string
+}
+
+func (r ApiGetBatchProcessingSessionRequest) Execute() (*BatchProcessingSession, *http.Response, error) {
+	return r.ApiService.GetBatchProcessingSessionExecute(r)
+}
+
+/*
+GetBatchProcessingSession Get the batch processing session by ID
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param batchSessionID unique generated ID of a batch session
+	@return ApiGetBatchProcessingSessionRequest
+*/
+func (a *DefaultAPIService) GetBatchProcessingSession(ctx context.Context, batchSessionID string) ApiGetBatchProcessingSessionRequest {
+	return ApiGetBatchProcessingSessionRequest{
+		ApiService:     a,
+		ctx:            ctx,
+		batchSessionID: batchSessionID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return BatchProcessingSession
+func (a *DefaultAPIService) GetBatchProcessingSessionExecute(r ApiGetBatchProcessingSessionRequest) (*BatchProcessingSession, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *BatchProcessingSession
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetBatchProcessingSession")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/batch/processing-session/{batchSessionID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"batchSessionID"+"}", url.PathEscape(parameterValueToString(r.batchSessionID, "batchSessionID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -32863,6 +33165,116 @@ func (a *DefaultAPIService) QueryBanksExecute(r ApiQueryBanksRequest) ([]Bank, *
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiQueryBatchProcessingSessionsRequest struct {
+	ctx                                 context.Context
+	ApiService                          *DefaultAPIService
+	queryBatchProcessingSessionsRequest *QueryBatchProcessingSessionsRequest
+}
+
+// Batch session query criteria
+func (r ApiQueryBatchProcessingSessionsRequest) QueryBatchProcessingSessionsRequest(queryBatchProcessingSessionsRequest QueryBatchProcessingSessionsRequest) ApiQueryBatchProcessingSessionsRequest {
+	r.queryBatchProcessingSessionsRequest = &queryBatchProcessingSessionsRequest
+	return r
+}
+
+func (r ApiQueryBatchProcessingSessionsRequest) Execute() (*QueryBatchProcessingSessionsResponse, *http.Response, error) {
+	return r.ApiService.QueryBatchProcessingSessionsExecute(r)
+}
+
+/*
+QueryBatchProcessingSessions Query batch processing sessions for given criteria
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiQueryBatchProcessingSessionsRequest
+*/
+func (a *DefaultAPIService) QueryBatchProcessingSessions(ctx context.Context) ApiQueryBatchProcessingSessionsRequest {
+	return ApiQueryBatchProcessingSessionsRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return QueryBatchProcessingSessionsResponse
+func (a *DefaultAPIService) QueryBatchProcessingSessionsExecute(r ApiQueryBatchProcessingSessionsRequest) (*QueryBatchProcessingSessionsResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *QueryBatchProcessingSessionsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.QueryBatchProcessingSessions")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/batch/processing-sessions"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.queryBatchProcessingSessionsRequest == nil {
+		return localVarReturnValue, nil, reportError("queryBatchProcessingSessionsRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.queryBatchProcessingSessionsRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiQueryBookingPreviewsRequest struct {
 	ctx                         context.Context
 	ApiService                  *DefaultAPIService
@@ -39290,6 +39702,120 @@ func (a *DefaultAPIService) UpdateBankTransactionExecute(r ApiUpdateBankTransact
 	}
 	// body params
 	localVarPostBody = r.createOrUpdateBankTransactionRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdateBatchProcessingSessionRequest struct {
+	ctx                                        context.Context
+	ApiService                                 *DefaultAPIService
+	batchSessionID                             string
+	processItemInBatchProcessingSessionRequest *ProcessItemInBatchProcessingSessionRequest
+}
+
+// Updated batch session details and operations
+func (r ApiUpdateBatchProcessingSessionRequest) ProcessItemInBatchProcessingSessionRequest(processItemInBatchProcessingSessionRequest ProcessItemInBatchProcessingSessionRequest) ApiUpdateBatchProcessingSessionRequest {
+	r.processItemInBatchProcessingSessionRequest = &processItemInBatchProcessingSessionRequest
+	return r
+}
+
+func (r ApiUpdateBatchProcessingSessionRequest) Execute() (*BatchProcessingSession, *http.Response, error) {
+	return r.ApiService.UpdateBatchProcessingSessionExecute(r)
+}
+
+/*
+UpdateBatchProcessingSession Update batch processing session
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param batchSessionID unique generated ID of a batch session
+	@return ApiUpdateBatchProcessingSessionRequest
+*/
+func (a *DefaultAPIService) UpdateBatchProcessingSession(ctx context.Context, batchSessionID string) ApiUpdateBatchProcessingSessionRequest {
+	return ApiUpdateBatchProcessingSessionRequest{
+		ApiService:     a,
+		ctx:            ctx,
+		batchSessionID: batchSessionID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return BatchProcessingSession
+func (a *DefaultAPIService) UpdateBatchProcessingSessionExecute(r ApiUpdateBatchProcessingSessionRequest) (*BatchProcessingSession, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *BatchProcessingSession
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdateBatchProcessingSession")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/batch/processing-session/{batchSessionID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"batchSessionID"+"}", url.PathEscape(parameterValueToString(r.batchSessionID, "batchSessionID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.processItemInBatchProcessingSessionRequest == nil {
+		return localVarReturnValue, nil, reportError("processItemInBatchProcessingSessionRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.processItemInBatchProcessingSessionRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
