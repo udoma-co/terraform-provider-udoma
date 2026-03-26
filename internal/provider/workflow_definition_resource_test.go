@@ -60,11 +60,20 @@ resource "udoma_workflow_definition" "test" {
 		{
 			id: "generate_document",
 			type: "generate_document",
-			name: "Generate Document",
+			menu_widget: {
+				icon: "fa-regular fa-file-pdf",
+				label: {
+					en: "Generate Document"
+				}
+			},
 			actions: [
 				{
 					id: "save",
-					label: "Save",
+					button_widget: {
+						label: {
+							en: "Save"
+						}
+					},
 					next_step_id: "finish"
 				}
 			]
@@ -110,11 +119,20 @@ func resourceDefinitionWorkflowDefinition() string {
 			{
 				id: "generate_document",
 				type: "generate_document",
-				name: "Generate Document",
+				menu_widget: {
+					icon: "fa-regular fa-file-pdf",
+					label: {
+						en: "Generate Document"
+					}
+				},
 				actions: [
 					{
 						id: "save",
-						label: "Save",
+						button_widget: {
+							label: {
+								en: "Save"
+							}
+						},
 						next_step_id: "finish"
 					}
 				]

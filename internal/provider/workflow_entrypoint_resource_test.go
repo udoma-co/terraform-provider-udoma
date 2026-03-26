@@ -36,7 +36,14 @@ resource udoma_workflow_entrypoint "test" {
 		id: "init",
 		type: "select_property"
 		action: {
-    		"id": "generate_document"
+    		id: "generate_document",
+			button_widget: {
+				label: {
+					en: "Generate document"
+				}
+			}
+		}
+	})
   		}
 	})
 
