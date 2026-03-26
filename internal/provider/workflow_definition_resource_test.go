@@ -24,9 +24,6 @@ func TestAccWorkflowDefinitionResource(t *testing.T) {
 					// Verify env_vars
 					resource.TestCheckResourceAttr("udoma_workflow_definition.test", "env_vars.var1", "val1"),
 
-					// Verify init_step, steps
-					// TODO
-
 					// Verify dynamic values have any value set in the state.
 					resource.TestCheckResourceAttrSet("udoma_workflow_definition.test", "id"),
 					resource.TestCheckResourceAttrSet("udoma_workflow_definition.test", "last_updated"),
@@ -58,14 +55,6 @@ resource "udoma_workflow_definition" "test" {
 	}
 
 	first_step_id = "generate_document"
-
-	init_step = jsonencode({
-		id: "init",
-		type: "select_property"
-		action: {
-    		"id": "generate_document"
-  		}
-	})
 
 	steps = jsonencode([
 		{

@@ -18,6 +18,7 @@ resource udoma_workflow_entrypoint "test" {
 	workflow_definition_ref = udoma_workflow_definition.test.id
 	app_location 			= "case"
 	icon 					= "fa-solid fa-file-alt"
+	repeatable 				= "allow"
 	
 	location_filters 		= [
 		{ 
@@ -30,6 +31,14 @@ resource udoma_workflow_entrypoint "test" {
 		en = "Start workflow"
 		de = "Starte Workflow"
 	}
+
+	init_step = jsonencode({
+		id: "init",
+		type: "select_property"
+		action: {
+    		"id": "generate_document"
+  		}
+	})
 
 	init_script = <<EOF
 	// This is a comment
@@ -74,6 +83,7 @@ resource "udoma_workflow_entrypoint" "test" {
 	workflow_definition_ref = udoma_workflow_definition.test.id
 	app_location 			= "manual"
 	icon 					= "fa-solid fa-file-alt"
+	repeatable 				= "allow"
 
 	label = {
 		en = "Start workflow"
