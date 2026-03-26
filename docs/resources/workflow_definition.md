@@ -25,11 +25,15 @@ Resource represents a defintion of a workflow
 - `description` (String) The description of the workflow definition
 - `env_vars` (Map of String) A map of environment variables to be set for the workflow execution
 - `icon` (String) The icon to be displayed on the manual workflow execution page
-- `init_step` (String) Optional JSON serialised initial step definition
 - `name_expression` (String) An optional JS expression to be used to compute the name of 
 				the workflow execution. If not set, the name of the definition will be used
 				for new executions
+- `step_groups` (Attributes List) Optional groups of workflow steps. Steps with a group will be rendered in the UI as a drawer. (see [below for nested schema](#nestedatt--step_groups))
 - `steps` (String) The JSON serialised step definitions
+- `transient` (Boolean) A check that indicates whether the workflow execution should be transient, 
+					i.e. if it should be deleted after it is finished. This can be used for workflows 
+					that are only used for automating a process and don't require keeping the history 
+					of the workflow execution.
 - `version` (Number) The version of the workflow definition
 
 ### Read-Only
@@ -38,3 +42,14 @@ Resource represents a defintion of a workflow
 - `id` (String) The unique identifier for the workflow definition
 - `last_updated` (String)
 - `updated_at` (Number) The date and time the workflow definition was last modified
+
+<a id="nestedatt--step_groups"></a>
+### Nested Schema for `step_groups`
+
+Required:
+
+- `id` (String) The ID of the group, unique within the workflow
+
+Optional:
+
+- `label` (Map of String) A map of localised labels for the group

@@ -21,9 +21,12 @@ var _ MappedNullable = &WorkflowExecutionResponse{}
 
 // WorkflowExecutionResponse a response for starting or executing a step in a workflow execution
 type WorkflowExecutionResponse struct {
+	// whether the workflow execution or the step execution was successful or not
 	Success bool `json:"success"`
-	// the result of the workflow execution as JSON
-	Result string `json:"result"`
+	// an optional message that will be set, if the executed action had a test_script and the  script returned false, preventing the execution of the action. The message can be used  to provide feedback to the user on why the action was not executed.
+	Message *string `json:"message,omitempty"`
+	// the result of the workflow execution
+	Result map[string]interface{} `json:"result"`
 	// the ID of the next step of the workflow execution
 	NextStep *string `json:"next_step,omitempty"`
 	// optional ID of an entity that the app should navigate to. This can be used when the workflow execution creates a new entity and the user is supposed to be redirected to that entity.
@@ -37,7 +40,7 @@ type _WorkflowExecutionResponse WorkflowExecutionResponse
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewWorkflowExecutionResponse(success bool, result string) *WorkflowExecutionResponse {
+func NewWorkflowExecutionResponse(success bool, result map[string]interface{}) *WorkflowExecutionResponse {
 	this := WorkflowExecutionResponse{}
 	this.Success = success
 	this.Result = result
@@ -76,10 +79,42 @@ func (o *WorkflowExecutionResponse) SetSuccess(v bool) {
 	o.Success = v
 }
 
-// GetResult returns the Result field value
-func (o *WorkflowExecutionResponse) GetResult() string {
-	if o == nil {
+// GetMessage returns the Message field value if set, zero value otherwise.
+func (o *WorkflowExecutionResponse) GetMessage() string {
+	if o == nil || IsNil(o.Message) {
 		var ret string
+		return ret
+	}
+	return *o.Message
+}
+
+// GetMessageOk returns a tuple with the Message field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowExecutionResponse) GetMessageOk() (*string, bool) {
+	if o == nil || IsNil(o.Message) {
+		return nil, false
+	}
+	return o.Message, true
+}
+
+// HasMessage returns a boolean if a field has been set.
+func (o *WorkflowExecutionResponse) HasMessage() bool {
+	if o != nil && !IsNil(o.Message) {
+		return true
+	}
+
+	return false
+}
+
+// SetMessage gets a reference to the given string and assigns it to the Message field.
+func (o *WorkflowExecutionResponse) SetMessage(v string) {
+	o.Message = &v
+}
+
+// GetResult returns the Result field value
+func (o *WorkflowExecutionResponse) GetResult() map[string]interface{} {
+	if o == nil {
+		var ret map[string]interface{}
 		return ret
 	}
 
@@ -88,15 +123,15 @@ func (o *WorkflowExecutionResponse) GetResult() string {
 
 // GetResultOk returns a tuple with the Result field value
 // and a boolean to check if the value has been set.
-func (o *WorkflowExecutionResponse) GetResultOk() (*string, bool) {
+func (o *WorkflowExecutionResponse) GetResultOk() (map[string]interface{}, bool) {
 	if o == nil {
-		return nil, false
+		return map[string]interface{}{}, false
 	}
-	return &o.Result, true
+	return o.Result, true
 }
 
 // SetResult sets field value
-func (o *WorkflowExecutionResponse) SetResult(v string) {
+func (o *WorkflowExecutionResponse) SetResult(v map[string]interface{}) {
 	o.Result = v
 }
 
@@ -207,6 +242,9 @@ func (o WorkflowExecutionResponse) MarshalJSON() ([]byte, error) {
 func (o WorkflowExecutionResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["success"] = o.Success
+	if !IsNil(o.Message) {
+		toSerialize["message"] = o.Message
+	}
 	toSerialize["result"] = o.Result
 	if !IsNil(o.NextStep) {
 		toSerialize["next_step"] = o.NextStep

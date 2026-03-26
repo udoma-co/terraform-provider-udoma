@@ -14,6 +14,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 	api "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
 	"gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/internal/client"
 	"gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/internal/tf"
@@ -35,27 +36,34 @@ type workflowDefinition struct {
 	client *client.UdomaClient
 }
 
+// workflowStepGroupModel describes a group of workflow steps.
+type workflowStepGroupModel struct {
+	ID    types.String `tfsdk:"id"`
+	Label types.Map    `tfsdk:"label"`
+}
+
 // workflowDefinitionModel describes the resource data model.
 type workflowDefinitionModel struct {
-	ID             types.String       `tfsdk:"id"`
-	LastUpdated    types.String       `tfsdk:"last_updated"`
-	CreatedAt      types.Int64        `tfsdk:"created_at"`
-	UpdatedAt      types.Int64        `tfsdk:"updated_at"`
-	Name           types.String       `tfsdk:"name"`
-	Description    types.String       `tfsdk:"description"`
-	Icon           types.String       `tfsdk:"icon"`
-	NameExpression types.String       `tfsdk:"name_expression"`
-	EnvVars        types.Map          `tfsdk:"env_vars"`
-	FirstStepID    types.String       `tfsdk:"first_step_id"`
-	InitStep       tf.JsonObjectValue `tfsdk:"init_step"`
-	Steps          tf.JsonObjectValue `tfsdk:"steps"`
-	Version        types.Int32        `tfsdk:"version"`
+	ID             types.String             `tfsdk:"id"`
+	LastUpdated    types.String             `tfsdk:"last_updated"`
+	CreatedAt      types.Int64              `tfsdk:"created_at"`
+	UpdatedAt      types.Int64              `tfsdk:"updated_at"`
+	Name           types.String             `tfsdk:"name"`
+	Description    types.String             `tfsdk:"description"`
+	Transient      types.Bool               `tfsdk:"transient"`
+	Icon           types.String             `tfsdk:"icon"`
+	NameExpression types.String             `tfsdk:"name_expression"`
+	EnvVars        types.Map                `tfsdk:"env_vars"`
+	FirstStepID    types.String             `tfsdk:"first_step_id"`
+	Steps          tf.JsonObjectValue       `tfsdk:"steps"`
+	Version        types.Int32              `tfsdk:"version"`
+	StepGroups     []workflowStepGroupModel `tfsdk:"step_groups"`
 }
 
 func NewWorkflowDefinitionModelNull() *workflowDefinitionModel {
 	return &workflowDefinitionModel{
-		InitStep: tf.NewJsonObjectNull(),
-		Steps:    tf.NewJsonObjectNull(),
+		Steps:      tf.NewJsonObjectNull(),
+		StepGroups: []workflowStepGroupModel{},
 	}
 }
 
@@ -98,6 +106,13 @@ func (r *workflowDefinition) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:    true,
 				Description: "The description of the workflow definition",
 			},
+			"transient": schema.BoolAttribute{
+				Optional: true,
+				Description: `A check that indicates whether the workflow execution should be transient, 
+					i.e. if it should be deleted after it is finished. This can be used for workflows 
+					that are only used for automating a process and don't require keeping the history 
+					of the workflow execution.`,
+			},
 			"icon": schema.StringAttribute{
 				Optional:    true,
 				Description: "The icon to be displayed on the manual workflow execution page",
@@ -123,11 +138,6 @@ func (r *workflowDefinition) Schema(ctx context.Context, req resource.SchemaRequ
 					stringvalidator.LengthAtMost(250),
 				},
 			},
-			"init_step": schema.StringAttribute{
-				CustomType:  tf.JsonObjectType{},
-				Optional:    true,
-				Description: "Optional JSON serialised initial step definition",
-			},
 			"steps": schema.StringAttribute{
 				CustomType:  tf.JsonObjectType{},
 				Optional:    true,
@@ -136,6 +146,23 @@ func (r *workflowDefinition) Schema(ctx context.Context, req resource.SchemaRequ
 			"version": schema.Int32Attribute{
 				Optional:    true,
 				Description: "The version of the workflow definition",
+			},
+			"step_groups": schema.ListNestedAttribute{
+				Optional:    true,
+				Description: "Optional groups of workflow steps. Steps with a group will be rendered in the UI as a drawer.",
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"id": schema.StringAttribute{
+							Required:    true,
+							Description: "The ID of the group, unique within the workflow",
+						},
+						"label": schema.MapAttribute{
+							Optional:    true,
+							ElementType: types.StringType,
+							Description: "A map of localised labels for the group",
+						},
+					},
+				},
 			},
 		},
 	}
@@ -334,6 +361,7 @@ func (model *workflowDefinitionModel) fromAPI(workflowDefinition *api.WorkflowDe
 	model.UpdatedAt = types.Int64Value(workflowDefinition.UpdatedAt)
 	model.Name = types.StringValue(workflowDefinition.Name)
 	model.Description = omittableStringValue(workflowDefinition.Description, model.Description)
+	model.Transient = omittableBooleanValue(workflowDefinition.Transient, model.Transient)
 	model.Icon = omittableStringValue(workflowDefinition.Icon, model.Icon)
 	model.NameExpression = omittableStringValue(workflowDefinition.NameExpression, model.NameExpression)
 	model.FirstStepID = types.StringValue(workflowDefinition.FirstStepId)
@@ -348,20 +376,27 @@ func (model *workflowDefinitionModel) fromAPI(workflowDefinition *api.WorkflowDe
 		model.EnvVars = modelValue
 	}
 
-	if workflowDefinition.InitStep.IsSet() {
-		step := workflowDefinition.InitStep.Get()
-		jsonData, err := json.Marshal(step)
-		if err != nil {
-			return fmt.Errorf("failed to marshal init step: %w", err)
-		}
-		model.InitStep = tf.NewJsonObjectValue(string(jsonData))
-	}
-
 	steps, err := json.Marshal(workflowDefinition.Steps)
 	if err != nil {
 		return fmt.Errorf("failed to marshal steps: %w", err)
 	}
 	model.Steps = tf.NewJsonObjectValue(string(steps))
+
+	if workflowDefinition.StepGroups != nil {
+		model.StepGroups = make([]workflowStepGroupModel, len(workflowDefinition.StepGroups))
+		for i, g := range workflowDefinition.StepGroups {
+			model.StepGroups[i].ID = types.StringValue(g.Id)
+			if g.Label != nil {
+				labelMap, diags := types.MapValue(types.StringType, stringMapToValueMap(*g.Label))
+				if diags.HasError() {
+					return fmt.Errorf("error converting group label to map: %v", diags)
+				}
+				model.StepGroups[i].Label = labelMap
+			} else {
+				model.StepGroups[i].Label = basetypes.NewMapNull(types.StringType)
+			}
+		}
+	}
 
 	return nil
 }
@@ -375,26 +410,28 @@ func (model *workflowDefinitionModel) toAPIRequest() (api.CreateOrUpdateWorkflow
 		NameExpression: model.NameExpression.ValueStringPointer(),
 		FirstStepId:    model.FirstStepID.ValueString(),
 		Version:        model.Version.ValueInt32Pointer(),
+		Transient:      model.Transient.ValueBoolPointer(),
 	}
 
 	if envVars := modelMapToStringMap(model.EnvVars); len(envVars) > 0 {
 		workflowDefinition.EnvVars = &envVars
 	}
 
-	if !model.InitStep.IsNull() && !model.InitStep.IsUnknown() {
-		var jsonVal *api.WorkflowInitStepDefinition
-		if diag := model.InitStep.Unmarshal(&jsonVal); diag.HasError() {
-			return workflowDefinition, fmt.Errorf("failed to unmarshal initial step: %v", diag)
-		}
-		if jsonVal != nil {
-			workflowDefinition.InitStep = *api.NewNullableWorkflowInitStepDefinition(jsonVal)
-		}
-	}
-
 	if !model.Steps.IsNull() && !model.Steps.IsUnknown() {
 		if diag := model.Steps.Unmarshal(&workflowDefinition.Steps); diag.HasError() {
 			return workflowDefinition, fmt.Errorf("failed to unmarshal steps: %v", diag)
 		}
+	}
+
+	if len(model.StepGroups) > 0 {
+		stepGroups := make([]api.WorkflowStepGroup, len(model.StepGroups))
+		for i, g := range model.StepGroups {
+			stepGroups[i].Id = g.ID.ValueString()
+			if label := modelMapToStringMap(g.Label); len(label) > 0 {
+				stepGroups[i].Label = &label
+			}
+		}
+		workflowDefinition.StepGroups = stepGroups
 	}
 
 	return workflowDefinition, nil

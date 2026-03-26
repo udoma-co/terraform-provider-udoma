@@ -17,6 +17,7 @@ Resource represents an entrypoint to a workflow
 
 ### Required
 
+- `repeatable` (String)
 - `workflow_definition_ref` (String) The ID of the workflow definition
 
 ### Optional
@@ -24,6 +25,7 @@ Resource represents an entrypoint to a workflow
 - `app_location` (String) The location in the webapp where the workflow can be started from
 - `icon` (String) Optional icon to be displayed on the button that will start the workflow execution
 - `init_script` (String) Optional JS script to be executed before the workflow is started
+- `init_step` (String) Optional JSON serialised initial step definition
 - `label` (Map of String) The label to be displayed on the button starting the workflow execution
 - `location_filters` (Attributes List) Filters that can be used to limit where the entrypoint is shown (see [below for nested schema](#nestedatt--location_filters))
 - `validations` (Attributes List) Optional validations that can be used to determine if the workflow can 

@@ -238,5 +238,6 @@ func (p *UdomaProvider) DataSources(ctx context.Context) []func() datasource.Dat
 func (p *UdomaProvider) Functions(_ context.Context) []func() function.Function {
 	return []func() function.Function{
 		NewApplyPatchFunction,
+		NewFileWithEmbedsFunction,
 	}
 }

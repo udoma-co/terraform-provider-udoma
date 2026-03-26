@@ -26,7 +26,9 @@ type WorkflowTrigger struct {
 	// The date and time the entity was last updated
 	UpdatedAt int64 `json:"updated_at"`
 	// The ID of the workflow execution that was triggered
-	ExecutionRef   string                     `json:"execution_ref"`
+	ExecutionRef string `json:"execution_ref"`
+	// The ID of the entrypoint from which the workflow execution  was triggered, if applicable
+	EntrypointRef  *string                    `json:"entrypoint_ref,omitempty"`
 	EntrypointType WorkflowEntrypointLocation `json:"entrypoint_type"`
 	// The ID of the source object
 	SourceRef string `json:"source_ref"`
@@ -136,6 +138,38 @@ func (o *WorkflowTrigger) GetExecutionRefOk() (*string, bool) {
 // SetExecutionRef sets field value
 func (o *WorkflowTrigger) SetExecutionRef(v string) {
 	o.ExecutionRef = v
+}
+
+// GetEntrypointRef returns the EntrypointRef field value if set, zero value otherwise.
+func (o *WorkflowTrigger) GetEntrypointRef() string {
+	if o == nil || IsNil(o.EntrypointRef) {
+		var ret string
+		return ret
+	}
+	return *o.EntrypointRef
+}
+
+// GetEntrypointRefOk returns a tuple with the EntrypointRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowTrigger) GetEntrypointRefOk() (*string, bool) {
+	if o == nil || IsNil(o.EntrypointRef) {
+		return nil, false
+	}
+	return o.EntrypointRef, true
+}
+
+// HasEntrypointRef returns a boolean if a field has been set.
+func (o *WorkflowTrigger) HasEntrypointRef() bool {
+	if o != nil && !IsNil(o.EntrypointRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetEntrypointRef gets a reference to the given string and assigns it to the EntrypointRef field.
+func (o *WorkflowTrigger) SetEntrypointRef(v string) {
+	o.EntrypointRef = &v
 }
 
 // GetEntrypointType returns the EntrypointType field value
@@ -303,6 +337,9 @@ func (o WorkflowTrigger) ToMap() (map[string]interface{}, error) {
 	toSerialize["created_at"] = o.CreatedAt
 	toSerialize["updated_at"] = o.UpdatedAt
 	toSerialize["execution_ref"] = o.ExecutionRef
+	if !IsNil(o.EntrypointRef) {
+		toSerialize["entrypoint_ref"] = o.EntrypointRef
+	}
 	toSerialize["entrypoint_type"] = o.EntrypointType
 	toSerialize["source_ref"] = o.SourceRef
 	toSerialize["definition_ref"] = o.DefinitionRef

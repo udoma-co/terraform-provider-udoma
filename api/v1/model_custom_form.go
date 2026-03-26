@@ -27,6 +27,8 @@ type CustomForm struct {
 	Groups []FormGroup `json:"groups,omitempty"`
 	// the inputs that will be displayed to the user
 	Inputs []FormInput `json:"inputs"`
+	// the slots that will be used to display custom content in the form
+	Slots []FormSlot `json:"slots,omitempty"`
 	// the validations that will be performed on the data provided by the user
 	Validations []FormValidation `json:"validations,omitempty"`
 }
@@ -132,6 +134,38 @@ func (o *CustomForm) SetInputs(v []FormInput) {
 	o.Inputs = v
 }
 
+// GetSlots returns the Slots field value if set, zero value otherwise.
+func (o *CustomForm) GetSlots() []FormSlot {
+	if o == nil || IsNil(o.Slots) {
+		var ret []FormSlot
+		return ret
+	}
+	return o.Slots
+}
+
+// GetSlotsOk returns a tuple with the Slots field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CustomForm) GetSlotsOk() ([]FormSlot, bool) {
+	if o == nil || IsNil(o.Slots) {
+		return nil, false
+	}
+	return o.Slots, true
+}
+
+// HasSlots returns a boolean if a field has been set.
+func (o *CustomForm) HasSlots() bool {
+	if o != nil && !IsNil(o.Slots) {
+		return true
+	}
+
+	return false
+}
+
+// SetSlots gets a reference to the given []FormSlot and assigns it to the Slots field.
+func (o *CustomForm) SetSlots(v []FormSlot) {
+	o.Slots = v
+}
+
 // GetValidations returns the Validations field value if set, zero value otherwise.
 func (o *CustomForm) GetValidations() []FormValidation {
 	if o == nil || IsNil(o.Validations) {
@@ -179,6 +213,9 @@ func (o CustomForm) ToMap() (map[string]interface{}, error) {
 		toSerialize["groups"] = o.Groups
 	}
 	toSerialize["inputs"] = o.Inputs
+	if !IsNil(o.Slots) {
+		toSerialize["slots"] = o.Slots
+	}
 	if !IsNil(o.Validations) {
 		toSerialize["validations"] = o.Validations
 	}

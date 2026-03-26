@@ -27,9 +27,14 @@ type WorkflowInitStepDefinition struct {
 	Type string `json:"type"`
 	// a parameter of a workflow step or step action. The value of the parameter is contextual and can vary in type and meaning depending on the step or action that uses it. If used in a step, the parameter will be available in the UI and will not be interpreted, i.e. JS expressions are not allowed. In actions however, the parameter might be interpreted as a JS expression, if the action type requires it.
 	Parameters map[string]interface{} `json:"parameters,omitempty"`
+	MenuWidget WidgetDescriptor       `json:"menu_widget"`
+	// Optional ID of the group of the step. If a group is provided, steps within the same group will be grouped together in the UI as a drawer.
+	GroupRef *string `json:"group_ref,omitempty"`
 	// a map of values, where the key and values are strings
-	DynamicParameters *map[string]string                         `json:"dynamic_parameters,omitempty"`
-	Action            NullableWorkflowStepPrerunActionDefinition `json:"action"`
+	DynamicParameters *map[string]string             `json:"dynamic_parameters,omitempty"`
+	Actions           []WorkflowStepActionDefinition `json:"actions"`
+	// optional JS script that will be executed in the backend to generate the data for the step,  before being sent over to the UI. This can be used to generate dynamic data for the step,  based on the context of the workflow execution.
+	DataScript *string `json:"data_script,omitempty"`
 }
 
 type _WorkflowInitStepDefinition WorkflowInitStepDefinition
@@ -38,11 +43,12 @@ type _WorkflowInitStepDefinition WorkflowInitStepDefinition
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewWorkflowInitStepDefinition(id string, type_ string, action NullableWorkflowStepPrerunActionDefinition) *WorkflowInitStepDefinition {
+func NewWorkflowInitStepDefinition(id string, type_ string, menuWidget WidgetDescriptor, actions []WorkflowStepActionDefinition) *WorkflowInitStepDefinition {
 	this := WorkflowInitStepDefinition{}
 	this.Id = id
 	this.Type = type_
-	this.Action = action
+	this.MenuWidget = menuWidget
+	this.Actions = actions
 	return &this
 }
 
@@ -134,6 +140,62 @@ func (o *WorkflowInitStepDefinition) SetParameters(v map[string]interface{}) {
 	o.Parameters = v
 }
 
+// GetMenuWidget returns the MenuWidget field value
+func (o *WorkflowInitStepDefinition) GetMenuWidget() WidgetDescriptor {
+	if o == nil {
+		var ret WidgetDescriptor
+		return ret
+	}
+
+	return o.MenuWidget
+}
+
+// GetMenuWidgetOk returns a tuple with the MenuWidget field value
+// and a boolean to check if the value has been set.
+func (o *WorkflowInitStepDefinition) GetMenuWidgetOk() (*WidgetDescriptor, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.MenuWidget, true
+}
+
+// SetMenuWidget sets field value
+func (o *WorkflowInitStepDefinition) SetMenuWidget(v WidgetDescriptor) {
+	o.MenuWidget = v
+}
+
+// GetGroupRef returns the GroupRef field value if set, zero value otherwise.
+func (o *WorkflowInitStepDefinition) GetGroupRef() string {
+	if o == nil || IsNil(o.GroupRef) {
+		var ret string
+		return ret
+	}
+	return *o.GroupRef
+}
+
+// GetGroupRefOk returns a tuple with the GroupRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowInitStepDefinition) GetGroupRefOk() (*string, bool) {
+	if o == nil || IsNil(o.GroupRef) {
+		return nil, false
+	}
+	return o.GroupRef, true
+}
+
+// HasGroupRef returns a boolean if a field has been set.
+func (o *WorkflowInitStepDefinition) HasGroupRef() bool {
+	if o != nil && !IsNil(o.GroupRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetGroupRef gets a reference to the given string and assigns it to the GroupRef field.
+func (o *WorkflowInitStepDefinition) SetGroupRef(v string) {
+	o.GroupRef = &v
+}
+
 // GetDynamicParameters returns the DynamicParameters field value if set, zero value otherwise.
 func (o *WorkflowInitStepDefinition) GetDynamicParameters() map[string]string {
 	if o == nil || IsNil(o.DynamicParameters) {
@@ -166,30 +228,60 @@ func (o *WorkflowInitStepDefinition) SetDynamicParameters(v map[string]string) {
 	o.DynamicParameters = &v
 }
 
-// GetAction returns the Action field value
-// If the value is explicit nil, the zero value for WorkflowStepPrerunActionDefinition will be returned
-func (o *WorkflowInitStepDefinition) GetAction() WorkflowStepPrerunActionDefinition {
-	if o == nil || o.Action.Get() == nil {
-		var ret WorkflowStepPrerunActionDefinition
+// GetActions returns the Actions field value
+func (o *WorkflowInitStepDefinition) GetActions() []WorkflowStepActionDefinition {
+	if o == nil {
+		var ret []WorkflowStepActionDefinition
 		return ret
 	}
 
-	return *o.Action.Get()
+	return o.Actions
 }
 
-// GetActionOk returns a tuple with the Action field value
+// GetActionsOk returns a tuple with the Actions field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *WorkflowInitStepDefinition) GetActionOk() (*WorkflowStepPrerunActionDefinition, bool) {
+func (o *WorkflowInitStepDefinition) GetActionsOk() ([]WorkflowStepActionDefinition, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.Action.Get(), o.Action.IsSet()
+	return o.Actions, true
 }
 
-// SetAction sets field value
-func (o *WorkflowInitStepDefinition) SetAction(v WorkflowStepPrerunActionDefinition) {
-	o.Action.Set(&v)
+// SetActions sets field value
+func (o *WorkflowInitStepDefinition) SetActions(v []WorkflowStepActionDefinition) {
+	o.Actions = v
+}
+
+// GetDataScript returns the DataScript field value if set, zero value otherwise.
+func (o *WorkflowInitStepDefinition) GetDataScript() string {
+	if o == nil || IsNil(o.DataScript) {
+		var ret string
+		return ret
+	}
+	return *o.DataScript
+}
+
+// GetDataScriptOk returns a tuple with the DataScript field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowInitStepDefinition) GetDataScriptOk() (*string, bool) {
+	if o == nil || IsNil(o.DataScript) {
+		return nil, false
+	}
+	return o.DataScript, true
+}
+
+// HasDataScript returns a boolean if a field has been set.
+func (o *WorkflowInitStepDefinition) HasDataScript() bool {
+	if o != nil && !IsNil(o.DataScript) {
+		return true
+	}
+
+	return false
+}
+
+// SetDataScript gets a reference to the given string and assigns it to the DataScript field.
+func (o *WorkflowInitStepDefinition) SetDataScript(v string) {
+	o.DataScript = &v
 }
 
 func (o WorkflowInitStepDefinition) MarshalJSON() ([]byte, error) {
@@ -207,10 +299,17 @@ func (o WorkflowInitStepDefinition) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Parameters) {
 		toSerialize["parameters"] = o.Parameters
 	}
+	toSerialize["menu_widget"] = o.MenuWidget
+	if !IsNil(o.GroupRef) {
+		toSerialize["group_ref"] = o.GroupRef
+	}
 	if !IsNil(o.DynamicParameters) {
 		toSerialize["dynamic_parameters"] = o.DynamicParameters
 	}
-	toSerialize["action"] = o.Action.Get()
+	toSerialize["actions"] = o.Actions
+	if !IsNil(o.DataScript) {
+		toSerialize["data_script"] = o.DataScript
+	}
 	return toSerialize, nil
 }
 
@@ -221,7 +320,8 @@ func (o *WorkflowInitStepDefinition) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"id",
 		"type",
-		"action",
+		"menu_widget",
+		"actions",
 	}
 
 	allProperties := make(map[string]interface{})

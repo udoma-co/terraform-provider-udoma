@@ -142,16 +142,43 @@ func NewJsonObjectUnknown() JsonObjectValue {
 
 // NewJsonObjectValue creates a JsonObjectValue with a known value. Access the value via ValueString method.
 func NewJsonObjectValue(value string) JsonObjectValue {
+	v := normalizeJsonString(value)
 	return JsonObjectValue{
-		StringValue: basetypes.NewStringValue(value),
+		StringValue: basetypes.NewStringValue(v),
 	}
 }
 
 // NewJsonObjectPointerValue creates a JsonObjectValue with a null value if nil or a known value. Access the value via ValueStringPointer method.
 func NewJsonObjectPointerValue(value *string) JsonObjectValue {
-	return JsonObjectValue{
-		StringValue: basetypes.NewStringPointerValue(value),
+	if value == nil {
+		return NewJsonObjectNull()
 	}
+	v := normalizeJsonString(*value)
+	return JsonObjectValue{
+		StringValue: basetypes.NewStringValue(v),
+	}
+}
+
+// normalizeJsonString takes a JSON string and returns a normalized version of
+// it. This is useful for comparing JSON strings that may have different
+// formatting but represent the same data.
+func normalizeJsonString(jsonStr string) string {
+
+	var jsonObj any
+
+	err := json.Unmarshal([]byte(jsonStr), &jsonObj)
+	if err != nil {
+		// If the string is not valid JSON, return it as is
+		return jsonStr
+	}
+
+	normalizedBytes, err := json.Marshal(jsonObj)
+	if err != nil {
+		// If marshaling fails, return the original string
+		return jsonStr
+	}
+
+	return string(normalizedBytes)
 }
 
 // Unmarshal calls (encoding/json).Unmarshal with the StringValue and `target` input. A null or unknown value will produce an error diagnostic.

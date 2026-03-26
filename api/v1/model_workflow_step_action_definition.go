@@ -27,18 +27,23 @@ type WorkflowStepActionDefinition struct {
 	Parameters map[string]interface{} `json:"parameters,omitempty"`
 	// a map of values, where the key and values are strings
 	DynamicParameters *map[string]string `json:"dynamic_parameters,omitempty"`
+	// optional JS script that will be executed in the backend to determine whether  the action can be executed. If the script returns false and an error message,  the action will not be executed. This can be used to provide better feedback to users on why an action cannot be executed, e.g. due to missing or invalid  data, etc. This will be ignored in init_step actions, as the same functionality can be achieved via the entrypoint validations.
+	TestScript *string `json:"test_script,omitempty"`
+	// optional JS script that will be executed in the backend when the action is  executed. This can be used to perform additional operations during the execution  of the action, e.g. to update some data, send notifications, etc. This replaces the exec_before and exec_after attributes, which are now deprecated, as the step specific logic will be gradually removed from the backend, in favor of using  action execution scripts for better flexibility and maintainability.
+	ExecutionScript *string `json:"execution_script,omitempty"`
 	// Optional JS expression that will be executed before any step- and action-specific logic is executed.
+	// Deprecated
 	ExecBefore *string `json:"exec_before,omitempty"`
 	// Optional JS expression that will be executed after the step- and action-specific logic is executed.
+	// Deprecated
 	ExecAfter *string `json:"exec_after,omitempty"`
-	// the icon of the action
-	Icon *string `json:"icon,omitempty"`
-	// the button label for the action
-	Label string `json:"label"`
-	// optional button modifier of the action
-	ButtonModifier *string `json:"button_modifier,omitempty"`
+	// a map of values, where the key and values are strings
+	ConfirmationPrompt *map[string]string `json:"confirmation_prompt,omitempty"`
+	ButtonWidget       WidgetDescriptor   `json:"button_widget"`
 	// An optional JS expression that determines whether the action can be executed or  not. If not set, this will default to true. If the expression returns false, the action will not show up in the UI.
 	CanBeExecutedExpression *string `json:"can_be_executed_expression,omitempty"`
+	// Indicates whether the client should include the user provided data in the request when executing the action. Typically this will be set to false in actions that skip a step. When set to false, forms will also not be validated on the client  side.
+	CollectData *bool `json:"collect_data,omitempty"`
 	// the ID of the next step of the workflow
 	NextStepId *string `json:"next_step_id,omitempty"`
 }
@@ -49,10 +54,10 @@ type _WorkflowStepActionDefinition WorkflowStepActionDefinition
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewWorkflowStepActionDefinition(id string, label string) *WorkflowStepActionDefinition {
+func NewWorkflowStepActionDefinition(id string, buttonWidget WidgetDescriptor) *WorkflowStepActionDefinition {
 	this := WorkflowStepActionDefinition{}
 	this.Id = id
-	this.Label = label
+	this.ButtonWidget = buttonWidget
 	return &this
 }
 
@@ -152,7 +157,72 @@ func (o *WorkflowStepActionDefinition) SetDynamicParameters(v map[string]string)
 	o.DynamicParameters = &v
 }
 
+// GetTestScript returns the TestScript field value if set, zero value otherwise.
+func (o *WorkflowStepActionDefinition) GetTestScript() string {
+	if o == nil || IsNil(o.TestScript) {
+		var ret string
+		return ret
+	}
+	return *o.TestScript
+}
+
+// GetTestScriptOk returns a tuple with the TestScript field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowStepActionDefinition) GetTestScriptOk() (*string, bool) {
+	if o == nil || IsNil(o.TestScript) {
+		return nil, false
+	}
+	return o.TestScript, true
+}
+
+// HasTestScript returns a boolean if a field has been set.
+func (o *WorkflowStepActionDefinition) HasTestScript() bool {
+	if o != nil && !IsNil(o.TestScript) {
+		return true
+	}
+
+	return false
+}
+
+// SetTestScript gets a reference to the given string and assigns it to the TestScript field.
+func (o *WorkflowStepActionDefinition) SetTestScript(v string) {
+	o.TestScript = &v
+}
+
+// GetExecutionScript returns the ExecutionScript field value if set, zero value otherwise.
+func (o *WorkflowStepActionDefinition) GetExecutionScript() string {
+	if o == nil || IsNil(o.ExecutionScript) {
+		var ret string
+		return ret
+	}
+	return *o.ExecutionScript
+}
+
+// GetExecutionScriptOk returns a tuple with the ExecutionScript field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowStepActionDefinition) GetExecutionScriptOk() (*string, bool) {
+	if o == nil || IsNil(o.ExecutionScript) {
+		return nil, false
+	}
+	return o.ExecutionScript, true
+}
+
+// HasExecutionScript returns a boolean if a field has been set.
+func (o *WorkflowStepActionDefinition) HasExecutionScript() bool {
+	if o != nil && !IsNil(o.ExecutionScript) {
+		return true
+	}
+
+	return false
+}
+
+// SetExecutionScript gets a reference to the given string and assigns it to the ExecutionScript field.
+func (o *WorkflowStepActionDefinition) SetExecutionScript(v string) {
+	o.ExecutionScript = &v
+}
+
 // GetExecBefore returns the ExecBefore field value if set, zero value otherwise.
+// Deprecated
 func (o *WorkflowStepActionDefinition) GetExecBefore() string {
 	if o == nil || IsNil(o.ExecBefore) {
 		var ret string
@@ -163,6 +233,7 @@ func (o *WorkflowStepActionDefinition) GetExecBefore() string {
 
 // GetExecBeforeOk returns a tuple with the ExecBefore field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *WorkflowStepActionDefinition) GetExecBeforeOk() (*string, bool) {
 	if o == nil || IsNil(o.ExecBefore) {
 		return nil, false
@@ -180,11 +251,13 @@ func (o *WorkflowStepActionDefinition) HasExecBefore() bool {
 }
 
 // SetExecBefore gets a reference to the given string and assigns it to the ExecBefore field.
+// Deprecated
 func (o *WorkflowStepActionDefinition) SetExecBefore(v string) {
 	o.ExecBefore = &v
 }
 
 // GetExecAfter returns the ExecAfter field value if set, zero value otherwise.
+// Deprecated
 func (o *WorkflowStepActionDefinition) GetExecAfter() string {
 	if o == nil || IsNil(o.ExecAfter) {
 		var ret string
@@ -195,6 +268,7 @@ func (o *WorkflowStepActionDefinition) GetExecAfter() string {
 
 // GetExecAfterOk returns a tuple with the ExecAfter field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *WorkflowStepActionDefinition) GetExecAfterOk() (*string, bool) {
 	if o == nil || IsNil(o.ExecAfter) {
 		return nil, false
@@ -212,96 +286,65 @@ func (o *WorkflowStepActionDefinition) HasExecAfter() bool {
 }
 
 // SetExecAfter gets a reference to the given string and assigns it to the ExecAfter field.
+// Deprecated
 func (o *WorkflowStepActionDefinition) SetExecAfter(v string) {
 	o.ExecAfter = &v
 }
 
-// GetIcon returns the Icon field value if set, zero value otherwise.
-func (o *WorkflowStepActionDefinition) GetIcon() string {
-	if o == nil || IsNil(o.Icon) {
-		var ret string
+// GetConfirmationPrompt returns the ConfirmationPrompt field value if set, zero value otherwise.
+func (o *WorkflowStepActionDefinition) GetConfirmationPrompt() map[string]string {
+	if o == nil || IsNil(o.ConfirmationPrompt) {
+		var ret map[string]string
 		return ret
 	}
-	return *o.Icon
+	return *o.ConfirmationPrompt
 }
 
-// GetIconOk returns a tuple with the Icon field value if set, nil otherwise
+// GetConfirmationPromptOk returns a tuple with the ConfirmationPrompt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *WorkflowStepActionDefinition) GetIconOk() (*string, bool) {
-	if o == nil || IsNil(o.Icon) {
+func (o *WorkflowStepActionDefinition) GetConfirmationPromptOk() (*map[string]string, bool) {
+	if o == nil || IsNil(o.ConfirmationPrompt) {
 		return nil, false
 	}
-	return o.Icon, true
+	return o.ConfirmationPrompt, true
 }
 
-// HasIcon returns a boolean if a field has been set.
-func (o *WorkflowStepActionDefinition) HasIcon() bool {
-	if o != nil && !IsNil(o.Icon) {
+// HasConfirmationPrompt returns a boolean if a field has been set.
+func (o *WorkflowStepActionDefinition) HasConfirmationPrompt() bool {
+	if o != nil && !IsNil(o.ConfirmationPrompt) {
 		return true
 	}
 
 	return false
 }
 
-// SetIcon gets a reference to the given string and assigns it to the Icon field.
-func (o *WorkflowStepActionDefinition) SetIcon(v string) {
-	o.Icon = &v
+// SetConfirmationPrompt gets a reference to the given map[string]string and assigns it to the ConfirmationPrompt field.
+func (o *WorkflowStepActionDefinition) SetConfirmationPrompt(v map[string]string) {
+	o.ConfirmationPrompt = &v
 }
 
-// GetLabel returns the Label field value
-func (o *WorkflowStepActionDefinition) GetLabel() string {
+// GetButtonWidget returns the ButtonWidget field value
+func (o *WorkflowStepActionDefinition) GetButtonWidget() WidgetDescriptor {
 	if o == nil {
-		var ret string
+		var ret WidgetDescriptor
 		return ret
 	}
 
-	return o.Label
+	return o.ButtonWidget
 }
 
-// GetLabelOk returns a tuple with the Label field value
+// GetButtonWidgetOk returns a tuple with the ButtonWidget field value
 // and a boolean to check if the value has been set.
-func (o *WorkflowStepActionDefinition) GetLabelOk() (*string, bool) {
+func (o *WorkflowStepActionDefinition) GetButtonWidgetOk() (*WidgetDescriptor, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Label, true
+	return &o.ButtonWidget, true
 }
 
-// SetLabel sets field value
-func (o *WorkflowStepActionDefinition) SetLabel(v string) {
-	o.Label = v
-}
-
-// GetButtonModifier returns the ButtonModifier field value if set, zero value otherwise.
-func (o *WorkflowStepActionDefinition) GetButtonModifier() string {
-	if o == nil || IsNil(o.ButtonModifier) {
-		var ret string
-		return ret
-	}
-	return *o.ButtonModifier
-}
-
-// GetButtonModifierOk returns a tuple with the ButtonModifier field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *WorkflowStepActionDefinition) GetButtonModifierOk() (*string, bool) {
-	if o == nil || IsNil(o.ButtonModifier) {
-		return nil, false
-	}
-	return o.ButtonModifier, true
-}
-
-// HasButtonModifier returns a boolean if a field has been set.
-func (o *WorkflowStepActionDefinition) HasButtonModifier() bool {
-	if o != nil && !IsNil(o.ButtonModifier) {
-		return true
-	}
-
-	return false
-}
-
-// SetButtonModifier gets a reference to the given string and assigns it to the ButtonModifier field.
-func (o *WorkflowStepActionDefinition) SetButtonModifier(v string) {
-	o.ButtonModifier = &v
+// SetButtonWidget sets field value
+func (o *WorkflowStepActionDefinition) SetButtonWidget(v WidgetDescriptor) {
+	o.ButtonWidget = v
 }
 
 // GetCanBeExecutedExpression returns the CanBeExecutedExpression field value if set, zero value otherwise.
@@ -334,6 +377,38 @@ func (o *WorkflowStepActionDefinition) HasCanBeExecutedExpression() bool {
 // SetCanBeExecutedExpression gets a reference to the given string and assigns it to the CanBeExecutedExpression field.
 func (o *WorkflowStepActionDefinition) SetCanBeExecutedExpression(v string) {
 	o.CanBeExecutedExpression = &v
+}
+
+// GetCollectData returns the CollectData field value if set, zero value otherwise.
+func (o *WorkflowStepActionDefinition) GetCollectData() bool {
+	if o == nil || IsNil(o.CollectData) {
+		var ret bool
+		return ret
+	}
+	return *o.CollectData
+}
+
+// GetCollectDataOk returns a tuple with the CollectData field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowStepActionDefinition) GetCollectDataOk() (*bool, bool) {
+	if o == nil || IsNil(o.CollectData) {
+		return nil, false
+	}
+	return o.CollectData, true
+}
+
+// HasCollectData returns a boolean if a field has been set.
+func (o *WorkflowStepActionDefinition) HasCollectData() bool {
+	if o != nil && !IsNil(o.CollectData) {
+		return true
+	}
+
+	return false
+}
+
+// SetCollectData gets a reference to the given bool and assigns it to the CollectData field.
+func (o *WorkflowStepActionDefinition) SetCollectData(v bool) {
+	o.CollectData = &v
 }
 
 // GetNextStepId returns the NextStepId field value if set, zero value otherwise.
@@ -385,21 +460,27 @@ func (o WorkflowStepActionDefinition) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.DynamicParameters) {
 		toSerialize["dynamic_parameters"] = o.DynamicParameters
 	}
+	if !IsNil(o.TestScript) {
+		toSerialize["test_script"] = o.TestScript
+	}
+	if !IsNil(o.ExecutionScript) {
+		toSerialize["execution_script"] = o.ExecutionScript
+	}
 	if !IsNil(o.ExecBefore) {
 		toSerialize["exec_before"] = o.ExecBefore
 	}
 	if !IsNil(o.ExecAfter) {
 		toSerialize["exec_after"] = o.ExecAfter
 	}
-	if !IsNil(o.Icon) {
-		toSerialize["icon"] = o.Icon
+	if !IsNil(o.ConfirmationPrompt) {
+		toSerialize["confirmation_prompt"] = o.ConfirmationPrompt
 	}
-	toSerialize["label"] = o.Label
-	if !IsNil(o.ButtonModifier) {
-		toSerialize["button_modifier"] = o.ButtonModifier
-	}
+	toSerialize["button_widget"] = o.ButtonWidget
 	if !IsNil(o.CanBeExecutedExpression) {
 		toSerialize["can_be_executed_expression"] = o.CanBeExecutedExpression
+	}
+	if !IsNil(o.CollectData) {
+		toSerialize["collect_data"] = o.CollectData
 	}
 	if !IsNil(o.NextStepId) {
 		toSerialize["next_step_id"] = o.NextStepId
@@ -413,7 +494,7 @@ func (o *WorkflowStepActionDefinition) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"id",
-		"label",
+		"button_widget",
 	}
 
 	allProperties := make(map[string]interface{})

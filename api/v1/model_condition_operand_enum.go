@@ -15,7 +15,7 @@ import (
 	"fmt"
 )
 
-// ConditionOperandEnum the model 'ConditionOperandEnum'
+// ConditionOperandEnum The operand that will be used to compare the source data with the value
 type ConditionOperandEnum string
 
 // List of ConditionOperandEnum
