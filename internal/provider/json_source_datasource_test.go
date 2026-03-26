@@ -8,20 +8,7 @@ import (
 
 func TestAccJsonSourceDataSource(t *testing.T) {
 
-	expectedContent := `{
-  "id": "1",
-  "source": "const greeting = 'Hello, world!';\nconst name = 'John Doe';\nconst message = greeting + \" My name is \" + name;\n\n// log message to console\nconsole.log(message);",
-  "elements": [
-  {
-    "id": "elem-1",
-    "name": "Element 1"
-  },
-  {
-    "id": "elem-2",
-    "name": "Element 2"
-  }
-]
-}`
+	expectedContent := `{"elements":[{"id":"elem-1","name":"Element 1"},{"id":"elem-2","name":"Element 2"}],"id":"1","source":"const greeting = 'Hello, world!';\nconst name = 'John Doe';\nconst message = greeting + \" My name is \" + name;\n\n// log message to console\nconsole.log(message);"}`
 
 	resource.Test(t, resource.TestCase{
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,

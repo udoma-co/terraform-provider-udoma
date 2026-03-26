@@ -34,17 +34,23 @@ resource udoma_workflow_entrypoint "test" {
 
 	init_step = jsonencode({
 		id: "init",
-		type: "select_property"
-		action: {
-    		id: "generate_document",
-			button_widget: {
-				label: {
-					en: "Generate document"
+		type: "select_property",
+		menu_widget: {
+			icon: "fa-solid fa-filter",
+			label: {
+				en: "Start"
+			}
+		},
+		actions: [
+			{
+				id: "generate_document",
+				button_widget: {
+					label: {
+						en: "Generate document"
+					}
 				}
 			}
-		}
-	})
-  		}
+		]
 	})
 
 	init_script = <<EOF
