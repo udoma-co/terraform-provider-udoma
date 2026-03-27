@@ -99,7 +99,8 @@ func (r *jsonSource) Read(ctx context.Context, req datasource.ReadRequest, resp 
 			)
 			return
 		}
-		if patchContents[0] == '[' {
+		switch patchContents[0] {
+		case '[':
 			// JSON patch
 
 			patch, err := jsonpatch.DecodePatch(patchContents)
@@ -113,7 +114,7 @@ func (r *jsonSource) Read(ctx context.Context, req datasource.ReadRequest, resp 
 
 			jsonPatches = append(jsonPatches, patch)
 
-		} else if patchContents[0] == '-' {
+		case '-':
 			// Unified diff patch
 
 			files, _, err := gitdiff.Parse(bytes.NewReader(patchContents))
@@ -127,7 +128,7 @@ func (r *jsonSource) Read(ctx context.Context, req datasource.ReadRequest, resp 
 
 			diffPatches = append(diffPatches, files...)
 
-		} else {
+		default:
 			resp.Diagnostics.AddError(
 				"Error Reading Patch File",
 				"Patch file does not start with a valid character, expected '[' for JSON patch or '-' for unified diff patch",

@@ -40,7 +40,7 @@ func ReadFileWithEmbeds(fileName string, diffPatches []*gitdiff.File) ([]byte, e
 		return data, nil
 	}
 
-	return nil, fmt.Errorf("unknown file format, only support .yaml, .yml, .json")
+	return data, nil
 }
 
 // embedFilesJson finds occurrences of "src:.*.json", "src:.*.png", "src:.*.jpg",
