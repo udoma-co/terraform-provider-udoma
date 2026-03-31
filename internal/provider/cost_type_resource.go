@@ -79,18 +79,9 @@ func (ct *CostType) Schema(ctx context.Context, req resource.SchemaRequest, resp
 			},
 			"category": schema.StringAttribute{
 				Required:            true,
-				MarkdownDescription: "The category of the cost type. Must be one of: operating_costs, maintenance, administrative_costs, utilities, insurance, taxes_fees, cap_ex, others",
+				MarkdownDescription: "The category of the cost type",
 				Validators: []validator.String{
-					stringvalidator.OneOf(
-						"operating_costs",
-						"maintenance",
-						"administrative_costs",
-						"utilities",
-						"insurance",
-						"taxes_fees",
-						"cap_ex",
-						"others",
-					),
+					stringvalidator.OneOfCaseInsensitive(stringSlice(api.AllowedCostTypeCategoryEnumEnumValues)...),
 				},
 			},
 		},
@@ -255,36 +246,18 @@ func (model *CostTypeModel) fromAPI(costType *api.CostType) (diags diag.Diagnost
 	model.UpdatedAt = types.Int64Value(costType.UpdatedAt)
 	model.Name = types.StringValue(costType.Name)
 	model.Category = types.StringValue(string(costType.Category))
-
-	if costType.Description != nil {
-		model.Description = types.StringValue(*costType.Description)
-	} else {
-		model.Description = types.StringNull()
-	}
-
-	if costType.IsFixed != nil {
-		model.IsFixed = types.BoolValue(*costType.IsFixed)
-	} else {
-		model.IsFixed = types.BoolNull()
-	}
+	model.Description = omittableStringValue(costType.Description, model.Description)
+	model.IsFixed = omittableBooleanValue(costType.IsFixed, model.IsFixed)
 
 	return
 }
 
 func (model *CostTypeModel) toAPIRequest() (api.CreateOrUpdateCostTypeRequest, error) {
 	req := api.CreateOrUpdateCostTypeRequest{
-		Name:     model.Name.ValueString(),
-		Category: api.CostTypeCategoryEnum(model.Category.ValueString()),
-	}
-
-	if !model.Description.IsNull() && !model.Description.IsUnknown() {
-		desc := model.Description.ValueString()
-		req.Description = &desc
-	}
-
-	if !model.IsFixed.IsNull() && !model.IsFixed.IsUnknown() {
-		isFixed := model.IsFixed.ValueBool()
-		req.IsFixed = &isFixed
+		Name:        model.Name.ValueString(),
+		Category:    api.CostTypeCategoryEnum(model.Category.ValueString()),
+		Description: model.Description.ValueStringPointer(),
+		IsFixed:     model.IsFixed.ValueBoolPointer(),
 	}
 
 	return req, nil

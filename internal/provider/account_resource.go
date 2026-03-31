@@ -291,6 +291,12 @@ func (model *AccountModel) fromAPI(account *api.FinancialAccount) (diags diag.Di
 	model.Type = types.StringValue(string(account.Type))
 	model.Cadence = types.StringValue(string(*account.Cadence))
 
+	if account.CostTypeRef != nil {
+		model.CostTypeRef = types.StringValue(*account.CostTypeRef)
+	} else {
+		model.CostTypeRef = types.StringNull()
+	}
+
 	dimensionIDs := make([]string, len(account.Dimensions))
 	for i := range account.Dimensions {
 		dimensionIDs[i] = account.Dimensions[i].Id
@@ -318,6 +324,11 @@ func (model *AccountModel) toAPIRequest() (api.CreateOrUpdateFinancialAccountReq
 
 	cadence := api.BalanceCadenceEnum(model.Cadence.ValueString())
 	account.Cadence = &cadence
+
+	if !model.CostTypeRef.IsNull() && !model.CostTypeRef.IsUnknown() {
+		ref := model.CostTypeRef.ValueString()
+		account.CostTypeRef = &ref
+	}
 
 	return account, nil
 }
