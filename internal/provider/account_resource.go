@@ -31,15 +31,16 @@ type Account struct {
 }
 
 type AccountModel struct {
-	ID         types.String `tfsdk:"id"`
-	CreatedAt  types.Int64  `tfsdk:"created_at"`
-	UpdatedAt  types.Int64  `tfsdk:"updated_at"`
-	Number     types.Int32  `tfsdk:"number"`
-	Name       types.String `tfsdk:"name"`
-	Type       types.String `tfsdk:"type"`
-	Currency   types.String `tfsdk:"currency"`
-	Dimensions types.List   `tfsdk:"dimensions"`
-	Cadence    types.String `tfsdk:"cadence"`
+	ID          types.String `tfsdk:"id"`
+	CreatedAt   types.Int64  `tfsdk:"created_at"`
+	UpdatedAt   types.Int64  `tfsdk:"updated_at"`
+	Number      types.Int32  `tfsdk:"number"`
+	Name        types.String `tfsdk:"name"`
+	Type        types.String `tfsdk:"type"`
+	Currency    types.String `tfsdk:"currency"`
+	Dimensions  types.List   `tfsdk:"dimensions"`
+	Cadence     types.String `tfsdk:"cadence"`
+	CostTypeRef types.String `tfsdk:"cost_type_ref"`
 }
 
 func (faq *Account) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -98,6 +99,13 @@ func (faq *Account) Schema(ctx context.Context, req resource.SchemaRequest, resp
 				Description: "The cadence at which the account balance is calculated",
 				Validators: []validator.String{
 					cadenceValidator{},
+				},
+			},
+			"cost_type_ref": schema.StringAttribute{
+				Optional:    true,
+				Description: "Optional reference to a cost type, used for operating cost statement tracking",
+				Validators: []validator.String{
+					stringvalidator.LengthAtMost(255),
 				},
 			},
 		},
@@ -283,6 +291,12 @@ func (model *AccountModel) fromAPI(account *api.FinancialAccount) (diags diag.Di
 	model.Type = types.StringValue(string(account.Type))
 	model.Cadence = types.StringValue(string(*account.Cadence))
 
+	if account.CostTypeRef != nil {
+		model.CostTypeRef = types.StringValue(*account.CostTypeRef)
+	} else {
+		model.CostTypeRef = types.StringNull()
+	}
+
 	dimensionIDs := make([]string, len(account.Dimensions))
 	for i := range account.Dimensions {
 		dimensionIDs[i] = account.Dimensions[i].Id
@@ -310,6 +324,11 @@ func (model *AccountModel) toAPIRequest() (api.CreateOrUpdateFinancialAccountReq
 
 	cadence := api.BalanceCadenceEnum(model.Cadence.ValueString())
 	account.Cadence = &cadence
+
+	if !model.CostTypeRef.IsNull() && !model.CostTypeRef.IsUnknown() {
+		ref := model.CostTypeRef.ValueString()
+		account.CostTypeRef = &ref
+	}
 
 	return account, nil
 }

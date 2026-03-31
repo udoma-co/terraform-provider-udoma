@@ -89,6 +89,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**ArchivePropertyHandover**](docs/DefaultAPI.md#archivepropertyhandover) | **Put** /property-handovers/handovers/{handoverID}/archive | Archive a property handover
 *DefaultAPI* | [**ArchiveWorkflowExecution**](docs/DefaultAPI.md#archiveworkflowexecution) | **Put** /workflows/execution/{executionID}/archive | Archive a workflow execution
 *DefaultAPI* | [**AssignCase**](docs/DefaultAPI.md#assigncase) | **Post** /case/{caseID}/assign | Assign case to a service provider
+*DefaultAPI* | [**AutoBookBankTransaction**](docs/DefaultAPI.md#autobookbanktransaction) | **Post** /bank-account-transaction/{transactionID}/auto-book | Run auto-booking on a manually added bank transaction
 *DefaultAPI* | [**CancelCorrespondence**](docs/DefaultAPI.md#cancelcorrespondence) | **Post** /tenant-correspondence/{corrID}/cancel | Cancel a tenant correspondence.
 *DefaultAPI* | [**CancelSignaturesForDocument**](docs/DefaultAPI.md#cancelsignaturesfordocument) | **Delete** /document-generation/documents/{docID}/esignature | Cancel a signature request for a document
 *DefaultAPI* | [**ConfirmAppointment**](docs/DefaultAPI.md#confirmappointment) | **Post** /calendar/appointments/entry/{entryID}/confirm | Confirm an appointment
@@ -115,6 +116,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateConnectorCredentials**](docs/DefaultAPI.md#createconnectorcredentials) | **Post** /connector/credentials | Create new connector credentials
 *DefaultAPI* | [**CreateConnectorQuery**](docs/DefaultAPI.md#createconnectorquery) | **Post** /connector/query | Create a new connector query
 *DefaultAPI* | [**CreateCorrespondence**](docs/DefaultAPI.md#createcorrespondence) | **Post** /tenant-correspondence | Create a new correspondence object for document generation.
+*DefaultAPI* | [**CreateCostType**](docs/DefaultAPI.md#createcosttype) | **Post** /cost-type | Create a new cost type
 *DefaultAPI* | [**CreateCustomForm**](docs/DefaultAPI.md#createcustomform) | **Post** /custom-form | Create a new custom form
 *DefaultAPI* | [**CreateCustomIDGenerator**](docs/DefaultAPI.md#createcustomidgenerator) | **Post** /id-generator | Create a new customer specififc ID generator
 *DefaultAPI* | [**CreateCustomerScript**](docs/DefaultAPI.md#createcustomerscript) | **Post** /customer-script | Create a new customer specififc JS script
@@ -171,6 +173,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteConnectorEntity**](docs/DefaultAPI.md#deleteconnectorentity) | **Delete** /connector/{name}/entity/{entityType} | Delete all the entities of a certain type.
 *DefaultAPI* | [**DeleteConnectorQuery**](docs/DefaultAPI.md#deleteconnectorquery) | **Delete** /query/{queryID} | Delete the query
 *DefaultAPI* | [**DeleteCorrespondence**](docs/DefaultAPI.md#deletecorrespondence) | **Delete** /tenant-correspondence/{corrID} | Delete a correspondence object via its ID
+*DefaultAPI* | [**DeleteCostType**](docs/DefaultAPI.md#deletecosttype) | **Delete** /cost-type/{costTypeID} | Delete a cost type
 *DefaultAPI* | [**DeleteCustomForm**](docs/DefaultAPI.md#deletecustomform) | **Delete** /custom-form/{formID} | Delete the custom form
 *DefaultAPI* | [**DeleteCustomIDGenerator**](docs/DefaultAPI.md#deletecustomidgenerator) | **Delete** /id-generators/{generatorID} | Delete the custom ID generator with all its related data
 *DefaultAPI* | [**DeleteCustomerScript**](docs/DefaultAPI.md#deletecustomerscript) | **Delete** /customer-scripts/{scriptID} | Delete the script with all its related data
@@ -260,6 +263,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetConnectorQuery**](docs/DefaultAPI.md#getconnectorquery) | **Get** /query/{queryID} | Get the query for the current account
 *DefaultAPI* | [**GetCorrespondence**](docs/DefaultAPI.md#getcorrespondence) | **Get** /tenant-correspondence/{corrID} | Get a correspondence object via its ID
 *DefaultAPI* | [**GetCorrespondenceAccessRecord**](docs/DefaultAPI.md#getcorrespondenceaccessrecord) | **Get** /tenant-correspondence/{corrID}/access-record | Get the access record for the correspondence.
+*DefaultAPI* | [**GetCostType**](docs/DefaultAPI.md#getcosttype) | **Get** /cost-type/{costTypeID} | Get a cost type by ID
 *DefaultAPI* | [**GetCustomForm**](docs/DefaultAPI.md#getcustomform) | **Get** /custom-form/{formID} | Get the custom form by ID
 *DefaultAPI* | [**GetCustomIDGenerator**](docs/DefaultAPI.md#getcustomidgenerator) | **Get** /id-generators/{generatorID} | Get the ID generator with all its attributes
 *DefaultAPI* | [**GetCustomIDGenerators**](docs/DefaultAPI.md#getcustomidgenerators) | **Get** /id-generators | Get all customer specific ID generators
@@ -322,6 +326,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetServiceProvider**](docs/DefaultAPI.md#getserviceprovider) | **Get** /service-provider/{serviceProviderID} | Get the service provider with the given ID
 *DefaultAPI* | [**GetSignedDocumentAuditDownload**](docs/DefaultAPI.md#getsigneddocumentauditdownload) | **Get** /document-generation/documents/{docID}/esignature/download-audits | Get the audit information for the signed document
 *DefaultAPI* | [**GetSignedDocumentDownload**](docs/DefaultAPI.md#getsigneddocumentdownload) | **Get** /document-generation/documents/{docID}/esignature/download-document | Get the signed document
+*DefaultAPI* | [**GetSuggestedBookingTemplate**](docs/DefaultAPI.md#getsuggestedbookingtemplate) | **Get** /bank-account-transaction/{transactionID}/suggested-template | Get the suggested booking template for a bank transaction based on booking history
 *DefaultAPI* | [**GetTenancy**](docs/DefaultAPI.md#gettenancy) | **Get** /tenancy/{tenancyID} | Get the tenancy with the given ID
 *DefaultAPI* | [**GetTenancyHistory**](docs/DefaultAPI.md#gettenancyhistory) | **Get** /property/{propID}/tenancy/history | Get the tenancy history for the property
 *DefaultAPI* | [**GetTenant**](docs/DefaultAPI.md#gettenant) | **Get** /tenant/{tenantID} | Get tenant details
@@ -402,12 +407,13 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryBookingPreviews**](docs/DefaultAPI.md#querybookingpreviews) | **Post** /financial/booking-previews | Query all booking previews
 *DefaultAPI* | [**QueryBookingTemplates**](docs/DefaultAPI.md#querybookingtemplates) | **Post** /financial/booking-templates | Query all booking templates
 *DefaultAPI* | [**QueryBookingsForAccount**](docs/DefaultAPI.md#querybookingsforaccount) | **Post** /financial/accounts-by-number/{flatNumber}/bookings | Query bookings for the given account
-*DefaultAPI* | [**QueryBookingsForStartEndDate**](docs/DefaultAPI.md#querybookingsforstartenddate) | **Get** /financial/accounts/{flatNumber}/bookings/date | Get the financial account with all its attributes
+*DefaultAPI* | [**QueryBookingsForStartEndDate**](docs/DefaultAPI.md#querybookingsforstartenddate) | **Get** /financial/accounts-by-number/{flatNumber}/bookings/date | Get the financial account with all its attributes
 *DefaultAPI* | [**QueryCaseReportingEndpoints**](docs/DefaultAPI.md#querycasereportingendpoints) | **Post** /cases/endpoints | Query all case reporting endpoints for given criteria
 *DefaultAPI* | [**QueryCaseTemplates**](docs/DefaultAPI.md#querycasetemplates) | **Post** /cases/templates | Query all case templates for given criteria
 *DefaultAPI* | [**QueryCases**](docs/DefaultAPI.md#querycases) | **Post** /cases | Query cases for the current user
 *DefaultAPI* | [**QueryCommentTemplates**](docs/DefaultAPI.md#querycommenttemplates) | **Post** /comment-templates | Query all comment templates for the account
 *DefaultAPI* | [**QueryCorrespondences**](docs/DefaultAPI.md#querycorrespondences) | **Post** /tenant-correspondences | Get all the correspondences
+*DefaultAPI* | [**QueryCostTypes**](docs/DefaultAPI.md#querycosttypes) | **Post** /cost-types | Query all cost types
 *DefaultAPI* | [**QueryCustomForms**](docs/DefaultAPI.md#querycustomforms) | **Get** /custom-forms | Get all custom forms
 *DefaultAPI* | [**QueryDataImportTemplates**](docs/DefaultAPI.md#querydataimporttemplates) | **Post** /data-import/templates | Query all data import templates for given criteria
 *DefaultAPI* | [**QueryDocumentGenerations**](docs/DefaultAPI.md#querydocumentgenerations) | **Post** /document-generation/documents | Request a list of document generations
@@ -470,6 +476,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateCompanyProfile**](docs/DefaultAPI.md#updatecompanyprofile) | **Put** /profile/company | Update company profile
 *DefaultAPI* | [**UpdateConnectorConfig**](docs/DefaultAPI.md#updateconnectorconfig) | **Put** /connector/{name}/config | Update the connector configuration
 *DefaultAPI* | [**UpdateConnectorQuery**](docs/DefaultAPI.md#updateconnectorquery) | **Put** /query/{queryID} | Update the connector Query
+*DefaultAPI* | [**UpdateCostType**](docs/DefaultAPI.md#updatecosttype) | **Put** /cost-type/{costTypeID} | Update an existing cost type
 *DefaultAPI* | [**UpdateCustomForm**](docs/DefaultAPI.md#updatecustomform) | **Put** /custom-form/{formID} | Update the custom form
 *DefaultAPI* | [**UpdateCustomIDGenerator**](docs/DefaultAPI.md#updatecustomidgenerator) | **Put** /id-generators/{generatorID} | Update an already existing ID generator
 *DefaultAPI* | [**UpdateCustomerScript**](docs/DefaultAPI.md#updatecustomerscript) | **Put** /customer-scripts/{scriptID} | Update an already existing script
@@ -633,6 +640,9 @@ Class | Method | HTTP request | Description
  - [CorrespondenceAttributesPartial](docs/CorrespondenceAttributesPartial.md)
  - [CorrespondenceEmail](docs/CorrespondenceEmail.md)
  - [CorrespondenceStatus](docs/CorrespondenceStatus.md)
+ - [CostType](docs/CostType.md)
+ - [CostTypeAttributesPartial](docs/CostTypeAttributesPartial.md)
+ - [CostTypeCategoryEnum](docs/CostTypeCategoryEnum.md)
  - [CreateAccountBookingAllocation](docs/CreateAccountBookingAllocation.md)
  - [CreateAccountBookingRequest](docs/CreateAccountBookingRequest.md)
  - [CreateAccountBookingsRequest](docs/CreateAccountBookingsRequest.md)
@@ -662,6 +672,7 @@ Class | Method | HTTP request | Description
  - [CreateOrUpdateCaseTemplateRequest](docs/CreateOrUpdateCaseTemplateRequest.md)
  - [CreateOrUpdateCommentTemplateRequest](docs/CreateOrUpdateCommentTemplateRequest.md)
  - [CreateOrUpdateConnectorQueryRequest](docs/CreateOrUpdateConnectorQueryRequest.md)
+ - [CreateOrUpdateCostTypeRequest](docs/CreateOrUpdateCostTypeRequest.md)
  - [CreateOrUpdateCustomFormRequest](docs/CreateOrUpdateCustomFormRequest.md)
  - [CreateOrUpdateCustomIDGeneratorRequest](docs/CreateOrUpdateCustomIDGeneratorRequest.md)
  - [CreateOrUpdateCustomerScriptRequest](docs/CreateOrUpdateCustomerScriptRequest.md)
