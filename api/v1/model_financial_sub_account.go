@@ -29,6 +29,8 @@ type FinancialSubAccount struct {
 	// The currency of the booking
 	Currency string              `json:"currency"`
 	Cadence  *BalanceCadenceEnum `json:"cadence,omitempty"`
+	// Optional reference to a cost type, used for operating cost statement tracking.
+	CostTypeRef *string `json:"cost_type_ref,omitempty"`
 	// The flat number associated with the sub-account, that is the merged representation of the account and its dimensions.
 	FlatNumber string `json:"flat_number"`
 	// The dimensions and their values that are assigned to the sub-account. This is just the expanded version of the flat number.
@@ -193,6 +195,38 @@ func (o *FinancialSubAccount) SetCadence(v BalanceCadenceEnum) {
 	o.Cadence = &v
 }
 
+// GetCostTypeRef returns the CostTypeRef field value if set, zero value otherwise.
+func (o *FinancialSubAccount) GetCostTypeRef() string {
+	if o == nil || IsNil(o.CostTypeRef) {
+		var ret string
+		return ret
+	}
+	return *o.CostTypeRef
+}
+
+// GetCostTypeRefOk returns a tuple with the CostTypeRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *FinancialSubAccount) GetCostTypeRefOk() (*string, bool) {
+	if o == nil || IsNil(o.CostTypeRef) {
+		return nil, false
+	}
+	return o.CostTypeRef, true
+}
+
+// HasCostTypeRef returns a boolean if a field has been set.
+func (o *FinancialSubAccount) HasCostTypeRef() bool {
+	if o != nil && !IsNil(o.CostTypeRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetCostTypeRef gets a reference to the given string and assigns it to the CostTypeRef field.
+func (o *FinancialSubAccount) SetCostTypeRef(v string) {
+	o.CostTypeRef = &v
+}
+
 // GetFlatNumber returns the FlatNumber field value
 func (o *FinancialSubAccount) GetFlatNumber() string {
 	if o == nil {
@@ -313,6 +347,9 @@ func (o FinancialSubAccount) ToMap() (map[string]interface{}, error) {
 	toSerialize["currency"] = o.Currency
 	if !IsNil(o.Cadence) {
 		toSerialize["cadence"] = o.Cadence
+	}
+	if !IsNil(o.CostTypeRef) {
+		toSerialize["cost_type_ref"] = o.CostTypeRef
 	}
 	toSerialize["flat_number"] = o.FlatNumber
 	toSerialize["dimension_definitions"] = o.DimensionDefinitions

@@ -1107,6 +1107,108 @@ func (a *DefaultAPIService) AssignCaseExecute(r ApiAssignCaseRequest) (*http.Res
 	return localVarHTTPResponse, nil
 }
 
+type ApiAutoBookBankTransactionRequest struct {
+	ctx           context.Context
+	ApiService    *DefaultAPIService
+	transactionID string
+}
+
+func (r ApiAutoBookBankTransactionRequest) Execute() (*BookingPreview, *http.Response, error) {
+	return r.ApiService.AutoBookBankTransactionExecute(r)
+}
+
+/*
+AutoBookBankTransaction Run auto-booking on a manually added bank transaction
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param transactionID unique generated ID of a bank transaction
+	@return ApiAutoBookBankTransactionRequest
+*/
+func (a *DefaultAPIService) AutoBookBankTransaction(ctx context.Context, transactionID string) ApiAutoBookBankTransactionRequest {
+	return ApiAutoBookBankTransactionRequest{
+		ApiService:    a,
+		ctx:           ctx,
+		transactionID: transactionID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return BookingPreview
+func (a *DefaultAPIService) AutoBookBankTransactionExecute(r ApiAutoBookBankTransactionRequest) (*BookingPreview, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *BookingPreview
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.AutoBookBankTransaction")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/bank-account-transaction/{transactionID}/auto-book"
+	localVarPath = strings.Replace(localVarPath, "{"+"transactionID"+"}", url.PathEscape(parameterValueToString(r.transactionID, "transactionID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiCancelCorrespondenceRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
@@ -3866,6 +3968,115 @@ func (a *DefaultAPIService) CreateCorrespondenceExecute(r ApiCreateCorrespondenc
 	}
 	// body params
 	localVarPostBody = r.createCorrespondenceRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiCreateCostTypeRequest struct {
+	ctx                           context.Context
+	ApiService                    *DefaultAPIService
+	createOrUpdateCostTypeRequest *CreateOrUpdateCostTypeRequest
+}
+
+func (r ApiCreateCostTypeRequest) CreateOrUpdateCostTypeRequest(createOrUpdateCostTypeRequest CreateOrUpdateCostTypeRequest) ApiCreateCostTypeRequest {
+	r.createOrUpdateCostTypeRequest = &createOrUpdateCostTypeRequest
+	return r
+}
+
+func (r ApiCreateCostTypeRequest) Execute() (*CostType, *http.Response, error) {
+	return r.ApiService.CreateCostTypeExecute(r)
+}
+
+/*
+CreateCostType Create a new cost type
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiCreateCostTypeRequest
+*/
+func (a *DefaultAPIService) CreateCostType(ctx context.Context) ApiCreateCostTypeRequest {
+	return ApiCreateCostTypeRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return CostType
+func (a *DefaultAPIService) CreateCostTypeExecute(r ApiCreateCostTypeRequest) (*CostType, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *CostType
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateCostType")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/cost-type"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createOrUpdateCostTypeRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdateCostTypeRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrUpdateCostTypeRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -9622,6 +9833,96 @@ func (a *DefaultAPIService) DeleteCorrespondenceExecute(r ApiDeleteCorrespondenc
 
 	localVarPath := localBasePath + "/tenant-correspondence/{corrID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"corrID"+"}", url.PathEscape(parameterValueToString(r.corrID, "corrID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDeleteCostTypeRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	costTypeID string
+}
+
+func (r ApiDeleteCostTypeRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteCostTypeExecute(r)
+}
+
+/*
+DeleteCostType Delete a cost type
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param costTypeID unique generated ID of a cost type
+	@return ApiDeleteCostTypeRequest
+*/
+func (a *DefaultAPIService) DeleteCostType(ctx context.Context, costTypeID string) ApiDeleteCostTypeRequest {
+	return ApiDeleteCostTypeRequest{
+		ApiService: a,
+		ctx:        ctx,
+		costTypeID: costTypeID,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DeleteCostTypeExecute(r ApiDeleteCostTypeRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteCostType")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/cost-type/{costTypeID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"costTypeID"+"}", url.PathEscape(parameterValueToString(r.costTypeID, "costTypeID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -18426,6 +18727,108 @@ func (a *DefaultAPIService) GetCorrespondenceAccessRecordExecute(r ApiGetCorresp
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetCostTypeRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	costTypeID string
+}
+
+func (r ApiGetCostTypeRequest) Execute() (*CostType, *http.Response, error) {
+	return r.ApiService.GetCostTypeExecute(r)
+}
+
+/*
+GetCostType Get a cost type by ID
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param costTypeID unique generated ID of a cost type
+	@return ApiGetCostTypeRequest
+*/
+func (a *DefaultAPIService) GetCostType(ctx context.Context, costTypeID string) ApiGetCostTypeRequest {
+	return ApiGetCostTypeRequest{
+		ApiService: a,
+		ctx:        ctx,
+		costTypeID: costTypeID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return CostType
+func (a *DefaultAPIService) GetCostTypeExecute(r ApiGetCostTypeRequest) (*CostType, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *CostType
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetCostType")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/cost-type/{costTypeID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"costTypeID"+"}", url.PathEscape(parameterValueToString(r.costTypeID, "costTypeID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetCustomFormRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
@@ -24731,6 +25134,108 @@ func (a *DefaultAPIService) GetSignedDocumentDownloadExecute(r ApiGetSignedDocum
 
 	localVarPath := localBasePath + "/document-generation/documents/{docID}/esignature/download-document"
 	localVarPath = strings.Replace(localVarPath, "{"+"docID"+"}", url.PathEscape(parameterValueToString(r.docID, "docID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetSuggestedBookingTemplateRequest struct {
+	ctx           context.Context
+	ApiService    *DefaultAPIService
+	transactionID string
+}
+
+func (r ApiGetSuggestedBookingTemplateRequest) Execute() (*BookingTemplate, *http.Response, error) {
+	return r.ApiService.GetSuggestedBookingTemplateExecute(r)
+}
+
+/*
+GetSuggestedBookingTemplate Get the suggested booking template for a bank transaction based on booking history
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param transactionID unique generated ID of a bank transaction
+	@return ApiGetSuggestedBookingTemplateRequest
+*/
+func (a *DefaultAPIService) GetSuggestedBookingTemplate(ctx context.Context, transactionID string) ApiGetSuggestedBookingTemplateRequest {
+	return ApiGetSuggestedBookingTemplateRequest{
+		ApiService:    a,
+		ctx:           ctx,
+		transactionID: transactionID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return BookingTemplate
+func (a *DefaultAPIService) GetSuggestedBookingTemplateExecute(r ApiGetSuggestedBookingTemplateRequest) (*BookingTemplate, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *BookingTemplate
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetSuggestedBookingTemplate")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/bank-account-transaction/{transactionID}/suggested-template"
+	localVarPath = strings.Replace(localVarPath, "{"+"transactionID"+"}", url.PathEscape(parameterValueToString(r.transactionID, "transactionID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -33654,7 +34159,7 @@ func (a *DefaultAPIService) QueryBookingsForStartEndDateExecute(r ApiQueryBookin
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/financial/accounts/{flatNumber}/bookings/date"
+	localVarPath := localBasePath + "/financial/accounts-by-number/{flatNumber}/bookings/date"
 	localVarPath = strings.Replace(localVarPath, "{"+"flatNumber"+"}", url.PathEscape(parameterValueToString(r.flatNumber, "flatNumber")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -34231,6 +34736,115 @@ func (a *DefaultAPIService) QueryCorrespondencesExecute(r ApiQueryCorrespondence
 	}
 	// body params
 	localVarPostBody = r.queryCorrespondenceRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiQueryCostTypesRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	body       *map[string]interface{}
+}
+
+func (r ApiQueryCostTypesRequest) Body(body map[string]interface{}) ApiQueryCostTypesRequest {
+	r.body = &body
+	return r
+}
+
+func (r ApiQueryCostTypesRequest) Execute() ([]CostType, *http.Response, error) {
+	return r.ApiService.QueryCostTypesExecute(r)
+}
+
+/*
+QueryCostTypes Query all cost types
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiQueryCostTypesRequest
+*/
+func (a *DefaultAPIService) QueryCostTypes(ctx context.Context) ApiQueryCostTypesRequest {
+	return ApiQueryCostTypesRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return []CostType
+func (a *DefaultAPIService) QueryCostTypesExecute(r ApiQueryCostTypesRequest) ([]CostType, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []CostType
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.QueryCostTypes")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/cost-types"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.body == nil {
+		return localVarReturnValue, nil, reportError("body is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.body
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -40951,6 +41565,119 @@ func (a *DefaultAPIService) UpdateConnectorQueryExecute(r ApiUpdateConnectorQuer
 	}
 	// body params
 	localVarPostBody = r.createOrUpdateConnectorQueryRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdateCostTypeRequest struct {
+	ctx                           context.Context
+	ApiService                    *DefaultAPIService
+	costTypeID                    string
+	createOrUpdateCostTypeRequest *CreateOrUpdateCostTypeRequest
+}
+
+func (r ApiUpdateCostTypeRequest) CreateOrUpdateCostTypeRequest(createOrUpdateCostTypeRequest CreateOrUpdateCostTypeRequest) ApiUpdateCostTypeRequest {
+	r.createOrUpdateCostTypeRequest = &createOrUpdateCostTypeRequest
+	return r
+}
+
+func (r ApiUpdateCostTypeRequest) Execute() (*CostType, *http.Response, error) {
+	return r.ApiService.UpdateCostTypeExecute(r)
+}
+
+/*
+UpdateCostType Update an existing cost type
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param costTypeID unique generated ID of a cost type
+	@return ApiUpdateCostTypeRequest
+*/
+func (a *DefaultAPIService) UpdateCostType(ctx context.Context, costTypeID string) ApiUpdateCostTypeRequest {
+	return ApiUpdateCostTypeRequest{
+		ApiService: a,
+		ctx:        ctx,
+		costTypeID: costTypeID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return CostType
+func (a *DefaultAPIService) UpdateCostTypeExecute(r ApiUpdateCostTypeRequest) (*CostType, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *CostType
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdateCostType")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/cost-type/{costTypeID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"costTypeID"+"}", url.PathEscape(parameterValueToString(r.costTypeID, "costTypeID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createOrUpdateCostTypeRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdateCostTypeRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrUpdateCostTypeRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

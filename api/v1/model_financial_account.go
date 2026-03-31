@@ -35,6 +35,8 @@ type FinancialAccount struct {
 	// The currency of the booking
 	Currency string              `json:"currency"`
 	Cadence  *BalanceCadenceEnum `json:"cadence,omitempty"`
+	// Optional reference to a cost type, used for operating cost statement tracking.
+	CostTypeRef *string `json:"cost_type_ref,omitempty"`
 	// The current balance of the account
 	Balance *float64 `json:"balance,omitempty"`
 	// The dimensions that are assigned to the account
@@ -267,6 +269,38 @@ func (o *FinancialAccount) SetCadence(v BalanceCadenceEnum) {
 	o.Cadence = &v
 }
 
+// GetCostTypeRef returns the CostTypeRef field value if set, zero value otherwise.
+func (o *FinancialAccount) GetCostTypeRef() string {
+	if o == nil || IsNil(o.CostTypeRef) {
+		var ret string
+		return ret
+	}
+	return *o.CostTypeRef
+}
+
+// GetCostTypeRefOk returns a tuple with the CostTypeRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *FinancialAccount) GetCostTypeRefOk() (*string, bool) {
+	if o == nil || IsNil(o.CostTypeRef) {
+		return nil, false
+	}
+	return o.CostTypeRef, true
+}
+
+// HasCostTypeRef returns a boolean if a field has been set.
+func (o *FinancialAccount) HasCostTypeRef() bool {
+	if o != nil && !IsNil(o.CostTypeRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetCostTypeRef gets a reference to the given string and assigns it to the CostTypeRef field.
+func (o *FinancialAccount) SetCostTypeRef(v string) {
+	o.CostTypeRef = &v
+}
+
 // GetBalance returns the Balance field value if set, zero value otherwise.
 func (o *FinancialAccount) GetBalance() float64 {
 	if o == nil || IsNil(o.Balance) {
@@ -350,6 +384,9 @@ func (o FinancialAccount) ToMap() (map[string]interface{}, error) {
 	toSerialize["currency"] = o.Currency
 	if !IsNil(o.Cadence) {
 		toSerialize["cadence"] = o.Cadence
+	}
+	if !IsNil(o.CostTypeRef) {
+		toSerialize["cost_type_ref"] = o.CostTypeRef
 	}
 	if !IsNil(o.Balance) {
 		toSerialize["balance"] = o.Balance

@@ -31,15 +31,16 @@ type Account struct {
 }
 
 type AccountModel struct {
-	ID         types.String `tfsdk:"id"`
-	CreatedAt  types.Int64  `tfsdk:"created_at"`
-	UpdatedAt  types.Int64  `tfsdk:"updated_at"`
-	Number     types.Int32  `tfsdk:"number"`
-	Name       types.String `tfsdk:"name"`
-	Type       types.String `tfsdk:"type"`
-	Currency   types.String `tfsdk:"currency"`
-	Dimensions types.List   `tfsdk:"dimensions"`
-	Cadence    types.String `tfsdk:"cadence"`
+	ID          types.String `tfsdk:"id"`
+	CreatedAt   types.Int64  `tfsdk:"created_at"`
+	UpdatedAt   types.Int64  `tfsdk:"updated_at"`
+	Number      types.Int32  `tfsdk:"number"`
+	Name        types.String `tfsdk:"name"`
+	Type        types.String `tfsdk:"type"`
+	Currency    types.String `tfsdk:"currency"`
+	Dimensions  types.List   `tfsdk:"dimensions"`
+	Cadence     types.String `tfsdk:"cadence"`
+	CostTypeRef types.String `tfsdk:"cost_type_ref"`
 }
 
 func (faq *Account) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -98,6 +99,13 @@ func (faq *Account) Schema(ctx context.Context, req resource.SchemaRequest, resp
 				Description: "The cadence at which the account balance is calculated",
 				Validators: []validator.String{
 					cadenceValidator{},
+				},
+			},
+			"cost_type_ref": schema.StringAttribute{
+				Optional:    true,
+				Description: "Optional reference to a cost type, used for operating cost statement tracking",
+				Validators: []validator.String{
+					stringvalidator.LengthAtMost(255),
 				},
 			},
 		},

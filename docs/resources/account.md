@@ -25,6 +25,7 @@ Resource represents a financial account
 
 ### Optional
 
+- `cost_type_ref` (String) Optional reference to a cost type, used for operating cost statement tracking
 - `dimensions` (List of String) The sub dimensions of the account.
 
 ### Read-Only

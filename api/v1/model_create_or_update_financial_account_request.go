@@ -29,6 +29,8 @@ type CreateOrUpdateFinancialAccountRequest struct {
 	// The currency of the booking
 	Currency string              `json:"currency"`
 	Cadence  *BalanceCadenceEnum `json:"cadence,omitempty"`
+	// Optional reference to a cost type, used for operating cost statement tracking.
+	CostTypeRef *string `json:"cost_type_ref,omitempty"`
 	// The IDs of the dimensions that are assigned to the account
 	Dimensions []string `json:"dimensions,omitempty"`
 }
@@ -184,6 +186,38 @@ func (o *CreateOrUpdateFinancialAccountRequest) SetCadence(v BalanceCadenceEnum)
 	o.Cadence = &v
 }
 
+// GetCostTypeRef returns the CostTypeRef field value if set, zero value otherwise.
+func (o *CreateOrUpdateFinancialAccountRequest) GetCostTypeRef() string {
+	if o == nil || IsNil(o.CostTypeRef) {
+		var ret string
+		return ret
+	}
+	return *o.CostTypeRef
+}
+
+// GetCostTypeRefOk returns a tuple with the CostTypeRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateFinancialAccountRequest) GetCostTypeRefOk() (*string, bool) {
+	if o == nil || IsNil(o.CostTypeRef) {
+		return nil, false
+	}
+	return o.CostTypeRef, true
+}
+
+// HasCostTypeRef returns a boolean if a field has been set.
+func (o *CreateOrUpdateFinancialAccountRequest) HasCostTypeRef() bool {
+	if o != nil && !IsNil(o.CostTypeRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetCostTypeRef gets a reference to the given string and assigns it to the CostTypeRef field.
+func (o *CreateOrUpdateFinancialAccountRequest) SetCostTypeRef(v string) {
+	o.CostTypeRef = &v
+}
+
 // GetDimensions returns the Dimensions field value if set, zero value otherwise.
 func (o *CreateOrUpdateFinancialAccountRequest) GetDimensions() []string {
 	if o == nil || IsNil(o.Dimensions) {
@@ -232,6 +266,9 @@ func (o CreateOrUpdateFinancialAccountRequest) ToMap() (map[string]interface{}, 
 	toSerialize["currency"] = o.Currency
 	if !IsNil(o.Cadence) {
 		toSerialize["cadence"] = o.Cadence
+	}
+	if !IsNil(o.CostTypeRef) {
+		toSerialize["cost_type_ref"] = o.CostTypeRef
 	}
 	if !IsNil(o.Dimensions) {
 		toSerialize["dimensions"] = o.Dimensions
