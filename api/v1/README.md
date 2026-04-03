@@ -289,6 +289,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetFinancialAccount**](docs/DefaultAPI.md#getfinancialaccount) | **Get** /financial/accounts/{accountID} | Get the financial account with all its attributes
 *DefaultAPI* | [**GetFinancialAccountByFlatNumber**](docs/DefaultAPI.md#getfinancialaccountbyflatnumber) | **Get** /financial/accounts-by-number/{flatNumber} | Get financial account by flat number
 *DefaultAPI* | [**GetFinancialAccountsByRef**](docs/DefaultAPI.md#getfinancialaccountsbyref) | **Post** /financial/account/by-ref/{refType}/{refID} | Get the financial account for a given ref type and ref ID
+*DefaultAPI* | [**GetFinancialSubAccount**](docs/DefaultAPI.md#getfinancialsubaccount) | **Get** /financial/accounts-by-number/{flatNumber}/subaccount | Get financial sub-account by flat number
 *DefaultAPI* | [**GetHook**](docs/DefaultAPI.md#gethook) | **Get** /hook/{hookID} | Get hook with all its attributes
 *DefaultAPI* | [**GetInventoryForProperty**](docs/DefaultAPI.md#getinventoryforproperty) | **Get** /property/{propID}/inventory | List inventory items for a property
 *DefaultAPI* | [**GetInventoryItem**](docs/DefaultAPI.md#getinventoryitem) | **Get** /inventory/{inventoryItemID} | Get inventory item
@@ -407,7 +408,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryBookingPreviews**](docs/DefaultAPI.md#querybookingpreviews) | **Post** /financial/booking-previews | Query all booking previews
 *DefaultAPI* | [**QueryBookingTemplates**](docs/DefaultAPI.md#querybookingtemplates) | **Post** /financial/booking-templates | Query all booking templates
 *DefaultAPI* | [**QueryBookingsForAccount**](docs/DefaultAPI.md#querybookingsforaccount) | **Post** /financial/accounts-by-number/{flatNumber}/bookings | Query bookings for the given account
-*DefaultAPI* | [**QueryBookingsForStartEndDate**](docs/DefaultAPI.md#querybookingsforstartenddate) | **Get** /financial/accounts-by-number/{flatNumber}/bookings/date | Get the financial account with all its attributes
+*DefaultAPI* | [**QueryBookingsForStartEndDate**](docs/DefaultAPI.md#querybookingsforstartenddate) | **Post** /financial/accounts-by-number/{flatNumber}/bookings/date | Get a list of bookings for the given account and time period
 *DefaultAPI* | [**QueryCaseReportingEndpoints**](docs/DefaultAPI.md#querycasereportingendpoints) | **Post** /cases/endpoints | Query all case reporting endpoints for given criteria
 *DefaultAPI* | [**QueryCaseTemplates**](docs/DefaultAPI.md#querycasetemplates) | **Post** /cases/templates | Query all case templates for given criteria
 *DefaultAPI* | [**QueryCases**](docs/DefaultAPI.md#querycases) | **Post** /cases | Query cases for the current user

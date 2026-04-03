@@ -31,6 +31,8 @@ type BankDetails struct {
 	ExternalId *string `json:"external_id,omitempty"`
 	// A user friendly label, used to identify the account (optional)
 	Description *string `json:"description,omitempty"`
+	// Optional reference to a system bank account (b- prefixed ID)
+	BankAccountRef *string `json:"bank_account_ref,omitempty"`
 }
 
 // NewBankDetails instantiates a new BankDetails object
@@ -242,6 +244,38 @@ func (o *BankDetails) SetDescription(v string) {
 	o.Description = &v
 }
 
+// GetBankAccountRef returns the BankAccountRef field value if set, zero value otherwise.
+func (o *BankDetails) GetBankAccountRef() string {
+	if o == nil || IsNil(o.BankAccountRef) {
+		var ret string
+		return ret
+	}
+	return *o.BankAccountRef
+}
+
+// GetBankAccountRefOk returns a tuple with the BankAccountRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BankDetails) GetBankAccountRefOk() (*string, bool) {
+	if o == nil || IsNil(o.BankAccountRef) {
+		return nil, false
+	}
+	return o.BankAccountRef, true
+}
+
+// HasBankAccountRef returns a boolean if a field has been set.
+func (o *BankDetails) HasBankAccountRef() bool {
+	if o != nil && !IsNil(o.BankAccountRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetBankAccountRef gets a reference to the given string and assigns it to the BankAccountRef field.
+func (o *BankDetails) SetBankAccountRef(v string) {
+	o.BankAccountRef = &v
+}
+
 func (o BankDetails) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -269,6 +303,9 @@ func (o BankDetails) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
+	}
+	if !IsNil(o.BankAccountRef) {
+		toSerialize["bank_account_ref"] = o.BankAccountRef
 	}
 	return toSerialize, nil
 }

@@ -31,6 +31,8 @@ type AppointmentSchedule struct {
 	SlotDuration int32 `json:"slot_duration"`
 	// The duration of the gap between appointments in minutes
 	GapDuration *int32 `json:"gap_duration,omitempty"`
+	// The minimum number of minutes required between now and the appointment start time for a booking to be accepted. Set to 720 to prevent bookings within 12 hours of the slot. A value of 0 (or omitted) means no buffer is enforced.
+	BookingBuffer *int32 `json:"booking_buffer,omitempty"`
 	// The color to use when displaying the appointment window in a calendar view
 	Color *string `json:"color,omitempty"`
 	// The appointment windows
@@ -199,6 +201,38 @@ func (o *AppointmentSchedule) SetGapDuration(v int32) {
 	o.GapDuration = &v
 }
 
+// GetBookingBuffer returns the BookingBuffer field value if set, zero value otherwise.
+func (o *AppointmentSchedule) GetBookingBuffer() int32 {
+	if o == nil || IsNil(o.BookingBuffer) {
+		var ret int32
+		return ret
+	}
+	return *o.BookingBuffer
+}
+
+// GetBookingBufferOk returns a tuple with the BookingBuffer field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AppointmentSchedule) GetBookingBufferOk() (*int32, bool) {
+	if o == nil || IsNil(o.BookingBuffer) {
+		return nil, false
+	}
+	return o.BookingBuffer, true
+}
+
+// HasBookingBuffer returns a boolean if a field has been set.
+func (o *AppointmentSchedule) HasBookingBuffer() bool {
+	if o != nil && !IsNil(o.BookingBuffer) {
+		return true
+	}
+
+	return false
+}
+
+// SetBookingBuffer gets a reference to the given int32 and assigns it to the BookingBuffer field.
+func (o *AppointmentSchedule) SetBookingBuffer(v int32) {
+	o.BookingBuffer = &v
+}
+
 // GetColor returns the Color field value if set, zero value otherwise.
 func (o *AppointmentSchedule) GetColor() string {
 	if o == nil || IsNil(o.Color) {
@@ -337,6 +371,9 @@ func (o AppointmentSchedule) ToMap() (map[string]interface{}, error) {
 	toSerialize["slot_duration"] = o.SlotDuration
 	if !IsNil(o.GapDuration) {
 		toSerialize["gap_duration"] = o.GapDuration
+	}
+	if !IsNil(o.BookingBuffer) {
+		toSerialize["booking_buffer"] = o.BookingBuffer
 	}
 	if !IsNil(o.Color) {
 		toSerialize["color"] = o.Color

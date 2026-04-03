@@ -17,13 +17,14 @@ Resource represents a cost type used for categorizing costs in operating cost st
 
 ### Required
 
-- `category` (String) The category of the cost type. Must be one of: operating_costs, maintenance, administrative_costs, utilities, insurance, taxes_fees, cap_ex, others
+- `category` (String) The category of the cost type
 - `name` (String) The name of the cost type
 
 ### Optional
 
 - `description` (String) An optional description of the cost type
 - `is_fixed` (Boolean) If true, this cost is fixed (not dependent on actual usage). If false, the cost is variable.
+- `tenant_billing_rate` (Number) The percentage (0-100) of this cost that will be billed to tenants.
 
 ### Read-Only
 

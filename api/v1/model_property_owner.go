@@ -44,8 +44,8 @@ type PropertyOwner struct {
 	// the phone number of the owner
 	PhoneNumber *string  `json:"phone_number,omitempty"`
 	Address     *Address `json:"address,omitempty"`
-	// the reference to the bank account of the owner
-	BankAccountRef *string `json:"bank_account_ref,omitempty"`
+	// optional list of bank accounts of the owner
+	BankDetails []BankDetails `json:"bank_details,omitempty"`
 	// Extensions data for this property owner, keyed by extension key
 	Extensions *map[string]map[string]interface{} `json:"extensions,omitempty"`
 }
@@ -432,36 +432,36 @@ func (o *PropertyOwner) SetAddress(v Address) {
 	o.Address = &v
 }
 
-// GetBankAccountRef returns the BankAccountRef field value if set, zero value otherwise.
-func (o *PropertyOwner) GetBankAccountRef() string {
-	if o == nil || IsNil(o.BankAccountRef) {
-		var ret string
+// GetBankDetails returns the BankDetails field value if set, zero value otherwise.
+func (o *PropertyOwner) GetBankDetails() []BankDetails {
+	if o == nil || IsNil(o.BankDetails) {
+		var ret []BankDetails
 		return ret
 	}
-	return *o.BankAccountRef
+	return o.BankDetails
 }
 
-// GetBankAccountRefOk returns a tuple with the BankAccountRef field value if set, nil otherwise
+// GetBankDetailsOk returns a tuple with the BankDetails field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PropertyOwner) GetBankAccountRefOk() (*string, bool) {
-	if o == nil || IsNil(o.BankAccountRef) {
+func (o *PropertyOwner) GetBankDetailsOk() ([]BankDetails, bool) {
+	if o == nil || IsNil(o.BankDetails) {
 		return nil, false
 	}
-	return o.BankAccountRef, true
+	return o.BankDetails, true
 }
 
-// HasBankAccountRef returns a boolean if a field has been set.
-func (o *PropertyOwner) HasBankAccountRef() bool {
-	if o != nil && !IsNil(o.BankAccountRef) {
+// HasBankDetails returns a boolean if a field has been set.
+func (o *PropertyOwner) HasBankDetails() bool {
+	if o != nil && !IsNil(o.BankDetails) {
 		return true
 	}
 
 	return false
 }
 
-// SetBankAccountRef gets a reference to the given string and assigns it to the BankAccountRef field.
-func (o *PropertyOwner) SetBankAccountRef(v string) {
-	o.BankAccountRef = &v
+// SetBankDetails gets a reference to the given []BankDetails and assigns it to the BankDetails field.
+func (o *PropertyOwner) SetBankDetails(v []BankDetails) {
+	o.BankDetails = v
 }
 
 // GetExtensions returns the Extensions field value if set, zero value otherwise.
@@ -536,8 +536,8 @@ func (o PropertyOwner) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Address) {
 		toSerialize["address"] = o.Address
 	}
-	if !IsNil(o.BankAccountRef) {
-		toSerialize["bank_account_ref"] = o.BankAccountRef
+	if !IsNil(o.BankDetails) {
+		toSerialize["bank_details"] = o.BankDetails
 	}
 	if !IsNil(o.Extensions) {
 		toSerialize["extensions"] = o.Extensions
