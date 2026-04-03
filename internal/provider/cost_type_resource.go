@@ -30,14 +30,14 @@ type CostType struct {
 }
 
 type CostTypeModel struct {
-	ID                types.String  `tfsdk:"id"`
-	CreatedAt         types.Int64   `tfsdk:"created_at"`
-	UpdatedAt         types.Int64   `tfsdk:"updated_at"`
-	Name              types.String  `tfsdk:"name"`
-	Description       types.String  `tfsdk:"description"`
-	IsFixed           types.Bool    `tfsdk:"is_fixed"`
-	TenantBillingRate types.Float64 `tfsdk:"tenant_billing_rate"`
-	Category          types.String  `tfsdk:"category"`
+	ID                types.String `tfsdk:"id"`
+	CreatedAt         types.Int64  `tfsdk:"created_at"`
+	UpdatedAt         types.Int64  `tfsdk:"updated_at"`
+	Name              types.String `tfsdk:"name"`
+	Description       types.String `tfsdk:"description"`
+	IsFixed           types.Bool   `tfsdk:"is_fixed"`
+	TenantBillingRate types.Int32  `tfsdk:"tenant_billing_rate"`
+	Category          types.String `tfsdk:"category"`
 }
 
 func (ct *CostType) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -253,27 +253,18 @@ func (model *CostTypeModel) fromAPI(costType *api.CostType) (diags diag.Diagnost
 	model.Category = types.StringValue(string(costType.Category))
 	model.Description = omittableStringValue(costType.Description, model.Description)
 	model.IsFixed = omittableBooleanValue(costType.IsFixed, model.IsFixed)
-
-	if costType.TenantBillingRate != nil {
-		model.TenantBillingRate = types.Float64Value(float64(*costType.TenantBillingRate))
-	} else {
-		model.TenantBillingRate = types.Float64Null()
-	}
+	model.TenantBillingRate = omittableInt32Value(costType.TenantBillingRate, model.TenantBillingRate)
 
 	return
 }
 
 func (model *CostTypeModel) toAPIRequest() (api.CreateOrUpdateCostTypeRequest, error) {
 	req := api.CreateOrUpdateCostTypeRequest{
-		Name:        model.Name.ValueString(),
-		Category:    api.CostTypeCategoryEnum(model.Category.ValueString()),
-		Description: model.Description.ValueStringPointer(),
-		IsFixed:     model.IsFixed.ValueBoolPointer(),
-	}
-
-	if !model.TenantBillingRate.IsNull() && !model.TenantBillingRate.IsUnknown() {
-		rate := float32(model.TenantBillingRate.ValueFloat64())
-		req.TenantBillingRate = &rate
+		Name:              model.Name.ValueString(),
+		Category:          api.CostTypeCategoryEnum(model.Category.ValueString()),
+		Description:       model.Description.ValueStringPointer(),
+		IsFixed:           model.IsFixed.ValueBoolPointer(),
+		TenantBillingRate: model.TenantBillingRate.ValueInt32Pointer(),
 	}
 
 	return req, nil

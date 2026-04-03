@@ -34,7 +34,7 @@ type CostType struct {
 	// If true, this cost is fixed (not dependent on actual usage). If false, the cost is variable.
 	IsFixed *bool `json:"is_fixed,omitempty"`
 	// The percentage (0-100) of this cost that will be billed to tenants. For example, 100 means the cost is fully billed to tenants, 0 means the owner bears the full cost, and 30 means 30% is billed to tenants.
-	TenantBillingRate *float32             `json:"tenant_billing_rate,omitempty"`
+	TenantBillingRate *int32               `json:"tenant_billing_rate,omitempty"`
 	Category          CostTypeCategoryEnum `json:"category"`
 }
 
@@ -223,9 +223,9 @@ func (o *CostType) SetIsFixed(v bool) {
 }
 
 // GetTenantBillingRate returns the TenantBillingRate field value if set, zero value otherwise.
-func (o *CostType) GetTenantBillingRate() float32 {
+func (o *CostType) GetTenantBillingRate() int32 {
 	if o == nil || IsNil(o.TenantBillingRate) {
-		var ret float32
+		var ret int32
 		return ret
 	}
 	return *o.TenantBillingRate
@@ -233,7 +233,7 @@ func (o *CostType) GetTenantBillingRate() float32 {
 
 // GetTenantBillingRateOk returns a tuple with the TenantBillingRate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CostType) GetTenantBillingRateOk() (*float32, bool) {
+func (o *CostType) GetTenantBillingRateOk() (*int32, bool) {
 	if o == nil || IsNil(o.TenantBillingRate) {
 		return nil, false
 	}
@@ -249,8 +249,8 @@ func (o *CostType) HasTenantBillingRate() bool {
 	return false
 }
 
-// SetTenantBillingRate gets a reference to the given float32 and assigns it to the TenantBillingRate field.
-func (o *CostType) SetTenantBillingRate(v float32) {
+// SetTenantBillingRate gets a reference to the given int32 and assigns it to the TenantBillingRate field.
+func (o *CostType) SetTenantBillingRate(v int32) {
 	o.TenantBillingRate = &v
 }
 
