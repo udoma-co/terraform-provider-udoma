@@ -26,8 +26,10 @@ type CreateOrUpdateCostTypeRequest struct {
 	// An optional description of this cost type.
 	Description *string `json:"description,omitempty"`
 	// If true, this cost is fixed (not dependent on actual usage). If false, the cost is variable.
-	IsFixed  *bool                `json:"is_fixed,omitempty"`
-	Category CostTypeCategoryEnum `json:"category"`
+	IsFixed *bool `json:"is_fixed,omitempty"`
+	// The percentage (0-100) of this cost that will be billed to tenants. For example, 100 means the cost is fully billed to tenants, 0 means the owner bears the full cost, and 30 means 30% is billed to tenants.
+	TenantBillingRate *int32               `json:"tenant_billing_rate,omitempty"`
+	Category          CostTypeCategoryEnum `json:"category"`
 }
 
 type _CreateOrUpdateCostTypeRequest CreateOrUpdateCostTypeRequest
@@ -139,6 +141,38 @@ func (o *CreateOrUpdateCostTypeRequest) SetIsFixed(v bool) {
 	o.IsFixed = &v
 }
 
+// GetTenantBillingRate returns the TenantBillingRate field value if set, zero value otherwise.
+func (o *CreateOrUpdateCostTypeRequest) GetTenantBillingRate() int32 {
+	if o == nil || IsNil(o.TenantBillingRate) {
+		var ret int32
+		return ret
+	}
+	return *o.TenantBillingRate
+}
+
+// GetTenantBillingRateOk returns a tuple with the TenantBillingRate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateCostTypeRequest) GetTenantBillingRateOk() (*int32, bool) {
+	if o == nil || IsNil(o.TenantBillingRate) {
+		return nil, false
+	}
+	return o.TenantBillingRate, true
+}
+
+// HasTenantBillingRate returns a boolean if a field has been set.
+func (o *CreateOrUpdateCostTypeRequest) HasTenantBillingRate() bool {
+	if o != nil && !IsNil(o.TenantBillingRate) {
+		return true
+	}
+
+	return false
+}
+
+// SetTenantBillingRate gets a reference to the given int32 and assigns it to the TenantBillingRate field.
+func (o *CreateOrUpdateCostTypeRequest) SetTenantBillingRate(v int32) {
+	o.TenantBillingRate = &v
+}
+
 // GetCategory returns the Category field value
 func (o *CreateOrUpdateCostTypeRequest) GetCategory() CostTypeCategoryEnum {
 	if o == nil {
@@ -179,6 +213,9 @@ func (o CreateOrUpdateCostTypeRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.IsFixed) {
 		toSerialize["is_fixed"] = o.IsFixed
+	}
+	if !IsNil(o.TenantBillingRate) {
+		toSerialize["tenant_billing_rate"] = o.TenantBillingRate
 	}
 	toSerialize["category"] = o.Category
 	return toSerialize, nil

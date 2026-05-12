@@ -17,12 +17,14 @@ func TestCostTypeResource(t *testing.T) {
 					resource.TestCheckResourceAttr("udoma_cost_type.test", "category", "maintenance"),
 					resource.TestCheckResourceAttr("udoma_cost_type.test", "is_fixed", "true"),
 					resource.TestCheckResourceAttr("udoma_cost_type.test", "description", "A test cost type"),
+					resource.TestCheckResourceAttr("udoma_cost_type.test", "tenant_billing_rate", "0"),
 				),
 			},
 			{
-				ResourceName:      "udoma_cost_type.test",
-				ImportState:       true,
-				ImportStateVerify: true,
+				ResourceName:            "udoma_cost_type.test",
+				ImportState:             true,
+				ImportStateVerify:       true,
+				ImportStateVerifyIgnore: []string{"tenant_billing_rate"},
 			},
 			{
 				Config: `
@@ -37,6 +39,7 @@ func TestCostTypeResource(t *testing.T) {
 					resource.TestCheckResourceAttr("udoma_cost_type.test", "category", "utilities"),
 					resource.TestCheckNoResourceAttr("udoma_cost_type.test", "is_fixed"),
 					resource.TestCheckResourceAttr("udoma_cost_type.test", "description", "An updated cost type"),
+					resource.TestCheckNoResourceAttr("udoma_cost_type.test", "tenant_billing_rate"),
 				),
 			},
 		},
@@ -50,6 +53,7 @@ resource "udoma_cost_type" "test" {
   category    = "maintenance"
   is_fixed    = true
   description = "A test cost type"
+  tenant_billing_rate = 0
 }
 `
 }

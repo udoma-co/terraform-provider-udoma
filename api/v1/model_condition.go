@@ -24,7 +24,7 @@ type Condition struct {
 	// The path to the source data that will be used to evaluate the condition
 	Source  string               `json:"source"`
 	Operand ConditionOperandEnum `json:"operand"`
-	// The value that will be used to compare the source data with, as a JSON  string. This can be a string, number, or boolean.
+	// The value that will be used to compare the source data with, as a JSON string. This can be a string, number, or boolean.
 	Value string `json:"value"`
 }
 

@@ -41,6 +41,8 @@ type BankAccount struct {
 	BankName *string `json:"bank_name,omitempty"`
 	// A user friendly label, used to identify the account (optional)
 	Description *string `json:"description,omitempty"`
+	// Optional reference to a system bank account (b- prefixed ID)
+	BankAccountRef *string `json:"bank_account_ref,omitempty"`
 	// The category of the bank account indicates what type of transactions are  expected to be booked on the account and can be used for automatic booking.
 	Categories []BankAccountCategoryEnum `json:"categories,omitempty"`
 	Cadence    BalanceCadenceEnum        `json:"cadence"`
@@ -355,6 +357,38 @@ func (o *BankAccount) SetDescription(v string) {
 	o.Description = &v
 }
 
+// GetBankAccountRef returns the BankAccountRef field value if set, zero value otherwise.
+func (o *BankAccount) GetBankAccountRef() string {
+	if o == nil || IsNil(o.BankAccountRef) {
+		var ret string
+		return ret
+	}
+	return *o.BankAccountRef
+}
+
+// GetBankAccountRefOk returns a tuple with the BankAccountRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BankAccount) GetBankAccountRefOk() (*string, bool) {
+	if o == nil || IsNil(o.BankAccountRef) {
+		return nil, false
+	}
+	return o.BankAccountRef, true
+}
+
+// HasBankAccountRef returns a boolean if a field has been set.
+func (o *BankAccount) HasBankAccountRef() bool {
+	if o != nil && !IsNil(o.BankAccountRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetBankAccountRef gets a reference to the given string and assigns it to the BankAccountRef field.
+func (o *BankAccount) SetBankAccountRef(v string) {
+	o.BankAccountRef = &v
+}
+
 // GetCategories returns the Categories field value if set, zero value otherwise.
 func (o *BankAccount) GetCategories() []BankAccountCategoryEnum {
 	if o == nil || IsNil(o.Categories) {
@@ -536,6 +570,9 @@ func (o BankAccount) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
+	}
+	if !IsNil(o.BankAccountRef) {
+		toSerialize["bank_account_ref"] = o.BankAccountRef
 	}
 	if !IsNil(o.Categories) {
 		toSerialize["categories"] = o.Categories
