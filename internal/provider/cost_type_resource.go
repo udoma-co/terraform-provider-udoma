@@ -78,7 +78,7 @@ func (ct *CostType) Schema(ctx context.Context, req resource.SchemaRequest, resp
 				Optional:            true,
 				MarkdownDescription: "If true, this cost is fixed (not dependent on actual usage). If false, the cost is variable.",
 			},
-			"tenant_billing_rate": schema.Int64Attribute{
+			"tenant_billing_rate": schema.Int32Attribute{
 				Optional:            true,
 				MarkdownDescription: "The percentage (0-100) of this cost that will be billed to tenants.",
 			},

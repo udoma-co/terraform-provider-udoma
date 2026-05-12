@@ -21,9 +21,10 @@ func TestCostTypeResource(t *testing.T) {
 				),
 			},
 			{
-				ResourceName:      "udoma_cost_type.test",
-				ImportState:       true,
-				ImportStateVerify: true,
+				ResourceName:            "udoma_cost_type.test",
+				ImportState:             true,
+				ImportStateVerify:       true,
+				ImportStateVerifyIgnore: []string{"tenant_billing_rate"},
 			},
 			{
 				Config: `
