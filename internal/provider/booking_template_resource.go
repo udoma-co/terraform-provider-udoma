@@ -14,6 +14,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 	v1 "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
 	"gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/internal/client"
 )
@@ -31,19 +32,26 @@ type BookingTemplate struct {
 	client *client.UdomaClient
 }
 
+type BookingGroupingModel struct {
+	SourceType     types.String `tfsdk:"source_type"`
+	AccountNumber  types.Int32  `tfsdk:"account_number"`
+	DimensionIndex types.Int32  `tfsdk:"dimension_index"`
+}
+
 type BookingTemplateModel struct {
-	ID             types.String     `tfsdk:"id"`
-	CreatedAt      types.Int64      `tfsdk:"created_at"`
-	UpdatedAt      types.Int64      `tfsdk:"updated_at"`
-	Name           types.String     `tfsdk:"name"`
-	NameExpression types.String     `tfsdk:"name_expression"`
-	Description    types.String     `tfsdk:"description"`
-	Icon           types.String     `tfsdk:"icon"`
-	TriggerSource  types.String     `tfsdk:"trigger_source"`
-	Inputs         *CustomFormModel `tfsdk:"inputs"`
-	InitScript     types.String     `tfsdk:"init_script"`
-	Script         types.String     `tfsdk:"script"`
-	EnvVars        types.Map        `tfsdk:"env_vars"`
+	ID             types.String          `tfsdk:"id"`
+	CreatedAt      types.Int64           `tfsdk:"created_at"`
+	UpdatedAt      types.Int64           `tfsdk:"updated_at"`
+	Name           types.String          `tfsdk:"name"`
+	NameExpression types.String          `tfsdk:"name_expression"`
+	Description    types.String          `tfsdk:"description"`
+	Icon           types.String          `tfsdk:"icon"`
+	TriggerSource  types.String          `tfsdk:"trigger_source"`
+	Inputs         *CustomFormModel      `tfsdk:"inputs"`
+	InitScript     types.String          `tfsdk:"init_script"`
+	Script         types.String          `tfsdk:"script"`
+	EnvVars        types.Map             `tfsdk:"env_vars"`
+	Grouping       *BookingGroupingModel `tfsdk:"grouping"`
 }
 
 func (faq *BookingTemplate) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -123,6 +131,11 @@ func (faq *BookingTemplate) Schema(ctx context.Context, req resource.SchemaReque
 				ElementType: types.StringType,
 				Optional:    true,
 				Description: "Environment variables available to the script",
+			},
+			"grouping": schema.SingleNestedAttribute{
+				Optional:    true,
+				Description: "An optional descriptor that defines how bookings inside a preview are grouped",
+				Attributes:  bookingGroupingNestedSchema(),
 			},
 		},
 	}
@@ -297,6 +310,26 @@ func (res *BookingTemplate) ImportState(ctx context.Context, req resource.Import
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
 
+func bookingGroupingNestedSchema() map[string]schema.Attribute {
+	return map[string]schema.Attribute{
+		"source_type": schema.StringAttribute{
+			Required:    true,
+			Description: "The type of booking entry used for grouping or sorting",
+			Validators: []validator.String{
+				stringvalidator.OneOf("credit", "debit"),
+			},
+		},
+		"account_number": schema.Int32Attribute{
+			Required:    true,
+			Description: "The number of the account used for grouping or sorting",
+		},
+		"dimension_index": schema.Int32Attribute{
+			Optional:    true,
+			Description: "The index of the dimension used for grouping or sorting",
+		},
+	}
+}
+
 func (model *BookingTemplateModel) fromApiResponse(bookingTemplate *v1.BookingTemplate) (diags diag.Diagnostics) {
 
 	if bookingTemplate == nil {
@@ -339,6 +372,20 @@ func (model *BookingTemplateModel) fromApiResponse(bookingTemplate *v1.BookingTe
 		model.EnvVars = types.MapValueMust(types.StringType, envMap)
 	}
 
+	if grouping := bookingTemplate.Grouping.Get(); grouping != nil {
+		var oldDimIdx basetypes.Int32Value
+		if model.Grouping != nil {
+			oldDimIdx = model.Grouping.DimensionIndex
+		}
+		model.Grouping = &BookingGroupingModel{
+			SourceType:     types.StringValue(string(grouping.SourceType)),
+			AccountNumber:  types.Int32Value(grouping.AccountNumber),
+			DimensionIndex: omittableInt32Value(grouping.DimensionIndex, oldDimIdx),
+		}
+	} else {
+		model.Grouping = nil
+	}
+
 	return nil
 }
 
@@ -375,17 +422,13 @@ func (model *BookingTemplateModel) toApiRequest() (v1.CreateOrUpdateBookingTempl
 		bookingTemplate.EnvVars = nil
 	}
 
-	if !model.EnvVars.IsNull() && !model.EnvVars.IsUnknown() {
-		envVars := make(map[string]string)
-
-		for k, v := range model.EnvVars.Elements() {
-			strVal := v.(types.String)
-			envVars[k] = strVal.ValueString()
+	if model.Grouping != nil {
+		grouping := v1.BookingGrouping{
+			SourceType:     v1.BookingTypeEnum(model.Grouping.SourceType.ValueString()),
+			AccountNumber:  model.Grouping.AccountNumber.ValueInt32(),
+			DimensionIndex: model.Grouping.DimensionIndex.ValueInt32Pointer(),
 		}
-
-		bookingTemplate.EnvVars = &envVars
-	} else {
-		bookingTemplate.EnvVars = nil
+		bookingTemplate.Grouping = *v1.NewNullableBookingGrouping(&grouping)
 	}
 
 	return bookingTemplate, nil

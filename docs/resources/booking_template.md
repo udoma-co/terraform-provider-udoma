@@ -25,6 +25,7 @@ Resource represents a booking template
 
 - `description` (String) An optional user friendly label, used to identify the booking template
 - `env_vars` (Map of String) Environment variables available to the script
+- `grouping` (Attributes) An optional descriptor that defines how bookings inside a preview are grouped (see [below for nested schema](#nestedatt--grouping))
 - `icon` (String) An optional icon for the booking template
 - `init_script` (String) An optional script that can be used to prepare data and populate the custom form when the template is triggered
 - `name_expression` (String) An optional expression that can be used to dynamically generate the name of the booking preview based on the input data
@@ -168,3 +169,17 @@ Required:
 - `id` (String) the ID of the validation, used to identify it
 - `message` (Map of String) a map of values, where the key and values are strings
 - `target` (String) the index of the input should be highlighted if the validation fails (nesting is supported via dot notation)
+
+
+
+<a id="nestedatt--grouping"></a>
+### Nested Schema for `grouping`
+
+Required:
+
+- `account_number` (Number) The number of the account used for grouping or sorting
+- `source_type` (String) The type of booking entry used for grouping or sorting
+
+Optional:
+
+- `dimension_index` (Number) The index of the dimension used for grouping or sorting

@@ -27,37 +27,20 @@ type CreateOrUpdateInvoiceRequest struct {
 	IssueDate *int64 `json:"issue_date,omitempty"`
 	// Timestamp of the invoice due date.
 	DueDate *int64 `json:"due_date,omitempty"`
-	// Optional payment target date for the invoice, defaults to the due date, but can be adjusted manually.
-	PaymentTarget *int64 `json:"payment_target,omitempty"`
-	// The subtotal before taxes and fees.
-	SubtotalAmount *float64 `json:"subtotal_amount,omitempty"`
-	// The total amount due on the invoice
-	TotalAmount *float64 `json:"total_amount,omitempty"`
-	// The tax rate applied to the invoice.
-	TaxRate *float64 `json:"tax_rate,omitempty"`
-	// The total tax amount applied to the invoice
-	TaxAmount *float64 `json:"tax_amount,omitempty"`
+	// The total amount due on the invoice, in cents.
+	TotalAmount *int64 `json:"total_amount,omitempty"`
 	// Currency of the invoice
-	Currency *string             `json:"currency,omitempty"`
-	Vendor   NullableContactData `json:"vendor"`
-	// Optional VAT number of the vendor issuing the invoice.
-	VendorVatNumber *string `json:"vendor_vat_number,omitempty"`
-	// Optional customer number referenced in the invoice.
-	CustomerNumber *string `json:"customer_number,omitempty"`
-	// Optional meter number referenced in the invoice. This is typically used for utility invoices.
-	MeterNumber       *string      `json:"meter_number,omitempty"`
-	VendorBankDetails *BankDetails `json:"vendor_bank_details,omitempty"`
-	// Optional property address for which the invoice is issued. This is typically detected as a single line
-	PropertyAddress *string `json:"property_address,omitempty"`
+	Currency     *string              `json:"currency,omitempty"`
+	ExtendedData *InvoiceExtendedData `json:"extended_data,omitempty"`
 	// Optional reference to the property for which the invoice is issued. This can be set by the user based on the property_address.
 	PropertyRef *string `json:"property_ref,omitempty"`
 	// Optional reference to the provider that issued the invoice.
 	ServiceProviderRef *string `json:"service_provider_ref,omitempty"`
 	// Optional reference to the bank account from which the invoice will be paid.
 	PaymentBankAccountRef *string `json:"payment_bank_account_ref,omitempty"`
-	// Optional reference to the meter that this invoice is associated with.  This is typically used for utility invoices.
+	// Optional reference to the meter that this invoice is associated with. This is typically used for utility invoices.
 	MeterRef *string `json:"meter_ref,omitempty"`
-	// Reference to the invoice PDF/JPEG. One of invoice_analysis_ref or attachment_ref must be supplied.
+	// Reference to the invoice PDF/JPEG.
 	AttachmentRef *string `json:"attachment_ref,omitempty"`
 }
 
@@ -67,10 +50,9 @@ type _CreateOrUpdateInvoiceRequest CreateOrUpdateInvoiceRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateOrUpdateInvoiceRequest(number string, vendor NullableContactData) *CreateOrUpdateInvoiceRequest {
+func NewCreateOrUpdateInvoiceRequest(number string) *CreateOrUpdateInvoiceRequest {
 	this := CreateOrUpdateInvoiceRequest{}
 	this.Number = number
-	this.Vendor = vendor
 	return &this
 }
 
@@ -170,74 +152,10 @@ func (o *CreateOrUpdateInvoiceRequest) SetDueDate(v int64) {
 	o.DueDate = &v
 }
 
-// GetPaymentTarget returns the PaymentTarget field value if set, zero value otherwise.
-func (o *CreateOrUpdateInvoiceRequest) GetPaymentTarget() int64 {
-	if o == nil || IsNil(o.PaymentTarget) {
-		var ret int64
-		return ret
-	}
-	return *o.PaymentTarget
-}
-
-// GetPaymentTargetOk returns a tuple with the PaymentTarget field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateOrUpdateInvoiceRequest) GetPaymentTargetOk() (*int64, bool) {
-	if o == nil || IsNil(o.PaymentTarget) {
-		return nil, false
-	}
-	return o.PaymentTarget, true
-}
-
-// HasPaymentTarget returns a boolean if a field has been set.
-func (o *CreateOrUpdateInvoiceRequest) HasPaymentTarget() bool {
-	if o != nil && !IsNil(o.PaymentTarget) {
-		return true
-	}
-
-	return false
-}
-
-// SetPaymentTarget gets a reference to the given int64 and assigns it to the PaymentTarget field.
-func (o *CreateOrUpdateInvoiceRequest) SetPaymentTarget(v int64) {
-	o.PaymentTarget = &v
-}
-
-// GetSubtotalAmount returns the SubtotalAmount field value if set, zero value otherwise.
-func (o *CreateOrUpdateInvoiceRequest) GetSubtotalAmount() float64 {
-	if o == nil || IsNil(o.SubtotalAmount) {
-		var ret float64
-		return ret
-	}
-	return *o.SubtotalAmount
-}
-
-// GetSubtotalAmountOk returns a tuple with the SubtotalAmount field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateOrUpdateInvoiceRequest) GetSubtotalAmountOk() (*float64, bool) {
-	if o == nil || IsNil(o.SubtotalAmount) {
-		return nil, false
-	}
-	return o.SubtotalAmount, true
-}
-
-// HasSubtotalAmount returns a boolean if a field has been set.
-func (o *CreateOrUpdateInvoiceRequest) HasSubtotalAmount() bool {
-	if o != nil && !IsNil(o.SubtotalAmount) {
-		return true
-	}
-
-	return false
-}
-
-// SetSubtotalAmount gets a reference to the given float64 and assigns it to the SubtotalAmount field.
-func (o *CreateOrUpdateInvoiceRequest) SetSubtotalAmount(v float64) {
-	o.SubtotalAmount = &v
-}
-
 // GetTotalAmount returns the TotalAmount field value if set, zero value otherwise.
-func (o *CreateOrUpdateInvoiceRequest) GetTotalAmount() float64 {
+func (o *CreateOrUpdateInvoiceRequest) GetTotalAmount() int64 {
 	if o == nil || IsNil(o.TotalAmount) {
-		var ret float64
+		var ret int64
 		return ret
 	}
 	return *o.TotalAmount
@@ -245,7 +163,7 @@ func (o *CreateOrUpdateInvoiceRequest) GetTotalAmount() float64 {
 
 // GetTotalAmountOk returns a tuple with the TotalAmount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CreateOrUpdateInvoiceRequest) GetTotalAmountOk() (*float64, bool) {
+func (o *CreateOrUpdateInvoiceRequest) GetTotalAmountOk() (*int64, bool) {
 	if o == nil || IsNil(o.TotalAmount) {
 		return nil, false
 	}
@@ -261,73 +179,9 @@ func (o *CreateOrUpdateInvoiceRequest) HasTotalAmount() bool {
 	return false
 }
 
-// SetTotalAmount gets a reference to the given float64 and assigns it to the TotalAmount field.
-func (o *CreateOrUpdateInvoiceRequest) SetTotalAmount(v float64) {
+// SetTotalAmount gets a reference to the given int64 and assigns it to the TotalAmount field.
+func (o *CreateOrUpdateInvoiceRequest) SetTotalAmount(v int64) {
 	o.TotalAmount = &v
-}
-
-// GetTaxRate returns the TaxRate field value if set, zero value otherwise.
-func (o *CreateOrUpdateInvoiceRequest) GetTaxRate() float64 {
-	if o == nil || IsNil(o.TaxRate) {
-		var ret float64
-		return ret
-	}
-	return *o.TaxRate
-}
-
-// GetTaxRateOk returns a tuple with the TaxRate field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateOrUpdateInvoiceRequest) GetTaxRateOk() (*float64, bool) {
-	if o == nil || IsNil(o.TaxRate) {
-		return nil, false
-	}
-	return o.TaxRate, true
-}
-
-// HasTaxRate returns a boolean if a field has been set.
-func (o *CreateOrUpdateInvoiceRequest) HasTaxRate() bool {
-	if o != nil && !IsNil(o.TaxRate) {
-		return true
-	}
-
-	return false
-}
-
-// SetTaxRate gets a reference to the given float64 and assigns it to the TaxRate field.
-func (o *CreateOrUpdateInvoiceRequest) SetTaxRate(v float64) {
-	o.TaxRate = &v
-}
-
-// GetTaxAmount returns the TaxAmount field value if set, zero value otherwise.
-func (o *CreateOrUpdateInvoiceRequest) GetTaxAmount() float64 {
-	if o == nil || IsNil(o.TaxAmount) {
-		var ret float64
-		return ret
-	}
-	return *o.TaxAmount
-}
-
-// GetTaxAmountOk returns a tuple with the TaxAmount field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateOrUpdateInvoiceRequest) GetTaxAmountOk() (*float64, bool) {
-	if o == nil || IsNil(o.TaxAmount) {
-		return nil, false
-	}
-	return o.TaxAmount, true
-}
-
-// HasTaxAmount returns a boolean if a field has been set.
-func (o *CreateOrUpdateInvoiceRequest) HasTaxAmount() bool {
-	if o != nil && !IsNil(o.TaxAmount) {
-		return true
-	}
-
-	return false
-}
-
-// SetTaxAmount gets a reference to the given float64 and assigns it to the TaxAmount field.
-func (o *CreateOrUpdateInvoiceRequest) SetTaxAmount(v float64) {
-	o.TaxAmount = &v
 }
 
 // GetCurrency returns the Currency field value if set, zero value otherwise.
@@ -362,190 +216,36 @@ func (o *CreateOrUpdateInvoiceRequest) SetCurrency(v string) {
 	o.Currency = &v
 }
 
-// GetVendor returns the Vendor field value
-// If the value is explicit nil, the zero value for ContactData will be returned
-func (o *CreateOrUpdateInvoiceRequest) GetVendor() ContactData {
-	if o == nil || o.Vendor.Get() == nil {
-		var ret ContactData
+// GetExtendedData returns the ExtendedData field value if set, zero value otherwise.
+func (o *CreateOrUpdateInvoiceRequest) GetExtendedData() InvoiceExtendedData {
+	if o == nil || IsNil(o.ExtendedData) {
+		var ret InvoiceExtendedData
 		return ret
 	}
-
-	return *o.Vendor.Get()
+	return *o.ExtendedData
 }
 
-// GetVendorOk returns a tuple with the Vendor field value
+// GetExtendedDataOk returns a tuple with the ExtendedData field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *CreateOrUpdateInvoiceRequest) GetVendorOk() (*ContactData, bool) {
-	if o == nil {
+func (o *CreateOrUpdateInvoiceRequest) GetExtendedDataOk() (*InvoiceExtendedData, bool) {
+	if o == nil || IsNil(o.ExtendedData) {
 		return nil, false
 	}
-	return o.Vendor.Get(), o.Vendor.IsSet()
+	return o.ExtendedData, true
 }
 
-// SetVendor sets field value
-func (o *CreateOrUpdateInvoiceRequest) SetVendor(v ContactData) {
-	o.Vendor.Set(&v)
-}
-
-// GetVendorVatNumber returns the VendorVatNumber field value if set, zero value otherwise.
-func (o *CreateOrUpdateInvoiceRequest) GetVendorVatNumber() string {
-	if o == nil || IsNil(o.VendorVatNumber) {
-		var ret string
-		return ret
-	}
-	return *o.VendorVatNumber
-}
-
-// GetVendorVatNumberOk returns a tuple with the VendorVatNumber field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateOrUpdateInvoiceRequest) GetVendorVatNumberOk() (*string, bool) {
-	if o == nil || IsNil(o.VendorVatNumber) {
-		return nil, false
-	}
-	return o.VendorVatNumber, true
-}
-
-// HasVendorVatNumber returns a boolean if a field has been set.
-func (o *CreateOrUpdateInvoiceRequest) HasVendorVatNumber() bool {
-	if o != nil && !IsNil(o.VendorVatNumber) {
+// HasExtendedData returns a boolean if a field has been set.
+func (o *CreateOrUpdateInvoiceRequest) HasExtendedData() bool {
+	if o != nil && !IsNil(o.ExtendedData) {
 		return true
 	}
 
 	return false
 }
 
-// SetVendorVatNumber gets a reference to the given string and assigns it to the VendorVatNumber field.
-func (o *CreateOrUpdateInvoiceRequest) SetVendorVatNumber(v string) {
-	o.VendorVatNumber = &v
-}
-
-// GetCustomerNumber returns the CustomerNumber field value if set, zero value otherwise.
-func (o *CreateOrUpdateInvoiceRequest) GetCustomerNumber() string {
-	if o == nil || IsNil(o.CustomerNumber) {
-		var ret string
-		return ret
-	}
-	return *o.CustomerNumber
-}
-
-// GetCustomerNumberOk returns a tuple with the CustomerNumber field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateOrUpdateInvoiceRequest) GetCustomerNumberOk() (*string, bool) {
-	if o == nil || IsNil(o.CustomerNumber) {
-		return nil, false
-	}
-	return o.CustomerNumber, true
-}
-
-// HasCustomerNumber returns a boolean if a field has been set.
-func (o *CreateOrUpdateInvoiceRequest) HasCustomerNumber() bool {
-	if o != nil && !IsNil(o.CustomerNumber) {
-		return true
-	}
-
-	return false
-}
-
-// SetCustomerNumber gets a reference to the given string and assigns it to the CustomerNumber field.
-func (o *CreateOrUpdateInvoiceRequest) SetCustomerNumber(v string) {
-	o.CustomerNumber = &v
-}
-
-// GetMeterNumber returns the MeterNumber field value if set, zero value otherwise.
-func (o *CreateOrUpdateInvoiceRequest) GetMeterNumber() string {
-	if o == nil || IsNil(o.MeterNumber) {
-		var ret string
-		return ret
-	}
-	return *o.MeterNumber
-}
-
-// GetMeterNumberOk returns a tuple with the MeterNumber field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateOrUpdateInvoiceRequest) GetMeterNumberOk() (*string, bool) {
-	if o == nil || IsNil(o.MeterNumber) {
-		return nil, false
-	}
-	return o.MeterNumber, true
-}
-
-// HasMeterNumber returns a boolean if a field has been set.
-func (o *CreateOrUpdateInvoiceRequest) HasMeterNumber() bool {
-	if o != nil && !IsNil(o.MeterNumber) {
-		return true
-	}
-
-	return false
-}
-
-// SetMeterNumber gets a reference to the given string and assigns it to the MeterNumber field.
-func (o *CreateOrUpdateInvoiceRequest) SetMeterNumber(v string) {
-	o.MeterNumber = &v
-}
-
-// GetVendorBankDetails returns the VendorBankDetails field value if set, zero value otherwise.
-func (o *CreateOrUpdateInvoiceRequest) GetVendorBankDetails() BankDetails {
-	if o == nil || IsNil(o.VendorBankDetails) {
-		var ret BankDetails
-		return ret
-	}
-	return *o.VendorBankDetails
-}
-
-// GetVendorBankDetailsOk returns a tuple with the VendorBankDetails field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateOrUpdateInvoiceRequest) GetVendorBankDetailsOk() (*BankDetails, bool) {
-	if o == nil || IsNil(o.VendorBankDetails) {
-		return nil, false
-	}
-	return o.VendorBankDetails, true
-}
-
-// HasVendorBankDetails returns a boolean if a field has been set.
-func (o *CreateOrUpdateInvoiceRequest) HasVendorBankDetails() bool {
-	if o != nil && !IsNil(o.VendorBankDetails) {
-		return true
-	}
-
-	return false
-}
-
-// SetVendorBankDetails gets a reference to the given BankDetails and assigns it to the VendorBankDetails field.
-func (o *CreateOrUpdateInvoiceRequest) SetVendorBankDetails(v BankDetails) {
-	o.VendorBankDetails = &v
-}
-
-// GetPropertyAddress returns the PropertyAddress field value if set, zero value otherwise.
-func (o *CreateOrUpdateInvoiceRequest) GetPropertyAddress() string {
-	if o == nil || IsNil(o.PropertyAddress) {
-		var ret string
-		return ret
-	}
-	return *o.PropertyAddress
-}
-
-// GetPropertyAddressOk returns a tuple with the PropertyAddress field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateOrUpdateInvoiceRequest) GetPropertyAddressOk() (*string, bool) {
-	if o == nil || IsNil(o.PropertyAddress) {
-		return nil, false
-	}
-	return o.PropertyAddress, true
-}
-
-// HasPropertyAddress returns a boolean if a field has been set.
-func (o *CreateOrUpdateInvoiceRequest) HasPropertyAddress() bool {
-	if o != nil && !IsNil(o.PropertyAddress) {
-		return true
-	}
-
-	return false
-}
-
-// SetPropertyAddress gets a reference to the given string and assigns it to the PropertyAddress field.
-func (o *CreateOrUpdateInvoiceRequest) SetPropertyAddress(v string) {
-	o.PropertyAddress = &v
+// SetExtendedData gets a reference to the given InvoiceExtendedData and assigns it to the ExtendedData field.
+func (o *CreateOrUpdateInvoiceRequest) SetExtendedData(v InvoiceExtendedData) {
+	o.ExtendedData = &v
 }
 
 // GetPropertyRef returns the PropertyRef field value if set, zero value otherwise.
@@ -725,39 +425,14 @@ func (o CreateOrUpdateInvoiceRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.DueDate) {
 		toSerialize["due_date"] = o.DueDate
 	}
-	if !IsNil(o.PaymentTarget) {
-		toSerialize["payment_target"] = o.PaymentTarget
-	}
-	if !IsNil(o.SubtotalAmount) {
-		toSerialize["subtotal_amount"] = o.SubtotalAmount
-	}
 	if !IsNil(o.TotalAmount) {
 		toSerialize["total_amount"] = o.TotalAmount
-	}
-	if !IsNil(o.TaxRate) {
-		toSerialize["tax_rate"] = o.TaxRate
-	}
-	if !IsNil(o.TaxAmount) {
-		toSerialize["tax_amount"] = o.TaxAmount
 	}
 	if !IsNil(o.Currency) {
 		toSerialize["currency"] = o.Currency
 	}
-	toSerialize["vendor"] = o.Vendor.Get()
-	if !IsNil(o.VendorVatNumber) {
-		toSerialize["vendor_vat_number"] = o.VendorVatNumber
-	}
-	if !IsNil(o.CustomerNumber) {
-		toSerialize["customer_number"] = o.CustomerNumber
-	}
-	if !IsNil(o.MeterNumber) {
-		toSerialize["meter_number"] = o.MeterNumber
-	}
-	if !IsNil(o.VendorBankDetails) {
-		toSerialize["vendor_bank_details"] = o.VendorBankDetails
-	}
-	if !IsNil(o.PropertyAddress) {
-		toSerialize["property_address"] = o.PropertyAddress
+	if !IsNil(o.ExtendedData) {
+		toSerialize["extended_data"] = o.ExtendedData
 	}
 	if !IsNil(o.PropertyRef) {
 		toSerialize["property_ref"] = o.PropertyRef
@@ -783,7 +458,6 @@ func (o *CreateOrUpdateInvoiceRequest) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"number",
-		"vendor",
 	}
 
 	allProperties := make(map[string]interface{})

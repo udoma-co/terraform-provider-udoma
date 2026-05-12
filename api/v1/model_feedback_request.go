@@ -21,7 +21,7 @@ var _ MappedNullable = &FeedbackRequest{}
 type FeedbackRequest struct {
 	Type *FeedbackType `json:"type,omitempty"`
 	// Optional rating the user can provide (1-5 stars)
-	Rating *float32 `json:"rating,omitempty"`
+	Rating *int32 `json:"rating,omitempty"`
 	// An optional message the user can provide
 	Content *string `json:"content,omitempty"`
 }
@@ -76,9 +76,9 @@ func (o *FeedbackRequest) SetType(v FeedbackType) {
 }
 
 // GetRating returns the Rating field value if set, zero value otherwise.
-func (o *FeedbackRequest) GetRating() float32 {
+func (o *FeedbackRequest) GetRating() int32 {
 	if o == nil || IsNil(o.Rating) {
-		var ret float32
+		var ret int32
 		return ret
 	}
 	return *o.Rating
@@ -86,7 +86,7 @@ func (o *FeedbackRequest) GetRating() float32 {
 
 // GetRatingOk returns a tuple with the Rating field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *FeedbackRequest) GetRatingOk() (*float32, bool) {
+func (o *FeedbackRequest) GetRatingOk() (*int32, bool) {
 	if o == nil || IsNil(o.Rating) {
 		return nil, false
 	}
@@ -102,8 +102,8 @@ func (o *FeedbackRequest) HasRating() bool {
 	return false
 }
 
-// SetRating gets a reference to the given float32 and assigns it to the Rating field.
-func (o *FeedbackRequest) SetRating(v float32) {
+// SetRating gets a reference to the given int32 and assigns it to the Rating field.
+func (o *FeedbackRequest) SetRating(v int32) {
 	o.Rating = &v
 }
 

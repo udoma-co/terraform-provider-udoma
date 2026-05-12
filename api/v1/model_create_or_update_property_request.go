@@ -29,6 +29,8 @@ type CreateOrUpdatePropertyRequest struct {
 	Address  *Address `json:"address,omitempty"`
 	// For appartments, this is the unique number within the building. For  buildings, this can be used as a short identifier
 	Number *int32 `json:"number,omitempty"`
+	// List of management types that are applicable for this property. This is used to determine which features are available for the property and is available for accounts that have a mixed management mode (see  PropertyManagementConfig).
+	ManagementTypes []PropertyManagementTypeEnum `json:"management_types,omitempty"`
 	// Optional reference to the owner of this property
 	OwnerRef *string `json:"owner_ref,omitempty"`
 	// Optional reference to the parent property (e.g. building) of this property
@@ -203,6 +205,38 @@ func (o *CreateOrUpdatePropertyRequest) SetNumber(v int32) {
 	o.Number = &v
 }
 
+// GetManagementTypes returns the ManagementTypes field value if set, zero value otherwise.
+func (o *CreateOrUpdatePropertyRequest) GetManagementTypes() []PropertyManagementTypeEnum {
+	if o == nil || IsNil(o.ManagementTypes) {
+		var ret []PropertyManagementTypeEnum
+		return ret
+	}
+	return o.ManagementTypes
+}
+
+// GetManagementTypesOk returns a tuple with the ManagementTypes field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdatePropertyRequest) GetManagementTypesOk() ([]PropertyManagementTypeEnum, bool) {
+	if o == nil || IsNil(o.ManagementTypes) {
+		return nil, false
+	}
+	return o.ManagementTypes, true
+}
+
+// HasManagementTypes returns a boolean if a field has been set.
+func (o *CreateOrUpdatePropertyRequest) HasManagementTypes() bool {
+	if o != nil && !IsNil(o.ManagementTypes) {
+		return true
+	}
+
+	return false
+}
+
+// SetManagementTypes gets a reference to the given []PropertyManagementTypeEnum and assigns it to the ManagementTypes field.
+func (o *CreateOrUpdatePropertyRequest) SetManagementTypes(v []PropertyManagementTypeEnum) {
+	o.ManagementTypes = v
+}
+
 // GetOwnerRef returns the OwnerRef field value if set, zero value otherwise.
 func (o *CreateOrUpdatePropertyRequest) GetOwnerRef() string {
 	if o == nil || IsNil(o.OwnerRef) {
@@ -351,6 +385,9 @@ func (o CreateOrUpdatePropertyRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Number) {
 		toSerialize["number"] = o.Number
+	}
+	if !IsNil(o.ManagementTypes) {
+		toSerialize["management_types"] = o.ManagementTypes
 	}
 	if !IsNil(o.OwnerRef) {
 		toSerialize["owner_ref"] = o.OwnerRef

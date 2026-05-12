@@ -42,7 +42,8 @@ type BookingTemplate struct {
 	// A script that can be used to generate the booking based on the provided input
 	Script string `json:"script"`
 	// a map of values, where the key and values are strings
-	EnvVars *map[string]string `json:"env_vars,omitempty"`
+	EnvVars  *map[string]string      `json:"env_vars,omitempty"`
+	Grouping NullableBookingGrouping `json:"grouping,omitempty"`
 	// A flag indicating whether the entity is deleted. If the entity is deleted, it should not be returned in the results of a query, but it is still kept in the database as it is referenced by other entities.
 	IsDeleted *bool `json:"is_deleted,omitempty"`
 }
@@ -410,6 +411,49 @@ func (o *BookingTemplate) SetEnvVars(v map[string]string) {
 	o.EnvVars = &v
 }
 
+// GetGrouping returns the Grouping field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BookingTemplate) GetGrouping() BookingGrouping {
+	if o == nil || IsNil(o.Grouping.Get()) {
+		var ret BookingGrouping
+		return ret
+	}
+	return *o.Grouping.Get()
+}
+
+// GetGroupingOk returns a tuple with the Grouping field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BookingTemplate) GetGroupingOk() (*BookingGrouping, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Grouping.Get(), o.Grouping.IsSet()
+}
+
+// HasGrouping returns a boolean if a field has been set.
+func (o *BookingTemplate) HasGrouping() bool {
+	if o != nil && o.Grouping.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetGrouping gets a reference to the given NullableBookingGrouping and assigns it to the Grouping field.
+func (o *BookingTemplate) SetGrouping(v BookingGrouping) {
+	o.Grouping.Set(&v)
+}
+
+// SetGroupingNil sets the value for Grouping to be an explicit nil
+func (o *BookingTemplate) SetGroupingNil() {
+	o.Grouping.Set(nil)
+}
+
+// UnsetGrouping ensures that no value is present for Grouping, not even an explicit nil
+func (o *BookingTemplate) UnsetGrouping() {
+	o.Grouping.Unset()
+}
+
 // GetIsDeleted returns the IsDeleted field value if set, zero value otherwise.
 func (o *BookingTemplate) GetIsDeleted() bool {
 	if o == nil || IsNil(o.IsDeleted) {
@@ -475,6 +519,9 @@ func (o BookingTemplate) ToMap() (map[string]interface{}, error) {
 	toSerialize["script"] = o.Script
 	if !IsNil(o.EnvVars) {
 		toSerialize["env_vars"] = o.EnvVars
+	}
+	if o.Grouping.IsSet() {
+		toSerialize["grouping"] = o.Grouping.Get()
 	}
 	if !IsNil(o.IsDeleted) {
 		toSerialize["is_deleted"] = o.IsDeleted

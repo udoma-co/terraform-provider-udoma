@@ -14,7 +14,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"time"
 )
 
 // checks if the OutlookTenantCaseItem type satisfies the MappedNullable interface at compile time
@@ -27,8 +26,8 @@ type OutlookTenantCaseItem struct {
 	// The name/subject of the case
 	Subject string         `json:"subject"`
 	Status  CaseStatusEnum `json:"status"`
-	// The timestamp when the case was created
-	CreatedAt time.Time `json:"createdAt"`
+	// The timestamp (in milliseconds since epoch) when the case was created
+	CreatedAt int64 `json:"createdAt"`
 	// Optional description of the case
 	Description *string `json:"description,omitempty"`
 	// Property address related to the case
@@ -41,7 +40,7 @@ type _OutlookTenantCaseItem OutlookTenantCaseItem
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewOutlookTenantCaseItem(id string, subject string, status CaseStatusEnum, createdAt time.Time) *OutlookTenantCaseItem {
+func NewOutlookTenantCaseItem(id string, subject string, status CaseStatusEnum, createdAt int64) *OutlookTenantCaseItem {
 	this := OutlookTenantCaseItem{}
 	this.Id = id
 	this.Subject = subject
@@ -131,9 +130,9 @@ func (o *OutlookTenantCaseItem) SetStatus(v CaseStatusEnum) {
 }
 
 // GetCreatedAt returns the CreatedAt field value
-func (o *OutlookTenantCaseItem) GetCreatedAt() time.Time {
+func (o *OutlookTenantCaseItem) GetCreatedAt() int64 {
 	if o == nil {
-		var ret time.Time
+		var ret int64
 		return ret
 	}
 
@@ -142,7 +141,7 @@ func (o *OutlookTenantCaseItem) GetCreatedAt() time.Time {
 
 // GetCreatedAtOk returns a tuple with the CreatedAt field value
 // and a boolean to check if the value has been set.
-func (o *OutlookTenantCaseItem) GetCreatedAtOk() (*time.Time, bool) {
+func (o *OutlookTenantCaseItem) GetCreatedAtOk() (*int64, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -150,7 +149,7 @@ func (o *OutlookTenantCaseItem) GetCreatedAtOk() (*time.Time, bool) {
 }
 
 // SetCreatedAt sets field value
-func (o *OutlookTenantCaseItem) SetCreatedAt(v time.Time) {
+func (o *OutlookTenantCaseItem) SetCreatedAt(v int64) {
 	o.CreatedAt = v
 }
 

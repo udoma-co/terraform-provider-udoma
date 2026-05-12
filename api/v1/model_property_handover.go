@@ -38,6 +38,8 @@ type PropertyHandover struct {
 	// The ID of the property handover template.
 	TemplateRef string                     `json:"template_ref"`
 	Status      PropertyHandoverStatusEnum `json:"status"`
+	// The ID of the protocol document generated after the handover is done.
+	ProtocolRef *string `json:"protocol_ref,omitempty"`
 	// Whether the property handover has been archived or not.
 	Archived *bool `json:"archived,omitempty"`
 }
@@ -339,6 +341,38 @@ func (o *PropertyHandover) SetStatus(v PropertyHandoverStatusEnum) {
 	o.Status = v
 }
 
+// GetProtocolRef returns the ProtocolRef field value if set, zero value otherwise.
+func (o *PropertyHandover) GetProtocolRef() string {
+	if o == nil || IsNil(o.ProtocolRef) {
+		var ret string
+		return ret
+	}
+	return *o.ProtocolRef
+}
+
+// GetProtocolRefOk returns a tuple with the ProtocolRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PropertyHandover) GetProtocolRefOk() (*string, bool) {
+	if o == nil || IsNil(o.ProtocolRef) {
+		return nil, false
+	}
+	return o.ProtocolRef, true
+}
+
+// HasProtocolRef returns a boolean if a field has been set.
+func (o *PropertyHandover) HasProtocolRef() bool {
+	if o != nil && !IsNil(o.ProtocolRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetProtocolRef gets a reference to the given string and assigns it to the ProtocolRef field.
+func (o *PropertyHandover) SetProtocolRef(v string) {
+	o.ProtocolRef = &v
+}
+
 // GetArchived returns the Archived field value if set, zero value otherwise.
 func (o *PropertyHandover) GetArchived() bool {
 	if o == nil || IsNil(o.Archived) {
@@ -399,6 +433,9 @@ func (o PropertyHandover) ToMap() (map[string]interface{}, error) {
 	}
 	toSerialize["template_ref"] = o.TemplateRef
 	toSerialize["status"] = o.Status
+	if !IsNil(o.ProtocolRef) {
+		toSerialize["protocol_ref"] = o.ProtocolRef
+	}
 	if !IsNil(o.Archived) {
 		toSerialize["archived"] = o.Archived
 	}
