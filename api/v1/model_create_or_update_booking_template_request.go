@@ -36,7 +36,8 @@ type CreateOrUpdateBookingTemplateRequest struct {
 	// A script that can be used to generate the booking based on the provided input
 	Script string `json:"script"`
 	// a map of values, where the key and values are strings
-	EnvVars *map[string]string `json:"env_vars,omitempty"`
+	EnvVars  *map[string]string      `json:"env_vars,omitempty"`
+	Grouping NullableBookingGrouping `json:"grouping,omitempty"`
 }
 
 type _CreateOrUpdateBookingTemplateRequest CreateOrUpdateBookingTemplateRequest
@@ -327,6 +328,49 @@ func (o *CreateOrUpdateBookingTemplateRequest) SetEnvVars(v map[string]string) {
 	o.EnvVars = &v
 }
 
+// GetGrouping returns the Grouping field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CreateOrUpdateBookingTemplateRequest) GetGrouping() BookingGrouping {
+	if o == nil || IsNil(o.Grouping.Get()) {
+		var ret BookingGrouping
+		return ret
+	}
+	return *o.Grouping.Get()
+}
+
+// GetGroupingOk returns a tuple with the Grouping field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CreateOrUpdateBookingTemplateRequest) GetGroupingOk() (*BookingGrouping, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Grouping.Get(), o.Grouping.IsSet()
+}
+
+// HasGrouping returns a boolean if a field has been set.
+func (o *CreateOrUpdateBookingTemplateRequest) HasGrouping() bool {
+	if o != nil && o.Grouping.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetGrouping gets a reference to the given NullableBookingGrouping and assigns it to the Grouping field.
+func (o *CreateOrUpdateBookingTemplateRequest) SetGrouping(v BookingGrouping) {
+	o.Grouping.Set(&v)
+}
+
+// SetGroupingNil sets the value for Grouping to be an explicit nil
+func (o *CreateOrUpdateBookingTemplateRequest) SetGroupingNil() {
+	o.Grouping.Set(nil)
+}
+
+// UnsetGrouping ensures that no value is present for Grouping, not even an explicit nil
+func (o *CreateOrUpdateBookingTemplateRequest) UnsetGrouping() {
+	o.Grouping.Unset()
+}
+
 func (o CreateOrUpdateBookingTemplateRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -357,6 +401,9 @@ func (o CreateOrUpdateBookingTemplateRequest) ToMap() (map[string]interface{}, e
 	toSerialize["script"] = o.Script
 	if !IsNil(o.EnvVars) {
 		toSerialize["env_vars"] = o.EnvVars
+	}
+	if o.Grouping.IsSet() {
+		toSerialize["grouping"] = o.Grouping.Get()
 	}
 	return toSerialize, nil
 }

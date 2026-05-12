@@ -36,6 +36,8 @@ type CostType struct {
 	// The percentage (0-100) of this cost that will be billed to tenants. For example, 100 means the cost is fully billed to tenants, 0 means the owner bears the full cost, and 30 means 30% is billed to tenants.
 	TenantBillingRate *int32               `json:"tenant_billing_rate,omitempty"`
 	Category          CostTypeCategoryEnum `json:"category"`
+	// Optional reference to the default allocation key used when distributing this cost type.
+	AllocationKeyRef *string `json:"allocation_key_ref,omitempty"`
 }
 
 type _CostType CostType
@@ -278,6 +280,38 @@ func (o *CostType) SetCategory(v CostTypeCategoryEnum) {
 	o.Category = v
 }
 
+// GetAllocationKeyRef returns the AllocationKeyRef field value if set, zero value otherwise.
+func (o *CostType) GetAllocationKeyRef() string {
+	if o == nil || IsNil(o.AllocationKeyRef) {
+		var ret string
+		return ret
+	}
+	return *o.AllocationKeyRef
+}
+
+// GetAllocationKeyRefOk returns a tuple with the AllocationKeyRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CostType) GetAllocationKeyRefOk() (*string, bool) {
+	if o == nil || IsNil(o.AllocationKeyRef) {
+		return nil, false
+	}
+	return o.AllocationKeyRef, true
+}
+
+// HasAllocationKeyRef returns a boolean if a field has been set.
+func (o *CostType) HasAllocationKeyRef() bool {
+	if o != nil && !IsNil(o.AllocationKeyRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetAllocationKeyRef gets a reference to the given string and assigns it to the AllocationKeyRef field.
+func (o *CostType) SetAllocationKeyRef(v string) {
+	o.AllocationKeyRef = &v
+}
+
 func (o CostType) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -302,6 +336,9 @@ func (o CostType) ToMap() (map[string]interface{}, error) {
 		toSerialize["tenant_billing_rate"] = o.TenantBillingRate
 	}
 	toSerialize["category"] = o.Category
+	if !IsNil(o.AllocationKeyRef) {
+		toSerialize["allocation_key_ref"] = o.AllocationKeyRef
+	}
 	return toSerialize, nil
 }
 

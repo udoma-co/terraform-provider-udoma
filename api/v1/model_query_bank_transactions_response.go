@@ -20,9 +20,9 @@ var _ MappedNullable = &QueryBankTransactionsResponse{}
 // QueryBankTransactionsResponse The response to a query for transactions of a bank account
 type QueryBankTransactionsResponse struct {
 	// The starting balance of the account at the beginning of the query period
-	BalanceStart *float32 `json:"balance_start,omitempty"`
+	BalanceStart *float64 `json:"balance_start,omitempty"`
 	// The ending balance of the account at the end of the query period
-	BalanceEnd   *float32          `json:"balance_end,omitempty"`
+	BalanceEnd   *float64          `json:"balance_end,omitempty"`
 	Transactions []BankTransaction `json:"transactions,omitempty"`
 }
 
@@ -44,9 +44,9 @@ func NewQueryBankTransactionsResponseWithDefaults() *QueryBankTransactionsRespon
 }
 
 // GetBalanceStart returns the BalanceStart field value if set, zero value otherwise.
-func (o *QueryBankTransactionsResponse) GetBalanceStart() float32 {
+func (o *QueryBankTransactionsResponse) GetBalanceStart() float64 {
 	if o == nil || IsNil(o.BalanceStart) {
-		var ret float32
+		var ret float64
 		return ret
 	}
 	return *o.BalanceStart
@@ -54,7 +54,7 @@ func (o *QueryBankTransactionsResponse) GetBalanceStart() float32 {
 
 // GetBalanceStartOk returns a tuple with the BalanceStart field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *QueryBankTransactionsResponse) GetBalanceStartOk() (*float32, bool) {
+func (o *QueryBankTransactionsResponse) GetBalanceStartOk() (*float64, bool) {
 	if o == nil || IsNil(o.BalanceStart) {
 		return nil, false
 	}
@@ -70,15 +70,15 @@ func (o *QueryBankTransactionsResponse) HasBalanceStart() bool {
 	return false
 }
 
-// SetBalanceStart gets a reference to the given float32 and assigns it to the BalanceStart field.
-func (o *QueryBankTransactionsResponse) SetBalanceStart(v float32) {
+// SetBalanceStart gets a reference to the given float64 and assigns it to the BalanceStart field.
+func (o *QueryBankTransactionsResponse) SetBalanceStart(v float64) {
 	o.BalanceStart = &v
 }
 
 // GetBalanceEnd returns the BalanceEnd field value if set, zero value otherwise.
-func (o *QueryBankTransactionsResponse) GetBalanceEnd() float32 {
+func (o *QueryBankTransactionsResponse) GetBalanceEnd() float64 {
 	if o == nil || IsNil(o.BalanceEnd) {
-		var ret float32
+		var ret float64
 		return ret
 	}
 	return *o.BalanceEnd
@@ -86,7 +86,7 @@ func (o *QueryBankTransactionsResponse) GetBalanceEnd() float32 {
 
 // GetBalanceEndOk returns a tuple with the BalanceEnd field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *QueryBankTransactionsResponse) GetBalanceEndOk() (*float32, bool) {
+func (o *QueryBankTransactionsResponse) GetBalanceEndOk() (*float64, bool) {
 	if o == nil || IsNil(o.BalanceEnd) {
 		return nil, false
 	}
@@ -102,8 +102,8 @@ func (o *QueryBankTransactionsResponse) HasBalanceEnd() bool {
 	return false
 }
 
-// SetBalanceEnd gets a reference to the given float32 and assigns it to the BalanceEnd field.
-func (o *QueryBankTransactionsResponse) SetBalanceEnd(v float32) {
+// SetBalanceEnd gets a reference to the given float64 and assigns it to the BalanceEnd field.
+func (o *QueryBankTransactionsResponse) SetBalanceEnd(v float64) {
 	o.BalanceEnd = &v
 }
 

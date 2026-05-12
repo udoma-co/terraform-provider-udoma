@@ -14,7 +14,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"time"
 )
 
 // checks if the OutlookProviderCaseItem type satisfies the MappedNullable interface at compile time
@@ -27,8 +26,8 @@ type OutlookProviderCaseItem struct {
 	// The name/subject of the case
 	Subject string         `json:"subject"`
 	Status  CaseStatusEnum `json:"status"`
-	// The timestamp when the case was created
-	CreatedAt time.Time `json:"createdAt"`
+	// The timestamp (in milliseconds since epoch) when the case was created
+	CreatedAt int64 `json:"createdAt"`
 	// Optional description of the case
 	Description *string `json:"description,omitempty"`
 	// Name of the tenant related to the case
@@ -43,7 +42,7 @@ type _OutlookProviderCaseItem OutlookProviderCaseItem
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewOutlookProviderCaseItem(id string, subject string, status CaseStatusEnum, createdAt time.Time) *OutlookProviderCaseItem {
+func NewOutlookProviderCaseItem(id string, subject string, status CaseStatusEnum, createdAt int64) *OutlookProviderCaseItem {
 	this := OutlookProviderCaseItem{}
 	this.Id = id
 	this.Subject = subject
@@ -133,9 +132,9 @@ func (o *OutlookProviderCaseItem) SetStatus(v CaseStatusEnum) {
 }
 
 // GetCreatedAt returns the CreatedAt field value
-func (o *OutlookProviderCaseItem) GetCreatedAt() time.Time {
+func (o *OutlookProviderCaseItem) GetCreatedAt() int64 {
 	if o == nil {
-		var ret time.Time
+		var ret int64
 		return ret
 	}
 
@@ -144,7 +143,7 @@ func (o *OutlookProviderCaseItem) GetCreatedAt() time.Time {
 
 // GetCreatedAtOk returns a tuple with the CreatedAt field value
 // and a boolean to check if the value has been set.
-func (o *OutlookProviderCaseItem) GetCreatedAtOk() (*time.Time, bool) {
+func (o *OutlookProviderCaseItem) GetCreatedAtOk() (*int64, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -152,7 +151,7 @@ func (o *OutlookProviderCaseItem) GetCreatedAtOk() (*time.Time, bool) {
 }
 
 // SetCreatedAt sets field value
-func (o *OutlookProviderCaseItem) SetCreatedAt(v time.Time) {
+func (o *OutlookProviderCaseItem) SetCreatedAt(v int64) {
 	o.CreatedAt = v
 }
 

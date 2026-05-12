@@ -98,6 +98,8 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateAccountBookings**](docs/DefaultAPI.md#createaccountbookings) | **Post** /financial/bookings | Create multi booking request
 *DefaultAPI* | [**CreateAccountDimension**](docs/DefaultAPI.md#createaccountdimension) | **Post** /financial/account-dimension | Create a new account dimension
 *DefaultAPI* | [**CreateAccountDimensionValue**](docs/DefaultAPI.md#createaccountdimensionvalue) | **Post** /financial/account-dimension/{dimensionID}/value | Create a new account dimension value
+*DefaultAPI* | [**CreateAllocationKey**](docs/DefaultAPI.md#createallocationkey) | **Post** /allocation-key | Create a new allocation key
+*DefaultAPI* | [**CreateAllocationKeyOverride**](docs/DefaultAPI.md#createallocationkeyoverride) | **Post** /allocation-key-override | Create a new allocation key override
 *DefaultAPI* | [**CreateAppointment**](docs/DefaultAPI.md#createappointment) | **Post** /calendar/appointments/schedule/{scheduleID}/appointment | Create new appointment for a given schedule
 *DefaultAPI* | [**CreateAppointmentSchedule**](docs/DefaultAPI.md#createappointmentschedule) | **Post** /calendar/appointments/schedule | Create new appointment schedule
 *DefaultAPI* | [**CreateAppointmentTemplate**](docs/DefaultAPI.md#createappointmenttemplate) | **Post** /calendar/appointments/template | Create new appointment template
@@ -115,6 +117,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateConnectorConfig**](docs/DefaultAPI.md#createconnectorconfig) | **Post** /connector/config | Create a new connector configuration
 *DefaultAPI* | [**CreateConnectorCredentials**](docs/DefaultAPI.md#createconnectorcredentials) | **Post** /connector/credentials | Create new connector credentials
 *DefaultAPI* | [**CreateConnectorQuery**](docs/DefaultAPI.md#createconnectorquery) | **Post** /connector/query | Create a new connector query
+*DefaultAPI* | [**CreateConsumption**](docs/DefaultAPI.md#createconsumption) | **Post** /property-fiscal-years/{fiscalYearID}/consumptions | Create a consumption record
 *DefaultAPI* | [**CreateCorrespondence**](docs/DefaultAPI.md#createcorrespondence) | **Post** /tenant-correspondence | Create a new correspondence object for document generation.
 *DefaultAPI* | [**CreateCostType**](docs/DefaultAPI.md#createcosttype) | **Post** /cost-type | Create a new cost type
 *DefaultAPI* | [**CreateCustomForm**](docs/DefaultAPI.md#createcustomform) | **Post** /custom-form | Create a new custom form
@@ -137,6 +140,8 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateNote**](docs/DefaultAPI.md#createnote) | **Post** /note | Create a new note
 *DefaultAPI* | [**CreateNotification**](docs/DefaultAPI.md#createnotification) | **Post** /notification | Create a new notification
 *DefaultAPI* | [**CreateProperty**](docs/DefaultAPI.md#createproperty) | **Post** /property | Create property
+*DefaultAPI* | [**CreatePropertyDeclaration**](docs/DefaultAPI.md#createpropertydeclaration) | **Post** /property-declarations | Create a new property declaration of condominium ownership
+*DefaultAPI* | [**CreatePropertyFiscalYear**](docs/DefaultAPI.md#createpropertyfiscalyear) | **Post** /properties/{propID}/fiscal-years | Create a fiscal year for a property
 *DefaultAPI* | [**CreatePropertyHandover**](docs/DefaultAPI.md#createpropertyhandover) | **Post** /property-handovers/handover/{templateID} | Create a new property handover
 *DefaultAPI* | [**CreatePropertyHandoverTemplate**](docs/DefaultAPI.md#createpropertyhandovertemplate) | **Post** /property-handovers/template | Create a new property handover template
 *DefaultAPI* | [**CreatePropertyOwner**](docs/DefaultAPI.md#createpropertyowner) | **Post** /owner | Create a new property owner
@@ -152,6 +157,8 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateWorkflowEntrypoint**](docs/DefaultAPI.md#createworkflowentrypoint) | **Post** /workflows/definition/{definitionID}/entrypoint | Create a new workflow entry point for the workflow definition
 *DefaultAPI* | [**DeleteAccountDimension**](docs/DefaultAPI.md#deleteaccountdimension) | **Delete** /financial/account-dimension/{dimensionID} | Delete the account dimension with all its related data
 *DefaultAPI* | [**DeleteAccountDimensionValue**](docs/DefaultAPI.md#deleteaccountdimensionvalue) | **Delete** /financial/account-dimension/{dimensionID}/value/{refID} | Delete the account dimension value with all its related data
+*DefaultAPI* | [**DeleteAllocationKey**](docs/DefaultAPI.md#deleteallocationkey) | **Delete** /allocation-key/{allocationKeyID} | Delete an allocation key
+*DefaultAPI* | [**DeleteAllocationKeyOverride**](docs/DefaultAPI.md#deleteallocationkeyoverride) | **Delete** /allocation-key-override/{overrideID} | Delete an allocation key override
 *DefaultAPI* | [**DeleteAppointment**](docs/DefaultAPI.md#deleteappointment) | **Delete** /calendar/appointments/entry/{entryID} | Delete an appointment
 *DefaultAPI* | [**DeleteAppointmentComment**](docs/DefaultAPI.md#deleteappointmentcomment) | **Delete** /calendar/appointments/entry/{entryID}/comment/{commentID} | Delete a comment from appointment.
 *DefaultAPI* | [**DeleteAppointmentSchedule**](docs/DefaultAPI.md#deleteappointmentschedule) | **Delete** /calendar/appointments/schedule/{scheduleID} | Delete an appointment schedule
@@ -172,6 +179,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteConnectorCredentials**](docs/DefaultAPI.md#deleteconnectorcredentials) | **Delete** /credentials/{apiKey} | Delete the connector credentials for the current account
 *DefaultAPI* | [**DeleteConnectorEntity**](docs/DefaultAPI.md#deleteconnectorentity) | **Delete** /connector/{name}/entity/{entityType} | Delete all the entities of a certain type.
 *DefaultAPI* | [**DeleteConnectorQuery**](docs/DefaultAPI.md#deleteconnectorquery) | **Delete** /query/{queryID} | Delete the query
+*DefaultAPI* | [**DeleteConsumption**](docs/DefaultAPI.md#deleteconsumption) | **Delete** /consumptions/{consumptionID} | Delete a consumption record
 *DefaultAPI* | [**DeleteCorrespondence**](docs/DefaultAPI.md#deletecorrespondence) | **Delete** /tenant-correspondence/{corrID} | Delete a correspondence object via its ID
 *DefaultAPI* | [**DeleteCostType**](docs/DefaultAPI.md#deletecosttype) | **Delete** /cost-type/{costTypeID} | Delete a cost type
 *DefaultAPI* | [**DeleteCustomForm**](docs/DefaultAPI.md#deletecustomform) | **Delete** /custom-form/{formID} | Delete the custom form
@@ -188,14 +196,14 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteHook**](docs/DefaultAPI.md#deletehook) | **Delete** /hook/{hookID} | Delete hook with all its related data
 *DefaultAPI* | [**DeleteInventoryItem**](docs/DefaultAPI.md#deleteinventoryitem) | **Delete** /inventory/{inventoryItemID} | Delete inventory item
 *DefaultAPI* | [**DeleteInvoice**](docs/DefaultAPI.md#deleteinvoice) | **Delete** /invoice/{invoiceID} | Delete invoice
-*DefaultAPI* | [**DeleteInvoiceAnalysis**](docs/DefaultAPI.md#deleteinvoiceanalysis) | **Delete** /invoice-analysis/{invoiceAnalysisID} | Delete invoice analysis
-*DefaultAPI* | [**DeleteInvoiceAnalysisERechnung**](docs/DefaultAPI.md#deleteinvoiceanalysiserechnung) | **Delete** /invoice-analysis-erechnung/{invoiceAnalysisERechnungID} | Delete invoice analysis erechnung
 *DefaultAPI* | [**DeleteInvoiceDataMapper**](docs/DefaultAPI.md#deleteinvoicedatamapper) | **Delete** /invoice-data-mapper/{invoiceDataMapperID} | Delete invoice data mapper
 *DefaultAPI* | [**DeleteMeter**](docs/DefaultAPI.md#deletemeter) | **Delete** /meter/{meterID} | Delete meter
 *DefaultAPI* | [**DeleteMeterReading**](docs/DefaultAPI.md#deletemeterreading) | **Delete** /meter/{meterID}/reading/{readingID} | Delete meter reading
 *DefaultAPI* | [**DeleteNote**](docs/DefaultAPI.md#deletenote) | **Delete** /notes/{noteID} | Delete note
 *DefaultAPI* | [**DeleteNotification**](docs/DefaultAPI.md#deletenotification) | **Delete** /notification/{notificationName} | Delete notification
 *DefaultAPI* | [**DeleteProperty**](docs/DefaultAPI.md#deleteproperty) | **Delete** /properties/{propID} | Delete property
+*DefaultAPI* | [**DeletePropertyDeclaration**](docs/DefaultAPI.md#deletepropertydeclaration) | **Delete** /property-declarations/{declarationID} | Delete property declaration of condominium ownership
+*DefaultAPI* | [**DeletePropertyFiscalYear**](docs/DefaultAPI.md#deletepropertyfiscalyear) | **Delete** /property-fiscal-years/{fiscalYearID} | Delete a fiscal year for a property
 *DefaultAPI* | [**DeletePropertyHandover**](docs/DefaultAPI.md#deletepropertyhandover) | **Delete** /property-handovers/handovers/{handoverID} | Delete property handover
 *DefaultAPI* | [**DeletePropertyHandoverTemplate**](docs/DefaultAPI.md#deletepropertyhandovertemplate) | **Delete** /property-handovers/template/{templateID} | Delete property handover template
 *DefaultAPI* | [**DeletePropertyOwner**](docs/DefaultAPI.md#deletepropertyowner) | **Delete** /owner/{ownerID} | Delete property owner
@@ -212,14 +220,13 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteWorkflowEntrypoint**](docs/DefaultAPI.md#deleteworkflowentrypoint) | **Delete** /workflows/entrypoint/{entrypointID} | Delete workflow entry point
 *DefaultAPI* | [**DeleteWorkflowExecution**](docs/DefaultAPI.md#deleteworkflowexecution) | **Delete** /workflows/execution/{executionID} | Delete workflow execution
 *DefaultAPI* | [**DenyAppointment**](docs/DefaultAPI.md#denyappointment) | **Post** /calendar/appointments/entry/{entryID}/deny | Deny an appointment
+*DefaultAPI* | [**DismissInvoiceUploadJob**](docs/DefaultAPI.md#dismissinvoiceuploadjob) | **Delete** /invoice-upload-jobs/{invoiceUploadJobID} | Dismiss invoice upload job
 *DefaultAPI* | [**ExecuteBookingTemplate**](docs/DefaultAPI.md#executebookingtemplate) | **Post** /financial/booking-template/{bookingTemplateID}/execute | Execute a booking template and create a booking preview
 *DefaultAPI* | [**ExecuteCommentTemplate**](docs/DefaultAPI.md#executecommenttemplate) | **Post** /comment-template/{commentTemplateID}/execute | Execute a comment template returning the comment.
 *DefaultAPI* | [**ExecuteReport**](docs/DefaultAPI.md#executereport) | **Post** /report/{definitionID}/execute | 
 *DefaultAPI* | [**ExecuteWorkflowEntrypoint**](docs/DefaultAPI.md#executeworkflowentrypoint) | **Post** /workflows/entrypoint/{entrypointID}/execute | Execute the workflow entry point
 *DefaultAPI* | [**ExecuteWorkflowExecutionStep**](docs/DefaultAPI.md#executeworkflowexecutionstep) | **Post** /workflows/execution/{executionID} | Execute workflow execution step
 *DefaultAPI* | [**Feedback**](docs/DefaultAPI.md#feedback) | **Post** /feedback | User feedback about the product
-*DefaultAPI* | [**FinalizeInvoiceAnalysis**](docs/DefaultAPI.md#finalizeinvoiceanalysis) | **Post** /invoice-analysis/{invoiceAnalysisID}/finalize | Finalize invoice analysis and create invoices
-*DefaultAPI* | [**FinalizeInvoiceAnalysisERechnung**](docs/DefaultAPI.md#finalizeinvoiceanalysiserechnung) | **Post** /invoice-analysis-erechnung/{invoiceAnalysisERechnungID}/finalize | Finalize invoice erechnung analysis and create an invoice out of it
 *DefaultAPI* | [**FinalizePropertyHandover**](docs/DefaultAPI.md#finalizepropertyhandover) | **Put** /property-handovers/handovers/{handoverID}/finalize | Finalize a property handover
 *DefaultAPI* | [**GenerateAccountDimensionValues**](docs/DefaultAPI.md#generateaccountdimensionvalues) | **Post** /financial/account-dimension/{dimensionID}/values/generate | Generate the account dimension values for the given dimension
 *DefaultAPI* | [**GenerateCaseComment**](docs/DefaultAPI.md#generatecasecomment) | **Post** /case/{caseID}/comment/generate | Generate AI comment suggestions
@@ -230,9 +237,12 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GenerateESignatureForDocument**](docs/DefaultAPI.md#generateesignaturefordocument) | **Get** /document-generation/documents/{docID}/esignature/generate | Get the singing status for the document
 *DefaultAPI* | [**GenerateSignaturePreviewPDF**](docs/DefaultAPI.md#generatesignaturepreviewpdf) | **Post** /document-generation/signature-preview | Generate a signature preview PDF
 *DefaultAPI* | [**GetAccountBooking**](docs/DefaultAPI.md#getaccountbooking) | **Get** /financial/bookings/{bookingID} | Get the booking with all its attributes
+*DefaultAPI* | [**GetAccountConfig**](docs/DefaultAPI.md#getaccountconfig) | **Get** /profile/account | Get the account configuration details
 *DefaultAPI* | [**GetAccountDimension**](docs/DefaultAPI.md#getaccountdimension) | **Get** /financial/account-dimension/{dimensionID} | Get the account dimension with all its attributes
 *DefaultAPI* | [**GetAccountDimensionValue**](docs/DefaultAPI.md#getaccountdimensionvalue) | **Get** /financial/account-dimension/{dimensionID}/value/{refID} | Get the account dimension value for a refID with all its attributes
 *DefaultAPI* | [**GetAccountSummary**](docs/DefaultAPI.md#getaccountsummary) | **Post** /summary | Get overview of data in the system for current account
+*DefaultAPI* | [**GetAllocationKey**](docs/DefaultAPI.md#getallocationkey) | **Get** /allocation-key/{allocationKeyID} | Get an allocation key by ID
+*DefaultAPI* | [**GetAllocationKeyOverride**](docs/DefaultAPI.md#getallocationkeyoverride) | **Get** /allocation-key-override/{overrideID} | Get an allocation key override by ID
 *DefaultAPI* | [**GetAppointment**](docs/DefaultAPI.md#getappointment) | **Get** /calendar/appointments/entry/{entryID} | Get the appointment by ID
 *DefaultAPI* | [**GetAppointmentInIcalFormat**](docs/DefaultAPI.md#getappointmentinicalformat) | **Get** /calendar/appointments/entry/{entryID}/ical | Get appointment in ical format
 *DefaultAPI* | [**GetAppointmentSchedule**](docs/DefaultAPI.md#getappointmentschedule) | **Get** /calendar/appointments/schedule/{scheduleID} | Get the appointment schedule by ID
@@ -261,6 +271,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetConnectorEntityStats**](docs/DefaultAPI.md#getconnectorentitystats) | **Get** /connector/{name}/entity | Get stats for the connector
 *DefaultAPI* | [**GetConnectorQueries**](docs/DefaultAPI.md#getconnectorqueries) | **Get** /connector/{name}/queries | Get the queries that belong to the config.
 *DefaultAPI* | [**GetConnectorQuery**](docs/DefaultAPI.md#getconnectorquery) | **Get** /query/{queryID} | Get the query for the current account
+*DefaultAPI* | [**GetConsumption**](docs/DefaultAPI.md#getconsumption) | **Get** /consumptions/{consumptionID} | Get a consumption record
 *DefaultAPI* | [**GetCorrespondence**](docs/DefaultAPI.md#getcorrespondence) | **Get** /tenant-correspondence/{corrID} | Get a correspondence object via its ID
 *DefaultAPI* | [**GetCorrespondenceAccessRecord**](docs/DefaultAPI.md#getcorrespondenceaccessrecord) | **Get** /tenant-correspondence/{corrID}/access-record | Get the access record for the correspondence.
 *DefaultAPI* | [**GetCostType**](docs/DefaultAPI.md#getcosttype) | **Get** /cost-type/{costTypeID} | Get a cost type by ID
@@ -287,6 +298,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetFeatureFlags**](docs/DefaultAPI.md#getfeatureflags) | **Get** /feature-flags | Get feature flags by reference
 *DefaultAPI* | [**GetFeatureFlagsConfig**](docs/DefaultAPI.md#getfeatureflagsconfig) | **Get** /feature-flags/config | Get all feature flags config
 *DefaultAPI* | [**GetFinancialAccount**](docs/DefaultAPI.md#getfinancialaccount) | **Get** /financial/accounts/{accountID} | Get the financial account with all its attributes
+*DefaultAPI* | [**GetFinancialAccountByAccountNumber**](docs/DefaultAPI.md#getfinancialaccountbyaccountnumber) | **Get** /financial/accounts-by-account-number/{accountNumber} | Get financial account by the account number
 *DefaultAPI* | [**GetFinancialAccountByFlatNumber**](docs/DefaultAPI.md#getfinancialaccountbyflatnumber) | **Get** /financial/accounts-by-number/{flatNumber} | Get financial account by flat number
 *DefaultAPI* | [**GetFinancialAccountsByRef**](docs/DefaultAPI.md#getfinancialaccountsbyref) | **Post** /financial/account/by-ref/{refType}/{refID} | Get the financial account for a given ref type and ref ID
 *DefaultAPI* | [**GetFinancialSubAccount**](docs/DefaultAPI.md#getfinancialsubaccount) | **Get** /financial/accounts-by-number/{flatNumber}/subaccount | Get financial sub-account by flat number
@@ -294,8 +306,6 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetInventoryForProperty**](docs/DefaultAPI.md#getinventoryforproperty) | **Get** /property/{propID}/inventory | List inventory items for a property
 *DefaultAPI* | [**GetInventoryItem**](docs/DefaultAPI.md#getinventoryitem) | **Get** /inventory/{inventoryItemID} | Get inventory item
 *DefaultAPI* | [**GetInvoice**](docs/DefaultAPI.md#getinvoice) | **Get** /invoice/{invoiceID} | Get invoice
-*DefaultAPI* | [**GetInvoiceAnalysis**](docs/DefaultAPI.md#getinvoiceanalysis) | **Get** /invoice-analysis/{invoiceAnalysisID} | Load an invoice analysis
-*DefaultAPI* | [**GetInvoiceAnalysisERechnung**](docs/DefaultAPI.md#getinvoiceanalysiserechnung) | **Get** /invoice-analysis-erechnung/{invoiceAnalysisERechnungID} | Get invoice analysis erechnung
 *DefaultAPI* | [**GetInvoiceDataMapper**](docs/DefaultAPI.md#getinvoicedatamapper) | **Get** /invoice-data-mapper/{invoiceDataMapperID} | Get invoice data mapper
 *DefaultAPI* | [**GetLatestPriceIndexPoint**](docs/DefaultAPI.md#getlatestpriceindexpoint) | **Get** /price-index/latest/{countryCode} | Get the current latest PriceIndexPoint
 *DefaultAPI* | [**GetMeter**](docs/DefaultAPI.md#getmeter) | **Get** /meter/{meterID} | Get meter
@@ -311,6 +321,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetPriceIndexPoint**](docs/DefaultAPI.md#getpriceindexpoint) | **Post** /price-index | Get the PriceIndexPoint
 *DefaultAPI* | [**GetProperty**](docs/DefaultAPI.md#getproperty) | **Get** /properties/{propID} | Get property details
 *DefaultAPI* | [**GetPropertyCases**](docs/DefaultAPI.md#getpropertycases) | **Post** /property/{propID}/cases | Get property cases
+*DefaultAPI* | [**GetPropertyDeclaration**](docs/DefaultAPI.md#getpropertydeclaration) | **Get** /property-declarations/{declarationID} | Get property declaration of condominium ownership
 *DefaultAPI* | [**GetPropertyHandover**](docs/DefaultAPI.md#getpropertyhandover) | **Get** /property-handovers/handovers/{handoverID} | Get property handover
 *DefaultAPI* | [**GetPropertyHandoverTemplate**](docs/DefaultAPI.md#getpropertyhandovertemplate) | **Get** /property-handovers/template/{templateID} | Get property handover template
 *DefaultAPI* | [**GetPropertyOwner**](docs/DefaultAPI.md#getpropertyowner) | **Get** /owner/{ownerID} | Get property owner details
@@ -394,6 +405,8 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryAccountDimensionValues**](docs/DefaultAPI.md#queryaccountdimensionvalues) | **Post** /financial/account-dimension/{dimensionID}/values | Query all account dimension values for a given dimension
 *DefaultAPI* | [**QueryAccountDimensionValuesForEntity**](docs/DefaultAPI.md#queryaccountdimensionvaluesforentity) | **Post** /financial/account-dimension/by-ref | Query all account dimension values for a given entity
 *DefaultAPI* | [**QueryAccountDimensions**](docs/DefaultAPI.md#queryaccountdimensions) | **Post** /financial/account-dimensions | Query all account dimensions
+*DefaultAPI* | [**QueryAllocationKeyOverrides**](docs/DefaultAPI.md#queryallocationkeyoverrides) | **Post** /allocation-key-overrides | Query allocation key overrides by property and fiscal year
+*DefaultAPI* | [**QueryAllocationKeys**](docs/DefaultAPI.md#queryallocationkeys) | **Post** /allocation-keys | Query all allocation keys for the account
 *DefaultAPI* | [**QueryAppointmentSchedules**](docs/DefaultAPI.md#queryappointmentschedules) | **Post** /calendar/appointments/schedules | Query all appointment schedules for given criteria
 *DefaultAPI* | [**QueryAppointmentTemplates**](docs/DefaultAPI.md#queryappointmenttemplates) | **Post** /calendar/appointments/templates | Query all appointment templates for given criteria
 *DefaultAPI* | [**QueryAppointments**](docs/DefaultAPI.md#queryappointments) | **Get** /calendar/appointments/window/{windowID} | Get the appointments of a Window
@@ -413,6 +426,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryCaseTemplates**](docs/DefaultAPI.md#querycasetemplates) | **Post** /cases/templates | Query all case templates for given criteria
 *DefaultAPI* | [**QueryCases**](docs/DefaultAPI.md#querycases) | **Post** /cases | Query cases for the current user
 *DefaultAPI* | [**QueryCommentTemplates**](docs/DefaultAPI.md#querycommenttemplates) | **Post** /comment-templates | Query all comment templates for the account
+*DefaultAPI* | [**QueryConsumptionsByFiscalYear**](docs/DefaultAPI.md#queryconsumptionsbyfiscalyear) | **Get** /property-fiscal-years/{fiscalYearID}/consumptions | List consumptions for a fiscal year
 *DefaultAPI* | [**QueryCorrespondences**](docs/DefaultAPI.md#querycorrespondences) | **Post** /tenant-correspondences | Get all the correspondences
 *DefaultAPI* | [**QueryCostTypes**](docs/DefaultAPI.md#querycosttypes) | **Post** /cost-types | Query all cost types
 *DefaultAPI* | [**QueryCustomForms**](docs/DefaultAPI.md#querycustomforms) | **Get** /custom-forms | Get all custom forms
@@ -425,12 +439,14 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryFinancialAccountBalances**](docs/DefaultAPI.md#queryfinancialaccountbalances) | **Post** /financial/balances | Query the current balances of all financial accounts
 *DefaultAPI* | [**QueryFinancialAccounts**](docs/DefaultAPI.md#queryfinancialaccounts) | **Post** /financial/accounts | Query all financial accounts
 *DefaultAPI* | [**QueryHooks**](docs/DefaultAPI.md#queryhooks) | **Post** /hooks | Query hooks
-*DefaultAPI* | [**QueryInvoiceAnalyses**](docs/DefaultAPI.md#queryinvoiceanalyses) | **Post** /invoice-analyses | Query invoice analyses
 *DefaultAPI* | [**QueryInvoiceDataMappers**](docs/DefaultAPI.md#queryinvoicedatamappers) | **Post** /invoice-data-mappers | Query invoice data mappers
+*DefaultAPI* | [**QueryInvoiceUploadJobs**](docs/DefaultAPI.md#queryinvoiceuploadjobs) | **Get** /invoice-upload-jobs | List invoice upload jobs
 *DefaultAPI* | [**QueryInvoices**](docs/DefaultAPI.md#queryinvoices) | **Post** /invoices | Query invoices
 *DefaultAPI* | [**QueryNotesForEntity**](docs/DefaultAPI.md#querynotesforentity) | **Get** /notes/by-reference/{refID} | List notes
 *DefaultAPI* | [**QueryNotifications**](docs/DefaultAPI.md#querynotifications) | **Post** /notifications | Query notifications
 *DefaultAPI* | [**QueryProperties**](docs/DefaultAPI.md#queryproperties) | **Post** /properties | Query properties
+*DefaultAPI* | [**QueryPropertyDeclarations**](docs/DefaultAPI.md#querypropertydeclarations) | **Post** /property-declarations/query | Query property declarations of condominium ownership
+*DefaultAPI* | [**QueryPropertyFiscalYears**](docs/DefaultAPI.md#querypropertyfiscalyears) | **Get** /properties/{propID}/fiscal-years | List fiscal years for a property
 *DefaultAPI* | [**QueryPropertyHandoverTemplates**](docs/DefaultAPI.md#querypropertyhandovertemplates) | **Post** /property-handovers/templates | Query property handover templates
 *DefaultAPI* | [**QueryPropertyHandovers**](docs/DefaultAPI.md#querypropertyhandovers) | **Post** /property-handovers/handovers | Query property handovers
 *DefaultAPI* | [**QueryPropertyOwners**](docs/DefaultAPI.md#querypropertyowners) | **Post** /owners | Query property owners
@@ -442,7 +458,6 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryVersionMigrators**](docs/DefaultAPI.md#queryversionmigrators) | **Post** /version-migrators | Query all version migrators
 *DefaultAPI* | [**QueryWorkflowDefinitions**](docs/DefaultAPI.md#queryworkflowdefinitions) | **Post** /workflows/definitions | Query all workflow definitions
 *DefaultAPI* | [**QueryWorkflowExecutions**](docs/DefaultAPI.md#queryworkflowexecutions) | **Post** /workflows/executions | Get a list of all workflow executions, matching the criteria in the request 
-*DefaultAPI* | [**ReattachInvoiceAnalysisPages**](docs/DefaultAPI.md#reattachinvoiceanalysispages) | **Put** /invoice-analysis/{invoiceAnalysisID}/reattach/{invoiceID} | Reattach invoice analysis pages
 *DefaultAPI* | [**RejectApproval**](docs/DefaultAPI.md#rejectapproval) | **Post** /approval/{approvalID}/reject | Reject the approval with the given ID
 *DefaultAPI* | [**RequestESignaturesForDocument**](docs/DefaultAPI.md#requestesignaturesfordocument) | **Post** /document-generation/documents/{docID}/esignature | Trigger a signing request for a document
 *DefaultAPI* | [**RerunReportExecution**](docs/DefaultAPI.md#rerunreportexecution) | **Post** /report/executions/{executionID}/rerun | Rerun the report execution with the same parameters
@@ -458,8 +473,11 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UnassignCase**](docs/DefaultAPI.md#unassigncase) | **Post** /case/{caseID}/unassign | Remove access from case
 *DefaultAPI* | [**UnlinkAppointmentProperty**](docs/DefaultAPI.md#unlinkappointmentproperty) | **Post** /calendar/appointments/entry/{entryID}/property/unlink | Unlink a property from an appointment
 *DefaultAPI* | [**UnlinkCaseProperty**](docs/DefaultAPI.md#unlinkcaseproperty) | **Post** /case/{caseID}/property/unlink | Unlink a property from a case
+*DefaultAPI* | [**UpdateAccountConfig**](docs/DefaultAPI.md#updateaccountconfig) | **Put** /profile/account | Update the account configuration
 *DefaultAPI* | [**UpdateAccountDimension**](docs/DefaultAPI.md#updateaccountdimension) | **Put** /financial/account-dimension/{dimensionID} | Update an already existing account dimension
 *DefaultAPI* | [**UpdateAccountDimensionValue**](docs/DefaultAPI.md#updateaccountdimensionvalue) | **Put** /financial/account-dimension/{dimensionID}/value/{refID} | Update an already existing account dimension value
+*DefaultAPI* | [**UpdateAllocationKey**](docs/DefaultAPI.md#updateallocationkey) | **Put** /allocation-key/{allocationKeyID} | Update an existing allocation key
+*DefaultAPI* | [**UpdateAllocationKeyOverride**](docs/DefaultAPI.md#updateallocationkeyoverride) | **Put** /allocation-key-override/{overrideID} | Update an allocation key override
 *DefaultAPI* | [**UpdateAppointment**](docs/DefaultAPI.md#updateappointment) | **Put** /calendar/appointments/entry/{entryID} | Update appointment
 *DefaultAPI* | [**UpdateAppointmentSchedule**](docs/DefaultAPI.md#updateappointmentschedule) | **Put** /calendar/appointments/schedule/{scheduleID} | Update appointment schedule
 *DefaultAPI* | [**UpdateAppointmentTemplate**](docs/DefaultAPI.md#updateappointmenttemplate) | **Put** /calendar/appointments/template/{templateID} | Update appointment template
@@ -477,6 +495,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateCompanyProfile**](docs/DefaultAPI.md#updatecompanyprofile) | **Put** /profile/company | Update company profile
 *DefaultAPI* | [**UpdateConnectorConfig**](docs/DefaultAPI.md#updateconnectorconfig) | **Put** /connector/{name}/config | Update the connector configuration
 *DefaultAPI* | [**UpdateConnectorQuery**](docs/DefaultAPI.md#updateconnectorquery) | **Put** /query/{queryID} | Update the connector Query
+*DefaultAPI* | [**UpdateConsumption**](docs/DefaultAPI.md#updateconsumption) | **Put** /consumptions/{consumptionID} | Update a consumption record
 *DefaultAPI* | [**UpdateCostType**](docs/DefaultAPI.md#updatecosttype) | **Put** /cost-type/{costTypeID} | Update an existing cost type
 *DefaultAPI* | [**UpdateCustomForm**](docs/DefaultAPI.md#updatecustomform) | **Put** /custom-form/{formID} | Update the custom form
 *DefaultAPI* | [**UpdateCustomIDGenerator**](docs/DefaultAPI.md#updatecustomidgenerator) | **Put** /id-generators/{generatorID} | Update an already existing ID generator
@@ -492,14 +511,14 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateHook**](docs/DefaultAPI.md#updatehook) | **Put** /hook/{hookID} | Update an already hook
 *DefaultAPI* | [**UpdateInventoryItem**](docs/DefaultAPI.md#updateinventoryitem) | **Put** /inventory/{inventoryItemID} | Update inventory item
 *DefaultAPI* | [**UpdateInvoice**](docs/DefaultAPI.md#updateinvoice) | **Put** /invoice/{invoiceID} | Update invoice
-*DefaultAPI* | [**UpdateInvoiceAnalysis**](docs/DefaultAPI.md#updateinvoiceanalysis) | **Put** /invoice-analysis/{invoiceAnalysisID} | Update invoice analysis
-*DefaultAPI* | [**UpdateInvoiceAnalysisData**](docs/DefaultAPI.md#updateinvoiceanalysisdata) | **Put** /invoice-analysis/{invoiceAnalysisID}/data/{invoiceID} | Update invoice analysis data
 *DefaultAPI* | [**UpdateInvoiceDataMapper**](docs/DefaultAPI.md#updateinvoicedatamapper) | **Put** /invoice-data-mapper/{invoiceDataMapperID} | Update invoice data mapper
 *DefaultAPI* | [**UpdateMeter**](docs/DefaultAPI.md#updatemeter) | **Put** /meter/{meterID} | Update meter
 *DefaultAPI* | [**UpdateMeterReading**](docs/DefaultAPI.md#updatemeterreading) | **Put** /meter/{meterID}/reading/{readingID} | Update meter reading
 *DefaultAPI* | [**UpdateNote**](docs/DefaultAPI.md#updatenote) | **Put** /notes/{noteID} | Update note
 *DefaultAPI* | [**UpdateNotification**](docs/DefaultAPI.md#updatenotification) | **Put** /notification/{notificationName} | Update notification
 *DefaultAPI* | [**UpdateProperty**](docs/DefaultAPI.md#updateproperty) | **Put** /properties/{propID} | Update property
+*DefaultAPI* | [**UpdatePropertyDeclaration**](docs/DefaultAPI.md#updatepropertydeclaration) | **Put** /property-declarations/{declarationID} | Update property declaration of condominium ownership
+*DefaultAPI* | [**UpdatePropertyFiscalYear**](docs/DefaultAPI.md#updatepropertyfiscalyear) | **Put** /property-fiscal-years/{fiscalYearID} | Update a fiscal year for a property
 *DefaultAPI* | [**UpdatePropertyHandover**](docs/DefaultAPI.md#updatepropertyhandover) | **Put** /property-handovers/handovers/{handoverID} | Update property handover
 *DefaultAPI* | [**UpdatePropertyHandoverTemplate**](docs/DefaultAPI.md#updatepropertyhandovertemplate) | **Put** /property-handovers/template/{templateID} | Update property handover template
 *DefaultAPI* | [**UpdatePropertyOwner**](docs/DefaultAPI.md#updatepropertyowner) | **Put** /owner/{ownerID} | Update property owner
@@ -514,8 +533,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateWorkflowDefinition**](docs/DefaultAPI.md#updateworkflowdefinition) | **Put** /workflows/definition/{definitionID} | Update workflow definition
 *DefaultAPI* | [**UpdateWorkflowEntrypoint**](docs/DefaultAPI.md#updateworkflowentrypoint) | **Put** /workflows/entrypoint/{entrypointID} | Update workflow entry point
 *DefaultAPI* | [**UploadAttachment**](docs/DefaultAPI.md#uploadattachment) | **Post** /attachment | Upload new file attachment
-*DefaultAPI* | [**UploadInvoiceAnalysisAttachment**](docs/DefaultAPI.md#uploadinvoiceanalysisattachment) | **Post** /invoice-analysis/attachment | Upload new file invoice attachment
-*DefaultAPI* | [**UploadInvoiceAnalysisAttachmentVision**](docs/DefaultAPI.md#uploadinvoiceanalysisattachmentvision) | **Post** /invoice-analysis/attachment-vision | Upload new file invoice attachment
+*DefaultAPI* | [**UploadInvoiceAttachment**](docs/DefaultAPI.md#uploadinvoiceattachment) | **Post** /invoices/upload | Upload invoice attachment and extract invoice data
 *DefaultAPI* | [**ValidateBankAccountIban**](docs/DefaultAPI.md#validatebankaccountiban) | **Post** /bank-account-iban/validate | Validate a bank account IBAN
 *DefaultAPI* | [**ValidateCustomForm**](docs/DefaultAPI.md#validatecustomform) | **Post** /custom-form/{formID}/validate | Validate a custom form
 *DefaultAPI* | [**ValidateUserEmail**](docs/DefaultAPI.md#validateuseremail) | **Post** /email/validation | Validate user&#39;s email and point out problems if there are any
@@ -531,6 +549,8 @@ Class | Method | HTTP request | Description
  - [AccountBooking](docs/AccountBooking.md)
  - [AccountBookingAllocation](docs/AccountBookingAllocation.md)
  - [AccountBookingAttributesPartial](docs/AccountBookingAttributesPartial.md)
+ - [AccountConfig](docs/AccountConfig.md)
+ - [AccountConfigAttributesPartial](docs/AccountConfigAttributesPartial.md)
  - [AccountDimension](docs/AccountDimension.md)
  - [AccountDimensionAttributesPartial](docs/AccountDimensionAttributesPartial.md)
  - [AccountDimensionReferenceTypeEnum](docs/AccountDimensionReferenceTypeEnum.md)
@@ -538,9 +558,14 @@ Class | Method | HTTP request | Description
  - [AccountDimensionValueAttributesPartial](docs/AccountDimensionValueAttributesPartial.md)
  - [AccountDimensionValueRef](docs/AccountDimensionValueRef.md)
  - [AccountDimensionWithValue](docs/AccountDimensionWithValue.md)
+ - [AccountTypeEnum](docs/AccountTypeEnum.md)
  - [AccountTypesEnum](docs/AccountTypesEnum.md)
  - [AdditionalRentCost](docs/AdditionalRentCost.md)
  - [Address](docs/Address.md)
+ - [AllocationKey](docs/AllocationKey.md)
+ - [AllocationKeyAttributesPartial](docs/AllocationKeyAttributesPartial.md)
+ - [AllocationKeyOverride](docs/AllocationKeyOverride.md)
+ - [AllocationKeyOverrideAttributesPartial](docs/AllocationKeyOverrideAttributesPartial.md)
  - [Appointment](docs/Appointment.md)
  - [AppointmentComment](docs/AppointmentComment.md)
  - [AppointmentCommentPartial](docs/AppointmentCommentPartial.md)
@@ -579,6 +604,7 @@ Class | Method | HTTP request | Description
  - [BankTransactionAutoImportFilterModeEnum](docs/BankTransactionAutoImportFilterModeEnum.md)
  - [BankTransactionAutoImportFilterTypeEnum](docs/BankTransactionAutoImportFilterTypeEnum.md)
  - [BankTransactionImport](docs/BankTransactionImport.md)
+ - [BatchInvoiceOperationRequest](docs/BatchInvoiceOperationRequest.md)
  - [BatchInvoiceOperationResponse](docs/BatchInvoiceOperationResponse.md)
  - [BatchItemActionEnum](docs/BatchItemActionEnum.md)
  - [BatchProcessingRefs](docs/BatchProcessingRefs.md)
@@ -586,6 +612,7 @@ Class | Method | HTTP request | Description
  - [BatchProcessingStatusEnum](docs/BatchProcessingStatusEnum.md)
  - [BatchProcessingTypeEnum](docs/BatchProcessingTypeEnum.md)
  - [BatchSessionAttributesPartial](docs/BatchSessionAttributesPartial.md)
+ - [BookingGrouping](docs/BookingGrouping.md)
  - [BookingInitialisationStatusEnum](docs/BookingInitialisationStatusEnum.md)
  - [BookingPreview](docs/BookingPreview.md)
  - [BookingPreviewPartial](docs/BookingPreviewPartial.md)
@@ -636,6 +663,10 @@ Class | Method | HTTP request | Description
  - [ConnectorQuery](docs/ConnectorQuery.md)
  - [ConnectorQueryAttributesPartial](docs/ConnectorQueryAttributesPartial.md)
  - [ConnectorSyncRequest](docs/ConnectorSyncRequest.md)
+ - [Consumption](docs/Consumption.md)
+ - [ConsumptionAttributesPartial](docs/ConsumptionAttributesPartial.md)
+ - [ConsumptionRate](docs/ConsumptionRate.md)
+ - [ConsumptionRateAttributesPartial](docs/ConsumptionRateAttributesPartial.md)
  - [ContactData](docs/ContactData.md)
  - [Correspondence](docs/Correspondence.md)
  - [CorrespondenceAttributesPartial](docs/CorrespondenceAttributesPartial.md)
@@ -662,6 +693,8 @@ Class | Method | HTTP request | Description
  - [CreateNotificationRequest](docs/CreateNotificationRequest.md)
  - [CreateOrUpdateAccountDimensionRequest](docs/CreateOrUpdateAccountDimensionRequest.md)
  - [CreateOrUpdateAccountDimensionValueRequest](docs/CreateOrUpdateAccountDimensionValueRequest.md)
+ - [CreateOrUpdateAllocationKeyOverrideRequest](docs/CreateOrUpdateAllocationKeyOverrideRequest.md)
+ - [CreateOrUpdateAllocationKeyRequest](docs/CreateOrUpdateAllocationKeyRequest.md)
  - [CreateOrUpdateAppointmentComment](docs/CreateOrUpdateAppointmentComment.md)
  - [CreateOrUpdateAppointmentRequest](docs/CreateOrUpdateAppointmentRequest.md)
  - [CreateOrUpdateAppointmentScheduleRequest](docs/CreateOrUpdateAppointmentScheduleRequest.md)
@@ -673,6 +706,7 @@ Class | Method | HTTP request | Description
  - [CreateOrUpdateCaseTemplateRequest](docs/CreateOrUpdateCaseTemplateRequest.md)
  - [CreateOrUpdateCommentTemplateRequest](docs/CreateOrUpdateCommentTemplateRequest.md)
  - [CreateOrUpdateConnectorQueryRequest](docs/CreateOrUpdateConnectorQueryRequest.md)
+ - [CreateOrUpdateConsumptionRequest](docs/CreateOrUpdateConsumptionRequest.md)
  - [CreateOrUpdateCostTypeRequest](docs/CreateOrUpdateCostTypeRequest.md)
  - [CreateOrUpdateCustomFormRequest](docs/CreateOrUpdateCustomFormRequest.md)
  - [CreateOrUpdateCustomIDGeneratorRequest](docs/CreateOrUpdateCustomIDGeneratorRequest.md)
@@ -689,6 +723,8 @@ Class | Method | HTTP request | Description
  - [CreateOrUpdateInvoiceRequest](docs/CreateOrUpdateInvoiceRequest.md)
  - [CreateOrUpdateMeterReadingRequest](docs/CreateOrUpdateMeterReadingRequest.md)
  - [CreateOrUpdateMeterRequest](docs/CreateOrUpdateMeterRequest.md)
+ - [CreateOrUpdatePropertyDeclarationRequest](docs/CreateOrUpdatePropertyDeclarationRequest.md)
+ - [CreateOrUpdatePropertyFiscalYearRequest](docs/CreateOrUpdatePropertyFiscalYearRequest.md)
  - [CreateOrUpdatePropertyHandoverRequest](docs/CreateOrUpdatePropertyHandoverRequest.md)
  - [CreateOrUpdatePropertyHandoverTemplateRequest](docs/CreateOrUpdatePropertyHandoverTemplateRequest.md)
  - [CreateOrUpdatePropertyOwnerRequest](docs/CreateOrUpdatePropertyOwnerRequest.md)
@@ -716,6 +752,8 @@ Class | Method | HTTP request | Description
  - [DataImportTemplate](docs/DataImportTemplate.md)
  - [DataImportTemplatePartial](docs/DataImportTemplatePartial.md)
  - [DisplayCondition](docs/DisplayCondition.md)
+ - [DivisionDeclaration](docs/DivisionDeclaration.md)
+ - [DivisionUnit](docs/DivisionUnit.md)
  - [Document](docs/Document.md)
  - [DocumentCreateAttributesPartial](docs/DocumentCreateAttributesPartial.md)
  - [DocumentGeneration](docs/DocumentGeneration.md)
@@ -758,7 +796,7 @@ Class | Method | HTTP request | Description
  - [FeatureFlagScopeEnum](docs/FeatureFlagScopeEnum.md)
  - [FeedbackRequest](docs/FeedbackRequest.md)
  - [FeedbackType](docs/FeedbackType.md)
- - [FinalizeERechnungInvoiceAnalysisRequest](docs/FinalizeERechnungInvoiceAnalysisRequest.md)
+ - [FinalizePropertyHandoverRequest](docs/FinalizePropertyHandoverRequest.md)
  - [FinancialAccount](docs/FinancialAccount.md)
  - [FinancialAccountAttributesPartial](docs/FinancialAccountAttributesPartial.md)
  - [FinancialSubAccount](docs/FinancialSubAccount.md)
@@ -811,19 +849,19 @@ Class | Method | HTTP request | Description
  - [InventoryItemAttributesPartial](docs/InventoryItemAttributesPartial.md)
  - [InviteToAppointmentRequest](docs/InviteToAppointmentRequest.md)
  - [Invoice](docs/Invoice.md)
- - [InvoiceAnalysis](docs/InvoiceAnalysis.md)
- - [InvoiceAnalysisERechnung](docs/InvoiceAnalysisERechnung.md)
- - [InvoiceAnalysisStatusEnum](docs/InvoiceAnalysisStatusEnum.md)
  - [InvoiceData](docs/InvoiceData.md)
  - [InvoiceDataMapper](docs/InvoiceDataMapper.md)
  - [InvoiceDataMapperAttributesPartial](docs/InvoiceDataMapperAttributesPartial.md)
  - [InvoiceDataMapperEntrypointEnum](docs/InvoiceDataMapperEntrypointEnum.md)
- - [InvoiceDocumentAnalysis](docs/InvoiceDocumentAnalysis.md)
- - [InvoiceERechnungAnalysisStatusEnum](docs/InvoiceERechnungAnalysisStatusEnum.md)
+ - [InvoiceExtendedData](docs/InvoiceExtendedData.md)
  - [InvoicePaymentStatusEnum](docs/InvoicePaymentStatusEnum.md)
+ - [InvoiceUploadJob](docs/InvoiceUploadJob.md)
+ - [InvoiceUploadJobStatusEnum](docs/InvoiceUploadJobStatusEnum.md)
  - [IsDeletedAttributePartial](docs/IsDeletedAttributePartial.md)
+ - [LandRegistryEntry](docs/LandRegistryEntry.md)
  - [LogRequest](docs/LogRequest.md)
  - [MailStatusResponse](docs/MailStatusResponse.md)
+ - [ManagementModeTypeEnum](docs/ManagementModeTypeEnum.md)
  - [MandatoryMessage](docs/MandatoryMessage.md)
  - [Meter](docs/Meter.md)
  - [MeterAttributesPartial](docs/MeterAttributesPartial.md)
@@ -852,7 +890,10 @@ Class | Method | HTTP request | Description
  - [ProcessItemInBatchProcessingSessionRequest](docs/ProcessItemInBatchProcessingSessionRequest.md)
  - [Property](docs/Property.md)
  - [PropertyAttributesPartial](docs/PropertyAttributesPartial.md)
+ - [PropertyDeclaration](docs/PropertyDeclaration.md)
+ - [PropertyDeclarationAttributesPartial](docs/PropertyDeclarationAttributesPartial.md)
  - [PropertyDetails](docs/PropertyDetails.md)
+ - [PropertyFiscalYear](docs/PropertyFiscalYear.md)
  - [PropertyFloorTypeEnum](docs/PropertyFloorTypeEnum.md)
  - [PropertyFurnishingEnum](docs/PropertyFurnishingEnum.md)
  - [PropertyHandover](docs/PropertyHandover.md)
@@ -862,6 +903,8 @@ Class | Method | HTTP request | Description
  - [PropertyHandoverTemplateAttributesPartial](docs/PropertyHandoverTemplateAttributesPartial.md)
  - [PropertyHandoverType](docs/PropertyHandoverType.md)
  - [PropertyHeatingTypeEnum](docs/PropertyHeatingTypeEnum.md)
+ - [PropertyManagementConfig](docs/PropertyManagementConfig.md)
+ - [PropertyManagementTypeEnum](docs/PropertyManagementTypeEnum.md)
  - [PropertyOwner](docs/PropertyOwner.md)
  - [PropertyOwnerAttributesPartial](docs/PropertyOwnerAttributesPartial.md)
  - [PropertyParkingTypeEnum](docs/PropertyParkingTypeEnum.md)
@@ -871,6 +914,7 @@ Class | Method | HTTP request | Description
  - [PublicJoinAppointmentRequest](docs/PublicJoinAppointmentRequest.md)
  - [QueryAccountDimensionValuesRequest](docs/QueryAccountDimensionValuesRequest.md)
  - [QueryAccountDimensionsRequest](docs/QueryAccountDimensionsRequest.md)
+ - [QueryAllocationKeyOverridesRequest](docs/QueryAllocationKeyOverridesRequest.md)
  - [QueryAppointmentSchedulesRequest](docs/QueryAppointmentSchedulesRequest.md)
  - [QueryAppointmentTemplatesRequest](docs/QueryAppointmentTemplatesRequest.md)
  - [QueryApprovalType](docs/QueryApprovalType.md)
@@ -899,6 +943,7 @@ Class | Method | HTTP request | Description
  - [QueryCaseTemplatesRequest](docs/QueryCaseTemplatesRequest.md)
  - [QueryCasesRequest](docs/QueryCasesRequest.md)
  - [QueryCommentTemplatesRequest](docs/QueryCommentTemplatesRequest.md)
+ - [QueryConsumptionsResponse](docs/QueryConsumptionsResponse.md)
  - [QueryCorrespondenceRequest](docs/QueryCorrespondenceRequest.md)
  - [QueryCorrespondenceType](docs/QueryCorrespondenceType.md)
  - [QueryCustomFormsResponse](docs/QueryCustomFormsResponse.md)
@@ -917,8 +962,6 @@ Class | Method | HTTP request | Description
  - [QueryFinancialAccountsRequest](docs/QueryFinancialAccountsRequest.md)
  - [QueryHooksRequest](docs/QueryHooksRequest.md)
  - [QueryHooksResponse](docs/QueryHooksResponse.md)
- - [QueryInvoiceAnalysesRequest](docs/QueryInvoiceAnalysesRequest.md)
- - [QueryInvoiceAnalysesResponse](docs/QueryInvoiceAnalysesResponse.md)
  - [QueryInvoiceDataMappersRequest](docs/QueryInvoiceDataMappersRequest.md)
  - [QueryInvoicesRequest](docs/QueryInvoicesRequest.md)
  - [QueryLimitAttributesPartial](docs/QueryLimitAttributesPartial.md)
@@ -926,6 +969,8 @@ Class | Method | HTTP request | Description
  - [QueryNotificationsResponse](docs/QueryNotificationsResponse.md)
  - [QueryPropertiesRequest](docs/QueryPropertiesRequest.md)
  - [QueryPropertiesResponse](docs/QueryPropertiesResponse.md)
+ - [QueryPropertyDeclarationsRequest](docs/QueryPropertyDeclarationsRequest.md)
+ - [QueryPropertyFiscalYearsResponse](docs/QueryPropertyFiscalYearsResponse.md)
  - [QueryPropertyHandoversRequest](docs/QueryPropertyHandoversRequest.md)
  - [QueryPropertyOwnersRequest](docs/QueryPropertyOwnersRequest.md)
  - [QueryPropertyOwnersResponse](docs/QueryPropertyOwnersResponse.md)
@@ -945,8 +990,6 @@ Class | Method | HTTP request | Description
  - [QueryWorkflowDefinitionsResponse](docs/QueryWorkflowDefinitionsResponse.md)
  - [QueryWorkflowExecutionsRequest](docs/QueryWorkflowExecutionsRequest.md)
  - [QueryWorkflowExecutionsResponse](docs/QueryWorkflowExecutionsResponse.md)
- - [ReattachActionEnum](docs/ReattachActionEnum.md)
- - [ReattachInvoiceAnalysisRequest](docs/ReattachInvoiceAnalysisRequest.md)
  - [ReceiveEmailInvoiceRequest](docs/ReceiveEmailInvoiceRequest.md)
  - [ReceiveEmailInvoiceResponse](docs/ReceiveEmailInvoiceResponse.md)
  - [RejectApprovalRequest](docs/RejectApprovalRequest.md)
@@ -980,6 +1023,9 @@ Class | Method | HTTP request | Description
  - [SignatureStatusType](docs/SignatureStatusType.md)
  - [SignerNotificationTypeEnum](docs/SignerNotificationTypeEnum.md)
  - [SignerStatusType](docs/SignerStatusType.md)
+ - [SpecialUsageAssignment](docs/SpecialUsageAssignment.md)
+ - [SpecialUsageRight](docs/SpecialUsageRight.md)
+ - [SpecialUsageRightTypeEnum](docs/SpecialUsageRightTypeEnum.md)
  - [StepExecutionRequestPartials](docs/StepExecutionRequestPartials.md)
  - [SubmitPropertyHandoverRequest](docs/SubmitPropertyHandoverRequest.md)
  - [Tenancy](docs/Tenancy.md)
@@ -993,6 +1039,7 @@ Class | Method | HTTP request | Description
  - [TimeSlotAttributesPartial](docs/TimeSlotAttributesPartial.md)
  - [TipTapDocument](docs/TipTapDocument.md)
  - [UnssignCaseRequest](docs/UnssignCaseRequest.md)
+ - [UpdateAccountConfigRequest](docs/UpdateAccountConfigRequest.md)
  - [UpdateArchivalJobSettingsRequest](docs/UpdateArchivalJobSettingsRequest.md)
  - [UpdateBookingPreviewRequest](docs/UpdateBookingPreviewRequest.md)
  - [UpdateCaseRequest](docs/UpdateCaseRequest.md)
@@ -1001,12 +1048,11 @@ Class | Method | HTTP request | Description
  - [UpdateConnectorConfigRequest](docs/UpdateConnectorConfigRequest.md)
  - [UpdateDocumentRequest](docs/UpdateDocumentRequest.md)
  - [UpdateExternalUserRequest](docs/UpdateExternalUserRequest.md)
- - [UpdateInvoiceAnalysisRequest](docs/UpdateInvoiceAnalysisRequest.md)
  - [UpdateNoteRequest](docs/UpdateNoteRequest.md)
  - [UpdateNotificationRequest](docs/UpdateNotificationRequest.md)
  - [UpdateTenancyRequest](docs/UpdateTenancyRequest.md)
  - [UpdateUserPreferencesRequest](docs/UpdateUserPreferencesRequest.md)
- - [UploadInvoiceAttachmentResponse](docs/UploadInvoiceAttachmentResponse.md)
+ - [UploadInvoiceResponse](docs/UploadInvoiceResponse.md)
  - [UserPreferences](docs/UserPreferences.md)
  - [UserPreferencesAttributesPartial](docs/UserPreferencesAttributesPartial.md)
  - [UserReference](docs/UserReference.md)
