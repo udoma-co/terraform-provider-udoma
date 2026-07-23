@@ -64,6 +64,9 @@ func (r *Attachment) Schema(ctx context.Context, req resource.SchemaRequest, res
 			"source": schema.StringAttribute{
 				Required:    true,
 				Description: "The file location to read the JSON from",
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 			},
 			"created": schema.Int64Attribute{
 				Computed:    true,
