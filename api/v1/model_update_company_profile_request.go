@@ -31,6 +31,8 @@ type UpdateCompanyProfileRequest struct {
 	Website *string `json:"website,omitempty"`
 	// VAT number of the company.
 	VatNumber *string `json:"vat_number,omitempty"`
+	// The default signature text that should be used when sending correspondences (e.g. in case comments).
+	SignatureText *string `json:"signature_text,omitempty"`
 	// The ID of the image that is used as the company logo.
 	LogoAttachmentRef *string `json:"logo_attachment_ref,omitempty"`
 	// The ID of the image that is used as the company signature.
@@ -241,6 +243,38 @@ func (o *UpdateCompanyProfileRequest) SetVatNumber(v string) {
 	o.VatNumber = &v
 }
 
+// GetSignatureText returns the SignatureText field value if set, zero value otherwise.
+func (o *UpdateCompanyProfileRequest) GetSignatureText() string {
+	if o == nil || IsNil(o.SignatureText) {
+		var ret string
+		return ret
+	}
+	return *o.SignatureText
+}
+
+// GetSignatureTextOk returns a tuple with the SignatureText field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateCompanyProfileRequest) GetSignatureTextOk() (*string, bool) {
+	if o == nil || IsNil(o.SignatureText) {
+		return nil, false
+	}
+	return o.SignatureText, true
+}
+
+// HasSignatureText returns a boolean if a field has been set.
+func (o *UpdateCompanyProfileRequest) HasSignatureText() bool {
+	if o != nil && !IsNil(o.SignatureText) {
+		return true
+	}
+
+	return false
+}
+
+// SetSignatureText gets a reference to the given string and assigns it to the SignatureText field.
+func (o *UpdateCompanyProfileRequest) SetSignatureText(v string) {
+	o.SignatureText = &v
+}
+
 // GetLogoAttachmentRef returns the LogoAttachmentRef field value if set, zero value otherwise.
 func (o *UpdateCompanyProfileRequest) GetLogoAttachmentRef() string {
 	if o == nil || IsNil(o.LogoAttachmentRef) {
@@ -330,6 +364,9 @@ func (o UpdateCompanyProfileRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.VatNumber) {
 		toSerialize["vat_number"] = o.VatNumber
+	}
+	if !IsNil(o.SignatureText) {
+		toSerialize["signature_text"] = o.SignatureText
 	}
 	if !IsNil(o.LogoAttachmentRef) {
 		toSerialize["logo_attachment_ref"] = o.LogoAttachmentRef

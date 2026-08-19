@@ -13,7 +13,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 	api "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
 	"gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/internal/client"
 )
@@ -332,15 +331,7 @@ func (model *BankAccountModel) fromAPI(bankAccount *api.BankAccount) error {
 	model.UpdatedAt = types.Int64Value(bankAccount.UpdatedAt)
 	model.Cadence = types.StringValue(string(bankAccount.Cadence))
 
-	if len(bankAccount.Categories) != 0 {
-		categories, diags := types.ListValue(types.StringType, enumSliceToValueList(bankAccount.Categories))
-		if diags.HasError() {
-			return fmt.Errorf("error converting categories to list: %s", diags.Errors())
-		}
-		model.Categories = categories
-	} else {
-		model.Categories = basetypes.NewListNull(types.StringType)
-	}
+	model.Categories = omittableEnumListValue(bankAccount.Categories, model.Categories)
 
 	return nil
 }

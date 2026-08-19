@@ -38,6 +38,7 @@ type AccountDimensionModel struct {
 	Required        types.Bool   `tfsdk:"required"`
 	PadToSize       types.Int32  `tfsdk:"pad_to_size"`
 	ValueGenerator  types.String `tfsdk:"value_generator"`
+	IsCatalogItem   types.Bool   `tfsdk:"is_catalog_item"`
 }
 
 func (faq *AccountDimension) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -76,7 +77,7 @@ func (faq *AccountDimension) Schema(ctx context.Context, req resource.SchemaRequ
 				MarkdownDescription: "The reference type of the account",
 				Validators: []validator.String{
 					stringvalidator.LengthAtMost(25),
-					stringvalidator.OneOfCaseInsensitive(stringSlice(api.AllowedAccountDimensionReferenceTypeEnumEnumValues)...),
+					stringvalidator.OneOf(stringSlice(api.AllowedAccountDimensionReferenceTypeEnumEnumValues)...),
 				},
 			},
 			"required": schema.BoolAttribute{
@@ -90,6 +91,10 @@ func (faq *AccountDimension) Schema(ctx context.Context, req resource.SchemaRequ
 			"value_generator": schema.StringAttribute{
 				Optional:            true,
 				MarkdownDescription: "The value generator of the account",
+			},
+			"is_catalog_item": schema.BoolAttribute{
+				Computed:            true,
+				MarkdownDescription: "Whether this entity is represented as a catalog item.",
 			},
 		},
 	}
@@ -284,6 +289,7 @@ func (model *AccountDimensionModel) fromAPI(dimension *api.AccountDimension) err
 	model.ParentDimension = types.StringPointerValue(dimension.ParentDimensionRef)
 	model.Required = types.BoolPointerValue(dimension.Required)
 	model.ValueGenerator = types.StringPointerValue(dimension.ValueGenerator)
+	model.IsCatalogItem = types.BoolPointerValue(dimension.IsCatalogItem)
 
 	return nil
 }

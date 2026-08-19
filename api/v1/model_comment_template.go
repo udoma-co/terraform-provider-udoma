@@ -36,6 +36,8 @@ type CommentTemplate struct {
 	Script *string `json:"script,omitempty"`
 	// A golang template, that'll be passed reporter as Data and should return a nicely formatted string to use as a comment.
 	Template string `json:"template"`
+	// A flag indicating whether the entity is published as a catalog item. Catalog items are defined once for the environment and are managed centrally, they cannot be edited from a customer account that has subscribed to them. The flag is derived from the catalog and is never set by the client.
+	IsCatalogItem *bool `json:"is_catalog_item,omitempty"`
 }
 
 type _CommentTemplate CommentTemplate
@@ -278,6 +280,38 @@ func (o *CommentTemplate) SetTemplate(v string) {
 	o.Template = v
 }
 
+// GetIsCatalogItem returns the IsCatalogItem field value if set, zero value otherwise.
+func (o *CommentTemplate) GetIsCatalogItem() bool {
+	if o == nil || IsNil(o.IsCatalogItem) {
+		var ret bool
+		return ret
+	}
+	return *o.IsCatalogItem
+}
+
+// GetIsCatalogItemOk returns a tuple with the IsCatalogItem field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CommentTemplate) GetIsCatalogItemOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsCatalogItem) {
+		return nil, false
+	}
+	return o.IsCatalogItem, true
+}
+
+// HasIsCatalogItem returns a boolean if a field has been set.
+func (o *CommentTemplate) HasIsCatalogItem() bool {
+	if o != nil && !IsNil(o.IsCatalogItem) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsCatalogItem gets a reference to the given bool and assigns it to the IsCatalogItem field.
+func (o *CommentTemplate) SetIsCatalogItem(v bool) {
+	o.IsCatalogItem = &v
+}
+
 func (o CommentTemplate) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -302,6 +336,9 @@ func (o CommentTemplate) ToMap() (map[string]interface{}, error) {
 		toSerialize["script"] = o.Script
 	}
 	toSerialize["template"] = o.Template
+	if !IsNil(o.IsCatalogItem) {
+		toSerialize["is_catalog_item"] = o.IsCatalogItem
+	}
 	return toSerialize, nil
 }
 

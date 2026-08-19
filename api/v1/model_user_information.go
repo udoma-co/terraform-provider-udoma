@@ -14,11 +14,11 @@ import (
 	"encoding/json"
 )
 
-// checks if the UserPreferences type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &UserPreferences{}
+// checks if the UserInformation type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &UserInformation{}
 
-// UserPreferences struct for UserPreferences
-type UserPreferences struct {
+// UserInformation struct for UserInformation
+type UserInformation struct {
 	// Notify when a new case has been raised for the account. For property  managers or service providers, this will be triggered when a new case is raised for their company/any of the properties the company manages. For tenants it is triggered, when a case is raised for the property  they live in.
 	NotifyOnNewCase []NotificationType `json:"notify_on_new_case,omitempty"`
 	// Notify when a new case has been updated, which the user or their  company has been active on.
@@ -33,25 +33,25 @@ type UserPreferences struct {
 	NotifyOnSignatureDone []NotificationType `json:"notify_on_signature_done,omitempty"`
 }
 
-// NewUserPreferences instantiates a new UserPreferences object
+// NewUserInformation instantiates a new UserInformation object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewUserPreferences() *UserPreferences {
-	this := UserPreferences{}
+func NewUserInformation() *UserInformation {
+	this := UserInformation{}
 	return &this
 }
 
-// NewUserPreferencesWithDefaults instantiates a new UserPreferences object
+// NewUserInformationWithDefaults instantiates a new UserInformation object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewUserPreferencesWithDefaults() *UserPreferences {
-	this := UserPreferences{}
+func NewUserInformationWithDefaults() *UserInformation {
+	this := UserInformation{}
 	return &this
 }
 
 // GetNotifyOnNewCase returns the NotifyOnNewCase field value if set, zero value otherwise.
-func (o *UserPreferences) GetNotifyOnNewCase() []NotificationType {
+func (o *UserInformation) GetNotifyOnNewCase() []NotificationType {
 	if o == nil || IsNil(o.NotifyOnNewCase) {
 		var ret []NotificationType
 		return ret
@@ -61,7 +61,7 @@ func (o *UserPreferences) GetNotifyOnNewCase() []NotificationType {
 
 // GetNotifyOnNewCaseOk returns a tuple with the NotifyOnNewCase field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UserPreferences) GetNotifyOnNewCaseOk() ([]NotificationType, bool) {
+func (o *UserInformation) GetNotifyOnNewCaseOk() ([]NotificationType, bool) {
 	if o == nil || IsNil(o.NotifyOnNewCase) {
 		return nil, false
 	}
@@ -69,7 +69,7 @@ func (o *UserPreferences) GetNotifyOnNewCaseOk() ([]NotificationType, bool) {
 }
 
 // HasNotifyOnNewCase returns a boolean if a field has been set.
-func (o *UserPreferences) HasNotifyOnNewCase() bool {
+func (o *UserInformation) HasNotifyOnNewCase() bool {
 	if o != nil && !IsNil(o.NotifyOnNewCase) {
 		return true
 	}
@@ -78,12 +78,12 @@ func (o *UserPreferences) HasNotifyOnNewCase() bool {
 }
 
 // SetNotifyOnNewCase gets a reference to the given []NotificationType and assigns it to the NotifyOnNewCase field.
-func (o *UserPreferences) SetNotifyOnNewCase(v []NotificationType) {
+func (o *UserInformation) SetNotifyOnNewCase(v []NotificationType) {
 	o.NotifyOnNewCase = v
 }
 
 // GetNotifyOnCaseUpdate returns the NotifyOnCaseUpdate field value if set, zero value otherwise.
-func (o *UserPreferences) GetNotifyOnCaseUpdate() []NotificationType {
+func (o *UserInformation) GetNotifyOnCaseUpdate() []NotificationType {
 	if o == nil || IsNil(o.NotifyOnCaseUpdate) {
 		var ret []NotificationType
 		return ret
@@ -93,7 +93,7 @@ func (o *UserPreferences) GetNotifyOnCaseUpdate() []NotificationType {
 
 // GetNotifyOnCaseUpdateOk returns a tuple with the NotifyOnCaseUpdate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UserPreferences) GetNotifyOnCaseUpdateOk() ([]NotificationType, bool) {
+func (o *UserInformation) GetNotifyOnCaseUpdateOk() ([]NotificationType, bool) {
 	if o == nil || IsNil(o.NotifyOnCaseUpdate) {
 		return nil, false
 	}
@@ -101,7 +101,7 @@ func (o *UserPreferences) GetNotifyOnCaseUpdateOk() ([]NotificationType, bool) {
 }
 
 // HasNotifyOnCaseUpdate returns a boolean if a field has been set.
-func (o *UserPreferences) HasNotifyOnCaseUpdate() bool {
+func (o *UserInformation) HasNotifyOnCaseUpdate() bool {
 	if o != nil && !IsNil(o.NotifyOnCaseUpdate) {
 		return true
 	}
@@ -110,12 +110,12 @@ func (o *UserPreferences) HasNotifyOnCaseUpdate() bool {
 }
 
 // SetNotifyOnCaseUpdate gets a reference to the given []NotificationType and assigns it to the NotifyOnCaseUpdate field.
-func (o *UserPreferences) SetNotifyOnCaseUpdate(v []NotificationType) {
+func (o *UserInformation) SetNotifyOnCaseUpdate(v []NotificationType) {
 	o.NotifyOnCaseUpdate = v
 }
 
 // GetNotifyOnAppointment returns the NotifyOnAppointment field value if set, zero value otherwise.
-func (o *UserPreferences) GetNotifyOnAppointment() []NotificationType {
+func (o *UserInformation) GetNotifyOnAppointment() []NotificationType {
 	if o == nil || IsNil(o.NotifyOnAppointment) {
 		var ret []NotificationType
 		return ret
@@ -125,7 +125,7 @@ func (o *UserPreferences) GetNotifyOnAppointment() []NotificationType {
 
 // GetNotifyOnAppointmentOk returns a tuple with the NotifyOnAppointment field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UserPreferences) GetNotifyOnAppointmentOk() ([]NotificationType, bool) {
+func (o *UserInformation) GetNotifyOnAppointmentOk() ([]NotificationType, bool) {
 	if o == nil || IsNil(o.NotifyOnAppointment) {
 		return nil, false
 	}
@@ -133,7 +133,7 @@ func (o *UserPreferences) GetNotifyOnAppointmentOk() ([]NotificationType, bool) 
 }
 
 // HasNotifyOnAppointment returns a boolean if a field has been set.
-func (o *UserPreferences) HasNotifyOnAppointment() bool {
+func (o *UserInformation) HasNotifyOnAppointment() bool {
 	if o != nil && !IsNil(o.NotifyOnAppointment) {
 		return true
 	}
@@ -142,12 +142,12 @@ func (o *UserPreferences) HasNotifyOnAppointment() bool {
 }
 
 // SetNotifyOnAppointment gets a reference to the given []NotificationType and assigns it to the NotifyOnAppointment field.
-func (o *UserPreferences) SetNotifyOnAppointment(v []NotificationType) {
+func (o *UserInformation) SetNotifyOnAppointment(v []NotificationType) {
 	o.NotifyOnAppointment = v
 }
 
 // GetNotifyOnCorrespondenceAccessed returns the NotifyOnCorrespondenceAccessed field value if set, zero value otherwise.
-func (o *UserPreferences) GetNotifyOnCorrespondenceAccessed() []NotificationType {
+func (o *UserInformation) GetNotifyOnCorrespondenceAccessed() []NotificationType {
 	if o == nil || IsNil(o.NotifyOnCorrespondenceAccessed) {
 		var ret []NotificationType
 		return ret
@@ -157,7 +157,7 @@ func (o *UserPreferences) GetNotifyOnCorrespondenceAccessed() []NotificationType
 
 // GetNotifyOnCorrespondenceAccessedOk returns a tuple with the NotifyOnCorrespondenceAccessed field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UserPreferences) GetNotifyOnCorrespondenceAccessedOk() ([]NotificationType, bool) {
+func (o *UserInformation) GetNotifyOnCorrespondenceAccessedOk() ([]NotificationType, bool) {
 	if o == nil || IsNil(o.NotifyOnCorrespondenceAccessed) {
 		return nil, false
 	}
@@ -165,7 +165,7 @@ func (o *UserPreferences) GetNotifyOnCorrespondenceAccessedOk() ([]NotificationT
 }
 
 // HasNotifyOnCorrespondenceAccessed returns a boolean if a field has been set.
-func (o *UserPreferences) HasNotifyOnCorrespondenceAccessed() bool {
+func (o *UserInformation) HasNotifyOnCorrespondenceAccessed() bool {
 	if o != nil && !IsNil(o.NotifyOnCorrespondenceAccessed) {
 		return true
 	}
@@ -174,12 +174,12 @@ func (o *UserPreferences) HasNotifyOnCorrespondenceAccessed() bool {
 }
 
 // SetNotifyOnCorrespondenceAccessed gets a reference to the given []NotificationType and assigns it to the NotifyOnCorrespondenceAccessed field.
-func (o *UserPreferences) SetNotifyOnCorrespondenceAccessed(v []NotificationType) {
+func (o *UserInformation) SetNotifyOnCorrespondenceAccessed(v []NotificationType) {
 	o.NotifyOnCorrespondenceAccessed = v
 }
 
 // GetNotifyOnHandoverSubmitted returns the NotifyOnHandoverSubmitted field value if set, zero value otherwise.
-func (o *UserPreferences) GetNotifyOnHandoverSubmitted() []NotificationType {
+func (o *UserInformation) GetNotifyOnHandoverSubmitted() []NotificationType {
 	if o == nil || IsNil(o.NotifyOnHandoverSubmitted) {
 		var ret []NotificationType
 		return ret
@@ -189,7 +189,7 @@ func (o *UserPreferences) GetNotifyOnHandoverSubmitted() []NotificationType {
 
 // GetNotifyOnHandoverSubmittedOk returns a tuple with the NotifyOnHandoverSubmitted field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UserPreferences) GetNotifyOnHandoverSubmittedOk() ([]NotificationType, bool) {
+func (o *UserInformation) GetNotifyOnHandoverSubmittedOk() ([]NotificationType, bool) {
 	if o == nil || IsNil(o.NotifyOnHandoverSubmitted) {
 		return nil, false
 	}
@@ -197,7 +197,7 @@ func (o *UserPreferences) GetNotifyOnHandoverSubmittedOk() ([]NotificationType, 
 }
 
 // HasNotifyOnHandoverSubmitted returns a boolean if a field has been set.
-func (o *UserPreferences) HasNotifyOnHandoverSubmitted() bool {
+func (o *UserInformation) HasNotifyOnHandoverSubmitted() bool {
 	if o != nil && !IsNil(o.NotifyOnHandoverSubmitted) {
 		return true
 	}
@@ -206,12 +206,12 @@ func (o *UserPreferences) HasNotifyOnHandoverSubmitted() bool {
 }
 
 // SetNotifyOnHandoverSubmitted gets a reference to the given []NotificationType and assigns it to the NotifyOnHandoverSubmitted field.
-func (o *UserPreferences) SetNotifyOnHandoverSubmitted(v []NotificationType) {
+func (o *UserInformation) SetNotifyOnHandoverSubmitted(v []NotificationType) {
 	o.NotifyOnHandoverSubmitted = v
 }
 
 // GetNotifyOnSignatureDone returns the NotifyOnSignatureDone field value if set, zero value otherwise.
-func (o *UserPreferences) GetNotifyOnSignatureDone() []NotificationType {
+func (o *UserInformation) GetNotifyOnSignatureDone() []NotificationType {
 	if o == nil || IsNil(o.NotifyOnSignatureDone) {
 		var ret []NotificationType
 		return ret
@@ -221,7 +221,7 @@ func (o *UserPreferences) GetNotifyOnSignatureDone() []NotificationType {
 
 // GetNotifyOnSignatureDoneOk returns a tuple with the NotifyOnSignatureDone field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UserPreferences) GetNotifyOnSignatureDoneOk() ([]NotificationType, bool) {
+func (o *UserInformation) GetNotifyOnSignatureDoneOk() ([]NotificationType, bool) {
 	if o == nil || IsNil(o.NotifyOnSignatureDone) {
 		return nil, false
 	}
@@ -229,7 +229,7 @@ func (o *UserPreferences) GetNotifyOnSignatureDoneOk() ([]NotificationType, bool
 }
 
 // HasNotifyOnSignatureDone returns a boolean if a field has been set.
-func (o *UserPreferences) HasNotifyOnSignatureDone() bool {
+func (o *UserInformation) HasNotifyOnSignatureDone() bool {
 	if o != nil && !IsNil(o.NotifyOnSignatureDone) {
 		return true
 	}
@@ -238,11 +238,11 @@ func (o *UserPreferences) HasNotifyOnSignatureDone() bool {
 }
 
 // SetNotifyOnSignatureDone gets a reference to the given []NotificationType and assigns it to the NotifyOnSignatureDone field.
-func (o *UserPreferences) SetNotifyOnSignatureDone(v []NotificationType) {
+func (o *UserInformation) SetNotifyOnSignatureDone(v []NotificationType) {
 	o.NotifyOnSignatureDone = v
 }
 
-func (o UserPreferences) MarshalJSON() ([]byte, error) {
+func (o UserInformation) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -250,7 +250,7 @@ func (o UserPreferences) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o UserPreferences) ToMap() (map[string]interface{}, error) {
+func (o UserInformation) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.NotifyOnNewCase) {
 		toSerialize["notify_on_new_case"] = o.NotifyOnNewCase
@@ -273,38 +273,38 @@ func (o UserPreferences) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-type NullableUserPreferences struct {
-	value *UserPreferences
+type NullableUserInformation struct {
+	value *UserInformation
 	isSet bool
 }
 
-func (v NullableUserPreferences) Get() *UserPreferences {
+func (v NullableUserInformation) Get() *UserInformation {
 	return v.value
 }
 
-func (v *NullableUserPreferences) Set(val *UserPreferences) {
+func (v *NullableUserInformation) Set(val *UserInformation) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableUserPreferences) IsSet() bool {
+func (v NullableUserInformation) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableUserPreferences) Unset() {
+func (v *NullableUserInformation) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableUserPreferences(val *UserPreferences) *NullableUserPreferences {
-	return &NullableUserPreferences{value: val, isSet: true}
+func NewNullableUserInformation(val *UserInformation) *NullableUserInformation {
+	return &NullableUserInformation{value: val, isSet: true}
 }
 
-func (v NullableUserPreferences) MarshalJSON() ([]byte, error) {
+func (v NullableUserInformation) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableUserPreferences) UnmarshalJSON(src []byte) error {
+func (v *NullableUserInformation) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

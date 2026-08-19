@@ -34,6 +34,7 @@ Resource represents a template for generating documents
 ### Read-Only
 
 - `id` (String) The unique identifier for the document template
+- `is_catalog_item` (Boolean) Whether this entity is represented as a catalog item.
 - `last_updated` (String)
 
 <a id="nestedatt--options"></a>

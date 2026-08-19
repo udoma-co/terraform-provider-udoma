@@ -42,9 +42,11 @@ type Tenant struct {
 	// The email address of the tenant. Used for sending communication to them, as well as used for invitations.
 	Email *string `json:"email,omitempty"`
 	// The phone number of the tenant. Not directly used by the system, but can be used by managers and service providers to contact the tenant.
-	PhoneNumber *string      `json:"phone_number,omitempty"`
-	Address     *Address     `json:"address,omitempty"`
-	BankDetails *BankDetails `json:"bank_details,omitempty"`
+	PhoneNumber *string                 `json:"phone_number,omitempty"`
+	Address     *Address                `json:"address,omitempty"`
+	BankDetails *BankDetails            `json:"bank_details,omitempty"`
+	Property    NullableContactProperty `json:"property,omitempty"`
+	TenancyMode *TenancyModeEnum        `json:"tenancy_mode,omitempty"`
 	// Extensions data for this tenant, keyed by extension key
 	Extensions *map[string]map[string]interface{} `json:"extensions,omitempty"`
 }
@@ -449,6 +451,81 @@ func (o *Tenant) SetBankDetails(v BankDetails) {
 	o.BankDetails = &v
 }
 
+// GetProperty returns the Property field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Tenant) GetProperty() ContactProperty {
+	if o == nil || IsNil(o.Property.Get()) {
+		var ret ContactProperty
+		return ret
+	}
+	return *o.Property.Get()
+}
+
+// GetPropertyOk returns a tuple with the Property field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Tenant) GetPropertyOk() (*ContactProperty, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Property.Get(), o.Property.IsSet()
+}
+
+// HasProperty returns a boolean if a field has been set.
+func (o *Tenant) HasProperty() bool {
+	if o != nil && o.Property.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetProperty gets a reference to the given NullableContactProperty and assigns it to the Property field.
+func (o *Tenant) SetProperty(v ContactProperty) {
+	o.Property.Set(&v)
+}
+
+// SetPropertyNil sets the value for Property to be an explicit nil
+func (o *Tenant) SetPropertyNil() {
+	o.Property.Set(nil)
+}
+
+// UnsetProperty ensures that no value is present for Property, not even an explicit nil
+func (o *Tenant) UnsetProperty() {
+	o.Property.Unset()
+}
+
+// GetTenancyMode returns the TenancyMode field value if set, zero value otherwise.
+func (o *Tenant) GetTenancyMode() TenancyModeEnum {
+	if o == nil || IsNil(o.TenancyMode) {
+		var ret TenancyModeEnum
+		return ret
+	}
+	return *o.TenancyMode
+}
+
+// GetTenancyModeOk returns a tuple with the TenancyMode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Tenant) GetTenancyModeOk() (*TenancyModeEnum, bool) {
+	if o == nil || IsNil(o.TenancyMode) {
+		return nil, false
+	}
+	return o.TenancyMode, true
+}
+
+// HasTenancyMode returns a boolean if a field has been set.
+func (o *Tenant) HasTenancyMode() bool {
+	if o != nil && !IsNil(o.TenancyMode) {
+		return true
+	}
+
+	return false
+}
+
+// SetTenancyMode gets a reference to the given TenancyModeEnum and assigns it to the TenancyMode field.
+func (o *Tenant) SetTenancyMode(v TenancyModeEnum) {
+	o.TenancyMode = &v
+}
+
 // GetExtensions returns the Extensions field value if set, zero value otherwise.
 func (o *Tenant) GetExtensions() map[string]map[string]interface{} {
 	if o == nil || IsNil(o.Extensions) {
@@ -519,6 +596,12 @@ func (o Tenant) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.BankDetails) {
 		toSerialize["bank_details"] = o.BankDetails
+	}
+	if o.Property.IsSet() {
+		toSerialize["property"] = o.Property.Get()
+	}
+	if !IsNil(o.TenancyMode) {
+		toSerialize["tenancy_mode"] = o.TenancyMode
 	}
 	if !IsNil(o.Extensions) {
 		toSerialize["extensions"] = o.Extensions

@@ -35,8 +35,12 @@ type FinancialAccount struct {
 	// The currency of the booking
 	Currency string              `json:"currency"`
 	Cadence  *BalanceCadenceEnum `json:"cadence,omitempty"`
-	// Optional reference to a cost type, used for operating cost statement tracking.
+	// Optional reference to a cost type, used for operating cost statement tracking. Mutually exclusive with revenue_type_ref.
 	CostTypeRef *string `json:"cost_type_ref,omitempty"`
+	// Optional reference to a revenue type, used for tracking different types of income. Mutually exclusive with cost_type_ref.
+	RevenueTypeRef *string `json:"revenue_type_ref,omitempty"`
+	// A flag indicating whether the entity is published as a catalog item. Catalog items are defined once for the environment and are managed centrally, they cannot be edited from a customer account that has subscribed to them. The flag is derived from the catalog and is never set by the client.
+	IsCatalogItem *bool `json:"is_catalog_item,omitempty"`
 	// The current balance of the account
 	Balance *float64 `json:"balance,omitempty"`
 	// The dimensions that are assigned to the account
@@ -301,6 +305,70 @@ func (o *FinancialAccount) SetCostTypeRef(v string) {
 	o.CostTypeRef = &v
 }
 
+// GetRevenueTypeRef returns the RevenueTypeRef field value if set, zero value otherwise.
+func (o *FinancialAccount) GetRevenueTypeRef() string {
+	if o == nil || IsNil(o.RevenueTypeRef) {
+		var ret string
+		return ret
+	}
+	return *o.RevenueTypeRef
+}
+
+// GetRevenueTypeRefOk returns a tuple with the RevenueTypeRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *FinancialAccount) GetRevenueTypeRefOk() (*string, bool) {
+	if o == nil || IsNil(o.RevenueTypeRef) {
+		return nil, false
+	}
+	return o.RevenueTypeRef, true
+}
+
+// HasRevenueTypeRef returns a boolean if a field has been set.
+func (o *FinancialAccount) HasRevenueTypeRef() bool {
+	if o != nil && !IsNil(o.RevenueTypeRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetRevenueTypeRef gets a reference to the given string and assigns it to the RevenueTypeRef field.
+func (o *FinancialAccount) SetRevenueTypeRef(v string) {
+	o.RevenueTypeRef = &v
+}
+
+// GetIsCatalogItem returns the IsCatalogItem field value if set, zero value otherwise.
+func (o *FinancialAccount) GetIsCatalogItem() bool {
+	if o == nil || IsNil(o.IsCatalogItem) {
+		var ret bool
+		return ret
+	}
+	return *o.IsCatalogItem
+}
+
+// GetIsCatalogItemOk returns a tuple with the IsCatalogItem field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *FinancialAccount) GetIsCatalogItemOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsCatalogItem) {
+		return nil, false
+	}
+	return o.IsCatalogItem, true
+}
+
+// HasIsCatalogItem returns a boolean if a field has been set.
+func (o *FinancialAccount) HasIsCatalogItem() bool {
+	if o != nil && !IsNil(o.IsCatalogItem) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsCatalogItem gets a reference to the given bool and assigns it to the IsCatalogItem field.
+func (o *FinancialAccount) SetIsCatalogItem(v bool) {
+	o.IsCatalogItem = &v
+}
+
 // GetBalance returns the Balance field value if set, zero value otherwise.
 func (o *FinancialAccount) GetBalance() float64 {
 	if o == nil || IsNil(o.Balance) {
@@ -387,6 +455,12 @@ func (o FinancialAccount) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.CostTypeRef) {
 		toSerialize["cost_type_ref"] = o.CostTypeRef
+	}
+	if !IsNil(o.RevenueTypeRef) {
+		toSerialize["revenue_type_ref"] = o.RevenueTypeRef
+	}
+	if !IsNil(o.IsCatalogItem) {
+		toSerialize["is_catalog_item"] = o.IsCatalogItem
 	}
 	if !IsNil(o.Balance) {
 		toSerialize["balance"] = o.Balance

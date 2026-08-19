@@ -30,4 +30,5 @@ description: |-
 
 - `created_at` (Number) The creation timestamp of the data import template.
 - `id` (String) The ID of the data import template.
+- `is_catalog_item` (Boolean) Whether this entity is represented as a catalog item.
 - `updated_at` (Number) The last update timestamp of the data import template.

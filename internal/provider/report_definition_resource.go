@@ -49,17 +49,18 @@ type resultSchemaModel struct {
 
 // reportDefinitionModel describes the resource data model.
 type reportDefinitionModel struct {
-	ID           types.String       `tfsdk:"id"`
-	LastUpdated  types.String       `tfsdk:"last_updated"`
-	CreatedAt    types.Int64        `tfsdk:"created_at"`
-	UpdatedAt    types.Int64        `tfsdk:"updated_at"`
-	Name         types.String       `tfsdk:"name"`
-	Description  types.String       `tfsdk:"description"`
-	EnvVars      types.Map          `tfsdk:"env_vars"`
-	ResultSchema *resultSchemaModel `tfsdk:"result_schema"`
-	Parameters   *CustomFormModel   `tfsdk:"parameters"`
-	Script       types.String       `tfsdk:"script"`
-	Version      types.Int32        `tfsdk:"version"`
+	ID            types.String       `tfsdk:"id"`
+	LastUpdated   types.String       `tfsdk:"last_updated"`
+	CreatedAt     types.Int64        `tfsdk:"created_at"`
+	UpdatedAt     types.Int64        `tfsdk:"updated_at"`
+	Name          types.String       `tfsdk:"name"`
+	Description   types.String       `tfsdk:"description"`
+	EnvVars       types.Map          `tfsdk:"env_vars"`
+	ResultSchema  *resultSchemaModel `tfsdk:"result_schema"`
+	Parameters    *CustomFormModel   `tfsdk:"parameters"`
+	Script        types.String       `tfsdk:"script"`
+	IsCatalogItem types.Bool         `tfsdk:"is_catalog_item"`
+	Version       types.Int32        `tfsdk:"version"`
 }
 
 func NewReportDefinitionModelNull() *reportDefinitionModel {
@@ -123,7 +124,7 @@ func (r *reportDefinition) Schema(ctx context.Context, req resource.SchemaReques
 						Required:    true,
 						Description: "The type of the result (object, table).",
 						Validators: []validator.String{
-							stringvalidator.OneOfCaseInsensitive(stringSlice(api.AllowedReportResultTypeEnumEnumValues)...),
+							stringvalidator.OneOf(stringSlice(api.AllowedReportResultTypeEnumEnumValues)...),
 						},
 					},
 					"table_row_id_attribute": schema.StringAttribute{
@@ -165,6 +166,10 @@ func (r *reportDefinition) Schema(ctx context.Context, req resource.SchemaReques
 			"script": schema.StringAttribute{
 				Required:    true,
 				Description: "JS script that is executed to generate the report",
+			},
+			"is_catalog_item": schema.BoolAttribute{
+				Computed:    true,
+				Description: "Whether this entity is represented as a catalog item.",
 			},
 			"version": schema.Int32Attribute{
 				Optional:    true,
@@ -411,6 +416,7 @@ func (model *reportDefinitionModel) fromAPI(reportDefinition *api.ReportDefiniti
 	model.Name = types.StringValue(reportDefinition.Name)
 	model.Description = omittableStringValue(reportDefinition.Description, model.Description)
 	model.Script = types.StringValue(reportDefinition.Script)
+	model.IsCatalogItem = types.BoolPointerValue(reportDefinition.IsCatalogItem)
 	model.Version = types.Int32PointerValue(reportDefinition.Version)
 
 	if reportDefinition.EnvVars != nil {

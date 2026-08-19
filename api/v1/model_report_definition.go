@@ -38,6 +38,8 @@ type ReportDefinition struct {
 	// The JS script to execute to generate the report result
 	Script  string `json:"script"`
 	Version *int32 `json:"version,omitempty"`
+	// A flag indicating whether the entity is published as a catalog item. Catalog items are defined once for the environment and are managed centrally, they cannot be edited from a customer account that has subscribed to them. The flag is derived from the catalog and is never set by the client.
+	IsCatalogItem *bool `json:"is_catalog_item,omitempty"`
 }
 
 type _ReportDefinition ReportDefinition
@@ -348,6 +350,38 @@ func (o *ReportDefinition) SetVersion(v int32) {
 	o.Version = &v
 }
 
+// GetIsCatalogItem returns the IsCatalogItem field value if set, zero value otherwise.
+func (o *ReportDefinition) GetIsCatalogItem() bool {
+	if o == nil || IsNil(o.IsCatalogItem) {
+		var ret bool
+		return ret
+	}
+	return *o.IsCatalogItem
+}
+
+// GetIsCatalogItemOk returns a tuple with the IsCatalogItem field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReportDefinition) GetIsCatalogItemOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsCatalogItem) {
+		return nil, false
+	}
+	return o.IsCatalogItem, true
+}
+
+// HasIsCatalogItem returns a boolean if a field has been set.
+func (o *ReportDefinition) HasIsCatalogItem() bool {
+	if o != nil && !IsNil(o.IsCatalogItem) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsCatalogItem gets a reference to the given bool and assigns it to the IsCatalogItem field.
+func (o *ReportDefinition) SetIsCatalogItem(v bool) {
+	o.IsCatalogItem = &v
+}
+
 func (o ReportDefinition) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -375,6 +409,9 @@ func (o ReportDefinition) ToMap() (map[string]interface{}, error) {
 	toSerialize["script"] = o.Script
 	if !IsNil(o.Version) {
 		toSerialize["version"] = o.Version
+	}
+	if !IsNil(o.IsCatalogItem) {
+		toSerialize["is_catalog_item"] = o.IsCatalogItem
 	}
 	return toSerialize, nil
 }

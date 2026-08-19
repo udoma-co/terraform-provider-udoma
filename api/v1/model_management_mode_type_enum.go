@@ -15,7 +15,7 @@ import (
 	"fmt"
 )
 
-// ManagementModeTypeEnum Indicates if the property management has a mixed portfolio, or all properties are  managed in the same way.
+// ManagementModeTypeEnum Indicates if the property management has a mixed portfolio, or all properties are managed in the same way.
 type ManagementModeTypeEnum string
 
 // List of ManagementModeTypeEnum

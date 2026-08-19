@@ -32,6 +32,7 @@ Resource represents a defintion of a report
 
 - `created_at` (Number) The date and time the report definition was created
 - `id` (String) The unique identifier for the report definition
+- `is_catalog_item` (Boolean) Whether this entity is represented as a catalog item.
 - `last_updated` (String)
 - `updated_at` (Number) The date and time the report definition was last modified
 

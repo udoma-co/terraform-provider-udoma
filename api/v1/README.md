@@ -79,6 +79,7 @@ All URIs are relative to *http://hostlocal/api/udoma/v1*
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *DefaultAPI* | [**AddAppointmentComment**](docs/DefaultAPI.md#addappointmentcomment) | **Post** /calendar/appointments/entry/{entryID}/comment | Add a comment in an appointment
+*DefaultAPI* | [**AddBadgeForEntity**](docs/DefaultAPI.md#addbadgeforentity) | **Post** /badges/by-reference/{refID} | Add a badge
 *DefaultAPI* | [**AddCaseComment**](docs/DefaultAPI.md#addcasecomment) | **Post** /case/{caseID}/comment | Add new case comment
 *DefaultAPI* | [**ArchiveApproval**](docs/DefaultAPI.md#archiveapproval) | **Post** /approval/{approvalID}/archive | Archive the approval with the given ID
 *DefaultAPI* | [**ArchiveCase**](docs/DefaultAPI.md#archivecase) | **Post** /case/{caseID}/archive | Mark the case as archived
@@ -113,6 +114,9 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateCase**](docs/DefaultAPI.md#createcase) | **Post** /case | Create a new case
 *DefaultAPI* | [**CreateCaseReportingEndpoint**](docs/DefaultAPI.md#createcasereportingendpoint) | **Post** /cases/endpoint | Create new case reporting endpoint
 *DefaultAPI* | [**CreateCaseTemplate**](docs/DefaultAPI.md#createcasetemplate) | **Post** /cases/template | Create new case template
+*DefaultAPI* | [**CreateCatalogGroup**](docs/DefaultAPI.md#createcataloggroup) | **Post** /catalog/group | Create new catalog group
+*DefaultAPI* | [**CreateCatalogItem**](docs/DefaultAPI.md#createcatalogitem) | **Post** /catalog/item | Create new catalog item
+*DefaultAPI* | [**CreateCatalogItemSubscription**](docs/DefaultAPI.md#createcatalogitemsubscription) | **Post** /catalog/item-subscription | Create a new catalog item subscription for the current account
 *DefaultAPI* | [**CreateCommentTemplate**](docs/DefaultAPI.md#createcommenttemplate) | **Post** /comment-template | Create a comment template
 *DefaultAPI* | [**CreateConnectorConfig**](docs/DefaultAPI.md#createconnectorconfig) | **Post** /connector/config | Create a new connector configuration
 *DefaultAPI* | [**CreateConnectorCredentials**](docs/DefaultAPI.md#createconnectorcredentials) | **Post** /connector/credentials | Create new connector credentials
@@ -131,6 +135,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateFAQEntry**](docs/DefaultAPI.md#createfaqentry) | **Post** /faqs/entry | Create a new FAQ entry
 *DefaultAPI* | [**CreateFeatureFlagConfig**](docs/DefaultAPI.md#createfeatureflagconfig) | **Post** /feature-flags/configs | Create a new feature flag configuration
 *DefaultAPI* | [**CreateFinancialAccount**](docs/DefaultAPI.md#createfinancialaccount) | **Post** /financial/account | Create a new financial account
+*DefaultAPI* | [**CreateGroupSubscription**](docs/DefaultAPI.md#creategroupsubscription) | **Post** /catalog/group-subscription | Create new group subscription for the current account
 *DefaultAPI* | [**CreateHook**](docs/DefaultAPI.md#createhook) | **Post** /hook | Create a new hook
 *DefaultAPI* | [**CreateInventoryItem**](docs/DefaultAPI.md#createinventoryitem) | **Post** /property/{propID}/inventory | Create a new inventory item for a property
 *DefaultAPI* | [**CreateInvoice**](docs/DefaultAPI.md#createinvoice) | **Post** /invoice | Create invoice request
@@ -139,15 +144,19 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateMeterReading**](docs/DefaultAPI.md#createmeterreading) | **Post** /meter/{meterID}/readings | Create a new meter reading for a meter
 *DefaultAPI* | [**CreateNote**](docs/DefaultAPI.md#createnote) | **Post** /note | Create a new note
 *DefaultAPI* | [**CreateNotification**](docs/DefaultAPI.md#createnotification) | **Post** /notification | Create a new notification
+*DefaultAPI* | [**CreateOwnership**](docs/DefaultAPI.md#createownership) | **Post** /ownership | Create a new ownership
 *DefaultAPI* | [**CreateProperty**](docs/DefaultAPI.md#createproperty) | **Post** /property | Create property
 *DefaultAPI* | [**CreatePropertyDeclaration**](docs/DefaultAPI.md#createpropertydeclaration) | **Post** /property-declarations | Create a new property declaration of condominium ownership
 *DefaultAPI* | [**CreatePropertyFiscalYear**](docs/DefaultAPI.md#createpropertyfiscalyear) | **Post** /properties/{propID}/fiscal-years | Create a fiscal year for a property
 *DefaultAPI* | [**CreatePropertyHandover**](docs/DefaultAPI.md#createpropertyhandover) | **Post** /property-handovers/handover/{templateID} | Create a new property handover
 *DefaultAPI* | [**CreatePropertyHandoverTemplate**](docs/DefaultAPI.md#createpropertyhandovertemplate) | **Post** /property-handovers/template | Create a new property handover template
 *DefaultAPI* | [**CreatePropertyOwner**](docs/DefaultAPI.md#createpropertyowner) | **Post** /owner | Create a new property owner
+*DefaultAPI* | [**CreatePropertyUnitAssessment**](docs/DefaultAPI.md#createpropertyunitassessment) | **Post** /properties/{propID}/condominium-fee | Create a unit assessment for a property
+*DefaultAPI* | [**CreatePublicChatbotInstruction**](docs/DefaultAPI.md#createpublicchatbotinstruction) | **Post** /chatbot/instruction | Create a new public chatbot instruction
 *DefaultAPI* | [**CreateRentUpdate**](docs/DefaultAPI.md#createrentupdate) | **Post** /tenancy/{tenancyID}/rent-updates | Create new rent update for the tenancy
 *DefaultAPI* | [**CreateReportDefinition**](docs/DefaultAPI.md#createreportdefinition) | **Post** /report | Create a new report definition
 *DefaultAPI* | [**CreateReportEntrypoint**](docs/DefaultAPI.md#createreportentrypoint) | **Post** /report/definition/{definitionID}/entrypoint | Create a new report entry point for the report definition
+*DefaultAPI* | [**CreateRevenueType**](docs/DefaultAPI.md#createrevenuetype) | **Post** /revenue-type | Create a new revenue type
 *DefaultAPI* | [**CreateServiceProvider**](docs/DefaultAPI.md#createserviceprovider) | **Post** /service-provider | Create a new service provider for the current account
 *DefaultAPI* | [**CreateTenancy**](docs/DefaultAPI.md#createtenancy) | **Post** /property/{propID}/tenancy | Create new tenancy for the property
 *DefaultAPI* | [**CreateTenant**](docs/DefaultAPI.md#createtenant) | **Post** /tenant | Create a new tenant and optionally invites them to join the platform 
@@ -164,6 +173,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteAppointmentSchedule**](docs/DefaultAPI.md#deleteappointmentschedule) | **Delete** /calendar/appointments/schedule/{scheduleID} | Delete an appointment schedule
 *DefaultAPI* | [**DeleteAppointmentTemplate**](docs/DefaultAPI.md#deleteappointmenttemplate) | **Delete** /calendar/appointments/template/{templateID} | Delete an appointment template
 *DefaultAPI* | [**DeleteApproval**](docs/DefaultAPI.md#deleteapproval) | **Delete** /approval/{approvalID} | Delete an already existing approval
+*DefaultAPI* | [**DeleteBadgeForEntity**](docs/DefaultAPI.md#deletebadgeforentity) | **Delete** /badges/by-reference/{refID}/{badge} | Remove a badge
 *DefaultAPI* | [**DeleteBankAccount**](docs/DefaultAPI.md#deletebankaccount) | **Delete** /bank-account/{accountID} | Delete an already existing bank account
 *DefaultAPI* | [**DeleteBankConnection**](docs/DefaultAPI.md#deletebankconnection) | **Delete** /bank-connection/{bankConnectionID} | Delete the bank connection
 *DefaultAPI* | [**DeleteBankTransaction**](docs/DefaultAPI.md#deletebanktransaction) | **Delete** /bank-account-transaction/{transactionID} | Delete the bank transaction with all its related data
@@ -174,6 +184,9 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteCaseComment**](docs/DefaultAPI.md#deletecasecomment) | **Delete** /case/{caseID}/comment/{commentID} | Mark a case comment as deleted
 *DefaultAPI* | [**DeleteCaseReportingEndpoint**](docs/DefaultAPI.md#deletecasereportingendpoint) | **Delete** /cases/endpoints/{endpointID} | Delete the case reporting endpoint by ID
 *DefaultAPI* | [**DeleteCaseTemplate**](docs/DefaultAPI.md#deletecasetemplate) | **Delete** /cases/template/{templateID} | Delete a case template
+*DefaultAPI* | [**DeleteCatalogGroup**](docs/DefaultAPI.md#deletecataloggroup) | **Delete** /catalog/group/{groupID} | Delete a catalog group
+*DefaultAPI* | [**DeleteCatalogItem**](docs/DefaultAPI.md#deletecatalogitem) | **Delete** /catalog/items/{itemID} | Delete a catalog item
+*DefaultAPI* | [**DeleteCatalogItemSubscription**](docs/DefaultAPI.md#deletecatalogitemsubscription) | **Delete** /catalog/item-subscriptions/{subscriptionID} | Delete a catalog item subscription
 *DefaultAPI* | [**DeleteCommentTemplate**](docs/DefaultAPI.md#deletecommenttemplate) | **Delete** /comment-template/{commentTemplateID} | Delete comment template
 *DefaultAPI* | [**DeleteConnectorConfig**](docs/DefaultAPI.md#deleteconnectorconfig) | **Delete** /connector/{name}/config | Delete the connector configuration
 *DefaultAPI* | [**DeleteConnectorCredentials**](docs/DefaultAPI.md#deleteconnectorcredentials) | **Delete** /credentials/{apiKey} | Delete the connector credentials for the current account
@@ -193,6 +206,8 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteFAQEntry**](docs/DefaultAPI.md#deletefaqentry) | **Delete** /faqs/entry/{entryID} | Delete a FAQ entry
 *DefaultAPI* | [**DeleteFeatureFlagConfig**](docs/DefaultAPI.md#deletefeatureflagconfig) | **Delete** /feature-flags/config/{entryID} | Delete a feature flag config
 *DefaultAPI* | [**DeleteFinancialAccount**](docs/DefaultAPI.md#deletefinancialaccount) | **Delete** /financial/accounts/{accountID} | Delete the financial account with all its related data
+*DefaultAPI* | [**DeleteFolder**](docs/DefaultAPI.md#deletefolder) | **Delete** /document-repository/folder | Delete a single folder
+*DefaultAPI* | [**DeleteGroupSubscription**](docs/DefaultAPI.md#deletegroupsubscription) | **Delete** /catalog/group-subscriptions/{subscriptionID} | Delete a group subscription
 *DefaultAPI* | [**DeleteHook**](docs/DefaultAPI.md#deletehook) | **Delete** /hook/{hookID} | Delete hook with all its related data
 *DefaultAPI* | [**DeleteInventoryItem**](docs/DefaultAPI.md#deleteinventoryitem) | **Delete** /inventory/{inventoryItemID} | Delete inventory item
 *DefaultAPI* | [**DeleteInvoice**](docs/DefaultAPI.md#deleteinvoice) | **Delete** /invoice/{invoiceID} | Delete invoice
@@ -201,16 +216,21 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteMeterReading**](docs/DefaultAPI.md#deletemeterreading) | **Delete** /meter/{meterID}/reading/{readingID} | Delete meter reading
 *DefaultAPI* | [**DeleteNote**](docs/DefaultAPI.md#deletenote) | **Delete** /notes/{noteID} | Delete note
 *DefaultAPI* | [**DeleteNotification**](docs/DefaultAPI.md#deletenotification) | **Delete** /notification/{notificationName} | Delete notification
+*DefaultAPI* | [**DeleteOwnership**](docs/DefaultAPI.md#deleteownership) | **Delete** /ownership/{ownershipID} | Delete ownership
 *DefaultAPI* | [**DeleteProperty**](docs/DefaultAPI.md#deleteproperty) | **Delete** /properties/{propID} | Delete property
 *DefaultAPI* | [**DeletePropertyDeclaration**](docs/DefaultAPI.md#deletepropertydeclaration) | **Delete** /property-declarations/{declarationID} | Delete property declaration of condominium ownership
 *DefaultAPI* | [**DeletePropertyFiscalYear**](docs/DefaultAPI.md#deletepropertyfiscalyear) | **Delete** /property-fiscal-years/{fiscalYearID} | Delete a fiscal year for a property
 *DefaultAPI* | [**DeletePropertyHandover**](docs/DefaultAPI.md#deletepropertyhandover) | **Delete** /property-handovers/handovers/{handoverID} | Delete property handover
 *DefaultAPI* | [**DeletePropertyHandoverTemplate**](docs/DefaultAPI.md#deletepropertyhandovertemplate) | **Delete** /property-handovers/template/{templateID} | Delete property handover template
+*DefaultAPI* | [**DeletePropertyListing**](docs/DefaultAPI.md#deletepropertylisting) | **Delete** /properties/{propID}/listing | Delete property listing
 *DefaultAPI* | [**DeletePropertyOwner**](docs/DefaultAPI.md#deletepropertyowner) | **Delete** /owner/{ownerID} | Delete property owner
+*DefaultAPI* | [**DeletePropertyUnitAssessment**](docs/DefaultAPI.md#deletepropertyunitassessment) | **Delete** /properties/{propID}/condominium-fees/{unitAssessmentID} | Delete a unit assessment by ID
+*DefaultAPI* | [**DeletePublicChatbotInstruction**](docs/DefaultAPI.md#deletepublicchatbotinstruction) | **Delete** /chatbot/instruction/{instructionID} | Delete a public chatbot instruction
 *DefaultAPI* | [**DeleteRentUpdate**](docs/DefaultAPI.md#deleterentupdate) | **Delete** /rent-update/{rentUpdateID} | Delete the rent update with the given ID
 *DefaultAPI* | [**DeleteReportDefinition**](docs/DefaultAPI.md#deletereportdefinition) | **Delete** /report/{definitionID} | 
 *DefaultAPI* | [**DeleteReportEntrypoint**](docs/DefaultAPI.md#deletereportentrypoint) | **Delete** /reports/entrypoint/{entrypointID} | Delete report entry point
 *DefaultAPI* | [**DeleteReportExecution**](docs/DefaultAPI.md#deletereportexecution) | **Delete** /report/executions/{executionID} | 
+*DefaultAPI* | [**DeleteRevenueType**](docs/DefaultAPI.md#deleterevenuetype) | **Delete** /revenue-type/{revenueTypeID} | Delete a revenue type
 *DefaultAPI* | [**DeleteServiceProvider**](docs/DefaultAPI.md#deleteserviceprovider) | **Delete** /service-provider/{serviceProviderID} | Delete the service provider
 *DefaultAPI* | [**DeleteTenancy**](docs/DefaultAPI.md#deletetenancy) | **Delete** /tenancy/{tenancyID} | Delete the tenancy with the given ID
 *DefaultAPI* | [**DeleteTenant**](docs/DefaultAPI.md#deletetenant) | **Delete** /tenant/{tenantID} | Remove tenant from property
@@ -263,6 +283,11 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetCaseReportingEndpoint**](docs/DefaultAPI.md#getcasereportingendpoint) | **Get** /cases/endpoints/{endpointID} | Get the case report endpoint by ID
 *DefaultAPI* | [**GetCaseReportingEndpointQRCode**](docs/DefaultAPI.md#getcasereportingendpointqrcode) | **Get** /cases/endpoints/{endpointID}/qr-code | Generates and returns a QR code of the URL of the case reporting endpoint 
 *DefaultAPI* | [**GetCaseTemplate**](docs/DefaultAPI.md#getcasetemplate) | **Get** /cases/template/{templateID} | Get the case template by ID
+*DefaultAPI* | [**GetCatalogGroup**](docs/DefaultAPI.md#getcataloggroup) | **Get** /catalog/group/{groupID} | Get an existing catalog group
+*DefaultAPI* | [**GetCatalogItem**](docs/DefaultAPI.md#getcatalogitem) | **Get** /catalog/items/{itemID} | Get a catalog item
+*DefaultAPI* | [**GetCatalogItemSubscription**](docs/DefaultAPI.md#getcatalogitemsubscription) | **Get** /catalog/item-subscriptions/{subscriptionID} | Get a catalog item subscription
+*DefaultAPI* | [**GetChatbotConfig**](docs/DefaultAPI.md#getchatbotconfig) | **Get** /chatbot/config | Get the chatbot configuration of the account
+*DefaultAPI* | [**GetChatbotStats**](docs/DefaultAPI.md#getchatbotstats) | **Post** /chatbot/stats | Get chatbot usage statistics for the account
 *DefaultAPI* | [**GetCommentTemplate**](docs/DefaultAPI.md#getcommenttemplate) | **Get** /comment-template/{commentTemplateID} | Get comment template
 *DefaultAPI* | [**GetCompanyProfile**](docs/DefaultAPI.md#getcompanyprofile) | **Get** /profile/company | Get the company profile details
 *DefaultAPI* | [**GetConnectorConfig**](docs/DefaultAPI.md#getconnectorconfig) | **Get** /connector/{name}/config | Get the connector configuration for the current account
@@ -275,6 +300,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetCorrespondence**](docs/DefaultAPI.md#getcorrespondence) | **Get** /tenant-correspondence/{corrID} | Get a correspondence object via its ID
 *DefaultAPI* | [**GetCorrespondenceAccessRecord**](docs/DefaultAPI.md#getcorrespondenceaccessrecord) | **Get** /tenant-correspondence/{corrID}/access-record | Get the access record for the correspondence.
 *DefaultAPI* | [**GetCostType**](docs/DefaultAPI.md#getcosttype) | **Get** /cost-type/{costTypeID} | Get a cost type by ID
+*DefaultAPI* | [**GetCurrentPropertyOwnership**](docs/DefaultAPI.md#getcurrentpropertyownership) | **Get** /properties/{propID}/current-ownership | Get the current ownership for a property
 *DefaultAPI* | [**GetCustomForm**](docs/DefaultAPI.md#getcustomform) | **Get** /custom-form/{formID} | Get the custom form by ID
 *DefaultAPI* | [**GetCustomIDGenerator**](docs/DefaultAPI.md#getcustomidgenerator) | **Get** /id-generators/{generatorID} | Get the ID generator with all its attributes
 *DefaultAPI* | [**GetCustomIDGenerators**](docs/DefaultAPI.md#getcustomidgenerators) | **Get** /id-generators | Get all customer specific ID generators
@@ -298,15 +324,16 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetFeatureFlags**](docs/DefaultAPI.md#getfeatureflags) | **Get** /feature-flags | Get feature flags by reference
 *DefaultAPI* | [**GetFeatureFlagsConfig**](docs/DefaultAPI.md#getfeatureflagsconfig) | **Get** /feature-flags/config | Get all feature flags config
 *DefaultAPI* | [**GetFinancialAccount**](docs/DefaultAPI.md#getfinancialaccount) | **Get** /financial/accounts/{accountID} | Get the financial account with all its attributes
-*DefaultAPI* | [**GetFinancialAccountByAccountNumber**](docs/DefaultAPI.md#getfinancialaccountbyaccountnumber) | **Get** /financial/accounts-by-account-number/{accountNumber} | Get financial account by the account number
 *DefaultAPI* | [**GetFinancialAccountByFlatNumber**](docs/DefaultAPI.md#getfinancialaccountbyflatnumber) | **Get** /financial/accounts-by-number/{flatNumber} | Get financial account by flat number
 *DefaultAPI* | [**GetFinancialAccountsByRef**](docs/DefaultAPI.md#getfinancialaccountsbyref) | **Post** /financial/account/by-ref/{refType}/{refID} | Get the financial account for a given ref type and ref ID
 *DefaultAPI* | [**GetFinancialSubAccount**](docs/DefaultAPI.md#getfinancialsubaccount) | **Get** /financial/accounts-by-number/{flatNumber}/subaccount | Get financial sub-account by flat number
+*DefaultAPI* | [**GetGroupSubscription**](docs/DefaultAPI.md#getgroupsubscription) | **Get** /catalog/group-subscriptions/{subscriptionID} | Get a group subscription
 *DefaultAPI* | [**GetHook**](docs/DefaultAPI.md#gethook) | **Get** /hook/{hookID} | Get hook with all its attributes
 *DefaultAPI* | [**GetInventoryForProperty**](docs/DefaultAPI.md#getinventoryforproperty) | **Get** /property/{propID}/inventory | List inventory items for a property
 *DefaultAPI* | [**GetInventoryItem**](docs/DefaultAPI.md#getinventoryitem) | **Get** /inventory/{inventoryItemID} | Get inventory item
 *DefaultAPI* | [**GetInvoice**](docs/DefaultAPI.md#getinvoice) | **Get** /invoice/{invoiceID} | Get invoice
 *DefaultAPI* | [**GetInvoiceDataMapper**](docs/DefaultAPI.md#getinvoicedatamapper) | **Get** /invoice-data-mapper/{invoiceDataMapperID} | Get invoice data mapper
+*DefaultAPI* | [**GetInvoiceInboxConfig**](docs/DefaultAPI.md#getinvoiceinboxconfig) | **Get** /invoice-inbox-config | Get the invoice inbox email configuration for the current account
 *DefaultAPI* | [**GetLatestPriceIndexPoint**](docs/DefaultAPI.md#getlatestpriceindexpoint) | **Get** /price-index/latest/{countryCode} | Get the current latest PriceIndexPoint
 *DefaultAPI* | [**GetMeter**](docs/DefaultAPI.md#getmeter) | **Get** /meter/{meterID} | Get meter
 *DefaultAPI* | [**GetMeterReading**](docs/DefaultAPI.md#getmeterreading) | **Get** /meter/{meterID}/reading/{readingID} | Get meter reading
@@ -318,14 +345,20 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetNumberOfCasesForActionAndTimePeriod**](docs/DefaultAPI.md#getnumberofcasesforactionandtimeperiod) | **Post** /cases/stats/action | Get number of cases for the given action and time period
 *DefaultAPI* | [**GetNumberOfCasesForStatus**](docs/DefaultAPI.md#getnumberofcasesforstatus) | **Post** /cases/stats/status | Get number of cases for the given status
 *DefaultAPI* | [**GetNumberOfInteractionsForCases**](docs/DefaultAPI.md#getnumberofinteractionsforcases) | **Post** /cases/stats/interactions | Query the interactions of the cases for the current user
+*DefaultAPI* | [**GetOwnership**](docs/DefaultAPI.md#getownership) | **Get** /ownership/{ownershipID} | Get ownership details
 *DefaultAPI* | [**GetPriceIndexPoint**](docs/DefaultAPI.md#getpriceindexpoint) | **Post** /price-index | Get the PriceIndexPoint
 *DefaultAPI* | [**GetProperty**](docs/DefaultAPI.md#getproperty) | **Get** /properties/{propID} | Get property details
 *DefaultAPI* | [**GetPropertyCases**](docs/DefaultAPI.md#getpropertycases) | **Post** /property/{propID}/cases | Get property cases
 *DefaultAPI* | [**GetPropertyDeclaration**](docs/DefaultAPI.md#getpropertydeclaration) | **Get** /property-declarations/{declarationID} | Get property declaration of condominium ownership
 *DefaultAPI* | [**GetPropertyHandover**](docs/DefaultAPI.md#getpropertyhandover) | **Get** /property-handovers/handovers/{handoverID} | Get property handover
 *DefaultAPI* | [**GetPropertyHandoverTemplate**](docs/DefaultAPI.md#getpropertyhandovertemplate) | **Get** /property-handovers/template/{templateID} | Get property handover template
+*DefaultAPI* | [**GetPropertyListing**](docs/DefaultAPI.md#getpropertylisting) | **Get** /properties/{propID}/listing | Get property listing
 *DefaultAPI* | [**GetPropertyOwner**](docs/DefaultAPI.md#getpropertyowner) | **Get** /owner/{ownerID} | Get property owner details
+*DefaultAPI* | [**GetPropertyOwnerships**](docs/DefaultAPI.md#getpropertyownerships) | **Get** /properties/{propID}/ownerships | List ownerships for a property
 *DefaultAPI* | [**GetPropertyTenancy**](docs/DefaultAPI.md#getpropertytenancy) | **Get** /property/{propID}/tenancy | Get the current tenancy for the property
+*DefaultAPI* | [**GetPropertyUnitAssessment**](docs/DefaultAPI.md#getpropertyunitassessment) | **Get** /properties/{propID}/condominium-fees/{unitAssessmentID} | Get a unit assessment by ID
+*DefaultAPI* | [**GetPublicChatbotInstruction**](docs/DefaultAPI.md#getpublicchatbotinstruction) | **Get** /chatbot/instruction/{instructionID} | Get a public chatbot instruction
+*DefaultAPI* | [**GetPublicChatbotInstructions**](docs/DefaultAPI.md#getpublicchatbotinstructions) | **Get** /chatbot/instructions | Get all public chatbot instructions of the account
 *DefaultAPI* | [**GetRentUpdate**](docs/DefaultAPI.md#getrentupdate) | **Get** /rent-update/{rentUpdateID} | Get the rent update with the given ID
 *DefaultAPI* | [**GetRentUpdates**](docs/DefaultAPI.md#getrentupdates) | **Get** /tenancy/{tenancyID}/rent-updates | Get all tenancy rent updates
 *DefaultAPI* | [**GetReportDefinition**](docs/DefaultAPI.md#getreportdefinition) | **Get** /report/{definitionID} | 
@@ -335,6 +368,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetReportEntrypointsForDefinition**](docs/DefaultAPI.md#getreportentrypointsfordefinition) | **Get** /report/definition/{definitionID}/entrypoints | Get the report entry points for the report definition
 *DefaultAPI* | [**GetReportExecution**](docs/DefaultAPI.md#getreportexecution) | **Get** /report/executions/{executionID} | Get report execution details
 *DefaultAPI* | [**GetReportExecutions**](docs/DefaultAPI.md#getreportexecutions) | **Post** /reports/executions | Get all executions that match the given criteria
+*DefaultAPI* | [**GetRevenueType**](docs/DefaultAPI.md#getrevenuetype) | **Get** /revenue-type/{revenueTypeID} | Get a revenue type by ID
 *DefaultAPI* | [**GetServiceProvider**](docs/DefaultAPI.md#getserviceprovider) | **Get** /service-provider/{serviceProviderID} | Get the service provider with the given ID
 *DefaultAPI* | [**GetSignedDocumentAuditDownload**](docs/DefaultAPI.md#getsigneddocumentauditdownload) | **Get** /document-generation/documents/{docID}/esignature/download-audits | Get the audit information for the signed document
 *DefaultAPI* | [**GetSignedDocumentDownload**](docs/DefaultAPI.md#getsigneddocumentdownload) | **Get** /document-generation/documents/{docID}/esignature/download-document | Get the signed document
@@ -345,7 +379,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetTenantChange**](docs/DefaultAPI.md#gettenantchange) | **Get** /tenant-change/{tenantChangeID} | Get a tenancy tenant change
 *DefaultAPI* | [**GetTenantChanges**](docs/DefaultAPI.md#gettenantchanges) | **Get** /tenancy/{tenancyID}/tenant-changes | Get all the tenant changes for a tenancy.
 *DefaultAPI* | [**GetTenantTenancies**](docs/DefaultAPI.md#gettenanttenancies) | **Get** /tenant/{tenantID}/tenancies | Get all tenancies for the tenant
-*DefaultAPI* | [**GetUserPreferences**](docs/DefaultAPI.md#getuserpreferences) | **Get** /preferences | Get the user preferences details
+*DefaultAPI* | [**GetUserInformation**](docs/DefaultAPI.md#getuserinformation) | **Get** /information | Get the user information details
 *DefaultAPI* | [**GetVersionMigrator**](docs/DefaultAPI.md#getversionmigrator) | **Get** /version-migrator/{migratorID} | Get the version migrator with the given ID
 *DefaultAPI* | [**GetWorkflowDefinition**](docs/DefaultAPI.md#getworkflowdefinition) | **Get** /workflows/definition/{definitionID} | Get workflow definition details
 *DefaultAPI* | [**GetWorkflowEntrypoint**](docs/DefaultAPI.md#getworkflowentrypoint) | **Get** /workflows/entrypoint/{entrypointID} | Get the workflow entry point for the workflow definition
@@ -393,8 +427,10 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**PublicGetCorrespondenceDocument**](docs/DefaultAPI.md#publicgetcorrespondencedocument) | **Post** /public/tenant-correspondence/document | Get the document locked behind the given code
 *DefaultAPI* | [**PublicGetCorrespondenceStatus**](docs/DefaultAPI.md#publicgetcorrespondencestatus) | **Get** /public/tenant-correspondence/status | Check whether an access record eixsts for the correspondence.
 *DefaultAPI* | [**PublicGetExternalUser**](docs/DefaultAPI.md#publicgetexternaluser) | **Get** /public/external-users | Get external user data
+*DefaultAPI* | [**PublicGetListing**](docs/DefaultAPI.md#publicgetlisting) | **Get** /public/expose/{code} | Get public listing
 *DefaultAPI* | [**PublicGetManagerCompanyProfile**](docs/DefaultAPI.md#publicgetmanagercompanyprofile) | **Get** /public/profile/company/manager | Get the manager company details
 *DefaultAPI* | [**PublicJoinAppointment**](docs/DefaultAPI.md#publicjoinappointment) | **Post** /public/calendar/appointments/entry/{code}/join | Join an existing appointment
+*DefaultAPI* | [**PublicSendChatbotMessage**](docs/DefaultAPI.md#publicsendchatbotmessage) | **Post** /public/chatbot/endpoint/{endpointID}/message | Send a message to the chatbot of the case reporting endpoint 
 *DefaultAPI* | [**PublicUpdateCase**](docs/DefaultAPI.md#publicupdatecase) | **Put** /public/case | Update case data
 *DefaultAPI* | [**PublicUpdateCaseStatus**](docs/DefaultAPI.md#publicupdatecasestatus) | **Post** /public/case/{caseID}/status | Add new case status
 *DefaultAPI* | [**PublicUpdateExternalUser**](docs/DefaultAPI.md#publicupdateexternaluser) | **Put** /public/external-users | Update external user data
@@ -412,6 +448,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryAppointments**](docs/DefaultAPI.md#queryappointments) | **Get** /calendar/appointments/window/{windowID} | Get the appointments of a Window
 *DefaultAPI* | [**QueryApprovals**](docs/DefaultAPI.md#queryapprovals) | **Post** /approvals | Query approvals
 *DefaultAPI* | [**QueryArchivedDocumentGenerations**](docs/DefaultAPI.md#queryarchiveddocumentgenerations) | **Post** /document-generation/documents/archive | Request a list of archived document generations
+*DefaultAPI* | [**QueryBadgesForEntity**](docs/DefaultAPI.md#querybadgesforentity) | **Get** /badges/by-reference/{refID} | List badges
 *DefaultAPI* | [**QueryBankAccountBalance**](docs/DefaultAPI.md#querybankaccountbalance) | **Post** /bank-account/{accountID}/balance | Query the balance of the bank account with the given ID
 *DefaultAPI* | [**QueryBankAccounts**](docs/DefaultAPI.md#querybankaccounts) | **Post** /bank-accounts | Query bank accounts
 *DefaultAPI* | [**QueryBankConnectionTransactions**](docs/DefaultAPI.md#querybankconnectiontransactions) | **Post** /bank-account/{accountID}/connection/transactions | Get the bank connection transactions
@@ -425,6 +462,9 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryCaseReportingEndpoints**](docs/DefaultAPI.md#querycasereportingendpoints) | **Post** /cases/endpoints | Query all case reporting endpoints for given criteria
 *DefaultAPI* | [**QueryCaseTemplates**](docs/DefaultAPI.md#querycasetemplates) | **Post** /cases/templates | Query all case templates for given criteria
 *DefaultAPI* | [**QueryCases**](docs/DefaultAPI.md#querycases) | **Post** /cases | Query cases for the current user
+*DefaultAPI* | [**QueryCatalogGroups**](docs/DefaultAPI.md#querycataloggroups) | **Post** /catalog/groups | Query existing catalog groups
+*DefaultAPI* | [**QueryCatalogItemSubscriptions**](docs/DefaultAPI.md#querycatalogitemsubscriptions) | **Post** /catalog/item-subscriptions | Query catalog item subscriptions
+*DefaultAPI* | [**QueryCatalogItems**](docs/DefaultAPI.md#querycatalogitems) | **Post** /catalog/items | Query existing catalog items
 *DefaultAPI* | [**QueryCommentTemplates**](docs/DefaultAPI.md#querycommenttemplates) | **Post** /comment-templates | Query all comment templates for the account
 *DefaultAPI* | [**QueryConsumptionsByFiscalYear**](docs/DefaultAPI.md#queryconsumptionsbyfiscalyear) | **Get** /property-fiscal-years/{fiscalYearID}/consumptions | List consumptions for a fiscal year
 *DefaultAPI* | [**QueryCorrespondences**](docs/DefaultAPI.md#querycorrespondences) | **Post** /tenant-correspondences | Get all the correspondences
@@ -438,19 +478,23 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryExternalUsers**](docs/DefaultAPI.md#queryexternalusers) | **Get** /external-users | Get a list of external users who reported to the current manager
 *DefaultAPI* | [**QueryFinancialAccountBalances**](docs/DefaultAPI.md#queryfinancialaccountbalances) | **Post** /financial/balances | Query the current balances of all financial accounts
 *DefaultAPI* | [**QueryFinancialAccounts**](docs/DefaultAPI.md#queryfinancialaccounts) | **Post** /financial/accounts | Query all financial accounts
+*DefaultAPI* | [**QueryGroupSubscriptions**](docs/DefaultAPI.md#querygroupsubscriptions) | **Post** /catalog/group-subscriptions | Query group subscriptions
 *DefaultAPI* | [**QueryHooks**](docs/DefaultAPI.md#queryhooks) | **Post** /hooks | Query hooks
 *DefaultAPI* | [**QueryInvoiceDataMappers**](docs/DefaultAPI.md#queryinvoicedatamappers) | **Post** /invoice-data-mappers | Query invoice data mappers
 *DefaultAPI* | [**QueryInvoiceUploadJobs**](docs/DefaultAPI.md#queryinvoiceuploadjobs) | **Get** /invoice-upload-jobs | List invoice upload jobs
 *DefaultAPI* | [**QueryInvoices**](docs/DefaultAPI.md#queryinvoices) | **Post** /invoices | Query invoices
 *DefaultAPI* | [**QueryNotesForEntity**](docs/DefaultAPI.md#querynotesforentity) | **Get** /notes/by-reference/{refID} | List notes
 *DefaultAPI* | [**QueryNotifications**](docs/DefaultAPI.md#querynotifications) | **Post** /notifications | Query notifications
+*DefaultAPI* | [**QueryOwnerships**](docs/DefaultAPI.md#queryownerships) | **Post** /ownerships | Query ownerships
 *DefaultAPI* | [**QueryProperties**](docs/DefaultAPI.md#queryproperties) | **Post** /properties | Query properties
 *DefaultAPI* | [**QueryPropertyDeclarations**](docs/DefaultAPI.md#querypropertydeclarations) | **Post** /property-declarations/query | Query property declarations of condominium ownership
 *DefaultAPI* | [**QueryPropertyFiscalYears**](docs/DefaultAPI.md#querypropertyfiscalyears) | **Get** /properties/{propID}/fiscal-years | List fiscal years for a property
 *DefaultAPI* | [**QueryPropertyHandoverTemplates**](docs/DefaultAPI.md#querypropertyhandovertemplates) | **Post** /property-handovers/templates | Query property handover templates
 *DefaultAPI* | [**QueryPropertyHandovers**](docs/DefaultAPI.md#querypropertyhandovers) | **Post** /property-handovers/handovers | Query property handovers
 *DefaultAPI* | [**QueryPropertyOwners**](docs/DefaultAPI.md#querypropertyowners) | **Post** /owners | Query property owners
+*DefaultAPI* | [**QueryPropertyUnitAssessment**](docs/DefaultAPI.md#querypropertyunitassessment) | **Post** /properties/{propID}/condominium-fees | Query unit assessments for a property
 *DefaultAPI* | [**QueryPropertyVacancies**](docs/DefaultAPI.md#querypropertyvacancies) | **Post** /property-vacancies | List all property vacancies for a given time period
+*DefaultAPI* | [**QueryRevenueTypes**](docs/DefaultAPI.md#queryrevenuetypes) | **Post** /revenue-types | Query all revenue types
 *DefaultAPI* | [**QueryServiceProviderCases**](docs/DefaultAPI.md#queryserviceprovidercases) | **Get** /service-provider/{serviceProviderID}/cases | Get the cases the the given service provider has access to
 *DefaultAPI* | [**QueryServiceProviders**](docs/DefaultAPI.md#queryserviceproviders) | **Post** /service-providers | Query all service providers for certain criteria
 *DefaultAPI* | [**QuerySimilarProperties**](docs/DefaultAPI.md#querysimilarproperties) | **Post** /property/similar | Returns properties that match the provided address
@@ -459,17 +503,21 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryWorkflowDefinitions**](docs/DefaultAPI.md#queryworkflowdefinitions) | **Post** /workflows/definitions | Query all workflow definitions
 *DefaultAPI* | [**QueryWorkflowExecutions**](docs/DefaultAPI.md#queryworkflowexecutions) | **Post** /workflows/executions | Get a list of all workflow executions, matching the criteria in the request 
 *DefaultAPI* | [**RejectApproval**](docs/DefaultAPI.md#rejectapproval) | **Post** /approval/{approvalID}/reject | Reject the approval with the given ID
+*DefaultAPI* | [**RenameFolder**](docs/DefaultAPI.md#renamefolder) | **Put** /document-repository/folder | Rename an already existing folder
 *DefaultAPI* | [**RequestESignaturesForDocument**](docs/DefaultAPI.md#requestesignaturesfordocument) | **Post** /document-generation/documents/{docID}/esignature | Trigger a signing request for a document
 *DefaultAPI* | [**RerunReportExecution**](docs/DefaultAPI.md#rerunreportexecution) | **Post** /report/executions/{executionID}/rerun | Rerun the report execution with the same parameters
 *DefaultAPI* | [**ResetConnectorQuery**](docs/DefaultAPI.md#resetconnectorquery) | **Put** /connector/query/{queryID}/reset | Get the query for the current account
+*DefaultAPI* | [**RetryInvoiceUploadJob**](docs/DefaultAPI.md#retryinvoiceuploadjob) | **Post** /invoice-upload-jobs/{invoiceUploadJobID}/retry | Retry invoice upload job
 *DefaultAPI* | [**RevertAccountBooking**](docs/DefaultAPI.md#revertaccountbooking) | **Post** /financial/bookings/{bookingID}/revert | Revert a previously created booking
 *DefaultAPI* | [**SendAppointmentScheduleInvitation**](docs/DefaultAPI.md#sendappointmentscheduleinvitation) | **Post** /calendar/appointments/schedule/{scheduleID}/invitation | Send invitation to recepients after creating a new appointment schedule
 *DefaultAPI* | [**SendDocumentViaMail**](docs/DefaultAPI.md#senddocumentviamail) | **Post** /document-generation/documents/{docID}/send-via-mail | Send the document generation via physical mail
 *DefaultAPI* | [**SendNotification**](docs/DefaultAPI.md#sendnotification) | **Post** /notification/{notificationName}/send | Send notification
+*DefaultAPI* | [**SetBadgesForEntity**](docs/DefaultAPI.md#setbadgesforentity) | **Put** /badges/by-reference/{refID} | Set badges
 *DefaultAPI* | [**StartWorkflowExecution**](docs/DefaultAPI.md#startworkflowexecution) | **Post** /workflows/definition/{definitionID}/execute | Start a new workflow execution
 *DefaultAPI* | [**SubmitPropertyHandover**](docs/DefaultAPI.md#submitpropertyhandover) | **Post** /property-handovers/handovers/{handoverID}/submit | Submit the data for a property handover
 *DefaultAPI* | [**SyncConnectorData**](docs/DefaultAPI.md#syncconnectordata) | **Post** /connector/sync | Sync the next batch of connector data.
 *DefaultAPI* | [**TestDocumentTemplatePlaceholders**](docs/DefaultAPI.md#testdocumenttemplateplaceholders) | **Post** /document-generation/template/{templateID}/placeholders | Test placeholder generation for given template and data
+*DefaultAPI* | [**UnarchiveCase**](docs/DefaultAPI.md#unarchivecase) | **Post** /case/{caseID}/unarchive | Move the case out of the archive
 *DefaultAPI* | [**UnassignCase**](docs/DefaultAPI.md#unassigncase) | **Post** /case/{caseID}/unassign | Remove access from case
 *DefaultAPI* | [**UnlinkAppointmentProperty**](docs/DefaultAPI.md#unlinkappointmentproperty) | **Post** /calendar/appointments/entry/{entryID}/property/unlink | Unlink a property from an appointment
 *DefaultAPI* | [**UnlinkCaseProperty**](docs/DefaultAPI.md#unlinkcaseproperty) | **Post** /case/{caseID}/property/unlink | Unlink a property from a case
@@ -491,6 +539,10 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateCaseReportingEndpoint**](docs/DefaultAPI.md#updatecasereportingendpoint) | **Put** /cases/endpoints/{endpointID} | Update the case reporting endpoint by ID
 *DefaultAPI* | [**UpdateCaseStatus**](docs/DefaultAPI.md#updatecasestatus) | **Post** /case/{caseID}/status | Add new case status
 *DefaultAPI* | [**UpdateCaseTemplate**](docs/DefaultAPI.md#updatecasetemplate) | **Put** /cases/template/{templateID} | Update case template
+*DefaultAPI* | [**UpdateCatalogGroup**](docs/DefaultAPI.md#updatecataloggroup) | **Put** /catalog/group/{groupID} | Update a catalog group
+*DefaultAPI* | [**UpdateCatalogItem**](docs/DefaultAPI.md#updatecatalogitem) | **Put** /catalog/items/{itemID} | Update a catalog item
+*DefaultAPI* | [**UpdateCatalogItemSubscription**](docs/DefaultAPI.md#updatecatalogitemsubscription) | **Put** /catalog/item-subscriptions/{subscriptionID} | Update a catalog item subscription
+*DefaultAPI* | [**UpdateChatbotConfig**](docs/DefaultAPI.md#updatechatbotconfig) | **Put** /chatbot/config | Update the chatbot configuration of the account
 *DefaultAPI* | [**UpdateCommentTemplate**](docs/DefaultAPI.md#updatecommenttemplate) | **Put** /comment-template/{commentTemplateID} | Update comment template
 *DefaultAPI* | [**UpdateCompanyProfile**](docs/DefaultAPI.md#updatecompanyprofile) | **Put** /profile/company | Update company profile
 *DefaultAPI* | [**UpdateConnectorConfig**](docs/DefaultAPI.md#updateconnectorconfig) | **Put** /connector/{name}/config | Update the connector configuration
@@ -508,6 +560,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateFAQEntry**](docs/DefaultAPI.md#updatefaqentry) | **Put** /faqs/entry/{entryID} | Update an existing FAQ entry
 *DefaultAPI* | [**UpdateFeatureFlagConfig**](docs/DefaultAPI.md#updatefeatureflagconfig) | **Put** /feature-flags/config/{entryID} | Update an existing feature flag config
 *DefaultAPI* | [**UpdateFinancialAccount**](docs/DefaultAPI.md#updatefinancialaccount) | **Put** /financial/accounts/{accountID} | Update an already existing financial account
+*DefaultAPI* | [**UpdateGroupSubscription**](docs/DefaultAPI.md#updategroupsubscription) | **Put** /catalog/group-subscriptions/{subscriptionID} | Update a group subscription
 *DefaultAPI* | [**UpdateHook**](docs/DefaultAPI.md#updatehook) | **Put** /hook/{hookID} | Update an already hook
 *DefaultAPI* | [**UpdateInventoryItem**](docs/DefaultAPI.md#updateinventoryitem) | **Put** /inventory/{inventoryItemID} | Update inventory item
 *DefaultAPI* | [**UpdateInvoice**](docs/DefaultAPI.md#updateinvoice) | **Put** /invoice/{invoiceID} | Update invoice
@@ -516,19 +569,24 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateMeterReading**](docs/DefaultAPI.md#updatemeterreading) | **Put** /meter/{meterID}/reading/{readingID} | Update meter reading
 *DefaultAPI* | [**UpdateNote**](docs/DefaultAPI.md#updatenote) | **Put** /notes/{noteID} | Update note
 *DefaultAPI* | [**UpdateNotification**](docs/DefaultAPI.md#updatenotification) | **Put** /notification/{notificationName} | Update notification
+*DefaultAPI* | [**UpdateOwnership**](docs/DefaultAPI.md#updateownership) | **Put** /ownership/{ownershipID} | Update ownership
 *DefaultAPI* | [**UpdateProperty**](docs/DefaultAPI.md#updateproperty) | **Put** /properties/{propID} | Update property
 *DefaultAPI* | [**UpdatePropertyDeclaration**](docs/DefaultAPI.md#updatepropertydeclaration) | **Put** /property-declarations/{declarationID} | Update property declaration of condominium ownership
 *DefaultAPI* | [**UpdatePropertyFiscalYear**](docs/DefaultAPI.md#updatepropertyfiscalyear) | **Put** /property-fiscal-years/{fiscalYearID} | Update a fiscal year for a property
 *DefaultAPI* | [**UpdatePropertyHandover**](docs/DefaultAPI.md#updatepropertyhandover) | **Put** /property-handovers/handovers/{handoverID} | Update property handover
 *DefaultAPI* | [**UpdatePropertyHandoverTemplate**](docs/DefaultAPI.md#updatepropertyhandovertemplate) | **Put** /property-handovers/template/{templateID} | Update property handover template
+*DefaultAPI* | [**UpdatePropertyListing**](docs/DefaultAPI.md#updatepropertylisting) | **Put** /properties/{propID}/listing | Create or update property listing
 *DefaultAPI* | [**UpdatePropertyOwner**](docs/DefaultAPI.md#updatepropertyowner) | **Put** /owner/{ownerID} | Update property owner
+*DefaultAPI* | [**UpdatePropertyUnitAssessment**](docs/DefaultAPI.md#updatepropertyunitassessment) | **Put** /properties/{propID}/condominium-fees/{unitAssessmentID} | Update a unit assessment by ID
+*DefaultAPI* | [**UpdatePublicChatbotInstruction**](docs/DefaultAPI.md#updatepublicchatbotinstruction) | **Put** /chatbot/instruction/{instructionID} | Update an existing public chatbot instruction
 *DefaultAPI* | [**UpdateRentUpdate**](docs/DefaultAPI.md#updaterentupdate) | **Put** /rent-update/{rentUpdateID} | Update the rent update with the given ID
 *DefaultAPI* | [**UpdateReportDefinition**](docs/DefaultAPI.md#updatereportdefinition) | **Put** /report/{definitionID} | 
 *DefaultAPI* | [**UpdateReportEntrypoint**](docs/DefaultAPI.md#updatereportentrypoint) | **Put** /reports/entrypoint/{entrypointID} | Update report entry point
+*DefaultAPI* | [**UpdateRevenueType**](docs/DefaultAPI.md#updaterevenuetype) | **Put** /revenue-type/{revenueTypeID} | Update an existing revenue type
 *DefaultAPI* | [**UpdateServiceProvider**](docs/DefaultAPI.md#updateserviceprovider) | **Put** /service-provider/{serviceProviderID} | Update the attributes of the service provider
 *DefaultAPI* | [**UpdateTenancy**](docs/DefaultAPI.md#updatetenancy) | **Put** /tenancy/{tenancyID} | Update the tenancy with the given ID
 *DefaultAPI* | [**UpdateTenant**](docs/DefaultAPI.md#updatetenant) | **Put** /tenant/{tenantID} | Update tenant information
-*DefaultAPI* | [**UpdateUserPreferences**](docs/DefaultAPI.md#updateuserpreferences) | **Put** /preferences | Update the user preferences
+*DefaultAPI* | [**UpdateUserInformation**](docs/DefaultAPI.md#updateuserinformation) | **Put** /information | Update the user information
 *DefaultAPI* | [**UpdateVersionMigrator**](docs/DefaultAPI.md#updateversionmigrator) | **Put** /version-migrator/{migratorID} | Update the version migrator with the given ID
 *DefaultAPI* | [**UpdateWorkflowDefinition**](docs/DefaultAPI.md#updateworkflowdefinition) | **Put** /workflows/definition/{definitionID} | Update workflow definition
 *DefaultAPI* | [**UpdateWorkflowEntrypoint**](docs/DefaultAPI.md#updateworkflowentrypoint) | **Put** /workflows/entrypoint/{entrypointID} | Update workflow entry point
@@ -558,8 +616,10 @@ Class | Method | HTTP request | Description
  - [AccountDimensionValueAttributesPartial](docs/AccountDimensionValueAttributesPartial.md)
  - [AccountDimensionValueRef](docs/AccountDimensionValueRef.md)
  - [AccountDimensionWithValue](docs/AccountDimensionWithValue.md)
+ - [AccountScopeCode](docs/AccountScopeCode.md)
  - [AccountTypeEnum](docs/AccountTypeEnum.md)
  - [AccountTypesEnum](docs/AccountTypesEnum.md)
+ - [AddBadgeForEntityRequest](docs/AddBadgeForEntityRequest.md)
  - [AdditionalRentCost](docs/AdditionalRentCost.md)
  - [Address](docs/Address.md)
  - [AllocationKey](docs/AllocationKey.md)
@@ -586,6 +646,7 @@ Class | Method | HTTP request | Description
  - [AskQuestionRequest](docs/AskQuestionRequest.md)
  - [AssignCaseRequest](docs/AssignCaseRequest.md)
  - [Attachment](docs/Attachment.md)
+ - [BadgeTypeEnum](docs/BadgeTypeEnum.md)
  - [BalanceCadenceEnum](docs/BalanceCadenceEnum.md)
  - [Bank](docs/Bank.md)
  - [BankAccount](docs/BankAccount.md)
@@ -646,6 +707,22 @@ Class | Method | HTTP request | Description
  - [CaseTemplateAccessibility](docs/CaseTemplateAccessibility.md)
  - [CaseTemplateAdCategoryEnum](docs/CaseTemplateAdCategoryEnum.md)
  - [CaseTemplateAttributesPartial](docs/CaseTemplateAttributesPartial.md)
+ - [CatalogGroup](docs/CatalogGroup.md)
+ - [CatalogGroupPartial](docs/CatalogGroupPartial.md)
+ - [CatalogGroupSubscription](docs/CatalogGroupSubscription.md)
+ - [CatalogGroupSubscriptionPartial](docs/CatalogGroupSubscriptionPartial.md)
+ - [CatalogItem](docs/CatalogItem.md)
+ - [CatalogItemAttributePartial](docs/CatalogItemAttributePartial.md)
+ - [CatalogItemPartial](docs/CatalogItemPartial.md)
+ - [CatalogItemPatch](docs/CatalogItemPatch.md)
+ - [CatalogItemPatchDefinition](docs/CatalogItemPatchDefinition.md)
+ - [CatalogItemSubscription](docs/CatalogItemSubscription.md)
+ - [CatalogItemSubscriptionPartial](docs/CatalogItemSubscriptionPartial.md)
+ - [CatalogItemType](docs/CatalogItemType.md)
+ - [ChatbotConfig](docs/ChatbotConfig.md)
+ - [ChatbotConfigAttributesPartial](docs/ChatbotConfigAttributesPartial.md)
+ - [ChatbotMessage](docs/ChatbotMessage.md)
+ - [ChatbotMessageRole](docs/ChatbotMessageRole.md)
  - [CommentTemplate](docs/CommentTemplate.md)
  - [CommentTemplateAttributesPartial](docs/CommentTemplateAttributesPartial.md)
  - [CompanyProfile](docs/CompanyProfile.md)
@@ -668,6 +745,7 @@ Class | Method | HTTP request | Description
  - [ConsumptionRate](docs/ConsumptionRate.md)
  - [ConsumptionRateAttributesPartial](docs/ConsumptionRateAttributesPartial.md)
  - [ContactData](docs/ContactData.md)
+ - [ContactProperty](docs/ContactProperty.md)
  - [Correspondence](docs/Correspondence.md)
  - [CorrespondenceAttributesPartial](docs/CorrespondenceAttributesPartial.md)
  - [CorrespondenceEmail](docs/CorrespondenceEmail.md)
@@ -704,6 +782,10 @@ Class | Method | HTTP request | Description
  - [CreateOrUpdateBookingTemplateRequest](docs/CreateOrUpdateBookingTemplateRequest.md)
  - [CreateOrUpdateCaseReportingEndpointRequest](docs/CreateOrUpdateCaseReportingEndpointRequest.md)
  - [CreateOrUpdateCaseTemplateRequest](docs/CreateOrUpdateCaseTemplateRequest.md)
+ - [CreateOrUpdateCatalogGroup](docs/CreateOrUpdateCatalogGroup.md)
+ - [CreateOrUpdateCatalogGroupSubscription](docs/CreateOrUpdateCatalogGroupSubscription.md)
+ - [CreateOrUpdateCatalogItem](docs/CreateOrUpdateCatalogItem.md)
+ - [CreateOrUpdateCatalogItemSubscription](docs/CreateOrUpdateCatalogItemSubscription.md)
  - [CreateOrUpdateCommentTemplateRequest](docs/CreateOrUpdateCommentTemplateRequest.md)
  - [CreateOrUpdateConnectorQueryRequest](docs/CreateOrUpdateConnectorQueryRequest.md)
  - [CreateOrUpdateConsumptionRequest](docs/CreateOrUpdateConsumptionRequest.md)
@@ -721,19 +803,24 @@ Class | Method | HTTP request | Description
  - [CreateOrUpdateInventoryItemRequest](docs/CreateOrUpdateInventoryItemRequest.md)
  - [CreateOrUpdateInvoiceDataMapperRequest](docs/CreateOrUpdateInvoiceDataMapperRequest.md)
  - [CreateOrUpdateInvoiceRequest](docs/CreateOrUpdateInvoiceRequest.md)
+ - [CreateOrUpdateListingRequest](docs/CreateOrUpdateListingRequest.md)
  - [CreateOrUpdateMeterReadingRequest](docs/CreateOrUpdateMeterReadingRequest.md)
  - [CreateOrUpdateMeterRequest](docs/CreateOrUpdateMeterRequest.md)
+ - [CreateOrUpdateOwnershipRequest](docs/CreateOrUpdateOwnershipRequest.md)
  - [CreateOrUpdatePropertyDeclarationRequest](docs/CreateOrUpdatePropertyDeclarationRequest.md)
  - [CreateOrUpdatePropertyFiscalYearRequest](docs/CreateOrUpdatePropertyFiscalYearRequest.md)
  - [CreateOrUpdatePropertyHandoverRequest](docs/CreateOrUpdatePropertyHandoverRequest.md)
  - [CreateOrUpdatePropertyHandoverTemplateRequest](docs/CreateOrUpdatePropertyHandoverTemplateRequest.md)
  - [CreateOrUpdatePropertyOwnerRequest](docs/CreateOrUpdatePropertyOwnerRequest.md)
  - [CreateOrUpdatePropertyRequest](docs/CreateOrUpdatePropertyRequest.md)
+ - [CreateOrUpdatePublicChatbotInstructionRequest](docs/CreateOrUpdatePublicChatbotInstructionRequest.md)
  - [CreateOrUpdateRentUpdateRequest](docs/CreateOrUpdateRentUpdateRequest.md)
  - [CreateOrUpdateReportDefinitionRequest](docs/CreateOrUpdateReportDefinitionRequest.md)
  - [CreateOrUpdateReportEntrypointRequest](docs/CreateOrUpdateReportEntrypointRequest.md)
+ - [CreateOrUpdateRevenueTypeRequest](docs/CreateOrUpdateRevenueTypeRequest.md)
  - [CreateOrUpdateServiceProvider](docs/CreateOrUpdateServiceProvider.md)
  - [CreateOrUpdateTenantRequest](docs/CreateOrUpdateTenantRequest.md)
+ - [CreateOrUpdateUnitAssessmentRequest](docs/CreateOrUpdateUnitAssessmentRequest.md)
  - [CreateOrUpdateVersionMigratorRequest](docs/CreateOrUpdateVersionMigratorRequest.md)
  - [CreateOrUpdateWorkflowDefinitionRequest](docs/CreateOrUpdateWorkflowDefinitionRequest.md)
  - [CreateOrUpdateWorkflowEntrypointRequest](docs/CreateOrUpdateWorkflowEntrypointRequest.md)
@@ -751,6 +838,7 @@ Class | Method | HTTP request | Description
  - [DataImportPreviewItem](docs/DataImportPreviewItem.md)
  - [DataImportTemplate](docs/DataImportTemplate.md)
  - [DataImportTemplatePartial](docs/DataImportTemplatePartial.md)
+ - [DeleteFolderRequest](docs/DeleteFolderRequest.md)
  - [DisplayCondition](docs/DisplayCondition.md)
  - [DivisionDeclaration](docs/DivisionDeclaration.md)
  - [DivisionUnit](docs/DivisionUnit.md)
@@ -821,6 +909,8 @@ Class | Method | HTTP request | Description
  - [GenerateSignaturePreviewPDFRequest](docs/GenerateSignaturePreviewPDFRequest.md)
  - [GetAppointmentInfoResponse](docs/GetAppointmentInfoResponse.md)
  - [GetBankConnectionResponse](docs/GetBankConnectionResponse.md)
+ - [GetChatbotStatsRequest](docs/GetChatbotStatsRequest.md)
+ - [GetChatbotStatsResponse](docs/GetChatbotStatsResponse.md)
  - [GetCorrespondenceDocumentResponse](docs/GetCorrespondenceDocumentResponse.md)
  - [GetCorrespondenceStatusResponse](docs/GetCorrespondenceStatusResponse.md)
  - [GetExternalUserCasesCountResponse](docs/GetExternalUserCasesCountResponse.md)
@@ -854,11 +944,15 @@ Class | Method | HTTP request | Description
  - [InvoiceDataMapperAttributesPartial](docs/InvoiceDataMapperAttributesPartial.md)
  - [InvoiceDataMapperEntrypointEnum](docs/InvoiceDataMapperEntrypointEnum.md)
  - [InvoiceExtendedData](docs/InvoiceExtendedData.md)
+ - [InvoiceInboxConfig](docs/InvoiceInboxConfig.md)
  - [InvoicePaymentStatusEnum](docs/InvoicePaymentStatusEnum.md)
  - [InvoiceUploadJob](docs/InvoiceUploadJob.md)
  - [InvoiceUploadJobStatusEnum](docs/InvoiceUploadJobStatusEnum.md)
  - [IsDeletedAttributePartial](docs/IsDeletedAttributePartial.md)
  - [LandRegistryEntry](docs/LandRegistryEntry.md)
+ - [Listing](docs/Listing.md)
+ - [ListingAttributesPartial](docs/ListingAttributesPartial.md)
+ - [ListingRoom](docs/ListingRoom.md)
  - [LogRequest](docs/LogRequest.md)
  - [MailStatusResponse](docs/MailStatusResponse.md)
  - [ManagementModeTypeEnum](docs/ManagementModeTypeEnum.md)
@@ -884,6 +978,10 @@ Class | Method | HTTP request | Description
  - [OutlookSenderTypeEnum](docs/OutlookSenderTypeEnum.md)
  - [OutlookTenantCaseItem](docs/OutlookTenantCaseItem.md)
  - [OutlookTenantDetails](docs/OutlookTenantDetails.md)
+ - [Ownership](docs/Ownership.md)
+ - [OwnershipAttributesPartial](docs/OwnershipAttributesPartial.md)
+ - [OwnershipTrackingModeEnum](docs/OwnershipTrackingModeEnum.md)
+ - [PatchFormat](docs/PatchFormat.md)
  - [PreviewDataImportRequest](docs/PreviewDataImportRequest.md)
  - [PriceIndexPoint](docs/PriceIndexPoint.md)
  - [PriceIndexPointQueryRequest](docs/PriceIndexPointQueryRequest.md)
@@ -893,6 +991,7 @@ Class | Method | HTTP request | Description
  - [PropertyDeclaration](docs/PropertyDeclaration.md)
  - [PropertyDeclarationAttributesPartial](docs/PropertyDeclarationAttributesPartial.md)
  - [PropertyDetails](docs/PropertyDetails.md)
+ - [PropertyEnergySourceEnum](docs/PropertyEnergySourceEnum.md)
  - [PropertyFiscalYear](docs/PropertyFiscalYear.md)
  - [PropertyFloorTypeEnum](docs/PropertyFloorTypeEnum.md)
  - [PropertyFurnishingEnum](docs/PropertyFurnishingEnum.md)
@@ -911,7 +1010,10 @@ Class | Method | HTTP request | Description
  - [PropertySimiliarity](docs/PropertySimiliarity.md)
  - [PropertyType](docs/PropertyType.md)
  - [PropertyWindowTypeEnum](docs/PropertyWindowTypeEnum.md)
+ - [PublicChatbotInstruction](docs/PublicChatbotInstruction.md)
+ - [PublicChatbotInstructionAttributesPartial](docs/PublicChatbotInstructionAttributesPartial.md)
  - [PublicJoinAppointmentRequest](docs/PublicJoinAppointmentRequest.md)
+ - [PublicListing](docs/PublicListing.md)
  - [QueryAccountDimensionValuesRequest](docs/QueryAccountDimensionValuesRequest.md)
  - [QueryAccountDimensionsRequest](docs/QueryAccountDimensionsRequest.md)
  - [QueryAllocationKeyOverridesRequest](docs/QueryAllocationKeyOverridesRequest.md)
@@ -942,6 +1044,14 @@ Class | Method | HTTP request | Description
  - [QueryCaseReportingEndpointsResponse](docs/QueryCaseReportingEndpointsResponse.md)
  - [QueryCaseTemplatesRequest](docs/QueryCaseTemplatesRequest.md)
  - [QueryCasesRequest](docs/QueryCasesRequest.md)
+ - [QueryCatalogGroupSubscriptionRequest](docs/QueryCatalogGroupSubscriptionRequest.md)
+ - [QueryCatalogGroupSubscriptionResponse](docs/QueryCatalogGroupSubscriptionResponse.md)
+ - [QueryCatalogGroupsRequest](docs/QueryCatalogGroupsRequest.md)
+ - [QueryCatalogGroupsResponse](docs/QueryCatalogGroupsResponse.md)
+ - [QueryCatalogItemSubscriptionRequest](docs/QueryCatalogItemSubscriptionRequest.md)
+ - [QueryCatalogItemSubscriptionResponse](docs/QueryCatalogItemSubscriptionResponse.md)
+ - [QueryCatalogItemsRequest](docs/QueryCatalogItemsRequest.md)
+ - [QueryCatalogItemsResponse](docs/QueryCatalogItemsResponse.md)
  - [QueryCommentTemplatesRequest](docs/QueryCommentTemplatesRequest.md)
  - [QueryConsumptionsResponse](docs/QueryConsumptionsResponse.md)
  - [QueryCorrespondenceRequest](docs/QueryCorrespondenceRequest.md)
@@ -967,6 +1077,8 @@ Class | Method | HTTP request | Description
  - [QueryLimitAttributesPartial](docs/QueryLimitAttributesPartial.md)
  - [QueryNotificationsRequest](docs/QueryNotificationsRequest.md)
  - [QueryNotificationsResponse](docs/QueryNotificationsResponse.md)
+ - [QueryOwnershipsRequest](docs/QueryOwnershipsRequest.md)
+ - [QueryOwnershipsResponse](docs/QueryOwnershipsResponse.md)
  - [QueryPropertiesRequest](docs/QueryPropertiesRequest.md)
  - [QueryPropertiesResponse](docs/QueryPropertiesResponse.md)
  - [QueryPropertyDeclarationsRequest](docs/QueryPropertyDeclarationsRequest.md)
@@ -984,6 +1096,7 @@ Class | Method | HTTP request | Description
  - [QueryTenantsRequest](docs/QueryTenantsRequest.md)
  - [QueryTenantsResponse](docs/QueryTenantsResponse.md)
  - [QueryTimeRange](docs/QueryTimeRange.md)
+ - [QueryUnitAssessmentsRequest](docs/QueryUnitAssessmentsRequest.md)
  - [QueryVersionMigratorsRequest](docs/QueryVersionMigratorsRequest.md)
  - [QueryVersionMigratorsResponse](docs/QueryVersionMigratorsResponse.md)
  - [QueryWorkflowDefinitionsRequest](docs/QueryWorkflowDefinitionsRequest.md)
@@ -993,6 +1106,7 @@ Class | Method | HTTP request | Description
  - [ReceiveEmailInvoiceRequest](docs/ReceiveEmailInvoiceRequest.md)
  - [ReceiveEmailInvoiceResponse](docs/ReceiveEmailInvoiceResponse.md)
  - [RejectApprovalRequest](docs/RejectApprovalRequest.md)
+ - [RenameFolderRequest](docs/RenameFolderRequest.md)
  - [RentData](docs/RentData.md)
  - [RentDetails](docs/RentDetails.md)
  - [RentDetailsAndData](docs/RentDetailsAndData.md)
@@ -1009,7 +1123,13 @@ Class | Method | HTTP request | Description
  - [ReportResultSchema](docs/ReportResultSchema.md)
  - [ReportResultSchemaAttribute](docs/ReportResultSchemaAttribute.md)
  - [ReportResultTypeEnum](docs/ReportResultTypeEnum.md)
+ - [RevenueType](docs/RevenueType.md)
+ - [RevenueTypeAttributesPartial](docs/RevenueTypeAttributesPartial.md)
+ - [RevenueTypeScopeEnum](docs/RevenueTypeScopeEnum.md)
+ - [RevenueTypeSystemDefaultEnum](docs/RevenueTypeSystemDefaultEnum.md)
  - [RevertAccountBookingRequest](docs/RevertAccountBookingRequest.md)
+ - [SendChatbotMessageRequest](docs/SendChatbotMessageRequest.md)
+ - [SendChatbotMessageResponse](docs/SendChatbotMessageResponse.md)
  - [SendNotificationRequest](docs/SendNotificationRequest.md)
  - [ServiceCategoryEnum](docs/ServiceCategoryEnum.md)
  - [ServiceProvider](docs/ServiceProvider.md)
@@ -1031,19 +1151,23 @@ Class | Method | HTTP request | Description
  - [Tenancy](docs/Tenancy.md)
  - [TenancyAttributesPartial](docs/TenancyAttributesPartial.md)
  - [TenancyDurationEnum](docs/TenancyDurationEnum.md)
+ - [TenancyModeEnum](docs/TenancyModeEnum.md)
  - [Tenant](docs/Tenant.md)
  - [TenantAttributesPartial](docs/TenantAttributesPartial.md)
  - [TenantChange](docs/TenantChange.md)
  - [TenantChangeActionEnum](docs/TenantChangeActionEnum.md)
- - [TenantChangesInner](docs/TenantChangesInner.md)
+ - [TenantChangeRequest](docs/TenantChangeRequest.md)
  - [TimeSlotAttributesPartial](docs/TimeSlotAttributesPartial.md)
  - [TipTapDocument](docs/TipTapDocument.md)
+ - [UnitAssessment](docs/UnitAssessment.md)
+ - [UnitAssessmentPartial](docs/UnitAssessmentPartial.md)
  - [UnssignCaseRequest](docs/UnssignCaseRequest.md)
  - [UpdateAccountConfigRequest](docs/UpdateAccountConfigRequest.md)
  - [UpdateArchivalJobSettingsRequest](docs/UpdateArchivalJobSettingsRequest.md)
  - [UpdateBookingPreviewRequest](docs/UpdateBookingPreviewRequest.md)
  - [UpdateCaseRequest](docs/UpdateCaseRequest.md)
  - [UpdateCaseStatusRequest](docs/UpdateCaseStatusRequest.md)
+ - [UpdateChatbotConfigRequest](docs/UpdateChatbotConfigRequest.md)
  - [UpdateCompanyProfileRequest](docs/UpdateCompanyProfileRequest.md)
  - [UpdateConnectorConfigRequest](docs/UpdateConnectorConfigRequest.md)
  - [UpdateDocumentRequest](docs/UpdateDocumentRequest.md)
@@ -1051,10 +1175,10 @@ Class | Method | HTTP request | Description
  - [UpdateNoteRequest](docs/UpdateNoteRequest.md)
  - [UpdateNotificationRequest](docs/UpdateNotificationRequest.md)
  - [UpdateTenancyRequest](docs/UpdateTenancyRequest.md)
- - [UpdateUserPreferencesRequest](docs/UpdateUserPreferencesRequest.md)
+ - [UpdateUserInformationRequest](docs/UpdateUserInformationRequest.md)
  - [UploadInvoiceResponse](docs/UploadInvoiceResponse.md)
- - [UserPreferences](docs/UserPreferences.md)
- - [UserPreferencesAttributesPartial](docs/UserPreferencesAttributesPartial.md)
+ - [UserInformation](docs/UserInformation.md)
+ - [UserInformationAttributesPartial](docs/UserInformationAttributesPartial.md)
  - [UserReference](docs/UserReference.md)
  - [UserTypeEnum](docs/UserTypeEnum.md)
  - [ValidateBankAccountIbanRequest](docs/ValidateBankAccountIbanRequest.md)

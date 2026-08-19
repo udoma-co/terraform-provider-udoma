@@ -52,6 +52,7 @@ type BookingTemplateModel struct {
 	Script         types.String          `tfsdk:"script"`
 	EnvVars        types.Map             `tfsdk:"env_vars"`
 	Grouping       *BookingGroupingModel `tfsdk:"grouping"`
+	IsCatalogItem  types.Bool            `tfsdk:"is_catalog_item"`
 }
 
 func (faq *BookingTemplate) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -136,6 +137,10 @@ func (faq *BookingTemplate) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:    true,
 				Description: "An optional descriptor that defines how bookings inside a preview are grouped",
 				Attributes:  bookingGroupingNestedSchema(),
+			},
+			"is_catalog_item": schema.BoolAttribute{
+				Computed:    true,
+				Description: "Whether this entity is represented as a catalog item.",
 			},
 		},
 	}
@@ -346,6 +351,7 @@ func (model *BookingTemplateModel) fromApiResponse(bookingTemplate *v1.BookingTe
 	model.Icon = omittableStringValue(bookingTemplate.Icon, model.Icon)
 	model.Script = types.StringValue(bookingTemplate.Script)
 	model.InitScript = omittableStringValue(bookingTemplate.InitScript, model.InitScript)
+	model.IsCatalogItem = types.BoolPointerValue(bookingTemplate.IsCatalogItem)
 
 	var triggerSourcePtr *string
 	if bookingTemplate.TriggerSource != nil {

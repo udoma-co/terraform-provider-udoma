@@ -4,7 +4,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 	v1 "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
 )
 
@@ -71,7 +70,7 @@ func (cfg *CaseConfigModel) fromApiResponse(resp v1.CaseConfig) bool {
 			cfg.StatusConfig[i].fromApiResponse(&resp.StatusConfig[i])
 		}
 	} else {
-		cfg.StatusConfig = nil
+		cfg.StatusConfig = preserveEmptySlice(cfg.StatusConfig)
 	}
 
 	if len(resp.Reminders) != 0 {
@@ -81,7 +80,7 @@ func (cfg *CaseConfigModel) fromApiResponse(resp v1.CaseConfig) bool {
 			cfg.Reminders[i].fromApiResponse(&resp.Reminders[i])
 		}
 	} else {
-		cfg.Reminders = nil
+		cfg.Reminders = preserveEmptySlice(cfg.Reminders)
 	}
 
 	if len(resp.AutomaticActions) != 0 {
@@ -91,7 +90,7 @@ func (cfg *CaseConfigModel) fromApiResponse(resp v1.CaseConfig) bool {
 			cfg.AutomaticActions[i].fromApiResponse(&resp.AutomaticActions[i])
 		}
 	} else {
-		cfg.AutomaticActions = nil
+		cfg.AutomaticActions = preserveEmptySlice(cfg.AutomaticActions)
 	}
 	isEmpty = true
 
@@ -166,23 +165,9 @@ func (cfg *CaseStatusConfigModel) fromApiResponse(resp *v1.CaseStatusConfig) (di
 
 	cfg.Action = types.StringValue(string(resp.Action))
 
-	if len(resp.SourceStatus) != 0 {
-		cfg.SourceStatus, diags = types.ListValue(types.StringType, enumSliceToValueList(resp.SourceStatus))
-		if diags.HasError() {
-			return
-		}
-	} else {
-		cfg.SourceStatus = basetypes.NewListNull(types.StringType)
-	}
+	cfg.SourceStatus = omittableEnumListValue(resp.SourceStatus, cfg.SourceStatus)
 
-	if len(resp.Parties) != 0 {
-		cfg.Parties, diags = types.ListValue(types.StringType, enumSliceToValueList(resp.Parties))
-		if diags.HasError() {
-			return
-		}
-	} else {
-		cfg.Parties = basetypes.NewListNull(types.StringType)
-	}
+	cfg.Parties = omittableEnumListValue(resp.Parties, cfg.Parties)
 
 	if len(resp.Feedback) != 0 {
 		cfg.Feedback = make([]CaseFeedbackConfigModel, len(resp.Feedback))
@@ -190,17 +175,10 @@ func (cfg *CaseStatusConfigModel) fromApiResponse(resp *v1.CaseStatusConfig) (di
 			cfg.Feedback[i].fromApiResponse(&resp.Feedback[i])
 		}
 	} else {
-		cfg.Feedback = nil
+		cfg.Feedback = preserveEmptySlice(cfg.Feedback)
 	}
 
-	if len(resp.Notify) != 0 {
-		cfg.Notify, diags = types.ListValue(types.StringType, enumSliceToValueList(resp.Notify))
-		if diags.HasError() {
-			return
-		}
-	} else {
-		cfg.Notify = basetypes.NewListNull(types.StringType)
-	}
+	cfg.Notify = omittableEnumListValue(resp.Notify, cfg.Notify)
 
 	return
 }
@@ -261,14 +239,7 @@ func (cfg *CaseFeedbackConfigModel) fromApiResponse(resp *v1.CaseFeedbackConfig)
 	cfg.ID = types.StringValue(resp.Id)
 	cfg.Mode = types.StringValue(string(resp.Mode))
 
-	if len(resp.Visibility) != 0 {
-		cfg.Visibility, diags = types.ListValue(types.StringType, enumSliceToValueList[v1.UserTypeEnum](resp.Visibility))
-		if diags.HasError() {
-			return
-		}
-	} else {
-		cfg.Visibility = basetypes.NewListNull(types.StringType)
-	}
+	cfg.Visibility = omittableEnumListValue(resp.Visibility, cfg.Visibility)
 
 	if formDef := resp.Form.Get(); resp.Form.IsSet() && !isEmptyCustomForm(formDef) {
 		cfg.Form = &CustomFormModel{}
@@ -328,14 +299,7 @@ func (cfg *CaseReminderConfigModel) fromApiResponse(resp *v1.CaseReminderConfig)
 
 	cfg.Status = types.StringValue(string(resp.Status))
 
-	if len(resp.Schedule) != 0 {
-		cfg.Schedule, diags = types.ListValue(types.Int64Type, int32SliceToValueList(resp.Schedule))
-		if diags.HasError() {
-			return
-		}
-	} else {
-		cfg.Schedule = basetypes.NewListNull(types.Int64Type)
-	}
+	cfg.Schedule = omittableInt32ListValue(resp.Schedule, cfg.Schedule)
 
 	return
 }

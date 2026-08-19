@@ -46,6 +46,7 @@ type HookModel struct {
 	BreakOnError   types.Bool           `tfsdk:"break_on_error"`
 	Script         types.String         `tfsdk:"script"`
 	AdditionalData jsontypes.Normalized `tfsdk:"additional_data"`
+	IsCatalogItem  types.Bool           `tfsdk:"is_catalog_item"`
 }
 
 func (hook *Hook) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -125,6 +126,10 @@ func (hook *Hook) Schema(ctx context.Context, req resource.SchemaRequest, resp *
 				Optional:    true,
 				CustomType:  jsontypes.NormalizedType{},
 				Description: "Additional data that can be used by the hook",
+			},
+			"is_catalog_item": schema.BoolAttribute{
+				Computed:    true,
+				Description: "Whether this entity is represented as a catalog item.",
 			},
 		},
 	}
@@ -355,6 +360,7 @@ func (hook *HookModel) fromAPI(resp *api.Hook) (err error) {
 	hook.Priority = omittableInt32Value(resp.Priority, hook.Priority)
 	hook.Enabled = omittableBooleanValue(resp.Enabled, hook.Enabled)
 	hook.BreakOnError = omittableBooleanValue(resp.BreakOnError, hook.BreakOnError)
+	hook.IsCatalogItem = types.BoolPointerValue(resp.IsCatalogItem)
 
 	bAdditionalData, err := json.Marshal(resp.AdditionalData)
 	if err != nil {

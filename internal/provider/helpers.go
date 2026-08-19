@@ -86,6 +86,51 @@ func omittableBooleanValue(newValue *bool, oldValue basetypes.BoolValue) basetyp
 	return types.BoolPointerValue(newValue)
 }
 
+// omittableStringListValue returns an empty list when the API omits an empty
+// list that was explicitly configured, and null otherwise.
+func omittableStringListValue(newValue []string, oldValue basetypes.ListValue) basetypes.ListValue {
+	if len(newValue) > 0 {
+		return types.ListValueMust(types.StringType, stringSliceToValueList(newValue))
+	}
+	if !oldValue.IsNull() && !oldValue.IsUnknown() && len(oldValue.Elements()) == 0 {
+		return types.ListValueMust(types.StringType, []attr.Value{})
+	}
+	return types.ListNull(types.StringType)
+}
+
+// omittableEnumListValue returns an empty list when the API omits an empty
+// enum list that was explicitly configured, and null otherwise.
+func omittableEnumListValue[T ~string](newValue []T, oldValue basetypes.ListValue) basetypes.ListValue {
+	if len(newValue) > 0 {
+		return types.ListValueMust(types.StringType, enumSliceToValueList(newValue))
+	}
+	if !oldValue.IsNull() && !oldValue.IsUnknown() && len(oldValue.Elements()) == 0 {
+		return types.ListValueMust(types.StringType, []attr.Value{})
+	}
+	return types.ListNull(types.StringType)
+}
+
+// omittableInt32ListValue returns an empty int64 Terraform list when the API
+// omits an empty int32 list that was explicitly configured, and null otherwise.
+func omittableInt32ListValue(newValue []int32, oldValue basetypes.ListValue) basetypes.ListValue {
+	if len(newValue) > 0 {
+		return types.ListValueMust(types.Int64Type, int32SliceToValueList(newValue))
+	}
+	if !oldValue.IsNull() && !oldValue.IsUnknown() && len(oldValue.Elements()) == 0 {
+		return types.ListValueMust(types.Int64Type, []attr.Value{})
+	}
+	return types.ListNull(types.Int64Type)
+}
+
+// preserveEmptySlice returns an empty slice when the API omits an empty slice
+// that was explicitly configured, and nil otherwise.
+func preserveEmptySlice[T any](oldValue []T) []T {
+	if oldValue != nil {
+		return make([]T, 0)
+	}
+	return nil
+}
+
 // omittableStringValue returns a new value for a string field that can be
 // omitted. That is, if the new value is nil and the old value is "", the
 // returned value is "". Otherwise, the returned value is the new value.

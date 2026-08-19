@@ -125,7 +125,7 @@ func (r *workflowEntrypoint) Schema(ctx context.Context, req resource.SchemaRequ
 				// default only works with computed attributes
 				// Default:  stringdefault.StaticString("allow"),
 				Validators: []validator.String{
-					stringvalidator.OneOfCaseInsensitive(stringSlice(api.AllowedWorkflowEntrypointRepeatabilityEnumValues)...),
+					stringvalidator.OneOf(stringSlice(api.AllowedWorkflowEntrypointRepeatabilityEnumValues)...),
 				},
 			},
 			"icon": schema.StringAttribute{

@@ -20,20 +20,24 @@ type BankAccountCategoryEnum string
 
 // List of BankAccountCategoryEnum
 const (
-	BANKACCOUNTCATEGORYENUM_DEPOSIT      BankAccountCategoryEnum = "DEPOSIT"
-	BANKACCOUNTCATEGORYENUM_RENT_PAYMENT BankAccountCategoryEnum = "RENT_PAYMENT"
-	BANKACCOUNTCATEGORYENUM_EXPENSES     BankAccountCategoryEnum = "EXPENSES"
-	BANKACCOUNTCATEGORYENUM_PROVISIONS   BankAccountCategoryEnum = "PROVISIONS"
-	BANKACCOUNTCATEGORYENUM_OTHERS       BankAccountCategoryEnum = "OTHERS"
+	BANKACCOUNTCATEGORYENUM_CONDOMINIUM_CHECKING BankAccountCategoryEnum = "CONDOMINIUM_CHECKING"
+	BANKACCOUNTCATEGORYENUM_CONDOMINIUM_RESERVE  BankAccountCategoryEnum = "CONDOMINIUM_RESERVE"
+	BANKACCOUNTCATEGORYENUM_DEPOSIT              BankAccountCategoryEnum = "DEPOSIT"
+	BANKACCOUNTCATEGORYENUM_EXPENSES             BankAccountCategoryEnum = "EXPENSES"
+	BANKACCOUNTCATEGORYENUM_OTHERS               BankAccountCategoryEnum = "OTHERS"
+	BANKACCOUNTCATEGORYENUM_PROVISIONS           BankAccountCategoryEnum = "PROVISIONS"
+	BANKACCOUNTCATEGORYENUM_RENT_PAYMENT         BankAccountCategoryEnum = "RENT_PAYMENT"
 )
 
 // All allowed values of BankAccountCategoryEnum enum
 var AllowedBankAccountCategoryEnumEnumValues = []BankAccountCategoryEnum{
+	"CONDOMINIUM_CHECKING",
+	"CONDOMINIUM_RESERVE",
 	"DEPOSIT",
-	"RENT_PAYMENT",
 	"EXPENSES",
-	"PROVISIONS",
 	"OTHERS",
+	"PROVISIONS",
+	"RENT_PAYMENT",
 }
 
 func (v *BankAccountCategoryEnum) UnmarshalJSON(src []byte) error {

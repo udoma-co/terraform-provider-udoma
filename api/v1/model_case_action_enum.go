@@ -41,6 +41,7 @@ const (
 	CASEACTIONENUM_SCHEDULE_WORK    CaseActionEnum = "SCHEDULE_WORK"
 	CASEACTIONENUM_START_WORK       CaseActionEnum = "START_WORK"
 	CASEACTIONENUM_UNASSIGN         CaseActionEnum = "UNASSIGN"
+	CASEACTIONENUM_UNARCHIVE        CaseActionEnum = "UNARCHIVE"
 	CASEACTIONENUM_UPDATE           CaseActionEnum = "UPDATE"
 )
 
@@ -67,6 +68,7 @@ var AllowedCaseActionEnumEnumValues = []CaseActionEnum{
 	"SCHEDULE_WORK",
 	"START_WORK",
 	"UNASSIGN",
+	"UNARCHIVE",
 	"UPDATE",
 }
 

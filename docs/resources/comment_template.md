@@ -30,4 +30,5 @@ Comment template resource
 
 - `created_at` (Number) The date and time the template was created
 - `id` (String) The unique identifier of the comment template
+- `is_catalog_item` (Boolean) Whether this entity is represented as a catalog item.
 - `updated_at` (Number) The date and time the template was last updated

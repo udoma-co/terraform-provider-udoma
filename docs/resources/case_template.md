@@ -24,6 +24,7 @@ Resource represents a template for raising cases
 ### Optional
 
 - `ad_categories` (List of String) The list of ad categories for the case template
+- `ai_hint` (String) Hint for AI agents working with this template; not shown to tenants.
 - `config` (Attributes) Defines custom behaviour of a case, based on the case template that was used to create it (see [below for nested schema](#nestedatt--config))
 - `confirmation_text` (Map of String) Text for the confirmation window before submiting case
 - `description` (Map of String) The description of the case template, shown in the reporting page
@@ -39,6 +40,7 @@ Resource represents a template for raising cases
 
 - `created_at` (Number) The date and time the template was created
 - `id` (String) The unique identifier for the case template
+- `is_catalog_item` (Boolean) Whether this entity is represented as a catalog item.
 - `last_updated` (String)
 - `updated_at` (Number) The date and time the template was last modified
 

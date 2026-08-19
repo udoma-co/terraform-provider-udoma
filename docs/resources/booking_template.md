@@ -35,6 +35,7 @@ Resource represents a booking template
 
 - `created_at` (Number) The date and time the booking template was created
 - `id` (String) The unique identifier for the booking template
+- `is_catalog_item` (Boolean) Whether this entity is represented as a catalog item.
 - `updated_at` (Number) The date and time the booking template was last modified
 
 <a id="nestedatt--inputs"></a>

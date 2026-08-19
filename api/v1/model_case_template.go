@@ -46,6 +46,8 @@ type CaseTemplate struct {
 	AdCategories []CaseTemplateAdCategoryEnum `json:"ad_categories,omitempty"`
 	// a map of values, where the key and values are strings
 	ConfirmationText *map[string]string `json:"confirmation_text,omitempty"`
+	// Hint for the AI agents working with this template, describing when the template should be used, what is expected from the tenant and what the next steps after the submission are. The hint is never shown to the tenants, it is only passed to the AI, for example so the public chatbot can suggest the right template and explain what will happen.
+	AiHint *string `json:"ai_hint,omitempty"`
 	// If true, an AI-generated summary of the submitted case data will be included in the new case notification email sent to the property manager.
 	IncludeAiSummary *bool `json:"include_ai_summary,omitempty"`
 	// If true, AI will be used to automatically assess the priority of the newly  submitted case. High priority cases will have the notification email sent with high importance/priority.
@@ -53,6 +55,8 @@ type CaseTemplate struct {
 	Version                     *int32 `json:"version,omitempty"`
 	// A flag indicating whether the entity is deleted. If the entity is deleted, it should not be returned in the results of a query, but it is still kept in the database as it is referenced by other entities.
 	IsDeleted *bool `json:"is_deleted,omitempty"`
+	// A flag indicating whether the entity is published as a catalog item. Catalog items are defined once for the environment and are managed centrally, they cannot be edited from a customer account that has subscribed to them. The flag is derived from the catalog and is never set by the client.
+	IsCatalogItem *bool `json:"is_catalog_item,omitempty"`
 }
 
 type _CaseTemplate CaseTemplate
@@ -475,6 +479,38 @@ func (o *CaseTemplate) SetConfirmationText(v map[string]string) {
 	o.ConfirmationText = &v
 }
 
+// GetAiHint returns the AiHint field value if set, zero value otherwise.
+func (o *CaseTemplate) GetAiHint() string {
+	if o == nil || IsNil(o.AiHint) {
+		var ret string
+		return ret
+	}
+	return *o.AiHint
+}
+
+// GetAiHintOk returns a tuple with the AiHint field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CaseTemplate) GetAiHintOk() (*string, bool) {
+	if o == nil || IsNil(o.AiHint) {
+		return nil, false
+	}
+	return o.AiHint, true
+}
+
+// HasAiHint returns a boolean if a field has been set.
+func (o *CaseTemplate) HasAiHint() bool {
+	if o != nil && !IsNil(o.AiHint) {
+		return true
+	}
+
+	return false
+}
+
+// SetAiHint gets a reference to the given string and assigns it to the AiHint field.
+func (o *CaseTemplate) SetAiHint(v string) {
+	o.AiHint = &v
+}
+
 // GetIncludeAiSummary returns the IncludeAiSummary field value if set, zero value otherwise.
 func (o *CaseTemplate) GetIncludeAiSummary() bool {
 	if o == nil || IsNil(o.IncludeAiSummary) {
@@ -603,6 +639,38 @@ func (o *CaseTemplate) SetIsDeleted(v bool) {
 	o.IsDeleted = &v
 }
 
+// GetIsCatalogItem returns the IsCatalogItem field value if set, zero value otherwise.
+func (o *CaseTemplate) GetIsCatalogItem() bool {
+	if o == nil || IsNil(o.IsCatalogItem) {
+		var ret bool
+		return ret
+	}
+	return *o.IsCatalogItem
+}
+
+// GetIsCatalogItemOk returns a tuple with the IsCatalogItem field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CaseTemplate) GetIsCatalogItemOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsCatalogItem) {
+		return nil, false
+	}
+	return o.IsCatalogItem, true
+}
+
+// HasIsCatalogItem returns a boolean if a field has been set.
+func (o *CaseTemplate) HasIsCatalogItem() bool {
+	if o != nil && !IsNil(o.IsCatalogItem) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsCatalogItem gets a reference to the given bool and assigns it to the IsCatalogItem field.
+func (o *CaseTemplate) SetIsCatalogItem(v bool) {
+	o.IsCatalogItem = &v
+}
+
 func (o CaseTemplate) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -641,6 +709,9 @@ func (o CaseTemplate) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.ConfirmationText) {
 		toSerialize["confirmation_text"] = o.ConfirmationText
 	}
+	if !IsNil(o.AiHint) {
+		toSerialize["ai_hint"] = o.AiHint
+	}
 	if !IsNil(o.IncludeAiSummary) {
 		toSerialize["include_ai_summary"] = o.IncludeAiSummary
 	}
@@ -652,6 +723,9 @@ func (o CaseTemplate) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.IsDeleted) {
 		toSerialize["is_deleted"] = o.IsDeleted
+	}
+	if !IsNil(o.IsCatalogItem) {
+		toSerialize["is_catalog_item"] = o.IsCatalogItem
 	}
 	return toSerialize, nil
 }

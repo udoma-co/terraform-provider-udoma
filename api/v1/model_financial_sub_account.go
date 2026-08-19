@@ -29,8 +29,10 @@ type FinancialSubAccount struct {
 	// The currency of the booking
 	Currency string              `json:"currency"`
 	Cadence  *BalanceCadenceEnum `json:"cadence,omitempty"`
-	// Optional reference to a cost type, used for operating cost statement tracking.
+	// Optional reference to a cost type, used for operating cost statement tracking. Mutually exclusive with revenue_type_ref.
 	CostTypeRef *string `json:"cost_type_ref,omitempty"`
+	// Optional reference to a revenue type, used for tracking different types of income. Mutually exclusive with cost_type_ref.
+	RevenueTypeRef *string `json:"revenue_type_ref,omitempty"`
 	// The flat number associated with the sub-account, that is the merged representation of the account and its dimensions.
 	FlatNumber string `json:"flat_number"`
 	// The dimensions and their values that are assigned to the sub-account. This is just the expanded version of the flat number.
@@ -227,6 +229,38 @@ func (o *FinancialSubAccount) SetCostTypeRef(v string) {
 	o.CostTypeRef = &v
 }
 
+// GetRevenueTypeRef returns the RevenueTypeRef field value if set, zero value otherwise.
+func (o *FinancialSubAccount) GetRevenueTypeRef() string {
+	if o == nil || IsNil(o.RevenueTypeRef) {
+		var ret string
+		return ret
+	}
+	return *o.RevenueTypeRef
+}
+
+// GetRevenueTypeRefOk returns a tuple with the RevenueTypeRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *FinancialSubAccount) GetRevenueTypeRefOk() (*string, bool) {
+	if o == nil || IsNil(o.RevenueTypeRef) {
+		return nil, false
+	}
+	return o.RevenueTypeRef, true
+}
+
+// HasRevenueTypeRef returns a boolean if a field has been set.
+func (o *FinancialSubAccount) HasRevenueTypeRef() bool {
+	if o != nil && !IsNil(o.RevenueTypeRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetRevenueTypeRef gets a reference to the given string and assigns it to the RevenueTypeRef field.
+func (o *FinancialSubAccount) SetRevenueTypeRef(v string) {
+	o.RevenueTypeRef = &v
+}
+
 // GetFlatNumber returns the FlatNumber field value
 func (o *FinancialSubAccount) GetFlatNumber() string {
 	if o == nil {
@@ -350,6 +384,9 @@ func (o FinancialSubAccount) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.CostTypeRef) {
 		toSerialize["cost_type_ref"] = o.CostTypeRef
+	}
+	if !IsNil(o.RevenueTypeRef) {
+		toSerialize["revenue_type_ref"] = o.RevenueTypeRef
 	}
 	toSerialize["flat_number"] = o.FlatNumber
 	toSerialize["dimension_definitions"] = o.DimensionDefinitions

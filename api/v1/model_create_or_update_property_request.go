@@ -27,12 +27,12 @@ type CreateOrUpdatePropertyRequest struct {
 	// Controls if the property is a rentable unit. If set to true, it will be possible to add tenancies to it. If set to false, it will not be possible to add tenancies to it and it can be set as a parent property for other properties.
 	Rentable *bool    `json:"rentable,omitempty"`
 	Address  *Address `json:"address,omitempty"`
-	// For appartments, this is the unique number within the building. For  buildings, this can be used as a short identifier
+	// For appartments, this is the unique number within the building. For buildings, this can be used as a short identifier
 	Number *int32 `json:"number,omitempty"`
-	// List of management types that are applicable for this property. This is used to determine which features are available for the property and is available for accounts that have a mixed management mode (see  PropertyManagementConfig).
+	// List of management types that are applicable for this property. This is used to determine which features are available for the property and is available for accounts that have a mixed management mode (see PropertyManagementConfig).
 	ManagementTypes []PropertyManagementTypeEnum `json:"management_types,omitempty"`
-	// Optional reference to the owner of this property
-	OwnerRef *string `json:"owner_ref,omitempty"`
+	// Reference to the current owner of this property. On responses this is derived from the property's active ownership (the one whose end_date is NULL); on create/update requests it is honoured only when the account is in SIMPLE ownership tracking mode and will create or replace the single ownership row. In HISTORIC mode ownership must be managed via the dedicated /ownership endpoints and this field is ignored on mutations. In NONE mode the field is ignored on mutations and not populated on responses. If multiple ownership is enabled on the account, this field can contain more than a single owner. Otherwise it should always contain a single owner.
+	OwnerRefs []string `json:"owner_refs,omitempty"`
 	// Optional reference to the parent property (e.g. building) of this property
 	ParentRef *string          `json:"parent_ref,omitempty"`
 	Details   *PropertyDetails `json:"details,omitempty"`
@@ -237,36 +237,36 @@ func (o *CreateOrUpdatePropertyRequest) SetManagementTypes(v []PropertyManagemen
 	o.ManagementTypes = v
 }
 
-// GetOwnerRef returns the OwnerRef field value if set, zero value otherwise.
-func (o *CreateOrUpdatePropertyRequest) GetOwnerRef() string {
-	if o == nil || IsNil(o.OwnerRef) {
-		var ret string
+// GetOwnerRefs returns the OwnerRefs field value if set, zero value otherwise.
+func (o *CreateOrUpdatePropertyRequest) GetOwnerRefs() []string {
+	if o == nil || IsNil(o.OwnerRefs) {
+		var ret []string
 		return ret
 	}
-	return *o.OwnerRef
+	return o.OwnerRefs
 }
 
-// GetOwnerRefOk returns a tuple with the OwnerRef field value if set, nil otherwise
+// GetOwnerRefsOk returns a tuple with the OwnerRefs field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CreateOrUpdatePropertyRequest) GetOwnerRefOk() (*string, bool) {
-	if o == nil || IsNil(o.OwnerRef) {
+func (o *CreateOrUpdatePropertyRequest) GetOwnerRefsOk() ([]string, bool) {
+	if o == nil || IsNil(o.OwnerRefs) {
 		return nil, false
 	}
-	return o.OwnerRef, true
+	return o.OwnerRefs, true
 }
 
-// HasOwnerRef returns a boolean if a field has been set.
-func (o *CreateOrUpdatePropertyRequest) HasOwnerRef() bool {
-	if o != nil && !IsNil(o.OwnerRef) {
+// HasOwnerRefs returns a boolean if a field has been set.
+func (o *CreateOrUpdatePropertyRequest) HasOwnerRefs() bool {
+	if o != nil && !IsNil(o.OwnerRefs) {
 		return true
 	}
 
 	return false
 }
 
-// SetOwnerRef gets a reference to the given string and assigns it to the OwnerRef field.
-func (o *CreateOrUpdatePropertyRequest) SetOwnerRef(v string) {
-	o.OwnerRef = &v
+// SetOwnerRefs gets a reference to the given []string and assigns it to the OwnerRefs field.
+func (o *CreateOrUpdatePropertyRequest) SetOwnerRefs(v []string) {
+	o.OwnerRefs = v
 }
 
 // GetParentRef returns the ParentRef field value if set, zero value otherwise.
@@ -389,8 +389,8 @@ func (o CreateOrUpdatePropertyRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.ManagementTypes) {
 		toSerialize["management_types"] = o.ManagementTypes
 	}
-	if !IsNil(o.OwnerRef) {
-		toSerialize["owner_ref"] = o.OwnerRef
+	if !IsNil(o.OwnerRefs) {
+		toSerialize["owner_refs"] = o.OwnerRefs
 	}
 	if !IsNil(o.ParentRef) {
 		toSerialize["parent_ref"] = o.ParentRef

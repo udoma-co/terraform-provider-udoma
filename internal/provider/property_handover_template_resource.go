@@ -33,11 +33,12 @@ type PropertyHandoverTemplate struct {
 
 // PropertyTemplateTemplateModel describes the resource data model
 type PropertyHandoverTemplateModel struct {
-	ID          types.String     `tfsdk:"id"`
-	Name        types.String     `tfsdk:"name"`
-	Description types.String     `tfsdk:"description"`
-	Inputs      *CustomFormModel `tfsdk:"inputs"`
-	Version     types.Int32      `tfsdk:"version"`
+	ID            types.String     `tfsdk:"id"`
+	Name          types.String     `tfsdk:"name"`
+	Description   types.String     `tfsdk:"description"`
+	Inputs        *CustomFormModel `tfsdk:"inputs"`
+	IsCatalogItem types.Bool       `tfsdk:"is_catalog_item"`
+	Version       types.Int32      `tfsdk:"version"`
 }
 
 func (r *PropertyHandoverTemplate) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -70,6 +71,10 @@ func (r *PropertyHandoverTemplate) Schema(ctx context.Context, req resource.Sche
 				Required:    true,
 				Description: "A custom form to collect data with",
 				Attributes:  CustomFormNestedSchema(),
+			},
+			"is_catalog_item": schema.BoolAttribute{
+				Computed:    true,
+				Description: "Whether this entity is represented as a catalog item.",
 			},
 			"version": schema.Int32Attribute{
 				Optional:    true,
@@ -231,6 +236,7 @@ func (template *PropertyHandoverTemplateModel) toApiRequest() *v1.CreateOrUpdate
 
 func (template *PropertyHandoverTemplateModel) fromApiResponse(resp *v1.PropertyHandoverTemplate) (diags diag.Diagnostics) {
 	template.ID = types.StringValue(resp.Id)
+	template.IsCatalogItem = types.BoolPointerValue(resp.IsCatalogItem)
 	template.Name = types.StringValue(resp.Name)
 	template.Description = omittableStringValue(resp.Description, template.Description)
 	template.Version = types.Int32PointerValue(resp.Version)

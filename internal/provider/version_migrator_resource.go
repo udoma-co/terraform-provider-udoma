@@ -37,6 +37,7 @@ type VersionMigratorModel struct {
 	SourceVersion types.Int32  `tfsdk:"source_version"`
 	TargetVersion types.Int32  `tfsdk:"target_version"`
 	Script        types.String `tfsdk:"script"`
+	IsCatalogItem types.Bool   `tfsdk:"is_catalog_item"`
 }
 
 func (migrator *VersionMigrator) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -81,6 +82,10 @@ func (migrator *VersionMigrator) Schema(ctx context.Context, req resource.Schema
 			"script": schema.StringAttribute{
 				Required:    true,
 				Description: "The script that is going to hanlde the migration",
+			},
+			"is_catalog_item": schema.BoolAttribute{
+				Computed:    true,
+				Description: "Whether this entity is represented as a catalog item.",
 			},
 		},
 	}
@@ -268,11 +273,12 @@ func (model *VersionMigratorModel) fromAPI(migrator *api.VersionMigrator) error 
 	}
 
 	model.ID = types.StringValue(migrator.Id)
+	model.CreatedAt = types.Int64Value(migrator.CreatedAt)
+	model.UpdatedAt = types.Int64Value(migrator.UpdatedAt)
 	model.RefId = types.StringValue(migrator.RefId)
 	model.TargetVersion = types.Int32Value(migrator.TargetVersion)
 	model.Script = types.StringValue(migrator.Script)
-	model.CreatedAt = types.Int64Value(migrator.CreatedAt)
-	model.UpdatedAt = types.Int64Value(migrator.UpdatedAt)
+	model.IsCatalogItem = types.BoolPointerValue(migrator.IsCatalogItem)
 	if migrator.SourceVersion != nil {
 		model.SourceVersion = types.Int32Value(*migrator.SourceVersion)
 	}

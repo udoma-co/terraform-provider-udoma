@@ -82,7 +82,7 @@ func (r *reportEntrypoint) Schema(ctx context.Context, req resource.SchemaReques
 				Required:    true,
 				Description: "The location of the entrypoint in the app",
 				Validators: []validator.String{
-					stringvalidator.OneOfCaseInsensitive(stringSlice(api.AllowedReportEntrypointLocationEnumValues)...),
+					stringvalidator.OneOf(stringSlice(api.AllowedReportEntrypointLocationEnumValues)...),
 				},
 			},
 			"icon": schema.StringAttribute{

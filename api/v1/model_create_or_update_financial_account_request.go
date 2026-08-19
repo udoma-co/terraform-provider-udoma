@@ -29,8 +29,10 @@ type CreateOrUpdateFinancialAccountRequest struct {
 	// The currency of the booking
 	Currency string              `json:"currency"`
 	Cadence  *BalanceCadenceEnum `json:"cadence,omitempty"`
-	// Optional reference to a cost type, used for operating cost statement tracking.
+	// Optional reference to a cost type, used for operating cost statement tracking. Mutually exclusive with revenue_type_ref.
 	CostTypeRef *string `json:"cost_type_ref,omitempty"`
+	// Optional reference to a revenue type, used for tracking different types of income. Mutually exclusive with cost_type_ref.
+	RevenueTypeRef *string `json:"revenue_type_ref,omitempty"`
 	// The IDs of the dimensions that are assigned to the account
 	Dimensions []string `json:"dimensions,omitempty"`
 }
@@ -218,6 +220,38 @@ func (o *CreateOrUpdateFinancialAccountRequest) SetCostTypeRef(v string) {
 	o.CostTypeRef = &v
 }
 
+// GetRevenueTypeRef returns the RevenueTypeRef field value if set, zero value otherwise.
+func (o *CreateOrUpdateFinancialAccountRequest) GetRevenueTypeRef() string {
+	if o == nil || IsNil(o.RevenueTypeRef) {
+		var ret string
+		return ret
+	}
+	return *o.RevenueTypeRef
+}
+
+// GetRevenueTypeRefOk returns a tuple with the RevenueTypeRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateFinancialAccountRequest) GetRevenueTypeRefOk() (*string, bool) {
+	if o == nil || IsNil(o.RevenueTypeRef) {
+		return nil, false
+	}
+	return o.RevenueTypeRef, true
+}
+
+// HasRevenueTypeRef returns a boolean if a field has been set.
+func (o *CreateOrUpdateFinancialAccountRequest) HasRevenueTypeRef() bool {
+	if o != nil && !IsNil(o.RevenueTypeRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetRevenueTypeRef gets a reference to the given string and assigns it to the RevenueTypeRef field.
+func (o *CreateOrUpdateFinancialAccountRequest) SetRevenueTypeRef(v string) {
+	o.RevenueTypeRef = &v
+}
+
 // GetDimensions returns the Dimensions field value if set, zero value otherwise.
 func (o *CreateOrUpdateFinancialAccountRequest) GetDimensions() []string {
 	if o == nil || IsNil(o.Dimensions) {
@@ -269,6 +303,9 @@ func (o CreateOrUpdateFinancialAccountRequest) ToMap() (map[string]interface{}, 
 	}
 	if !IsNil(o.CostTypeRef) {
 		toSerialize["cost_type_ref"] = o.CostTypeRef
+	}
+	if !IsNil(o.RevenueTypeRef) {
+		toSerialize["revenue_type_ref"] = o.RevenueTypeRef
 	}
 	if !IsNil(o.Dimensions) {
 		toSerialize["dimensions"] = o.Dimensions

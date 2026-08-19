@@ -26,4 +26,5 @@ Resource represents a version migrator
 
 - `created_at` (Number) The date and time the version migrators was created
 - `id` (String) The unique identifier for the faq
+- `is_catalog_item` (Boolean) Whether this entity is represented as a catalog item.
 - `updated_at` (Number) The date and time the version migrator was last modified

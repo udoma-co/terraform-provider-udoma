@@ -39,10 +39,13 @@ type PropertyDetails struct {
 	// List of Floor types present in a property
 	FloorType []PropertyFloorTypeEnum `json:"floor_type,omitempty"`
 	// List of Heating types present in a property
-	HeatingType []PropertyHeatingTypeEnum `json:"heating_type,omitempty"`
+	HeatingType  []PropertyHeatingTypeEnum `json:"heating_type,omitempty"`
+	EnergySource *PropertyEnergySourceEnum `json:"energy_source,omitempty"`
 	// List of window types present in a property
 	WindowType []PropertyWindowTypeEnum `json:"window_type,omitempty"`
 	Furnishing *PropertyFurnishingEnum  `json:"furnishing,omitempty"`
+	// True if the property has a fitted kitchen, false otherwise
+	FittedKitchen *bool `json:"fitted_kitchen,omitempty"`
 	// \"A building with special architectural or historic interest, considered to be of national importance and therefor worth being preserved/protected\"
 	HistoricProperty *bool `json:"historic_property,omitempty"`
 }
@@ -416,6 +419,38 @@ func (o *PropertyDetails) SetHeatingType(v []PropertyHeatingTypeEnum) {
 	o.HeatingType = v
 }
 
+// GetEnergySource returns the EnergySource field value if set, zero value otherwise.
+func (o *PropertyDetails) GetEnergySource() PropertyEnergySourceEnum {
+	if o == nil || IsNil(o.EnergySource) {
+		var ret PropertyEnergySourceEnum
+		return ret
+	}
+	return *o.EnergySource
+}
+
+// GetEnergySourceOk returns a tuple with the EnergySource field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PropertyDetails) GetEnergySourceOk() (*PropertyEnergySourceEnum, bool) {
+	if o == nil || IsNil(o.EnergySource) {
+		return nil, false
+	}
+	return o.EnergySource, true
+}
+
+// HasEnergySource returns a boolean if a field has been set.
+func (o *PropertyDetails) HasEnergySource() bool {
+	if o != nil && !IsNil(o.EnergySource) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnergySource gets a reference to the given PropertyEnergySourceEnum and assigns it to the EnergySource field.
+func (o *PropertyDetails) SetEnergySource(v PropertyEnergySourceEnum) {
+	o.EnergySource = &v
+}
+
 // GetWindowType returns the WindowType field value if set, zero value otherwise.
 func (o *PropertyDetails) GetWindowType() []PropertyWindowTypeEnum {
 	if o == nil || IsNil(o.WindowType) {
@@ -478,6 +513,38 @@ func (o *PropertyDetails) HasFurnishing() bool {
 // SetFurnishing gets a reference to the given PropertyFurnishingEnum and assigns it to the Furnishing field.
 func (o *PropertyDetails) SetFurnishing(v PropertyFurnishingEnum) {
 	o.Furnishing = &v
+}
+
+// GetFittedKitchen returns the FittedKitchen field value if set, zero value otherwise.
+func (o *PropertyDetails) GetFittedKitchen() bool {
+	if o == nil || IsNil(o.FittedKitchen) {
+		var ret bool
+		return ret
+	}
+	return *o.FittedKitchen
+}
+
+// GetFittedKitchenOk returns a tuple with the FittedKitchen field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PropertyDetails) GetFittedKitchenOk() (*bool, bool) {
+	if o == nil || IsNil(o.FittedKitchen) {
+		return nil, false
+	}
+	return o.FittedKitchen, true
+}
+
+// HasFittedKitchen returns a boolean if a field has been set.
+func (o *PropertyDetails) HasFittedKitchen() bool {
+	if o != nil && !IsNil(o.FittedKitchen) {
+		return true
+	}
+
+	return false
+}
+
+// SetFittedKitchen gets a reference to the given bool and assigns it to the FittedKitchen field.
+func (o *PropertyDetails) SetFittedKitchen(v bool) {
+	o.FittedKitchen = &v
 }
 
 // GetHistoricProperty returns the HistoricProperty field value if set, zero value otherwise.
@@ -555,11 +622,17 @@ func (o PropertyDetails) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.HeatingType) {
 		toSerialize["heating_type"] = o.HeatingType
 	}
+	if !IsNil(o.EnergySource) {
+		toSerialize["energy_source"] = o.EnergySource
+	}
 	if !IsNil(o.WindowType) {
 		toSerialize["window_type"] = o.WindowType
 	}
 	if !IsNil(o.Furnishing) {
 		toSerialize["furnishing"] = o.Furnishing
+	}
+	if !IsNil(o.FittedKitchen) {
+		toSerialize["fitted_kitchen"] = o.FittedKitchen
 	}
 	if !IsNil(o.HistoricProperty) {
 		toSerialize["historic_property"] = o.HistoricProperty
