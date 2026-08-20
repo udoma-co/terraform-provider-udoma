@@ -64,7 +64,7 @@ resource "udoma_catalog_item" "test" {
   code        = "catalog-item-test"
   ref_type    = "cost_type"
   ref_id      = udoma_cost_type.test.id
-  account_ref = 1
+  account_ref = ` + testAccAccountRef() + `
   groups      = [udoma_catalog_group.test.code]
   description = {
     en = "Catalog item test"
@@ -81,6 +81,13 @@ resource "udoma_catalog_item" "test" {
   ]
 }
 `
+}
+
+func TestTestAccAccountRefUsesEnvironment(t *testing.T) {
+	t.Setenv("UDOMA_ACCOUNT_REF", "42")
+	if got := testAccAccountRef(); got != "42" {
+		t.Fatalf("expected UDOMA_ACCOUNT_REF to be used, got %q", got)
+	}
 }
 
 func TestCatalogItemFromAPIPreservesEmptyConfiguredLists(t *testing.T) {

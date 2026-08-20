@@ -1,6 +1,8 @@
 package provider
 
 import (
+	"os"
+
 	"github.com/hashicorp/terraform-plugin-framework/providerserver"
 	"github.com/hashicorp/terraform-plugin-go/tfprotov6"
 )
@@ -14,3 +16,11 @@ var (
 		"udoma": providerserver.NewProtocol6WithError(New("test")()),
 	}
 )
+
+func testAccAccountRef() string {
+	accountRef := os.Getenv("UDOMA_ACCOUNT_REF")
+	if accountRef == "" {
+		panic("UDOMA_ACCOUNT_REF environment variable is required for catalog acceptance tests")
+	}
+	return accountRef
+}

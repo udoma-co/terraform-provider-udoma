@@ -52,7 +52,7 @@ resource "udoma_catalog_item" "test" {
   code        = "catalog-item-test"
   ref_type    = "cost_type"
   ref_id      = udoma_cost_type.test.id
-  account_ref = 1
+  account_ref = ` + testAccAccountRef() + `
   published   = true
 }
 
