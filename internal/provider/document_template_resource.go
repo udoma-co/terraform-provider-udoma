@@ -54,6 +54,7 @@ type documentTemplateModel struct {
 	Inputs             tf.JsonObjectValue            `tfsdk:"inputs"`
 	PlaceholdersScript types.String                  `tfsdk:"placeholders_script"`
 	Signatures         tf.JsonObjectValue            `tfsdk:"signatures"`
+	IsCatalogItem      types.Bool                    `tfsdk:"is_catalog_item"`
 	Version            types.Int32                   `tfsdk:"version"`
 }
 
@@ -132,6 +133,10 @@ func (r *documentTemplate) Schema(ctx context.Context, req resource.SchemaReques
 				CustomType:  tf.JsonObjectType{},
 				Optional:    true,
 				Description: "The JSON serialised signature configuration of the template",
+			},
+			"is_catalog_item": schema.BoolAttribute{
+				Computed:    true,
+				Description: "Whether this entity is represented as a catalog item.",
 			},
 			"version": schema.Int32Attribute{
 				Optional:    true,
@@ -336,6 +341,7 @@ func (model *documentTemplateModel) fromAPI(template *api.DocumentTemplate) erro
 	model.Name = types.StringValue(template.Name)
 	model.Description = omittableStringValue(template.Description, model.Description)
 	model.PlaceholdersScript = omittableStringValue(template.PlaceholdersScript, model.PlaceholdersScript)
+	model.IsCatalogItem = types.BoolPointerValue(template.IsCatalogItem)
 	model.Version = types.Int32PointerValue(template.Version)
 
 	if template.Options.IsSet() {

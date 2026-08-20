@@ -53,8 +53,10 @@ type CaseTemplateModel struct {
 	Config                      *CaseConfigModel   `tfsdk:"config"`
 	AdCategories                []types.String     `tfsdk:"ad_categories"`
 	ConfirmationText            types.Map          `tfsdk:"confirmation_text"`
+	AiHint                      types.String       `tfsdk:"ai_hint"`
 	IncludeAiPriorityAssessment types.Bool         `tfsdk:"include_ai_priority_assessment"`
 	IncludeAiSummary            types.Bool         `tfsdk:"include_ai_summary"`
+	IsCatalogItem               types.Bool         `tfsdk:"is_catalog_item"`
 	Version                     types.Int32        `tfsdk:"version"`
 }
 
@@ -162,6 +164,10 @@ func (r *CaseTemplate) Schema(ctx context.Context, req resource.SchemaRequest, r
 				Description: "Text for the confirmation window before submiting case",
 				ElementType: types.StringType,
 			},
+			"ai_hint": schema.StringAttribute{
+				Optional:    true,
+				Description: "Hint for AI agents working with this template; not shown to tenants.",
+			},
 			"include_ai_priority_assessment": schema.BoolAttribute{
 				Optional:    true,
 				Description: "If true, AI will be used to automatically assess the priority of the newly submitted case. High priority cases will have the notification email sent with high importance/priority.",
@@ -169,6 +175,10 @@ func (r *CaseTemplate) Schema(ctx context.Context, req resource.SchemaRequest, r
 			"include_ai_summary": schema.BoolAttribute{
 				Optional:    true,
 				Description: "If true, an AI-generated summary of the submitted case data will be included in the new case notification email sent to the property manager.",
+			},
+			"is_catalog_item": schema.BoolAttribute{
+				Computed:    true,
+				Description: "Whether this entity is represented as a catalog item.",
 			},
 			"version": schema.Int32Attribute{
 				Optional:    true,
@@ -377,7 +387,9 @@ func (model *CaseTemplateModel) fromAPI(template *api.CaseTemplate) error {
 	model.Icon = omittableStringValue(template.Icon, model.Icon)
 	model.IncludeAiPriorityAssessment = omittableBooleanValue(template.IncludeAiPriorityAssessment, model.IncludeAiPriorityAssessment)
 	model.IncludeAiSummary = omittableBooleanValue(template.IncludeAiSummary, model.IncludeAiSummary)
+	model.AiHint = omittableStringValue(template.AiHint, model.AiHint)
 	model.Version = types.Int32PointerValue(template.Version)
+	model.IsCatalogItem = types.BoolPointerValue(template.IsCatalogItem)
 
 	model.Access = make([]types.String, len(template.Access))
 	for i := range template.Access {
@@ -456,6 +468,7 @@ func (model *CaseTemplateModel) toAPIRequest() (api.CreateOrUpdateCaseTemplateRe
 		Icon:                        model.Icon.ValueStringPointer(),
 		IncludeAiPriorityAssessment: model.IncludeAiPriorityAssessment.ValueBoolPointer(),
 		IncludeAiSummary:            model.IncludeAiSummary.ValueBoolPointer(),
+		AiHint:                      model.AiHint.ValueStringPointer(),
 		Version:                     model.Version.ValueInt32Pointer(),
 	}
 

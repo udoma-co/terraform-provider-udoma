@@ -33,6 +33,8 @@ type AllocationKey struct {
 	Description *string `json:"description,omitempty"`
 	// Pseudocode / mathematical expression defining how costs are distributed (may contain named placeholders).
 	Formula *string `json:"formula,omitempty"`
+	// A flag indicating whether the entity is published as a catalog item. Catalog items are defined once for the environment and are managed centrally, they cannot be edited from a customer account that has subscribed to them. The flag is derived from the catalog and is never set by the client.
+	IsCatalogItem *bool `json:"is_catalog_item,omitempty"`
 }
 
 type _AllocationKey AllocationKey
@@ -218,6 +220,38 @@ func (o *AllocationKey) SetFormula(v string) {
 	o.Formula = &v
 }
 
+// GetIsCatalogItem returns the IsCatalogItem field value if set, zero value otherwise.
+func (o *AllocationKey) GetIsCatalogItem() bool {
+	if o == nil || IsNil(o.IsCatalogItem) {
+		var ret bool
+		return ret
+	}
+	return *o.IsCatalogItem
+}
+
+// GetIsCatalogItemOk returns a tuple with the IsCatalogItem field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AllocationKey) GetIsCatalogItemOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsCatalogItem) {
+		return nil, false
+	}
+	return o.IsCatalogItem, true
+}
+
+// HasIsCatalogItem returns a boolean if a field has been set.
+func (o *AllocationKey) HasIsCatalogItem() bool {
+	if o != nil && !IsNil(o.IsCatalogItem) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsCatalogItem gets a reference to the given bool and assigns it to the IsCatalogItem field.
+func (o *AllocationKey) SetIsCatalogItem(v bool) {
+	o.IsCatalogItem = &v
+}
+
 func (o AllocationKey) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -237,6 +271,9 @@ func (o AllocationKey) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Formula) {
 		toSerialize["formula"] = o.Formula
+	}
+	if !IsNil(o.IsCatalogItem) {
+		toSerialize["is_catalog_item"] = o.IsCatalogItem
 	}
 	return toSerialize, nil
 }

@@ -21,8 +21,11 @@ var _ MappedNullable = &UpdateAccountConfigRequest{}
 
 // UpdateAccountConfigRequest Request used to update the account configuration details
 type UpdateAccountConfigRequest struct {
-	AccountType      AccountTypeEnum           `json:"account_type"`
-	ManagementConfig *PropertyManagementConfig `json:"management_config,omitempty"`
+	AccountType           AccountTypeEnum            `json:"account_type"`
+	ManagementConfig      *PropertyManagementConfig  `json:"management_config,omitempty"`
+	OwnershipTrackingMode *OwnershipTrackingModeEnum `json:"ownership_tracking_mode,omitempty"`
+	// Whether properties in the account can be owned by more than 1 owner at a time.
+	AllowMultipleOwners *bool `json:"allow_multiple_owners,omitempty"`
 }
 
 type _UpdateAccountConfigRequest UpdateAccountConfigRequest
@@ -101,6 +104,70 @@ func (o *UpdateAccountConfigRequest) SetManagementConfig(v PropertyManagementCon
 	o.ManagementConfig = &v
 }
 
+// GetOwnershipTrackingMode returns the OwnershipTrackingMode field value if set, zero value otherwise.
+func (o *UpdateAccountConfigRequest) GetOwnershipTrackingMode() OwnershipTrackingModeEnum {
+	if o == nil || IsNil(o.OwnershipTrackingMode) {
+		var ret OwnershipTrackingModeEnum
+		return ret
+	}
+	return *o.OwnershipTrackingMode
+}
+
+// GetOwnershipTrackingModeOk returns a tuple with the OwnershipTrackingMode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateAccountConfigRequest) GetOwnershipTrackingModeOk() (*OwnershipTrackingModeEnum, bool) {
+	if o == nil || IsNil(o.OwnershipTrackingMode) {
+		return nil, false
+	}
+	return o.OwnershipTrackingMode, true
+}
+
+// HasOwnershipTrackingMode returns a boolean if a field has been set.
+func (o *UpdateAccountConfigRequest) HasOwnershipTrackingMode() bool {
+	if o != nil && !IsNil(o.OwnershipTrackingMode) {
+		return true
+	}
+
+	return false
+}
+
+// SetOwnershipTrackingMode gets a reference to the given OwnershipTrackingModeEnum and assigns it to the OwnershipTrackingMode field.
+func (o *UpdateAccountConfigRequest) SetOwnershipTrackingMode(v OwnershipTrackingModeEnum) {
+	o.OwnershipTrackingMode = &v
+}
+
+// GetAllowMultipleOwners returns the AllowMultipleOwners field value if set, zero value otherwise.
+func (o *UpdateAccountConfigRequest) GetAllowMultipleOwners() bool {
+	if o == nil || IsNil(o.AllowMultipleOwners) {
+		var ret bool
+		return ret
+	}
+	return *o.AllowMultipleOwners
+}
+
+// GetAllowMultipleOwnersOk returns a tuple with the AllowMultipleOwners field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateAccountConfigRequest) GetAllowMultipleOwnersOk() (*bool, bool) {
+	if o == nil || IsNil(o.AllowMultipleOwners) {
+		return nil, false
+	}
+	return o.AllowMultipleOwners, true
+}
+
+// HasAllowMultipleOwners returns a boolean if a field has been set.
+func (o *UpdateAccountConfigRequest) HasAllowMultipleOwners() bool {
+	if o != nil && !IsNil(o.AllowMultipleOwners) {
+		return true
+	}
+
+	return false
+}
+
+// SetAllowMultipleOwners gets a reference to the given bool and assigns it to the AllowMultipleOwners field.
+func (o *UpdateAccountConfigRequest) SetAllowMultipleOwners(v bool) {
+	o.AllowMultipleOwners = &v
+}
+
 func (o UpdateAccountConfigRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -114,6 +181,12 @@ func (o UpdateAccountConfigRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize["account_type"] = o.AccountType
 	if !IsNil(o.ManagementConfig) {
 		toSerialize["management_config"] = o.ManagementConfig
+	}
+	if !IsNil(o.OwnershipTrackingMode) {
+		toSerialize["ownership_tracking_mode"] = o.OwnershipTrackingMode
+	}
+	if !IsNil(o.AllowMultipleOwners) {
+		toSerialize["allow_multiple_owners"] = o.AllowMultipleOwners
 	}
 	return toSerialize, nil
 }

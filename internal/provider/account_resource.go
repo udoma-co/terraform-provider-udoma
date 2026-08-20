@@ -31,16 +31,17 @@ type Account struct {
 }
 
 type AccountModel struct {
-	ID          types.String `tfsdk:"id"`
-	CreatedAt   types.Int64  `tfsdk:"created_at"`
-	UpdatedAt   types.Int64  `tfsdk:"updated_at"`
-	Number      types.Int32  `tfsdk:"number"`
-	Name        types.String `tfsdk:"name"`
-	Type        types.String `tfsdk:"type"`
-	Currency    types.String `tfsdk:"currency"`
-	Dimensions  types.List   `tfsdk:"dimensions"`
-	Cadence     types.String `tfsdk:"cadence"`
-	CostTypeRef types.String `tfsdk:"cost_type_ref"`
+	ID            types.String `tfsdk:"id"`
+	CreatedAt     types.Int64  `tfsdk:"created_at"`
+	UpdatedAt     types.Int64  `tfsdk:"updated_at"`
+	Number        types.Int32  `tfsdk:"number"`
+	Name          types.String `tfsdk:"name"`
+	Type          types.String `tfsdk:"type"`
+	Currency      types.String `tfsdk:"currency"`
+	Dimensions    types.List   `tfsdk:"dimensions"`
+	Cadence       types.String `tfsdk:"cadence"`
+	CostTypeRef   types.String `tfsdk:"cost_type_ref"`
+	IsCatalogItem types.Bool   `tfsdk:"is_catalog_item"`
 }
 
 func (faq *Account) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -107,6 +108,10 @@ func (faq *Account) Schema(ctx context.Context, req resource.SchemaRequest, resp
 				Validators: []validator.String{
 					stringvalidator.LengthAtMost(255),
 				},
+			},
+			"is_catalog_item": schema.BoolAttribute{
+				Computed:            true,
+				MarkdownDescription: "Whether this entity is represented as a catalog item.",
 			},
 		},
 	}
@@ -290,6 +295,7 @@ func (model *AccountModel) fromAPI(account *api.FinancialAccount) (diags diag.Di
 	model.UpdatedAt = types.Int64Value(account.UpdatedAt)
 	model.Type = types.StringValue(string(account.Type))
 	model.Cadence = types.StringValue(string(*account.Cadence))
+	model.IsCatalogItem = types.BoolPointerValue(account.IsCatalogItem)
 
 	if account.CostTypeRef != nil {
 		model.CostTypeRef = types.StringValue(*account.CostTypeRef)

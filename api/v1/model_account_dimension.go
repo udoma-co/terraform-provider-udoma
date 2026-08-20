@@ -36,6 +36,8 @@ type AccountDimension struct {
 	Required *bool `json:"required,omitempty"`
 	// A JS script that generates a value for the dimension.
 	ValueGenerator *string `json:"value_generator,omitempty"`
+	// A flag indicating whether the entity is published as a catalog item. Catalog items are defined once for the environment and are managed centrally, they cannot be edited from a customer account that has subscribed to them. The flag is derived from the catalog and is never set by the client.
+	IsCatalogItem *bool `json:"is_catalog_item,omitempty"`
 	// Optional nested dimensions for this dimension. This is lazy loaded, that is, it is returned only if a single dimension is loaded.
 	SubDimensions []AccountDimension `json:"sub_dimensions,omitempty"`
 	// All available values for this dimension. This is lazy loaded, that is, only if a single dimension is loaded.
@@ -296,6 +298,38 @@ func (o *AccountDimension) SetValueGenerator(v string) {
 	o.ValueGenerator = &v
 }
 
+// GetIsCatalogItem returns the IsCatalogItem field value if set, zero value otherwise.
+func (o *AccountDimension) GetIsCatalogItem() bool {
+	if o == nil || IsNil(o.IsCatalogItem) {
+		var ret bool
+		return ret
+	}
+	return *o.IsCatalogItem
+}
+
+// GetIsCatalogItemOk returns a tuple with the IsCatalogItem field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AccountDimension) GetIsCatalogItemOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsCatalogItem) {
+		return nil, false
+	}
+	return o.IsCatalogItem, true
+}
+
+// HasIsCatalogItem returns a boolean if a field has been set.
+func (o *AccountDimension) HasIsCatalogItem() bool {
+	if o != nil && !IsNil(o.IsCatalogItem) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsCatalogItem gets a reference to the given bool and assigns it to the IsCatalogItem field.
+func (o *AccountDimension) SetIsCatalogItem(v bool) {
+	o.IsCatalogItem = &v
+}
+
 // GetSubDimensions returns the SubDimensions field value if set, zero value otherwise.
 func (o *AccountDimension) GetSubDimensions() []AccountDimension {
 	if o == nil || IsNil(o.SubDimensions) {
@@ -387,6 +421,9 @@ func (o AccountDimension) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ValueGenerator) {
 		toSerialize["value_generator"] = o.ValueGenerator
+	}
+	if !IsNil(o.IsCatalogItem) {
+		toSerialize["is_catalog_item"] = o.IsCatalogItem
 	}
 	if !IsNil(o.SubDimensions) {
 		toSerialize["sub_dimensions"] = o.SubDimensions

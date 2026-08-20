@@ -45,7 +45,8 @@ type PropertyOwner struct {
 	PhoneNumber *string  `json:"phone_number,omitempty"`
 	Address     *Address `json:"address,omitempty"`
 	// optional list of bank accounts of the owner
-	BankDetails []BankDetails `json:"bank_details,omitempty"`
+	BankDetails []BankDetails           `json:"bank_details,omitempty"`
+	Property    NullableContactProperty `json:"property,omitempty"`
 	// Extensions data for this property owner, keyed by extension key
 	Extensions *map[string]map[string]interface{} `json:"extensions,omitempty"`
 }
@@ -464,6 +465,49 @@ func (o *PropertyOwner) SetBankDetails(v []BankDetails) {
 	o.BankDetails = v
 }
 
+// GetProperty returns the Property field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *PropertyOwner) GetProperty() ContactProperty {
+	if o == nil || IsNil(o.Property.Get()) {
+		var ret ContactProperty
+		return ret
+	}
+	return *o.Property.Get()
+}
+
+// GetPropertyOk returns a tuple with the Property field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *PropertyOwner) GetPropertyOk() (*ContactProperty, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Property.Get(), o.Property.IsSet()
+}
+
+// HasProperty returns a boolean if a field has been set.
+func (o *PropertyOwner) HasProperty() bool {
+	if o != nil && o.Property.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetProperty gets a reference to the given NullableContactProperty and assigns it to the Property field.
+func (o *PropertyOwner) SetProperty(v ContactProperty) {
+	o.Property.Set(&v)
+}
+
+// SetPropertyNil sets the value for Property to be an explicit nil
+func (o *PropertyOwner) SetPropertyNil() {
+	o.Property.Set(nil)
+}
+
+// UnsetProperty ensures that no value is present for Property, not even an explicit nil
+func (o *PropertyOwner) UnsetProperty() {
+	o.Property.Unset()
+}
+
 // GetExtensions returns the Extensions field value if set, zero value otherwise.
 func (o *PropertyOwner) GetExtensions() map[string]map[string]interface{} {
 	if o == nil || IsNil(o.Extensions) {
@@ -538,6 +582,9 @@ func (o PropertyOwner) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.BankDetails) {
 		toSerialize["bank_details"] = o.BankDetails
+	}
+	if o.Property.IsSet() {
+		toSerialize["property"] = o.Property.Get()
 	}
 	if !IsNil(o.Extensions) {
 		toSerialize["extensions"] = o.Extensions

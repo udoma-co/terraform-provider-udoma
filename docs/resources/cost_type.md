@@ -30,4 +30,5 @@ Resource represents a cost type used for categorizing costs in operating cost st
 
 - `created_at` (Number) The date and time the cost type was created
 - `id` (String) The unique identifier for the cost type
+- `is_catalog_item` (Boolean) Whether this entity is represented as a catalog item.
 - `updated_at` (Number) The date and time the cost type was last modified

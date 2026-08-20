@@ -46,6 +46,8 @@ type BookingTemplate struct {
 	Grouping NullableBookingGrouping `json:"grouping,omitempty"`
 	// A flag indicating whether the entity is deleted. If the entity is deleted, it should not be returned in the results of a query, but it is still kept in the database as it is referenced by other entities.
 	IsDeleted *bool `json:"is_deleted,omitempty"`
+	// A flag indicating whether the entity is published as a catalog item. Catalog items are defined once for the environment and are managed centrally, they cannot be edited from a customer account that has subscribed to them. The flag is derived from the catalog and is never set by the client.
+	IsCatalogItem *bool `json:"is_catalog_item,omitempty"`
 }
 
 type _BookingTemplate BookingTemplate
@@ -486,6 +488,38 @@ func (o *BookingTemplate) SetIsDeleted(v bool) {
 	o.IsDeleted = &v
 }
 
+// GetIsCatalogItem returns the IsCatalogItem field value if set, zero value otherwise.
+func (o *BookingTemplate) GetIsCatalogItem() bool {
+	if o == nil || IsNil(o.IsCatalogItem) {
+		var ret bool
+		return ret
+	}
+	return *o.IsCatalogItem
+}
+
+// GetIsCatalogItemOk returns a tuple with the IsCatalogItem field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BookingTemplate) GetIsCatalogItemOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsCatalogItem) {
+		return nil, false
+	}
+	return o.IsCatalogItem, true
+}
+
+// HasIsCatalogItem returns a boolean if a field has been set.
+func (o *BookingTemplate) HasIsCatalogItem() bool {
+	if o != nil && !IsNil(o.IsCatalogItem) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsCatalogItem gets a reference to the given bool and assigns it to the IsCatalogItem field.
+func (o *BookingTemplate) SetIsCatalogItem(v bool) {
+	o.IsCatalogItem = &v
+}
+
 func (o BookingTemplate) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -525,6 +559,9 @@ func (o BookingTemplate) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.IsDeleted) {
 		toSerialize["is_deleted"] = o.IsDeleted
+	}
+	if !IsNil(o.IsCatalogItem) {
+		toSerialize["is_catalog_item"] = o.IsCatalogItem
 	}
 	return toSerialize, nil
 }

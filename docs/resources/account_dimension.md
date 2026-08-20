@@ -31,3 +31,4 @@ Resource represents a financial account
 ### Read-Only
 
 - `id` (String) The unique identifier for the account dimension
+- `is_catalog_item` (Boolean) Whether this entity is represented as a catalog item.

@@ -55,6 +55,8 @@ type Invoice struct {
 	Archived *bool `json:"archived,omitempty"`
 	// Whether the invoice needs manual review. This is set automatically based on extraction confidence and missing required fields. Can also be set/unset by invoice data mappers or manual updates.
 	NeedsReview *bool `json:"needs_review,omitempty"`
+	// The first page this invoice occupies within the originally uploaded (possibly multi-invoice) PDF. Invoices extracted from the same upload share a creation timestamp, so this can be used as a tie-breaker to list them in document order. 0 when the invoice did not originate from a split PDF.
+	SourcePage *int32 `json:"source_page,omitempty"`
 }
 
 type _Invoice Invoice
@@ -617,6 +619,38 @@ func (o *Invoice) SetNeedsReview(v bool) {
 	o.NeedsReview = &v
 }
 
+// GetSourcePage returns the SourcePage field value if set, zero value otherwise.
+func (o *Invoice) GetSourcePage() int32 {
+	if o == nil || IsNil(o.SourcePage) {
+		var ret int32
+		return ret
+	}
+	return *o.SourcePage
+}
+
+// GetSourcePageOk returns a tuple with the SourcePage field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Invoice) GetSourcePageOk() (*int32, bool) {
+	if o == nil || IsNil(o.SourcePage) {
+		return nil, false
+	}
+	return o.SourcePage, true
+}
+
+// HasSourcePage returns a boolean if a field has been set.
+func (o *Invoice) HasSourcePage() bool {
+	if o != nil && !IsNil(o.SourcePage) {
+		return true
+	}
+
+	return false
+}
+
+// SetSourcePage gets a reference to the given int32 and assigns it to the SourcePage field.
+func (o *Invoice) SetSourcePage(v int32) {
+	o.SourcePage = &v
+}
+
 func (o Invoice) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -670,6 +704,9 @@ func (o Invoice) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.NeedsReview) {
 		toSerialize["needs_review"] = o.NeedsReview
+	}
+	if !IsNil(o.SourcePage) {
+		toSerialize["source_page"] = o.SourcePage
 	}
 	return toSerialize, nil
 }

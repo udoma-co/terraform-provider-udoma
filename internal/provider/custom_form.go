@@ -540,14 +540,7 @@ func (group *CustomFormGroupModel) fromApiResponse(resp *v1.FormGroup) (diags di
 	group.ID = types.StringValue(resp.Id)
 	group.Type = types.StringValue(string(resp.Type))
 
-	if resp.Subtitle != nil {
-		group.Subtitle, diags = types.ListValue(types.StringType, stringSliceToValueList(resp.Subtitle))
-		if diags.HasError() {
-			return
-		}
-	} else {
-		group.Subtitle = types.ListNull(types.StringType)
-	}
+	group.Subtitle = omittableStringListValue(resp.Subtitle, group.Subtitle)
 
 	if resp.Label != nil {
 		group.Label, diags = types.MapValue(types.StringType, stringMapToValueMap(*resp.Label))

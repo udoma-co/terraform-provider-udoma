@@ -28,6 +28,7 @@ description: |-
 ### Read-Only
 
 - `id` (String) The ID of the property handover template.
+- `is_catalog_item` (Boolean) Whether this entity is represented as a catalog item.
 
 <a id="nestedatt--inputs"></a>
 ### Nested Schema for `inputs`

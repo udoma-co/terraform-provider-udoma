@@ -56,8 +56,9 @@ type workflowDefinitionModel struct {
 	EnvVars        types.Map                `tfsdk:"env_vars"`
 	FirstStepID    types.String             `tfsdk:"first_step_id"`
 	Steps          tf.JsonObjectValue       `tfsdk:"steps"`
-	Version        types.Int32              `tfsdk:"version"`
 	StepGroups     []workflowStepGroupModel `tfsdk:"step_groups"`
+	IsCatalogItem  types.Bool               `tfsdk:"is_catalog_item"`
+	Version        types.Int32              `tfsdk:"version"`
 }
 
 func NewWorkflowDefinitionModelNull() *workflowDefinitionModel {
@@ -143,10 +144,6 @@ func (r *workflowDefinition) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:    true,
 				Description: "The JSON serialised step definitions",
 			},
-			"version": schema.Int32Attribute{
-				Optional:    true,
-				Description: "The version of the workflow definition",
-			},
 			"step_groups": schema.ListNestedAttribute{
 				Optional:    true,
 				Description: "Optional groups of workflow steps. Steps with a group will be rendered in the UI as a drawer.",
@@ -163,6 +160,14 @@ func (r *workflowDefinition) Schema(ctx context.Context, req resource.SchemaRequ
 						},
 					},
 				},
+			},
+			"is_catalog_item": schema.BoolAttribute{
+				Computed:    true,
+				Description: "Whether this entity is represented as a catalog item.",
+			},
+			"version": schema.Int32Attribute{
+				Optional:    true,
+				Description: "The version of the workflow definition",
 			},
 		},
 	}
@@ -365,6 +370,7 @@ func (model *workflowDefinitionModel) fromAPI(workflowDefinition *api.WorkflowDe
 	model.Icon = omittableStringValue(workflowDefinition.Icon, model.Icon)
 	model.NameExpression = omittableStringValue(workflowDefinition.NameExpression, model.NameExpression)
 	model.FirstStepID = types.StringValue(workflowDefinition.FirstStepId)
+	model.IsCatalogItem = types.BoolPointerValue(workflowDefinition.IsCatalogItem)
 	model.Version = types.Int32PointerValue(workflowDefinition.Version)
 
 	if workflowDefinition.EnvVars != nil {

@@ -13,7 +13,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 	v1 "gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/api/v1"
 	"gitlab.com/zestlabs-io/udoma/terraform-provider-udoma/internal/client"
 )
@@ -44,6 +43,7 @@ type AppointmentTemplateModel struct {
 	DefaultScheduleDescription types.Map        `tfsdk:"default_schedule_description"`
 	InvitationText             types.String     `tfsdk:"invitation_text"`
 	Icon                       types.String     `tfsdk:"icon"`
+	IsCatalogItem              types.Bool       `tfsdk:"is_catalog_item"`
 	Version                    types.Int32      `tfsdk:"version"`
 }
 
@@ -118,6 +118,10 @@ func (r *AppointmentTemplate) Schema(ctx context.Context, req resource.SchemaReq
 			"icon": schema.StringAttribute{
 				Optional:    true,
 				Description: "The icon of the appointment template.",
+			},
+			"is_catalog_item": schema.BoolAttribute{
+				Computed:    true,
+				Description: "Whether this entity is represented as a catalog item.",
 			},
 			"version": schema.Int32Attribute{
 				Optional:    true,
@@ -296,16 +300,10 @@ func (template *AppointmentTemplateModel) fromApiResponse(resp *v1.AppointmentTe
 	template.InvitationText = omittableStringValue(resp.InvitationText, template.InvitationText)
 	template.Icon = omittableStringValue(resp.Icon, template.Icon)
 	template.RequireConfirmation = omittableBooleanValue(resp.RequireConfirmation, template.RequireConfirmation)
+	template.IsCatalogItem = types.BoolPointerValue(resp.IsCatalogItem)
 	template.Version = types.Int32PointerValue(resp.Version)
 
-	if len(resp.ConfirmationReminders) != 0 {
-		template.ConfirmationReminders, diags = types.ListValue(types.Int64Type, int32SliceToValueList(resp.ConfirmationReminders))
-		if diags.HasError() {
-			return
-		}
-	} else {
-		template.ConfirmationReminders = basetypes.NewListNull(types.Int64Type)
-	}
+	template.ConfirmationReminders = omittableInt32ListValue(resp.ConfirmationReminders, template.ConfirmationReminders)
 
 	if resp.DefaultScheduleDescription != nil {
 		in := stringMapToValueMap(*resp.DefaultScheduleDescription)

@@ -47,6 +47,8 @@ type Appointment struct {
 	Data map[string]interface{} `json:"data,omitempty"`
 	// All comments including authors that were made for the appointment.
 	Comments []AppointmentComment `json:"comments"`
+	// Visual badges attached to the appointment, used to identify it at a glance in overview lists.
+	Badges []BadgeTypeEnum `json:"badges,omitempty"`
 }
 
 type _Appointment Appointment
@@ -460,6 +462,38 @@ func (o *Appointment) SetComments(v []AppointmentComment) {
 	o.Comments = v
 }
 
+// GetBadges returns the Badges field value if set, zero value otherwise.
+func (o *Appointment) GetBadges() []BadgeTypeEnum {
+	if o == nil || IsNil(o.Badges) {
+		var ret []BadgeTypeEnum
+		return ret
+	}
+	return o.Badges
+}
+
+// GetBadgesOk returns a tuple with the Badges field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Appointment) GetBadgesOk() ([]BadgeTypeEnum, bool) {
+	if o == nil || IsNil(o.Badges) {
+		return nil, false
+	}
+	return o.Badges, true
+}
+
+// HasBadges returns a boolean if a field has been set.
+func (o *Appointment) HasBadges() bool {
+	if o != nil && !IsNil(o.Badges) {
+		return true
+	}
+
+	return false
+}
+
+// SetBadges gets a reference to the given []BadgeTypeEnum and assigns it to the Badges field.
+func (o *Appointment) SetBadges(v []BadgeTypeEnum) {
+	o.Badges = v
+}
+
 func (o Appointment) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -496,6 +530,9 @@ func (o Appointment) ToMap() (map[string]interface{}, error) {
 		toSerialize["data"] = o.Data
 	}
 	toSerialize["comments"] = o.Comments
+	if !IsNil(o.Badges) {
+		toSerialize["badges"] = o.Badges
+	}
 	return toSerialize, nil
 }
 

@@ -33,14 +33,15 @@ type DataImportTemplate struct {
 
 // DataImportTemplateModel describes the resource data model
 type DataImportTemplateModel struct {
-	ID          types.String `tfsdk:"id"`
-	CreatedAt   types.Int64  `tfsdk:"created_at"`
-	UpdatedAt   types.Int64  `tfsdk:"updated_at"`
-	Name        types.String `tfsdk:"name"`
-	Description types.String `tfsdk:"description"`
-	Icon        types.String `tfsdk:"icon"`
-	FileType    types.String `tfsdk:"file_type"`
-	DataMapper  types.String `tfsdk:"data_mapper"`
+	ID            types.String `tfsdk:"id"`
+	CreatedAt     types.Int64  `tfsdk:"created_at"`
+	UpdatedAt     types.Int64  `tfsdk:"updated_at"`
+	Name          types.String `tfsdk:"name"`
+	Description   types.String `tfsdk:"description"`
+	Icon          types.String `tfsdk:"icon"`
+	FileType      types.String `tfsdk:"file_type"`
+	DataMapper    types.String `tfsdk:"data_mapper"`
+	IsCatalogItem types.Bool   `tfsdk:"is_catalog_item"`
 }
 
 func (r *DataImportTemplate) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -94,6 +95,10 @@ func (r *DataImportTemplate) Schema(ctx context.Context, req resource.SchemaRequ
 			"data_mapper": schema.StringAttribute{
 				Optional:    true,
 				Description: "A JS expression that maps imported data to the system’s data model.",
+			},
+			"is_catalog_item": schema.BoolAttribute{
+				Computed:    true,
+				Description: "Whether this entity is represented as a catalog item.",
 			},
 		},
 	}
@@ -268,6 +273,7 @@ func (template *DataImportTemplateModel) fromApiResponse(resp *v1.DataImportTemp
 	template.DataMapper = omittableStringValue(resp.DataMapper, template.DataMapper)
 	template.Icon = omittableStringValue(resp.Icon, template.Icon)
 	template.Description = omittableStringValue(resp.Description, template.Description)
+	template.IsCatalogItem = types.BoolPointerValue(resp.IsCatalogItem)
 
 	return diags
 }

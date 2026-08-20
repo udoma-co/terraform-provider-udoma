@@ -19,12 +19,14 @@ import (
 // checks if the CreateTenantChangeRequest type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &CreateTenantChangeRequest{}
 
-// CreateTenantChangeRequest A list of changes to the tenants.
+// CreateTenantChangeRequest A list of changes to the tenants of a property.
 type CreateTenantChangeRequest struct {
 	// The date when the change will enter into force
 	EntryIntoForce int64 `json:"entry_into_force"`
-	// The list of changes to the tenants.
-	TenantChanges []TenantChangesInner `json:"tenant_changes"`
+	// Optional date when the change will expire. This is only used for temporary changes, e.g. a subtenant that is only staying for a few  months.
+	ExpiryDate    *int64                `json:"expiry_date,omitempty"`
+	TenancyMode   TenancyModeEnum       `json:"tenancy_mode"`
+	TenantChanges []TenantChangeRequest `json:"tenant_changes"`
 }
 
 type _CreateTenantChangeRequest CreateTenantChangeRequest
@@ -33,9 +35,10 @@ type _CreateTenantChangeRequest CreateTenantChangeRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateTenantChangeRequest(entryIntoForce int64, tenantChanges []TenantChangesInner) *CreateTenantChangeRequest {
+func NewCreateTenantChangeRequest(entryIntoForce int64, tenancyMode TenancyModeEnum, tenantChanges []TenantChangeRequest) *CreateTenantChangeRequest {
 	this := CreateTenantChangeRequest{}
 	this.EntryIntoForce = entryIntoForce
+	this.TenancyMode = tenancyMode
 	this.TenantChanges = tenantChanges
 	return &this
 }
@@ -72,10 +75,66 @@ func (o *CreateTenantChangeRequest) SetEntryIntoForce(v int64) {
 	o.EntryIntoForce = v
 }
 
-// GetTenantChanges returns the TenantChanges field value
-func (o *CreateTenantChangeRequest) GetTenantChanges() []TenantChangesInner {
+// GetExpiryDate returns the ExpiryDate field value if set, zero value otherwise.
+func (o *CreateTenantChangeRequest) GetExpiryDate() int64 {
+	if o == nil || IsNil(o.ExpiryDate) {
+		var ret int64
+		return ret
+	}
+	return *o.ExpiryDate
+}
+
+// GetExpiryDateOk returns a tuple with the ExpiryDate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateTenantChangeRequest) GetExpiryDateOk() (*int64, bool) {
+	if o == nil || IsNil(o.ExpiryDate) {
+		return nil, false
+	}
+	return o.ExpiryDate, true
+}
+
+// HasExpiryDate returns a boolean if a field has been set.
+func (o *CreateTenantChangeRequest) HasExpiryDate() bool {
+	if o != nil && !IsNil(o.ExpiryDate) {
+		return true
+	}
+
+	return false
+}
+
+// SetExpiryDate gets a reference to the given int64 and assigns it to the ExpiryDate field.
+func (o *CreateTenantChangeRequest) SetExpiryDate(v int64) {
+	o.ExpiryDate = &v
+}
+
+// GetTenancyMode returns the TenancyMode field value
+func (o *CreateTenantChangeRequest) GetTenancyMode() TenancyModeEnum {
 	if o == nil {
-		var ret []TenantChangesInner
+		var ret TenancyModeEnum
+		return ret
+	}
+
+	return o.TenancyMode
+}
+
+// GetTenancyModeOk returns a tuple with the TenancyMode field value
+// and a boolean to check if the value has been set.
+func (o *CreateTenantChangeRequest) GetTenancyModeOk() (*TenancyModeEnum, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.TenancyMode, true
+}
+
+// SetTenancyMode sets field value
+func (o *CreateTenantChangeRequest) SetTenancyMode(v TenancyModeEnum) {
+	o.TenancyMode = v
+}
+
+// GetTenantChanges returns the TenantChanges field value
+func (o *CreateTenantChangeRequest) GetTenantChanges() []TenantChangeRequest {
+	if o == nil {
+		var ret []TenantChangeRequest
 		return ret
 	}
 
@@ -84,7 +143,7 @@ func (o *CreateTenantChangeRequest) GetTenantChanges() []TenantChangesInner {
 
 // GetTenantChangesOk returns a tuple with the TenantChanges field value
 // and a boolean to check if the value has been set.
-func (o *CreateTenantChangeRequest) GetTenantChangesOk() ([]TenantChangesInner, bool) {
+func (o *CreateTenantChangeRequest) GetTenantChangesOk() ([]TenantChangeRequest, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -92,7 +151,7 @@ func (o *CreateTenantChangeRequest) GetTenantChangesOk() ([]TenantChangesInner, 
 }
 
 // SetTenantChanges sets field value
-func (o *CreateTenantChangeRequest) SetTenantChanges(v []TenantChangesInner) {
+func (o *CreateTenantChangeRequest) SetTenantChanges(v []TenantChangeRequest) {
 	o.TenantChanges = v
 }
 
@@ -107,6 +166,10 @@ func (o CreateTenantChangeRequest) MarshalJSON() ([]byte, error) {
 func (o CreateTenantChangeRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["entry_into_force"] = o.EntryIntoForce
+	if !IsNil(o.ExpiryDate) {
+		toSerialize["expiry_date"] = o.ExpiryDate
+	}
+	toSerialize["tenancy_mode"] = o.TenancyMode
 	toSerialize["tenant_changes"] = o.TenantChanges
 	return toSerialize, nil
 }
@@ -117,6 +180,7 @@ func (o *CreateTenantChangeRequest) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"entry_into_force",
+		"tenancy_mode",
 		"tenant_changes",
 	}
 

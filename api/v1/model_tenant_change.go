@@ -37,6 +37,7 @@ type TenantChange struct {
 	// The date when the update will enter into force
 	EntryIntoForce int64                  `json:"entry_into_force"`
 	Action         TenantChangeActionEnum `json:"action"`
+	TenancyMode    *TenancyModeEnum       `json:"tenancy_mode,omitempty"`
 }
 
 type _TenantChange TenantChange
@@ -297,6 +298,38 @@ func (o *TenantChange) SetAction(v TenantChangeActionEnum) {
 	o.Action = v
 }
 
+// GetTenancyMode returns the TenancyMode field value if set, zero value otherwise.
+func (o *TenantChange) GetTenancyMode() TenancyModeEnum {
+	if o == nil || IsNil(o.TenancyMode) {
+		var ret TenancyModeEnum
+		return ret
+	}
+	return *o.TenancyMode
+}
+
+// GetTenancyModeOk returns a tuple with the TenancyMode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TenantChange) GetTenancyModeOk() (*TenancyModeEnum, bool) {
+	if o == nil || IsNil(o.TenancyMode) {
+		return nil, false
+	}
+	return o.TenancyMode, true
+}
+
+// HasTenancyMode returns a boolean if a field has been set.
+func (o *TenantChange) HasTenancyMode() bool {
+	if o != nil && !IsNil(o.TenancyMode) {
+		return true
+	}
+
+	return false
+}
+
+// SetTenancyMode gets a reference to the given TenancyModeEnum and assigns it to the TenancyMode field.
+func (o *TenantChange) SetTenancyMode(v TenancyModeEnum) {
+	o.TenancyMode = &v
+}
+
 func (o TenantChange) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -320,6 +353,9 @@ func (o TenantChange) ToMap() (map[string]interface{}, error) {
 	toSerialize["tenancy_ref"] = o.TenancyRef
 	toSerialize["entry_into_force"] = o.EntryIntoForce
 	toSerialize["action"] = o.Action
+	if !IsNil(o.TenancyMode) {
+		toSerialize["tenancy_mode"] = o.TenancyMode
+	}
 	return toSerialize, nil
 }
 

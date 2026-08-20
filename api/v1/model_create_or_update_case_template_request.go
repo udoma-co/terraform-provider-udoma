@@ -40,6 +40,8 @@ type CreateOrUpdateCaseTemplateRequest struct {
 	AdCategories []CaseTemplateAdCategoryEnum `json:"ad_categories,omitempty"`
 	// a map of values, where the key and values are strings
 	ConfirmationText *map[string]string `json:"confirmation_text,omitempty"`
+	// Hint for the AI agents working with this template, describing when the template should be used, what is expected from the tenant and what the next steps after the submission are. The hint is never shown to the tenants, it is only passed to the AI, for example so the public chatbot can suggest the right template and explain what will happen.
+	AiHint *string `json:"ai_hint,omitempty"`
 	// If true, an AI-generated summary of the submitted case data will be included in the new case notification email sent to the property manager.
 	IncludeAiSummary *bool `json:"include_ai_summary,omitempty"`
 	// If true, AI will be used to automatically assess the priority of the newly  submitted case. High priority cases will have the notification email sent with high importance/priority.
@@ -392,6 +394,38 @@ func (o *CreateOrUpdateCaseTemplateRequest) SetConfirmationText(v map[string]str
 	o.ConfirmationText = &v
 }
 
+// GetAiHint returns the AiHint field value if set, zero value otherwise.
+func (o *CreateOrUpdateCaseTemplateRequest) GetAiHint() string {
+	if o == nil || IsNil(o.AiHint) {
+		var ret string
+		return ret
+	}
+	return *o.AiHint
+}
+
+// GetAiHintOk returns a tuple with the AiHint field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateCaseTemplateRequest) GetAiHintOk() (*string, bool) {
+	if o == nil || IsNil(o.AiHint) {
+		return nil, false
+	}
+	return o.AiHint, true
+}
+
+// HasAiHint returns a boolean if a field has been set.
+func (o *CreateOrUpdateCaseTemplateRequest) HasAiHint() bool {
+	if o != nil && !IsNil(o.AiHint) {
+		return true
+	}
+
+	return false
+}
+
+// SetAiHint gets a reference to the given string and assigns it to the AiHint field.
+func (o *CreateOrUpdateCaseTemplateRequest) SetAiHint(v string) {
+	o.AiHint = &v
+}
+
 // GetIncludeAiSummary returns the IncludeAiSummary field value if set, zero value otherwise.
 func (o *CreateOrUpdateCaseTemplateRequest) GetIncludeAiSummary() bool {
 	if o == nil || IsNil(o.IncludeAiSummary) {
@@ -522,6 +556,9 @@ func (o CreateOrUpdateCaseTemplateRequest) ToMap() (map[string]interface{}, erro
 	}
 	if !IsNil(o.ConfirmationText) {
 		toSerialize["confirmation_text"] = o.ConfirmationText
+	}
+	if !IsNil(o.AiHint) {
+		toSerialize["ai_hint"] = o.AiHint
 	}
 	if !IsNil(o.IncludeAiSummary) {
 		toSerialize["include_ai_summary"] = o.IncludeAiSummary

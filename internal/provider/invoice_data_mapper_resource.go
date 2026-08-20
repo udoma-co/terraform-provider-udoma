@@ -81,7 +81,7 @@ func (idm *InvoiceDataMapper) Schema(ctx context.Context, req resource.SchemaReq
 				Description: "When to run the script, either before or after data processing",
 				Validators: []validator.String{
 					stringvalidator.LengthAtMost(32),
-					stringvalidator.OneOfCaseInsensitive(stringSlice(api.AllowedInvoiceDataMapperEntrypointEnumEnumValues)...),
+					stringvalidator.OneOf(stringSlice(api.AllowedInvoiceDataMapperEntrypointEnumEnumValues)...),
 				},
 			},
 		},

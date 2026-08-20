@@ -35,14 +35,15 @@ type CommentTemplate struct {
 
 // CommentTemplateModel defines the model for the resource.
 type CommentTemplateModel struct {
-	ID          types.String `tfsdk:"id"`
-	CreatedAt   types.Int64  `tfsdk:"created_at"`
-	UpdatedAt   types.Int64  `tfsdk:"updated_at"`
-	DisplayName types.String `tfsdk:"display_name"`
-	AccessList  types.List   `tfsdk:"access_list"`
-	IsDenyList  types.Bool   `tfsdk:"is_deny_list"`
-	Script      types.String `tfsdk:"script"`
-	Template    types.String `tfsdk:"template"`
+	ID            types.String `tfsdk:"id"`
+	CreatedAt     types.Int64  `tfsdk:"created_at"`
+	UpdatedAt     types.Int64  `tfsdk:"updated_at"`
+	DisplayName   types.String `tfsdk:"display_name"`
+	AccessList    types.List   `tfsdk:"access_list"`
+	IsDenyList    types.Bool   `tfsdk:"is_deny_list"`
+	Script        types.String `tfsdk:"script"`
+	Template      types.String `tfsdk:"template"`
+	IsCatalogItem types.Bool   `tfsdk:"is_catalog_item"`
 }
 
 func (c *CommentTemplate) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -91,6 +92,10 @@ func (c *CommentTemplate) Schema(ctx context.Context, req resource.SchemaRequest
 			"template": schema.StringAttribute{
 				Required:    true,
 				Description: "The template that will be used to generate the comment",
+			},
+			"is_catalog_item": schema.BoolAttribute{
+				Computed:    true,
+				Description: "Whether this entity is represented as a catalog item.",
 			},
 		},
 	}
@@ -243,6 +248,7 @@ func (model *CommentTemplateModel) fromAPIResponse(ct *api.CommentTemplate) (dia
 	model.CreatedAt = types.Int64Value(ct.CreatedAt)
 	model.UpdatedAt = types.Int64Value(ct.UpdatedAt)
 	model.DisplayName = types.StringValue(ct.DisplayName)
+	model.IsCatalogItem = types.BoolPointerValue(ct.IsCatalogItem)
 
 	model.AccessList, diags = types.ListValue(types.StringType, stringSliceToValueList(ct.AccessList))
 	if diags.HasError() {

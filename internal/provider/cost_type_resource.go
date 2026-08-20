@@ -3,6 +3,7 @@ package provider
 import (
 	"context"
 	"fmt"
+
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -38,6 +39,7 @@ type CostTypeModel struct {
 	IsFixed           types.Bool   `tfsdk:"is_fixed"`
 	TenantBillingRate types.Int32  `tfsdk:"tenant_billing_rate"`
 	Category          types.String `tfsdk:"category"`
+	IsCatalogItem     types.Bool   `tfsdk:"is_catalog_item"`
 }
 
 func (ct *CostType) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -86,8 +88,12 @@ func (ct *CostType) Schema(ctx context.Context, req resource.SchemaRequest, resp
 				Required:            true,
 				MarkdownDescription: "The category of the cost type",
 				Validators: []validator.String{
-					stringvalidator.OneOfCaseInsensitive(stringSlice(api.AllowedCostTypeCategoryEnumEnumValues)...),
+					stringvalidator.OneOf(stringSlice(api.AllowedCostTypeCategoryEnumEnumValues)...),
 				},
+			},
+			"is_catalog_item": schema.BoolAttribute{
+				Computed:            true,
+				MarkdownDescription: "Whether this entity is represented as a catalog item.",
 			},
 		},
 	}
@@ -254,6 +260,7 @@ func (model *CostTypeModel) fromAPI(costType *api.CostType) (diags diag.Diagnost
 	model.Description = omittableStringValue(costType.Description, model.Description)
 	model.IsFixed = omittableBooleanValue(costType.IsFixed, model.IsFixed)
 	model.TenantBillingRate = omittableInt32Value(costType.TenantBillingRate, model.TenantBillingRate)
+	model.IsCatalogItem = types.BoolPointerValue(costType.IsCatalogItem)
 
 	return
 }

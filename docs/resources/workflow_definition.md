@@ -40,6 +40,7 @@ Resource represents a defintion of a workflow
 
 - `created_at` (Number) The date and time the workflow definition was created
 - `id` (String) The unique identifier for the workflow definition
+- `is_catalog_item` (Boolean) Whether this entity is represented as a catalog item.
 - `last_updated` (String)
 - `updated_at` (Number) The date and time the workflow definition was last modified
 

@@ -36,3 +36,4 @@ Resource represents a hook
 ### Read-Only
 
 - `id` (String) The unique identifier for the hook
+- `is_catalog_item` (Boolean) Whether this entity is represented as a catalog item.
