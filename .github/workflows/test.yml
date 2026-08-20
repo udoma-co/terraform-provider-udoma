@@ -31,6 +31,7 @@ jobs:
       - name: Create .env file
         run: |
           echo "UDOMA_ENDPOINT=${{ vars.UDOMA_ENDPOINT }}" >> .env
+          echo "UDOMA_ACCOUNT_REF=${{ vars.UDOMA_ACCOUNT_REF }}" >> .env
           echo "UDOMA_API_KEY=${{ secrets.UDOMA_API_KEY }}" >> .env
           echo "UDOMA_KEY_SECRET=${{ secrets.UDOMA_KEY_SECRET }}" >> .env
 
