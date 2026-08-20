@@ -254,7 +254,7 @@ func (r *CatalogItem) Delete(ctx context.Context, req resource.DeleteRequest, re
 }
 
 func (r *CatalogItem) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("code"), req, resp)
+	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
 
 func (model *catalogItemModel) fromAPI(item *api.CatalogItem) error {

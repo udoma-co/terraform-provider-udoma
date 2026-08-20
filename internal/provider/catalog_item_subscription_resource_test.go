@@ -54,6 +54,18 @@ resource "udoma_catalog_item" "test" {
   ref_id      = udoma_cost_type.test.id
   account_ref = ` + testAccAccountRef() + `
   published   = true
+  patches = [
+    {
+	  code   = "patch-ref-1"
+	  format = "json_patch"
+	  patch  = "[]"
+	},
+    {
+	  code   = "patch-ref-2"
+	  format = "json_patch"
+	  patch  = "[]"
+	}
+  ]
 }
 
 resource "udoma_catalog_item_subscription" "test" {

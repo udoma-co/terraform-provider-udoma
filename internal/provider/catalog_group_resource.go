@@ -197,7 +197,7 @@ func (r *CatalogGroup) Delete(ctx context.Context, req resource.DeleteRequest, r
 }
 
 func (r *CatalogGroup) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("code"), req, resp)
+	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
 
 func (model *catalogGroupModel) fromAPI(group *api.CatalogGroup) error {
