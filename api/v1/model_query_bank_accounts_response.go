@@ -23,8 +23,10 @@ type QueryBankAccountsResponse struct {
 	Limit *int32 `json:"limit,omitempty"`
 	// The number of entities to skip before returning the result
 	Offset       *int32        `json:"offset,omitempty"`
-	Total        *int32        `json:"total,omitempty"`
 	BankAccounts []BankAccount `json:"bank_accounts,omitempty"`
+	Total        *int32        `json:"total,omitempty"`
+	// total number of bank accounts matching the query, ignoring limit and offset
+	TotalCount *int64 `json:"total_count,omitempty"`
 }
 
 // NewQueryBankAccountsResponse instantiates a new QueryBankAccountsResponse object
@@ -108,38 +110,6 @@ func (o *QueryBankAccountsResponse) SetOffset(v int32) {
 	o.Offset = &v
 }
 
-// GetTotal returns the Total field value if set, zero value otherwise.
-func (o *QueryBankAccountsResponse) GetTotal() int32 {
-	if o == nil || IsNil(o.Total) {
-		var ret int32
-		return ret
-	}
-	return *o.Total
-}
-
-// GetTotalOk returns a tuple with the Total field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *QueryBankAccountsResponse) GetTotalOk() (*int32, bool) {
-	if o == nil || IsNil(o.Total) {
-		return nil, false
-	}
-	return o.Total, true
-}
-
-// HasTotal returns a boolean if a field has been set.
-func (o *QueryBankAccountsResponse) HasTotal() bool {
-	if o != nil && !IsNil(o.Total) {
-		return true
-	}
-
-	return false
-}
-
-// SetTotal gets a reference to the given int32 and assigns it to the Total field.
-func (o *QueryBankAccountsResponse) SetTotal(v int32) {
-	o.Total = &v
-}
-
 // GetBankAccounts returns the BankAccounts field value if set, zero value otherwise.
 func (o *QueryBankAccountsResponse) GetBankAccounts() []BankAccount {
 	if o == nil || IsNil(o.BankAccounts) {
@@ -172,6 +142,70 @@ func (o *QueryBankAccountsResponse) SetBankAccounts(v []BankAccount) {
 	o.BankAccounts = v
 }
 
+// GetTotal returns the Total field value if set, zero value otherwise.
+func (o *QueryBankAccountsResponse) GetTotal() int32 {
+	if o == nil || IsNil(o.Total) {
+		var ret int32
+		return ret
+	}
+	return *o.Total
+}
+
+// GetTotalOk returns a tuple with the Total field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryBankAccountsResponse) GetTotalOk() (*int32, bool) {
+	if o == nil || IsNil(o.Total) {
+		return nil, false
+	}
+	return o.Total, true
+}
+
+// HasTotal returns a boolean if a field has been set.
+func (o *QueryBankAccountsResponse) HasTotal() bool {
+	if o != nil && !IsNil(o.Total) {
+		return true
+	}
+
+	return false
+}
+
+// SetTotal gets a reference to the given int32 and assigns it to the Total field.
+func (o *QueryBankAccountsResponse) SetTotal(v int32) {
+	o.Total = &v
+}
+
+// GetTotalCount returns the TotalCount field value if set, zero value otherwise.
+func (o *QueryBankAccountsResponse) GetTotalCount() int64 {
+	if o == nil || IsNil(o.TotalCount) {
+		var ret int64
+		return ret
+	}
+	return *o.TotalCount
+}
+
+// GetTotalCountOk returns a tuple with the TotalCount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryBankAccountsResponse) GetTotalCountOk() (*int64, bool) {
+	if o == nil || IsNil(o.TotalCount) {
+		return nil, false
+	}
+	return o.TotalCount, true
+}
+
+// HasTotalCount returns a boolean if a field has been set.
+func (o *QueryBankAccountsResponse) HasTotalCount() bool {
+	if o != nil && !IsNil(o.TotalCount) {
+		return true
+	}
+
+	return false
+}
+
+// SetTotalCount gets a reference to the given int64 and assigns it to the TotalCount field.
+func (o *QueryBankAccountsResponse) SetTotalCount(v int64) {
+	o.TotalCount = &v
+}
+
 func (o QueryBankAccountsResponse) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -188,11 +222,14 @@ func (o QueryBankAccountsResponse) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Offset) {
 		toSerialize["offset"] = o.Offset
 	}
+	if !IsNil(o.BankAccounts) {
+		toSerialize["bank_accounts"] = o.BankAccounts
+	}
 	if !IsNil(o.Total) {
 		toSerialize["total"] = o.Total
 	}
-	if !IsNil(o.BankAccounts) {
-		toSerialize["bank_accounts"] = o.BankAccounts
+	if !IsNil(o.TotalCount) {
+		toSerialize["total_count"] = o.TotalCount
 	}
 	return toSerialize, nil
 }

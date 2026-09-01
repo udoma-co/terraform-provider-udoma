@@ -27,6 +27,10 @@ type QueryBookingsByStartEndDateResponse struct {
 	EndBalance *float64 `json:"end_balance,omitempty"`
 	// The sum of all booking amounts, representing the net impact of the queried bookings
 	QueriedBalance *float64 `json:"queried_balance,omitempty"`
+	// total number of bookings in the queried period, ignoring limit and offset
+	TotalCount *int64 `json:"total_count,omitempty"`
+	// number of bookings that were skipped in the result
+	Offset *int32 `json:"offset,omitempty"`
 }
 
 // NewQueryBookingsByStartEndDateResponse instantiates a new QueryBookingsByStartEndDateResponse object
@@ -174,6 +178,70 @@ func (o *QueryBookingsByStartEndDateResponse) SetQueriedBalance(v float64) {
 	o.QueriedBalance = &v
 }
 
+// GetTotalCount returns the TotalCount field value if set, zero value otherwise.
+func (o *QueryBookingsByStartEndDateResponse) GetTotalCount() int64 {
+	if o == nil || IsNil(o.TotalCount) {
+		var ret int64
+		return ret
+	}
+	return *o.TotalCount
+}
+
+// GetTotalCountOk returns a tuple with the TotalCount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryBookingsByStartEndDateResponse) GetTotalCountOk() (*int64, bool) {
+	if o == nil || IsNil(o.TotalCount) {
+		return nil, false
+	}
+	return o.TotalCount, true
+}
+
+// HasTotalCount returns a boolean if a field has been set.
+func (o *QueryBookingsByStartEndDateResponse) HasTotalCount() bool {
+	if o != nil && !IsNil(o.TotalCount) {
+		return true
+	}
+
+	return false
+}
+
+// SetTotalCount gets a reference to the given int64 and assigns it to the TotalCount field.
+func (o *QueryBookingsByStartEndDateResponse) SetTotalCount(v int64) {
+	o.TotalCount = &v
+}
+
+// GetOffset returns the Offset field value if set, zero value otherwise.
+func (o *QueryBookingsByStartEndDateResponse) GetOffset() int32 {
+	if o == nil || IsNil(o.Offset) {
+		var ret int32
+		return ret
+	}
+	return *o.Offset
+}
+
+// GetOffsetOk returns a tuple with the Offset field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryBookingsByStartEndDateResponse) GetOffsetOk() (*int32, bool) {
+	if o == nil || IsNil(o.Offset) {
+		return nil, false
+	}
+	return o.Offset, true
+}
+
+// HasOffset returns a boolean if a field has been set.
+func (o *QueryBookingsByStartEndDateResponse) HasOffset() bool {
+	if o != nil && !IsNil(o.Offset) {
+		return true
+	}
+
+	return false
+}
+
+// SetOffset gets a reference to the given int32 and assigns it to the Offset field.
+func (o *QueryBookingsByStartEndDateResponse) SetOffset(v int32) {
+	o.Offset = &v
+}
+
 func (o QueryBookingsByStartEndDateResponse) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -195,6 +263,12 @@ func (o QueryBookingsByStartEndDateResponse) ToMap() (map[string]interface{}, er
 	}
 	if !IsNil(o.QueriedBalance) {
 		toSerialize["queried_balance"] = o.QueriedBalance
+	}
+	if !IsNil(o.TotalCount) {
+		toSerialize["total_count"] = o.TotalCount
+	}
+	if !IsNil(o.Offset) {
+		toSerialize["offset"] = o.Offset
 	}
 	return toSerialize, nil
 }

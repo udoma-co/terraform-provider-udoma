@@ -23,12 +23,19 @@ type QueryPropertiesRequest struct {
 	Limit *int32 `json:"limit,omitempty"`
 	// The number of entities to skip before returning the result
 	Offset *int32 `json:"offset,omitempty"`
+	// The attribute to sort the result by. Which values are supported depends on the queried entity, an unsupported value falls back to the default sort of the query.
+	SortKey   *string             `json:"sort_key,omitempty"`
+	SortOrder *QuerySortOrderEnum `json:"sort_order,omitempty"`
+	// Free text search term. Which attributes are matched depends on the queried entity. Multiple terms can be given separated by whitespace, in which case an entity has to match all of them.
+	Search *string `json:"search,omitempty"`
 	// like search for the name of the property
 	Name *string `json:"name,omitempty"`
 	// optional property ID, if set only properties that are children of the given property are returned
 	ParentRef *string `json:"parent_ref,omitempty"`
 	// optional property owner ID, if set only properties that are owned by the given owner are returned
 	OwnerRef *string `json:"owner_ref,omitempty"`
+	// The types the returned properties should have. If empty, all properties are returned.
+	Types []PropertyType `json:"types,omitempty"`
 }
 
 // NewQueryPropertiesRequest instantiates a new QueryPropertiesRequest object
@@ -110,6 +117,102 @@ func (o *QueryPropertiesRequest) HasOffset() bool {
 // SetOffset gets a reference to the given int32 and assigns it to the Offset field.
 func (o *QueryPropertiesRequest) SetOffset(v int32) {
 	o.Offset = &v
+}
+
+// GetSortKey returns the SortKey field value if set, zero value otherwise.
+func (o *QueryPropertiesRequest) GetSortKey() string {
+	if o == nil || IsNil(o.SortKey) {
+		var ret string
+		return ret
+	}
+	return *o.SortKey
+}
+
+// GetSortKeyOk returns a tuple with the SortKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryPropertiesRequest) GetSortKeyOk() (*string, bool) {
+	if o == nil || IsNil(o.SortKey) {
+		return nil, false
+	}
+	return o.SortKey, true
+}
+
+// HasSortKey returns a boolean if a field has been set.
+func (o *QueryPropertiesRequest) HasSortKey() bool {
+	if o != nil && !IsNil(o.SortKey) {
+		return true
+	}
+
+	return false
+}
+
+// SetSortKey gets a reference to the given string and assigns it to the SortKey field.
+func (o *QueryPropertiesRequest) SetSortKey(v string) {
+	o.SortKey = &v
+}
+
+// GetSortOrder returns the SortOrder field value if set, zero value otherwise.
+func (o *QueryPropertiesRequest) GetSortOrder() QuerySortOrderEnum {
+	if o == nil || IsNil(o.SortOrder) {
+		var ret QuerySortOrderEnum
+		return ret
+	}
+	return *o.SortOrder
+}
+
+// GetSortOrderOk returns a tuple with the SortOrder field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryPropertiesRequest) GetSortOrderOk() (*QuerySortOrderEnum, bool) {
+	if o == nil || IsNil(o.SortOrder) {
+		return nil, false
+	}
+	return o.SortOrder, true
+}
+
+// HasSortOrder returns a boolean if a field has been set.
+func (o *QueryPropertiesRequest) HasSortOrder() bool {
+	if o != nil && !IsNil(o.SortOrder) {
+		return true
+	}
+
+	return false
+}
+
+// SetSortOrder gets a reference to the given QuerySortOrderEnum and assigns it to the SortOrder field.
+func (o *QueryPropertiesRequest) SetSortOrder(v QuerySortOrderEnum) {
+	o.SortOrder = &v
+}
+
+// GetSearch returns the Search field value if set, zero value otherwise.
+func (o *QueryPropertiesRequest) GetSearch() string {
+	if o == nil || IsNil(o.Search) {
+		var ret string
+		return ret
+	}
+	return *o.Search
+}
+
+// GetSearchOk returns a tuple with the Search field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryPropertiesRequest) GetSearchOk() (*string, bool) {
+	if o == nil || IsNil(o.Search) {
+		return nil, false
+	}
+	return o.Search, true
+}
+
+// HasSearch returns a boolean if a field has been set.
+func (o *QueryPropertiesRequest) HasSearch() bool {
+	if o != nil && !IsNil(o.Search) {
+		return true
+	}
+
+	return false
+}
+
+// SetSearch gets a reference to the given string and assigns it to the Search field.
+func (o *QueryPropertiesRequest) SetSearch(v string) {
+	o.Search = &v
 }
 
 // GetName returns the Name field value if set, zero value otherwise.
@@ -208,6 +311,38 @@ func (o *QueryPropertiesRequest) SetOwnerRef(v string) {
 	o.OwnerRef = &v
 }
 
+// GetTypes returns the Types field value if set, zero value otherwise.
+func (o *QueryPropertiesRequest) GetTypes() []PropertyType {
+	if o == nil || IsNil(o.Types) {
+		var ret []PropertyType
+		return ret
+	}
+	return o.Types
+}
+
+// GetTypesOk returns a tuple with the Types field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryPropertiesRequest) GetTypesOk() ([]PropertyType, bool) {
+	if o == nil || IsNil(o.Types) {
+		return nil, false
+	}
+	return o.Types, true
+}
+
+// HasTypes returns a boolean if a field has been set.
+func (o *QueryPropertiesRequest) HasTypes() bool {
+	if o != nil && !IsNil(o.Types) {
+		return true
+	}
+
+	return false
+}
+
+// SetTypes gets a reference to the given []PropertyType and assigns it to the Types field.
+func (o *QueryPropertiesRequest) SetTypes(v []PropertyType) {
+	o.Types = v
+}
+
 func (o QueryPropertiesRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -224,6 +359,15 @@ func (o QueryPropertiesRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Offset) {
 		toSerialize["offset"] = o.Offset
 	}
+	if !IsNil(o.SortKey) {
+		toSerialize["sort_key"] = o.SortKey
+	}
+	if !IsNil(o.SortOrder) {
+		toSerialize["sort_order"] = o.SortOrder
+	}
+	if !IsNil(o.Search) {
+		toSerialize["search"] = o.Search
+	}
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
 	}
@@ -232,6 +376,9 @@ func (o QueryPropertiesRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.OwnerRef) {
 		toSerialize["owner_ref"] = o.OwnerRef
+	}
+	if !IsNil(o.Types) {
+		toSerialize["types"] = o.Types
 	}
 	return toSerialize, nil
 }

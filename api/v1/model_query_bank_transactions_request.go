@@ -19,10 +19,20 @@ var _ MappedNullable = &QueryBankTransactionsRequest{}
 
 // QueryBankTransactionsRequest The data required to query the transactions of a bank account
 type QueryBankTransactionsRequest struct {
+	// The maximum number of entities to return from the query
+	Limit *int32 `json:"limit,omitempty"`
+	// The number of entities to skip before returning the result
+	Offset *int32 `json:"offset,omitempty"`
+	// The attribute to sort the result by. Which values are supported depends on the queried entity, an unsupported value falls back to the default sort of the query.
+	SortKey   *string             `json:"sort_key,omitempty"`
+	SortOrder *QuerySortOrderEnum `json:"sort_order,omitempty"`
+	// Free text search term. Which attributes are matched depends on the queried entity. Multiple terms can be given separated by whitespace, in which case an entity has to match all of them.
+	Search *string `json:"search,omitempty"`
 	// The lowest date to include in the result
 	DateMin *int64 `json:"date_min,omitempty"`
 	// The highest date to include in the result
-	DateMax *int64 `json:"date_max,omitempty"`
+	DateMax *int64                 `json:"date_max,omitempty"`
+	Booked  *QueryBooleanParameter `json:"booked,omitempty"`
 }
 
 // NewQueryBankTransactionsRequest instantiates a new QueryBankTransactionsRequest object
@@ -40,6 +50,166 @@ func NewQueryBankTransactionsRequest() *QueryBankTransactionsRequest {
 func NewQueryBankTransactionsRequestWithDefaults() *QueryBankTransactionsRequest {
 	this := QueryBankTransactionsRequest{}
 	return &this
+}
+
+// GetLimit returns the Limit field value if set, zero value otherwise.
+func (o *QueryBankTransactionsRequest) GetLimit() int32 {
+	if o == nil || IsNil(o.Limit) {
+		var ret int32
+		return ret
+	}
+	return *o.Limit
+}
+
+// GetLimitOk returns a tuple with the Limit field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryBankTransactionsRequest) GetLimitOk() (*int32, bool) {
+	if o == nil || IsNil(o.Limit) {
+		return nil, false
+	}
+	return o.Limit, true
+}
+
+// HasLimit returns a boolean if a field has been set.
+func (o *QueryBankTransactionsRequest) HasLimit() bool {
+	if o != nil && !IsNil(o.Limit) {
+		return true
+	}
+
+	return false
+}
+
+// SetLimit gets a reference to the given int32 and assigns it to the Limit field.
+func (o *QueryBankTransactionsRequest) SetLimit(v int32) {
+	o.Limit = &v
+}
+
+// GetOffset returns the Offset field value if set, zero value otherwise.
+func (o *QueryBankTransactionsRequest) GetOffset() int32 {
+	if o == nil || IsNil(o.Offset) {
+		var ret int32
+		return ret
+	}
+	return *o.Offset
+}
+
+// GetOffsetOk returns a tuple with the Offset field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryBankTransactionsRequest) GetOffsetOk() (*int32, bool) {
+	if o == nil || IsNil(o.Offset) {
+		return nil, false
+	}
+	return o.Offset, true
+}
+
+// HasOffset returns a boolean if a field has been set.
+func (o *QueryBankTransactionsRequest) HasOffset() bool {
+	if o != nil && !IsNil(o.Offset) {
+		return true
+	}
+
+	return false
+}
+
+// SetOffset gets a reference to the given int32 and assigns it to the Offset field.
+func (o *QueryBankTransactionsRequest) SetOffset(v int32) {
+	o.Offset = &v
+}
+
+// GetSortKey returns the SortKey field value if set, zero value otherwise.
+func (o *QueryBankTransactionsRequest) GetSortKey() string {
+	if o == nil || IsNil(o.SortKey) {
+		var ret string
+		return ret
+	}
+	return *o.SortKey
+}
+
+// GetSortKeyOk returns a tuple with the SortKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryBankTransactionsRequest) GetSortKeyOk() (*string, bool) {
+	if o == nil || IsNil(o.SortKey) {
+		return nil, false
+	}
+	return o.SortKey, true
+}
+
+// HasSortKey returns a boolean if a field has been set.
+func (o *QueryBankTransactionsRequest) HasSortKey() bool {
+	if o != nil && !IsNil(o.SortKey) {
+		return true
+	}
+
+	return false
+}
+
+// SetSortKey gets a reference to the given string and assigns it to the SortKey field.
+func (o *QueryBankTransactionsRequest) SetSortKey(v string) {
+	o.SortKey = &v
+}
+
+// GetSortOrder returns the SortOrder field value if set, zero value otherwise.
+func (o *QueryBankTransactionsRequest) GetSortOrder() QuerySortOrderEnum {
+	if o == nil || IsNil(o.SortOrder) {
+		var ret QuerySortOrderEnum
+		return ret
+	}
+	return *o.SortOrder
+}
+
+// GetSortOrderOk returns a tuple with the SortOrder field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryBankTransactionsRequest) GetSortOrderOk() (*QuerySortOrderEnum, bool) {
+	if o == nil || IsNil(o.SortOrder) {
+		return nil, false
+	}
+	return o.SortOrder, true
+}
+
+// HasSortOrder returns a boolean if a field has been set.
+func (o *QueryBankTransactionsRequest) HasSortOrder() bool {
+	if o != nil && !IsNil(o.SortOrder) {
+		return true
+	}
+
+	return false
+}
+
+// SetSortOrder gets a reference to the given QuerySortOrderEnum and assigns it to the SortOrder field.
+func (o *QueryBankTransactionsRequest) SetSortOrder(v QuerySortOrderEnum) {
+	o.SortOrder = &v
+}
+
+// GetSearch returns the Search field value if set, zero value otherwise.
+func (o *QueryBankTransactionsRequest) GetSearch() string {
+	if o == nil || IsNil(o.Search) {
+		var ret string
+		return ret
+	}
+	return *o.Search
+}
+
+// GetSearchOk returns a tuple with the Search field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryBankTransactionsRequest) GetSearchOk() (*string, bool) {
+	if o == nil || IsNil(o.Search) {
+		return nil, false
+	}
+	return o.Search, true
+}
+
+// HasSearch returns a boolean if a field has been set.
+func (o *QueryBankTransactionsRequest) HasSearch() bool {
+	if o != nil && !IsNil(o.Search) {
+		return true
+	}
+
+	return false
+}
+
+// SetSearch gets a reference to the given string and assigns it to the Search field.
+func (o *QueryBankTransactionsRequest) SetSearch(v string) {
+	o.Search = &v
 }
 
 // GetDateMin returns the DateMin field value if set, zero value otherwise.
@@ -106,6 +276,38 @@ func (o *QueryBankTransactionsRequest) SetDateMax(v int64) {
 	o.DateMax = &v
 }
 
+// GetBooked returns the Booked field value if set, zero value otherwise.
+func (o *QueryBankTransactionsRequest) GetBooked() QueryBooleanParameter {
+	if o == nil || IsNil(o.Booked) {
+		var ret QueryBooleanParameter
+		return ret
+	}
+	return *o.Booked
+}
+
+// GetBookedOk returns a tuple with the Booked field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryBankTransactionsRequest) GetBookedOk() (*QueryBooleanParameter, bool) {
+	if o == nil || IsNil(o.Booked) {
+		return nil, false
+	}
+	return o.Booked, true
+}
+
+// HasBooked returns a boolean if a field has been set.
+func (o *QueryBankTransactionsRequest) HasBooked() bool {
+	if o != nil && !IsNil(o.Booked) {
+		return true
+	}
+
+	return false
+}
+
+// SetBooked gets a reference to the given QueryBooleanParameter and assigns it to the Booked field.
+func (o *QueryBankTransactionsRequest) SetBooked(v QueryBooleanParameter) {
+	o.Booked = &v
+}
+
 func (o QueryBankTransactionsRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -116,11 +318,29 @@ func (o QueryBankTransactionsRequest) MarshalJSON() ([]byte, error) {
 
 func (o QueryBankTransactionsRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Limit) {
+		toSerialize["limit"] = o.Limit
+	}
+	if !IsNil(o.Offset) {
+		toSerialize["offset"] = o.Offset
+	}
+	if !IsNil(o.SortKey) {
+		toSerialize["sort_key"] = o.SortKey
+	}
+	if !IsNil(o.SortOrder) {
+		toSerialize["sort_order"] = o.SortOrder
+	}
+	if !IsNil(o.Search) {
+		toSerialize["search"] = o.Search
+	}
 	if !IsNil(o.DateMin) {
 		toSerialize["date_min"] = o.DateMin
 	}
 	if !IsNil(o.DateMax) {
 		toSerialize["date_max"] = o.DateMax
+	}
+	if !IsNil(o.Booked) {
+		toSerialize["booked"] = o.Booked
 	}
 	return toSerialize, nil
 }

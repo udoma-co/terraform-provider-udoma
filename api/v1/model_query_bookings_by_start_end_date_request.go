@@ -21,8 +21,17 @@ var _ MappedNullable = &QueryBookingsByStartEndDateRequest{}
 
 // QueryBookingsByStartEndDateRequest The request for a query for bookings by start & end date
 type QueryBookingsByStartEndDateRequest struct {
-	StartDate int64  `json:"start_date"`
-	EndDate   *int64 `json:"end_date,omitempty"`
+	// The maximum number of entities to return from the query
+	Limit *int32 `json:"limit,omitempty"`
+	// The number of entities to skip before returning the result
+	Offset *int32 `json:"offset,omitempty"`
+	// The attribute to sort the result by. Which values are supported depends on the queried entity, an unsupported value falls back to the default sort of the query.
+	SortKey   *string             `json:"sort_key,omitempty"`
+	SortOrder *QuerySortOrderEnum `json:"sort_order,omitempty"`
+	// Free text search term. Which attributes are matched depends on the queried entity. Multiple terms can be given separated by whitespace, in which case an entity has to match all of them.
+	Search    *string `json:"search,omitempty"`
+	StartDate int64   `json:"start_date"`
+	EndDate   *int64  `json:"end_date,omitempty"`
 }
 
 type _QueryBookingsByStartEndDateRequest QueryBookingsByStartEndDateRequest
@@ -43,6 +52,166 @@ func NewQueryBookingsByStartEndDateRequest(startDate int64) *QueryBookingsByStar
 func NewQueryBookingsByStartEndDateRequestWithDefaults() *QueryBookingsByStartEndDateRequest {
 	this := QueryBookingsByStartEndDateRequest{}
 	return &this
+}
+
+// GetLimit returns the Limit field value if set, zero value otherwise.
+func (o *QueryBookingsByStartEndDateRequest) GetLimit() int32 {
+	if o == nil || IsNil(o.Limit) {
+		var ret int32
+		return ret
+	}
+	return *o.Limit
+}
+
+// GetLimitOk returns a tuple with the Limit field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryBookingsByStartEndDateRequest) GetLimitOk() (*int32, bool) {
+	if o == nil || IsNil(o.Limit) {
+		return nil, false
+	}
+	return o.Limit, true
+}
+
+// HasLimit returns a boolean if a field has been set.
+func (o *QueryBookingsByStartEndDateRequest) HasLimit() bool {
+	if o != nil && !IsNil(o.Limit) {
+		return true
+	}
+
+	return false
+}
+
+// SetLimit gets a reference to the given int32 and assigns it to the Limit field.
+func (o *QueryBookingsByStartEndDateRequest) SetLimit(v int32) {
+	o.Limit = &v
+}
+
+// GetOffset returns the Offset field value if set, zero value otherwise.
+func (o *QueryBookingsByStartEndDateRequest) GetOffset() int32 {
+	if o == nil || IsNil(o.Offset) {
+		var ret int32
+		return ret
+	}
+	return *o.Offset
+}
+
+// GetOffsetOk returns a tuple with the Offset field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryBookingsByStartEndDateRequest) GetOffsetOk() (*int32, bool) {
+	if o == nil || IsNil(o.Offset) {
+		return nil, false
+	}
+	return o.Offset, true
+}
+
+// HasOffset returns a boolean if a field has been set.
+func (o *QueryBookingsByStartEndDateRequest) HasOffset() bool {
+	if o != nil && !IsNil(o.Offset) {
+		return true
+	}
+
+	return false
+}
+
+// SetOffset gets a reference to the given int32 and assigns it to the Offset field.
+func (o *QueryBookingsByStartEndDateRequest) SetOffset(v int32) {
+	o.Offset = &v
+}
+
+// GetSortKey returns the SortKey field value if set, zero value otherwise.
+func (o *QueryBookingsByStartEndDateRequest) GetSortKey() string {
+	if o == nil || IsNil(o.SortKey) {
+		var ret string
+		return ret
+	}
+	return *o.SortKey
+}
+
+// GetSortKeyOk returns a tuple with the SortKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryBookingsByStartEndDateRequest) GetSortKeyOk() (*string, bool) {
+	if o == nil || IsNil(o.SortKey) {
+		return nil, false
+	}
+	return o.SortKey, true
+}
+
+// HasSortKey returns a boolean if a field has been set.
+func (o *QueryBookingsByStartEndDateRequest) HasSortKey() bool {
+	if o != nil && !IsNil(o.SortKey) {
+		return true
+	}
+
+	return false
+}
+
+// SetSortKey gets a reference to the given string and assigns it to the SortKey field.
+func (o *QueryBookingsByStartEndDateRequest) SetSortKey(v string) {
+	o.SortKey = &v
+}
+
+// GetSortOrder returns the SortOrder field value if set, zero value otherwise.
+func (o *QueryBookingsByStartEndDateRequest) GetSortOrder() QuerySortOrderEnum {
+	if o == nil || IsNil(o.SortOrder) {
+		var ret QuerySortOrderEnum
+		return ret
+	}
+	return *o.SortOrder
+}
+
+// GetSortOrderOk returns a tuple with the SortOrder field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryBookingsByStartEndDateRequest) GetSortOrderOk() (*QuerySortOrderEnum, bool) {
+	if o == nil || IsNil(o.SortOrder) {
+		return nil, false
+	}
+	return o.SortOrder, true
+}
+
+// HasSortOrder returns a boolean if a field has been set.
+func (o *QueryBookingsByStartEndDateRequest) HasSortOrder() bool {
+	if o != nil && !IsNil(o.SortOrder) {
+		return true
+	}
+
+	return false
+}
+
+// SetSortOrder gets a reference to the given QuerySortOrderEnum and assigns it to the SortOrder field.
+func (o *QueryBookingsByStartEndDateRequest) SetSortOrder(v QuerySortOrderEnum) {
+	o.SortOrder = &v
+}
+
+// GetSearch returns the Search field value if set, zero value otherwise.
+func (o *QueryBookingsByStartEndDateRequest) GetSearch() string {
+	if o == nil || IsNil(o.Search) {
+		var ret string
+		return ret
+	}
+	return *o.Search
+}
+
+// GetSearchOk returns a tuple with the Search field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryBookingsByStartEndDateRequest) GetSearchOk() (*string, bool) {
+	if o == nil || IsNil(o.Search) {
+		return nil, false
+	}
+	return o.Search, true
+}
+
+// HasSearch returns a boolean if a field has been set.
+func (o *QueryBookingsByStartEndDateRequest) HasSearch() bool {
+	if o != nil && !IsNil(o.Search) {
+		return true
+	}
+
+	return false
+}
+
+// SetSearch gets a reference to the given string and assigns it to the Search field.
+func (o *QueryBookingsByStartEndDateRequest) SetSearch(v string) {
+	o.Search = &v
 }
 
 // GetStartDate returns the StartDate field value
@@ -111,6 +280,21 @@ func (o QueryBookingsByStartEndDateRequest) MarshalJSON() ([]byte, error) {
 
 func (o QueryBookingsByStartEndDateRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Limit) {
+		toSerialize["limit"] = o.Limit
+	}
+	if !IsNil(o.Offset) {
+		toSerialize["offset"] = o.Offset
+	}
+	if !IsNil(o.SortKey) {
+		toSerialize["sort_key"] = o.SortKey
+	}
+	if !IsNil(o.SortOrder) {
+		toSerialize["sort_order"] = o.SortOrder
+	}
+	if !IsNil(o.Search) {
+		toSerialize["search"] = o.Search
+	}
 	toSerialize["start_date"] = o.StartDate
 	if !IsNil(o.EndDate) {
 		toSerialize["end_date"] = o.EndDate

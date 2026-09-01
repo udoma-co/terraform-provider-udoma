@@ -23,6 +23,11 @@ type QueryTenantsRequest struct {
 	Limit *int32 `json:"limit,omitempty"`
 	// The number of entities to skip before returning the result
 	Offset *int32 `json:"offset,omitempty"`
+	// The attribute to sort the result by. Which values are supported depends on the queried entity, an unsupported value falls back to the default sort of the query.
+	SortKey   *string             `json:"sort_key,omitempty"`
+	SortOrder *QuerySortOrderEnum `json:"sort_order,omitempty"`
+	// Free text search term. Which attributes are matched depends on the queried entity. Multiple terms can be given separated by whitespace, in which case an entity has to match all of them.
+	Search *string `json:"search,omitempty"`
 }
 
 // NewQueryTenantsRequest instantiates a new QueryTenantsRequest object
@@ -106,6 +111,102 @@ func (o *QueryTenantsRequest) SetOffset(v int32) {
 	o.Offset = &v
 }
 
+// GetSortKey returns the SortKey field value if set, zero value otherwise.
+func (o *QueryTenantsRequest) GetSortKey() string {
+	if o == nil || IsNil(o.SortKey) {
+		var ret string
+		return ret
+	}
+	return *o.SortKey
+}
+
+// GetSortKeyOk returns a tuple with the SortKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryTenantsRequest) GetSortKeyOk() (*string, bool) {
+	if o == nil || IsNil(o.SortKey) {
+		return nil, false
+	}
+	return o.SortKey, true
+}
+
+// HasSortKey returns a boolean if a field has been set.
+func (o *QueryTenantsRequest) HasSortKey() bool {
+	if o != nil && !IsNil(o.SortKey) {
+		return true
+	}
+
+	return false
+}
+
+// SetSortKey gets a reference to the given string and assigns it to the SortKey field.
+func (o *QueryTenantsRequest) SetSortKey(v string) {
+	o.SortKey = &v
+}
+
+// GetSortOrder returns the SortOrder field value if set, zero value otherwise.
+func (o *QueryTenantsRequest) GetSortOrder() QuerySortOrderEnum {
+	if o == nil || IsNil(o.SortOrder) {
+		var ret QuerySortOrderEnum
+		return ret
+	}
+	return *o.SortOrder
+}
+
+// GetSortOrderOk returns a tuple with the SortOrder field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryTenantsRequest) GetSortOrderOk() (*QuerySortOrderEnum, bool) {
+	if o == nil || IsNil(o.SortOrder) {
+		return nil, false
+	}
+	return o.SortOrder, true
+}
+
+// HasSortOrder returns a boolean if a field has been set.
+func (o *QueryTenantsRequest) HasSortOrder() bool {
+	if o != nil && !IsNil(o.SortOrder) {
+		return true
+	}
+
+	return false
+}
+
+// SetSortOrder gets a reference to the given QuerySortOrderEnum and assigns it to the SortOrder field.
+func (o *QueryTenantsRequest) SetSortOrder(v QuerySortOrderEnum) {
+	o.SortOrder = &v
+}
+
+// GetSearch returns the Search field value if set, zero value otherwise.
+func (o *QueryTenantsRequest) GetSearch() string {
+	if o == nil || IsNil(o.Search) {
+		var ret string
+		return ret
+	}
+	return *o.Search
+}
+
+// GetSearchOk returns a tuple with the Search field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryTenantsRequest) GetSearchOk() (*string, bool) {
+	if o == nil || IsNil(o.Search) {
+		return nil, false
+	}
+	return o.Search, true
+}
+
+// HasSearch returns a boolean if a field has been set.
+func (o *QueryTenantsRequest) HasSearch() bool {
+	if o != nil && !IsNil(o.Search) {
+		return true
+	}
+
+	return false
+}
+
+// SetSearch gets a reference to the given string and assigns it to the Search field.
+func (o *QueryTenantsRequest) SetSearch(v string) {
+	o.Search = &v
+}
+
 func (o QueryTenantsRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -121,6 +222,15 @@ func (o QueryTenantsRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Offset) {
 		toSerialize["offset"] = o.Offset
+	}
+	if !IsNil(o.SortKey) {
+		toSerialize["sort_key"] = o.SortKey
+	}
+	if !IsNil(o.SortOrder) {
+		toSerialize["sort_order"] = o.SortOrder
+	}
+	if !IsNil(o.Search) {
+		toSerialize["search"] = o.Search
 	}
 	return toSerialize, nil
 }

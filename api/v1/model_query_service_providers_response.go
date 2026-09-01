@@ -21,6 +21,10 @@ var _ MappedNullable = &QueryServiceProvidersResponse{}
 type QueryServiceProvidersResponse struct {
 	// list of service providers
 	ServiceProviders []ServiceProvider `json:"service_providers,omitempty"`
+	// total number of service providers matching the query, ignoring limit and offset
+	TotalCount *int64 `json:"total_count,omitempty"`
+	// number of service providers that were skipped in the result
+	Offset *int32 `json:"offset,omitempty"`
 }
 
 // NewQueryServiceProvidersResponse instantiates a new QueryServiceProvidersResponse object
@@ -72,6 +76,70 @@ func (o *QueryServiceProvidersResponse) SetServiceProviders(v []ServiceProvider)
 	o.ServiceProviders = v
 }
 
+// GetTotalCount returns the TotalCount field value if set, zero value otherwise.
+func (o *QueryServiceProvidersResponse) GetTotalCount() int64 {
+	if o == nil || IsNil(o.TotalCount) {
+		var ret int64
+		return ret
+	}
+	return *o.TotalCount
+}
+
+// GetTotalCountOk returns a tuple with the TotalCount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryServiceProvidersResponse) GetTotalCountOk() (*int64, bool) {
+	if o == nil || IsNil(o.TotalCount) {
+		return nil, false
+	}
+	return o.TotalCount, true
+}
+
+// HasTotalCount returns a boolean if a field has been set.
+func (o *QueryServiceProvidersResponse) HasTotalCount() bool {
+	if o != nil && !IsNil(o.TotalCount) {
+		return true
+	}
+
+	return false
+}
+
+// SetTotalCount gets a reference to the given int64 and assigns it to the TotalCount field.
+func (o *QueryServiceProvidersResponse) SetTotalCount(v int64) {
+	o.TotalCount = &v
+}
+
+// GetOffset returns the Offset field value if set, zero value otherwise.
+func (o *QueryServiceProvidersResponse) GetOffset() int32 {
+	if o == nil || IsNil(o.Offset) {
+		var ret int32
+		return ret
+	}
+	return *o.Offset
+}
+
+// GetOffsetOk returns a tuple with the Offset field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryServiceProvidersResponse) GetOffsetOk() (*int32, bool) {
+	if o == nil || IsNil(o.Offset) {
+		return nil, false
+	}
+	return o.Offset, true
+}
+
+// HasOffset returns a boolean if a field has been set.
+func (o *QueryServiceProvidersResponse) HasOffset() bool {
+	if o != nil && !IsNil(o.Offset) {
+		return true
+	}
+
+	return false
+}
+
+// SetOffset gets a reference to the given int32 and assigns it to the Offset field.
+func (o *QueryServiceProvidersResponse) SetOffset(v int32) {
+	o.Offset = &v
+}
+
 func (o QueryServiceProvidersResponse) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -84,6 +152,12 @@ func (o QueryServiceProvidersResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.ServiceProviders) {
 		toSerialize["service_providers"] = o.ServiceProviders
+	}
+	if !IsNil(o.TotalCount) {
+		toSerialize["total_count"] = o.TotalCount
+	}
+	if !IsNil(o.Offset) {
+		toSerialize["offset"] = o.Offset
 	}
 	return toSerialize, nil
 }

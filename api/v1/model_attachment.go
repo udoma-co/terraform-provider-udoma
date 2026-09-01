@@ -34,7 +34,8 @@ type Attachment struct {
 	// the sha256 sum of the file
 	FileSha256 string `json:"file_sha256"`
 	// optional link to thumbnail (only if file is an image)
-	Thumbnail *string `json:"thumbnail,omitempty"`
+	Thumbnail       *string              `json:"thumbnail,omitempty"`
+	ThumbnailStatus *ThumbnailStatusEnum `json:"thumbnail_status,omitempty"`
 	// link to the actual file, through whitch it can be downloaded
 	Url string `json:"url"`
 }
@@ -241,6 +242,38 @@ func (o *Attachment) SetThumbnail(v string) {
 	o.Thumbnail = &v
 }
 
+// GetThumbnailStatus returns the ThumbnailStatus field value if set, zero value otherwise.
+func (o *Attachment) GetThumbnailStatus() ThumbnailStatusEnum {
+	if o == nil || IsNil(o.ThumbnailStatus) {
+		var ret ThumbnailStatusEnum
+		return ret
+	}
+	return *o.ThumbnailStatus
+}
+
+// GetThumbnailStatusOk returns a tuple with the ThumbnailStatus field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Attachment) GetThumbnailStatusOk() (*ThumbnailStatusEnum, bool) {
+	if o == nil || IsNil(o.ThumbnailStatus) {
+		return nil, false
+	}
+	return o.ThumbnailStatus, true
+}
+
+// HasThumbnailStatus returns a boolean if a field has been set.
+func (o *Attachment) HasThumbnailStatus() bool {
+	if o != nil && !IsNil(o.ThumbnailStatus) {
+		return true
+	}
+
+	return false
+}
+
+// SetThumbnailStatus gets a reference to the given ThumbnailStatusEnum and assigns it to the ThumbnailStatus field.
+func (o *Attachment) SetThumbnailStatus(v ThumbnailStatusEnum) {
+	o.ThumbnailStatus = &v
+}
+
 // GetUrl returns the Url field value
 func (o *Attachment) GetUrl() string {
 	if o == nil {
@@ -283,6 +316,9 @@ func (o Attachment) ToMap() (map[string]interface{}, error) {
 	toSerialize["file_sha256"] = o.FileSha256
 	if !IsNil(o.Thumbnail) {
 		toSerialize["thumbnail"] = o.Thumbnail
+	}
+	if !IsNil(o.ThumbnailStatus) {
+		toSerialize["thumbnail_status"] = o.ThumbnailStatus
 	}
 	toSerialize["url"] = o.Url
 	return toSerialize, nil

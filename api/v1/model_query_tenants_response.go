@@ -24,6 +24,8 @@ type QueryTenantsResponse struct {
 	// The number of entities to skip before returning the result
 	Offset  *int32   `json:"offset,omitempty"`
 	Tenants []Tenant `json:"tenants,omitempty"`
+	// total number of tenants matching the query, ignoring limit and offset
+	TotalCount *int64 `json:"total_count,omitempty"`
 }
 
 // NewQueryTenantsResponse instantiates a new QueryTenantsResponse object
@@ -139,6 +141,38 @@ func (o *QueryTenantsResponse) SetTenants(v []Tenant) {
 	o.Tenants = v
 }
 
+// GetTotalCount returns the TotalCount field value if set, zero value otherwise.
+func (o *QueryTenantsResponse) GetTotalCount() int64 {
+	if o == nil || IsNil(o.TotalCount) {
+		var ret int64
+		return ret
+	}
+	return *o.TotalCount
+}
+
+// GetTotalCountOk returns a tuple with the TotalCount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryTenantsResponse) GetTotalCountOk() (*int64, bool) {
+	if o == nil || IsNil(o.TotalCount) {
+		return nil, false
+	}
+	return o.TotalCount, true
+}
+
+// HasTotalCount returns a boolean if a field has been set.
+func (o *QueryTenantsResponse) HasTotalCount() bool {
+	if o != nil && !IsNil(o.TotalCount) {
+		return true
+	}
+
+	return false
+}
+
+// SetTotalCount gets a reference to the given int64 and assigns it to the TotalCount field.
+func (o *QueryTenantsResponse) SetTotalCount(v int64) {
+	o.TotalCount = &v
+}
+
 func (o QueryTenantsResponse) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -157,6 +191,9 @@ func (o QueryTenantsResponse) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Tenants) {
 		toSerialize["tenants"] = o.Tenants
+	}
+	if !IsNil(o.TotalCount) {
+		toSerialize["total_count"] = o.TotalCount
 	}
 	return toSerialize, nil
 }

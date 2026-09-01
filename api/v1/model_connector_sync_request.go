@@ -24,7 +24,7 @@ type ConnectorSyncRequest struct {
 	// the query this data belongs to
 	QueryId string `json:"query_id"`
 	// the data to be provided to the mapping script
-	Data string `json:"data"`
+	Data string `json:"data" log:"-"`
 }
 
 type _ConnectorSyncRequest ConnectorSyncRequest

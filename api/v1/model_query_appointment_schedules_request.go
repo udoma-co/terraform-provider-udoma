@@ -25,6 +25,8 @@ type QueryAppointmentSchedulesRequest struct {
 	Offset *int32 `json:"offset,omitempty"`
 	// The timestamp of the beginning of the time range
 	StartTime *int64 `json:"start_time,omitempty"`
+	// When true the schedules are returned without their windows and slots. Callers that only need the schedule metadata should set this, as the number of windows grows over the lifetime of a schedule.
+	ExcludeWindows *bool `json:"exclude_windows,omitempty"`
 }
 
 // NewQueryAppointmentSchedulesRequest instantiates a new QueryAppointmentSchedulesRequest object
@@ -140,6 +142,38 @@ func (o *QueryAppointmentSchedulesRequest) SetStartTime(v int64) {
 	o.StartTime = &v
 }
 
+// GetExcludeWindows returns the ExcludeWindows field value if set, zero value otherwise.
+func (o *QueryAppointmentSchedulesRequest) GetExcludeWindows() bool {
+	if o == nil || IsNil(o.ExcludeWindows) {
+		var ret bool
+		return ret
+	}
+	return *o.ExcludeWindows
+}
+
+// GetExcludeWindowsOk returns a tuple with the ExcludeWindows field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryAppointmentSchedulesRequest) GetExcludeWindowsOk() (*bool, bool) {
+	if o == nil || IsNil(o.ExcludeWindows) {
+		return nil, false
+	}
+	return o.ExcludeWindows, true
+}
+
+// HasExcludeWindows returns a boolean if a field has been set.
+func (o *QueryAppointmentSchedulesRequest) HasExcludeWindows() bool {
+	if o != nil && !IsNil(o.ExcludeWindows) {
+		return true
+	}
+
+	return false
+}
+
+// SetExcludeWindows gets a reference to the given bool and assigns it to the ExcludeWindows field.
+func (o *QueryAppointmentSchedulesRequest) SetExcludeWindows(v bool) {
+	o.ExcludeWindows = &v
+}
+
 func (o QueryAppointmentSchedulesRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -158,6 +192,9 @@ func (o QueryAppointmentSchedulesRequest) ToMap() (map[string]interface{}, error
 	}
 	if !IsNil(o.StartTime) {
 		toSerialize["start_time"] = o.StartTime
+	}
+	if !IsNil(o.ExcludeWindows) {
+		toSerialize["exclude_windows"] = o.ExcludeWindows
 	}
 	return toSerialize, nil
 }

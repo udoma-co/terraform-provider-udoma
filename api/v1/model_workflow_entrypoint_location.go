@@ -20,14 +20,15 @@ type WorkflowEntrypointLocation string
 
 // List of WorkflowEntrypointLocation
 const (
-	WORKFLOWENTRYPOINTLOCATION_MANUAL      WorkflowEntrypointLocation = "manual"
-	WORKFLOWENTRYPOINTLOCATION_PROPERTY    WorkflowEntrypointLocation = "property"
-	WORKFLOWENTRYPOINTLOCATION_TENANCY     WorkflowEntrypointLocation = "tenancy"
-	WORKFLOWENTRYPOINTLOCATION_TENANT      WorkflowEntrypointLocation = "tenant"
-	WORKFLOWENTRYPOINTLOCATION_CASE        WorkflowEntrypointLocation = "case"
-	WORKFLOWENTRYPOINTLOCATION_REPORT      WorkflowEntrypointLocation = "report"
-	WORKFLOWENTRYPOINTLOCATION_APPOINTMENT WorkflowEntrypointLocation = "appointment"
-	WORKFLOWENTRYPOINTLOCATION_HANDOVER    WorkflowEntrypointLocation = "handover"
+	WORKFLOWENTRYPOINTLOCATION_MANUAL           WorkflowEntrypointLocation = "manual"
+	WORKFLOWENTRYPOINTLOCATION_PROPERTY         WorkflowEntrypointLocation = "property"
+	WORKFLOWENTRYPOINTLOCATION_TENANCY          WorkflowEntrypointLocation = "tenancy"
+	WORKFLOWENTRYPOINTLOCATION_TENANT           WorkflowEntrypointLocation = "tenant"
+	WORKFLOWENTRYPOINTLOCATION_CASE             WorkflowEntrypointLocation = "case"
+	WORKFLOWENTRYPOINTLOCATION_REPORT           WorkflowEntrypointLocation = "report"
+	WORKFLOWENTRYPOINTLOCATION_APPOINTMENT      WorkflowEntrypointLocation = "appointment"
+	WORKFLOWENTRYPOINTLOCATION_HANDOVER         WorkflowEntrypointLocation = "handover"
+	WORKFLOWENTRYPOINTLOCATION_SERVICE_PROVIDER WorkflowEntrypointLocation = "service_provider"
 )
 
 // All allowed values of WorkflowEntrypointLocation enum
@@ -40,6 +41,7 @@ var AllowedWorkflowEntrypointLocationEnumValues = []WorkflowEntrypointLocation{
 	"report",
 	"appointment",
 	"handover",
+	"service_provider",
 }
 
 func (v *WorkflowEntrypointLocation) UnmarshalJSON(src []byte) error {
