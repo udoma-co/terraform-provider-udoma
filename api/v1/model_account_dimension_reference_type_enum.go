@@ -22,6 +22,7 @@ type AccountDimensionReferenceTypeEnum string
 const (
 	ACCOUNTDIMENSIONREFERENCETYPEENUM_NONE             AccountDimensionReferenceTypeEnum = "none"
 	ACCOUNTDIMENSIONREFERENCETYPEENUM_OWNER            AccountDimensionReferenceTypeEnum = "owner"
+	ACCOUNTDIMENSIONREFERENCETYPEENUM_OWNERSHIP        AccountDimensionReferenceTypeEnum = "ownership"
 	ACCOUNTDIMENSIONREFERENCETYPEENUM_PROPERTY         AccountDimensionReferenceTypeEnum = "property"
 	ACCOUNTDIMENSIONREFERENCETYPEENUM_SERVICE_PROVIDER AccountDimensionReferenceTypeEnum = "service_provider"
 	ACCOUNTDIMENSIONREFERENCETYPEENUM_TENANT           AccountDimensionReferenceTypeEnum = "tenant"
@@ -32,6 +33,7 @@ const (
 var AllowedAccountDimensionReferenceTypeEnumEnumValues = []AccountDimensionReferenceTypeEnum{
 	"none",
 	"owner",
+	"ownership",
 	"property",
 	"service_provider",
 	"tenant",

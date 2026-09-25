@@ -3600,6 +3600,115 @@ func (a *DefaultAPIService) CreateBookingTemplateExecute(r ApiCreateBookingTempl
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiCreateBookingTemplateScheduleRequest struct {
+	ctx                                          context.Context
+	ApiService                                   *DefaultAPIService
+	createOrUpdateBookingTemplateScheduleRequest *CreateOrUpdateBookingTemplateScheduleRequest
+}
+
+func (r ApiCreateBookingTemplateScheduleRequest) CreateOrUpdateBookingTemplateScheduleRequest(createOrUpdateBookingTemplateScheduleRequest CreateOrUpdateBookingTemplateScheduleRequest) ApiCreateBookingTemplateScheduleRequest {
+	r.createOrUpdateBookingTemplateScheduleRequest = &createOrUpdateBookingTemplateScheduleRequest
+	return r
+}
+
+func (r ApiCreateBookingTemplateScheduleRequest) Execute() (*BookingTemplateSchedule, *http.Response, error) {
+	return r.ApiService.CreateBookingTemplateScheduleExecute(r)
+}
+
+/*
+CreateBookingTemplateSchedule Create a new booking template schedule
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiCreateBookingTemplateScheduleRequest
+*/
+func (a *DefaultAPIService) CreateBookingTemplateSchedule(ctx context.Context) ApiCreateBookingTemplateScheduleRequest {
+	return ApiCreateBookingTemplateScheduleRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return BookingTemplateSchedule
+func (a *DefaultAPIService) CreateBookingTemplateScheduleExecute(r ApiCreateBookingTemplateScheduleRequest) (*BookingTemplateSchedule, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *BookingTemplateSchedule
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateBookingTemplateSchedule")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/financial/booking-template-schedule"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createOrUpdateBookingTemplateScheduleRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdateBookingTemplateScheduleRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrUpdateBookingTemplateScheduleRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiCreateBulkAccountDimensionValuesRequest struct {
 	ctx                                     context.Context
 	ApiService                              *DefaultAPIService
@@ -11121,6 +11230,96 @@ func (a *DefaultAPIService) DeleteBookingTemplateExecute(r ApiDeleteBookingTempl
 
 	localVarPath := localBasePath + "/financial/booking-template/{bookingTemplateID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"bookingTemplateID"+"}", url.PathEscape(parameterValueToString(r.bookingTemplateID, "bookingTemplateID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDeleteBookingTemplateScheduleRequest struct {
+	ctx                       context.Context
+	ApiService                *DefaultAPIService
+	bookingTemplateScheduleID string
+}
+
+func (r ApiDeleteBookingTemplateScheduleRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteBookingTemplateScheduleExecute(r)
+}
+
+/*
+DeleteBookingTemplateSchedule Delete the booking template schedule
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param bookingTemplateScheduleID unique generated ID of a booking template schedule
+	@return ApiDeleteBookingTemplateScheduleRequest
+*/
+func (a *DefaultAPIService) DeleteBookingTemplateSchedule(ctx context.Context, bookingTemplateScheduleID string) ApiDeleteBookingTemplateScheduleRequest {
+	return ApiDeleteBookingTemplateScheduleRequest{
+		ApiService:                a,
+		ctx:                       ctx,
+		bookingTemplateScheduleID: bookingTemplateScheduleID,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DeleteBookingTemplateScheduleExecute(r ApiDeleteBookingTemplateScheduleRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteBookingTemplateSchedule")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/financial/booking-template-schedule/{bookingTemplateScheduleID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"bookingTemplateScheduleID"+"}", url.PathEscape(parameterValueToString(r.bookingTemplateScheduleID, "bookingTemplateScheduleID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -20763,6 +20962,108 @@ func (a *DefaultAPIService) GetBookingTemplateExecute(r ApiGetBookingTemplateReq
 
 	localVarPath := localBasePath + "/financial/booking-template/{bookingTemplateID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"bookingTemplateID"+"}", url.PathEscape(parameterValueToString(r.bookingTemplateID, "bookingTemplateID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetBookingTemplateScheduleRequest struct {
+	ctx                       context.Context
+	ApiService                *DefaultAPIService
+	bookingTemplateScheduleID string
+}
+
+func (r ApiGetBookingTemplateScheduleRequest) Execute() (*BookingTemplateSchedule, *http.Response, error) {
+	return r.ApiService.GetBookingTemplateScheduleExecute(r)
+}
+
+/*
+GetBookingTemplateSchedule Get the booking template schedule with all its attributes
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param bookingTemplateScheduleID unique generated ID of a booking template schedule
+	@return ApiGetBookingTemplateScheduleRequest
+*/
+func (a *DefaultAPIService) GetBookingTemplateSchedule(ctx context.Context, bookingTemplateScheduleID string) ApiGetBookingTemplateScheduleRequest {
+	return ApiGetBookingTemplateScheduleRequest{
+		ApiService:                a,
+		ctx:                       ctx,
+		bookingTemplateScheduleID: bookingTemplateScheduleID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return BookingTemplateSchedule
+func (a *DefaultAPIService) GetBookingTemplateScheduleExecute(r ApiGetBookingTemplateScheduleRequest) (*BookingTemplateSchedule, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *BookingTemplateSchedule
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetBookingTemplateSchedule")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/financial/booking-template-schedule/{bookingTemplateScheduleID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"bookingTemplateScheduleID"+"}", url.PathEscape(parameterValueToString(r.bookingTemplateScheduleID, "bookingTemplateScheduleID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -40891,6 +41192,115 @@ func (a *DefaultAPIService) QueryBookingPreviewsV2Execute(r ApiQueryBookingPrevi
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiQueryBookingTemplateSchedulesRequest struct {
+	ctx                                  context.Context
+	ApiService                           *DefaultAPIService
+	queryBookingTemplateSchedulesRequest *QueryBookingTemplateSchedulesRequest
+}
+
+func (r ApiQueryBookingTemplateSchedulesRequest) QueryBookingTemplateSchedulesRequest(queryBookingTemplateSchedulesRequest QueryBookingTemplateSchedulesRequest) ApiQueryBookingTemplateSchedulesRequest {
+	r.queryBookingTemplateSchedulesRequest = &queryBookingTemplateSchedulesRequest
+	return r
+}
+
+func (r ApiQueryBookingTemplateSchedulesRequest) Execute() ([]BookingTemplateSchedule, *http.Response, error) {
+	return r.ApiService.QueryBookingTemplateSchedulesExecute(r)
+}
+
+/*
+QueryBookingTemplateSchedules Query all booking template schedules
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiQueryBookingTemplateSchedulesRequest
+*/
+func (a *DefaultAPIService) QueryBookingTemplateSchedules(ctx context.Context) ApiQueryBookingTemplateSchedulesRequest {
+	return ApiQueryBookingTemplateSchedulesRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return []BookingTemplateSchedule
+func (a *DefaultAPIService) QueryBookingTemplateSchedulesExecute(r ApiQueryBookingTemplateSchedulesRequest) ([]BookingTemplateSchedule, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []BookingTemplateSchedule
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.QueryBookingTemplateSchedules")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/financial/booking-template-schedules"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.queryBookingTemplateSchedulesRequest == nil {
+		return localVarReturnValue, nil, reportError("queryBookingTemplateSchedulesRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.queryBookingTemplateSchedulesRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiQueryBookingTemplatesRequest struct {
 	ctx                          context.Context
 	ApiService                   *DefaultAPIService
@@ -44221,6 +44631,115 @@ func (a *DefaultAPIService) QueryFinancialAccountsV2Execute(r ApiQueryFinancialA
 	}
 	// body params
 	localVarPostBody = r.queryFinancialAccountsV2Request
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiQueryFinancialDashboardRequest struct {
+	ctx                            context.Context
+	ApiService                     *DefaultAPIService
+	queryFinancialDashboardRequest *QueryFinancialDashboardRequest
+}
+
+func (r ApiQueryFinancialDashboardRequest) QueryFinancialDashboardRequest(queryFinancialDashboardRequest QueryFinancialDashboardRequest) ApiQueryFinancialDashboardRequest {
+	r.queryFinancialDashboardRequest = &queryFinancialDashboardRequest
+	return r
+}
+
+func (r ApiQueryFinancialDashboardRequest) Execute() (*QueryFinancialDashboardResponse, *http.Response, error) {
+	return r.ApiService.QueryFinancialDashboardExecute(r)
+}
+
+/*
+QueryFinancialDashboard Query the financial dashboard for a period
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiQueryFinancialDashboardRequest
+*/
+func (a *DefaultAPIService) QueryFinancialDashboard(ctx context.Context) ApiQueryFinancialDashboardRequest {
+	return ApiQueryFinancialDashboardRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return QueryFinancialDashboardResponse
+func (a *DefaultAPIService) QueryFinancialDashboardExecute(r ApiQueryFinancialDashboardRequest) (*QueryFinancialDashboardResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *QueryFinancialDashboardResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.QueryFinancialDashboard")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/financial/dashboard"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.queryFinancialDashboardRequest == nil {
+		return localVarReturnValue, nil, reportError("queryFinancialDashboardRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.queryFinancialDashboardRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -51148,6 +51667,119 @@ func (a *DefaultAPIService) UpdateBookingTemplateExecute(r ApiUpdateBookingTempl
 	}
 	// body params
 	localVarPostBody = r.createOrUpdateBookingTemplateRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdateBookingTemplateScheduleRequest struct {
+	ctx                                          context.Context
+	ApiService                                   *DefaultAPIService
+	bookingTemplateScheduleID                    string
+	createOrUpdateBookingTemplateScheduleRequest *CreateOrUpdateBookingTemplateScheduleRequest
+}
+
+func (r ApiUpdateBookingTemplateScheduleRequest) CreateOrUpdateBookingTemplateScheduleRequest(createOrUpdateBookingTemplateScheduleRequest CreateOrUpdateBookingTemplateScheduleRequest) ApiUpdateBookingTemplateScheduleRequest {
+	r.createOrUpdateBookingTemplateScheduleRequest = &createOrUpdateBookingTemplateScheduleRequest
+	return r
+}
+
+func (r ApiUpdateBookingTemplateScheduleRequest) Execute() (*BookingTemplateSchedule, *http.Response, error) {
+	return r.ApiService.UpdateBookingTemplateScheduleExecute(r)
+}
+
+/*
+UpdateBookingTemplateSchedule Update an already existing booking template schedule
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param bookingTemplateScheduleID unique generated ID of a booking template schedule
+	@return ApiUpdateBookingTemplateScheduleRequest
+*/
+func (a *DefaultAPIService) UpdateBookingTemplateSchedule(ctx context.Context, bookingTemplateScheduleID string) ApiUpdateBookingTemplateScheduleRequest {
+	return ApiUpdateBookingTemplateScheduleRequest{
+		ApiService:                a,
+		ctx:                       ctx,
+		bookingTemplateScheduleID: bookingTemplateScheduleID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return BookingTemplateSchedule
+func (a *DefaultAPIService) UpdateBookingTemplateScheduleExecute(r ApiUpdateBookingTemplateScheduleRequest) (*BookingTemplateSchedule, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *BookingTemplateSchedule
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdateBookingTemplateSchedule")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/financial/booking-template-schedule/{bookingTemplateScheduleID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"bookingTemplateScheduleID"+"}", url.PathEscape(parameterValueToString(r.bookingTemplateScheduleID, "bookingTemplateScheduleID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createOrUpdateBookingTemplateScheduleRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdateBookingTemplateScheduleRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrUpdateBookingTemplateScheduleRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

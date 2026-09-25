@@ -112,6 +112,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateBankTransaction**](docs/DefaultAPI.md#createbanktransaction) | **Post** /bank-account/{accountID}/bank-transaction | Create a new bank transaction
 *DefaultAPI* | [**CreateBatchProcessingSession**](docs/DefaultAPI.md#createbatchprocessingsession) | **Post** /batch/processing-session | Create a new session for batch processing of entities
 *DefaultAPI* | [**CreateBookingTemplate**](docs/DefaultAPI.md#createbookingtemplate) | **Post** /financial/booking-template | Create a new booking template
+*DefaultAPI* | [**CreateBookingTemplateSchedule**](docs/DefaultAPI.md#createbookingtemplateschedule) | **Post** /financial/booking-template-schedule | Create a new booking template schedule
 *DefaultAPI* | [**CreateBulkAccountDimensionValues**](docs/DefaultAPI.md#createbulkaccountdimensionvalues) | **Post** /financial/account-dimension/{dimensionID}/value/bulk | Create a set of new account dimension values
 *DefaultAPI* | [**CreateCase**](docs/DefaultAPI.md#createcase) | **Post** /case | Create a new case
 *DefaultAPI* | [**CreateCaseReportingEndpoint**](docs/DefaultAPI.md#createcasereportingendpoint) | **Post** /cases/endpoint | Create new case reporting endpoint
@@ -183,6 +184,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteBatchProcessingSession**](docs/DefaultAPI.md#deletebatchprocessingsession) | **Delete** /batch/processing-session/{batchSessionID} | Delete a batch processing session
 *DefaultAPI* | [**DeleteBookingPreview**](docs/DefaultAPI.md#deletebookingpreview) | **Delete** /financial/booking-preview/{bookingPreviewID} | Delete the booking preview
 *DefaultAPI* | [**DeleteBookingTemplate**](docs/DefaultAPI.md#deletebookingtemplate) | **Delete** /financial/booking-template/{bookingTemplateID} | Delete the booking template with all its related data
+*DefaultAPI* | [**DeleteBookingTemplateSchedule**](docs/DefaultAPI.md#deletebookingtemplateschedule) | **Delete** /financial/booking-template-schedule/{bookingTemplateScheduleID} | Delete the booking template schedule
 *DefaultAPI* | [**DeleteCase**](docs/DefaultAPI.md#deletecase) | **Delete** /case/{caseID} | Delete case
 *DefaultAPI* | [**DeleteCaseComment**](docs/DefaultAPI.md#deletecasecomment) | **Delete** /case/{caseID}/comment/{commentID} | Mark a case comment as deleted
 *DefaultAPI* | [**DeleteCaseReportingEndpoint**](docs/DefaultAPI.md#deletecasereportingendpoint) | **Delete** /cases/endpoints/{endpointID} | Delete the case reporting endpoint by ID
@@ -283,6 +285,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetBatchProcessingSession**](docs/DefaultAPI.md#getbatchprocessingsession) | **Get** /batch/processing-session/{batchSessionID} | Get the batch processing session by ID
 *DefaultAPI* | [**GetBookingPreview**](docs/DefaultAPI.md#getbookingpreview) | **Get** /financial/booking-preview/{bookingPreviewID} | Get the booking preview with all its attributes
 *DefaultAPI* | [**GetBookingTemplate**](docs/DefaultAPI.md#getbookingtemplate) | **Get** /financial/booking-template/{bookingTemplateID} | Get the booking template with all its attributes
+*DefaultAPI* | [**GetBookingTemplateSchedule**](docs/DefaultAPI.md#getbookingtemplateschedule) | **Get** /financial/booking-template-schedule/{bookingTemplateScheduleID} | Get the booking template schedule with all its attributes
 *DefaultAPI* | [**GetCase**](docs/DefaultAPI.md#getcase) | **Get** /case/{caseID} | Get case details
 *DefaultAPI* | [**GetCaseComment**](docs/DefaultAPI.md#getcasecomment) | **Get** /case/{caseID}/comment/{commentID} | Get comment details
 *DefaultAPI* | [**GetCaseReportingEndpoint**](docs/DefaultAPI.md#getcasereportingendpoint) | **Get** /cases/endpoints/{endpointID} | Get the case report endpoint by ID
@@ -471,6 +474,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryBatchProcessingSessions**](docs/DefaultAPI.md#querybatchprocessingsessions) | **Post** /batch/processing-sessions | Query batch processing sessions for given criteria
 *DefaultAPI* | [**QueryBookingPreviews**](docs/DefaultAPI.md#querybookingpreviews) | **Post** /financial/booking-previews | Query all booking previews
 *DefaultAPI* | [**QueryBookingPreviewsV2**](docs/DefaultAPI.md#querybookingpreviewsv2) | **Post** /financial/booking-previews-v2 | Query all booking previews
+*DefaultAPI* | [**QueryBookingTemplateSchedules**](docs/DefaultAPI.md#querybookingtemplateschedules) | **Post** /financial/booking-template-schedules | Query all booking template schedules
 *DefaultAPI* | [**QueryBookingTemplates**](docs/DefaultAPI.md#querybookingtemplates) | **Post** /financial/booking-templates | Query all booking templates
 *DefaultAPI* | [**QueryBookingsForAccount**](docs/DefaultAPI.md#querybookingsforaccount) | **Post** /financial/accounts-by-number/{flatNumber}/bookings | Query bookings for the given account
 *DefaultAPI* | [**QueryBookingsForStartEndDate**](docs/DefaultAPI.md#querybookingsforstartenddate) | **Post** /financial/accounts-by-number/{flatNumber}/bookings/date | Get a list of bookings for the given account and time period
@@ -502,6 +506,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryFinancialAccounts**](docs/DefaultAPI.md#queryfinancialaccounts) | **Post** /financial/accounts | Query all financial accounts
 *DefaultAPI* | [**QueryFinancialAccountsForEntity**](docs/DefaultAPI.md#queryfinancialaccountsforentity) | **Post** /financial/account/by-ref | Query financial accounts for a referenced entity
 *DefaultAPI* | [**QueryFinancialAccountsV2**](docs/DefaultAPI.md#queryfinancialaccountsv2) | **Post** /financial/accounts-v2 | Query all financial accounts
+*DefaultAPI* | [**QueryFinancialDashboard**](docs/DefaultAPI.md#queryfinancialdashboard) | **Post** /financial/dashboard | Query the financial dashboard for a period
 *DefaultAPI* | [**QueryGroupSubscriptions**](docs/DefaultAPI.md#querygroupsubscriptions) | **Post** /catalog/group-subscriptions | Query group subscriptions
 *DefaultAPI* | [**QueryHooks**](docs/DefaultAPI.md#queryhooks) | **Post** /hooks | Query hooks
 *DefaultAPI* | [**QueryInvoiceDataMappers**](docs/DefaultAPI.md#queryinvoicedatamappers) | **Post** /invoice-data-mappers | Query invoice data mappers
@@ -566,6 +571,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateBatchProcessingSession**](docs/DefaultAPI.md#updatebatchprocessingsession) | **Put** /batch/processing-session/{batchSessionID} | Update batch processing session
 *DefaultAPI* | [**UpdateBookingPreview**](docs/DefaultAPI.md#updatebookingpreview) | **Put** /financial/booking-preview/{bookingPreviewID} | Update the booking preview with all its attributes
 *DefaultAPI* | [**UpdateBookingTemplate**](docs/DefaultAPI.md#updatebookingtemplate) | **Put** /financial/booking-template/{bookingTemplateID} | Update an already existing booking template
+*DefaultAPI* | [**UpdateBookingTemplateSchedule**](docs/DefaultAPI.md#updatebookingtemplateschedule) | **Put** /financial/booking-template-schedule/{bookingTemplateScheduleID} | Update an already existing booking template schedule
 *DefaultAPI* | [**UpdateCase**](docs/DefaultAPI.md#updatecase) | **Put** /case/{caseID} | Update case
 *DefaultAPI* | [**UpdateCaseReportingEndpoint**](docs/DefaultAPI.md#updatecasereportingendpoint) | **Put** /cases/endpoints/{endpointID} | Update the case reporting endpoint by ID
 *DefaultAPI* | [**UpdateCaseStatus**](docs/DefaultAPI.md#updatecasestatus) | **Post** /case/{caseID}/status | Add new case status
@@ -713,6 +719,8 @@ Class | Method | HTTP request | Description
  - [BookingSourceEnum](docs/BookingSourceEnum.md)
  - [BookingTemplate](docs/BookingTemplate.md)
  - [BookingTemplatePartial](docs/BookingTemplatePartial.md)
+ - [BookingTemplateSchedule](docs/BookingTemplateSchedule.md)
+ - [BookingTemplateSchedulePartial](docs/BookingTemplateSchedulePartial.md)
  - [BookingTypeEnum](docs/BookingTypeEnum.md)
  - [Case](docs/Case.md)
  - [CaseActionEnum](docs/CaseActionEnum.md)
@@ -814,6 +822,7 @@ Class | Method | HTTP request | Description
  - [CreateOrUpdateBankAccountRequest](docs/CreateOrUpdateBankAccountRequest.md)
  - [CreateOrUpdateBankTransactionRequest](docs/CreateOrUpdateBankTransactionRequest.md)
  - [CreateOrUpdateBookingTemplateRequest](docs/CreateOrUpdateBookingTemplateRequest.md)
+ - [CreateOrUpdateBookingTemplateScheduleRequest](docs/CreateOrUpdateBookingTemplateScheduleRequest.md)
  - [CreateOrUpdateCaseReportingEndpointRequest](docs/CreateOrUpdateCaseReportingEndpointRequest.md)
  - [CreateOrUpdateCaseTemplateRequest](docs/CreateOrUpdateCaseTemplateRequest.md)
  - [CreateOrUpdateCatalogGroup](docs/CreateOrUpdateCatalogGroup.md)
@@ -869,6 +878,7 @@ Class | Method | HTTP request | Description
  - [CustomerScript](docs/CustomerScript.md)
  - [CustomerScriptAttributesPartial](docs/CustomerScriptAttributesPartial.md)
  - [CustomerScriptScope](docs/CustomerScriptScope.md)
+ - [DataExportActiveFilter](docs/DataExportActiveFilter.md)
  - [DataExportAlignmentEnum](docs/DataExportAlignmentEnum.md)
  - [DataExportColumn](docs/DataExportColumn.md)
  - [DataExportFormatEnum](docs/DataExportFormatEnum.md)
@@ -927,6 +937,11 @@ Class | Method | HTTP request | Description
  - [FinancialAccount](docs/FinancialAccount.md)
  - [FinancialAccountAttributesPartial](docs/FinancialAccountAttributesPartial.md)
  - [FinancialAccountClassEnum](docs/FinancialAccountClassEnum.md)
+ - [FinancialDashboardPosition](docs/FinancialDashboardPosition.md)
+ - [FinancialDashboardPositionStatusEnum](docs/FinancialDashboardPositionStatusEnum.md)
+ - [FinancialDashboardRevenueType](docs/FinancialDashboardRevenueType.md)
+ - [FinancialDashboardTotals](docs/FinancialDashboardTotals.md)
+ - [FinancialDashboardUnassignedPayments](docs/FinancialDashboardUnassignedPayments.md)
  - [FinancialSubAccount](docs/FinancialSubAccount.md)
  - [FloatNumber](docs/FloatNumber.md)
  - [Form](docs/Form.md)
@@ -948,6 +963,7 @@ Class | Method | HTTP request | Description
  - [GenerateCaseReportingEndpointNoticeRequest](docs/GenerateCaseReportingEndpointNoticeRequest.md)
  - [GenerateDataExportRequest](docs/GenerateDataExportRequest.md)
  - [GenerateSignaturePreviewPDFRequest](docs/GenerateSignaturePreviewPDFRequest.md)
+ - [GeneratedBookings](docs/GeneratedBookings.md)
  - [GetAppointmentInfoResponse](docs/GetAppointmentInfoResponse.md)
  - [GetBankAccountBankNamesResponse](docs/GetBankAccountBankNamesResponse.md)
  - [GetBankConnectionResponse](docs/GetBankConnectionResponse.md)
@@ -1092,6 +1108,7 @@ Class | Method | HTTP request | Description
  - [QueryBookingPreviewsRequest](docs/QueryBookingPreviewsRequest.md)
  - [QueryBookingPreviewsV2Request](docs/QueryBookingPreviewsV2Request.md)
  - [QueryBookingPreviewsV2Response](docs/QueryBookingPreviewsV2Response.md)
+ - [QueryBookingTemplateSchedulesRequest](docs/QueryBookingTemplateSchedulesRequest.md)
  - [QueryBookingTemplatesRequest](docs/QueryBookingTemplatesRequest.md)
  - [QueryBookingsByFlatNumberRequest](docs/QueryBookingsByFlatNumberRequest.md)
  - [QueryBookingsByFlatNumberResponse](docs/QueryBookingsByFlatNumberResponse.md)
@@ -1142,6 +1159,8 @@ Class | Method | HTTP request | Description
  - [QueryFinancialAccountsRequest](docs/QueryFinancialAccountsRequest.md)
  - [QueryFinancialAccountsV2Request](docs/QueryFinancialAccountsV2Request.md)
  - [QueryFinancialAccountsV2Response](docs/QueryFinancialAccountsV2Response.md)
+ - [QueryFinancialDashboardRequest](docs/QueryFinancialDashboardRequest.md)
+ - [QueryFinancialDashboardResponse](docs/QueryFinancialDashboardResponse.md)
  - [QueryHooksRequest](docs/QueryHooksRequest.md)
  - [QueryHooksResponse](docs/QueryHooksResponse.md)
  - [QueryInvoiceDataMappersRequest](docs/QueryInvoiceDataMappersRequest.md)

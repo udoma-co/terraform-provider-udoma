@@ -23,9 +23,11 @@ var _ MappedNullable = &GenerateDataExportRequest{}
 type GenerateDataExportRequest struct {
 	// The title of the exported data set, e.g. the name of the table
 	Title string `json:"title"`
-	// An optional subtitle, which can be used to describe the active search and filter criteria of the exported data set
-	Subtitle *string              `json:"subtitle,omitempty"`
-	Format   DataExportFormatEnum `json:"format"`
+	// An optional subtitle, which can be used to describe the active search and filter criteria of the exported data set. Used when no filter has a non-empty value, which covers both an unset filters field and one whose entries are all empty.
+	Subtitle *string `json:"subtitle,omitempty"`
+	// The active search and filter criteria of the exported data set, in display order. Preferred over subtitle, as it lets the renderer lay the criteria out itself.
+	Filters []DataExportActiveFilter `json:"filters,omitempty"`
+	Format  DataExportFormatEnum     `json:"format"`
 	// An optional file name for the generated file, without the extension. If not set, the name is derived from the title.
 	FileName *string `json:"file_name,omitempty"`
 	// The columns of the exported data set, in display order
@@ -111,6 +113,38 @@ func (o *GenerateDataExportRequest) HasSubtitle() bool {
 // SetSubtitle gets a reference to the given string and assigns it to the Subtitle field.
 func (o *GenerateDataExportRequest) SetSubtitle(v string) {
 	o.Subtitle = &v
+}
+
+// GetFilters returns the Filters field value if set, zero value otherwise.
+func (o *GenerateDataExportRequest) GetFilters() []DataExportActiveFilter {
+	if o == nil || IsNil(o.Filters) {
+		var ret []DataExportActiveFilter
+		return ret
+	}
+	return o.Filters
+}
+
+// GetFiltersOk returns a tuple with the Filters field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GenerateDataExportRequest) GetFiltersOk() ([]DataExportActiveFilter, bool) {
+	if o == nil || IsNil(o.Filters) {
+		return nil, false
+	}
+	return o.Filters, true
+}
+
+// HasFilters returns a boolean if a field has been set.
+func (o *GenerateDataExportRequest) HasFilters() bool {
+	if o != nil && !IsNil(o.Filters) {
+		return true
+	}
+
+	return false
+}
+
+// SetFilters gets a reference to the given []DataExportActiveFilter and assigns it to the Filters field.
+func (o *GenerateDataExportRequest) SetFilters(v []DataExportActiveFilter) {
+	o.Filters = v
 }
 
 // GetFormat returns the Format field value
@@ -230,6 +264,9 @@ func (o GenerateDataExportRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize["title"] = o.Title
 	if !IsNil(o.Subtitle) {
 		toSerialize["subtitle"] = o.Subtitle
+	}
+	if !IsNil(o.Filters) {
+		toSerialize["filters"] = o.Filters
 	}
 	toSerialize["format"] = o.Format
 	if !IsNil(o.FileName) {

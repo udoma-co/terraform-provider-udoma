@@ -76,14 +76,7 @@ func (hook *Hook) Schema(ctx context.Context, req resource.SchemaRequest, resp *
 				Required:    true,
 				Description: "The type of entity the hook is targeting",
 				Validators: []validator.String{
-					stringvalidator.OneOf(
-						"BANK_ACCOUNT",
-						"PROPERTY",
-						"PROPERTY_OWNER",
-						"TENANT",
-						"TENANCY",
-						"SERVICE_PROVIDER",
-					),
+					stringvalidator.OneOf(stringSlice(api.AllowedHookEntityEnumValues)...),
 				},
 			},
 			"run_on_create": schema.BoolAttribute{
