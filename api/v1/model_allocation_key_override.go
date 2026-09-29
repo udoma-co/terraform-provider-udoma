@@ -19,7 +19,7 @@ import (
 // checks if the AllocationKeyOverride type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &AllocationKeyOverride{}
 
-// AllocationKeyOverride Overrides the default allocation key (or uses a fixed amount) for a specific cost type, property, and fiscal year.
+// AllocationKeyOverride Overrides the default allocation key, uses a fixed amount or a ratio for a specific cost type, property and period.
 type AllocationKeyOverride struct {
 	// Unique and immutable ID attribute of the entity that is generated when the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities or to retrieve it from the backend.
 	Id string `json:"id"`
@@ -31,14 +31,21 @@ type AllocationKeyOverride struct {
 	CostTypeRef string `json:"cost_type_ref"`
 	// ID of the property this override applies to.
 	PropertyRef string `json:"property_ref"`
-	// ID of the property fiscal year this override is valid for.
-	FiscalYearRef string `json:"fiscal_year_ref"`
+	// First day the override is valid (timestamp in milliseconds, only the calendar day counts).
+	ValidFrom int64 `json:"valid_from"`
+	// Optional last day the override is valid (inclusive). If omitted, the override is valid indefinitely. Overrides of the same cost type and unit must not overlap.
+	ValidTo *int64 `json:"valid_to,omitempty"`
 	// Optional ID of the specific unit (child property) within the property that this override applies to. If omitted, the override applies to the property as a whole.
 	UnitRef *string `json:"unit_ref,omitempty"`
 	// Optional allocation key to use instead of the default.
-	AllocationKeyRef *string `json:"allocation_key_ref,omitempty"`
-	// Optional fixed amount (in cents) instead of any key.
+	AllocationKeyRef *string                        `json:"allocation_key_ref,omitempty"`
+	Mode             *AllocationKeyOverrideModeEnum `json:"mode,omitempty"`
+	// Mode `ABSOLUTE`: optional fixed amount (in cents) instead of any key. The amount is charged in full for every fiscal year the override is valid in.
 	AbsoluteAmount *int64 `json:"absolute_amount,omitempty"`
+	// Mode `RATIO`: the quantity of the unit, e.g. 5 of 15 bins.
+	Quantity *float64 `json:"quantity,omitempty"`
+	// Mode `RATIO`: the total quantity the unit's quantity relates to, e.g. 15 bins. The unit bears `quantity / total_quantity` of the cost type.
+	TotalQuantity *float64 `json:"total_quantity,omitempty"`
 }
 
 type _AllocationKeyOverride AllocationKeyOverride
@@ -47,14 +54,14 @@ type _AllocationKeyOverride AllocationKeyOverride
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAllocationKeyOverride(id string, createdAt int64, updatedAt int64, costTypeRef string, propertyRef string, fiscalYearRef string) *AllocationKeyOverride {
+func NewAllocationKeyOverride(id string, createdAt int64, updatedAt int64, costTypeRef string, propertyRef string, validFrom int64) *AllocationKeyOverride {
 	this := AllocationKeyOverride{}
 	this.Id = id
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
 	this.CostTypeRef = costTypeRef
 	this.PropertyRef = propertyRef
-	this.FiscalYearRef = fiscalYearRef
+	this.ValidFrom = validFrom
 	return &this
 }
 
@@ -186,28 +193,60 @@ func (o *AllocationKeyOverride) SetPropertyRef(v string) {
 	o.PropertyRef = v
 }
 
-// GetFiscalYearRef returns the FiscalYearRef field value
-func (o *AllocationKeyOverride) GetFiscalYearRef() string {
+// GetValidFrom returns the ValidFrom field value
+func (o *AllocationKeyOverride) GetValidFrom() int64 {
 	if o == nil {
-		var ret string
+		var ret int64
 		return ret
 	}
 
-	return o.FiscalYearRef
+	return o.ValidFrom
 }
 
-// GetFiscalYearRefOk returns a tuple with the FiscalYearRef field value
+// GetValidFromOk returns a tuple with the ValidFrom field value
 // and a boolean to check if the value has been set.
-func (o *AllocationKeyOverride) GetFiscalYearRefOk() (*string, bool) {
+func (o *AllocationKeyOverride) GetValidFromOk() (*int64, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.FiscalYearRef, true
+	return &o.ValidFrom, true
 }
 
-// SetFiscalYearRef sets field value
-func (o *AllocationKeyOverride) SetFiscalYearRef(v string) {
-	o.FiscalYearRef = v
+// SetValidFrom sets field value
+func (o *AllocationKeyOverride) SetValidFrom(v int64) {
+	o.ValidFrom = v
+}
+
+// GetValidTo returns the ValidTo field value if set, zero value otherwise.
+func (o *AllocationKeyOverride) GetValidTo() int64 {
+	if o == nil || IsNil(o.ValidTo) {
+		var ret int64
+		return ret
+	}
+	return *o.ValidTo
+}
+
+// GetValidToOk returns a tuple with the ValidTo field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AllocationKeyOverride) GetValidToOk() (*int64, bool) {
+	if o == nil || IsNil(o.ValidTo) {
+		return nil, false
+	}
+	return o.ValidTo, true
+}
+
+// HasValidTo returns a boolean if a field has been set.
+func (o *AllocationKeyOverride) HasValidTo() bool {
+	if o != nil && !IsNil(o.ValidTo) {
+		return true
+	}
+
+	return false
+}
+
+// SetValidTo gets a reference to the given int64 and assigns it to the ValidTo field.
+func (o *AllocationKeyOverride) SetValidTo(v int64) {
+	o.ValidTo = &v
 }
 
 // GetUnitRef returns the UnitRef field value if set, zero value otherwise.
@@ -274,6 +313,38 @@ func (o *AllocationKeyOverride) SetAllocationKeyRef(v string) {
 	o.AllocationKeyRef = &v
 }
 
+// GetMode returns the Mode field value if set, zero value otherwise.
+func (o *AllocationKeyOverride) GetMode() AllocationKeyOverrideModeEnum {
+	if o == nil || IsNil(o.Mode) {
+		var ret AllocationKeyOverrideModeEnum
+		return ret
+	}
+	return *o.Mode
+}
+
+// GetModeOk returns a tuple with the Mode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AllocationKeyOverride) GetModeOk() (*AllocationKeyOverrideModeEnum, bool) {
+	if o == nil || IsNil(o.Mode) {
+		return nil, false
+	}
+	return o.Mode, true
+}
+
+// HasMode returns a boolean if a field has been set.
+func (o *AllocationKeyOverride) HasMode() bool {
+	if o != nil && !IsNil(o.Mode) {
+		return true
+	}
+
+	return false
+}
+
+// SetMode gets a reference to the given AllocationKeyOverrideModeEnum and assigns it to the Mode field.
+func (o *AllocationKeyOverride) SetMode(v AllocationKeyOverrideModeEnum) {
+	o.Mode = &v
+}
+
 // GetAbsoluteAmount returns the AbsoluteAmount field value if set, zero value otherwise.
 func (o *AllocationKeyOverride) GetAbsoluteAmount() int64 {
 	if o == nil || IsNil(o.AbsoluteAmount) {
@@ -306,6 +377,70 @@ func (o *AllocationKeyOverride) SetAbsoluteAmount(v int64) {
 	o.AbsoluteAmount = &v
 }
 
+// GetQuantity returns the Quantity field value if set, zero value otherwise.
+func (o *AllocationKeyOverride) GetQuantity() float64 {
+	if o == nil || IsNil(o.Quantity) {
+		var ret float64
+		return ret
+	}
+	return *o.Quantity
+}
+
+// GetQuantityOk returns a tuple with the Quantity field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AllocationKeyOverride) GetQuantityOk() (*float64, bool) {
+	if o == nil || IsNil(o.Quantity) {
+		return nil, false
+	}
+	return o.Quantity, true
+}
+
+// HasQuantity returns a boolean if a field has been set.
+func (o *AllocationKeyOverride) HasQuantity() bool {
+	if o != nil && !IsNil(o.Quantity) {
+		return true
+	}
+
+	return false
+}
+
+// SetQuantity gets a reference to the given float64 and assigns it to the Quantity field.
+func (o *AllocationKeyOverride) SetQuantity(v float64) {
+	o.Quantity = &v
+}
+
+// GetTotalQuantity returns the TotalQuantity field value if set, zero value otherwise.
+func (o *AllocationKeyOverride) GetTotalQuantity() float64 {
+	if o == nil || IsNil(o.TotalQuantity) {
+		var ret float64
+		return ret
+	}
+	return *o.TotalQuantity
+}
+
+// GetTotalQuantityOk returns a tuple with the TotalQuantity field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AllocationKeyOverride) GetTotalQuantityOk() (*float64, bool) {
+	if o == nil || IsNil(o.TotalQuantity) {
+		return nil, false
+	}
+	return o.TotalQuantity, true
+}
+
+// HasTotalQuantity returns a boolean if a field has been set.
+func (o *AllocationKeyOverride) HasTotalQuantity() bool {
+	if o != nil && !IsNil(o.TotalQuantity) {
+		return true
+	}
+
+	return false
+}
+
+// SetTotalQuantity gets a reference to the given float64 and assigns it to the TotalQuantity field.
+func (o *AllocationKeyOverride) SetTotalQuantity(v float64) {
+	o.TotalQuantity = &v
+}
+
 func (o AllocationKeyOverride) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -321,15 +456,27 @@ func (o AllocationKeyOverride) ToMap() (map[string]interface{}, error) {
 	toSerialize["updated_at"] = o.UpdatedAt
 	toSerialize["cost_type_ref"] = o.CostTypeRef
 	toSerialize["property_ref"] = o.PropertyRef
-	toSerialize["fiscal_year_ref"] = o.FiscalYearRef
+	toSerialize["valid_from"] = o.ValidFrom
+	if !IsNil(o.ValidTo) {
+		toSerialize["valid_to"] = o.ValidTo
+	}
 	if !IsNil(o.UnitRef) {
 		toSerialize["unit_ref"] = o.UnitRef
 	}
 	if !IsNil(o.AllocationKeyRef) {
 		toSerialize["allocation_key_ref"] = o.AllocationKeyRef
 	}
+	if !IsNil(o.Mode) {
+		toSerialize["mode"] = o.Mode
+	}
 	if !IsNil(o.AbsoluteAmount) {
 		toSerialize["absolute_amount"] = o.AbsoluteAmount
+	}
+	if !IsNil(o.Quantity) {
+		toSerialize["quantity"] = o.Quantity
+	}
+	if !IsNil(o.TotalQuantity) {
+		toSerialize["total_quantity"] = o.TotalQuantity
 	}
 	return toSerialize, nil
 }
@@ -344,7 +491,7 @@ func (o *AllocationKeyOverride) UnmarshalJSON(data []byte) (err error) {
 		"updated_at",
 		"cost_type_ref",
 		"property_ref",
-		"fiscal_year_ref",
+		"valid_from",
 	}
 
 	allProperties := make(map[string]interface{})

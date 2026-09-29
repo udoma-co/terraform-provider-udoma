@@ -31,12 +31,13 @@ type AnnualStatementCostItem struct {
 	// The allocation key used to distribute the costs, either the building override for the fiscal year or the default key of the cost type.
 	AllocationKeyRef *string `json:"allocation_key_ref,omitempty"`
 	// The name of the allocation key at the time of the preparation.
-	AllocationKeyName *string `json:"allocation_key_name,omitempty"`
+	AllocationKeyName *string                `json:"allocation_key_name,omitempty"`
+	AllocationKeyType *AllocationKeyTypeEnum `json:"allocation_key_type,omitempty"`
 	// The total costs of the cost type booked for the building.
 	TotalAmount float64 `json:"total_amount"`
 	// The part of the total costs booked directly on a unit, which is assigned to that unit only and not distributed.
 	DirectAmount *float64 `json:"direct_amount,omitempty"`
-	// The sum of the allocation quantities of all units, e.g. the total co-ownership shares or the total area.
+	// The sum of the allocation quantities of all units, e.g. the total co-ownership shares or the total area. For keys of the type `QUANTITY`, the total quantity-days of all units.
 	TotalQuantity *float64 `json:"total_quantity,omitempty"`
 	// The part of the total costs that could not be assigned to any owner, e.g. because a unit has no owner for a part of the fiscal year.
 	UnallocatedAmount *float64 `json:"unallocated_amount,omitempty"`
@@ -247,6 +248,38 @@ func (o *AnnualStatementCostItem) SetAllocationKeyName(v string) {
 	o.AllocationKeyName = &v
 }
 
+// GetAllocationKeyType returns the AllocationKeyType field value if set, zero value otherwise.
+func (o *AnnualStatementCostItem) GetAllocationKeyType() AllocationKeyTypeEnum {
+	if o == nil || IsNil(o.AllocationKeyType) {
+		var ret AllocationKeyTypeEnum
+		return ret
+	}
+	return *o.AllocationKeyType
+}
+
+// GetAllocationKeyTypeOk returns a tuple with the AllocationKeyType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AnnualStatementCostItem) GetAllocationKeyTypeOk() (*AllocationKeyTypeEnum, bool) {
+	if o == nil || IsNil(o.AllocationKeyType) {
+		return nil, false
+	}
+	return o.AllocationKeyType, true
+}
+
+// HasAllocationKeyType returns a boolean if a field has been set.
+func (o *AnnualStatementCostItem) HasAllocationKeyType() bool {
+	if o != nil && !IsNil(o.AllocationKeyType) {
+		return true
+	}
+
+	return false
+}
+
+// SetAllocationKeyType gets a reference to the given AllocationKeyTypeEnum and assigns it to the AllocationKeyType field.
+func (o *AnnualStatementCostItem) SetAllocationKeyType(v AllocationKeyTypeEnum) {
+	o.AllocationKeyType = &v
+}
+
 // GetTotalAmount returns the TotalAmount field value
 func (o *AnnualStatementCostItem) GetTotalAmount() float64 {
 	if o == nil {
@@ -392,6 +425,9 @@ func (o AnnualStatementCostItem) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.AllocationKeyName) {
 		toSerialize["allocation_key_name"] = o.AllocationKeyName
+	}
+	if !IsNil(o.AllocationKeyType) {
+		toSerialize["allocation_key_type"] = o.AllocationKeyType
 	}
 	toSerialize["total_amount"] = o.TotalAmount
 	if !IsNil(o.DirectAmount) {

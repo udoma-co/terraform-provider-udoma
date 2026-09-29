@@ -21,8 +21,11 @@ Resource represents how a shared cost is distributed across properties or units.
 
 ### Optional
 
+- `attribute` (String) Only for the type `ATTRIBUTE`: the unit attribute the costs are distributed by (`MEA`, `AREA`, `HEATING_AREA`, `ROOMS` or `UNITS`).
 - `description` (String) Optional explanation of the allocation key.
-- `formula` (String) Pseudocode or mathematical expression defining how costs are distributed.
+- `formula` (String) Only for the type `FORMULA`: JavaScript expression defining how costs are distributed. All keys of the type `QUANTITY` are available as `quantities.<identifier>`.
+- `identifier` (String) Only for the type `QUANTITY`: the name under which the quantity-days of the key are available in formulas as `quantities.<identifier>`. Derived from the name if omitted.
+- `type` (String) How the allocation quantities of the units are determined: `ATTRIBUTE` (a predefined unit attribute), `QUANTITY` (quantities recorded per unit and period), `CONSUMPTION_USAGE` (proportionally to the recorded consumption), `CONSUMPTION_AMOUNT` (the recorded consumption amounts charged directly) or `FORMULA` (a JavaScript formula, the default).
 
 ### Read-Only
 

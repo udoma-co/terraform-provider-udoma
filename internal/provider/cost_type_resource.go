@@ -39,6 +39,7 @@ type CostTypeModel struct {
 	IsFixed           types.Bool   `tfsdk:"is_fixed"`
 	TenantBillingRate types.Int32  `tfsdk:"tenant_billing_rate"`
 	Category          types.String `tfsdk:"category"`
+	AllocationKeyRef  types.String `tfsdk:"allocation_key_ref"`
 	IsCatalogItem     types.Bool   `tfsdk:"is_catalog_item"`
 }
 
@@ -90,6 +91,10 @@ func (ct *CostType) Schema(ctx context.Context, req resource.SchemaRequest, resp
 				Validators: []validator.String{
 					stringvalidator.OneOf(stringSlice(api.AllowedCostTypeCategoryEnumEnumValues)...),
 				},
+			},
+			"allocation_key_ref": schema.StringAttribute{
+				Optional:            true,
+				MarkdownDescription: "Optional ID of the default allocation key used to distribute the costs of this cost type, unless a building overrides it.",
 			},
 			"is_catalog_item": schema.BoolAttribute{
 				Computed:            true,
@@ -260,6 +265,7 @@ func (model *CostTypeModel) fromAPI(costType *api.CostType) (diags diag.Diagnost
 	model.Description = omittableStringValue(costType.Description, model.Description)
 	model.IsFixed = omittableBooleanValue(costType.IsFixed, model.IsFixed)
 	model.TenantBillingRate = omittableInt32Value(costType.TenantBillingRate, model.TenantBillingRate)
+	model.AllocationKeyRef = omittableStringValue(costType.AllocationKeyRef, model.AllocationKeyRef)
 	model.IsCatalogItem = types.BoolPointerValue(costType.IsCatalogItem)
 
 	return
@@ -272,6 +278,7 @@ func (model *CostTypeModel) toAPIRequest() (api.CreateOrUpdateCostTypeRequest, e
 		Description:       model.Description.ValueStringPointer(),
 		IsFixed:           model.IsFixed.ValueBoolPointer(),
 		TenantBillingRate: model.TenantBillingRate.ValueInt32Pointer(),
+		AllocationKeyRef:  model.AllocationKeyRef.ValueStringPointer(),
 	}
 
 	return req, nil

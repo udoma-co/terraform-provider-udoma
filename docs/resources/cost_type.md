@@ -22,6 +22,7 @@ Resource represents a cost type used for categorizing costs in operating cost st
 
 ### Optional
 
+- `allocation_key_ref` (String) Optional ID of the default allocation key used to distribute the costs of this cost type, unless a building overrides it.
 - `description` (String) An optional description of the cost type
 - `is_fixed` (Boolean) If true, this cost is fixed (not dependent on actual usage). If false, the cost is variable.
 - `tenant_billing_rate` (Number) The percentage (0-100) of this cost that will be billed to tenants.

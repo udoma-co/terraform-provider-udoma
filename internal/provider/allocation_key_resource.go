@@ -36,6 +36,9 @@ type AllocationKeyModel struct {
 	UpdatedAt     types.Int64  `tfsdk:"updated_at"`
 	Name          types.String `tfsdk:"name"`
 	Description   types.String `tfsdk:"description"`
+	Type          types.String `tfsdk:"type"`
+	Attribute     types.String `tfsdk:"attribute"`
+	Identifier    types.String `tfsdk:"identifier"`
 	Formula       types.String `tfsdk:"formula"`
 	IsCatalogItem types.Bool   `tfsdk:"is_catalog_item"`
 }
@@ -74,9 +77,35 @@ func (ak *AllocationKey) Schema(ctx context.Context, req resource.SchemaRequest,
 				Optional:            true,
 				MarkdownDescription: "Optional explanation of the allocation key.",
 			},
+			"type": schema.StringAttribute{
+				Optional:            true,
+				Computed:            true,
+				MarkdownDescription: "How the allocation quantities of the units are determined: `ATTRIBUTE` (a predefined unit attribute), `QUANTITY` (quantities recorded per unit and period), `CONSUMPTION_USAGE` (proportionally to the recorded consumption), `CONSUMPTION_AMOUNT` (the recorded consumption amounts charged directly) or `FORMULA` (a JavaScript formula, the default).",
+				Validators: []validator.String{
+					stringvalidator.OneOf(stringSlice(api.AllowedAllocationKeyTypeEnumEnumValues)...),
+				},
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.UseStateForUnknown(),
+				},
+			},
+			"attribute": schema.StringAttribute{
+				Optional:            true,
+				MarkdownDescription: "Only for the type `ATTRIBUTE`: the unit attribute the costs are distributed by (`MEA`, `AREA`, `HEATING_AREA`, `ROOMS` or `UNITS`).",
+				Validators: []validator.String{
+					stringvalidator.OneOf(stringSlice(api.AllowedAllocationKeyAttributeEnumEnumValues)...),
+				},
+			},
+			"identifier": schema.StringAttribute{
+				Optional:            true,
+				Computed:            true,
+				MarkdownDescription: "Only for the type `QUANTITY`: the name under which the quantity-days of the key are available in formulas as `quantities.<identifier>`. Derived from the name if omitted.",
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.UseStateForUnknown(),
+				},
+			},
 			"formula": schema.StringAttribute{
 				Optional:            true,
-				MarkdownDescription: "Pseudocode or mathematical expression defining how costs are distributed.",
+				MarkdownDescription: "Only for the type `FORMULA`: JavaScript expression defining how costs are distributed. All keys of the type `QUANTITY` are available as `quantities.<identifier>`.",
 			},
 			"is_catalog_item": schema.BoolAttribute{
 				Computed:            true,
@@ -239,6 +268,15 @@ func (model *AllocationKeyModel) fromAPI(allocationKey *api.AllocationKey) (diag
 	model.Name = types.StringValue(allocationKey.Name)
 	model.Description = omittableStringValue(allocationKey.Description, model.Description)
 	model.Formula = omittableStringValue(allocationKey.Formula, model.Formula)
+	model.Type = types.StringNull()
+	if allocationKey.Type != nil {
+		model.Type = types.StringValue(string(*allocationKey.Type))
+	}
+	model.Attribute = types.StringNull()
+	if allocationKey.Attribute != nil {
+		model.Attribute = types.StringValue(string(*allocationKey.Attribute))
+	}
+	model.Identifier = types.StringPointerValue(allocationKey.Identifier)
 	model.IsCatalogItem = types.BoolPointerValue(allocationKey.IsCatalogItem)
 
 	return
@@ -249,6 +287,15 @@ func (model *AllocationKeyModel) toAPIRequest() (api.CreateOrUpdateAllocationKey
 		Name:        model.Name.ValueString(),
 		Description: model.Description.ValueStringPointer(),
 		Formula:     model.Formula.ValueStringPointer(),
+		Identifier:  model.Identifier.ValueStringPointer(),
+	}
+	if !model.Type.IsNull() && !model.Type.IsUnknown() {
+		keyType := api.AllocationKeyTypeEnum(model.Type.ValueString())
+		req.Type = &keyType
+	}
+	if !model.Attribute.IsNull() && !model.Attribute.IsUnknown() {
+		attribute := api.AllocationKeyAttributeEnum(model.Attribute.ValueString())
+		req.Attribute = &attribute
 	}
 
 	return req, nil
