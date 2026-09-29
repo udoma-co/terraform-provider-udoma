@@ -21,6 +21,8 @@ var _ MappedNullable = &AllocationQuantityRequirements{}
 type AllocationQuantityRequirements struct {
 	FiscalYearDays *int32                          `json:"fiscal_year_days,omitempty"`
 	Requirements   []AllocationQuantityRequirement `json:"requirements,omitempty"`
+	// The cost types that need consumption records.
+	Consumptions []AllocationConsumptionRequirement `json:"consumptions,omitempty"`
 	// Allocation keys of the type `QUANTITY` with quantities recorded for units of the building that no cost type uses in the fiscal year.
 	UnusedKeys []AllocationQuantityRequirement `json:"unused_keys,omitempty"`
 }
@@ -106,6 +108,38 @@ func (o *AllocationQuantityRequirements) SetRequirements(v []AllocationQuantityR
 	o.Requirements = v
 }
 
+// GetConsumptions returns the Consumptions field value if set, zero value otherwise.
+func (o *AllocationQuantityRequirements) GetConsumptions() []AllocationConsumptionRequirement {
+	if o == nil || IsNil(o.Consumptions) {
+		var ret []AllocationConsumptionRequirement
+		return ret
+	}
+	return o.Consumptions
+}
+
+// GetConsumptionsOk returns a tuple with the Consumptions field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AllocationQuantityRequirements) GetConsumptionsOk() ([]AllocationConsumptionRequirement, bool) {
+	if o == nil || IsNil(o.Consumptions) {
+		return nil, false
+	}
+	return o.Consumptions, true
+}
+
+// HasConsumptions returns a boolean if a field has been set.
+func (o *AllocationQuantityRequirements) HasConsumptions() bool {
+	if o != nil && !IsNil(o.Consumptions) {
+		return true
+	}
+
+	return false
+}
+
+// SetConsumptions gets a reference to the given []AllocationConsumptionRequirement and assigns it to the Consumptions field.
+func (o *AllocationQuantityRequirements) SetConsumptions(v []AllocationConsumptionRequirement) {
+	o.Consumptions = v
+}
+
 // GetUnusedKeys returns the UnusedKeys field value if set, zero value otherwise.
 func (o *AllocationQuantityRequirements) GetUnusedKeys() []AllocationQuantityRequirement {
 	if o == nil || IsNil(o.UnusedKeys) {
@@ -153,6 +187,9 @@ func (o AllocationQuantityRequirements) ToMap() (map[string]interface{}, error) 
 	}
 	if !IsNil(o.Requirements) {
 		toSerialize["requirements"] = o.Requirements
+	}
+	if !IsNil(o.Consumptions) {
+		toSerialize["consumptions"] = o.Consumptions
 	}
 	if !IsNil(o.UnusedKeys) {
 		toSerialize["unused_keys"] = o.UnusedKeys

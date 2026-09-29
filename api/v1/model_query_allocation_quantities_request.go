@@ -20,7 +20,7 @@ var _ MappedNullable = &QueryAllocationQuantitiesRequest{}
 // QueryAllocationQuantitiesRequest struct for QueryAllocationQuantitiesRequest
 type QueryAllocationQuantitiesRequest struct {
 	AllocationKeyRef *string `json:"allocation_key_ref,omitempty"`
-	// ID of a unit.
+	// ID of a unit or a building. For a building, the quantities of its units are returned.
 	PropertyRef *string `json:"property_ref,omitempty"`
 }
 

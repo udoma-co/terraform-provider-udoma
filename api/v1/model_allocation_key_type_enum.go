@@ -15,20 +15,24 @@ import (
 	"fmt"
 )
 
-// AllocationKeyTypeEnum How the allocation quantities of the units are determined. `ATTRIBUTE` uses a predefined attribute of the unit, `QUANTITY` uses the quantities recorded per unit and time period (see `AllocationQuantity`) and `FORMULA` evaluates a JavaScript formula.
+// AllocationKeyTypeEnum How the allocation quantities of the units are determined. `ATTRIBUTE` uses a predefined attribute of the unit, `QUANTITY` uses the quantities recorded per unit and time period (see `AllocationQuantity`), `CONSUMPTION_USAGE` distributes the costs proportionally to the measured usage (`value`) of the consumption records of the units for the cost type, `CONSUMPTION_AMOUNT` charges each unit the `total_amount` of its consumption records directly (the difference to the costs of the cost type is not allocated and reported as a warning) and `FORMULA` evaluates a JavaScript formula.
 type AllocationKeyTypeEnum string
 
 // List of AllocationKeyTypeEnum
 const (
-	ALLOCATIONKEYTYPEENUM_ATTRIBUTE AllocationKeyTypeEnum = "ATTRIBUTE"
-	ALLOCATIONKEYTYPEENUM_QUANTITY  AllocationKeyTypeEnum = "QUANTITY"
-	ALLOCATIONKEYTYPEENUM_FORMULA   AllocationKeyTypeEnum = "FORMULA"
+	ALLOCATIONKEYTYPEENUM_ATTRIBUTE          AllocationKeyTypeEnum = "ATTRIBUTE"
+	ALLOCATIONKEYTYPEENUM_QUANTITY           AllocationKeyTypeEnum = "QUANTITY"
+	ALLOCATIONKEYTYPEENUM_CONSUMPTION_USAGE  AllocationKeyTypeEnum = "CONSUMPTION_USAGE"
+	ALLOCATIONKEYTYPEENUM_CONSUMPTION_AMOUNT AllocationKeyTypeEnum = "CONSUMPTION_AMOUNT"
+	ALLOCATIONKEYTYPEENUM_FORMULA            AllocationKeyTypeEnum = "FORMULA"
 )
 
 // All allowed values of AllocationKeyTypeEnum enum
 var AllowedAllocationKeyTypeEnumEnumValues = []AllocationKeyTypeEnum{
 	"ATTRIBUTE",
 	"QUANTITY",
+	"CONSUMPTION_USAGE",
+	"CONSUMPTION_AMOUNT",
 	"FORMULA",
 }
 

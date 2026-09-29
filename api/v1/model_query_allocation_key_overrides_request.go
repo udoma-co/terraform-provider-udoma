@@ -22,8 +22,6 @@ var _ MappedNullable = &QueryAllocationKeyOverridesRequest{}
 // QueryAllocationKeyOverridesRequest struct for QueryAllocationKeyOverridesRequest
 type QueryAllocationKeyOverridesRequest struct {
 	PropertyRef string `json:"property_ref"`
-	// Optional, only return the overrides valid during the fiscal year.
-	FiscalYearRef *string `json:"fiscal_year_ref,omitempty"`
 }
 
 type _QueryAllocationKeyOverridesRequest QueryAllocationKeyOverridesRequest
@@ -70,38 +68,6 @@ func (o *QueryAllocationKeyOverridesRequest) SetPropertyRef(v string) {
 	o.PropertyRef = v
 }
 
-// GetFiscalYearRef returns the FiscalYearRef field value if set, zero value otherwise.
-func (o *QueryAllocationKeyOverridesRequest) GetFiscalYearRef() string {
-	if o == nil || IsNil(o.FiscalYearRef) {
-		var ret string
-		return ret
-	}
-	return *o.FiscalYearRef
-}
-
-// GetFiscalYearRefOk returns a tuple with the FiscalYearRef field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *QueryAllocationKeyOverridesRequest) GetFiscalYearRefOk() (*string, bool) {
-	if o == nil || IsNil(o.FiscalYearRef) {
-		return nil, false
-	}
-	return o.FiscalYearRef, true
-}
-
-// HasFiscalYearRef returns a boolean if a field has been set.
-func (o *QueryAllocationKeyOverridesRequest) HasFiscalYearRef() bool {
-	if o != nil && !IsNil(o.FiscalYearRef) {
-		return true
-	}
-
-	return false
-}
-
-// SetFiscalYearRef gets a reference to the given string and assigns it to the FiscalYearRef field.
-func (o *QueryAllocationKeyOverridesRequest) SetFiscalYearRef(v string) {
-	o.FiscalYearRef = &v
-}
-
 func (o QueryAllocationKeyOverridesRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -113,9 +79,6 @@ func (o QueryAllocationKeyOverridesRequest) MarshalJSON() ([]byte, error) {
 func (o QueryAllocationKeyOverridesRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["property_ref"] = o.PropertyRef
-	if !IsNil(o.FiscalYearRef) {
-		toSerialize["fiscal_year_ref"] = o.FiscalYearRef
-	}
 	return toSerialize, nil
 }
 

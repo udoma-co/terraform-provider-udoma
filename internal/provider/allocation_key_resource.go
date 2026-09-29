@@ -80,7 +80,7 @@ func (ak *AllocationKey) Schema(ctx context.Context, req resource.SchemaRequest,
 			"type": schema.StringAttribute{
 				Optional:            true,
 				Computed:            true,
-				MarkdownDescription: "How the allocation quantities of the units are determined: `ATTRIBUTE` (a predefined unit attribute), `QUANTITY` (quantities recorded per unit and period) or `FORMULA` (a JavaScript formula, the default).",
+				MarkdownDescription: "How the allocation quantities of the units are determined: `ATTRIBUTE` (a predefined unit attribute), `QUANTITY` (quantities recorded per unit and period), `CONSUMPTION_USAGE` (proportionally to the recorded consumption), `CONSUMPTION_AMOUNT` (the recorded consumption amounts charged directly) or `FORMULA` (a JavaScript formula, the default).",
 				Validators: []validator.String{
 					stringvalidator.OneOf(stringSlice(api.AllowedAllocationKeyTypeEnumEnumValues)...),
 				},

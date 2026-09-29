@@ -673,6 +673,7 @@ Class | Method | HTTP request | Description
  - [AddBadgeForEntityRequest](docs/AddBadgeForEntityRequest.md)
  - [AdditionalRentCost](docs/AdditionalRentCost.md)
  - [Address](docs/Address.md)
+ - [AllocationConsumptionRequirement](docs/AllocationConsumptionRequirement.md)
  - [AllocationKey](docs/AllocationKey.md)
  - [AllocationKeyAttributeEnum](docs/AllocationKeyAttributeEnum.md)
  - [AllocationKeyAttributesPartial](docs/AllocationKeyAttributesPartial.md)
