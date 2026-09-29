@@ -15,7 +15,7 @@ import (
 	"fmt"
 )
 
-// AllocationKeyAttributeEnum Only for keys of the type `ATTRIBUTE`: the unit attribute the costs are distributed by. `PERSONS` is weighted by days.
+// AllocationKeyAttributeEnum Only for keys of the type `ATTRIBUTE`: the unit attribute the costs are distributed by. The number of residents is recorded as allocation quantities of a key of the type `QUANTITY`.
 type AllocationKeyAttributeEnum string
 
 // List of AllocationKeyAttributeEnum
@@ -25,7 +25,6 @@ const (
 	ALLOCATIONKEYATTRIBUTEENUM_HEATING_AREA AllocationKeyAttributeEnum = "HEATING_AREA"
 	ALLOCATIONKEYATTRIBUTEENUM_ROOMS        AllocationKeyAttributeEnum = "ROOMS"
 	ALLOCATIONKEYATTRIBUTEENUM_UNITS        AllocationKeyAttributeEnum = "UNITS"
-	ALLOCATIONKEYATTRIBUTEENUM_PERSONS      AllocationKeyAttributeEnum = "PERSONS"
 )
 
 // All allowed values of AllocationKeyAttributeEnum enum
@@ -35,7 +34,6 @@ var AllowedAllocationKeyAttributeEnumEnumValues = []AllocationKeyAttributeEnum{
 	"HEATING_AREA",
 	"ROOMS",
 	"UNITS",
-	"PERSONS",
 }
 
 func (v *AllocationKeyAttributeEnum) UnmarshalJSON(src []byte) error {

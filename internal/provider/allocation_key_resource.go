@@ -90,7 +90,7 @@ func (ak *AllocationKey) Schema(ctx context.Context, req resource.SchemaRequest,
 			},
 			"attribute": schema.StringAttribute{
 				Optional:            true,
-				MarkdownDescription: "Only for the type `ATTRIBUTE`: the unit attribute the costs are distributed by (`MEA`, `AREA`, `HEATING_AREA`, `ROOMS`, `UNITS` or `PERSONS`).",
+				MarkdownDescription: "Only for the type `ATTRIBUTE`: the unit attribute the costs are distributed by (`MEA`, `AREA`, `HEATING_AREA`, `ROOMS` or `UNITS`).",
 				Validators: []validator.String{
 					stringvalidator.OneOf(stringSlice(api.AllowedAllocationKeyAttributeEnumEnumValues)...),
 				},

@@ -27,8 +27,6 @@ type PropertyDetails struct {
 	HeatingArea *float32 `json:"heating_area,omitempty"`
 	// Number of rooms in the property. Can be a float value (e.g. 2.5 rooms), which is commonly used to indicate number of proper rooms (bedroom, living  room) and a smaller room (e.g. kitchenette, small office, etc.).
 	Rooms *float32 `json:"rooms,omitempty"`
-	// Number of persons living in the property. It is used by per person allocation keys for the periods in which the property is not rented out, e.g. for owner-occupied condominium units. While the property is rented out, the number of tenants of the tenancy is used instead.
-	Persons *int32 `json:"persons,omitempty"`
 	// Number of bedrooms in the property. This typically includes living rooms  as well.
 	Bedrooms *float32 `json:"bedrooms,omitempty"`
 	// Number of bathrooms in the property
@@ -195,38 +193,6 @@ func (o *PropertyDetails) HasRooms() bool {
 // SetRooms gets a reference to the given float32 and assigns it to the Rooms field.
 func (o *PropertyDetails) SetRooms(v float32) {
 	o.Rooms = &v
-}
-
-// GetPersons returns the Persons field value if set, zero value otherwise.
-func (o *PropertyDetails) GetPersons() int32 {
-	if o == nil || IsNil(o.Persons) {
-		var ret int32
-		return ret
-	}
-	return *o.Persons
-}
-
-// GetPersonsOk returns a tuple with the Persons field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *PropertyDetails) GetPersonsOk() (*int32, bool) {
-	if o == nil || IsNil(o.Persons) {
-		return nil, false
-	}
-	return o.Persons, true
-}
-
-// HasPersons returns a boolean if a field has been set.
-func (o *PropertyDetails) HasPersons() bool {
-	if o != nil && !IsNil(o.Persons) {
-		return true
-	}
-
-	return false
-}
-
-// SetPersons gets a reference to the given int32 and assigns it to the Persons field.
-func (o *PropertyDetails) SetPersons(v int32) {
-	o.Persons = &v
 }
 
 // GetBedrooms returns the Bedrooms field value if set, zero value otherwise.
@@ -634,9 +600,6 @@ func (o PropertyDetails) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Rooms) {
 		toSerialize["rooms"] = o.Rooms
-	}
-	if !IsNil(o.Persons) {
-		toSerialize["persons"] = o.Persons
 	}
 	if !IsNil(o.Bedrooms) {
 		toSerialize["bedrooms"] = o.Bedrooms
