@@ -102,6 +102,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateAccountDimensionValue**](docs/DefaultAPI.md#createaccountdimensionvalue) | **Post** /financial/account-dimension/{dimensionID}/value | Create a new account dimension value
 *DefaultAPI* | [**CreateAllocationKey**](docs/DefaultAPI.md#createallocationkey) | **Post** /allocation-key | Create a new allocation key
 *DefaultAPI* | [**CreateAllocationKeyOverride**](docs/DefaultAPI.md#createallocationkeyoverride) | **Post** /allocation-key-override | Create a new allocation key override
+*DefaultAPI* | [**CreateAnnualStatement**](docs/DefaultAPI.md#createannualstatement) | **Post** /annual-statement | Create an annual statement
 *DefaultAPI* | [**CreateAppointment**](docs/DefaultAPI.md#createappointment) | **Post** /calendar/appointments/schedule/{scheduleID}/appointment | Create new appointment for a given schedule
 *DefaultAPI* | [**CreateAppointmentSchedule**](docs/DefaultAPI.md#createappointmentschedule) | **Post** /calendar/appointments/schedule | Create new appointment schedule
 *DefaultAPI* | [**CreateAppointmentTemplate**](docs/DefaultAPI.md#createappointmenttemplate) | **Post** /calendar/appointments/template | Create new appointment template
@@ -172,6 +173,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**DeleteAccountDimensionValue**](docs/DefaultAPI.md#deleteaccountdimensionvalue) | **Delete** /financial/account-dimension/{dimensionID}/value/{refID} | Delete the account dimension value with all its related data
 *DefaultAPI* | [**DeleteAllocationKey**](docs/DefaultAPI.md#deleteallocationkey) | **Delete** /allocation-key/{allocationKeyID} | Delete an allocation key
 *DefaultAPI* | [**DeleteAllocationKeyOverride**](docs/DefaultAPI.md#deleteallocationkeyoverride) | **Delete** /allocation-key-override/{overrideID} | Delete an allocation key override
+*DefaultAPI* | [**DeleteAnnualStatement**](docs/DefaultAPI.md#deleteannualstatement) | **Delete** /annual-statement/{annualStatementID} | Delete an annual statement
 *DefaultAPI* | [**DeleteAppointment**](docs/DefaultAPI.md#deleteappointment) | **Delete** /calendar/appointments/entry/{entryID} | Delete an appointment
 *DefaultAPI* | [**DeleteAppointmentComment**](docs/DefaultAPI.md#deleteappointmentcomment) | **Delete** /calendar/appointments/entry/{entryID}/comment/{commentID} | Delete a comment from appointment.
 *DefaultAPI* | [**DeleteAppointmentSchedule**](docs/DefaultAPI.md#deleteappointmentschedule) | **Delete** /calendar/appointments/schedule/{scheduleID} | Delete an appointment schedule
@@ -252,6 +254,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**ExecuteWorkflowEntrypoint**](docs/DefaultAPI.md#executeworkflowentrypoint) | **Post** /workflows/entrypoint/{entrypointID}/execute | Execute the workflow entry point
 *DefaultAPI* | [**ExecuteWorkflowExecutionStep**](docs/DefaultAPI.md#executeworkflowexecutionstep) | **Post** /workflows/execution/{executionID} | Execute workflow execution step
 *DefaultAPI* | [**Feedback**](docs/DefaultAPI.md#feedback) | **Post** /feedback | User feedback about the product
+*DefaultAPI* | [**FinalizeAnnualStatement**](docs/DefaultAPI.md#finalizeannualstatement) | **Post** /annual-statement/{annualStatementID}/finalize | Finalize an annual statement
 *DefaultAPI* | [**FinalizePropertyHandover**](docs/DefaultAPI.md#finalizepropertyhandover) | **Put** /property-handovers/handovers/{handoverID}/finalize | Finalize a property handover
 *DefaultAPI* | [**GenerateAccountDimensionValues**](docs/DefaultAPI.md#generateaccountdimensionvalues) | **Post** /financial/account-dimension/{dimensionID}/values/generate | Generate the account dimension values for the given dimension
 *DefaultAPI* | [**GenerateCaseComment**](docs/DefaultAPI.md#generatecasecomment) | **Post** /case/{caseID}/comment/generate | Generate AI comment suggestions
@@ -269,6 +272,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetAccountSummary**](docs/DefaultAPI.md#getaccountsummary) | **Post** /summary | Get overview of data in the system for current account
 *DefaultAPI* | [**GetAllocationKey**](docs/DefaultAPI.md#getallocationkey) | **Get** /allocation-key/{allocationKeyID} | Get an allocation key by ID
 *DefaultAPI* | [**GetAllocationKeyOverride**](docs/DefaultAPI.md#getallocationkeyoverride) | **Get** /allocation-key-override/{overrideID} | Get an allocation key override by ID
+*DefaultAPI* | [**GetAnnualStatement**](docs/DefaultAPI.md#getannualstatement) | **Get** /annual-statement/{annualStatementID} | Get an annual statement
 *DefaultAPI* | [**GetAppointment**](docs/DefaultAPI.md#getappointment) | **Get** /calendar/appointments/entry/{entryID} | Get the appointment by ID
 *DefaultAPI* | [**GetAppointmentInIcalFormat**](docs/DefaultAPI.md#getappointmentinicalformat) | **Get** /calendar/appointments/entry/{entryID}/ical | Get appointment in ical format
 *DefaultAPI* | [**GetAppointmentSchedule**](docs/DefaultAPI.md#getappointmentschedule) | **Get** /calendar/appointments/schedule/{scheduleID} | Get the appointment schedule by ID
@@ -277,6 +281,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetApproval**](docs/DefaultAPI.md#getapproval) | **Get** /approval/{approvalID} | Get the approval with the given ID
 *DefaultAPI* | [**GetApprovalsByRefId**](docs/DefaultAPI.md#getapprovalsbyrefid) | **Get** /approval/by-ref/{refID} | Get the approvals for the given entity ID
 *DefaultAPI* | [**GetArchivalJobSettings**](docs/DefaultAPI.md#getarchivaljobsettings) | **Get** /archival-job/settings | Get the archival job settings details
+*DefaultAPI* | [**GetAssistantSession**](docs/DefaultAPI.md#getassistantsession) | **Get** /ai/assistant/session/{assistantSessionID} | Get an AI assistant chat session
 *DefaultAPI* | [**GetAttachment**](docs/DefaultAPI.md#getattachment) | **Get** /attachment/{attachmentID} | Get a file attachment
 *DefaultAPI* | [**GetBankAccount**](docs/DefaultAPI.md#getbankaccount) | **Get** /bank-account/{accountID} | Get the bank account with the given ID
 *DefaultAPI* | [**GetBankAccountBankNames**](docs/DefaultAPI.md#getbankaccountbanknames) | **Get** /bank-accounts/bank-names | Get the bank names of the current account
@@ -294,8 +299,8 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetCatalogGroup**](docs/DefaultAPI.md#getcataloggroup) | **Get** /catalog/group/{groupID} | Get an existing catalog group
 *DefaultAPI* | [**GetCatalogItem**](docs/DefaultAPI.md#getcatalogitem) | **Get** /catalog/items/{itemID} | Get a catalog item
 *DefaultAPI* | [**GetCatalogItemSubscription**](docs/DefaultAPI.md#getcatalogitemsubscription) | **Get** /catalog/item-subscriptions/{subscriptionID} | Get a catalog item subscription
-*DefaultAPI* | [**GetChatbotConfig**](docs/DefaultAPI.md#getchatbotconfig) | **Get** /chatbot/config | Get the chatbot configuration of the account
 *DefaultAPI* | [**GetChatbotStats**](docs/DefaultAPI.md#getchatbotstats) | **Post** /chatbot/stats | Get chatbot usage statistics for the account
+*DefaultAPI* | [**GetChatbotUsage**](docs/DefaultAPI.md#getchatbotusage) | **Get** /chatbot/usage | Get the chatbot token usage and conversation counter of the account
 *DefaultAPI* | [**GetCommentTemplate**](docs/DefaultAPI.md#getcommenttemplate) | **Get** /comment-template/{commentTemplateID} | Get comment template
 *DefaultAPI* | [**GetCompanyProfile**](docs/DefaultAPI.md#getcompanyprofile) | **Get** /profile/company | Get the company profile details
 *DefaultAPI* | [**GetConnectorConfig**](docs/DefaultAPI.md#getconnectorconfig) | **Get** /connector/{name}/config | Get the connector configuration for the current account
@@ -397,7 +402,6 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetWorkflowExecution**](docs/DefaultAPI.md#getworkflowexecution) | **Get** /workflows/execution/{executionID} | Get workflow execution details
 *DefaultAPI* | [**GetWorkflowExecutionTrigger**](docs/DefaultAPI.md#getworkflowexecutiontrigger) | **Get** /workflows/triggers/{executionID} | Get workflow trigger for an execution
 *DefaultAPI* | [**GetWorkflowTriggersForSource**](docs/DefaultAPI.md#getworkflowtriggersforsource) | **Get** /workflows/trigger/source/{sourceID} | Get workflow triggers for a source
-*DefaultAPI* | [**HandleUserQuestion**](docs/DefaultAPI.md#handleuserquestion) | **Post** /ai/ask | Ask AI assistant a question
 *DefaultAPI* | [**ImportBankConnectionTransactions**](docs/DefaultAPI.md#importbankconnectiontransactions) | **Post** /bank-connection/{bankConnectionID}/transactions/import | Import transactions from bank connection
 *DefaultAPI* | [**ImportDataUsingTemplate**](docs/DefaultAPI.md#importdatausingtemplate) | **Post** /data-import/template/{templateID}/import | Import data using the template
 *DefaultAPI* | [**ImportServiceProvider**](docs/DefaultAPI.md#importserviceprovider) | **Post** /service-provider/import | Extract service provider data from an uploaded document
@@ -417,6 +421,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**OutlookGetTenant**](docs/DefaultAPI.md#outlookgettenant) | **Get** /outlook/tenants | Get tenant by email
 *DefaultAPI* | [**OutlookGetTenantCases**](docs/DefaultAPI.md#outlookgettenantcases) | **Get** /outlook/tenants/{tenantID}/cases | Get recent cases for a tenant
 *DefaultAPI* | [**PersistBookingPreview**](docs/DefaultAPI.md#persistbookingpreview) | **Post** /financial/booking-preview/{bookingPreviewID}/persist | Persist the bookings in the given booking preview
+*DefaultAPI* | [**PrepareAnnualStatement**](docs/DefaultAPI.md#prepareannualstatement) | **Post** /annual-statement/{annualStatementID}/prepare | Prepare an annual statement
 *DefaultAPI* | [**PreviewCommentTemplate**](docs/DefaultAPI.md#previewcommenttemplate) | **Post** /comment-template/{commentTemplateID}/preview | Preview a comment template returning an example comment.
 *DefaultAPI* | [**PreviewDataImport**](docs/DefaultAPI.md#previewdataimport) | **Post** /data-import/template/{templateID}/preview | Preview a data import template returning an example data import.
 *DefaultAPI* | [**ProcessUploadedInvoiceAttachment**](docs/DefaultAPI.md#processuploadedinvoiceattachment) | **Post** /invoices/upload/from-attachment | Extract invoice data from an already uploaded attachment
@@ -457,6 +462,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryAccountDimensionsV2**](docs/DefaultAPI.md#queryaccountdimensionsv2) | **Post** /financial/account-dimensions-v2 | Query all account dimensions
 *DefaultAPI* | [**QueryAllocationKeyOverrides**](docs/DefaultAPI.md#queryallocationkeyoverrides) | **Post** /allocation-key-overrides | Query allocation key overrides by property and fiscal year
 *DefaultAPI* | [**QueryAllocationKeys**](docs/DefaultAPI.md#queryallocationkeys) | **Post** /allocation-keys | Query all allocation keys for the account
+*DefaultAPI* | [**QueryAnnualStatements**](docs/DefaultAPI.md#queryannualstatements) | **Post** /annual-statements | Query annual statements
 *DefaultAPI* | [**QueryAppointmentEntries**](docs/DefaultAPI.md#queryappointmententries) | **Post** /calendar/appointments/entries | Query the appointments of the account within a time frame
 *DefaultAPI* | [**QueryAppointmentScheduleWindows**](docs/DefaultAPI.md#queryappointmentschedulewindows) | **Post** /calendar/appointments/schedule/{scheduleID}/windows | Query the windows of an appointment schedule for a given time frame
 *DefaultAPI* | [**QueryAppointmentSchedules**](docs/DefaultAPI.md#queryappointmentschedules) | **Post** /calendar/appointments/schedules | Query all appointment schedules for given criteria
@@ -546,6 +552,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**RetryInvoiceUploadJob**](docs/DefaultAPI.md#retryinvoiceuploadjob) | **Post** /invoice-upload-jobs/{invoiceUploadJobID}/retry | Retry invoice upload job
 *DefaultAPI* | [**RevertAccountBooking**](docs/DefaultAPI.md#revertaccountbooking) | **Post** /financial/bookings/{bookingID}/revert | Revert a previously created booking
 *DefaultAPI* | [**SendAppointmentScheduleInvitation**](docs/DefaultAPI.md#sendappointmentscheduleinvitation) | **Post** /calendar/appointments/schedule/{scheduleID}/invitation | Send invitation to recepients after creating a new appointment schedule
+*DefaultAPI* | [**SendAssistantMessage**](docs/DefaultAPI.md#sendassistantmessage) | **Post** /ai/assistant/message | Send a question to the AI assistant
 *DefaultAPI* | [**SendDocumentViaMail**](docs/DefaultAPI.md#senddocumentviamail) | **Post** /document-generation/documents/{docID}/send-via-mail | Send the document generation via physical mail
 *DefaultAPI* | [**SendNotification**](docs/DefaultAPI.md#sendnotification) | **Post** /notification/{notificationName}/send | Send notification
 *DefaultAPI* | [**SetBadgesForEntity**](docs/DefaultAPI.md#setbadgesforentity) | **Put** /badges/by-reference/{refID} | Set badges
@@ -562,6 +569,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateAccountDimensionValue**](docs/DefaultAPI.md#updateaccountdimensionvalue) | **Put** /financial/account-dimension/{dimensionID}/value/{refID} | Update an already existing account dimension value
 *DefaultAPI* | [**UpdateAllocationKey**](docs/DefaultAPI.md#updateallocationkey) | **Put** /allocation-key/{allocationKeyID} | Update an existing allocation key
 *DefaultAPI* | [**UpdateAllocationKeyOverride**](docs/DefaultAPI.md#updateallocationkeyoverride) | **Put** /allocation-key-override/{overrideID} | Update an allocation key override
+*DefaultAPI* | [**UpdateAnnualStatement**](docs/DefaultAPI.md#updateannualstatement) | **Put** /annual-statement/{annualStatementID} | Update an annual statement
 *DefaultAPI* | [**UpdateAppointment**](docs/DefaultAPI.md#updateappointment) | **Put** /calendar/appointments/entry/{entryID} | Update appointment
 *DefaultAPI* | [**UpdateAppointmentSchedule**](docs/DefaultAPI.md#updateappointmentschedule) | **Put** /calendar/appointments/schedule/{scheduleID} | Update appointment schedule
 *DefaultAPI* | [**UpdateAppointmentTemplate**](docs/DefaultAPI.md#updateappointmenttemplate) | **Put** /calendar/appointments/template/{templateID} | Update appointment template
@@ -579,7 +587,6 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateCatalogGroup**](docs/DefaultAPI.md#updatecataloggroup) | **Put** /catalog/group/{groupID} | Update a catalog group
 *DefaultAPI* | [**UpdateCatalogItem**](docs/DefaultAPI.md#updatecatalogitem) | **Put** /catalog/items/{itemID} | Update a catalog item
 *DefaultAPI* | [**UpdateCatalogItemSubscription**](docs/DefaultAPI.md#updatecatalogitemsubscription) | **Put** /catalog/item-subscriptions/{subscriptionID} | Update a catalog item subscription
-*DefaultAPI* | [**UpdateChatbotConfig**](docs/DefaultAPI.md#updatechatbotconfig) | **Put** /chatbot/config | Update the chatbot configuration of the account
 *DefaultAPI* | [**UpdateCommentTemplate**](docs/DefaultAPI.md#updatecommenttemplate) | **Put** /comment-template/{commentTemplateID} | Update comment template
 *DefaultAPI* | [**UpdateCompanyProfile**](docs/DefaultAPI.md#updatecompanyprofile) | **Put** /profile/company | Update company profile
 *DefaultAPI* | [**UpdateConnectorConfig**](docs/DefaultAPI.md#updateconnectorconfig) | **Put** /connector/{name}/config | Update the connector configuration
@@ -638,7 +645,6 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
- - [AIAssistantResponse](docs/AIAssistantResponse.md)
  - [AccessRecord](docs/AccessRecord.md)
  - [AccessRecordData](docs/AccessRecordData.md)
  - [AccountBalance](docs/AccountBalance.md)
@@ -664,6 +670,15 @@ Class | Method | HTTP request | Description
  - [AllocationKeyAttributesPartial](docs/AllocationKeyAttributesPartial.md)
  - [AllocationKeyOverride](docs/AllocationKeyOverride.md)
  - [AllocationKeyOverrideAttributesPartial](docs/AllocationKeyOverrideAttributesPartial.md)
+ - [AnnualStatement](docs/AnnualStatement.md)
+ - [AnnualStatementAccountDevelopment](docs/AnnualStatementAccountDevelopment.md)
+ - [AnnualStatementCostItem](docs/AnnualStatementCostItem.md)
+ - [AnnualStatementCostItemPartial](docs/AnnualStatementCostItemPartial.md)
+ - [AnnualStatementInputAttributesPartial](docs/AnnualStatementInputAttributesPartial.md)
+ - [AnnualStatementOwner](docs/AnnualStatementOwner.md)
+ - [AnnualStatementOwnerCostItem](docs/AnnualStatementOwnerCostItem.md)
+ - [AnnualStatementStatusEnum](docs/AnnualStatementStatusEnum.md)
+ - [AnnualStatementTotals](docs/AnnualStatementTotals.md)
  - [Appointment](docs/Appointment.md)
  - [AppointmentComment](docs/AppointmentComment.md)
  - [AppointmentCommentPartial](docs/AppointmentCommentPartial.md)
@@ -681,8 +696,12 @@ Class | Method | HTTP request | Description
  - [Approver](docs/Approver.md)
  - [ArchivalJobSettings](docs/ArchivalJobSettings.md)
  - [ArchivalJobSettingsAttributesPartial](docs/ArchivalJobSettingsAttributesPartial.md)
- - [AskQuestionRequest](docs/AskQuestionRequest.md)
  - [AssignCaseRequest](docs/AssignCaseRequest.md)
+ - [AssistantAction](docs/AssistantAction.md)
+ - [AssistantMessage](docs/AssistantMessage.md)
+ - [AssistantMessageRole](docs/AssistantMessageRole.md)
+ - [AssistantPageContext](docs/AssistantPageContext.md)
+ - [AssistantSession](docs/AssistantSession.md)
  - [Attachment](docs/Attachment.md)
  - [AttachmentUpload](docs/AttachmentUpload.md)
  - [BadgeTypeEnum](docs/BadgeTypeEnum.md)
@@ -712,6 +731,7 @@ Class | Method | HTTP request | Description
  - [BatchProcessingStatusEnum](docs/BatchProcessingStatusEnum.md)
  - [BatchProcessingTypeEnum](docs/BatchProcessingTypeEnum.md)
  - [BatchSessionAttributesPartial](docs/BatchSessionAttributesPartial.md)
+ - [BookingAutoPersist](docs/BookingAutoPersist.md)
  - [BookingGrouping](docs/BookingGrouping.md)
  - [BookingInitialisationStatusEnum](docs/BookingInitialisationStatusEnum.md)
  - [BookingPreview](docs/BookingPreview.md)
@@ -760,10 +780,9 @@ Class | Method | HTTP request | Description
  - [CatalogItemSubscription](docs/CatalogItemSubscription.md)
  - [CatalogItemSubscriptionPartial](docs/CatalogItemSubscriptionPartial.md)
  - [CatalogItemType](docs/CatalogItemType.md)
- - [ChatbotConfig](docs/ChatbotConfig.md)
- - [ChatbotConfigAttributesPartial](docs/ChatbotConfigAttributesPartial.md)
  - [ChatbotMessage](docs/ChatbotMessage.md)
  - [ChatbotMessageRole](docs/ChatbotMessageRole.md)
+ - [ChatbotMonthlyUsage](docs/ChatbotMonthlyUsage.md)
  - [CommentTemplate](docs/CommentTemplate.md)
  - [CommentTemplateAttributesPartial](docs/CommentTemplateAttributesPartial.md)
  - [CompanyProfile](docs/CompanyProfile.md)
@@ -797,6 +816,7 @@ Class | Method | HTTP request | Description
  - [CreateAccountBookingAllocation](docs/CreateAccountBookingAllocation.md)
  - [CreateAccountBookingRequest](docs/CreateAccountBookingRequest.md)
  - [CreateAccountBookingsRequest](docs/CreateAccountBookingsRequest.md)
+ - [CreateAnnualStatementRequest](docs/CreateAnnualStatementRequest.md)
  - [CreateApprovalRequest](docs/CreateApprovalRequest.md)
  - [CreateAttachmentUploadRequest](docs/CreateAttachmentUploadRequest.md)
  - [CreateBankConnectionResponse](docs/CreateBankConnectionResponse.md)
@@ -969,6 +989,7 @@ Class | Method | HTTP request | Description
  - [GetBankConnectionResponse](docs/GetBankConnectionResponse.md)
  - [GetChatbotStatsRequest](docs/GetChatbotStatsRequest.md)
  - [GetChatbotStatsResponse](docs/GetChatbotStatsResponse.md)
+ - [GetChatbotUsageResponse](docs/GetChatbotUsageResponse.md)
  - [GetCorrespondenceDocumentResponse](docs/GetCorrespondenceDocumentResponse.md)
  - [GetCorrespondenceStatusResponse](docs/GetCorrespondenceStatusResponse.md)
  - [GetExternalUserCasesCountResponse](docs/GetExternalUserCasesCountResponse.md)
@@ -1084,6 +1105,8 @@ Class | Method | HTTP request | Description
  - [QueryAccountDimensionsV2Request](docs/QueryAccountDimensionsV2Request.md)
  - [QueryAccountDimensionsV2Response](docs/QueryAccountDimensionsV2Response.md)
  - [QueryAllocationKeyOverridesRequest](docs/QueryAllocationKeyOverridesRequest.md)
+ - [QueryAnnualStatementsRequest](docs/QueryAnnualStatementsRequest.md)
+ - [QueryAnnualStatementsResponse](docs/QueryAnnualStatementsResponse.md)
  - [QueryAppointmentEntriesRequest](docs/QueryAppointmentEntriesRequest.md)
  - [QueryAppointmentScheduleWindowsRequest](docs/QueryAppointmentScheduleWindowsRequest.md)
  - [QueryAppointmentSchedulesRequest](docs/QueryAppointmentSchedulesRequest.md)
@@ -1232,6 +1255,8 @@ Class | Method | HTTP request | Description
  - [RevenueTypeScopeEnum](docs/RevenueTypeScopeEnum.md)
  - [RevenueTypeSystemDefaultEnum](docs/RevenueTypeSystemDefaultEnum.md)
  - [RevertAccountBookingRequest](docs/RevertAccountBookingRequest.md)
+ - [SendAssistantMessageRequest](docs/SendAssistantMessageRequest.md)
+ - [SendAssistantMessageResponse](docs/SendAssistantMessageResponse.md)
  - [SendChatbotMessageRequest](docs/SendChatbotMessageRequest.md)
  - [SendChatbotMessageResponse](docs/SendChatbotMessageResponse.md)
  - [SendNotificationRequest](docs/SendNotificationRequest.md)
@@ -1268,11 +1293,11 @@ Class | Method | HTTP request | Description
  - [UnitAssessmentPartial](docs/UnitAssessmentPartial.md)
  - [UnssignCaseRequest](docs/UnssignCaseRequest.md)
  - [UpdateAccountConfigRequest](docs/UpdateAccountConfigRequest.md)
+ - [UpdateAnnualStatementRequest](docs/UpdateAnnualStatementRequest.md)
  - [UpdateArchivalJobSettingsRequest](docs/UpdateArchivalJobSettingsRequest.md)
  - [UpdateBookingPreviewRequest](docs/UpdateBookingPreviewRequest.md)
  - [UpdateCaseRequest](docs/UpdateCaseRequest.md)
  - [UpdateCaseStatusRequest](docs/UpdateCaseStatusRequest.md)
- - [UpdateChatbotConfigRequest](docs/UpdateChatbotConfigRequest.md)
  - [UpdateCompanyProfileRequest](docs/UpdateCompanyProfileRequest.md)
  - [UpdateConnectorConfigRequest](docs/UpdateConnectorConfigRequest.md)
  - [UpdateDocumentRequest](docs/UpdateDocumentRequest.md)

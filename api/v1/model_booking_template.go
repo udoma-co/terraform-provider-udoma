@@ -42,8 +42,9 @@ type BookingTemplate struct {
 	// A script that can be used to generate the booking based on the provided input
 	Script string `json:"script"`
 	// a map of values, where the key and values are strings
-	EnvVars  *map[string]string      `json:"env_vars,omitempty"`
-	Grouping NullableBookingGrouping `json:"grouping,omitempty"`
+	EnvVars     *map[string]string         `json:"env_vars,omitempty"`
+	Grouping    NullableBookingGrouping    `json:"grouping,omitempty"`
+	AutoPersist NullableBookingAutoPersist `json:"auto_persist,omitempty"`
 	// A flag indicating whether the entity is deleted. If the entity is deleted, it should not be returned in the results of a query, but it is still kept in the database as it is referenced by other entities.
 	IsDeleted *bool `json:"is_deleted,omitempty"`
 	// A flag indicating whether the entity is published as a catalog item. Catalog items are defined once for the environment and are managed centrally, they cannot be edited from a customer account that has subscribed to them. The flag is derived from the catalog and is never set by the client.
@@ -456,6 +457,49 @@ func (o *BookingTemplate) UnsetGrouping() {
 	o.Grouping.Unset()
 }
 
+// GetAutoPersist returns the AutoPersist field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BookingTemplate) GetAutoPersist() BookingAutoPersist {
+	if o == nil || IsNil(o.AutoPersist.Get()) {
+		var ret BookingAutoPersist
+		return ret
+	}
+	return *o.AutoPersist.Get()
+}
+
+// GetAutoPersistOk returns a tuple with the AutoPersist field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BookingTemplate) GetAutoPersistOk() (*BookingAutoPersist, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AutoPersist.Get(), o.AutoPersist.IsSet()
+}
+
+// HasAutoPersist returns a boolean if a field has been set.
+func (o *BookingTemplate) HasAutoPersist() bool {
+	if o != nil && o.AutoPersist.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAutoPersist gets a reference to the given NullableBookingAutoPersist and assigns it to the AutoPersist field.
+func (o *BookingTemplate) SetAutoPersist(v BookingAutoPersist) {
+	o.AutoPersist.Set(&v)
+}
+
+// SetAutoPersistNil sets the value for AutoPersist to be an explicit nil
+func (o *BookingTemplate) SetAutoPersistNil() {
+	o.AutoPersist.Set(nil)
+}
+
+// UnsetAutoPersist ensures that no value is present for AutoPersist, not even an explicit nil
+func (o *BookingTemplate) UnsetAutoPersist() {
+	o.AutoPersist.Unset()
+}
+
 // GetIsDeleted returns the IsDeleted field value if set, zero value otherwise.
 func (o *BookingTemplate) GetIsDeleted() bool {
 	if o == nil || IsNil(o.IsDeleted) {
@@ -556,6 +600,9 @@ func (o BookingTemplate) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Grouping.IsSet() {
 		toSerialize["grouping"] = o.Grouping.Get()
+	}
+	if o.AutoPersist.IsSet() {
+		toSerialize["auto_persist"] = o.AutoPersist.Get()
 	}
 	if !IsNil(o.IsDeleted) {
 		toSerialize["is_deleted"] = o.IsDeleted

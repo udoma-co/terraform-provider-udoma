@@ -15,7 +15,7 @@ import (
 	"fmt"
 )
 
-// RevenueTypeSystemDefaultEnum The system default category of a revenue type. RENT, OPERATING_COSTS and TAX are only available for the \"tenancy\" scope. MAINTENANCE_FEE and RESERVE_CONTRIBUTION are only available for the \"ownership\" scope. NONE is available for all scopes.
+// RevenueTypeSystemDefaultEnum The system default category of a revenue type. RENT, OPERATING_COSTS and TAX are only available for the \"tenancy\" scope. MAINTENANCE_FEE and RESERVE_CONTRIBUTION are only available for the \"ownership\" scope. RESERVE_FUND and RESERVE_WITHDRAWAL are only available for the \"property\" scope. They mark the accounts that hold the reserve fund (Erhaltungsrücklage) of a condominium building, e.g. the additions, interest and taxes of the reserve, and the accounts the withdrawals from the reserve to cover costs are booked on. The balance of the reserve is the sum of the credits minus the debits of all these accounts. NONE is available for all scopes.
 type RevenueTypeSystemDefaultEnum string
 
 // List of RevenueTypeSystemDefaultEnum
@@ -26,6 +26,8 @@ const (
 	REVENUETYPESYSTEMDEFAULTENUM_TAX                  RevenueTypeSystemDefaultEnum = "TAX"
 	REVENUETYPESYSTEMDEFAULTENUM_MAINTENANCE_FEE      RevenueTypeSystemDefaultEnum = "MAINTENANCE_FEE"
 	REVENUETYPESYSTEMDEFAULTENUM_RESERVE_CONTRIBUTION RevenueTypeSystemDefaultEnum = "RESERVE_CONTRIBUTION"
+	REVENUETYPESYSTEMDEFAULTENUM_RESERVE_FUND         RevenueTypeSystemDefaultEnum = "RESERVE_FUND"
+	REVENUETYPESYSTEMDEFAULTENUM_RESERVE_WITHDRAWAL   RevenueTypeSystemDefaultEnum = "RESERVE_WITHDRAWAL"
 )
 
 // All allowed values of RevenueTypeSystemDefaultEnum enum
@@ -36,6 +38,8 @@ var AllowedRevenueTypeSystemDefaultEnumEnumValues = []RevenueTypeSystemDefaultEn
 	"TAX",
 	"MAINTENANCE_FEE",
 	"RESERVE_CONTRIBUTION",
+	"RESERVE_FUND",
+	"RESERVE_WITHDRAWAL",
 }
 
 func (v *RevenueTypeSystemDefaultEnum) UnmarshalJSON(src []byte) error {
