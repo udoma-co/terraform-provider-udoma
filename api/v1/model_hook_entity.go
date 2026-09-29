@@ -26,6 +26,7 @@ const (
 	HOOKENTITY_TENANT           HookEntity = "TENANT"
 	HOOKENTITY_TENANCY          HookEntity = "TENANCY"
 	HOOKENTITY_SERVICE_PROVIDER HookEntity = "SERVICE_PROVIDER"
+	HOOKENTITY_OWNERSHIP        HookEntity = "OWNERSHIP"
 )
 
 // All allowed values of HookEntity enum
@@ -36,6 +37,7 @@ var AllowedHookEntityEnumValues = []HookEntity{
 	"TENANT",
 	"TENANCY",
 	"SERVICE_PROVIDER",
+	"OWNERSHIP",
 }
 
 func (v *HookEntity) UnmarshalJSON(src []byte) error {

@@ -19,8 +19,10 @@ var _ MappedNullable = &CaseReportingEndpointInfo{}
 
 // CaseReportingEndpointInfo Contains necessary information for displaying a publicly available form,  where tenants who don't have a login raise cases.
 type CaseReportingEndpointInfo struct {
-	Endpoint   *CaseReportingEndpoint `json:"endpoint,omitempty"`
-	Properties []Property             `json:"properties,omitempty"`
+	Endpoint *CaseReportingEndpoint `json:"endpoint,omitempty"`
+	// Whether the chatbot can be used on the endpoint. False if the chatbot is disabled for the endpoint or the monthly token limit of the account is reached.
+	ChatbotAvailable *bool      `json:"chatbot_available,omitempty"`
+	Properties       []Property `json:"properties,omitempty"`
 	// The case templates that can be used to raise a case from this endpoint
 	Templates []CaseTemplate `json:"templates,omitempty"`
 	// Optional list of FAQs that should be displayed on the endpoint
@@ -74,6 +76,38 @@ func (o *CaseReportingEndpointInfo) HasEndpoint() bool {
 // SetEndpoint gets a reference to the given CaseReportingEndpoint and assigns it to the Endpoint field.
 func (o *CaseReportingEndpointInfo) SetEndpoint(v CaseReportingEndpoint) {
 	o.Endpoint = &v
+}
+
+// GetChatbotAvailable returns the ChatbotAvailable field value if set, zero value otherwise.
+func (o *CaseReportingEndpointInfo) GetChatbotAvailable() bool {
+	if o == nil || IsNil(o.ChatbotAvailable) {
+		var ret bool
+		return ret
+	}
+	return *o.ChatbotAvailable
+}
+
+// GetChatbotAvailableOk returns a tuple with the ChatbotAvailable field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CaseReportingEndpointInfo) GetChatbotAvailableOk() (*bool, bool) {
+	if o == nil || IsNil(o.ChatbotAvailable) {
+		return nil, false
+	}
+	return o.ChatbotAvailable, true
+}
+
+// HasChatbotAvailable returns a boolean if a field has been set.
+func (o *CaseReportingEndpointInfo) HasChatbotAvailable() bool {
+	if o != nil && !IsNil(o.ChatbotAvailable) {
+		return true
+	}
+
+	return false
+}
+
+// SetChatbotAvailable gets a reference to the given bool and assigns it to the ChatbotAvailable field.
+func (o *CaseReportingEndpointInfo) SetChatbotAvailable(v bool) {
+	o.ChatbotAvailable = &v
 }
 
 // GetProperties returns the Properties field value if set, zero value otherwise.
@@ -184,6 +218,9 @@ func (o CaseReportingEndpointInfo) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Endpoint) {
 		toSerialize["endpoint"] = o.Endpoint
+	}
+	if !IsNil(o.ChatbotAvailable) {
+		toSerialize["chatbot_available"] = o.ChatbotAvailable
 	}
 	if !IsNil(o.Properties) {
 		toSerialize["properties"] = o.Properties

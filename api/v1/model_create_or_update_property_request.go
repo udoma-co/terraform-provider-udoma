@@ -27,8 +27,8 @@ type CreateOrUpdatePropertyRequest struct {
 	// Controls if the property is a rentable unit. If set to true, it will be possible to add tenancies to it. If set to false, it will not be possible to add tenancies to it and it can be set as a parent property for other properties.
 	Rentable *bool    `json:"rentable,omitempty"`
 	Address  *Address `json:"address,omitempty"`
-	// For appartments, this is the unique number within the building. For buildings, this can be used as a short identifier
-	Number *int32 `json:"number,omitempty"`
+	// For appartments, this is the unique number within the building. For buildings, this can be used as a short identifier. Required when creating or updating a property. Properties that predate this keep an empty number until they are updated, so the field stays optional on responses.
+	Number int32 `json:"number"`
 	// List of management types that are applicable for this property. This is used to determine which features are available for the property and is available for accounts that have a mixed management mode (see PropertyManagementConfig).
 	ManagementTypes []PropertyManagementTypeEnum `json:"management_types,omitempty"`
 	// Reference to the current owner of this property. On responses this is derived from the property's active ownership (the one whose end_date is NULL); on create/update requests it is honoured only when the account is in SIMPLE ownership tracking mode and will create or replace the single ownership row. In HISTORIC mode ownership must be managed via the dedicated /ownership endpoints and this field is ignored on mutations. In NONE mode the field is ignored on mutations and not populated on responses. If multiple ownership is enabled on the account, this field can contain more than a single owner. Otherwise it should always contain a single owner.
@@ -46,10 +46,11 @@ type _CreateOrUpdatePropertyRequest CreateOrUpdatePropertyRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateOrUpdatePropertyRequest(name string, type_ PropertyType) *CreateOrUpdatePropertyRequest {
+func NewCreateOrUpdatePropertyRequest(name string, type_ PropertyType, number int32) *CreateOrUpdatePropertyRequest {
 	this := CreateOrUpdatePropertyRequest{}
 	this.Name = name
 	this.Type = type_
+	this.Number = number
 	return &this
 }
 
@@ -173,36 +174,28 @@ func (o *CreateOrUpdatePropertyRequest) SetAddress(v Address) {
 	o.Address = &v
 }
 
-// GetNumber returns the Number field value if set, zero value otherwise.
+// GetNumber returns the Number field value
 func (o *CreateOrUpdatePropertyRequest) GetNumber() int32 {
-	if o == nil || IsNil(o.Number) {
+	if o == nil {
 		var ret int32
 		return ret
 	}
-	return *o.Number
+
+	return o.Number
 }
 
-// GetNumberOk returns a tuple with the Number field value if set, nil otherwise
+// GetNumberOk returns a tuple with the Number field value
 // and a boolean to check if the value has been set.
 func (o *CreateOrUpdatePropertyRequest) GetNumberOk() (*int32, bool) {
-	if o == nil || IsNil(o.Number) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Number, true
+	return &o.Number, true
 }
 
-// HasNumber returns a boolean if a field has been set.
-func (o *CreateOrUpdatePropertyRequest) HasNumber() bool {
-	if o != nil && !IsNil(o.Number) {
-		return true
-	}
-
-	return false
-}
-
-// SetNumber gets a reference to the given int32 and assigns it to the Number field.
+// SetNumber sets field value
 func (o *CreateOrUpdatePropertyRequest) SetNumber(v int32) {
-	o.Number = &v
+	o.Number = v
 }
 
 // GetManagementTypes returns the ManagementTypes field value if set, zero value otherwise.
@@ -383,9 +376,7 @@ func (o CreateOrUpdatePropertyRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Address) {
 		toSerialize["address"] = o.Address
 	}
-	if !IsNil(o.Number) {
-		toSerialize["number"] = o.Number
-	}
+	toSerialize["number"] = o.Number
 	if !IsNil(o.ManagementTypes) {
 		toSerialize["management_types"] = o.ManagementTypes
 	}
@@ -411,6 +402,7 @@ func (o *CreateOrUpdatePropertyRequest) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"name",
 		"type",
+		"number",
 	}
 
 	allProperties := make(map[string]interface{})

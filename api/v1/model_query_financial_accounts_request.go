@@ -19,6 +19,8 @@ var _ MappedNullable = &QueryFinancialAccountsRequest{}
 
 // QueryFinancialAccountsRequest The data required to query financial accounts
 type QueryFinancialAccountsRequest struct {
+	// Optional revenue type reference used to filter the returned accounts.
+	RevenueTypeRef *string `json:"revenue_type_ref,omitempty" validate:"regexp=^rt-[2-9A-HJ-NP-Za-km-z]{19,22}$"`
 	// The lowest account number to include in the result
 	NumberMin *int64 `json:"number_min,omitempty"`
 	// The highest account number to include in the result
@@ -42,6 +44,38 @@ func NewQueryFinancialAccountsRequest() *QueryFinancialAccountsRequest {
 func NewQueryFinancialAccountsRequestWithDefaults() *QueryFinancialAccountsRequest {
 	this := QueryFinancialAccountsRequest{}
 	return &this
+}
+
+// GetRevenueTypeRef returns the RevenueTypeRef field value if set, zero value otherwise.
+func (o *QueryFinancialAccountsRequest) GetRevenueTypeRef() string {
+	if o == nil || IsNil(o.RevenueTypeRef) {
+		var ret string
+		return ret
+	}
+	return *o.RevenueTypeRef
+}
+
+// GetRevenueTypeRefOk returns a tuple with the RevenueTypeRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryFinancialAccountsRequest) GetRevenueTypeRefOk() (*string, bool) {
+	if o == nil || IsNil(o.RevenueTypeRef) {
+		return nil, false
+	}
+	return o.RevenueTypeRef, true
+}
+
+// HasRevenueTypeRef returns a boolean if a field has been set.
+func (o *QueryFinancialAccountsRequest) HasRevenueTypeRef() bool {
+	if o != nil && !IsNil(o.RevenueTypeRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetRevenueTypeRef gets a reference to the given string and assigns it to the RevenueTypeRef field.
+func (o *QueryFinancialAccountsRequest) SetRevenueTypeRef(v string) {
+	o.RevenueTypeRef = &v
 }
 
 // GetNumberMin returns the NumberMin field value if set, zero value otherwise.
@@ -150,6 +184,9 @@ func (o QueryFinancialAccountsRequest) MarshalJSON() ([]byte, error) {
 
 func (o QueryFinancialAccountsRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.RevenueTypeRef) {
+		toSerialize["revenue_type_ref"] = o.RevenueTypeRef
+	}
 	if !IsNil(o.NumberMin) {
 		toSerialize["number_min"] = o.NumberMin
 	}

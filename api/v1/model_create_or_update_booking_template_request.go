@@ -36,8 +36,9 @@ type CreateOrUpdateBookingTemplateRequest struct {
 	// A script that can be used to generate the booking based on the provided input
 	Script string `json:"script"`
 	// a map of values, where the key and values are strings
-	EnvVars  *map[string]string      `json:"env_vars,omitempty"`
-	Grouping NullableBookingGrouping `json:"grouping,omitempty"`
+	EnvVars     *map[string]string         `json:"env_vars,omitempty"`
+	Grouping    NullableBookingGrouping    `json:"grouping,omitempty"`
+	AutoPersist NullableBookingAutoPersist `json:"auto_persist,omitempty"`
 }
 
 type _CreateOrUpdateBookingTemplateRequest CreateOrUpdateBookingTemplateRequest
@@ -371,6 +372,49 @@ func (o *CreateOrUpdateBookingTemplateRequest) UnsetGrouping() {
 	o.Grouping.Unset()
 }
 
+// GetAutoPersist returns the AutoPersist field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CreateOrUpdateBookingTemplateRequest) GetAutoPersist() BookingAutoPersist {
+	if o == nil || IsNil(o.AutoPersist.Get()) {
+		var ret BookingAutoPersist
+		return ret
+	}
+	return *o.AutoPersist.Get()
+}
+
+// GetAutoPersistOk returns a tuple with the AutoPersist field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CreateOrUpdateBookingTemplateRequest) GetAutoPersistOk() (*BookingAutoPersist, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AutoPersist.Get(), o.AutoPersist.IsSet()
+}
+
+// HasAutoPersist returns a boolean if a field has been set.
+func (o *CreateOrUpdateBookingTemplateRequest) HasAutoPersist() bool {
+	if o != nil && o.AutoPersist.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAutoPersist gets a reference to the given NullableBookingAutoPersist and assigns it to the AutoPersist field.
+func (o *CreateOrUpdateBookingTemplateRequest) SetAutoPersist(v BookingAutoPersist) {
+	o.AutoPersist.Set(&v)
+}
+
+// SetAutoPersistNil sets the value for AutoPersist to be an explicit nil
+func (o *CreateOrUpdateBookingTemplateRequest) SetAutoPersistNil() {
+	o.AutoPersist.Set(nil)
+}
+
+// UnsetAutoPersist ensures that no value is present for AutoPersist, not even an explicit nil
+func (o *CreateOrUpdateBookingTemplateRequest) UnsetAutoPersist() {
+	o.AutoPersist.Unset()
+}
+
 func (o CreateOrUpdateBookingTemplateRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -404,6 +448,9 @@ func (o CreateOrUpdateBookingTemplateRequest) ToMap() (map[string]interface{}, e
 	}
 	if o.Grouping.IsSet() {
 		toSerialize["grouping"] = o.Grouping.Get()
+	}
+	if o.AutoPersist.IsSet() {
+		toSerialize["auto_persist"] = o.AutoPersist.Get()
 	}
 	return toSerialize, nil
 }

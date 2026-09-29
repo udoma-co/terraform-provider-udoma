@@ -31,7 +31,7 @@ type AllocationKey struct {
 	Name string `json:"name"`
 	// Optional explanation of the allocation key.
 	Description *string `json:"description,omitempty"`
-	// Pseudocode / mathematical expression defining how costs are distributed (may contain named placeholders).
+	// JavaScript expression defining how costs are distributed. The expression is evaluated for each unit of a building and has to return the non-negative allocation quantity of the unit, e.g. `mea` or `area`. The costs are distributed proportionally to the quantities of all units. Following placeholders are available: `mea` (the co-ownership share of the unit from the division declaration), `area`, `heating_area`, `rooms`, `units` (always 1), `consumption` (the consumption of the unit for the cost type in the fiscal year), `consumption_amount` (the total amount of the consumption records), `persons` (the average number of persons living in the unit during the fiscal year), `person_days` (the number of days the persons lived in the unit during the fiscal year), `days` (the number of days of the fiscal year), `unit` (the property of the unit) and `extensions` (the entity extension values of the unit). The persons are the tenants of the tenancies of the unit. For the periods the unit is not rented out, the persons set in the property details of the unit are used.
 	Formula *string `json:"formula,omitempty"`
 	// A flag indicating whether the entity is published as a catalog item. Catalog items are defined once for the environment and are managed centrally, they cannot be edited from a customer account that has subscribed to them. The flag is derived from the catalog and is never set by the client.
 	IsCatalogItem *bool `json:"is_catalog_item,omitempty"`

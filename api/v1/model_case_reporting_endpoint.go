@@ -31,6 +31,8 @@ type CaseReportingEndpoint struct {
 	Name string `json:"name"`
 	// Whether the endpoint is enabled or not
 	Active *bool `json:"active,omitempty"`
+	// Whether the chatbot is offered on the public page of the endpoint.
+	ChatbotEnabled *bool `json:"chatbot_enabled,omitempty"`
 	// The IDs of the properties for which the endpoint can be used to raise cases
 	PropertyRefs []string `json:"property_refs,omitempty"`
 	// Categories, used to group the templates, in order not to clutter the Case Reporting Endpoint page.
@@ -193,6 +195,38 @@ func (o *CaseReportingEndpoint) SetActive(v bool) {
 	o.Active = &v
 }
 
+// GetChatbotEnabled returns the ChatbotEnabled field value if set, zero value otherwise.
+func (o *CaseReportingEndpoint) GetChatbotEnabled() bool {
+	if o == nil || IsNil(o.ChatbotEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.ChatbotEnabled
+}
+
+// GetChatbotEnabledOk returns a tuple with the ChatbotEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CaseReportingEndpoint) GetChatbotEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.ChatbotEnabled) {
+		return nil, false
+	}
+	return o.ChatbotEnabled, true
+}
+
+// HasChatbotEnabled returns a boolean if a field has been set.
+func (o *CaseReportingEndpoint) HasChatbotEnabled() bool {
+	if o != nil && !IsNil(o.ChatbotEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetChatbotEnabled gets a reference to the given bool and assigns it to the ChatbotEnabled field.
+func (o *CaseReportingEndpoint) SetChatbotEnabled(v bool) {
+	o.ChatbotEnabled = &v
+}
+
 // GetPropertyRefs returns the PropertyRefs field value if set, zero value otherwise.
 func (o *CaseReportingEndpoint) GetPropertyRefs() []string {
 	if o == nil || IsNil(o.PropertyRefs) {
@@ -329,6 +363,9 @@ func (o CaseReportingEndpoint) ToMap() (map[string]interface{}, error) {
 	toSerialize["name"] = o.Name
 	if !IsNil(o.Active) {
 		toSerialize["active"] = o.Active
+	}
+	if !IsNil(o.ChatbotEnabled) {
+		toSerialize["chatbot_enabled"] = o.ChatbotEnabled
 	}
 	if !IsNil(o.PropertyRefs) {
 		toSerialize["property_refs"] = o.PropertyRefs
