@@ -21,7 +21,8 @@ var _ MappedNullable = &QueryAllocationKeyOverridesRequest{}
 
 // QueryAllocationKeyOverridesRequest struct for QueryAllocationKeyOverridesRequest
 type QueryAllocationKeyOverridesRequest struct {
-	PropertyRef   string  `json:"property_ref"`
+	PropertyRef string `json:"property_ref"`
+	// Optional, only return the overrides valid during the fiscal year.
 	FiscalYearRef *string `json:"fiscal_year_ref,omitempty"`
 }
 

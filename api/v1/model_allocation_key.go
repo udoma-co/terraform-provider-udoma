@@ -30,8 +30,12 @@ type AllocationKey struct {
 	// Human-readable name, e.g. \"by area\".
 	Name string `json:"name"`
 	// Optional explanation of the allocation key.
-	Description *string `json:"description,omitempty"`
-	// JavaScript expression defining how costs are distributed. The expression is evaluated for each unit of a building and has to return the non-negative allocation quantity of the unit, e.g. `mea` or `area`. The costs are distributed proportionally to the quantities of all units. Following placeholders are available: `mea` (the co-ownership share of the unit from the division declaration), `area`, `heating_area`, `rooms`, `units` (always 1), `consumption` (the consumption of the unit for the cost type in the fiscal year), `consumption_amount` (the total amount of the consumption records), `persons` (the average number of persons living in the unit during the fiscal year), `person_days` (the number of days the persons lived in the unit during the fiscal year), `days` (the number of days of the fiscal year), `unit` (the property of the unit) and `extensions` (the entity extension values of the unit). The persons are the tenants of the tenancies of the unit. For the periods the unit is not rented out, the persons set in the property details of the unit are used.
+	Description *string                     `json:"description,omitempty"`
+	Type        *AllocationKeyTypeEnum      `json:"type,omitempty"`
+	Attribute   *AllocationKeyAttributeEnum `json:"attribute,omitempty"`
+	// Only for keys of the type `QUANTITY`: the name under which the quantity-days of the key are available in formulas, as `quantities.<identifier>`. Must be a valid JavaScript identifier. If omitted, it is derived from the name of the key.
+	Identifier *string `json:"identifier,omitempty"`
+	// Only for keys of the type `FORMULA`. JavaScript expression defining how costs are distributed. The expression is evaluated for each unit of a building and has to return the non-negative allocation quantity of the unit, e.g. `mea` or `area`. The costs are distributed proportionally to the quantities of all units. Following placeholders are available: `mea` (the co-ownership share of the unit from the division declaration), `area`, `heating_area`, `rooms`, `units` (always 1), `consumption` (the consumption of the unit for the cost type in the fiscal year), `consumption_amount` (the total amount of the consumption records), `persons` (the average number of persons living in the unit during the fiscal year), `person_days` (the number of days the persons lived in the unit during the fiscal year), `days` (the number of days of the fiscal year), `unit` (the property of the unit) and `extensions` (the entity extension values of the unit). The persons are the tenants of the tenancies of the unit. For the periods the unit is not rented out, the persons set in the property details of the unit are used. The quantity-days of all keys of the type `QUANTITY` are available as `quantities.<identifier>`.
 	Formula *string `json:"formula,omitempty"`
 	// A flag indicating whether the entity is published as a catalog item. Catalog items are defined once for the environment and are managed centrally, they cannot be edited from a customer account that has subscribed to them. The flag is derived from the catalog and is never set by the client.
 	IsCatalogItem *bool `json:"is_catalog_item,omitempty"`
@@ -188,6 +192,102 @@ func (o *AllocationKey) SetDescription(v string) {
 	o.Description = &v
 }
 
+// GetType returns the Type field value if set, zero value otherwise.
+func (o *AllocationKey) GetType() AllocationKeyTypeEnum {
+	if o == nil || IsNil(o.Type) {
+		var ret AllocationKeyTypeEnum
+		return ret
+	}
+	return *o.Type
+}
+
+// GetTypeOk returns a tuple with the Type field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AllocationKey) GetTypeOk() (*AllocationKeyTypeEnum, bool) {
+	if o == nil || IsNil(o.Type) {
+		return nil, false
+	}
+	return o.Type, true
+}
+
+// HasType returns a boolean if a field has been set.
+func (o *AllocationKey) HasType() bool {
+	if o != nil && !IsNil(o.Type) {
+		return true
+	}
+
+	return false
+}
+
+// SetType gets a reference to the given AllocationKeyTypeEnum and assigns it to the Type field.
+func (o *AllocationKey) SetType(v AllocationKeyTypeEnum) {
+	o.Type = &v
+}
+
+// GetAttribute returns the Attribute field value if set, zero value otherwise.
+func (o *AllocationKey) GetAttribute() AllocationKeyAttributeEnum {
+	if o == nil || IsNil(o.Attribute) {
+		var ret AllocationKeyAttributeEnum
+		return ret
+	}
+	return *o.Attribute
+}
+
+// GetAttributeOk returns a tuple with the Attribute field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AllocationKey) GetAttributeOk() (*AllocationKeyAttributeEnum, bool) {
+	if o == nil || IsNil(o.Attribute) {
+		return nil, false
+	}
+	return o.Attribute, true
+}
+
+// HasAttribute returns a boolean if a field has been set.
+func (o *AllocationKey) HasAttribute() bool {
+	if o != nil && !IsNil(o.Attribute) {
+		return true
+	}
+
+	return false
+}
+
+// SetAttribute gets a reference to the given AllocationKeyAttributeEnum and assigns it to the Attribute field.
+func (o *AllocationKey) SetAttribute(v AllocationKeyAttributeEnum) {
+	o.Attribute = &v
+}
+
+// GetIdentifier returns the Identifier field value if set, zero value otherwise.
+func (o *AllocationKey) GetIdentifier() string {
+	if o == nil || IsNil(o.Identifier) {
+		var ret string
+		return ret
+	}
+	return *o.Identifier
+}
+
+// GetIdentifierOk returns a tuple with the Identifier field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AllocationKey) GetIdentifierOk() (*string, bool) {
+	if o == nil || IsNil(o.Identifier) {
+		return nil, false
+	}
+	return o.Identifier, true
+}
+
+// HasIdentifier returns a boolean if a field has been set.
+func (o *AllocationKey) HasIdentifier() bool {
+	if o != nil && !IsNil(o.Identifier) {
+		return true
+	}
+
+	return false
+}
+
+// SetIdentifier gets a reference to the given string and assigns it to the Identifier field.
+func (o *AllocationKey) SetIdentifier(v string) {
+	o.Identifier = &v
+}
+
 // GetFormula returns the Formula field value if set, zero value otherwise.
 func (o *AllocationKey) GetFormula() string {
 	if o == nil || IsNil(o.Formula) {
@@ -268,6 +368,15 @@ func (o AllocationKey) ToMap() (map[string]interface{}, error) {
 	toSerialize["name"] = o.Name
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
+	}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.Attribute) {
+		toSerialize["attribute"] = o.Attribute
+	}
+	if !IsNil(o.Identifier) {
+		toSerialize["identifier"] = o.Identifier
 	}
 	if !IsNil(o.Formula) {
 		toSerialize["formula"] = o.Formula

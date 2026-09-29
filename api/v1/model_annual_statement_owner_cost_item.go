@@ -23,8 +23,11 @@ var _ MappedNullable = &AnnualStatementOwnerCostItem{}
 type AnnualStatementOwnerCostItem struct {
 	// The cost type the costs are booked on.
 	CostTypeRef string `json:"cost_type_ref"`
-	// The allocation quantity of the owner, e.g. the co-ownership shares of the unit, weighted by the part of the fiscal year the unit was owned.
-	Quantity *float64 `json:"quantity,omitempty"`
+	// The allocation quantity of the owner, e.g. the co-ownership shares of the unit, weighted by the part of the fiscal year the unit was owned. For keys of the type `QUANTITY`, the quantity-days of the unit.
+	Quantity     *float64                       `json:"quantity,omitempty"`
+	OverrideMode *AllocationKeyOverrideModeEnum `json:"override_mode,omitempty"`
+	// Only for the mode `RATIO`: the part (0-1) of the costs of the cost type the unit bears, weighted by days.
+	Ratio *float64 `json:"ratio,omitempty"`
 	// The share of the owner in the costs of the cost type.
 	Amount float64 `json:"amount"`
 	// The part of the amount that was booked directly on the unit.
@@ -108,6 +111,70 @@ func (o *AnnualStatementOwnerCostItem) SetQuantity(v float64) {
 	o.Quantity = &v
 }
 
+// GetOverrideMode returns the OverrideMode field value if set, zero value otherwise.
+func (o *AnnualStatementOwnerCostItem) GetOverrideMode() AllocationKeyOverrideModeEnum {
+	if o == nil || IsNil(o.OverrideMode) {
+		var ret AllocationKeyOverrideModeEnum
+		return ret
+	}
+	return *o.OverrideMode
+}
+
+// GetOverrideModeOk returns a tuple with the OverrideMode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AnnualStatementOwnerCostItem) GetOverrideModeOk() (*AllocationKeyOverrideModeEnum, bool) {
+	if o == nil || IsNil(o.OverrideMode) {
+		return nil, false
+	}
+	return o.OverrideMode, true
+}
+
+// HasOverrideMode returns a boolean if a field has been set.
+func (o *AnnualStatementOwnerCostItem) HasOverrideMode() bool {
+	if o != nil && !IsNil(o.OverrideMode) {
+		return true
+	}
+
+	return false
+}
+
+// SetOverrideMode gets a reference to the given AllocationKeyOverrideModeEnum and assigns it to the OverrideMode field.
+func (o *AnnualStatementOwnerCostItem) SetOverrideMode(v AllocationKeyOverrideModeEnum) {
+	o.OverrideMode = &v
+}
+
+// GetRatio returns the Ratio field value if set, zero value otherwise.
+func (o *AnnualStatementOwnerCostItem) GetRatio() float64 {
+	if o == nil || IsNil(o.Ratio) {
+		var ret float64
+		return ret
+	}
+	return *o.Ratio
+}
+
+// GetRatioOk returns a tuple with the Ratio field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AnnualStatementOwnerCostItem) GetRatioOk() (*float64, bool) {
+	if o == nil || IsNil(o.Ratio) {
+		return nil, false
+	}
+	return o.Ratio, true
+}
+
+// HasRatio returns a boolean if a field has been set.
+func (o *AnnualStatementOwnerCostItem) HasRatio() bool {
+	if o != nil && !IsNil(o.Ratio) {
+		return true
+	}
+
+	return false
+}
+
+// SetRatio gets a reference to the given float64 and assigns it to the Ratio field.
+func (o *AnnualStatementOwnerCostItem) SetRatio(v float64) {
+	o.Ratio = &v
+}
+
 // GetAmount returns the Amount field value
 func (o *AnnualStatementOwnerCostItem) GetAmount() float64 {
 	if o == nil {
@@ -177,6 +244,12 @@ func (o AnnualStatementOwnerCostItem) ToMap() (map[string]interface{}, error) {
 	toSerialize["cost_type_ref"] = o.CostTypeRef
 	if !IsNil(o.Quantity) {
 		toSerialize["quantity"] = o.Quantity
+	}
+	if !IsNil(o.OverrideMode) {
+		toSerialize["override_mode"] = o.OverrideMode
+	}
+	if !IsNil(o.Ratio) {
+		toSerialize["ratio"] = o.Ratio
 	}
 	toSerialize["amount"] = o.Amount
 	if !IsNil(o.DirectAmount) {

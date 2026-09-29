@@ -2497,6 +2497,115 @@ func (a *DefaultAPIService) CreateAllocationKeyOverrideExecute(r ApiCreateAlloca
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiCreateAllocationQuantityRequest struct {
+	ctx                                     context.Context
+	ApiService                              *DefaultAPIService
+	createOrUpdateAllocationQuantityRequest *CreateOrUpdateAllocationQuantityRequest
+}
+
+func (r ApiCreateAllocationQuantityRequest) CreateOrUpdateAllocationQuantityRequest(createOrUpdateAllocationQuantityRequest CreateOrUpdateAllocationQuantityRequest) ApiCreateAllocationQuantityRequest {
+	r.createOrUpdateAllocationQuantityRequest = &createOrUpdateAllocationQuantityRequest
+	return r
+}
+
+func (r ApiCreateAllocationQuantityRequest) Execute() (*AllocationQuantity, *http.Response, error) {
+	return r.ApiService.CreateAllocationQuantityExecute(r)
+}
+
+/*
+CreateAllocationQuantity Create a new allocation quantity
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiCreateAllocationQuantityRequest
+*/
+func (a *DefaultAPIService) CreateAllocationQuantity(ctx context.Context) ApiCreateAllocationQuantityRequest {
+	return ApiCreateAllocationQuantityRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return AllocationQuantity
+func (a *DefaultAPIService) CreateAllocationQuantityExecute(r ApiCreateAllocationQuantityRequest) (*AllocationQuantity, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *AllocationQuantity
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateAllocationQuantity")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/allocation-quantity"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createOrUpdateAllocationQuantityRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdateAllocationQuantityRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrUpdateAllocationQuantityRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiCreateAnnualStatementRequest struct {
 	ctx                          context.Context
 	ApiService                   *DefaultAPIService
@@ -10221,6 +10330,96 @@ func (a *DefaultAPIService) DeleteAllocationKeyOverrideExecute(r ApiDeleteAlloca
 
 	localVarPath := localBasePath + "/allocation-key-override/{overrideID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"overrideID"+"}", url.PathEscape(parameterValueToString(r.overrideID, "overrideID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDeleteAllocationQuantityRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	quantityID string
+}
+
+func (r ApiDeleteAllocationQuantityRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteAllocationQuantityExecute(r)
+}
+
+/*
+DeleteAllocationQuantity Delete an allocation quantity
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param quantityID unique generated ID of an allocation quantity
+	@return ApiDeleteAllocationQuantityRequest
+*/
+func (a *DefaultAPIService) DeleteAllocationQuantity(ctx context.Context, quantityID string) ApiDeleteAllocationQuantityRequest {
+	return ApiDeleteAllocationQuantityRequest{
+		ApiService: a,
+		ctx:        ctx,
+		quantityID: quantityID,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DeleteAllocationQuantityExecute(r ApiDeleteAllocationQuantityRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteAllocationQuantity")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/allocation-quantity/{quantityID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"quantityID"+"}", url.PathEscape(parameterValueToString(r.quantityID, "quantityID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -19641,6 +19840,210 @@ func (a *DefaultAPIService) GetAllocationKeyOverrideExecute(r ApiGetAllocationKe
 
 	localVarPath := localBasePath + "/allocation-key-override/{overrideID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"overrideID"+"}", url.PathEscape(parameterValueToString(r.overrideID, "overrideID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetAllocationKeyUsageRequest struct {
+	ctx             context.Context
+	ApiService      *DefaultAPIService
+	allocationKeyID string
+}
+
+func (r ApiGetAllocationKeyUsageRequest) Execute() (*AllocationKeyUsage, *http.Response, error) {
+	return r.ApiService.GetAllocationKeyUsageExecute(r)
+}
+
+/*
+GetAllocationKeyUsage Get where an allocation key is used
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param allocationKeyID unique generated ID of an allocation key
+	@return ApiGetAllocationKeyUsageRequest
+*/
+func (a *DefaultAPIService) GetAllocationKeyUsage(ctx context.Context, allocationKeyID string) ApiGetAllocationKeyUsageRequest {
+	return ApiGetAllocationKeyUsageRequest{
+		ApiService:      a,
+		ctx:             ctx,
+		allocationKeyID: allocationKeyID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return AllocationKeyUsage
+func (a *DefaultAPIService) GetAllocationKeyUsageExecute(r ApiGetAllocationKeyUsageRequest) (*AllocationKeyUsage, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *AllocationKeyUsage
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetAllocationKeyUsage")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/allocation-key/{allocationKeyID}/usage"
+	localVarPath = strings.Replace(localVarPath, "{"+"allocationKeyID"+"}", url.PathEscape(parameterValueToString(r.allocationKeyID, "allocationKeyID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetAllocationQuantityRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	quantityID string
+}
+
+func (r ApiGetAllocationQuantityRequest) Execute() (*AllocationQuantity, *http.Response, error) {
+	return r.ApiService.GetAllocationQuantityExecute(r)
+}
+
+/*
+GetAllocationQuantity Get an allocation quantity by ID
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param quantityID unique generated ID of an allocation quantity
+	@return ApiGetAllocationQuantityRequest
+*/
+func (a *DefaultAPIService) GetAllocationQuantity(ctx context.Context, quantityID string) ApiGetAllocationQuantityRequest {
+	return ApiGetAllocationQuantityRequest{
+		ApiService: a,
+		ctx:        ctx,
+		quantityID: quantityID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return AllocationQuantity
+func (a *DefaultAPIService) GetAllocationQuantityExecute(r ApiGetAllocationQuantityRequest) (*AllocationQuantity, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *AllocationQuantity
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetAllocationQuantity")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/allocation-quantity/{quantityID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"quantityID"+"}", url.PathEscape(parameterValueToString(r.quantityID, "quantityID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -39832,6 +40235,224 @@ func (a *DefaultAPIService) QueryAllocationKeysExecute(r ApiQueryAllocationKeysR
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiQueryAllocationQuantitiesRequest struct {
+	ctx                              context.Context
+	ApiService                       *DefaultAPIService
+	queryAllocationQuantitiesRequest *QueryAllocationQuantitiesRequest
+}
+
+func (r ApiQueryAllocationQuantitiesRequest) QueryAllocationQuantitiesRequest(queryAllocationQuantitiesRequest QueryAllocationQuantitiesRequest) ApiQueryAllocationQuantitiesRequest {
+	r.queryAllocationQuantitiesRequest = &queryAllocationQuantitiesRequest
+	return r
+}
+
+func (r ApiQueryAllocationQuantitiesRequest) Execute() ([]AllocationQuantity, *http.Response, error) {
+	return r.ApiService.QueryAllocationQuantitiesExecute(r)
+}
+
+/*
+QueryAllocationQuantities Query allocation quantities by key and unit
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiQueryAllocationQuantitiesRequest
+*/
+func (a *DefaultAPIService) QueryAllocationQuantities(ctx context.Context) ApiQueryAllocationQuantitiesRequest {
+	return ApiQueryAllocationQuantitiesRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return []AllocationQuantity
+func (a *DefaultAPIService) QueryAllocationQuantitiesExecute(r ApiQueryAllocationQuantitiesRequest) ([]AllocationQuantity, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []AllocationQuantity
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.QueryAllocationQuantities")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/allocation-quantities"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.queryAllocationQuantitiesRequest == nil {
+		return localVarReturnValue, nil, reportError("queryAllocationQuantitiesRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.queryAllocationQuantitiesRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiQueryAllocationQuantityRequirementsRequest struct {
+	ctx                                        context.Context
+	ApiService                                 *DefaultAPIService
+	queryAllocationQuantityRequirementsRequest *QueryAllocationQuantityRequirementsRequest
+}
+
+func (r ApiQueryAllocationQuantityRequirementsRequest) QueryAllocationQuantityRequirementsRequest(queryAllocationQuantityRequirementsRequest QueryAllocationQuantityRequirementsRequest) ApiQueryAllocationQuantityRequirementsRequest {
+	r.queryAllocationQuantityRequirementsRequest = &queryAllocationQuantityRequirementsRequest
+	return r
+}
+
+func (r ApiQueryAllocationQuantityRequirementsRequest) Execute() (*AllocationQuantityRequirements, *http.Response, error) {
+	return r.ApiService.QueryAllocationQuantityRequirementsExecute(r)
+}
+
+/*
+QueryAllocationQuantityRequirements Determine the allocation quantities a building needs for a fiscal year
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiQueryAllocationQuantityRequirementsRequest
+*/
+func (a *DefaultAPIService) QueryAllocationQuantityRequirements(ctx context.Context) ApiQueryAllocationQuantityRequirementsRequest {
+	return ApiQueryAllocationQuantityRequirementsRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return AllocationQuantityRequirements
+func (a *DefaultAPIService) QueryAllocationQuantityRequirementsExecute(r ApiQueryAllocationQuantityRequirementsRequest) (*AllocationQuantityRequirements, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *AllocationQuantityRequirements
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.QueryAllocationQuantityRequirements")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/allocation-quantity-requirements"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.queryAllocationQuantityRequirementsRequest == nil {
+		return localVarReturnValue, nil, reportError("queryAllocationQuantityRequirementsRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.queryAllocationQuantityRequirementsRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiQueryAnnualStatementsRequest struct {
 	ctx                          context.Context
 	ApiService                   *DefaultAPIService
@@ -51370,6 +51991,119 @@ func (a *DefaultAPIService) UpdateAllocationKeyOverrideExecute(r ApiUpdateAlloca
 	}
 	// body params
 	localVarPostBody = r.createOrUpdateAllocationKeyOverrideRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdateAllocationQuantityRequest struct {
+	ctx                                     context.Context
+	ApiService                              *DefaultAPIService
+	quantityID                              string
+	createOrUpdateAllocationQuantityRequest *CreateOrUpdateAllocationQuantityRequest
+}
+
+func (r ApiUpdateAllocationQuantityRequest) CreateOrUpdateAllocationQuantityRequest(createOrUpdateAllocationQuantityRequest CreateOrUpdateAllocationQuantityRequest) ApiUpdateAllocationQuantityRequest {
+	r.createOrUpdateAllocationQuantityRequest = &createOrUpdateAllocationQuantityRequest
+	return r
+}
+
+func (r ApiUpdateAllocationQuantityRequest) Execute() (*AllocationQuantity, *http.Response, error) {
+	return r.ApiService.UpdateAllocationQuantityExecute(r)
+}
+
+/*
+UpdateAllocationQuantity Update an allocation quantity
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param quantityID unique generated ID of an allocation quantity
+	@return ApiUpdateAllocationQuantityRequest
+*/
+func (a *DefaultAPIService) UpdateAllocationQuantity(ctx context.Context, quantityID string) ApiUpdateAllocationQuantityRequest {
+	return ApiUpdateAllocationQuantityRequest{
+		ApiService: a,
+		ctx:        ctx,
+		quantityID: quantityID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return AllocationQuantity
+func (a *DefaultAPIService) UpdateAllocationQuantityExecute(r ApiUpdateAllocationQuantityRequest) (*AllocationQuantity, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *AllocationQuantity
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdateAllocationQuantity")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/allocation-quantity/{quantityID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"quantityID"+"}", url.PathEscape(parameterValueToString(r.quantityID, "quantityID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createOrUpdateAllocationQuantityRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdateAllocationQuantityRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrUpdateAllocationQuantityRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
