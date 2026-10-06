@@ -105,7 +105,7 @@ func (r *workflowEntrypoint) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:    true,
 				Description: "The location in the webapp where the workflow can be started from",
 				Validators: []validator.String{
-					stringvalidator.LengthAtMost(25),
+					stringvalidator.OneOf(stringSlice(api.AllowedWorkflowEntrypointLocationEnumValues)...),
 				},
 			},
 			"location_filters": schema.ListNestedAttribute{
