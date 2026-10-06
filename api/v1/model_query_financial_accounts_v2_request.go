@@ -29,7 +29,7 @@ type QueryFinancialAccountsV2Request struct {
 	// Free text search term. Which attributes are matched depends on the queried entity. Multiple terms can be given separated by whitespace, in which case an entity has to match all of them.
 	Search *string `json:"search,omitempty"`
 	// Only return accounts assigned to this revenue type
-	RevenueTypeRef *string `json:"revenue_type_ref,omitempty" validate:"regexp=^rt-[a-zA-Z0-9_-]{8,}$"`
+	RevenueTypeRef *string `json:"revenue_type_ref,omitempty" validate:"regexp=^rt-[2-9A-HJ-NP-Za-km-z]{19,22}$"`
 	// The lowest account number to include in the result
 	NumberMin *int64 `json:"number_min,omitempty"`
 	// The highest account number to include in the result

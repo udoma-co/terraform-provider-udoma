@@ -24,8 +24,10 @@ type FormInput struct {
 	// The ID of the input field, used to identify it within the form. If no  target value is set, this will also be how the value is stored and later accessed in the collected data.
 	Id string `json:"id"`
 	// Optional attribute name to use when exporting the value of this input. If not set, the ID will be used.
-	Target *string       `json:"target,omitempty"`
-	Type   FormInputType `json:"type"`
+	Target *string `json:"target,omitempty"`
+	// Optional ID of another input that scopes the lookup options for this input. Supported only for authenticated forms: a tenant_ref may be scoped by a property_ref (current tenants), and a property_ref may be scoped by a tenant_ref (all historical tenancy properties). The referenced input must be in the same repeat row or an ancestor repeat; sibling and descendant repeat inputs are not supported.
+	ScopeInput *string       `json:"scope_input,omitempty"`
+	Type       FormInputType `json:"type"`
 	// a map of values, where the key and values are strings
 	Attributes *map[string]string `json:"attributes,omitempty"`
 	// a map of values, where the key and values are strings
@@ -126,6 +128,38 @@ func (o *FormInput) HasTarget() bool {
 // SetTarget gets a reference to the given string and assigns it to the Target field.
 func (o *FormInput) SetTarget(v string) {
 	o.Target = &v
+}
+
+// GetScopeInput returns the ScopeInput field value if set, zero value otherwise.
+func (o *FormInput) GetScopeInput() string {
+	if o == nil || IsNil(o.ScopeInput) {
+		var ret string
+		return ret
+	}
+	return *o.ScopeInput
+}
+
+// GetScopeInputOk returns a tuple with the ScopeInput field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *FormInput) GetScopeInputOk() (*string, bool) {
+	if o == nil || IsNil(o.ScopeInput) {
+		return nil, false
+	}
+	return o.ScopeInput, true
+}
+
+// HasScopeInput returns a boolean if a field has been set.
+func (o *FormInput) HasScopeInput() bool {
+	if o != nil && !IsNil(o.ScopeInput) {
+		return true
+	}
+
+	return false
+}
+
+// SetScopeInput gets a reference to the given string and assigns it to the ScopeInput field.
+func (o *FormInput) SetScopeInput(v string) {
+	o.ScopeInput = &v
 }
 
 // GetType returns the Type field value
@@ -560,6 +594,9 @@ func (o FormInput) ToMap() (map[string]interface{}, error) {
 	toSerialize["id"] = o.Id
 	if !IsNil(o.Target) {
 		toSerialize["target"] = o.Target
+	}
+	if !IsNil(o.ScopeInput) {
+		toSerialize["scope_input"] = o.ScopeInput
 	}
 	toSerialize["type"] = o.Type
 	if !IsNil(o.Attributes) {

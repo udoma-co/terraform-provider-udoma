@@ -33,14 +33,20 @@ type AnnualStatementCostItem struct {
 	// The name of the allocation key at the time of the preparation.
 	AllocationKeyName *string                `json:"allocation_key_name,omitempty"`
 	AllocationKeyType *AllocationKeyTypeEnum `json:"allocation_key_type,omitempty"`
-	// The total costs of the cost type booked for the building.
+	// The total costs of the cost type booked for the building and its units. Costs booked on ownerships are not included, see owner_amount.
 	TotalAmount float64 `json:"total_amount"`
 	// The part of the total costs booked directly on a unit, which is assigned to that unit only and not distributed.
 	DirectAmount *float64 `json:"direct_amount,omitempty"`
 	// The sum of the allocation quantities of all units, e.g. the total co-ownership shares or the total area. For keys of the type `QUANTITY`, the total quantity-days of all units.
 	TotalQuantity *float64 `json:"total_quantity,omitempty"`
-	// The part of the total costs that could not be assigned to any owner, e.g. because a unit has no owner for a part of the fiscal year.
+	// The part of the total costs that can be billed to tenants (umlagefähige Kosten), i.e. total_amount × tenant_billing_rate / 100.
+	BillableAmount *float64 `json:"billable_amount,omitempty"`
+	// Costs of the cost type booked on the ownerships of the units, i.e. costs the owners bear themselves outside the costs of the building, e.g. the property tax of a unit in a condominium. They are not part of the owner statements, but charged to the tenancies of rental-managed units like costs booked directly on the unit.
+	OwnerAmount *float64 `json:"owner_amount,omitempty"`
+	// The part of the total costs that could not be assigned, e.g. because the allocation key could not be evaluated. In condominium buildings, it includes the costs of the periods a unit has no owner.
 	UnallocatedAmount *float64 `json:"unallocated_amount,omitempty"`
+	// The part of the costs (including owner_amount) of rental-managed units falling on the periods they were not let (Leerstand). These costs are borne by the owner.
+	VacancyAmount *float64 `json:"vacancy_amount,omitempty"`
 }
 
 type _AnnualStatementCostItem AnnualStatementCostItem
@@ -368,6 +374,70 @@ func (o *AnnualStatementCostItem) SetTotalQuantity(v float64) {
 	o.TotalQuantity = &v
 }
 
+// GetBillableAmount returns the BillableAmount field value if set, zero value otherwise.
+func (o *AnnualStatementCostItem) GetBillableAmount() float64 {
+	if o == nil || IsNil(o.BillableAmount) {
+		var ret float64
+		return ret
+	}
+	return *o.BillableAmount
+}
+
+// GetBillableAmountOk returns a tuple with the BillableAmount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AnnualStatementCostItem) GetBillableAmountOk() (*float64, bool) {
+	if o == nil || IsNil(o.BillableAmount) {
+		return nil, false
+	}
+	return o.BillableAmount, true
+}
+
+// HasBillableAmount returns a boolean if a field has been set.
+func (o *AnnualStatementCostItem) HasBillableAmount() bool {
+	if o != nil && !IsNil(o.BillableAmount) {
+		return true
+	}
+
+	return false
+}
+
+// SetBillableAmount gets a reference to the given float64 and assigns it to the BillableAmount field.
+func (o *AnnualStatementCostItem) SetBillableAmount(v float64) {
+	o.BillableAmount = &v
+}
+
+// GetOwnerAmount returns the OwnerAmount field value if set, zero value otherwise.
+func (o *AnnualStatementCostItem) GetOwnerAmount() float64 {
+	if o == nil || IsNil(o.OwnerAmount) {
+		var ret float64
+		return ret
+	}
+	return *o.OwnerAmount
+}
+
+// GetOwnerAmountOk returns a tuple with the OwnerAmount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AnnualStatementCostItem) GetOwnerAmountOk() (*float64, bool) {
+	if o == nil || IsNil(o.OwnerAmount) {
+		return nil, false
+	}
+	return o.OwnerAmount, true
+}
+
+// HasOwnerAmount returns a boolean if a field has been set.
+func (o *AnnualStatementCostItem) HasOwnerAmount() bool {
+	if o != nil && !IsNil(o.OwnerAmount) {
+		return true
+	}
+
+	return false
+}
+
+// SetOwnerAmount gets a reference to the given float64 and assigns it to the OwnerAmount field.
+func (o *AnnualStatementCostItem) SetOwnerAmount(v float64) {
+	o.OwnerAmount = &v
+}
+
 // GetUnallocatedAmount returns the UnallocatedAmount field value if set, zero value otherwise.
 func (o *AnnualStatementCostItem) GetUnallocatedAmount() float64 {
 	if o == nil || IsNil(o.UnallocatedAmount) {
@@ -398,6 +468,38 @@ func (o *AnnualStatementCostItem) HasUnallocatedAmount() bool {
 // SetUnallocatedAmount gets a reference to the given float64 and assigns it to the UnallocatedAmount field.
 func (o *AnnualStatementCostItem) SetUnallocatedAmount(v float64) {
 	o.UnallocatedAmount = &v
+}
+
+// GetVacancyAmount returns the VacancyAmount field value if set, zero value otherwise.
+func (o *AnnualStatementCostItem) GetVacancyAmount() float64 {
+	if o == nil || IsNil(o.VacancyAmount) {
+		var ret float64
+		return ret
+	}
+	return *o.VacancyAmount
+}
+
+// GetVacancyAmountOk returns a tuple with the VacancyAmount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AnnualStatementCostItem) GetVacancyAmountOk() (*float64, bool) {
+	if o == nil || IsNil(o.VacancyAmount) {
+		return nil, false
+	}
+	return o.VacancyAmount, true
+}
+
+// HasVacancyAmount returns a boolean if a field has been set.
+func (o *AnnualStatementCostItem) HasVacancyAmount() bool {
+	if o != nil && !IsNil(o.VacancyAmount) {
+		return true
+	}
+
+	return false
+}
+
+// SetVacancyAmount gets a reference to the given float64 and assigns it to the VacancyAmount field.
+func (o *AnnualStatementCostItem) SetVacancyAmount(v float64) {
+	o.VacancyAmount = &v
 }
 
 func (o AnnualStatementCostItem) MarshalJSON() ([]byte, error) {
@@ -436,8 +538,17 @@ func (o AnnualStatementCostItem) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.TotalQuantity) {
 		toSerialize["total_quantity"] = o.TotalQuantity
 	}
+	if !IsNil(o.BillableAmount) {
+		toSerialize["billable_amount"] = o.BillableAmount
+	}
+	if !IsNil(o.OwnerAmount) {
+		toSerialize["owner_amount"] = o.OwnerAmount
+	}
 	if !IsNil(o.UnallocatedAmount) {
 		toSerialize["unallocated_amount"] = o.UnallocatedAmount
+	}
+	if !IsNil(o.VacancyAmount) {
+		toSerialize["vacancy_amount"] = o.VacancyAmount
 	}
 	return toSerialize, nil
 }

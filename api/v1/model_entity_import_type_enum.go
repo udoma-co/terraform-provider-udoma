@@ -20,14 +20,16 @@ type EntityImportTypeEnum string
 
 // List of EntityImportTypeEnum
 const (
-	ENTITYIMPORTTYPEENUM_BANK_ACCOUNT     EntityImportTypeEnum = "bank_account"
-	ENTITYIMPORTTYPEENUM_BANK_TRANSACTION EntityImportTypeEnum = "bank_transaction"
-	ENTITYIMPORTTYPEENUM_BOOKING          EntityImportTypeEnum = "booking"
-	ENTITYIMPORTTYPEENUM_PROPERTY         EntityImportTypeEnum = "property"
-	ENTITYIMPORTTYPEENUM_TENANCY          EntityImportTypeEnum = "tenancy"
-	ENTITYIMPORTTYPEENUM_TENANT           EntityImportTypeEnum = "tenant"
-	ENTITYIMPORTTYPEENUM_OWNER            EntityImportTypeEnum = "owner"
-	ENTITYIMPORTTYPEENUM_SERVICE_PROVIDER EntityImportTypeEnum = "service_provider"
+	ENTITYIMPORTTYPEENUM_BANK_ACCOUNT         EntityImportTypeEnum = "bank_account"
+	ENTITYIMPORTTYPEENUM_BANK_TRANSACTION     EntityImportTypeEnum = "bank_transaction"
+	ENTITYIMPORTTYPEENUM_BOOKING              EntityImportTypeEnum = "booking"
+	ENTITYIMPORTTYPEENUM_PROPERTY             EntityImportTypeEnum = "property"
+	ENTITYIMPORTTYPEENUM_TENANCY              EntityImportTypeEnum = "tenancy"
+	ENTITYIMPORTTYPEENUM_TENANT               EntityImportTypeEnum = "tenant"
+	ENTITYIMPORTTYPEENUM_OWNER                EntityImportTypeEnum = "owner"
+	ENTITYIMPORTTYPEENUM_SERVICE_PROVIDER     EntityImportTypeEnum = "service_provider"
+	ENTITYIMPORTTYPEENUM_PROPERTY_FISCAL_YEAR EntityImportTypeEnum = "property_fiscal_year"
+	ENTITYIMPORTTYPEENUM_UNIT_ASSESSMENT      EntityImportTypeEnum = "unit_assessment"
 )
 
 // All allowed values of EntityImportTypeEnum enum
@@ -40,6 +42,8 @@ var AllowedEntityImportTypeEnumEnumValues = []EntityImportTypeEnum{
 	"tenant",
 	"owner",
 	"service_provider",
+	"property_fiscal_year",
+	"unit_assessment",
 }
 
 func (v *EntityImportTypeEnum) UnmarshalJSON(src []byte) error {

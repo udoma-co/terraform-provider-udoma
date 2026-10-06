@@ -21,9 +21,9 @@ var _ MappedNullable = &UpdateAnnualStatementRequest{}
 type UpdateAnnualStatementRequest struct {
 	// Optional free text description of the statement.
 	Description *string `json:"description,omitempty"`
-	// IDs of the financial accounts representing the bank accounts and cash of the building. Their development over the fiscal year is part of the statement. If omitted on creation, the accounts of the previous statement of the building are used.
+	// IDs of the financial accounts representing the bank accounts and cash of the building. Their development over the fiscal year is part of the statement. If omitted on creation, the accounts of the previous statement of the building are used. Only for buildings managed as a condominium.
 	CashAccountRefs []string `json:"cash_account_refs,omitempty"`
-	// The allocation key used to distribute the reserve fund to the owners, both for the calculated share of each owner in the reserve and for distributing the reserve withdrawals. If omitted on creation, the key of the previous statement of the building is used.
+	// The allocation key used to distribute the reserve fund to the owners, both for the calculated share of each owner in the reserve and for distributing the reserve withdrawals. If omitted on creation, the key of the previous statement of the building is used. Only for buildings managed as a condominium.
 	ReserveAllocationKeyRef *string `json:"reserve_allocation_key_ref,omitempty"`
 }
 

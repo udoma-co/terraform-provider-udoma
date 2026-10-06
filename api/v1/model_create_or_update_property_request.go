@@ -27,7 +27,7 @@ type CreateOrUpdatePropertyRequest struct {
 	// Controls if the property is a rentable unit. If set to true, it will be possible to add tenancies to it. If set to false, it will not be possible to add tenancies to it and it can be set as a parent property for other properties.
 	Rentable *bool    `json:"rentable,omitempty"`
 	Address  *Address `json:"address,omitempty"`
-	// For appartments, this is the unique number within the building. For buildings, this can be used as a short identifier. Required when creating or updating a property. Properties that predate this keep an empty number until they are updated, so the field stays optional on responses.
+	// For appartments, this is the unique number within the building. For buildings, this can be used as a short identifier. The number must be unique among the units of the same parent property, or among the top-level properties if there is no parent. Required when creating or updating a property. Properties that predate this keep an empty number until they are updated, so the field stays optional on responses.
 	Number int32 `json:"number"`
 	// List of management types that are applicable for this property. This is used to determine which features are available for the property and is available for accounts that have a mixed management mode (see PropertyManagementConfig).
 	ManagementTypes []PropertyManagementTypeEnum `json:"management_types,omitempty"`
