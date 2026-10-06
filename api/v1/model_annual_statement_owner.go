@@ -36,8 +36,8 @@ type AnnualStatementOwner struct {
 	// The end of the ownership within the fiscal year (inclusive).
 	PeriodEnd *int64 `json:"period_end,omitempty"`
 	// The number of days of the fiscal year the unit was owned.
-	Days      *int32                         `json:"days,omitempty"`
-	CostItems []AnnualStatementOwnerCostItem `json:"cost_items,omitempty"`
+	Days      *int32                     `json:"days,omitempty"`
+	CostItems []AnnualStatementCostShare `json:"cost_items,omitempty"`
 	// The share of the owner in the reserve withdrawals, as a positive amount. Costs paid from the reserve are part of the cost items, so this share is deducted from them in total_costs. It does not affect reserve_share, which already reflects the withdrawals through the closing balance of the reserve.
 	ReserveWithdrawalShare *float64 `json:"reserve_withdrawal_share,omitempty"`
 	// The share of the owner in the costs after deducting the share in the reserve withdrawals, i.e. the sum of the amounts of all cost_items minus reserve_withdrawal_share.
@@ -310,9 +310,9 @@ func (o *AnnualStatementOwner) SetDays(v int32) {
 }
 
 // GetCostItems returns the CostItems field value if set, zero value otherwise.
-func (o *AnnualStatementOwner) GetCostItems() []AnnualStatementOwnerCostItem {
+func (o *AnnualStatementOwner) GetCostItems() []AnnualStatementCostShare {
 	if o == nil || IsNil(o.CostItems) {
-		var ret []AnnualStatementOwnerCostItem
+		var ret []AnnualStatementCostShare
 		return ret
 	}
 	return o.CostItems
@@ -320,7 +320,7 @@ func (o *AnnualStatementOwner) GetCostItems() []AnnualStatementOwnerCostItem {
 
 // GetCostItemsOk returns a tuple with the CostItems field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AnnualStatementOwner) GetCostItemsOk() ([]AnnualStatementOwnerCostItem, bool) {
+func (o *AnnualStatementOwner) GetCostItemsOk() ([]AnnualStatementCostShare, bool) {
 	if o == nil || IsNil(o.CostItems) {
 		return nil, false
 	}
@@ -336,8 +336,8 @@ func (o *AnnualStatementOwner) HasCostItems() bool {
 	return false
 }
 
-// SetCostItems gets a reference to the given []AnnualStatementOwnerCostItem and assigns it to the CostItems field.
-func (o *AnnualStatementOwner) SetCostItems(v []AnnualStatementOwnerCostItem) {
+// SetCostItems gets a reference to the given []AnnualStatementCostShare and assigns it to the CostItems field.
+func (o *AnnualStatementOwner) SetCostItems(v []AnnualStatementCostShare) {
 	o.CostItems = v
 }
 

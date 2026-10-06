@@ -100,9 +100,11 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateAccountBookings**](docs/DefaultAPI.md#createaccountbookings) | **Post** /financial/bookings | Create multi booking request
 *DefaultAPI* | [**CreateAccountDimension**](docs/DefaultAPI.md#createaccountdimension) | **Post** /financial/account-dimension | Create a new account dimension
 *DefaultAPI* | [**CreateAccountDimensionValue**](docs/DefaultAPI.md#createaccountdimensionvalue) | **Post** /financial/account-dimension/{dimensionID}/value | Create a new account dimension value
+*DefaultAPI* | [**CreateAdvisoryBoardMember**](docs/DefaultAPI.md#createadvisoryboardmember) | **Post** /properties/{propID}/advisory-board-member | Add a member to the owners&#39; advisory board of a building
 *DefaultAPI* | [**CreateAllocationKey**](docs/DefaultAPI.md#createallocationkey) | **Post** /allocation-key | Create a new allocation key
 *DefaultAPI* | [**CreateAllocationKeyOverride**](docs/DefaultAPI.md#createallocationkeyoverride) | **Post** /allocation-key-override | Create a new allocation key override
 *DefaultAPI* | [**CreateAllocationQuantity**](docs/DefaultAPI.md#createallocationquantity) | **Post** /allocation-quantity | Create a new allocation quantity
+*DefaultAPI* | [**CreateAnnualBudget**](docs/DefaultAPI.md#createannualbudget) | **Post** /annual-budget | Create an annual budget
 *DefaultAPI* | [**CreateAnnualStatement**](docs/DefaultAPI.md#createannualstatement) | **Post** /annual-statement | Create an annual statement
 *DefaultAPI* | [**CreateAppointment**](docs/DefaultAPI.md#createappointment) | **Post** /calendar/appointments/schedule/{scheduleID}/appointment | Create new appointment for a given schedule
 *DefaultAPI* | [**CreateAppointmentSchedule**](docs/DefaultAPI.md#createappointmentschedule) | **Post** /calendar/appointments/schedule | Create new appointment schedule
@@ -172,9 +174,11 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**CreateWorkflowEntrypoint**](docs/DefaultAPI.md#createworkflowentrypoint) | **Post** /workflows/definition/{definitionID}/entrypoint | Create a new workflow entry point for the workflow definition
 *DefaultAPI* | [**DeleteAccountDimension**](docs/DefaultAPI.md#deleteaccountdimension) | **Delete** /financial/account-dimension/{dimensionID} | Delete the account dimension with all its related data
 *DefaultAPI* | [**DeleteAccountDimensionValue**](docs/DefaultAPI.md#deleteaccountdimensionvalue) | **Delete** /financial/account-dimension/{dimensionID}/value/{refID} | Delete the account dimension value with all its related data
+*DefaultAPI* | [**DeleteAdvisoryBoardMember**](docs/DefaultAPI.md#deleteadvisoryboardmember) | **Delete** /properties/{propID}/advisory-board-members/{advisoryBoardMemberID} | Remove a member from the owners&#39; advisory board
 *DefaultAPI* | [**DeleteAllocationKey**](docs/DefaultAPI.md#deleteallocationkey) | **Delete** /allocation-key/{allocationKeyID} | Delete an allocation key
 *DefaultAPI* | [**DeleteAllocationKeyOverride**](docs/DefaultAPI.md#deleteallocationkeyoverride) | **Delete** /allocation-key-override/{overrideID} | Delete an allocation key override
 *DefaultAPI* | [**DeleteAllocationQuantity**](docs/DefaultAPI.md#deleteallocationquantity) | **Delete** /allocation-quantity/{quantityID} | Delete an allocation quantity
+*DefaultAPI* | [**DeleteAnnualBudget**](docs/DefaultAPI.md#deleteannualbudget) | **Delete** /annual-budget/{annualBudgetID} | Delete an annual budget
 *DefaultAPI* | [**DeleteAnnualStatement**](docs/DefaultAPI.md#deleteannualstatement) | **Delete** /annual-statement/{annualStatementID} | Delete an annual statement
 *DefaultAPI* | [**DeleteAppointment**](docs/DefaultAPI.md#deleteappointment) | **Delete** /calendar/appointments/entry/{entryID} | Delete an appointment
 *DefaultAPI* | [**DeleteAppointmentComment**](docs/DefaultAPI.md#deleteappointmentcomment) | **Delete** /calendar/appointments/entry/{entryID}/comment/{commentID} | Delete a comment from appointment.
@@ -256,6 +260,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**ExecuteWorkflowEntrypoint**](docs/DefaultAPI.md#executeworkflowentrypoint) | **Post** /workflows/entrypoint/{entrypointID}/execute | Execute the workflow entry point
 *DefaultAPI* | [**ExecuteWorkflowExecutionStep**](docs/DefaultAPI.md#executeworkflowexecutionstep) | **Post** /workflows/execution/{executionID} | Execute workflow execution step
 *DefaultAPI* | [**Feedback**](docs/DefaultAPI.md#feedback) | **Post** /feedback | User feedback about the product
+*DefaultAPI* | [**FinalizeAnnualBudget**](docs/DefaultAPI.md#finalizeannualbudget) | **Post** /annual-budget/{annualBudgetID}/finalize | Finalize an annual budget
 *DefaultAPI* | [**FinalizeAnnualStatement**](docs/DefaultAPI.md#finalizeannualstatement) | **Post** /annual-statement/{annualStatementID}/finalize | Finalize an annual statement
 *DefaultAPI* | [**FinalizePropertyHandover**](docs/DefaultAPI.md#finalizepropertyhandover) | **Put** /property-handovers/handovers/{handoverID}/finalize | Finalize a property handover
 *DefaultAPI* | [**GenerateAccountDimensionValues**](docs/DefaultAPI.md#generateaccountdimensionvalues) | **Post** /financial/account-dimension/{dimensionID}/values/generate | Generate the account dimension values for the given dimension
@@ -272,10 +277,12 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetAccountDimension**](docs/DefaultAPI.md#getaccountdimension) | **Get** /financial/account-dimension/{dimensionID} | Get the account dimension with all its attributes
 *DefaultAPI* | [**GetAccountDimensionValue**](docs/DefaultAPI.md#getaccountdimensionvalue) | **Get** /financial/account-dimension/{dimensionID}/value/{refID} | Get the account dimension value for a refID with all its attributes
 *DefaultAPI* | [**GetAccountSummary**](docs/DefaultAPI.md#getaccountsummary) | **Post** /summary | Get overview of data in the system for current account
+*DefaultAPI* | [**GetAdvisoryBoardMember**](docs/DefaultAPI.md#getadvisoryboardmember) | **Get** /properties/{propID}/advisory-board-members/{advisoryBoardMemberID} | Get an owners&#39; advisory board member by ID
 *DefaultAPI* | [**GetAllocationKey**](docs/DefaultAPI.md#getallocationkey) | **Get** /allocation-key/{allocationKeyID} | Get an allocation key by ID
 *DefaultAPI* | [**GetAllocationKeyOverride**](docs/DefaultAPI.md#getallocationkeyoverride) | **Get** /allocation-key-override/{overrideID} | Get an allocation key override by ID
 *DefaultAPI* | [**GetAllocationKeyUsage**](docs/DefaultAPI.md#getallocationkeyusage) | **Get** /allocation-key/{allocationKeyID}/usage | Get where an allocation key is used
 *DefaultAPI* | [**GetAllocationQuantity**](docs/DefaultAPI.md#getallocationquantity) | **Get** /allocation-quantity/{quantityID} | Get an allocation quantity by ID
+*DefaultAPI* | [**GetAnnualBudget**](docs/DefaultAPI.md#getannualbudget) | **Get** /annual-budget/{annualBudgetID} | Get an annual budget
 *DefaultAPI* | [**GetAnnualStatement**](docs/DefaultAPI.md#getannualstatement) | **Get** /annual-statement/{annualStatementID} | Get an annual statement
 *DefaultAPI* | [**GetAppointment**](docs/DefaultAPI.md#getappointment) | **Get** /calendar/appointments/entry/{entryID} | Get the appointment by ID
 *DefaultAPI* | [**GetAppointmentInIcalFormat**](docs/DefaultAPI.md#getappointmentinicalformat) | **Get** /calendar/appointments/entry/{entryID}/ical | Get appointment in ical format
@@ -425,6 +432,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**OutlookGetTenant**](docs/DefaultAPI.md#outlookgettenant) | **Get** /outlook/tenants | Get tenant by email
 *DefaultAPI* | [**OutlookGetTenantCases**](docs/DefaultAPI.md#outlookgettenantcases) | **Get** /outlook/tenants/{tenantID}/cases | Get recent cases for a tenant
 *DefaultAPI* | [**PersistBookingPreview**](docs/DefaultAPI.md#persistbookingpreview) | **Post** /financial/booking-preview/{bookingPreviewID}/persist | Persist the bookings in the given booking preview
+*DefaultAPI* | [**PrepareAnnualBudget**](docs/DefaultAPI.md#prepareannualbudget) | **Post** /annual-budget/{annualBudgetID}/prepare | Prepare an annual budget
 *DefaultAPI* | [**PrepareAnnualStatement**](docs/DefaultAPI.md#prepareannualstatement) | **Post** /annual-statement/{annualStatementID}/prepare | Prepare an annual statement
 *DefaultAPI* | [**PreviewCommentTemplate**](docs/DefaultAPI.md#previewcommenttemplate) | **Post** /comment-template/{commentTemplateID}/preview | Preview a comment template returning an example comment.
 *DefaultAPI* | [**PreviewDataImport**](docs/DefaultAPI.md#previewdataimport) | **Post** /data-import/template/{templateID}/preview | Preview a data import template returning an example data import.
@@ -464,10 +472,13 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**QueryAccountDimensionValuesV2**](docs/DefaultAPI.md#queryaccountdimensionvaluesv2) | **Post** /financial/account-dimension/{dimensionID}/values-v2 | Query all account dimension values for a given dimension
 *DefaultAPI* | [**QueryAccountDimensions**](docs/DefaultAPI.md#queryaccountdimensions) | **Post** /financial/account-dimensions | Query all account dimensions
 *DefaultAPI* | [**QueryAccountDimensionsV2**](docs/DefaultAPI.md#queryaccountdimensionsv2) | **Post** /financial/account-dimensions-v2 | Query all account dimensions
+*DefaultAPI* | [**QueryAdvisoryBoardCandidates**](docs/DefaultAPI.md#queryadvisoryboardcandidates) | **Post** /properties/{propID}/advisory-board-candidates | Query the owners eligible for the owners&#39; advisory board of a building
+*DefaultAPI* | [**QueryAdvisoryBoardMembers**](docs/DefaultAPI.md#queryadvisoryboardmembers) | **Post** /properties/{propID}/advisory-board-members | Query the owners&#39; advisory board members of a building
 *DefaultAPI* | [**QueryAllocationKeyOverrides**](docs/DefaultAPI.md#queryallocationkeyoverrides) | **Post** /allocation-key-overrides | Query allocation key overrides by property and fiscal year
 *DefaultAPI* | [**QueryAllocationKeys**](docs/DefaultAPI.md#queryallocationkeys) | **Post** /allocation-keys | Query all allocation keys for the account
 *DefaultAPI* | [**QueryAllocationQuantities**](docs/DefaultAPI.md#queryallocationquantities) | **Post** /allocation-quantities | Query allocation quantities by key and unit
 *DefaultAPI* | [**QueryAllocationQuantityRequirements**](docs/DefaultAPI.md#queryallocationquantityrequirements) | **Post** /allocation-quantity-requirements | Determine the allocation quantities a building needs for a fiscal year
+*DefaultAPI* | [**QueryAnnualBudgets**](docs/DefaultAPI.md#queryannualbudgets) | **Post** /annual-budgets | Query annual budgets
 *DefaultAPI* | [**QueryAnnualStatements**](docs/DefaultAPI.md#queryannualstatements) | **Post** /annual-statements | Query annual statements
 *DefaultAPI* | [**QueryAppointmentEntries**](docs/DefaultAPI.md#queryappointmententries) | **Post** /calendar/appointments/entries | Query the appointments of the account within a time frame
 *DefaultAPI* | [**QueryAppointmentScheduleWindows**](docs/DefaultAPI.md#queryappointmentschedulewindows) | **Post** /calendar/appointments/schedule/{scheduleID}/windows | Query the windows of an appointment schedule for a given time frame
@@ -573,9 +584,11 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateAccountConfig**](docs/DefaultAPI.md#updateaccountconfig) | **Put** /profile/account | Update the account configuration
 *DefaultAPI* | [**UpdateAccountDimension**](docs/DefaultAPI.md#updateaccountdimension) | **Put** /financial/account-dimension/{dimensionID} | Update an already existing account dimension
 *DefaultAPI* | [**UpdateAccountDimensionValue**](docs/DefaultAPI.md#updateaccountdimensionvalue) | **Put** /financial/account-dimension/{dimensionID}/value/{refID} | Update an already existing account dimension value
+*DefaultAPI* | [**UpdateAdvisoryBoardMember**](docs/DefaultAPI.md#updateadvisoryboardmember) | **Put** /properties/{propID}/advisory-board-members/{advisoryBoardMemberID} | Update an owners&#39; advisory board member by ID
 *DefaultAPI* | [**UpdateAllocationKey**](docs/DefaultAPI.md#updateallocationkey) | **Put** /allocation-key/{allocationKeyID} | Update an existing allocation key
 *DefaultAPI* | [**UpdateAllocationKeyOverride**](docs/DefaultAPI.md#updateallocationkeyoverride) | **Put** /allocation-key-override/{overrideID} | Update an allocation key override
 *DefaultAPI* | [**UpdateAllocationQuantity**](docs/DefaultAPI.md#updateallocationquantity) | **Put** /allocation-quantity/{quantityID} | Update an allocation quantity
+*DefaultAPI* | [**UpdateAnnualBudget**](docs/DefaultAPI.md#updateannualbudget) | **Put** /annual-budget/{annualBudgetID} | Update an annual budget
 *DefaultAPI* | [**UpdateAnnualStatement**](docs/DefaultAPI.md#updateannualstatement) | **Put** /annual-statement/{annualStatementID} | Update an annual statement
 *DefaultAPI* | [**UpdateAppointment**](docs/DefaultAPI.md#updateappointment) | **Put** /calendar/appointments/entry/{entryID} | Update appointment
 *DefaultAPI* | [**UpdateAppointmentSchedule**](docs/DefaultAPI.md#updateappointmentschedule) | **Put** /calendar/appointments/schedule/{scheduleID} | Update appointment schedule
@@ -646,6 +659,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UploadInvoiceAttachment**](docs/DefaultAPI.md#uploadinvoiceattachment) | **Post** /invoices/upload | Upload invoice attachment and extract invoice data
 *DefaultAPI* | [**ValidateBankAccountIban**](docs/DefaultAPI.md#validatebankaccountiban) | **Post** /bank-account-iban/validate | Validate a bank account IBAN
 *DefaultAPI* | [**ValidateCustomForm**](docs/DefaultAPI.md#validatecustomform) | **Post** /custom-form/{formID}/validate | Validate a custom form
+*DefaultAPI* | [**ValidatePropertyNumber**](docs/DefaultAPI.md#validatepropertynumber) | **Post** /property/number/validate | Validate a property number
 *DefaultAPI* | [**ValidateUserEmail**](docs/DefaultAPI.md#validateuseremail) | **Post** /email/validation | Validate user&#39;s email and point out problems if there are any
 *DefaultAPI* | [**ValidateWorkflowEntrypoint**](docs/DefaultAPI.md#validateworkflowentrypoint) | **Post** /workflows/entrypoint/{entrypointID}/validate | Run the workflow entrypoint validations
 
@@ -673,6 +687,10 @@ Class | Method | HTTP request | Description
  - [AddBadgeForEntityRequest](docs/AddBadgeForEntityRequest.md)
  - [AdditionalRentCost](docs/AdditionalRentCost.md)
  - [Address](docs/Address.md)
+ - [AdvisoryBoardCandidate](docs/AdvisoryBoardCandidate.md)
+ - [AdvisoryBoardMember](docs/AdvisoryBoardMember.md)
+ - [AdvisoryBoardMemberPartial](docs/AdvisoryBoardMemberPartial.md)
+ - [AdvisoryBoardRoleEnum](docs/AdvisoryBoardRoleEnum.md)
  - [AllocationConsumptionRequirement](docs/AllocationConsumptionRequirement.md)
  - [AllocationKey](docs/AllocationKey.md)
  - [AllocationKeyAttributeEnum](docs/AllocationKeyAttributeEnum.md)
@@ -692,14 +710,27 @@ Class | Method | HTTP request | Description
  - [AllocationQuantityRequirementCostType](docs/AllocationQuantityRequirementCostType.md)
  - [AllocationQuantityRequirementUnit](docs/AllocationQuantityRequirementUnit.md)
  - [AllocationQuantityRequirements](docs/AllocationQuantityRequirements.md)
+ - [AnnualBudget](docs/AnnualBudget.md)
+ - [AnnualBudgetInputAttributesPartial](docs/AnnualBudgetInputAttributesPartial.md)
+ - [AnnualBudgetItem](docs/AnnualBudgetItem.md)
+ - [AnnualBudgetItemInput](docs/AnnualBudgetItemInput.md)
+ - [AnnualBudgetItemInputPartial](docs/AnnualBudgetItemInputPartial.md)
+ - [AnnualBudgetItemTypeEnum](docs/AnnualBudgetItemTypeEnum.md)
+ - [AnnualBudgetReserve](docs/AnnualBudgetReserve.md)
+ - [AnnualBudgetStatusEnum](docs/AnnualBudgetStatusEnum.md)
+ - [AnnualBudgetTotals](docs/AnnualBudgetTotals.md)
+ - [AnnualBudgetUnit](docs/AnnualBudgetUnit.md)
+ - [AnnualBudgetUnitItem](docs/AnnualBudgetUnitItem.md)
  - [AnnualStatement](docs/AnnualStatement.md)
  - [AnnualStatementAccountDevelopment](docs/AnnualStatementAccountDevelopment.md)
  - [AnnualStatementCostItem](docs/AnnualStatementCostItem.md)
  - [AnnualStatementCostItemPartial](docs/AnnualStatementCostItemPartial.md)
+ - [AnnualStatementCostShare](docs/AnnualStatementCostShare.md)
  - [AnnualStatementInputAttributesPartial](docs/AnnualStatementInputAttributesPartial.md)
  - [AnnualStatementOwner](docs/AnnualStatementOwner.md)
- - [AnnualStatementOwnerCostItem](docs/AnnualStatementOwnerCostItem.md)
  - [AnnualStatementStatusEnum](docs/AnnualStatementStatusEnum.md)
+ - [AnnualStatementTenancy](docs/AnnualStatementTenancy.md)
+ - [AnnualStatementTenancyTotals](docs/AnnualStatementTenancyTotals.md)
  - [AnnualStatementTotals](docs/AnnualStatementTotals.md)
  - [Appointment](docs/Appointment.md)
  - [AppointmentComment](docs/AppointmentComment.md)
@@ -838,6 +869,7 @@ Class | Method | HTTP request | Description
  - [CreateAccountBookingAllocation](docs/CreateAccountBookingAllocation.md)
  - [CreateAccountBookingRequest](docs/CreateAccountBookingRequest.md)
  - [CreateAccountBookingsRequest](docs/CreateAccountBookingsRequest.md)
+ - [CreateAnnualBudgetRequest](docs/CreateAnnualBudgetRequest.md)
  - [CreateAnnualStatementRequest](docs/CreateAnnualStatementRequest.md)
  - [CreateApprovalRequest](docs/CreateApprovalRequest.md)
  - [CreateAttachmentUploadRequest](docs/CreateAttachmentUploadRequest.md)
@@ -855,6 +887,7 @@ Class | Method | HTTP request | Description
  - [CreateNotificationRequest](docs/CreateNotificationRequest.md)
  - [CreateOrUpdateAccountDimensionRequest](docs/CreateOrUpdateAccountDimensionRequest.md)
  - [CreateOrUpdateAccountDimensionValueRequest](docs/CreateOrUpdateAccountDimensionValueRequest.md)
+ - [CreateOrUpdateAdvisoryBoardMemberRequest](docs/CreateOrUpdateAdvisoryBoardMemberRequest.md)
  - [CreateOrUpdateAllocationKeyOverrideRequest](docs/CreateOrUpdateAllocationKeyOverrideRequest.md)
  - [CreateOrUpdateAllocationKeyRequest](docs/CreateOrUpdateAllocationKeyRequest.md)
  - [CreateOrUpdateAllocationQuantityRequest](docs/CreateOrUpdateAllocationQuantityRequest.md)
@@ -926,6 +959,7 @@ Class | Method | HTTP request | Description
  - [DataExportColumn](docs/DataExportColumn.md)
  - [DataExportFormatEnum](docs/DataExportFormatEnum.md)
  - [DataExportResponse](docs/DataExportResponse.md)
+ - [DataImportFailureResponse](docs/DataImportFailureResponse.md)
  - [DataImportPreview](docs/DataImportPreview.md)
  - [DataImportPreviewItem](docs/DataImportPreviewItem.md)
  - [DataImportTemplate](docs/DataImportTemplate.md)
@@ -1127,9 +1161,15 @@ Class | Method | HTTP request | Description
  - [QueryAccountDimensionsRequest](docs/QueryAccountDimensionsRequest.md)
  - [QueryAccountDimensionsV2Request](docs/QueryAccountDimensionsV2Request.md)
  - [QueryAccountDimensionsV2Response](docs/QueryAccountDimensionsV2Response.md)
+ - [QueryAdvisoryBoardCandidatesRequest](docs/QueryAdvisoryBoardCandidatesRequest.md)
+ - [QueryAdvisoryBoardCandidatesResponse](docs/QueryAdvisoryBoardCandidatesResponse.md)
+ - [QueryAdvisoryBoardMembersRequest](docs/QueryAdvisoryBoardMembersRequest.md)
+ - [QueryAdvisoryBoardMembersResponse](docs/QueryAdvisoryBoardMembersResponse.md)
  - [QueryAllocationKeyOverridesRequest](docs/QueryAllocationKeyOverridesRequest.md)
  - [QueryAllocationQuantitiesRequest](docs/QueryAllocationQuantitiesRequest.md)
  - [QueryAllocationQuantityRequirementsRequest](docs/QueryAllocationQuantityRequirementsRequest.md)
+ - [QueryAnnualBudgetsRequest](docs/QueryAnnualBudgetsRequest.md)
+ - [QueryAnnualBudgetsResponse](docs/QueryAnnualBudgetsResponse.md)
  - [QueryAnnualStatementsRequest](docs/QueryAnnualStatementsRequest.md)
  - [QueryAnnualStatementsResponse](docs/QueryAnnualStatementsResponse.md)
  - [QueryAppointmentEntriesRequest](docs/QueryAppointmentEntriesRequest.md)
@@ -1318,6 +1358,7 @@ Class | Method | HTTP request | Description
  - [UnitAssessmentPartial](docs/UnitAssessmentPartial.md)
  - [UnssignCaseRequest](docs/UnssignCaseRequest.md)
  - [UpdateAccountConfigRequest](docs/UpdateAccountConfigRequest.md)
+ - [UpdateAnnualBudgetRequest](docs/UpdateAnnualBudgetRequest.md)
  - [UpdateAnnualStatementRequest](docs/UpdateAnnualStatementRequest.md)
  - [UpdateArchivalJobSettingsRequest](docs/UpdateArchivalJobSettingsRequest.md)
  - [UpdateBookingPreviewRequest](docs/UpdateBookingPreviewRequest.md)
@@ -1339,6 +1380,8 @@ Class | Method | HTTP request | Description
  - [UserTypeEnum](docs/UserTypeEnum.md)
  - [ValidateBankAccountIbanRequest](docs/ValidateBankAccountIbanRequest.md)
  - [ValidateBankAccountIbanResponse](docs/ValidateBankAccountIbanResponse.md)
+ - [ValidatePropertyNumberRequest](docs/ValidatePropertyNumberRequest.md)
+ - [ValidatePropertyNumberResponse](docs/ValidatePropertyNumberResponse.md)
  - [VersionMigrator](docs/VersionMigrator.md)
  - [VersionMigratorAttributesPartial](docs/VersionMigratorAttributesPartial.md)
  - [WidgetDescriptor](docs/WidgetDescriptor.md)

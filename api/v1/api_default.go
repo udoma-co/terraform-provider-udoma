@@ -2279,6 +2279,122 @@ func (a *DefaultAPIService) CreateAccountDimensionValueExecute(r ApiCreateAccoun
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiCreateAdvisoryBoardMemberRequest struct {
+	ctx                                      context.Context
+	ApiService                               *DefaultAPIService
+	propID                                   string
+	createOrUpdateAdvisoryBoardMemberRequest *CreateOrUpdateAdvisoryBoardMemberRequest
+}
+
+// The advisory board member to create
+func (r ApiCreateAdvisoryBoardMemberRequest) CreateOrUpdateAdvisoryBoardMemberRequest(createOrUpdateAdvisoryBoardMemberRequest CreateOrUpdateAdvisoryBoardMemberRequest) ApiCreateAdvisoryBoardMemberRequest {
+	r.createOrUpdateAdvisoryBoardMemberRequest = &createOrUpdateAdvisoryBoardMemberRequest
+	return r
+}
+
+func (r ApiCreateAdvisoryBoardMemberRequest) Execute() (*AdvisoryBoardMember, *http.Response, error) {
+	return r.ApiService.CreateAdvisoryBoardMemberExecute(r)
+}
+
+/*
+CreateAdvisoryBoardMember Add a member to the owners' advisory board of a building
+
+Add a property owner to the owners' advisory board (Verwaltungsbeirat) of a condominium building for a given fiscal year. The owner must own a unit of the building during the fiscal year.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param propID unique generated ID of a property
+	@return ApiCreateAdvisoryBoardMemberRequest
+*/
+func (a *DefaultAPIService) CreateAdvisoryBoardMember(ctx context.Context, propID string) ApiCreateAdvisoryBoardMemberRequest {
+	return ApiCreateAdvisoryBoardMemberRequest{
+		ApiService: a,
+		ctx:        ctx,
+		propID:     propID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return AdvisoryBoardMember
+func (a *DefaultAPIService) CreateAdvisoryBoardMemberExecute(r ApiCreateAdvisoryBoardMemberRequest) (*AdvisoryBoardMember, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *AdvisoryBoardMember
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateAdvisoryBoardMember")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/properties/{propID}/advisory-board-member"
+	localVarPath = strings.Replace(localVarPath, "{"+"propID"+"}", url.PathEscape(parameterValueToString(r.propID, "propID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createOrUpdateAdvisoryBoardMemberRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdateAdvisoryBoardMemberRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrUpdateAdvisoryBoardMemberRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiCreateAllocationKeyRequest struct {
 	ctx                                context.Context
 	ApiService                         *DefaultAPIService
@@ -2606,6 +2722,117 @@ func (a *DefaultAPIService) CreateAllocationQuantityExecute(r ApiCreateAllocatio
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiCreateAnnualBudgetRequest struct {
+	ctx                       context.Context
+	ApiService                *DefaultAPIService
+	createAnnualBudgetRequest *CreateAnnualBudgetRequest
+}
+
+func (r ApiCreateAnnualBudgetRequest) CreateAnnualBudgetRequest(createAnnualBudgetRequest CreateAnnualBudgetRequest) ApiCreateAnnualBudgetRequest {
+	r.createAnnualBudgetRequest = &createAnnualBudgetRequest
+	return r
+}
+
+func (r ApiCreateAnnualBudgetRequest) Execute() (*AnnualBudget, *http.Response, error) {
+	return r.ApiService.CreateAnnualBudgetExecute(r)
+}
+
+/*
+CreateAnnualBudget Create an annual budget
+
+Create a new annual budget in status DRAFT for a condominium building and one of its fiscal years. There can be only one budget per building and fiscal year.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiCreateAnnualBudgetRequest
+*/
+func (a *DefaultAPIService) CreateAnnualBudget(ctx context.Context) ApiCreateAnnualBudgetRequest {
+	return ApiCreateAnnualBudgetRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return AnnualBudget
+func (a *DefaultAPIService) CreateAnnualBudgetExecute(r ApiCreateAnnualBudgetRequest) (*AnnualBudget, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *AnnualBudget
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateAnnualBudget")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/annual-budget"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createAnnualBudgetRequest == nil {
+		return localVarReturnValue, nil, reportError("createAnnualBudgetRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createAnnualBudgetRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiCreateAnnualStatementRequest struct {
 	ctx                          context.Context
 	ApiService                   *DefaultAPIService
@@ -2624,7 +2851,7 @@ func (r ApiCreateAnnualStatementRequest) Execute() (*AnnualStatement, *http.Resp
 /*
 CreateAnnualStatement Create an annual statement
 
-Create a new annual statement in status DRAFT for a condominium building and one of its fiscal years. There can be only one statement per building and fiscal year.
+Create a new annual statement in status DRAFT for a building and one of its fiscal years. There can be only one statement per building and fiscal year.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiCreateAnnualStatementRequest
@@ -10200,6 +10427,100 @@ func (a *DefaultAPIService) DeleteAccountDimensionValueExecute(r ApiDeleteAccoun
 	return localVarHTTPResponse, nil
 }
 
+type ApiDeleteAdvisoryBoardMemberRequest struct {
+	ctx                   context.Context
+	ApiService            *DefaultAPIService
+	propID                string
+	advisoryBoardMemberID string
+}
+
+func (r ApiDeleteAdvisoryBoardMemberRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteAdvisoryBoardMemberExecute(r)
+}
+
+/*
+DeleteAdvisoryBoardMember Remove a member from the owners' advisory board
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param propID unique generated ID of a property
+	@param advisoryBoardMemberID unique generated ID of an owners' advisory board member
+	@return ApiDeleteAdvisoryBoardMemberRequest
+*/
+func (a *DefaultAPIService) DeleteAdvisoryBoardMember(ctx context.Context, propID string, advisoryBoardMemberID string) ApiDeleteAdvisoryBoardMemberRequest {
+	return ApiDeleteAdvisoryBoardMemberRequest{
+		ApiService:            a,
+		ctx:                   ctx,
+		propID:                propID,
+		advisoryBoardMemberID: advisoryBoardMemberID,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DeleteAdvisoryBoardMemberExecute(r ApiDeleteAdvisoryBoardMemberRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteAdvisoryBoardMember")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/properties/{propID}/advisory-board-members/{advisoryBoardMemberID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"propID"+"}", url.PathEscape(parameterValueToString(r.propID, "propID")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"advisoryBoardMemberID"+"}", url.PathEscape(parameterValueToString(r.advisoryBoardMemberID, "advisoryBoardMemberID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
 type ApiDeleteAllocationKeyRequest struct {
 	ctx             context.Context
 	ApiService      *DefaultAPIService
@@ -10420,6 +10741,98 @@ func (a *DefaultAPIService) DeleteAllocationQuantityExecute(r ApiDeleteAllocatio
 
 	localVarPath := localBasePath + "/allocation-quantity/{quantityID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"quantityID"+"}", url.PathEscape(parameterValueToString(r.quantityID, "quantityID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDeleteAnnualBudgetRequest struct {
+	ctx            context.Context
+	ApiService     *DefaultAPIService
+	annualBudgetID string
+}
+
+func (r ApiDeleteAnnualBudgetRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteAnnualBudgetExecute(r)
+}
+
+/*
+DeleteAnnualBudget Delete an annual budget
+
+Delete an annual budget that is not finalized.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param annualBudgetID unique generated ID of an annual budget
+	@return ApiDeleteAnnualBudgetRequest
+*/
+func (a *DefaultAPIService) DeleteAnnualBudget(ctx context.Context, annualBudgetID string) ApiDeleteAnnualBudgetRequest {
+	return ApiDeleteAnnualBudgetRequest{
+		ApiService:     a,
+		ctx:            ctx,
+		annualBudgetID: annualBudgetID,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DeleteAnnualBudgetExecute(r ApiDeleteAnnualBudgetRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteAnnualBudget")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/annual-budget/{annualBudgetID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"annualBudgetID"+"}", url.PathEscape(parameterValueToString(r.annualBudgetID, "annualBudgetID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -18005,6 +18418,110 @@ func (a *DefaultAPIService) FeedbackExecute(r ApiFeedbackRequest) (*http.Respons
 	return localVarHTTPResponse, nil
 }
 
+type ApiFinalizeAnnualBudgetRequest struct {
+	ctx            context.Context
+	ApiService     *DefaultAPIService
+	annualBudgetID string
+}
+
+func (r ApiFinalizeAnnualBudgetRequest) Execute() (*AnnualBudget, *http.Response, error) {
+	return r.ApiService.FinalizeAnnualBudgetExecute(r)
+}
+
+/*
+FinalizeAnnualBudget Finalize an annual budget
+
+Finalize a PREPARED annual budget once it has been adopted by the owners' meeting. The monthly fees of the unit budgets are stored as the unit assessments of the fiscal year, replacing existing ones, so that they are used when the condominium fees are booked. A finalized budget can no longer be changed or deleted.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param annualBudgetID unique generated ID of an annual budget
+	@return ApiFinalizeAnnualBudgetRequest
+*/
+func (a *DefaultAPIService) FinalizeAnnualBudget(ctx context.Context, annualBudgetID string) ApiFinalizeAnnualBudgetRequest {
+	return ApiFinalizeAnnualBudgetRequest{
+		ApiService:     a,
+		ctx:            ctx,
+		annualBudgetID: annualBudgetID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return AnnualBudget
+func (a *DefaultAPIService) FinalizeAnnualBudgetExecute(r ApiFinalizeAnnualBudgetRequest) (*AnnualBudget, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *AnnualBudget
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.FinalizeAnnualBudget")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/annual-budget/{annualBudgetID}/finalize"
+	localVarPath = strings.Replace(localVarPath, "{"+"annualBudgetID"+"}", url.PathEscape(parameterValueToString(r.annualBudgetID, "annualBudgetID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiFinalizeAnnualStatementRequest struct {
 	ctx               context.Context
 	ApiService        *DefaultAPIService
@@ -19695,6 +20212,112 @@ func (a *DefaultAPIService) GetAccountSummaryExecute(r ApiGetAccountSummaryReque
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetAdvisoryBoardMemberRequest struct {
+	ctx                   context.Context
+	ApiService            *DefaultAPIService
+	propID                string
+	advisoryBoardMemberID string
+}
+
+func (r ApiGetAdvisoryBoardMemberRequest) Execute() (*AdvisoryBoardMember, *http.Response, error) {
+	return r.ApiService.GetAdvisoryBoardMemberExecute(r)
+}
+
+/*
+GetAdvisoryBoardMember Get an owners' advisory board member by ID
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param propID unique generated ID of a property
+	@param advisoryBoardMemberID unique generated ID of an owners' advisory board member
+	@return ApiGetAdvisoryBoardMemberRequest
+*/
+func (a *DefaultAPIService) GetAdvisoryBoardMember(ctx context.Context, propID string, advisoryBoardMemberID string) ApiGetAdvisoryBoardMemberRequest {
+	return ApiGetAdvisoryBoardMemberRequest{
+		ApiService:            a,
+		ctx:                   ctx,
+		propID:                propID,
+		advisoryBoardMemberID: advisoryBoardMemberID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return AdvisoryBoardMember
+func (a *DefaultAPIService) GetAdvisoryBoardMemberExecute(r ApiGetAdvisoryBoardMemberRequest) (*AdvisoryBoardMember, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *AdvisoryBoardMember
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetAdvisoryBoardMember")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/properties/{propID}/advisory-board-members/{advisoryBoardMemberID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"propID"+"}", url.PathEscape(parameterValueToString(r.propID, "propID")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"advisoryBoardMemberID"+"}", url.PathEscape(parameterValueToString(r.advisoryBoardMemberID, "advisoryBoardMemberID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetAllocationKeyRequest struct {
 	ctx             context.Context
 	ApiService      *DefaultAPIService
@@ -20044,6 +20667,108 @@ func (a *DefaultAPIService) GetAllocationQuantityExecute(r ApiGetAllocationQuant
 
 	localVarPath := localBasePath + "/allocation-quantity/{quantityID}"
 	localVarPath = strings.Replace(localVarPath, "{"+"quantityID"+"}", url.PathEscape(parameterValueToString(r.quantityID, "quantityID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetAnnualBudgetRequest struct {
+	ctx            context.Context
+	ApiService     *DefaultAPIService
+	annualBudgetID string
+}
+
+func (r ApiGetAnnualBudgetRequest) Execute() (*AnnualBudget, *http.Response, error) {
+	return r.ApiService.GetAnnualBudgetExecute(r)
+}
+
+/*
+GetAnnualBudget Get an annual budget
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param annualBudgetID unique generated ID of an annual budget
+	@return ApiGetAnnualBudgetRequest
+*/
+func (a *DefaultAPIService) GetAnnualBudget(ctx context.Context, annualBudgetID string) ApiGetAnnualBudgetRequest {
+	return ApiGetAnnualBudgetRequest{
+		ApiService:     a,
+		ctx:            ctx,
+		annualBudgetID: annualBudgetID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return AnnualBudget
+func (a *DefaultAPIService) GetAnnualBudgetExecute(r ApiGetAnnualBudgetRequest) (*AnnualBudget, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *AnnualBudget
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetAnnualBudget")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/annual-budget/{annualBudgetID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"annualBudgetID"+"}", url.PathEscape(parameterValueToString(r.annualBudgetID, "annualBudgetID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -33622,6 +34347,17 @@ func (a *DefaultAPIService) ImportDataUsingTemplateExecute(r ApiImportDataUsingT
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v DataImportFailureResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
@@ -35486,6 +36222,110 @@ func (a *DefaultAPIService) PersistBookingPreviewExecute(r ApiPersistBookingPrev
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiPrepareAnnualBudgetRequest struct {
+	ctx            context.Context
+	ApiService     *DefaultAPIService
+	annualBudgetID string
+}
+
+func (r ApiPrepareAnnualBudgetRequest) Execute() (*AnnualBudget, *http.Response, error) {
+	return r.ApiService.PrepareAnnualBudgetExecute(r)
+}
+
+/*
+PrepareAnnualBudget Prepare an annual budget
+
+Calculate all figures of an annual budget that is not finalized. The estimated costs, income and reserve contribution are distributed to the units using the allocation keys and overrides valid in the fiscal year, and the monthly fees of each unit are calculated. Previously calculated figures and unit budgets are replaced, and the budget is moved to status PREPARED.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param annualBudgetID unique generated ID of an annual budget
+	@return ApiPrepareAnnualBudgetRequest
+*/
+func (a *DefaultAPIService) PrepareAnnualBudget(ctx context.Context, annualBudgetID string) ApiPrepareAnnualBudgetRequest {
+	return ApiPrepareAnnualBudgetRequest{
+		ApiService:     a,
+		ctx:            ctx,
+		annualBudgetID: annualBudgetID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return AnnualBudget
+func (a *DefaultAPIService) PrepareAnnualBudgetExecute(r ApiPrepareAnnualBudgetRequest) (*AnnualBudget, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *AnnualBudget
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.PrepareAnnualBudget")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/annual-budget/{annualBudgetID}/prepare"
+	localVarPath = strings.Replace(localVarPath, "{"+"annualBudgetID"+"}", url.PathEscape(parameterValueToString(r.annualBudgetID, "annualBudgetID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiPrepareAnnualStatementRequest struct {
 	ctx               context.Context
 	ApiService        *DefaultAPIService
@@ -35499,7 +36339,7 @@ func (r ApiPrepareAnnualStatementRequest) Execute() (*AnnualStatement, *http.Res
 /*
 PrepareAnnualStatement Prepare an annual statement
 
-Calculate all figures of an annual statement that is not finalized. The costs per cost type are collected from the bookings of the building, distributed to the units using the allocation keys, and assigned to the ownerships pro rata to the days of the fiscal year they owned the unit. The costs are then compared with the maintenance fees demanded and paid. Previously calculated figures and owner statements are replaced, and the statement is moved to status PREPARED.
+Calculate all figures of an annual statement that is not finalized. The costs per cost type are collected from the bookings of the building and distributed to the units using the allocation keys. In condominium buildings, they are assigned to the ownerships pro rata to the days of the fiscal year they owned the unit and compared with the maintenance fees demanded and paid. For rental-managed units, the costs of the unit together with the costs booked on its ownerships are assigned to the tenancies pro rata to the days the unit was let, the rest of the year is vacancy. The billable part is compared with the operating cost advances paid. Previously calculated figures and owner or tenancy statements are replaced, and the statement is moved to status PREPARED.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param annualStatementID unique generated ID of an annual statement
@@ -40017,6 +40857,238 @@ func (a *DefaultAPIService) QueryAccountDimensionsV2Execute(r ApiQueryAccountDim
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiQueryAdvisoryBoardCandidatesRequest struct {
+	ctx                                 context.Context
+	ApiService                          *DefaultAPIService
+	propID                              string
+	queryAdvisoryBoardCandidatesRequest *QueryAdvisoryBoardCandidatesRequest
+}
+
+// The fiscal year to query the eligible owners for
+func (r ApiQueryAdvisoryBoardCandidatesRequest) QueryAdvisoryBoardCandidatesRequest(queryAdvisoryBoardCandidatesRequest QueryAdvisoryBoardCandidatesRequest) ApiQueryAdvisoryBoardCandidatesRequest {
+	r.queryAdvisoryBoardCandidatesRequest = &queryAdvisoryBoardCandidatesRequest
+	return r
+}
+
+func (r ApiQueryAdvisoryBoardCandidatesRequest) Execute() (*QueryAdvisoryBoardCandidatesResponse, *http.Response, error) {
+	return r.ApiService.QueryAdvisoryBoardCandidatesExecute(r)
+}
+
+/*
+QueryAdvisoryBoardCandidates Query the owners eligible for the owners' advisory board of a building
+
+Query the property owners who own at least one unit of the condominium building during the given fiscal year, and can therefore be elected to the owners' advisory board.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param propID unique generated ID of a property
+	@return ApiQueryAdvisoryBoardCandidatesRequest
+*/
+func (a *DefaultAPIService) QueryAdvisoryBoardCandidates(ctx context.Context, propID string) ApiQueryAdvisoryBoardCandidatesRequest {
+	return ApiQueryAdvisoryBoardCandidatesRequest{
+		ApiService: a,
+		ctx:        ctx,
+		propID:     propID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return QueryAdvisoryBoardCandidatesResponse
+func (a *DefaultAPIService) QueryAdvisoryBoardCandidatesExecute(r ApiQueryAdvisoryBoardCandidatesRequest) (*QueryAdvisoryBoardCandidatesResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *QueryAdvisoryBoardCandidatesResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.QueryAdvisoryBoardCandidates")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/properties/{propID}/advisory-board-candidates"
+	localVarPath = strings.Replace(localVarPath, "{"+"propID"+"}", url.PathEscape(parameterValueToString(r.propID, "propID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.queryAdvisoryBoardCandidatesRequest == nil {
+		return localVarReturnValue, nil, reportError("queryAdvisoryBoardCandidatesRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.queryAdvisoryBoardCandidatesRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiQueryAdvisoryBoardMembersRequest struct {
+	ctx                              context.Context
+	ApiService                       *DefaultAPIService
+	propID                           string
+	queryAdvisoryBoardMembersRequest *QueryAdvisoryBoardMembersRequest
+}
+
+// The optional fiscal year to query the members for
+func (r ApiQueryAdvisoryBoardMembersRequest) QueryAdvisoryBoardMembersRequest(queryAdvisoryBoardMembersRequest QueryAdvisoryBoardMembersRequest) ApiQueryAdvisoryBoardMembersRequest {
+	r.queryAdvisoryBoardMembersRequest = &queryAdvisoryBoardMembersRequest
+	return r
+}
+
+func (r ApiQueryAdvisoryBoardMembersRequest) Execute() (*QueryAdvisoryBoardMembersResponse, *http.Response, error) {
+	return r.ApiService.QueryAdvisoryBoardMembersExecute(r)
+}
+
+/*
+QueryAdvisoryBoardMembers Query the owners' advisory board members of a building
+
+Query the members of the owners' advisory board (Verwaltungsbeirat) of a condominium building, optionally for a single fiscal year.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param propID unique generated ID of a property
+	@return ApiQueryAdvisoryBoardMembersRequest
+*/
+func (a *DefaultAPIService) QueryAdvisoryBoardMembers(ctx context.Context, propID string) ApiQueryAdvisoryBoardMembersRequest {
+	return ApiQueryAdvisoryBoardMembersRequest{
+		ApiService: a,
+		ctx:        ctx,
+		propID:     propID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return QueryAdvisoryBoardMembersResponse
+func (a *DefaultAPIService) QueryAdvisoryBoardMembersExecute(r ApiQueryAdvisoryBoardMembersRequest) (*QueryAdvisoryBoardMembersResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *QueryAdvisoryBoardMembersResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.QueryAdvisoryBoardMembers")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/properties/{propID}/advisory-board-members"
+	localVarPath = strings.Replace(localVarPath, "{"+"propID"+"}", url.PathEscape(parameterValueToString(r.propID, "propID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.queryAdvisoryBoardMembersRequest == nil {
+		return localVarReturnValue, nil, reportError("queryAdvisoryBoardMembersRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.queryAdvisoryBoardMembersRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiQueryAllocationKeyOverridesRequest struct {
 	ctx                                context.Context
 	ApiService                         *DefaultAPIService
@@ -40416,6 +41488,115 @@ func (a *DefaultAPIService) QueryAllocationQuantityRequirementsExecute(r ApiQuer
 	}
 	// body params
 	localVarPostBody = r.queryAllocationQuantityRequirementsRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiQueryAnnualBudgetsRequest struct {
+	ctx                       context.Context
+	ApiService                *DefaultAPIService
+	queryAnnualBudgetsRequest *QueryAnnualBudgetsRequest
+}
+
+func (r ApiQueryAnnualBudgetsRequest) QueryAnnualBudgetsRequest(queryAnnualBudgetsRequest QueryAnnualBudgetsRequest) ApiQueryAnnualBudgetsRequest {
+	r.queryAnnualBudgetsRequest = &queryAnnualBudgetsRequest
+	return r
+}
+
+func (r ApiQueryAnnualBudgetsRequest) Execute() (*QueryAnnualBudgetsResponse, *http.Response, error) {
+	return r.ApiService.QueryAnnualBudgetsExecute(r)
+}
+
+/*
+QueryAnnualBudgets Query annual budgets
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiQueryAnnualBudgetsRequest
+*/
+func (a *DefaultAPIService) QueryAnnualBudgets(ctx context.Context) ApiQueryAnnualBudgetsRequest {
+	return ApiQueryAnnualBudgetsRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return QueryAnnualBudgetsResponse
+func (a *DefaultAPIService) QueryAnnualBudgetsExecute(r ApiQueryAnnualBudgetsRequest) (*QueryAnnualBudgetsResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *QueryAnnualBudgetsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.QueryAnnualBudgets")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/annual-budgets"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.queryAnnualBudgetsRequest == nil {
+		return localVarReturnValue, nil, reportError("queryAnnualBudgetsRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.queryAnnualBudgetsRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -51802,6 +52983,126 @@ func (a *DefaultAPIService) UpdateAccountDimensionValueExecute(r ApiUpdateAccoun
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiUpdateAdvisoryBoardMemberRequest struct {
+	ctx                                      context.Context
+	ApiService                               *DefaultAPIService
+	propID                                   string
+	advisoryBoardMemberID                    string
+	createOrUpdateAdvisoryBoardMemberRequest *CreateOrUpdateAdvisoryBoardMemberRequest
+}
+
+// The advisory board member details to update
+func (r ApiUpdateAdvisoryBoardMemberRequest) CreateOrUpdateAdvisoryBoardMemberRequest(createOrUpdateAdvisoryBoardMemberRequest CreateOrUpdateAdvisoryBoardMemberRequest) ApiUpdateAdvisoryBoardMemberRequest {
+	r.createOrUpdateAdvisoryBoardMemberRequest = &createOrUpdateAdvisoryBoardMemberRequest
+	return r
+}
+
+func (r ApiUpdateAdvisoryBoardMemberRequest) Execute() (*AdvisoryBoardMember, *http.Response, error) {
+	return r.ApiService.UpdateAdvisoryBoardMemberExecute(r)
+}
+
+/*
+UpdateAdvisoryBoardMember Update an owners' advisory board member by ID
+
+Update the owner or the role of an advisory board member. The fiscal year of a member can not be changed: fiscal_year_ref has to match the member's fiscal year, otherwise the request is rejected.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param propID unique generated ID of a property
+	@param advisoryBoardMemberID unique generated ID of an owners' advisory board member
+	@return ApiUpdateAdvisoryBoardMemberRequest
+*/
+func (a *DefaultAPIService) UpdateAdvisoryBoardMember(ctx context.Context, propID string, advisoryBoardMemberID string) ApiUpdateAdvisoryBoardMemberRequest {
+	return ApiUpdateAdvisoryBoardMemberRequest{
+		ApiService:            a,
+		ctx:                   ctx,
+		propID:                propID,
+		advisoryBoardMemberID: advisoryBoardMemberID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return AdvisoryBoardMember
+func (a *DefaultAPIService) UpdateAdvisoryBoardMemberExecute(r ApiUpdateAdvisoryBoardMemberRequest) (*AdvisoryBoardMember, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *AdvisoryBoardMember
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdateAdvisoryBoardMember")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/properties/{propID}/advisory-board-members/{advisoryBoardMemberID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"propID"+"}", url.PathEscape(parameterValueToString(r.propID, "propID")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"advisoryBoardMemberID"+"}", url.PathEscape(parameterValueToString(r.advisoryBoardMemberID, "advisoryBoardMemberID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.createOrUpdateAdvisoryBoardMemberRequest == nil {
+		return localVarReturnValue, nil, reportError("createOrUpdateAdvisoryBoardMemberRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrUpdateAdvisoryBoardMemberRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiUpdateAllocationKeyRequest struct {
 	ctx                                context.Context
 	ApiService                         *DefaultAPIService
@@ -52104,6 +53405,121 @@ func (a *DefaultAPIService) UpdateAllocationQuantityExecute(r ApiUpdateAllocatio
 	}
 	// body params
 	localVarPostBody = r.createOrUpdateAllocationQuantityRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdateAnnualBudgetRequest struct {
+	ctx                       context.Context
+	ApiService                *DefaultAPIService
+	annualBudgetID            string
+	updateAnnualBudgetRequest *UpdateAnnualBudgetRequest
+}
+
+func (r ApiUpdateAnnualBudgetRequest) UpdateAnnualBudgetRequest(updateAnnualBudgetRequest UpdateAnnualBudgetRequest) ApiUpdateAnnualBudgetRequest {
+	r.updateAnnualBudgetRequest = &updateAnnualBudgetRequest
+	return r
+}
+
+func (r ApiUpdateAnnualBudgetRequest) Execute() (*AnnualBudget, *http.Response, error) {
+	return r.ApiService.UpdateAnnualBudgetExecute(r)
+}
+
+/*
+UpdateAnnualBudget Update an annual budget
+
+Update the inputs of an annual budget that is not finalized. A PREPARED budget is moved back to DRAFT.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param annualBudgetID unique generated ID of an annual budget
+	@return ApiUpdateAnnualBudgetRequest
+*/
+func (a *DefaultAPIService) UpdateAnnualBudget(ctx context.Context, annualBudgetID string) ApiUpdateAnnualBudgetRequest {
+	return ApiUpdateAnnualBudgetRequest{
+		ApiService:     a,
+		ctx:            ctx,
+		annualBudgetID: annualBudgetID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return AnnualBudget
+func (a *DefaultAPIService) UpdateAnnualBudgetExecute(r ApiUpdateAnnualBudgetRequest) (*AnnualBudget, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *AnnualBudget
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdateAnnualBudget")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/annual-budget/{annualBudgetID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"annualBudgetID"+"}", url.PathEscape(parameterValueToString(r.annualBudgetID, "annualBudgetID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.updateAnnualBudgetRequest == nil {
+		return localVarReturnValue, nil, reportError("updateAnnualBudgetRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.updateAnnualBudgetRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -60101,6 +61517,117 @@ func (a *DefaultAPIService) ValidateCustomFormExecute(r ApiValidateCustomFormReq
 	}
 	// body params
 	localVarPostBody = r.customFormValidationRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiValidatePropertyNumberRequest struct {
+	ctx                           context.Context
+	ApiService                    *DefaultAPIService
+	validatePropertyNumberRequest *ValidatePropertyNumberRequest
+}
+
+func (r ApiValidatePropertyNumberRequest) ValidatePropertyNumberRequest(validatePropertyNumberRequest ValidatePropertyNumberRequest) ApiValidatePropertyNumberRequest {
+	r.validatePropertyNumberRequest = &validatePropertyNumberRequest
+	return r
+}
+
+func (r ApiValidatePropertyNumberRequest) Execute() (*ValidatePropertyNumberResponse, *http.Response, error) {
+	return r.ApiService.ValidatePropertyNumberExecute(r)
+}
+
+/*
+ValidatePropertyNumber Validate a property number
+
+# Checks that no other unit of the same parent property, or no other top-level property if there is no parent, uses the number
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiValidatePropertyNumberRequest
+*/
+func (a *DefaultAPIService) ValidatePropertyNumber(ctx context.Context) ApiValidatePropertyNumberRequest {
+	return ApiValidatePropertyNumberRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return ValidatePropertyNumberResponse
+func (a *DefaultAPIService) ValidatePropertyNumberExecute(r ApiValidatePropertyNumberRequest) (*ValidatePropertyNumberResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ValidatePropertyNumberResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ValidatePropertyNumber")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/property/number/validate"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.validatePropertyNumberRequest == nil {
+		return localVarReturnValue, nil, reportError("validatePropertyNumberRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.validatePropertyNumberRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

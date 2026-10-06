@@ -19,7 +19,7 @@ import (
 // checks if the AnnualStatement type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &AnnualStatement{}
 
-// AnnualStatement The annual statement (Jahresabrechnung) of a condominium building for a fiscal year. It holds the costs of the building per cost type, the development of the reserve fund and the cash accounts, as well as the figures of each owner.
+// AnnualStatement The annual statement of a building for a fiscal year. It holds the costs of the building per cost type and, depending on the management types of the building and its units, the figures of each owner and of each tenancy. For buildings managed as a condominium (WEG), it is the annual statement (Jahresabrechnung) with a statement per ownership, the development of the reserve fund and the cash accounts. For rental-managed units, i.e. units whose building or the unit itself has the management type RENTAL, it contains the operating cost statement (Betriebskostenabrechnung) with a statement per tenancy that only includes the costs billable to tenants. Buildings with mixed management get both.
 type AnnualStatement struct {
 	// Unique and immutable ID attribute of the entity that is generated when the instance is created. The ID is unique within the system accross all accounts and it can be used to reference the entity in other entities or to retrieve it from the backend.
 	Id string `json:"id"`
@@ -29,11 +29,11 @@ type AnnualStatement struct {
 	UpdatedAt int64 `json:"updated_at"`
 	// Optional free text description of the statement.
 	Description *string `json:"description,omitempty"`
-	// IDs of the financial accounts representing the bank accounts and cash of the building. Their development over the fiscal year is part of the statement. If omitted on creation, the accounts of the previous statement of the building are used.
+	// IDs of the financial accounts representing the bank accounts and cash of the building. Their development over the fiscal year is part of the statement. If omitted on creation, the accounts of the previous statement of the building are used. Only for buildings managed as a condominium.
 	CashAccountRefs []string `json:"cash_account_refs,omitempty"`
-	// The allocation key used to distribute the reserve fund to the owners, both for the calculated share of each owner in the reserve and for distributing the reserve withdrawals. If omitted on creation, the key of the previous statement of the building is used.
+	// The allocation key used to distribute the reserve fund to the owners, both for the calculated share of each owner in the reserve and for distributing the reserve withdrawals. If omitted on creation, the key of the previous statement of the building is used. Only for buildings managed as a condominium.
 	ReserveAllocationKeyRef *string `json:"reserve_allocation_key_ref,omitempty"`
-	// The ID of the condominium building.
+	// The ID of the building.
 	PropertyRef string `json:"property_ref"`
 	// The ID of the fiscal year of the building.
 	FiscalYearRef string                    `json:"fiscal_year_ref"`
@@ -47,12 +47,16 @@ type AnnualStatement struct {
 	// When the statement was finalized.
 	FinalizedAt *int64                    `json:"finalized_at,omitempty"`
 	CostItems   []AnnualStatementCostItem `json:"cost_items,omitempty"`
-	// The development of the reserve fund (Erhaltungsrücklage), i.e. of the accounts of the building with a revenue type of the system default RESERVE_FUND or RESERVE_WITHDRAWAL. The balance of the reserve is the sum of the balances of these accounts.
+	// Only condominiums: the development of the reserve fund (Erhaltungsrücklage), i.e. of the accounts of the building with a revenue type of the system default RESERVE_FUND or RESERVE_WITHDRAWAL. The balance of the reserve is the sum of the balances of these accounts.
 	ReserveAccounts []AnnualStatementAccountDevelopment `json:"reserve_accounts,omitempty"`
-	CashAccounts    []AnnualStatementAccountDevelopment `json:"cash_accounts,omitempty"`
-	Totals          *AnnualStatementTotals              `json:"totals,omitempty"`
-	// The figures of each ownership, ordered by unit. They are only returned when a single annual statement is loaded, not when querying annual statements.
+	// Only condominiums: the development of the cash accounts, see cash_account_refs.
+	CashAccounts  []AnnualStatementAccountDevelopment `json:"cash_accounts,omitempty"`
+	Totals        *AnnualStatementTotals              `json:"totals,omitempty"`
+	TenancyTotals *AnnualStatementTenancyTotals       `json:"tenancy_totals,omitempty"`
+	// Only condominiums: the figures of each ownership, ordered by unit. They are only returned when a single annual statement is loaded, not when querying annual statements.
 	OwnerStatements []AnnualStatementOwner `json:"owner_statements,omitempty"`
+	// The figures of each tenancy of the rental-managed units, ordered by unit. They are only returned when a single annual statement is loaded, not when querying annual statements.
+	TenancyStatements []AnnualStatementTenancy `json:"tenancy_statements,omitempty"`
 	// Issues found while preparing the statement, which should be reviewed before the statement is finalized.
 	Warnings []string `json:"warnings,omitempty"`
 }
@@ -578,6 +582,38 @@ func (o *AnnualStatement) SetTotals(v AnnualStatementTotals) {
 	o.Totals = &v
 }
 
+// GetTenancyTotals returns the TenancyTotals field value if set, zero value otherwise.
+func (o *AnnualStatement) GetTenancyTotals() AnnualStatementTenancyTotals {
+	if o == nil || IsNil(o.TenancyTotals) {
+		var ret AnnualStatementTenancyTotals
+		return ret
+	}
+	return *o.TenancyTotals
+}
+
+// GetTenancyTotalsOk returns a tuple with the TenancyTotals field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AnnualStatement) GetTenancyTotalsOk() (*AnnualStatementTenancyTotals, bool) {
+	if o == nil || IsNil(o.TenancyTotals) {
+		return nil, false
+	}
+	return o.TenancyTotals, true
+}
+
+// HasTenancyTotals returns a boolean if a field has been set.
+func (o *AnnualStatement) HasTenancyTotals() bool {
+	if o != nil && !IsNil(o.TenancyTotals) {
+		return true
+	}
+
+	return false
+}
+
+// SetTenancyTotals gets a reference to the given AnnualStatementTenancyTotals and assigns it to the TenancyTotals field.
+func (o *AnnualStatement) SetTenancyTotals(v AnnualStatementTenancyTotals) {
+	o.TenancyTotals = &v
+}
+
 // GetOwnerStatements returns the OwnerStatements field value if set, zero value otherwise.
 func (o *AnnualStatement) GetOwnerStatements() []AnnualStatementOwner {
 	if o == nil || IsNil(o.OwnerStatements) {
@@ -608,6 +644,38 @@ func (o *AnnualStatement) HasOwnerStatements() bool {
 // SetOwnerStatements gets a reference to the given []AnnualStatementOwner and assigns it to the OwnerStatements field.
 func (o *AnnualStatement) SetOwnerStatements(v []AnnualStatementOwner) {
 	o.OwnerStatements = v
+}
+
+// GetTenancyStatements returns the TenancyStatements field value if set, zero value otherwise.
+func (o *AnnualStatement) GetTenancyStatements() []AnnualStatementTenancy {
+	if o == nil || IsNil(o.TenancyStatements) {
+		var ret []AnnualStatementTenancy
+		return ret
+	}
+	return o.TenancyStatements
+}
+
+// GetTenancyStatementsOk returns a tuple with the TenancyStatements field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AnnualStatement) GetTenancyStatementsOk() ([]AnnualStatementTenancy, bool) {
+	if o == nil || IsNil(o.TenancyStatements) {
+		return nil, false
+	}
+	return o.TenancyStatements, true
+}
+
+// HasTenancyStatements returns a boolean if a field has been set.
+func (o *AnnualStatement) HasTenancyStatements() bool {
+	if o != nil && !IsNil(o.TenancyStatements) {
+		return true
+	}
+
+	return false
+}
+
+// SetTenancyStatements gets a reference to the given []AnnualStatementTenancy and assigns it to the TenancyStatements field.
+func (o *AnnualStatement) SetTenancyStatements(v []AnnualStatementTenancy) {
+	o.TenancyStatements = v
 }
 
 // GetWarnings returns the Warnings field value if set, zero value otherwise.
@@ -691,8 +759,14 @@ func (o AnnualStatement) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Totals) {
 		toSerialize["totals"] = o.Totals
 	}
+	if !IsNil(o.TenancyTotals) {
+		toSerialize["tenancy_totals"] = o.TenancyTotals
+	}
 	if !IsNil(o.OwnerStatements) {
 		toSerialize["owner_statements"] = o.OwnerStatements
+	}
+	if !IsNil(o.TenancyStatements) {
+		toSerialize["tenancy_statements"] = o.TenancyStatements
 	}
 	if !IsNil(o.Warnings) {
 		toSerialize["warnings"] = o.Warnings

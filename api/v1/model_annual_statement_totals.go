@@ -17,13 +17,17 @@ import (
 // checks if the AnnualStatementTotals type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &AnnualStatementTotals{}
 
-// AnnualStatementTotals Totals over all owner statements.
+// AnnualStatementTotals Totals over the costs of the building and the owner statements. The owner figures (allocated costs, maintenance fees, reserve, settlements) are only set for buildings managed as a condominium.
 type AnnualStatementTotals struct {
 	// The sum of all costs of the building.
 	TotalCosts *float64 `json:"total_costs,omitempty"`
+	// The sum of the costs of the building that can be billed to tenants, see AnnualStatementCostItem.billable_amount.
+	BillableCosts *float64 `json:"billable_costs,omitempty"`
+	// The sum of the costs booked on the ownerships, see AnnualStatementCostItem.owner_amount.
+	OwnerCosts *float64 `json:"owner_costs,omitempty"`
 	// The sum of all costs assigned to owners, after deducting the reserve withdrawals.
 	AllocatedCosts *float64 `json:"allocated_costs,omitempty"`
-	// The sum of all costs that could not be assigned to any owner.
+	// The sum of all costs that could not be assigned.
 	UnallocatedCosts *float64 `json:"unallocated_costs,omitempty"`
 	// The sum of all maintenance fees demanded in the fiscal year.
 	MaintenanceFeesDemanded *float64 `json:"maintenance_fees_demanded,omitempty"`
@@ -35,9 +39,9 @@ type AnnualStatementTotals struct {
 	ReserveContributionsPaid *float64 `json:"reserve_contributions_paid,omitempty"`
 	// The amounts withdrawn from the reserve fund to cover costs, i.e. the balance of the bookings on the RESERVE_WITHDRAWAL accounts. They are credited to the owners using the reserve allocation key, see AnnualStatementOwner.reserve_withdrawal_share. The shares of the owners add up to this amount, except for the part of units that had no owner during a part of the fiscal year.
 	ReserveWithdrawals *float64 `json:"reserve_withdrawals,omitempty"`
-	// The sum of all positive settlement amounts (Nachzahlungen).
+	// The sum of all positive settlement amounts of the owner statements (Nachzahlungen).
 	AdditionalPayments *float64 `json:"additional_payments,omitempty"`
-	// The sum of all negative settlement amounts (Guthaben).
+	// The sum of all negative settlement amounts of the owner statements (Guthaben).
 	Credits *float64 `json:"credits,omitempty"`
 }
 
@@ -88,6 +92,70 @@ func (o *AnnualStatementTotals) HasTotalCosts() bool {
 // SetTotalCosts gets a reference to the given float64 and assigns it to the TotalCosts field.
 func (o *AnnualStatementTotals) SetTotalCosts(v float64) {
 	o.TotalCosts = &v
+}
+
+// GetBillableCosts returns the BillableCosts field value if set, zero value otherwise.
+func (o *AnnualStatementTotals) GetBillableCosts() float64 {
+	if o == nil || IsNil(o.BillableCosts) {
+		var ret float64
+		return ret
+	}
+	return *o.BillableCosts
+}
+
+// GetBillableCostsOk returns a tuple with the BillableCosts field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AnnualStatementTotals) GetBillableCostsOk() (*float64, bool) {
+	if o == nil || IsNil(o.BillableCosts) {
+		return nil, false
+	}
+	return o.BillableCosts, true
+}
+
+// HasBillableCosts returns a boolean if a field has been set.
+func (o *AnnualStatementTotals) HasBillableCosts() bool {
+	if o != nil && !IsNil(o.BillableCosts) {
+		return true
+	}
+
+	return false
+}
+
+// SetBillableCosts gets a reference to the given float64 and assigns it to the BillableCosts field.
+func (o *AnnualStatementTotals) SetBillableCosts(v float64) {
+	o.BillableCosts = &v
+}
+
+// GetOwnerCosts returns the OwnerCosts field value if set, zero value otherwise.
+func (o *AnnualStatementTotals) GetOwnerCosts() float64 {
+	if o == nil || IsNil(o.OwnerCosts) {
+		var ret float64
+		return ret
+	}
+	return *o.OwnerCosts
+}
+
+// GetOwnerCostsOk returns a tuple with the OwnerCosts field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AnnualStatementTotals) GetOwnerCostsOk() (*float64, bool) {
+	if o == nil || IsNil(o.OwnerCosts) {
+		return nil, false
+	}
+	return o.OwnerCosts, true
+}
+
+// HasOwnerCosts returns a boolean if a field has been set.
+func (o *AnnualStatementTotals) HasOwnerCosts() bool {
+	if o != nil && !IsNil(o.OwnerCosts) {
+		return true
+	}
+
+	return false
+}
+
+// SetOwnerCosts gets a reference to the given float64 and assigns it to the OwnerCosts field.
+func (o *AnnualStatementTotals) SetOwnerCosts(v float64) {
+	o.OwnerCosts = &v
 }
 
 // GetAllocatedCosts returns the AllocatedCosts field value if set, zero value otherwise.
@@ -390,6 +458,12 @@ func (o AnnualStatementTotals) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.TotalCosts) {
 		toSerialize["total_costs"] = o.TotalCosts
+	}
+	if !IsNil(o.BillableCosts) {
+		toSerialize["billable_costs"] = o.BillableCosts
+	}
+	if !IsNil(o.OwnerCosts) {
+		toSerialize["owner_costs"] = o.OwnerCosts
 	}
 	if !IsNil(o.AllocatedCosts) {
 		toSerialize["allocated_costs"] = o.AllocatedCosts
