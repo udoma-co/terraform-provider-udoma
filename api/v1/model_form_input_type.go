@@ -20,30 +20,31 @@ type FormInputType string
 
 // List of FormInputType
 const (
-	FORMINPUTTYPE_TEXT                 FormInputType = "text"
-	FORMINPUTTYPE_NUMBER               FormInputType = "number"
-	FORMINPUTTYPE_DATE                 FormInputType = "date"
-	FORMINPUTTYPE_BOOLEAN              FormInputType = "boolean"
-	FORMINPUTTYPE_SINGLE_SELECT        FormInputType = "single_select"
-	FORMINPUTTYPE_MULTI_SELECT         FormInputType = "multi_select"
-	FORMINPUTTYPE_SUGGESTION           FormInputType = "suggestion"
-	FORMINPUTTYPE_FILE                 FormInputType = "file"
-	FORMINPUTTYPE_ID_UPLOAD            FormInputType = "id_upload"
-	FORMINPUTTYPE_ADDRESS              FormInputType = "address"
-	FORMINPUTTYPE_CONTACT_DATA         FormInputType = "contact_data"
-	FORMINPUTTYPE_RENT                 FormInputType = "rent"
-	FORMINPUTTYPE_BANK_ACCOUNT         FormInputType = "bank_account"
-	FORMINPUTTYPE_YES_NO_OR_VALUE      FormInputType = "yes_no_or_value"
-	FORMINPUTTYPE_SERVICE_PROVIDER_REF FormInputType = "service_provider_ref"
-	FORMINPUTTYPE_TENANCY_REF          FormInputType = "tenancy_ref"
-	FORMINPUTTYPE_PROPERTY_REF         FormInputType = "property_ref"
-	FORMINPUTTYPE_OWNER_REF            FormInputType = "owner_ref"
-	FORMINPUTTYPE_TENANT_REF           FormInputType = "tenant_ref"
-	FORMINPUTTYPE_BANK_ACCOUNT_REF     FormInputType = "bank_account_ref"
-	FORMINPUTTYPE_REPORTER             FormInputType = "reporter"
-	FORMINPUTTYPE_PROPERTY             FormInputType = "property"
-	FORMINPUTTYPE_CASE_PARTY           FormInputType = "case_party"
-	FORMINPUTTYPE_SIGNATURE            FormInputType = "signature"
+	FORMINPUTTYPE_TEXT                  FormInputType = "text"
+	FORMINPUTTYPE_NUMBER                FormInputType = "number"
+	FORMINPUTTYPE_DATE                  FormInputType = "date"
+	FORMINPUTTYPE_BOOLEAN               FormInputType = "boolean"
+	FORMINPUTTYPE_SINGLE_SELECT         FormInputType = "single_select"
+	FORMINPUTTYPE_MULTI_SELECT          FormInputType = "multi_select"
+	FORMINPUTTYPE_SUGGESTION            FormInputType = "suggestion"
+	FORMINPUTTYPE_FILE                  FormInputType = "file"
+	FORMINPUTTYPE_ID_UPLOAD             FormInputType = "id_upload"
+	FORMINPUTTYPE_ADDRESS               FormInputType = "address"
+	FORMINPUTTYPE_CONTACT_DATA          FormInputType = "contact_data"
+	FORMINPUTTYPE_RENT                  FormInputType = "rent"
+	FORMINPUTTYPE_BANK_ACCOUNT          FormInputType = "bank_account"
+	FORMINPUTTYPE_YES_NO_OR_VALUE       FormInputType = "yes_no_or_value"
+	FORMINPUTTYPE_SERVICE_PROVIDER_REF  FormInputType = "service_provider_ref"
+	FORMINPUTTYPE_TENANCY_REF           FormInputType = "tenancy_ref"
+	FORMINPUTTYPE_PROPERTY_REF          FormInputType = "property_ref"
+	FORMINPUTTYPE_OWNER_REF             FormInputType = "owner_ref"
+	FORMINPUTTYPE_TENANT_REF            FormInputType = "tenant_ref"
+	FORMINPUTTYPE_BANK_ACCOUNT_REF      FormInputType = "bank_account_ref"
+	FORMINPUTTYPE_FINANCIAL_ACCOUNT_REF FormInputType = "financial_account_ref"
+	FORMINPUTTYPE_REPORTER              FormInputType = "reporter"
+	FORMINPUTTYPE_PROPERTY              FormInputType = "property"
+	FORMINPUTTYPE_CASE_PARTY            FormInputType = "case_party"
+	FORMINPUTTYPE_SIGNATURE             FormInputType = "signature"
 )
 
 // All allowed values of FormInputType enum
@@ -68,6 +69,7 @@ var AllowedFormInputTypeEnumValues = []FormInputType{
 	"owner_ref",
 	"tenant_ref",
 	"bank_account_ref",
+	"financial_account_ref",
 	"reporter",
 	"property",
 	"case_party",
