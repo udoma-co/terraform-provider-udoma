@@ -24,10 +24,9 @@ type ConsumptionRate struct {
 	// Timestamp when the rate comes into effect (epoch seconds)
 	StartDate int64 `json:"start_date"`
 	// Timestamp when the rate stops being effective (epoch seconds)
-	EndDate int64 `json:"end_date"`
-	// Unit string, same convention as Meter.unit
-	Unit  string      `json:"unit"`
-	Value FloatNumber `json:"value"`
+	EndDate int64               `json:"end_date"`
+	Unit    MeasurementUnitEnum `json:"unit"`
+	Value   FloatNumber         `json:"value"`
 }
 
 type _ConsumptionRate ConsumptionRate
@@ -36,7 +35,7 @@ type _ConsumptionRate ConsumptionRate
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewConsumptionRate(startDate int64, endDate int64, unit string, value FloatNumber) *ConsumptionRate {
+func NewConsumptionRate(startDate int64, endDate int64, unit MeasurementUnitEnum, value FloatNumber) *ConsumptionRate {
 	this := ConsumptionRate{}
 	this.StartDate = startDate
 	this.EndDate = endDate
@@ -102,9 +101,9 @@ func (o *ConsumptionRate) SetEndDate(v int64) {
 }
 
 // GetUnit returns the Unit field value
-func (o *ConsumptionRate) GetUnit() string {
+func (o *ConsumptionRate) GetUnit() MeasurementUnitEnum {
 	if o == nil {
-		var ret string
+		var ret MeasurementUnitEnum
 		return ret
 	}
 
@@ -113,7 +112,7 @@ func (o *ConsumptionRate) GetUnit() string {
 
 // GetUnitOk returns a tuple with the Unit field value
 // and a boolean to check if the value has been set.
-func (o *ConsumptionRate) GetUnitOk() (*string, bool) {
+func (o *ConsumptionRate) GetUnitOk() (*MeasurementUnitEnum, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -121,7 +120,7 @@ func (o *ConsumptionRate) GetUnitOk() (*string, bool) {
 }
 
 // SetUnit sets field value
-func (o *ConsumptionRate) SetUnit(v string) {
+func (o *ConsumptionRate) SetUnit(v MeasurementUnitEnum) {
 	o.Unit = v
 }
 

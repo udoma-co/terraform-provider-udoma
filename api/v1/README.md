@@ -1093,6 +1093,7 @@ Class | Method | HTTP request | Description
  - [MailStatusResponse](docs/MailStatusResponse.md)
  - [ManagementModeTypeEnum](docs/ManagementModeTypeEnum.md)
  - [MandatoryMessage](docs/MandatoryMessage.md)
+ - [MeasurementUnitEnum](docs/MeasurementUnitEnum.md)
  - [Meter](docs/Meter.md)
  - [MeterAttributesPartial](docs/MeterAttributesPartial.md)
  - [MeterListEntry](docs/MeterListEntry.md)

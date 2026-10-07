@@ -21,13 +21,15 @@ var _ MappedNullable = &CreateOrUpdateMeterRequest{}
 
 // CreateOrUpdateMeterRequest All the information required for creating a new meter
 type CreateOrUpdateMeterRequest struct {
-	MeterType           MeterTypeEnum `json:"meter_type"`
-	Unit                string        `json:"unit"`
-	Name                string        `json:"name"`
-	Location            *string       `json:"location,omitempty"`
-	SerialNumber        string        `json:"serial_number"`
-	CalibrationDate     *int64        `json:"calibration_date,omitempty"`
-	CalibrationValidity *int64        `json:"calibration_validity,omitempty"`
+	MeterType           MeterTypeEnum       `json:"meter_type"`
+	Unit                MeasurementUnitEnum `json:"unit"`
+	Name                string              `json:"name"`
+	Location            *string             `json:"location,omitempty"`
+	SerialNumber        string              `json:"serial_number"`
+	CalibrationDate     *int64              `json:"calibration_date,omitempty"`
+	CalibrationValidity *int64              `json:"calibration_validity,omitempty"`
+	// Optional reference to the cost type whose usage the meter measures. Used to preselect the meter when tracking consumptions of the cost type.
+	CostTypeRef *string `json:"cost_type_ref,omitempty"`
 }
 
 type _CreateOrUpdateMeterRequest CreateOrUpdateMeterRequest
@@ -36,7 +38,7 @@ type _CreateOrUpdateMeterRequest CreateOrUpdateMeterRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateOrUpdateMeterRequest(meterType MeterTypeEnum, unit string, name string, serialNumber string) *CreateOrUpdateMeterRequest {
+func NewCreateOrUpdateMeterRequest(meterType MeterTypeEnum, unit MeasurementUnitEnum, name string, serialNumber string) *CreateOrUpdateMeterRequest {
 	this := CreateOrUpdateMeterRequest{}
 	this.MeterType = meterType
 	this.Unit = unit
@@ -78,9 +80,9 @@ func (o *CreateOrUpdateMeterRequest) SetMeterType(v MeterTypeEnum) {
 }
 
 // GetUnit returns the Unit field value
-func (o *CreateOrUpdateMeterRequest) GetUnit() string {
+func (o *CreateOrUpdateMeterRequest) GetUnit() MeasurementUnitEnum {
 	if o == nil {
-		var ret string
+		var ret MeasurementUnitEnum
 		return ret
 	}
 
@@ -89,7 +91,7 @@ func (o *CreateOrUpdateMeterRequest) GetUnit() string {
 
 // GetUnitOk returns a tuple with the Unit field value
 // and a boolean to check if the value has been set.
-func (o *CreateOrUpdateMeterRequest) GetUnitOk() (*string, bool) {
+func (o *CreateOrUpdateMeterRequest) GetUnitOk() (*MeasurementUnitEnum, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -97,7 +99,7 @@ func (o *CreateOrUpdateMeterRequest) GetUnitOk() (*string, bool) {
 }
 
 // SetUnit sets field value
-func (o *CreateOrUpdateMeterRequest) SetUnit(v string) {
+func (o *CreateOrUpdateMeterRequest) SetUnit(v MeasurementUnitEnum) {
 	o.Unit = v
 }
 
@@ -245,6 +247,38 @@ func (o *CreateOrUpdateMeterRequest) SetCalibrationValidity(v int64) {
 	o.CalibrationValidity = &v
 }
 
+// GetCostTypeRef returns the CostTypeRef field value if set, zero value otherwise.
+func (o *CreateOrUpdateMeterRequest) GetCostTypeRef() string {
+	if o == nil || IsNil(o.CostTypeRef) {
+		var ret string
+		return ret
+	}
+	return *o.CostTypeRef
+}
+
+// GetCostTypeRefOk returns a tuple with the CostTypeRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateMeterRequest) GetCostTypeRefOk() (*string, bool) {
+	if o == nil || IsNil(o.CostTypeRef) {
+		return nil, false
+	}
+	return o.CostTypeRef, true
+}
+
+// HasCostTypeRef returns a boolean if a field has been set.
+func (o *CreateOrUpdateMeterRequest) HasCostTypeRef() bool {
+	if o != nil && !IsNil(o.CostTypeRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetCostTypeRef gets a reference to the given string and assigns it to the CostTypeRef field.
+func (o *CreateOrUpdateMeterRequest) SetCostTypeRef(v string) {
+	o.CostTypeRef = &v
+}
+
 func (o CreateOrUpdateMeterRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -267,6 +301,9 @@ func (o CreateOrUpdateMeterRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.CalibrationValidity) {
 		toSerialize["calibration_validity"] = o.CalibrationValidity
+	}
+	if !IsNil(o.CostTypeRef) {
+		toSerialize["cost_type_ref"] = o.CostTypeRef
 	}
 	return toSerialize, nil
 }

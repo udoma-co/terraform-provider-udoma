@@ -30,10 +30,9 @@ type CreateOrUpdateConsumptionRequest struct {
 	// Optional reference to the meter that produced the reading
 	MeterRef *string `json:"meter_ref,omitempty"`
 	// Reference to the fiscal year. Always points to the fiscal year of the building (for unit-level consumption, the parent building's fiscal year).
-	FiscalYearRef string `json:"fiscal_year_ref"`
-	// Unit of the measured usage, same convention as Meter.unit
-	Unit  string      `json:"unit"`
-	Value FloatNumber `json:"value"`
+	FiscalYearRef string              `json:"fiscal_year_ref"`
+	Unit          MeasurementUnitEnum `json:"unit"`
+	Value         FloatNumber         `json:"value"`
 	// Optional list of pricing rates applied to the consumption
 	Rates []ConsumptionRate `json:"rates,omitempty"`
 	// Total amount due for the consumption, in cents
@@ -46,7 +45,7 @@ type _CreateOrUpdateConsumptionRequest CreateOrUpdateConsumptionRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateOrUpdateConsumptionRequest(propertyRef string, costTypeRef string, fiscalYearRef string, unit string, value FloatNumber, totalAmount int64) *CreateOrUpdateConsumptionRequest {
+func NewCreateOrUpdateConsumptionRequest(propertyRef string, costTypeRef string, fiscalYearRef string, unit MeasurementUnitEnum, value FloatNumber, totalAmount int64) *CreateOrUpdateConsumptionRequest {
 	this := CreateOrUpdateConsumptionRequest{}
 	this.PropertyRef = propertyRef
 	this.CostTypeRef = costTypeRef
@@ -202,9 +201,9 @@ func (o *CreateOrUpdateConsumptionRequest) SetFiscalYearRef(v string) {
 }
 
 // GetUnit returns the Unit field value
-func (o *CreateOrUpdateConsumptionRequest) GetUnit() string {
+func (o *CreateOrUpdateConsumptionRequest) GetUnit() MeasurementUnitEnum {
 	if o == nil {
-		var ret string
+		var ret MeasurementUnitEnum
 		return ret
 	}
 
@@ -213,7 +212,7 @@ func (o *CreateOrUpdateConsumptionRequest) GetUnit() string {
 
 // GetUnitOk returns a tuple with the Unit field value
 // and a boolean to check if the value has been set.
-func (o *CreateOrUpdateConsumptionRequest) GetUnitOk() (*string, bool) {
+func (o *CreateOrUpdateConsumptionRequest) GetUnitOk() (*MeasurementUnitEnum, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -221,7 +220,7 @@ func (o *CreateOrUpdateConsumptionRequest) GetUnitOk() (*string, bool) {
 }
 
 // SetUnit sets field value
-func (o *CreateOrUpdateConsumptionRequest) SetUnit(v string) {
+func (o *CreateOrUpdateConsumptionRequest) SetUnit(v MeasurementUnitEnum) {
 	o.Unit = v
 }
 

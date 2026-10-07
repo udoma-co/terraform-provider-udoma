@@ -26,15 +26,17 @@ type Meter struct {
 	// The date and time the entity was created
 	CreatedAt int64 `json:"created_at"`
 	// The date and time the entity was last updated
-	UpdatedAt           int64         `json:"updated_at"`
-	MeterType           MeterTypeEnum `json:"meter_type"`
-	Unit                string        `json:"unit"`
-	Name                string        `json:"name"`
-	Location            *string       `json:"location,omitempty"`
-	SerialNumber        string        `json:"serial_number"`
-	CalibrationDate     *int64        `json:"calibration_date,omitempty"`
-	CalibrationValidity *int64        `json:"calibration_validity,omitempty"`
-	PropertyRef         string        `json:"property_ref"`
+	UpdatedAt           int64               `json:"updated_at"`
+	MeterType           MeterTypeEnum       `json:"meter_type"`
+	Unit                MeasurementUnitEnum `json:"unit"`
+	Name                string              `json:"name"`
+	Location            *string             `json:"location,omitempty"`
+	SerialNumber        string              `json:"serial_number"`
+	CalibrationDate     *int64              `json:"calibration_date,omitempty"`
+	CalibrationValidity *int64              `json:"calibration_validity,omitempty"`
+	// Optional reference to the cost type whose usage the meter measures. Used to preselect the meter when tracking consumptions of the cost type.
+	CostTypeRef *string `json:"cost_type_ref,omitempty"`
+	PropertyRef string  `json:"property_ref"`
 }
 
 type _Meter Meter
@@ -43,7 +45,7 @@ type _Meter Meter
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewMeter(id string, createdAt int64, updatedAt int64, meterType MeterTypeEnum, unit string, name string, serialNumber string, propertyRef string) *Meter {
+func NewMeter(id string, createdAt int64, updatedAt int64, meterType MeterTypeEnum, unit MeasurementUnitEnum, name string, serialNumber string, propertyRef string) *Meter {
 	this := Meter{}
 	this.Id = id
 	this.CreatedAt = createdAt
@@ -161,9 +163,9 @@ func (o *Meter) SetMeterType(v MeterTypeEnum) {
 }
 
 // GetUnit returns the Unit field value
-func (o *Meter) GetUnit() string {
+func (o *Meter) GetUnit() MeasurementUnitEnum {
 	if o == nil {
-		var ret string
+		var ret MeasurementUnitEnum
 		return ret
 	}
 
@@ -172,7 +174,7 @@ func (o *Meter) GetUnit() string {
 
 // GetUnitOk returns a tuple with the Unit field value
 // and a boolean to check if the value has been set.
-func (o *Meter) GetUnitOk() (*string, bool) {
+func (o *Meter) GetUnitOk() (*MeasurementUnitEnum, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -180,7 +182,7 @@ func (o *Meter) GetUnitOk() (*string, bool) {
 }
 
 // SetUnit sets field value
-func (o *Meter) SetUnit(v string) {
+func (o *Meter) SetUnit(v MeasurementUnitEnum) {
 	o.Unit = v
 }
 
@@ -328,6 +330,38 @@ func (o *Meter) SetCalibrationValidity(v int64) {
 	o.CalibrationValidity = &v
 }
 
+// GetCostTypeRef returns the CostTypeRef field value if set, zero value otherwise.
+func (o *Meter) GetCostTypeRef() string {
+	if o == nil || IsNil(o.CostTypeRef) {
+		var ret string
+		return ret
+	}
+	return *o.CostTypeRef
+}
+
+// GetCostTypeRefOk returns a tuple with the CostTypeRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Meter) GetCostTypeRefOk() (*string, bool) {
+	if o == nil || IsNil(o.CostTypeRef) {
+		return nil, false
+	}
+	return o.CostTypeRef, true
+}
+
+// HasCostTypeRef returns a boolean if a field has been set.
+func (o *Meter) HasCostTypeRef() bool {
+	if o != nil && !IsNil(o.CostTypeRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetCostTypeRef gets a reference to the given string and assigns it to the CostTypeRef field.
+func (o *Meter) SetCostTypeRef(v string) {
+	o.CostTypeRef = &v
+}
+
 // GetPropertyRef returns the PropertyRef field value
 func (o *Meter) GetPropertyRef() string {
 	if o == nil {
@@ -377,6 +411,9 @@ func (o Meter) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.CalibrationValidity) {
 		toSerialize["calibration_validity"] = o.CalibrationValidity
+	}
+	if !IsNil(o.CostTypeRef) {
+		toSerialize["cost_type_ref"] = o.CostTypeRef
 	}
 	toSerialize["property_ref"] = o.PropertyRef
 	return toSerialize, nil
