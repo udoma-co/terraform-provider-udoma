@@ -26,12 +26,15 @@ type MeterReading struct {
 	// The date and time the entity was created
 	CreatedAt int64 `json:"created_at"`
 	// The date and time the entity was last updated
-	UpdatedAt     int64        `json:"updated_at"`
-	Date          *int64       `json:"date,omitempty"`
-	Value         *FloatNumber `json:"value,omitempty"`
-	AttachmentRef *string      `json:"attachment_ref,omitempty"`
-	MeterRef      string       `json:"meter_ref"`
-	ReporterRef   string       `json:"reporter_ref"`
+	UpdatedAt int64        `json:"updated_at"`
+	Date      *int64       `json:"date,omitempty"`
+	Value     *FloatNumber `json:"value,omitempty"`
+	// Photo of the meter showing the reading
+	AttachmentRef *string `json:"attachment_ref,omitempty"`
+	// Document the reading was taken from, e.g. an imported utility bill. Only set when the reading is created, updates keep it.
+	SourceAttachmentRef *string `json:"source_attachment_ref,omitempty"`
+	MeterRef            string  `json:"meter_ref"`
+	ReporterRef         string  `json:"reporter_ref"`
 }
 
 type _MeterReading MeterReading
@@ -226,6 +229,38 @@ func (o *MeterReading) SetAttachmentRef(v string) {
 	o.AttachmentRef = &v
 }
 
+// GetSourceAttachmentRef returns the SourceAttachmentRef field value if set, zero value otherwise.
+func (o *MeterReading) GetSourceAttachmentRef() string {
+	if o == nil || IsNil(o.SourceAttachmentRef) {
+		var ret string
+		return ret
+	}
+	return *o.SourceAttachmentRef
+}
+
+// GetSourceAttachmentRefOk returns a tuple with the SourceAttachmentRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MeterReading) GetSourceAttachmentRefOk() (*string, bool) {
+	if o == nil || IsNil(o.SourceAttachmentRef) {
+		return nil, false
+	}
+	return o.SourceAttachmentRef, true
+}
+
+// HasSourceAttachmentRef returns a boolean if a field has been set.
+func (o *MeterReading) HasSourceAttachmentRef() bool {
+	if o != nil && !IsNil(o.SourceAttachmentRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetSourceAttachmentRef gets a reference to the given string and assigns it to the SourceAttachmentRef field.
+func (o *MeterReading) SetSourceAttachmentRef(v string) {
+	o.SourceAttachmentRef = &v
+}
+
 // GetMeterRef returns the MeterRef field value
 func (o *MeterReading) GetMeterRef() string {
 	if o == nil {
@@ -295,6 +330,9 @@ func (o MeterReading) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.AttachmentRef) {
 		toSerialize["attachment_ref"] = o.AttachmentRef
+	}
+	if !IsNil(o.SourceAttachmentRef) {
+		toSerialize["source_attachment_ref"] = o.SourceAttachmentRef
 	}
 	toSerialize["meter_ref"] = o.MeterRef
 	toSerialize["reporter_ref"] = o.ReporterRef

@@ -25,6 +25,8 @@ type Notification struct {
 	CreatedAt int64 `json:"created_at"`
 	// The date and time the entity was last updated
 	UpdatedAt int64 `json:"updated_at"`
+	// A flag indicating whether the entity is published as a catalog item. Catalog items are defined once for the environment and are managed centrally, they cannot be edited from a customer account that has subscribed to them. The flag is derived from the catalog and is never set by the client.
+	IsCatalogItem *bool `json:"is_catalog_item,omitempty"`
 	// A unique, descriptive, and short identifier name.
 	Name string `json:"name"`
 	// Whether this template is used an intermediate template or not. If true it cannot be used as a regular template and must only be referenced by other templates.
@@ -111,6 +113,38 @@ func (o *Notification) GetUpdatedAtOk() (*int64, bool) {
 // SetUpdatedAt sets field value
 func (o *Notification) SetUpdatedAt(v int64) {
 	o.UpdatedAt = v
+}
+
+// GetIsCatalogItem returns the IsCatalogItem field value if set, zero value otherwise.
+func (o *Notification) GetIsCatalogItem() bool {
+	if o == nil || IsNil(o.IsCatalogItem) {
+		var ret bool
+		return ret
+	}
+	return *o.IsCatalogItem
+}
+
+// GetIsCatalogItemOk returns a tuple with the IsCatalogItem field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Notification) GetIsCatalogItemOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsCatalogItem) {
+		return nil, false
+	}
+	return o.IsCatalogItem, true
+}
+
+// HasIsCatalogItem returns a boolean if a field has been set.
+func (o *Notification) HasIsCatalogItem() bool {
+	if o != nil && !IsNil(o.IsCatalogItem) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsCatalogItem gets a reference to the given bool and assigns it to the IsCatalogItem field.
+func (o *Notification) SetIsCatalogItem(v bool) {
+	o.IsCatalogItem = &v
 }
 
 // GetName returns the Name field value
@@ -325,6 +359,9 @@ func (o Notification) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["created_at"] = o.CreatedAt
 	toSerialize["updated_at"] = o.UpdatedAt
+	if !IsNil(o.IsCatalogItem) {
+		toSerialize["is_catalog_item"] = o.IsCatalogItem
+	}
 	toSerialize["name"] = o.Name
 	if !IsNil(o.IsIntermediate) {
 		toSerialize["is_intermediate"] = o.IsIntermediate

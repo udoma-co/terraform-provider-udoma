@@ -33,8 +33,16 @@ type InvoiceExtendedData struct {
 	TaxAmount *int64 `json:"tax_amount,omitempty"`
 	// The tax rate applied to the invoice, in cents.
 	TaxRate *int64 `json:"tax_rate,omitempty"`
-	// Optional property address for which the invoice is issued. This is typically detected as a single line
+	// Optional property address for which the invoice is issued (service location, e.g. \"Objekt\", \"Leistungsort\", \"Verbrauchsstelle\"). This is typically detected as a single line. Not the recipient address.
 	PropertyAddress *string `json:"property_address,omitempty"`
+	// Other references to the property found on the invoice, e.g. the name of the WEG or building, or a property number used by the vendor.
+	PropertyReferences []string `json:"property_references,omitempty"`
+	// Optional name of the invoice recipient as detected.
+	RecipientName *string `json:"recipient_name,omitempty"`
+	// Optional address of the invoice recipient as detected, typically the address of the property manager, not of the property.
+	RecipientAddress *string `json:"recipient_address,omitempty"`
+	// Properties (top-level buildings) that were detected as possible matches during the import, best match first. Set by the import only.
+	PropertyCandidates []InvoicePropertyCandidate `json:"property_candidates,omitempty"`
 	// Optional payment target date for the invoice, defaults to the due date, but can be adjusted manually.
 	PaymentTarget *int64 `json:"payment_target,omitempty"`
 }
@@ -355,6 +363,134 @@ func (o *InvoiceExtendedData) SetPropertyAddress(v string) {
 	o.PropertyAddress = &v
 }
 
+// GetPropertyReferences returns the PropertyReferences field value if set, zero value otherwise.
+func (o *InvoiceExtendedData) GetPropertyReferences() []string {
+	if o == nil || IsNil(o.PropertyReferences) {
+		var ret []string
+		return ret
+	}
+	return o.PropertyReferences
+}
+
+// GetPropertyReferencesOk returns a tuple with the PropertyReferences field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *InvoiceExtendedData) GetPropertyReferencesOk() ([]string, bool) {
+	if o == nil || IsNil(o.PropertyReferences) {
+		return nil, false
+	}
+	return o.PropertyReferences, true
+}
+
+// HasPropertyReferences returns a boolean if a field has been set.
+func (o *InvoiceExtendedData) HasPropertyReferences() bool {
+	if o != nil && !IsNil(o.PropertyReferences) {
+		return true
+	}
+
+	return false
+}
+
+// SetPropertyReferences gets a reference to the given []string and assigns it to the PropertyReferences field.
+func (o *InvoiceExtendedData) SetPropertyReferences(v []string) {
+	o.PropertyReferences = v
+}
+
+// GetRecipientName returns the RecipientName field value if set, zero value otherwise.
+func (o *InvoiceExtendedData) GetRecipientName() string {
+	if o == nil || IsNil(o.RecipientName) {
+		var ret string
+		return ret
+	}
+	return *o.RecipientName
+}
+
+// GetRecipientNameOk returns a tuple with the RecipientName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *InvoiceExtendedData) GetRecipientNameOk() (*string, bool) {
+	if o == nil || IsNil(o.RecipientName) {
+		return nil, false
+	}
+	return o.RecipientName, true
+}
+
+// HasRecipientName returns a boolean if a field has been set.
+func (o *InvoiceExtendedData) HasRecipientName() bool {
+	if o != nil && !IsNil(o.RecipientName) {
+		return true
+	}
+
+	return false
+}
+
+// SetRecipientName gets a reference to the given string and assigns it to the RecipientName field.
+func (o *InvoiceExtendedData) SetRecipientName(v string) {
+	o.RecipientName = &v
+}
+
+// GetRecipientAddress returns the RecipientAddress field value if set, zero value otherwise.
+func (o *InvoiceExtendedData) GetRecipientAddress() string {
+	if o == nil || IsNil(o.RecipientAddress) {
+		var ret string
+		return ret
+	}
+	return *o.RecipientAddress
+}
+
+// GetRecipientAddressOk returns a tuple with the RecipientAddress field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *InvoiceExtendedData) GetRecipientAddressOk() (*string, bool) {
+	if o == nil || IsNil(o.RecipientAddress) {
+		return nil, false
+	}
+	return o.RecipientAddress, true
+}
+
+// HasRecipientAddress returns a boolean if a field has been set.
+func (o *InvoiceExtendedData) HasRecipientAddress() bool {
+	if o != nil && !IsNil(o.RecipientAddress) {
+		return true
+	}
+
+	return false
+}
+
+// SetRecipientAddress gets a reference to the given string and assigns it to the RecipientAddress field.
+func (o *InvoiceExtendedData) SetRecipientAddress(v string) {
+	o.RecipientAddress = &v
+}
+
+// GetPropertyCandidates returns the PropertyCandidates field value if set, zero value otherwise.
+func (o *InvoiceExtendedData) GetPropertyCandidates() []InvoicePropertyCandidate {
+	if o == nil || IsNil(o.PropertyCandidates) {
+		var ret []InvoicePropertyCandidate
+		return ret
+	}
+	return o.PropertyCandidates
+}
+
+// GetPropertyCandidatesOk returns a tuple with the PropertyCandidates field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *InvoiceExtendedData) GetPropertyCandidatesOk() ([]InvoicePropertyCandidate, bool) {
+	if o == nil || IsNil(o.PropertyCandidates) {
+		return nil, false
+	}
+	return o.PropertyCandidates, true
+}
+
+// HasPropertyCandidates returns a boolean if a field has been set.
+func (o *InvoiceExtendedData) HasPropertyCandidates() bool {
+	if o != nil && !IsNil(o.PropertyCandidates) {
+		return true
+	}
+
+	return false
+}
+
+// SetPropertyCandidates gets a reference to the given []InvoicePropertyCandidate and assigns it to the PropertyCandidates field.
+func (o *InvoiceExtendedData) SetPropertyCandidates(v []InvoicePropertyCandidate) {
+	o.PropertyCandidates = v
+}
+
 // GetPaymentTarget returns the PaymentTarget field value if set, zero value otherwise.
 func (o *InvoiceExtendedData) GetPaymentTarget() int64 {
 	if o == nil || IsNil(o.PaymentTarget) {
@@ -423,6 +559,18 @@ func (o InvoiceExtendedData) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.PropertyAddress) {
 		toSerialize["property_address"] = o.PropertyAddress
+	}
+	if !IsNil(o.PropertyReferences) {
+		toSerialize["property_references"] = o.PropertyReferences
+	}
+	if !IsNil(o.RecipientName) {
+		toSerialize["recipient_name"] = o.RecipientName
+	}
+	if !IsNil(o.RecipientAddress) {
+		toSerialize["recipient_address"] = o.RecipientAddress
+	}
+	if !IsNil(o.PropertyCandidates) {
+		toSerialize["property_candidates"] = o.PropertyCandidates
 	}
 	if !IsNil(o.PaymentTarget) {
 		toSerialize["payment_target"] = o.PaymentTarget

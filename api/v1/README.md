@@ -321,6 +321,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetConnectorQueries**](docs/DefaultAPI.md#getconnectorqueries) | **Get** /connector/{name}/queries | Get the queries that belong to the config.
 *DefaultAPI* | [**GetConnectorQuery**](docs/DefaultAPI.md#getconnectorquery) | **Get** /query/{queryID} | Get the query for the current account
 *DefaultAPI* | [**GetConsumption**](docs/DefaultAPI.md#getconsumption) | **Get** /consumptions/{consumptionID} | Get a consumption record
+*DefaultAPI* | [**GetConsumptionImport**](docs/DefaultAPI.md#getconsumptionimport) | **Get** /properties/{propID}/consumptions/import/{consumptionImportID} | Get the state and result of a consumption import
 *DefaultAPI* | [**GetCorrespondence**](docs/DefaultAPI.md#getcorrespondence) | **Get** /tenant-correspondence/{corrID} | Get a correspondence object via its ID
 *DefaultAPI* | [**GetCorrespondenceAccessRecord**](docs/DefaultAPI.md#getcorrespondenceaccessrecord) | **Get** /tenant-correspondence/{corrID}/access-record | Get the access record for the correspondence.
 *DefaultAPI* | [**GetCostType**](docs/DefaultAPI.md#getcosttype) | **Get** /cost-type/{costTypeID} | Get a cost type by ID
@@ -371,15 +372,18 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetOrder**](docs/DefaultAPI.md#getorder) | **Get** /order/{orderID} | Get the order with the given ID
 *DefaultAPI* | [**GetOwnership**](docs/DefaultAPI.md#getownership) | **Get** /ownership/{ownershipID} | Get ownership details
 *DefaultAPI* | [**GetPriceIndexPoint**](docs/DefaultAPI.md#getpriceindexpoint) | **Post** /price-index | Get the PriceIndexPoint
+*DefaultAPI* | [**GetPropertiesByIDs**](docs/DefaultAPI.md#getpropertiesbyids) | **Post** /property/batch-get | Get properties by IDs
 *DefaultAPI* | [**GetProperty**](docs/DefaultAPI.md#getproperty) | **Get** /properties/{propID} | Get property details
 *DefaultAPI* | [**GetPropertyCases**](docs/DefaultAPI.md#getpropertycases) | **Post** /property/{propID}/cases | Get property cases
 *DefaultAPI* | [**GetPropertyCasesV2**](docs/DefaultAPI.md#getpropertycasesv2) | **Post** /property/{propID}/cases-v2 | Get property cases
+*DefaultAPI* | [**GetPropertyCities**](docs/DefaultAPI.md#getpropertycities) | **Get** /property/cities | Get the cities of all properties
 *DefaultAPI* | [**GetPropertyDeclaration**](docs/DefaultAPI.md#getpropertydeclaration) | **Get** /property-declarations/{declarationID} | Get property declaration of condominium ownership
 *DefaultAPI* | [**GetPropertyHandover**](docs/DefaultAPI.md#getpropertyhandover) | **Get** /property-handovers/handovers/{handoverID} | Get property handover
 *DefaultAPI* | [**GetPropertyHandoverTemplate**](docs/DefaultAPI.md#getpropertyhandovertemplate) | **Get** /property-handovers/template/{templateID} | Get property handover template
 *DefaultAPI* | [**GetPropertyListing**](docs/DefaultAPI.md#getpropertylisting) | **Get** /properties/{propID}/listing | Get property listing
 *DefaultAPI* | [**GetPropertyOwner**](docs/DefaultAPI.md#getpropertyowner) | **Get** /owner/{ownerID} | Get property owner details
 *DefaultAPI* | [**GetPropertyOwnerships**](docs/DefaultAPI.md#getpropertyownerships) | **Get** /properties/{propID}/ownerships | List ownerships for a property
+*DefaultAPI* | [**GetPropertyServiceProviders**](docs/DefaultAPI.md#getpropertyserviceproviders) | **Get** /properties/{propID}/service-providers | Get the service providers that are linked to the building
 *DefaultAPI* | [**GetPropertyTenancy**](docs/DefaultAPI.md#getpropertytenancy) | **Get** /property/{propID}/tenancy | Get the current tenancy for the property
 *DefaultAPI* | [**GetPropertyUnitAssessment**](docs/DefaultAPI.md#getpropertyunitassessment) | **Get** /properties/{propID}/condominium-fees/{unitAssessmentID} | Get a unit assessment by ID
 *DefaultAPI* | [**GetPublicChatbotInstruction**](docs/DefaultAPI.md#getpublicchatbotinstruction) | **Get** /chatbot/instruction/{instructionID} | Get a public chatbot instruction
@@ -395,6 +399,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetReportExecutions**](docs/DefaultAPI.md#getreportexecutions) | **Post** /reports/executions | Get all executions that match the given criteria
 *DefaultAPI* | [**GetRevenueType**](docs/DefaultAPI.md#getrevenuetype) | **Get** /revenue-type/{revenueTypeID} | Get a revenue type by ID
 *DefaultAPI* | [**GetServiceProvider**](docs/DefaultAPI.md#getserviceprovider) | **Get** /service-provider/{serviceProviderID} | Get the service provider with the given ID
+*DefaultAPI* | [**GetServiceProviderProperties**](docs/DefaultAPI.md#getserviceproviderproperties) | **Get** /service-provider/{serviceProviderID}/properties | Get the buildings that are linked to the service provider
 *DefaultAPI* | [**GetSignedDocumentAuditDownload**](docs/DefaultAPI.md#getsigneddocumentauditdownload) | **Get** /document-generation/documents/{docID}/esignature/download-audits | Get the audit information for the signed document
 *DefaultAPI* | [**GetSignedDocumentDownload**](docs/DefaultAPI.md#getsigneddocumentdownload) | **Get** /document-generation/documents/{docID}/esignature/download-document | Get the signed document
 *DefaultAPI* | [**GetSuggestedBookingTemplate**](docs/DefaultAPI.md#getsuggestedbookingtemplate) | **Get** /bank-account-transaction/{transactionID}/suggested-template | Get the suggested booking template for a bank transaction based on booking history
@@ -414,6 +419,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**GetWorkflowExecutionTrigger**](docs/DefaultAPI.md#getworkflowexecutiontrigger) | **Get** /workflows/triggers/{executionID} | Get workflow trigger for an execution
 *DefaultAPI* | [**GetWorkflowTriggersForSource**](docs/DefaultAPI.md#getworkflowtriggersforsource) | **Get** /workflows/trigger/source/{sourceID} | Get workflow triggers for a source
 *DefaultAPI* | [**ImportBankConnectionTransactions**](docs/DefaultAPI.md#importbankconnectiontransactions) | **Post** /bank-connection/{bankConnectionID}/transactions/import | Import transactions from bank connection
+*DefaultAPI* | [**ImportConsumptions**](docs/DefaultAPI.md#importconsumptions) | **Post** /properties/{propID}/consumptions/import | Start extracting consumptions and meter readings from an uploaded document
 *DefaultAPI* | [**ImportDataUsingTemplate**](docs/DefaultAPI.md#importdatausingtemplate) | **Post** /data-import/template/{templateID}/import | Import data using the template
 *DefaultAPI* | [**ImportServiceProvider**](docs/DefaultAPI.md#importserviceprovider) | **Post** /service-provider/import | Extract service provider data from an uploaded document
 *DefaultAPI* | [**InitBookingTemplate**](docs/DefaultAPI.md#initbookingtemplate) | **Post** /financial/booking-template/{bookingTemplateID}/init | Execute a booking template and create a booking preview
@@ -642,6 +648,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdatePropertyHandoverTemplate**](docs/DefaultAPI.md#updatepropertyhandovertemplate) | **Put** /property-handovers/template/{templateID} | Update property handover template
 *DefaultAPI* | [**UpdatePropertyListing**](docs/DefaultAPI.md#updatepropertylisting) | **Put** /properties/{propID}/listing | Create or update property listing
 *DefaultAPI* | [**UpdatePropertyOwner**](docs/DefaultAPI.md#updatepropertyowner) | **Put** /owner/{ownerID} | Update property owner
+*DefaultAPI* | [**UpdatePropertyServiceProviders**](docs/DefaultAPI.md#updatepropertyserviceproviders) | **Put** /properties/{propID}/service-providers | Replace the service providers that are linked to the building
 *DefaultAPI* | [**UpdatePropertyUnitAssessment**](docs/DefaultAPI.md#updatepropertyunitassessment) | **Put** /properties/{propID}/condominium-fees/{unitAssessmentID} | Update a unit assessment by ID
 *DefaultAPI* | [**UpdatePublicChatbotInstruction**](docs/DefaultAPI.md#updatepublicchatbotinstruction) | **Put** /chatbot/instruction/{instructionID} | Update an existing public chatbot instruction
 *DefaultAPI* | [**UpdateRentUpdate**](docs/DefaultAPI.md#updaterentupdate) | **Put** /rent-update/{rentUpdateID} | Update the rent update with the given ID
@@ -649,6 +656,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**UpdateReportEntrypoint**](docs/DefaultAPI.md#updatereportentrypoint) | **Put** /reports/entrypoint/{entrypointID} | Update report entry point
 *DefaultAPI* | [**UpdateRevenueType**](docs/DefaultAPI.md#updaterevenuetype) | **Put** /revenue-type/{revenueTypeID} | Update an existing revenue type
 *DefaultAPI* | [**UpdateServiceProvider**](docs/DefaultAPI.md#updateserviceprovider) | **Put** /service-provider/{serviceProviderID} | Update the attributes of the service provider
+*DefaultAPI* | [**UpdateServiceProviderProperties**](docs/DefaultAPI.md#updateserviceproviderproperties) | **Put** /service-provider/{serviceProviderID}/properties | Replace the buildings that are linked to the service provider
 *DefaultAPI* | [**UpdateTenancy**](docs/DefaultAPI.md#updatetenancy) | **Put** /tenancy/{tenancyID} | Update the tenancy with the given ID
 *DefaultAPI* | [**UpdateTenant**](docs/DefaultAPI.md#updatetenant) | **Put** /tenant/{tenantID} | Update tenant information
 *DefaultAPI* | [**UpdateUserInformation**](docs/DefaultAPI.md#updateuserinformation) | **Put** /information | Update the user information
@@ -855,6 +863,13 @@ Class | Method | HTTP request | Description
  - [ConnectorSyncRequest](docs/ConnectorSyncRequest.md)
  - [Consumption](docs/Consumption.md)
  - [ConsumptionAttributesPartial](docs/ConsumptionAttributesPartial.md)
+ - [ConsumptionImport](docs/ConsumptionImport.md)
+ - [ConsumptionImportCategoryEnum](docs/ConsumptionImportCategoryEnum.md)
+ - [ConsumptionImportEntry](docs/ConsumptionImportEntry.md)
+ - [ConsumptionImportMeter](docs/ConsumptionImportMeter.md)
+ - [ConsumptionImportMeterReading](docs/ConsumptionImportMeterReading.md)
+ - [ConsumptionImportResult](docs/ConsumptionImportResult.md)
+ - [ConsumptionImportStatusEnum](docs/ConsumptionImportStatusEnum.md)
  - [ConsumptionRate](docs/ConsumptionRate.md)
  - [ConsumptionRateAttributesPartial](docs/ConsumptionRateAttributesPartial.md)
  - [ContactData](docs/ContactData.md)
@@ -1056,6 +1071,7 @@ Class | Method | HTTP request | Description
  - [GetNumberOfCasesForStatusResponse](docs/GetNumberOfCasesForStatusResponse.md)
  - [GetNumberOfInteractionsForCasesRequest](docs/GetNumberOfInteractionsForCasesRequest.md)
  - [GetNumberOfInteractionsForCasesResponse](docs/GetNumberOfInteractionsForCasesResponse.md)
+ - [GetPropertiesByIDsRequest](docs/GetPropertiesByIDsRequest.md)
  - [GetSummaryRequest](docs/GetSummaryRequest.md)
  - [GetSummaryResponse](docs/GetSummaryResponse.md)
  - [GraduatedUpdate](docs/GraduatedUpdate.md)
@@ -1082,6 +1098,7 @@ Class | Method | HTTP request | Description
  - [InvoiceExtendedData](docs/InvoiceExtendedData.md)
  - [InvoiceInboxConfig](docs/InvoiceInboxConfig.md)
  - [InvoicePaymentStatusEnum](docs/InvoicePaymentStatusEnum.md)
+ - [InvoicePropertyCandidate](docs/InvoicePropertyCandidate.md)
  - [InvoiceUploadJob](docs/InvoiceUploadJob.md)
  - [InvoiceUploadJobStatusEnum](docs/InvoiceUploadJobStatusEnum.md)
  - [IsDeletedAttributePartial](docs/IsDeletedAttributePartial.md)
@@ -1130,6 +1147,7 @@ Class | Method | HTTP request | Description
  - [ProcessUploadedInvoiceAttachmentRequest](docs/ProcessUploadedInvoiceAttachmentRequest.md)
  - [Property](docs/Property.md)
  - [PropertyAttributesPartial](docs/PropertyAttributesPartial.md)
+ - [PropertyCitiesResponse](docs/PropertyCitiesResponse.md)
  - [PropertyDeclaration](docs/PropertyDeclaration.md)
  - [PropertyDeclarationAttributesPartial](docs/PropertyDeclarationAttributesPartial.md)
  - [PropertyDetails](docs/PropertyDetails.md)
@@ -1149,6 +1167,7 @@ Class | Method | HTTP request | Description
  - [PropertyOwner](docs/PropertyOwner.md)
  - [PropertyOwnerAttributesPartial](docs/PropertyOwnerAttributesPartial.md)
  - [PropertyParkingTypeEnum](docs/PropertyParkingTypeEnum.md)
+ - [PropertyServiceProvidersResponse](docs/PropertyServiceProvidersResponse.md)
  - [PropertySimiliarity](docs/PropertySimiliarity.md)
  - [PropertyType](docs/PropertyType.md)
  - [PropertyWindowTypeEnum](docs/PropertyWindowTypeEnum.md)
@@ -1329,6 +1348,7 @@ Class | Method | HTTP request | Description
  - [ServiceCategoryEnum](docs/ServiceCategoryEnum.md)
  - [ServiceProvider](docs/ServiceProvider.md)
  - [ServiceProviderAttributesPartial](docs/ServiceProviderAttributesPartial.md)
+ - [ServiceProviderPropertiesResponse](docs/ServiceProviderPropertiesResponse.md)
  - [Signature](docs/Signature.md)
  - [SignatureData](docs/SignatureData.md)
  - [SignatureInformationResponse](docs/SignatureInformationResponse.md)
@@ -1372,6 +1392,8 @@ Class | Method | HTTP request | Description
  - [UpdateNoteRequest](docs/UpdateNoteRequest.md)
  - [UpdateNotificationRequest](docs/UpdateNotificationRequest.md)
  - [UpdateOrderStatusRequest](docs/UpdateOrderStatusRequest.md)
+ - [UpdatePropertyServiceProvidersRequest](docs/UpdatePropertyServiceProvidersRequest.md)
+ - [UpdateServiceProviderPropertiesRequest](docs/UpdateServiceProviderPropertiesRequest.md)
  - [UpdateTenancyRequest](docs/UpdateTenancyRequest.md)
  - [UpdateUserInformationRequest](docs/UpdateUserInformationRequest.md)
  - [UploadInvoiceResponse](docs/UploadInvoiceResponse.md)

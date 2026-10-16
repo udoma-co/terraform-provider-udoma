@@ -15,7 +15,7 @@ import (
 	"fmt"
 )
 
-// CatalogItemType The type of entity that is being referenced in a catalog item
+// CatalogItemType The type of entity that is being referenced in a catalog item. Notifications have no id, they are referenced by their name (`ref_id` is the notification name).
 type CatalogItemType string
 
 // List of CatalogItemType
@@ -32,6 +32,7 @@ const (
 	CATALOGITEMTYPE_FINANCIAL_ACCOUNT     CatalogItemType = "financial_account"
 	CATALOGITEMTYPE_HANDOVER_TEMPLATE     CatalogItemType = "handover_template"
 	CATALOGITEMTYPE_HOOKS                 CatalogItemType = "hooks"
+	CATALOGITEMTYPE_NOTIFICATION          CatalogItemType = "notification"
 	CATALOGITEMTYPE_REPORT_DEFINITION     CatalogItemType = "report_definition"
 	CATALOGITEMTYPE_REVENUE_TYPE          CatalogItemType = "revenue_type"
 	CATALOGITEMTYPE_VERSION_MIGRATOR      CatalogItemType = "version_migrator"
@@ -52,6 +53,7 @@ var AllowedCatalogItemTypeEnumValues = []CatalogItemType{
 	"financial_account",
 	"handover_template",
 	"hooks",
+	"notification",
 	"report_definition",
 	"revenue_type",
 	"version_migrator",

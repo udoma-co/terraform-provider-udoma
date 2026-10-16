@@ -24703,6 +24703,114 @@ func (a *DefaultAPIService) GetConsumptionExecute(r ApiGetConsumptionRequest) (*
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetConsumptionImportRequest struct {
+	ctx                 context.Context
+	ApiService          *DefaultAPIService
+	propID              string
+	consumptionImportID string
+}
+
+func (r ApiGetConsumptionImportRequest) Execute() (*ConsumptionImport, *http.Response, error) {
+	return r.ApiService.GetConsumptionImportExecute(r)
+}
+
+/*
+GetConsumptionImport Get the state and result of a consumption import
+
+Returns the state of an extraction started with importConsumptions. Once COMPLETED, the result is matched against the current fiscal years, meters and cost types of the building.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param propID unique generated ID of a property
+	@param consumptionImportID unique generated ID of a consumption import
+	@return ApiGetConsumptionImportRequest
+*/
+func (a *DefaultAPIService) GetConsumptionImport(ctx context.Context, propID string, consumptionImportID string) ApiGetConsumptionImportRequest {
+	return ApiGetConsumptionImportRequest{
+		ApiService:          a,
+		ctx:                 ctx,
+		propID:              propID,
+		consumptionImportID: consumptionImportID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return ConsumptionImport
+func (a *DefaultAPIService) GetConsumptionImportExecute(r ApiGetConsumptionImportRequest) (*ConsumptionImport, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ConsumptionImport
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetConsumptionImport")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/properties/{propID}/consumptions/import/{consumptionImportID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"propID"+"}", url.PathEscape(parameterValueToString(r.propID, "propID")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"consumptionImportID"+"}", url.PathEscape(parameterValueToString(r.consumptionImportID, "consumptionImportID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetCorrespondenceRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
@@ -29825,6 +29933,117 @@ func (a *DefaultAPIService) GetPriceIndexPointExecute(r ApiGetPriceIndexPointReq
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetPropertiesByIDsRequest struct {
+	ctx                       context.Context
+	ApiService                *DefaultAPIService
+	getPropertiesByIDsRequest *GetPropertiesByIDsRequest
+}
+
+func (r ApiGetPropertiesByIDsRequest) GetPropertiesByIDsRequest(getPropertiesByIDsRequest GetPropertiesByIDsRequest) ApiGetPropertiesByIDsRequest {
+	r.getPropertiesByIDsRequest = &getPropertiesByIDsRequest
+	return r
+}
+
+func (r ApiGetPropertiesByIDsRequest) Execute() (*QueryPropertiesResponse, *http.Response, error) {
+	return r.ApiService.GetPropertiesByIDsExecute(r)
+}
+
+/*
+GetPropertiesByIDs Get properties by IDs
+
+Loads the properties with the given IDs, e.g. to show a few referenced properties without loading all of them.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetPropertiesByIDsRequest
+*/
+func (a *DefaultAPIService) GetPropertiesByIDs(ctx context.Context) ApiGetPropertiesByIDsRequest {
+	return ApiGetPropertiesByIDsRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return QueryPropertiesResponse
+func (a *DefaultAPIService) GetPropertiesByIDsExecute(r ApiGetPropertiesByIDsRequest) (*QueryPropertiesResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *QueryPropertiesResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetPropertiesByIDs")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/property/batch-get"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.getPropertiesByIDsRequest == nil {
+		return localVarReturnValue, nil, reportError("getPropertiesByIDsRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.getPropertiesByIDsRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetPropertyRequest struct {
 	ctx        context.Context
 	ApiService *DefaultAPIService
@@ -30111,6 +30330,106 @@ func (a *DefaultAPIService) GetPropertyCasesV2Execute(r ApiGetPropertyCasesV2Req
 	}
 	// body params
 	localVarPostBody = r.queryCasesV2Request
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetPropertyCitiesRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+}
+
+func (r ApiGetPropertyCitiesRequest) Execute() (*PropertyCitiesResponse, *http.Response, error) {
+	return r.ApiService.GetPropertyCitiesExecute(r)
+}
+
+/*
+GetPropertyCities Get the cities of all properties
+
+# Returns the distinct cities of the properties of the account, which are the options for the area of operation of a service provider
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetPropertyCitiesRequest
+*/
+func (a *DefaultAPIService) GetPropertyCities(ctx context.Context) ApiGetPropertyCitiesRequest {
+	return ApiGetPropertyCitiesRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return PropertyCitiesResponse
+func (a *DefaultAPIService) GetPropertyCitiesExecute(r ApiGetPropertyCitiesRequest) (*PropertyCitiesResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *PropertyCitiesResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetPropertyCities")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/property/cities"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -30706,6 +31025,108 @@ func (a *DefaultAPIService) GetPropertyOwnershipsExecute(r ApiGetPropertyOwnersh
 	}
 
 	localVarPath := localBasePath + "/properties/{propID}/ownerships"
+	localVarPath = strings.Replace(localVarPath, "{"+"propID"+"}", url.PathEscape(parameterValueToString(r.propID, "propID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetPropertyServiceProvidersRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	propID     string
+}
+
+func (r ApiGetPropertyServiceProvidersRequest) Execute() (*PropertyServiceProvidersResponse, *http.Response, error) {
+	return r.ApiService.GetPropertyServiceProvidersExecute(r)
+}
+
+/*
+GetPropertyServiceProviders Get the service providers that are linked to the building
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param propID unique generated ID of a property
+	@return ApiGetPropertyServiceProvidersRequest
+*/
+func (a *DefaultAPIService) GetPropertyServiceProviders(ctx context.Context, propID string) ApiGetPropertyServiceProvidersRequest {
+	return ApiGetPropertyServiceProvidersRequest{
+		ApiService: a,
+		ctx:        ctx,
+		propID:     propID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return PropertyServiceProvidersResponse
+func (a *DefaultAPIService) GetPropertyServiceProvidersExecute(r ApiGetPropertyServiceProvidersRequest) (*PropertyServiceProvidersResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *PropertyServiceProvidersResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetPropertyServiceProviders")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/properties/{propID}/service-providers"
 	localVarPath = strings.Replace(localVarPath, "{"+"propID"+"}", url.PathEscape(parameterValueToString(r.propID, "propID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -32244,6 +32665,108 @@ func (a *DefaultAPIService) GetServiceProviderExecute(r ApiGetServiceProviderReq
 	}
 
 	localVarPath := localBasePath + "/service-provider/{serviceProviderID}"
+	localVarPath = strings.Replace(localVarPath, "{"+"serviceProviderID"+"}", url.PathEscape(parameterValueToString(r.serviceProviderID, "serviceProviderID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetServiceProviderPropertiesRequest struct {
+	ctx               context.Context
+	ApiService        *DefaultAPIService
+	serviceProviderID string
+}
+
+func (r ApiGetServiceProviderPropertiesRequest) Execute() (*ServiceProviderPropertiesResponse, *http.Response, error) {
+	return r.ApiService.GetServiceProviderPropertiesExecute(r)
+}
+
+/*
+GetServiceProviderProperties Get the buildings that are linked to the service provider
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param serviceProviderID unique generated ID of a service provider
+	@return ApiGetServiceProviderPropertiesRequest
+*/
+func (a *DefaultAPIService) GetServiceProviderProperties(ctx context.Context, serviceProviderID string) ApiGetServiceProviderPropertiesRequest {
+	return ApiGetServiceProviderPropertiesRequest{
+		ApiService:        a,
+		ctx:               ctx,
+		serviceProviderID: serviceProviderID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return ServiceProviderPropertiesResponse
+func (a *DefaultAPIService) GetServiceProviderPropertiesExecute(r ApiGetServiceProviderPropertiesRequest) (*ServiceProviderPropertiesResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ServiceProviderPropertiesResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetServiceProviderProperties")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/service-provider/{serviceProviderID}/properties"
 	localVarPath = strings.Replace(localVarPath, "{"+"serviceProviderID"+"}", url.PathEscape(parameterValueToString(r.serviceProviderID, "serviceProviderID")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -34212,6 +34735,131 @@ func (a *DefaultAPIService) ImportBankConnectionTransactionsExecute(r ApiImportB
 	}
 	// body params
 	localVarPostBody = r.importBankConnectionTransactionRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiImportConsumptionsRequest struct {
+	ctx        context.Context
+	ApiService *DefaultAPIService
+	propID     string
+	data       *os.File
+}
+
+func (r ApiImportConsumptionsRequest) Data(data *os.File) ApiImportConsumptionsRequest {
+	r.data = data
+	return r
+}
+
+func (r ApiImportConsumptionsRequest) Execute() (*ConsumptionImport, *http.Response, error) {
+	return r.ApiService.ImportConsumptionsExecute(r)
+}
+
+/*
+ImportConsumptions Start extracting consumptions and meter readings from an uploaded document
+
+Starts extracting the usage positions and meter readings of utility bills (e.g. a scanned annual bill of an energy provider) for the given building. Scans with many pages take minutes, so the extraction runs in the background; poll getConsumptionImport until it is no longer PROCESSING. The result is matched against the fiscal years, meters and cost types of the building, to be reviewed and then created with the regular consumption and meter endpoints. Only the uploaded document is stored, as attachment that expires unless a meter reading references it.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param propID unique generated ID of a property
+	@return ApiImportConsumptionsRequest
+*/
+func (a *DefaultAPIService) ImportConsumptions(ctx context.Context, propID string) ApiImportConsumptionsRequest {
+	return ApiImportConsumptionsRequest{
+		ApiService: a,
+		ctx:        ctx,
+		propID:     propID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return ConsumptionImport
+func (a *DefaultAPIService) ImportConsumptionsExecute(r ApiImportConsumptionsRequest) (*ConsumptionImport, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ConsumptionImport
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ImportConsumptions")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/properties/{propID}/consumptions/import"
+	localVarPath = strings.Replace(localVarPath, "{"+"propID"+"}", url.PathEscape(parameterValueToString(r.propID, "propID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"multipart/form-data"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	var dataLocalVarFormFileName string
+	var dataLocalVarFileName string
+	var dataLocalVarFileBytes []byte
+
+	dataLocalVarFormFileName = "data"
+	dataLocalVarFile := r.data
+
+	if dataLocalVarFile != nil {
+		fbs, _ := io.ReadAll(dataLocalVarFile)
+
+		dataLocalVarFileBytes = fbs
+		dataLocalVarFileName = dataLocalVarFile.Name()
+		dataLocalVarFile.Close()
+		formFiles = append(formFiles, formFile{fileBytes: dataLocalVarFileBytes, fileName: dataLocalVarFileName, formFileName: dataLocalVarFormFileName})
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -59605,6 +60253,121 @@ func (a *DefaultAPIService) UpdatePropertyOwnerExecute(r ApiUpdatePropertyOwnerR
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiUpdatePropertyServiceProvidersRequest struct {
+	ctx                                   context.Context
+	ApiService                            *DefaultAPIService
+	propID                                string
+	updatePropertyServiceProvidersRequest *UpdatePropertyServiceProvidersRequest
+}
+
+func (r ApiUpdatePropertyServiceProvidersRequest) UpdatePropertyServiceProvidersRequest(updatePropertyServiceProvidersRequest UpdatePropertyServiceProvidersRequest) ApiUpdatePropertyServiceProvidersRequest {
+	r.updatePropertyServiceProvidersRequest = &updatePropertyServiceProvidersRequest
+	return r
+}
+
+func (r ApiUpdatePropertyServiceProvidersRequest) Execute() (*PropertyServiceProvidersResponse, *http.Response, error) {
+	return r.ApiService.UpdatePropertyServiceProvidersExecute(r)
+}
+
+/*
+UpdatePropertyServiceProviders Replace the service providers that are linked to the building
+
+Replaces the whole set of linked service providers. The property must be of type BUILDING. If a reference is invalid, the request is rejected and the existing links stay unchanged.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param propID unique generated ID of a property
+	@return ApiUpdatePropertyServiceProvidersRequest
+*/
+func (a *DefaultAPIService) UpdatePropertyServiceProviders(ctx context.Context, propID string) ApiUpdatePropertyServiceProvidersRequest {
+	return ApiUpdatePropertyServiceProvidersRequest{
+		ApiService: a,
+		ctx:        ctx,
+		propID:     propID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return PropertyServiceProvidersResponse
+func (a *DefaultAPIService) UpdatePropertyServiceProvidersExecute(r ApiUpdatePropertyServiceProvidersRequest) (*PropertyServiceProvidersResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *PropertyServiceProvidersResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdatePropertyServiceProviders")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/properties/{propID}/service-providers"
+	localVarPath = strings.Replace(localVarPath, "{"+"propID"+"}", url.PathEscape(parameterValueToString(r.propID, "propID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.updatePropertyServiceProvidersRequest == nil {
+		return localVarReturnValue, nil, reportError("updatePropertyServiceProvidersRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.updatePropertyServiceProvidersRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiUpdatePropertyUnitAssessmentRequest struct {
 	ctx                                 context.Context
 	ApiService                          *DefaultAPIService
@@ -60371,6 +61134,121 @@ func (a *DefaultAPIService) UpdateServiceProviderExecute(r ApiUpdateServiceProvi
 	}
 	// body params
 	localVarPostBody = r.createOrUpdateServiceProvider
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdateServiceProviderPropertiesRequest struct {
+	ctx                                    context.Context
+	ApiService                             *DefaultAPIService
+	serviceProviderID                      string
+	updateServiceProviderPropertiesRequest *UpdateServiceProviderPropertiesRequest
+}
+
+func (r ApiUpdateServiceProviderPropertiesRequest) UpdateServiceProviderPropertiesRequest(updateServiceProviderPropertiesRequest UpdateServiceProviderPropertiesRequest) ApiUpdateServiceProviderPropertiesRequest {
+	r.updateServiceProviderPropertiesRequest = &updateServiceProviderPropertiesRequest
+	return r
+}
+
+func (r ApiUpdateServiceProviderPropertiesRequest) Execute() (*ServiceProviderPropertiesResponse, *http.Response, error) {
+	return r.ApiService.UpdateServiceProviderPropertiesExecute(r)
+}
+
+/*
+UpdateServiceProviderProperties Replace the buildings that are linked to the service provider
+
+Replaces the whole set of linked buildings. Only properties of type BUILDING of the same account can be linked. If a reference is invalid, the request is rejected and the existing links stay unchanged.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param serviceProviderID unique generated ID of a service provider
+	@return ApiUpdateServiceProviderPropertiesRequest
+*/
+func (a *DefaultAPIService) UpdateServiceProviderProperties(ctx context.Context, serviceProviderID string) ApiUpdateServiceProviderPropertiesRequest {
+	return ApiUpdateServiceProviderPropertiesRequest{
+		ApiService:        a,
+		ctx:               ctx,
+		serviceProviderID: serviceProviderID,
+	}
+}
+
+// Execute executes the request
+//
+//	@return ServiceProviderPropertiesResponse
+func (a *DefaultAPIService) UpdateServiceProviderPropertiesExecute(r ApiUpdateServiceProviderPropertiesRequest) (*ServiceProviderPropertiesResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ServiceProviderPropertiesResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdateServiceProviderProperties")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/service-provider/{serviceProviderID}/properties"
+	localVarPath = strings.Replace(localVarPath, "{"+"serviceProviderID"+"}", url.PathEscape(parameterValueToString(r.serviceProviderID, "serviceProviderID")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.updateServiceProviderPropertiesRequest == nil {
+		return localVarReturnValue, nil, reportError("updateServiceProviderPropertiesRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.updateServiceProviderPropertiesRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

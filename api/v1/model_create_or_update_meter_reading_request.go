@@ -19,9 +19,12 @@ var _ MappedNullable = &CreateOrUpdateMeterReadingRequest{}
 
 // CreateOrUpdateMeterReadingRequest All the information required for tracking a meter reading
 type CreateOrUpdateMeterReadingRequest struct {
-	Date          *int64       `json:"date,omitempty"`
-	Value         *FloatNumber `json:"value,omitempty"`
-	AttachmentRef *string      `json:"attachment_ref,omitempty"`
+	Date  *int64       `json:"date,omitempty"`
+	Value *FloatNumber `json:"value,omitempty"`
+	// Photo of the meter showing the reading
+	AttachmentRef *string `json:"attachment_ref,omitempty"`
+	// Document the reading was taken from, e.g. an imported utility bill. Only set when the reading is created, updates keep it.
+	SourceAttachmentRef *string `json:"source_attachment_ref,omitempty"`
 }
 
 // NewCreateOrUpdateMeterReadingRequest instantiates a new CreateOrUpdateMeterReadingRequest object
@@ -137,6 +140,38 @@ func (o *CreateOrUpdateMeterReadingRequest) SetAttachmentRef(v string) {
 	o.AttachmentRef = &v
 }
 
+// GetSourceAttachmentRef returns the SourceAttachmentRef field value if set, zero value otherwise.
+func (o *CreateOrUpdateMeterReadingRequest) GetSourceAttachmentRef() string {
+	if o == nil || IsNil(o.SourceAttachmentRef) {
+		var ret string
+		return ret
+	}
+	return *o.SourceAttachmentRef
+}
+
+// GetSourceAttachmentRefOk returns a tuple with the SourceAttachmentRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateMeterReadingRequest) GetSourceAttachmentRefOk() (*string, bool) {
+	if o == nil || IsNil(o.SourceAttachmentRef) {
+		return nil, false
+	}
+	return o.SourceAttachmentRef, true
+}
+
+// HasSourceAttachmentRef returns a boolean if a field has been set.
+func (o *CreateOrUpdateMeterReadingRequest) HasSourceAttachmentRef() bool {
+	if o != nil && !IsNil(o.SourceAttachmentRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetSourceAttachmentRef gets a reference to the given string and assigns it to the SourceAttachmentRef field.
+func (o *CreateOrUpdateMeterReadingRequest) SetSourceAttachmentRef(v string) {
+	o.SourceAttachmentRef = &v
+}
+
 func (o CreateOrUpdateMeterReadingRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -155,6 +190,9 @@ func (o CreateOrUpdateMeterReadingRequest) ToMap() (map[string]interface{}, erro
 	}
 	if !IsNil(o.AttachmentRef) {
 		toSerialize["attachment_ref"] = o.AttachmentRef
+	}
+	if !IsNil(o.SourceAttachmentRef) {
+		toSerialize["source_attachment_ref"] = o.SourceAttachmentRef
 	}
 	return toSerialize, nil
 }

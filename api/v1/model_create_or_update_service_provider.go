@@ -39,7 +39,9 @@ type CreateOrUpdateServiceProvider struct {
 	CustomerNumber *string `json:"customer_number,omitempty"`
 	// optional list of categories, in which the company is providing services
 	Categories []ServiceCategoryEnum `json:"categories,omitempty"`
-	Address    *Address              `json:"address,omitempty"`
+	// optional list of city names in which the company can perform services. The cities are informational and are not checked against the cities of the properties. If the field is omitted on an update, the stored list is kept, an empty list removes all cities.
+	AreaOfOperation []string `json:"area_of_operation,omitempty"`
+	Address         *Address `json:"address,omitempty"`
 	// optional VAT ID of the company
 	VatId *string `json:"vat_id,omitempty"`
 	// optional list of bank accounts of the company
@@ -348,6 +350,38 @@ func (o *CreateOrUpdateServiceProvider) SetCategories(v []ServiceCategoryEnum) {
 	o.Categories = v
 }
 
+// GetAreaOfOperation returns the AreaOfOperation field value if set, zero value otherwise.
+func (o *CreateOrUpdateServiceProvider) GetAreaOfOperation() []string {
+	if o == nil || IsNil(o.AreaOfOperation) {
+		var ret []string
+		return ret
+	}
+	return o.AreaOfOperation
+}
+
+// GetAreaOfOperationOk returns a tuple with the AreaOfOperation field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateServiceProvider) GetAreaOfOperationOk() ([]string, bool) {
+	if o == nil || IsNil(o.AreaOfOperation) {
+		return nil, false
+	}
+	return o.AreaOfOperation, true
+}
+
+// HasAreaOfOperation returns a boolean if a field has been set.
+func (o *CreateOrUpdateServiceProvider) HasAreaOfOperation() bool {
+	if o != nil && !IsNil(o.AreaOfOperation) {
+		return true
+	}
+
+	return false
+}
+
+// SetAreaOfOperation gets a reference to the given []string and assigns it to the AreaOfOperation field.
+func (o *CreateOrUpdateServiceProvider) SetAreaOfOperation(v []string) {
+	o.AreaOfOperation = v
+}
+
 // GetAddress returns the Address field value if set, zero value otherwise.
 func (o *CreateOrUpdateServiceProvider) GetAddress() Address {
 	if o == nil || IsNil(o.Address) {
@@ -510,6 +544,9 @@ func (o CreateOrUpdateServiceProvider) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Categories) {
 		toSerialize["categories"] = o.Categories
+	}
+	if !IsNil(o.AreaOfOperation) {
+		toSerialize["area_of_operation"] = o.AreaOfOperation
 	}
 	if !IsNil(o.Address) {
 		toSerialize["address"] = o.Address
