@@ -10,6 +10,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -40,6 +41,7 @@ type CostTypeModel struct {
 	TenantBillingRate types.Int32  `tfsdk:"tenant_billing_rate"`
 	Category          types.String `tfsdk:"category"`
 	AllocationKeyRef  types.String `tfsdk:"allocation_key_ref"`
+	SystemDefault     types.String `tfsdk:"system_default"`
 	IsCatalogItem     types.Bool   `tfsdk:"is_catalog_item"`
 }
 
@@ -95,6 +97,15 @@ func (ct *CostType) Schema(ctx context.Context, req resource.SchemaRequest, resp
 			"allocation_key_ref": schema.StringAttribute{
 				Optional:            true,
 				MarkdownDescription: "Optional ID of the default allocation key used to distribute the costs of this cost type, unless a building overrides it.",
+			},
+			"system_default": schema.StringAttribute{
+				Optional:            true,
+				Computed:            true,
+				Default:             stringdefault.StaticString(string(api.COSTTYPESYSTEMDEFAULTENUM_NONE)),
+				MarkdownDescription: "The system default marker of this cost type (`NONE` or `PROPERTY_TAX`). Used by the system to find the cost type; at most one cost type per account can have a value other than `NONE`. Defaults to `NONE`.",
+				Validators: []validator.String{
+					stringvalidator.OneOf(stringSlice(api.AllowedCostTypeSystemDefaultEnumEnumValues)...),
+				},
 			},
 			"is_catalog_item": schema.BoolAttribute{
 				Computed:            true,
@@ -266,6 +277,11 @@ func (model *CostTypeModel) fromAPI(costType *api.CostType) (diags diag.Diagnost
 	model.IsFixed = omittableBooleanValue(costType.IsFixed, model.IsFixed)
 	model.TenantBillingRate = omittableInt32Value(costType.TenantBillingRate, model.TenantBillingRate)
 	model.AllocationKeyRef = omittableStringValue(costType.AllocationKeyRef, model.AllocationKeyRef)
+	if costType.SystemDefault != nil {
+		model.SystemDefault = types.StringValue(string(*costType.SystemDefault))
+	} else {
+		model.SystemDefault = types.StringValue(string(api.COSTTYPESYSTEMDEFAULTENUM_NONE))
+	}
 	model.IsCatalogItem = types.BoolPointerValue(costType.IsCatalogItem)
 
 	return
@@ -279,6 +295,10 @@ func (model *CostTypeModel) toAPIRequest() (api.CreateOrUpdateCostTypeRequest, e
 		IsFixed:           model.IsFixed.ValueBoolPointer(),
 		TenantBillingRate: model.TenantBillingRate.ValueInt32Pointer(),
 		AllocationKeyRef:  model.AllocationKeyRef.ValueStringPointer(),
+	}
+	if !model.SystemDefault.IsNull() && !model.SystemDefault.IsUnknown() {
+		systemDefault := api.CostTypeSystemDefaultEnum(model.SystemDefault.ValueString())
+		req.SystemDefault = &systemDefault
 	}
 
 	return req, nil

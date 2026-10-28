@@ -22,20 +22,22 @@ var _ MappedNullable = &CreateOrUpdatePropertyRequest{}
 // CreateOrUpdatePropertyRequest A requests that holds all necessary information to create or update a property.
 type CreateOrUpdatePropertyRequest struct {
 	// meaningful name of the property, e.g. 'Whg 12', or 'Etage 2/Links'
-	Name string       `json:"name"`
-	Type PropertyType `json:"type"`
-	// Controls if the property is a rentable unit. If set to true, it will be possible to add tenancies to it. If set to false, it will not be possible to add tenancies to it and it can be set as a parent property for other properties.
-	Rentable *bool    `json:"rentable,omitempty"`
-	Address  *Address `json:"address,omitempty"`
+	Name    string       `json:"name"`
+	Type    PropertyType `json:"type"`
+	Address *Address     `json:"address,omitempty"`
 	// For appartments, this is the unique number within the building. For buildings, this can be used as a short identifier. The number must be unique among the units of the same parent property, or among the top-level properties if there is no parent. Required when creating or updating a property. Properties that predate this keep an empty number until they are updated, so the field stays optional on responses.
 	Number int32 `json:"number"`
+	// Optional reference to the parent property (e.g. building) of this property
+	ParentRef *string `json:"parent_ref,omitempty"`
+	// Controls if the property is a rentable unit. If set to true, it will be possible to add tenancies to it. If set to false, it will not be possible to add tenancies to it and it can be set as a parent property for other properties.
+	Rentable *bool `json:"rentable,omitempty"`
 	// List of management types that are applicable for this property. This is used to determine which features are available for the property and is available for accounts that have a mixed management mode (see PropertyManagementConfig).
 	ManagementTypes []PropertyManagementTypeEnum `json:"management_types,omitempty"`
 	// Reference to the current owner of this property. On responses this is derived from the property's active ownership (the one whose end_date is NULL); on create/update requests it is honoured only when the account is in SIMPLE ownership tracking mode and will create or replace the single ownership row. In HISTORIC mode ownership must be managed via the dedicated /ownership endpoints and this field is ignored on mutations. In NONE mode the field is ignored on mutations and not populated on responses. If multiple ownership is enabled on the account, this field can contain more than a single owner. Otherwise it should always contain a single owner.
 	OwnerRefs []string `json:"owner_refs,omitempty"`
-	// Optional reference to the parent property (e.g. building) of this property
-	ParentRef *string          `json:"parent_ref,omitempty"`
-	Details   *PropertyDetails `json:"details,omitempty"`
+	// IDs of existing bank accounts in the same account linked to this property. The list is replaced on update; omission or an empty array clears it. Available for every property type. GetProperty excludes references to deleted bank accounts without changing stored data; other responses return the stored IDs.
+	BankAccountRefs []string         `json:"bank_account_refs,omitempty"`
+	Details         *PropertyDetails `json:"details,omitempty"`
 	// Extensions data for this property, keyed by extension key
 	Extensions *map[string]map[string]interface{} `json:"extensions,omitempty"`
 }
@@ -110,38 +112,6 @@ func (o *CreateOrUpdatePropertyRequest) SetType(v PropertyType) {
 	o.Type = v
 }
 
-// GetRentable returns the Rentable field value if set, zero value otherwise.
-func (o *CreateOrUpdatePropertyRequest) GetRentable() bool {
-	if o == nil || IsNil(o.Rentable) {
-		var ret bool
-		return ret
-	}
-	return *o.Rentable
-}
-
-// GetRentableOk returns a tuple with the Rentable field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateOrUpdatePropertyRequest) GetRentableOk() (*bool, bool) {
-	if o == nil || IsNil(o.Rentable) {
-		return nil, false
-	}
-	return o.Rentable, true
-}
-
-// HasRentable returns a boolean if a field has been set.
-func (o *CreateOrUpdatePropertyRequest) HasRentable() bool {
-	if o != nil && !IsNil(o.Rentable) {
-		return true
-	}
-
-	return false
-}
-
-// SetRentable gets a reference to the given bool and assigns it to the Rentable field.
-func (o *CreateOrUpdatePropertyRequest) SetRentable(v bool) {
-	o.Rentable = &v
-}
-
 // GetAddress returns the Address field value if set, zero value otherwise.
 func (o *CreateOrUpdatePropertyRequest) GetAddress() Address {
 	if o == nil || IsNil(o.Address) {
@@ -196,6 +166,70 @@ func (o *CreateOrUpdatePropertyRequest) GetNumberOk() (*int32, bool) {
 // SetNumber sets field value
 func (o *CreateOrUpdatePropertyRequest) SetNumber(v int32) {
 	o.Number = v
+}
+
+// GetParentRef returns the ParentRef field value if set, zero value otherwise.
+func (o *CreateOrUpdatePropertyRequest) GetParentRef() string {
+	if o == nil || IsNil(o.ParentRef) {
+		var ret string
+		return ret
+	}
+	return *o.ParentRef
+}
+
+// GetParentRefOk returns a tuple with the ParentRef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdatePropertyRequest) GetParentRefOk() (*string, bool) {
+	if o == nil || IsNil(o.ParentRef) {
+		return nil, false
+	}
+	return o.ParentRef, true
+}
+
+// HasParentRef returns a boolean if a field has been set.
+func (o *CreateOrUpdatePropertyRequest) HasParentRef() bool {
+	if o != nil && !IsNil(o.ParentRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetParentRef gets a reference to the given string and assigns it to the ParentRef field.
+func (o *CreateOrUpdatePropertyRequest) SetParentRef(v string) {
+	o.ParentRef = &v
+}
+
+// GetRentable returns the Rentable field value if set, zero value otherwise.
+func (o *CreateOrUpdatePropertyRequest) GetRentable() bool {
+	if o == nil || IsNil(o.Rentable) {
+		var ret bool
+		return ret
+	}
+	return *o.Rentable
+}
+
+// GetRentableOk returns a tuple with the Rentable field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdatePropertyRequest) GetRentableOk() (*bool, bool) {
+	if o == nil || IsNil(o.Rentable) {
+		return nil, false
+	}
+	return o.Rentable, true
+}
+
+// HasRentable returns a boolean if a field has been set.
+func (o *CreateOrUpdatePropertyRequest) HasRentable() bool {
+	if o != nil && !IsNil(o.Rentable) {
+		return true
+	}
+
+	return false
+}
+
+// SetRentable gets a reference to the given bool and assigns it to the Rentable field.
+func (o *CreateOrUpdatePropertyRequest) SetRentable(v bool) {
+	o.Rentable = &v
 }
 
 // GetManagementTypes returns the ManagementTypes field value if set, zero value otherwise.
@@ -262,36 +296,36 @@ func (o *CreateOrUpdatePropertyRequest) SetOwnerRefs(v []string) {
 	o.OwnerRefs = v
 }
 
-// GetParentRef returns the ParentRef field value if set, zero value otherwise.
-func (o *CreateOrUpdatePropertyRequest) GetParentRef() string {
-	if o == nil || IsNil(o.ParentRef) {
-		var ret string
+// GetBankAccountRefs returns the BankAccountRefs field value if set, zero value otherwise.
+func (o *CreateOrUpdatePropertyRequest) GetBankAccountRefs() []string {
+	if o == nil || IsNil(o.BankAccountRefs) {
+		var ret []string
 		return ret
 	}
-	return *o.ParentRef
+	return o.BankAccountRefs
 }
 
-// GetParentRefOk returns a tuple with the ParentRef field value if set, nil otherwise
+// GetBankAccountRefsOk returns a tuple with the BankAccountRefs field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CreateOrUpdatePropertyRequest) GetParentRefOk() (*string, bool) {
-	if o == nil || IsNil(o.ParentRef) {
+func (o *CreateOrUpdatePropertyRequest) GetBankAccountRefsOk() ([]string, bool) {
+	if o == nil || IsNil(o.BankAccountRefs) {
 		return nil, false
 	}
-	return o.ParentRef, true
+	return o.BankAccountRefs, true
 }
 
-// HasParentRef returns a boolean if a field has been set.
-func (o *CreateOrUpdatePropertyRequest) HasParentRef() bool {
-	if o != nil && !IsNil(o.ParentRef) {
+// HasBankAccountRefs returns a boolean if a field has been set.
+func (o *CreateOrUpdatePropertyRequest) HasBankAccountRefs() bool {
+	if o != nil && !IsNil(o.BankAccountRefs) {
 		return true
 	}
 
 	return false
 }
 
-// SetParentRef gets a reference to the given string and assigns it to the ParentRef field.
-func (o *CreateOrUpdatePropertyRequest) SetParentRef(v string) {
-	o.ParentRef = &v
+// SetBankAccountRefs gets a reference to the given []string and assigns it to the BankAccountRefs field.
+func (o *CreateOrUpdatePropertyRequest) SetBankAccountRefs(v []string) {
+	o.BankAccountRefs = v
 }
 
 // GetDetails returns the Details field value if set, zero value otherwise.
@@ -370,21 +404,24 @@ func (o CreateOrUpdatePropertyRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["name"] = o.Name
 	toSerialize["type"] = o.Type
-	if !IsNil(o.Rentable) {
-		toSerialize["rentable"] = o.Rentable
-	}
 	if !IsNil(o.Address) {
 		toSerialize["address"] = o.Address
 	}
 	toSerialize["number"] = o.Number
+	if !IsNil(o.ParentRef) {
+		toSerialize["parent_ref"] = o.ParentRef
+	}
+	if !IsNil(o.Rentable) {
+		toSerialize["rentable"] = o.Rentable
+	}
 	if !IsNil(o.ManagementTypes) {
 		toSerialize["management_types"] = o.ManagementTypes
 	}
 	if !IsNil(o.OwnerRefs) {
 		toSerialize["owner_refs"] = o.OwnerRefs
 	}
-	if !IsNil(o.ParentRef) {
-		toSerialize["parent_ref"] = o.ParentRef
+	if !IsNil(o.BankAccountRefs) {
+		toSerialize["bank_account_refs"] = o.BankAccountRefs
 	}
 	if !IsNil(o.Details) {
 		toSerialize["details"] = o.Details

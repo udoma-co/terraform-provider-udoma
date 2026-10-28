@@ -25,7 +25,8 @@ type UpdateAccountConfigRequest struct {
 	ManagementConfig      *PropertyManagementConfig  `json:"management_config,omitempty"`
 	OwnershipTrackingMode *OwnershipTrackingModeEnum `json:"ownership_tracking_mode,omitempty"`
 	// Whether properties in the account can be owned by more than 1 owner at a time.
-	AllowMultipleOwners *bool `json:"allow_multiple_owners,omitempty"`
+	AllowMultipleOwners *bool                 `json:"allow_multiple_owners,omitempty"`
+	Sharing             NullableSharingConfig `json:"sharing,omitempty"`
 }
 
 type _UpdateAccountConfigRequest UpdateAccountConfigRequest
@@ -168,6 +169,49 @@ func (o *UpdateAccountConfigRequest) SetAllowMultipleOwners(v bool) {
 	o.AllowMultipleOwners = &v
 }
 
+// GetSharing returns the Sharing field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *UpdateAccountConfigRequest) GetSharing() SharingConfig {
+	if o == nil || IsNil(o.Sharing.Get()) {
+		var ret SharingConfig
+		return ret
+	}
+	return *o.Sharing.Get()
+}
+
+// GetSharingOk returns a tuple with the Sharing field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *UpdateAccountConfigRequest) GetSharingOk() (*SharingConfig, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Sharing.Get(), o.Sharing.IsSet()
+}
+
+// HasSharing returns a boolean if a field has been set.
+func (o *UpdateAccountConfigRequest) HasSharing() bool {
+	if o != nil && o.Sharing.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSharing gets a reference to the given NullableSharingConfig and assigns it to the Sharing field.
+func (o *UpdateAccountConfigRequest) SetSharing(v SharingConfig) {
+	o.Sharing.Set(&v)
+}
+
+// SetSharingNil sets the value for Sharing to be an explicit nil
+func (o *UpdateAccountConfigRequest) SetSharingNil() {
+	o.Sharing.Set(nil)
+}
+
+// UnsetSharing ensures that no value is present for Sharing, not even an explicit nil
+func (o *UpdateAccountConfigRequest) UnsetSharing() {
+	o.Sharing.Unset()
+}
+
 func (o UpdateAccountConfigRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -187,6 +231,9 @@ func (o UpdateAccountConfigRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.AllowMultipleOwners) {
 		toSerialize["allow_multiple_owners"] = o.AllowMultipleOwners
+	}
+	if o.Sharing.IsSet() {
+		toSerialize["sharing"] = o.Sharing.Get()
 	}
 	return toSerialize, nil
 }

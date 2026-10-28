@@ -37,7 +37,8 @@ type CostType struct {
 	TenantBillingRate *int32               `json:"tenant_billing_rate,omitempty"`
 	Category          CostTypeCategoryEnum `json:"category"`
 	// Optional reference to the default allocation key used when distributing this cost type.
-	AllocationKeyRef *string `json:"allocation_key_ref,omitempty"`
+	AllocationKeyRef *string                    `json:"allocation_key_ref,omitempty"`
+	SystemDefault    *CostTypeSystemDefaultEnum `json:"system_default,omitempty"`
 	// A flag indicating whether the entity is published as a catalog item. Catalog items are defined once for the environment and are managed centrally, they cannot be edited from a customer account that has subscribed to them. The flag is derived from the catalog and is never set by the client.
 	IsCatalogItem *bool `json:"is_catalog_item,omitempty"`
 }
@@ -314,6 +315,38 @@ func (o *CostType) SetAllocationKeyRef(v string) {
 	o.AllocationKeyRef = &v
 }
 
+// GetSystemDefault returns the SystemDefault field value if set, zero value otherwise.
+func (o *CostType) GetSystemDefault() CostTypeSystemDefaultEnum {
+	if o == nil || IsNil(o.SystemDefault) {
+		var ret CostTypeSystemDefaultEnum
+		return ret
+	}
+	return *o.SystemDefault
+}
+
+// GetSystemDefaultOk returns a tuple with the SystemDefault field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CostType) GetSystemDefaultOk() (*CostTypeSystemDefaultEnum, bool) {
+	if o == nil || IsNil(o.SystemDefault) {
+		return nil, false
+	}
+	return o.SystemDefault, true
+}
+
+// HasSystemDefault returns a boolean if a field has been set.
+func (o *CostType) HasSystemDefault() bool {
+	if o != nil && !IsNil(o.SystemDefault) {
+		return true
+	}
+
+	return false
+}
+
+// SetSystemDefault gets a reference to the given CostTypeSystemDefaultEnum and assigns it to the SystemDefault field.
+func (o *CostType) SetSystemDefault(v CostTypeSystemDefaultEnum) {
+	o.SystemDefault = &v
+}
+
 // GetIsCatalogItem returns the IsCatalogItem field value if set, zero value otherwise.
 func (o *CostType) GetIsCatalogItem() bool {
 	if o == nil || IsNil(o.IsCatalogItem) {
@@ -372,6 +405,9 @@ func (o CostType) ToMap() (map[string]interface{}, error) {
 	toSerialize["category"] = o.Category
 	if !IsNil(o.AllocationKeyRef) {
 		toSerialize["allocation_key_ref"] = o.AllocationKeyRef
+	}
+	if !IsNil(o.SystemDefault) {
+		toSerialize["system_default"] = o.SystemDefault
 	}
 	if !IsNil(o.IsCatalogItem) {
 		toSerialize["is_catalog_item"] = o.IsCatalogItem

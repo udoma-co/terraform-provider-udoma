@@ -15,7 +15,7 @@ import (
 	"fmt"
 )
 
-// RevenueTypeSystemDefaultEnum The system default category of a revenue type. RENT, OPERATING_COSTS and TAX are only available for the \"tenancy\" scope. MAINTENANCE_FEE and RESERVE_CONTRIBUTION are only available for the \"ownership\" scope. RESERVE_FUND and RESERVE_WITHDRAWAL are only available for the \"property\" scope. They mark the accounts that hold the reserve fund (Erhaltungsrücklage) of a condominium building, e.g. the additions, interest and taxes of the reserve, and the accounts the withdrawals from the reserve to cover costs are booked on. The balance of the reserve is the sum of the credits minus the debits of all these accounts. NONE is available for all scopes.
+// RevenueTypeSystemDefaultEnum The system default category of a revenue type. RENT, OPERATING_COSTS and TAX are only available for the \"tenancy\" scope. MAINTENANCE_FEE and RESERVE_CONTRIBUTION are only available for the \"ownership\" scope. RESERVE_FUND and RESERVE_WITHDRAWAL are only available for the \"property\" scope. They mark the accounts that hold the reserve fund (Erhaltungsrücklage) of a condominium building, e.g. the additions, interest and taxes of the reserve, and the accounts the withdrawals from the reserve to cover costs are booked on. The balance of the reserve is the sum of the credits minus the debits of all these accounts. NONE is available for all scopes. An account can have at most one revenue type per system default other than NONE.
 type RevenueTypeSystemDefaultEnum string
 
 // List of RevenueTypeSystemDefaultEnum
