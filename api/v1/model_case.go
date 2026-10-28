@@ -31,11 +31,11 @@ type Case struct {
 	PropertyRef     *string  `json:"property_ref,omitempty"`
 	PropertyAddress *Address `json:"property_address,omitempty"`
 	// Input provided by the user when updating the case as a key-value map
-	Data map[string]interface{} `json:"data"`
-	Name string                 `json:"name"`
+	Data   map[string]interface{} `json:"data"`
+	Name   string                 `json:"name"`
+	Status CaseStatusEnum         `json:"status"`
 	// The ID of the case template used to create this case
-	TemplateRef *string        `json:"template_ref,omitempty"`
-	Status      CaseStatusEnum `json:"status"`
+	TemplateRef *string `json:"template_ref,omitempty"`
 	// Indicates if the case has been archived
 	Archived *bool               `json:"archived,omitempty"`
 	Reporter NullableContactData `json:"reporter"`
@@ -259,6 +259,30 @@ func (o *Case) SetName(v string) {
 	o.Name = v
 }
 
+// GetStatus returns the Status field value
+func (o *Case) GetStatus() CaseStatusEnum {
+	if o == nil {
+		var ret CaseStatusEnum
+		return ret
+	}
+
+	return o.Status
+}
+
+// GetStatusOk returns a tuple with the Status field value
+// and a boolean to check if the value has been set.
+func (o *Case) GetStatusOk() (*CaseStatusEnum, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Status, true
+}
+
+// SetStatus sets field value
+func (o *Case) SetStatus(v CaseStatusEnum) {
+	o.Status = v
+}
+
 // GetTemplateRef returns the TemplateRef field value if set, zero value otherwise.
 func (o *Case) GetTemplateRef() string {
 	if o == nil || IsNil(o.TemplateRef) {
@@ -289,30 +313,6 @@ func (o *Case) HasTemplateRef() bool {
 // SetTemplateRef gets a reference to the given string and assigns it to the TemplateRef field.
 func (o *Case) SetTemplateRef(v string) {
 	o.TemplateRef = &v
-}
-
-// GetStatus returns the Status field value
-func (o *Case) GetStatus() CaseStatusEnum {
-	if o == nil {
-		var ret CaseStatusEnum
-		return ret
-	}
-
-	return o.Status
-}
-
-// GetStatusOk returns a tuple with the Status field value
-// and a boolean to check if the value has been set.
-func (o *Case) GetStatusOk() (*CaseStatusEnum, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Status, true
-}
-
-// SetStatus sets field value
-func (o *Case) SetStatus(v CaseStatusEnum) {
-	o.Status = v
 }
 
 // GetArchived returns the Archived field value if set, zero value otherwise.
@@ -554,10 +554,10 @@ func (o Case) ToMap() (map[string]interface{}, error) {
 	}
 	toSerialize["data"] = o.Data
 	toSerialize["name"] = o.Name
+	toSerialize["status"] = o.Status
 	if !IsNil(o.TemplateRef) {
 		toSerialize["template_ref"] = o.TemplateRef
 	}
-	toSerialize["status"] = o.Status
 	if !IsNil(o.Archived) {
 		toSerialize["archived"] = o.Archived
 	}

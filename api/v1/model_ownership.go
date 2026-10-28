@@ -34,7 +34,12 @@ type Ownership struct {
 	// Start timestamp of the ownership period (inclusive, epoch seconds). NULL means the start of the ownership is unknown. In HISTORIC mode all ownerships except optionally a single \"primordial\" one must have a start_date.
 	StartDate *int64 `json:"start_date,omitempty"`
 	// End timestamp of the ownership period (exclusive, epoch seconds). NULL means the ownership is still active (the current owner). Only one ownership per property may have a NULL end_date.
-	EndDate *int64 `json:"end_date,omitempty"`
+	EndDate   *int64                  `json:"end_date,omitempty"`
+	Occupancy *OwnershipOccupancyEnum `json:"occupancy,omitempty"`
+	// The tenants of the property, if the owner rents it out.
+	TenantContacts []OwnershipTenant `json:"tenant_contacts,omitempty"`
+	// When the owner last updated the use of the property.
+	OccupancyUpdatedAt *int64 `json:"occupancy_updated_at,omitempty"`
 }
 
 type _Ownership Ownership
@@ -245,6 +250,102 @@ func (o *Ownership) SetEndDate(v int64) {
 	o.EndDate = &v
 }
 
+// GetOccupancy returns the Occupancy field value if set, zero value otherwise.
+func (o *Ownership) GetOccupancy() OwnershipOccupancyEnum {
+	if o == nil || IsNil(o.Occupancy) {
+		var ret OwnershipOccupancyEnum
+		return ret
+	}
+	return *o.Occupancy
+}
+
+// GetOccupancyOk returns a tuple with the Occupancy field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Ownership) GetOccupancyOk() (*OwnershipOccupancyEnum, bool) {
+	if o == nil || IsNil(o.Occupancy) {
+		return nil, false
+	}
+	return o.Occupancy, true
+}
+
+// HasOccupancy returns a boolean if a field has been set.
+func (o *Ownership) HasOccupancy() bool {
+	if o != nil && !IsNil(o.Occupancy) {
+		return true
+	}
+
+	return false
+}
+
+// SetOccupancy gets a reference to the given OwnershipOccupancyEnum and assigns it to the Occupancy field.
+func (o *Ownership) SetOccupancy(v OwnershipOccupancyEnum) {
+	o.Occupancy = &v
+}
+
+// GetTenantContacts returns the TenantContacts field value if set, zero value otherwise.
+func (o *Ownership) GetTenantContacts() []OwnershipTenant {
+	if o == nil || IsNil(o.TenantContacts) {
+		var ret []OwnershipTenant
+		return ret
+	}
+	return o.TenantContacts
+}
+
+// GetTenantContactsOk returns a tuple with the TenantContacts field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Ownership) GetTenantContactsOk() ([]OwnershipTenant, bool) {
+	if o == nil || IsNil(o.TenantContacts) {
+		return nil, false
+	}
+	return o.TenantContacts, true
+}
+
+// HasTenantContacts returns a boolean if a field has been set.
+func (o *Ownership) HasTenantContacts() bool {
+	if o != nil && !IsNil(o.TenantContacts) {
+		return true
+	}
+
+	return false
+}
+
+// SetTenantContacts gets a reference to the given []OwnershipTenant and assigns it to the TenantContacts field.
+func (o *Ownership) SetTenantContacts(v []OwnershipTenant) {
+	o.TenantContacts = v
+}
+
+// GetOccupancyUpdatedAt returns the OccupancyUpdatedAt field value if set, zero value otherwise.
+func (o *Ownership) GetOccupancyUpdatedAt() int64 {
+	if o == nil || IsNil(o.OccupancyUpdatedAt) {
+		var ret int64
+		return ret
+	}
+	return *o.OccupancyUpdatedAt
+}
+
+// GetOccupancyUpdatedAtOk returns a tuple with the OccupancyUpdatedAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Ownership) GetOccupancyUpdatedAtOk() (*int64, bool) {
+	if o == nil || IsNil(o.OccupancyUpdatedAt) {
+		return nil, false
+	}
+	return o.OccupancyUpdatedAt, true
+}
+
+// HasOccupancyUpdatedAt returns a boolean if a field has been set.
+func (o *Ownership) HasOccupancyUpdatedAt() bool {
+	if o != nil && !IsNil(o.OccupancyUpdatedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetOccupancyUpdatedAt gets a reference to the given int64 and assigns it to the OccupancyUpdatedAt field.
+func (o *Ownership) SetOccupancyUpdatedAt(v int64) {
+	o.OccupancyUpdatedAt = &v
+}
+
 func (o Ownership) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -265,6 +366,15 @@ func (o Ownership) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.EndDate) {
 		toSerialize["end_date"] = o.EndDate
+	}
+	if !IsNil(o.Occupancy) {
+		toSerialize["occupancy"] = o.Occupancy
+	}
+	if !IsNil(o.TenantContacts) {
+		toSerialize["tenant_contacts"] = o.TenantContacts
+	}
+	if !IsNil(o.OccupancyUpdatedAt) {
+		toSerialize["occupancy_updated_at"] = o.OccupancyUpdatedAt
 	}
 	return toSerialize, nil
 }

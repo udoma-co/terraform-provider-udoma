@@ -31,7 +31,8 @@ type CreateOrUpdateCostTypeRequest struct {
 	TenantBillingRate *int32               `json:"tenant_billing_rate,omitempty"`
 	Category          CostTypeCategoryEnum `json:"category"`
 	// Optional reference to the default allocation key used when distributing this cost type.
-	AllocationKeyRef *string `json:"allocation_key_ref,omitempty"`
+	AllocationKeyRef *string                    `json:"allocation_key_ref,omitempty"`
+	SystemDefault    *CostTypeSystemDefaultEnum `json:"system_default,omitempty"`
 }
 
 type _CreateOrUpdateCostTypeRequest CreateOrUpdateCostTypeRequest
@@ -231,6 +232,38 @@ func (o *CreateOrUpdateCostTypeRequest) SetAllocationKeyRef(v string) {
 	o.AllocationKeyRef = &v
 }
 
+// GetSystemDefault returns the SystemDefault field value if set, zero value otherwise.
+func (o *CreateOrUpdateCostTypeRequest) GetSystemDefault() CostTypeSystemDefaultEnum {
+	if o == nil || IsNil(o.SystemDefault) {
+		var ret CostTypeSystemDefaultEnum
+		return ret
+	}
+	return *o.SystemDefault
+}
+
+// GetSystemDefaultOk returns a tuple with the SystemDefault field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrUpdateCostTypeRequest) GetSystemDefaultOk() (*CostTypeSystemDefaultEnum, bool) {
+	if o == nil || IsNil(o.SystemDefault) {
+		return nil, false
+	}
+	return o.SystemDefault, true
+}
+
+// HasSystemDefault returns a boolean if a field has been set.
+func (o *CreateOrUpdateCostTypeRequest) HasSystemDefault() bool {
+	if o != nil && !IsNil(o.SystemDefault) {
+		return true
+	}
+
+	return false
+}
+
+// SetSystemDefault gets a reference to the given CostTypeSystemDefaultEnum and assigns it to the SystemDefault field.
+func (o *CreateOrUpdateCostTypeRequest) SetSystemDefault(v CostTypeSystemDefaultEnum) {
+	o.SystemDefault = &v
+}
+
 func (o CreateOrUpdateCostTypeRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -254,6 +287,9 @@ func (o CreateOrUpdateCostTypeRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize["category"] = o.Category
 	if !IsNil(o.AllocationKeyRef) {
 		toSerialize["allocation_key_ref"] = o.AllocationKeyRef
+	}
+	if !IsNil(o.SystemDefault) {
+		toSerialize["system_default"] = o.SystemDefault
 	}
 	return toSerialize, nil
 }

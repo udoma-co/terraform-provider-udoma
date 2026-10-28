@@ -41,7 +41,7 @@ type AnnualStatementCostItem struct {
 	TotalQuantity *float64 `json:"total_quantity,omitempty"`
 	// The part of the total costs that can be billed to tenants (umlagefähige Kosten), i.e. total_amount × tenant_billing_rate / 100.
 	BillableAmount *float64 `json:"billable_amount,omitempty"`
-	// Costs of the cost type booked on the ownerships of the units, i.e. costs the owners bear themselves outside the costs of the building, e.g. the property tax of a unit in a condominium. They are not part of the owner statements, but charged to the tenancies of rental-managed units like costs booked directly on the unit.
+	// Costs of the cost type booked on the ownerships of the units, i.e. costs the owners bear themselves outside the costs of the building, e.g. the property tax of a unit in a condominium, plus the unit property taxes of the units on the cost type with the system default PROPERTY_TAX (pro rata for the fiscal year). They are not part of the owner statements, but charged to the tenancies of rental-managed units like costs booked directly on the unit.
 	OwnerAmount *float64 `json:"owner_amount,omitempty"`
 	// The part of the total costs that could not be assigned, e.g. because the allocation key could not be evaluated. In condominium buildings, it includes the costs of the periods a unit has no owner.
 	UnallocatedAmount *float64 `json:"unallocated_amount,omitempty"`

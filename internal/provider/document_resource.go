@@ -3,6 +3,7 @@ package provider
 import (
 	"context"
 	"fmt"
+	"slices"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -234,7 +235,7 @@ func (m *DocumentModel) toCreateAPIRequest() *v1.CreateDocumentRequest {
 	req := &v1.CreateDocumentRequest{
 		Name:          m.Name.ValueString(),
 		Path:          m.Path.ValueStringPointer(),
-		Public:        m.Public.ValueBoolPointer(),
+		VisibleTo:     m.visibleTo(),
 		RefType:       v1.DocumentRefTypeEnum(m.RefType.ValueString()),
 		RefId:         m.RefID.ValueStringPointer(),
 		AttachmentRef: m.Attachment.ValueString(),
@@ -246,9 +247,9 @@ func (m *DocumentModel) toCreateAPIRequest() *v1.CreateDocumentRequest {
 func (m *DocumentModel) toUpdateAPIRequest() *v1.UpdateDocumentRequest {
 
 	req := &v1.UpdateDocumentRequest{
-		Name:   m.Name.ValueString(),
-		Path:   m.Path.ValueStringPointer(),
-		Public: m.Public.ValueBoolPointer(),
+		Name:      m.Name.ValueString(),
+		Path:      m.Path.ValueStringPointer(),
+		VisibleTo: m.visibleTo(),
 	}
 
 	return req
@@ -260,6 +261,23 @@ func (m *DocumentModel) fromAPIResponse(document *v1.Document) {
 	m.UpdatedAt = types.Int64Value(document.UpdatedAt)
 	m.Name = types.StringValue(document.Name)
 	m.Path = omittableStringValue(document.Path, m.Path)
-	m.Public = omittableBooleanValue(document.Public, m.Public)
+	if !m.Public.IsNull() || slices.Contains(document.VisibleTo, v1.DOCUMENTAUDIENCEENUM_TENANT) {
+		m.Public = types.BoolValue(slices.Contains(document.VisibleTo, v1.DOCUMENTAUDIENCEENUM_TENANT))
+	} else {
+		m.Public = types.BoolNull()
+	}
 	m.Attachment = types.StringValue(document.Attachment.Id)
+}
+
+// visibleTo maps the legacy boolean `public` attribute to the API audience:
+// true makes the document visible to tenants, false only to the management.
+// A null value is omitted so updates keep the current audience.
+func (m *DocumentModel) visibleTo() []v1.DocumentAudienceEnum {
+	if m.Public.IsNull() || m.Public.IsUnknown() {
+		return nil
+	}
+	if m.Public.ValueBool() {
+		return []v1.DocumentAudienceEnum{v1.DOCUMENTAUDIENCEENUM_TENANT}
+	}
+	return []v1.DocumentAudienceEnum{}
 }

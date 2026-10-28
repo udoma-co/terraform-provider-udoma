@@ -50,11 +50,11 @@ type AnnualStatement struct {
 	// Only condominiums: the development of the reserve fund (Erhaltungsrücklage), i.e. of the accounts of the building with a revenue type of the system default RESERVE_FUND or RESERVE_WITHDRAWAL. The balance of the reserve is the sum of the balances of these accounts.
 	ReserveAccounts []AnnualStatementAccountDevelopment `json:"reserve_accounts,omitempty"`
 	// Only condominiums: the development of the cash accounts, see cash_account_refs.
-	CashAccounts  []AnnualStatementAccountDevelopment `json:"cash_accounts,omitempty"`
-	Totals        *AnnualStatementTotals              `json:"totals,omitempty"`
-	TenancyTotals *AnnualStatementTenancyTotals       `json:"tenancy_totals,omitempty"`
+	CashAccounts []AnnualStatementAccountDevelopment `json:"cash_accounts,omitempty"`
+	Totals       *AnnualStatementTotals              `json:"totals,omitempty"`
 	// Only condominiums: the figures of each ownership, ordered by unit. They are only returned when a single annual statement is loaded, not when querying annual statements.
-	OwnerStatements []AnnualStatementOwner `json:"owner_statements,omitempty"`
+	OwnerStatements []AnnualStatementOwner        `json:"owner_statements,omitempty"`
+	TenancyTotals   *AnnualStatementTenancyTotals `json:"tenancy_totals,omitempty"`
 	// The figures of each tenancy of the rental-managed units, ordered by unit. They are only returned when a single annual statement is loaded, not when querying annual statements.
 	TenancyStatements []AnnualStatementTenancy `json:"tenancy_statements,omitempty"`
 	// Issues found while preparing the statement, which should be reviewed before the statement is finalized.
@@ -582,38 +582,6 @@ func (o *AnnualStatement) SetTotals(v AnnualStatementTotals) {
 	o.Totals = &v
 }
 
-// GetTenancyTotals returns the TenancyTotals field value if set, zero value otherwise.
-func (o *AnnualStatement) GetTenancyTotals() AnnualStatementTenancyTotals {
-	if o == nil || IsNil(o.TenancyTotals) {
-		var ret AnnualStatementTenancyTotals
-		return ret
-	}
-	return *o.TenancyTotals
-}
-
-// GetTenancyTotalsOk returns a tuple with the TenancyTotals field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *AnnualStatement) GetTenancyTotalsOk() (*AnnualStatementTenancyTotals, bool) {
-	if o == nil || IsNil(o.TenancyTotals) {
-		return nil, false
-	}
-	return o.TenancyTotals, true
-}
-
-// HasTenancyTotals returns a boolean if a field has been set.
-func (o *AnnualStatement) HasTenancyTotals() bool {
-	if o != nil && !IsNil(o.TenancyTotals) {
-		return true
-	}
-
-	return false
-}
-
-// SetTenancyTotals gets a reference to the given AnnualStatementTenancyTotals and assigns it to the TenancyTotals field.
-func (o *AnnualStatement) SetTenancyTotals(v AnnualStatementTenancyTotals) {
-	o.TenancyTotals = &v
-}
-
 // GetOwnerStatements returns the OwnerStatements field value if set, zero value otherwise.
 func (o *AnnualStatement) GetOwnerStatements() []AnnualStatementOwner {
 	if o == nil || IsNil(o.OwnerStatements) {
@@ -644,6 +612,38 @@ func (o *AnnualStatement) HasOwnerStatements() bool {
 // SetOwnerStatements gets a reference to the given []AnnualStatementOwner and assigns it to the OwnerStatements field.
 func (o *AnnualStatement) SetOwnerStatements(v []AnnualStatementOwner) {
 	o.OwnerStatements = v
+}
+
+// GetTenancyTotals returns the TenancyTotals field value if set, zero value otherwise.
+func (o *AnnualStatement) GetTenancyTotals() AnnualStatementTenancyTotals {
+	if o == nil || IsNil(o.TenancyTotals) {
+		var ret AnnualStatementTenancyTotals
+		return ret
+	}
+	return *o.TenancyTotals
+}
+
+// GetTenancyTotalsOk returns a tuple with the TenancyTotals field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AnnualStatement) GetTenancyTotalsOk() (*AnnualStatementTenancyTotals, bool) {
+	if o == nil || IsNil(o.TenancyTotals) {
+		return nil, false
+	}
+	return o.TenancyTotals, true
+}
+
+// HasTenancyTotals returns a boolean if a field has been set.
+func (o *AnnualStatement) HasTenancyTotals() bool {
+	if o != nil && !IsNil(o.TenancyTotals) {
+		return true
+	}
+
+	return false
+}
+
+// SetTenancyTotals gets a reference to the given AnnualStatementTenancyTotals and assigns it to the TenancyTotals field.
+func (o *AnnualStatement) SetTenancyTotals(v AnnualStatementTenancyTotals) {
+	o.TenancyTotals = &v
 }
 
 // GetTenancyStatements returns the TenancyStatements field value if set, zero value otherwise.
@@ -759,11 +759,11 @@ func (o AnnualStatement) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Totals) {
 		toSerialize["totals"] = o.Totals
 	}
-	if !IsNil(o.TenancyTotals) {
-		toSerialize["tenancy_totals"] = o.TenancyTotals
-	}
 	if !IsNil(o.OwnerStatements) {
 		toSerialize["owner_statements"] = o.OwnerStatements
+	}
+	if !IsNil(o.TenancyTotals) {
+		toSerialize["tenancy_totals"] = o.TenancyTotals
 	}
 	if !IsNil(o.TenancyStatements) {
 		toSerialize["tenancy_statements"] = o.TenancyStatements

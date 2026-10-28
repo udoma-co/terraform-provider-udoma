@@ -30,8 +30,10 @@ type CreateDocumentRequest struct {
 	Name string `json:"name"`
 	// Optional path that can be used to nest documents in folder like structures
 	Path *string `json:"path,omitempty"`
-	// Indicator, controlling whether tenants can see the document
-	Public *bool `json:"public,omitempty"`
+	// The date of the document, e.g. when it was issued (midnight Europe/Berlin). Can be earlier than the upload, for documents that are added to the repository later. Defaults to the day of the upload and is kept on updates without it. Owners only see the documents of a property that are dated before their ownership ended.
+	Date *int64 `json:"date,omitempty"`
+	// Who, besides the property management, can see the document. Empty means only the property management. Updates without it keep the current audience.
+	VisibleTo []DocumentAudienceEnum `json:"visible_to,omitempty"`
 }
 
 type _CreateDocumentRequest CreateDocumentRequest
@@ -192,36 +194,68 @@ func (o *CreateDocumentRequest) SetPath(v string) {
 	o.Path = &v
 }
 
-// GetPublic returns the Public field value if set, zero value otherwise.
-func (o *CreateDocumentRequest) GetPublic() bool {
-	if o == nil || IsNil(o.Public) {
-		var ret bool
+// GetDate returns the Date field value if set, zero value otherwise.
+func (o *CreateDocumentRequest) GetDate() int64 {
+	if o == nil || IsNil(o.Date) {
+		var ret int64
 		return ret
 	}
-	return *o.Public
+	return *o.Date
 }
 
-// GetPublicOk returns a tuple with the Public field value if set, nil otherwise
+// GetDateOk returns a tuple with the Date field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CreateDocumentRequest) GetPublicOk() (*bool, bool) {
-	if o == nil || IsNil(o.Public) {
+func (o *CreateDocumentRequest) GetDateOk() (*int64, bool) {
+	if o == nil || IsNil(o.Date) {
 		return nil, false
 	}
-	return o.Public, true
+	return o.Date, true
 }
 
-// HasPublic returns a boolean if a field has been set.
-func (o *CreateDocumentRequest) HasPublic() bool {
-	if o != nil && !IsNil(o.Public) {
+// HasDate returns a boolean if a field has been set.
+func (o *CreateDocumentRequest) HasDate() bool {
+	if o != nil && !IsNil(o.Date) {
 		return true
 	}
 
 	return false
 }
 
-// SetPublic gets a reference to the given bool and assigns it to the Public field.
-func (o *CreateDocumentRequest) SetPublic(v bool) {
-	o.Public = &v
+// SetDate gets a reference to the given int64 and assigns it to the Date field.
+func (o *CreateDocumentRequest) SetDate(v int64) {
+	o.Date = &v
+}
+
+// GetVisibleTo returns the VisibleTo field value if set, zero value otherwise.
+func (o *CreateDocumentRequest) GetVisibleTo() []DocumentAudienceEnum {
+	if o == nil || IsNil(o.VisibleTo) {
+		var ret []DocumentAudienceEnum
+		return ret
+	}
+	return o.VisibleTo
+}
+
+// GetVisibleToOk returns a tuple with the VisibleTo field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateDocumentRequest) GetVisibleToOk() ([]DocumentAudienceEnum, bool) {
+	if o == nil || IsNil(o.VisibleTo) {
+		return nil, false
+	}
+	return o.VisibleTo, true
+}
+
+// HasVisibleTo returns a boolean if a field has been set.
+func (o *CreateDocumentRequest) HasVisibleTo() bool {
+	if o != nil && !IsNil(o.VisibleTo) {
+		return true
+	}
+
+	return false
+}
+
+// SetVisibleTo gets a reference to the given []DocumentAudienceEnum and assigns it to the VisibleTo field.
+func (o *CreateDocumentRequest) SetVisibleTo(v []DocumentAudienceEnum) {
+	o.VisibleTo = v
 }
 
 func (o CreateDocumentRequest) MarshalJSON() ([]byte, error) {
@@ -243,8 +277,11 @@ func (o CreateDocumentRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Path) {
 		toSerialize["path"] = o.Path
 	}
-	if !IsNil(o.Public) {
-		toSerialize["public"] = o.Public
+	if !IsNil(o.Date) {
+		toSerialize["date"] = o.Date
+	}
+	if !IsNil(o.VisibleTo) {
+		toSerialize["visible_to"] = o.VisibleTo
 	}
 	return toSerialize, nil
 }

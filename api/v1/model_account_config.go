@@ -25,7 +25,8 @@ type AccountConfig struct {
 	ManagementConfig      *PropertyManagementConfig  `json:"management_config,omitempty"`
 	OwnershipTrackingMode *OwnershipTrackingModeEnum `json:"ownership_tracking_mode,omitempty"`
 	// Whether properties in the account can be owned by more than 1 owner at a time.
-	AllowMultipleOwners *bool `json:"allow_multiple_owners,omitempty"`
+	AllowMultipleOwners *bool                 `json:"allow_multiple_owners,omitempty"`
+	Sharing             NullableSharingConfig `json:"sharing,omitempty"`
 	// The ID of the account that the configuration belongs to.
 	AccountId *string `json:"account_id,omitempty"`
 }
@@ -170,6 +171,49 @@ func (o *AccountConfig) SetAllowMultipleOwners(v bool) {
 	o.AllowMultipleOwners = &v
 }
 
+// GetSharing returns the Sharing field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AccountConfig) GetSharing() SharingConfig {
+	if o == nil || IsNil(o.Sharing.Get()) {
+		var ret SharingConfig
+		return ret
+	}
+	return *o.Sharing.Get()
+}
+
+// GetSharingOk returns a tuple with the Sharing field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AccountConfig) GetSharingOk() (*SharingConfig, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Sharing.Get(), o.Sharing.IsSet()
+}
+
+// HasSharing returns a boolean if a field has been set.
+func (o *AccountConfig) HasSharing() bool {
+	if o != nil && o.Sharing.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSharing gets a reference to the given NullableSharingConfig and assigns it to the Sharing field.
+func (o *AccountConfig) SetSharing(v SharingConfig) {
+	o.Sharing.Set(&v)
+}
+
+// SetSharingNil sets the value for Sharing to be an explicit nil
+func (o *AccountConfig) SetSharingNil() {
+	o.Sharing.Set(nil)
+}
+
+// UnsetSharing ensures that no value is present for Sharing, not even an explicit nil
+func (o *AccountConfig) UnsetSharing() {
+	o.Sharing.Unset()
+}
+
 // GetAccountId returns the AccountId field value if set, zero value otherwise.
 func (o *AccountConfig) GetAccountId() string {
 	if o == nil || IsNil(o.AccountId) {
@@ -221,6 +265,9 @@ func (o AccountConfig) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.AllowMultipleOwners) {
 		toSerialize["allow_multiple_owners"] = o.AllowMultipleOwners
+	}
+	if o.Sharing.IsSet() {
+		toSerialize["sharing"] = o.Sharing.Get()
 	}
 	if !IsNil(o.AccountId) {
 		toSerialize["account_id"] = o.AccountId

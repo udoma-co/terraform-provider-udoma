@@ -15,7 +15,7 @@ import (
 	"fmt"
 )
 
-// CatalogItemType The type of entity that is being referenced in a catalog item. Notifications have no id, they are referenced by their name (`ref_id` is the notification name).
+// CatalogItemType The type of entity that is being referenced in a catalog item.  Notifications have no id, they are referenced by their name (`ref_id` is the notification name).
 type CatalogItemType string
 
 // List of CatalogItemType

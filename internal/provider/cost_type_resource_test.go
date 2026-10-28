@@ -18,6 +18,7 @@ func TestCostTypeResource(t *testing.T) {
 					resource.TestCheckResourceAttr("udoma_cost_type.test", "is_fixed", "true"),
 					resource.TestCheckResourceAttr("udoma_cost_type.test", "description", "A test cost type"),
 					resource.TestCheckResourceAttr("udoma_cost_type.test", "tenant_billing_rate", "0"),
+					resource.TestCheckResourceAttr("udoma_cost_type.test", "system_default", "NONE"),
 				),
 			},
 			{
@@ -54,6 +55,7 @@ resource "udoma_cost_type" "test" {
   is_fixed    = true
   description = "A test cost type"
   tenant_billing_rate = 0
+  system_default      = "NONE"
 }
 `
 }

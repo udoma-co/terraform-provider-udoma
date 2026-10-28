@@ -28,8 +28,6 @@ type QueryDocumentsRequest struct {
 	RefType *DocumentRefTypeEnum `json:"ref_type,omitempty"`
 	// The name of the document for which to query
 	Name *string `json:"name,omitempty"`
-	// Indicator, controlling whether the document is visible to tenants
-	Public *bool `json:"public,omitempty"`
 }
 
 // NewQueryDocumentsRequest instantiates a new QueryDocumentsRequest object
@@ -209,38 +207,6 @@ func (o *QueryDocumentsRequest) SetName(v string) {
 	o.Name = &v
 }
 
-// GetPublic returns the Public field value if set, zero value otherwise.
-func (o *QueryDocumentsRequest) GetPublic() bool {
-	if o == nil || IsNil(o.Public) {
-		var ret bool
-		return ret
-	}
-	return *o.Public
-}
-
-// GetPublicOk returns a tuple with the Public field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *QueryDocumentsRequest) GetPublicOk() (*bool, bool) {
-	if o == nil || IsNil(o.Public) {
-		return nil, false
-	}
-	return o.Public, true
-}
-
-// HasPublic returns a boolean if a field has been set.
-func (o *QueryDocumentsRequest) HasPublic() bool {
-	if o != nil && !IsNil(o.Public) {
-		return true
-	}
-
-	return false
-}
-
-// SetPublic gets a reference to the given bool and assigns it to the Public field.
-func (o *QueryDocumentsRequest) SetPublic(v bool) {
-	o.Public = &v
-}
-
 func (o QueryDocumentsRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -265,9 +231,6 @@ func (o QueryDocumentsRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
-	}
-	if !IsNil(o.Public) {
-		toSerialize["public"] = o.Public
 	}
 	return toSerialize, nil
 }
