@@ -105,6 +105,8 @@ func (r *CaseTemplate) Schema(ctx context.Context, req resource.SchemaRequest, r
 						string(api.CASETEMPLATEACCESSIBILITY_PROPERTY_MANAGER),
 						string(api.CASETEMPLATEACCESSIBILITY_TENANT),
 						string(api.CASETEMPLATEACCESSIBILITY_PUBLIC),
+						string(api.CASETEMPLATEACCESSIBILITY_OWNER),
+						string(api.CASETEMPLATEACCESSIBILITY_AI_AGENT),
 					)),
 				},
 			},
