@@ -27,7 +27,7 @@ type AccountDimensionWithValue struct {
 	Description *string `json:"description,omitempty"`
 	// The ID of a parent dimension, if any
 	ParentDimensionRef *string `json:"parent_dimension_ref,omitempty"`
-	// If set to a value greater than 0, the values of the dimension will be padded with 0 to match the size. E.g. if this is set to 3, a dimension value '42' would be padded to '042'. If not set, values will not be padded.
+	// If set to a value greater than 0, the values of the dimension will be padded with 0 to at least this size in flat numbers. E.g. if this is set to 3, a dimension value '42' would be padded to '042'. Larger values are allowed and are not truncated ('1042' stays '1042'). If not set, values will not be padded. Changing it later changes the flat numbers of the existing sub-accounts.
 	PadToSize *int32                            `json:"pad_to_size,omitempty"`
 	RefType   AccountDimensionReferenceTypeEnum `json:"ref_type"`
 	// Indicates whether providing a value for the dimension is required when adding an entry to an account

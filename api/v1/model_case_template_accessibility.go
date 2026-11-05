@@ -23,6 +23,8 @@ const (
 	CASETEMPLATEACCESSIBILITY_PROPERTY_MANAGER CaseTemplateAccessibility = "PROPERTY_MANAGER"
 	CASETEMPLATEACCESSIBILITY_TENANT           CaseTemplateAccessibility = "TENANT"
 	CASETEMPLATEACCESSIBILITY_PUBLIC           CaseTemplateAccessibility = "PUBLIC"
+	CASETEMPLATEACCESSIBILITY_OWNER            CaseTemplateAccessibility = "OWNER"
+	CASETEMPLATEACCESSIBILITY_AI_AGENT         CaseTemplateAccessibility = "AI_AGENT"
 )
 
 // All allowed values of CaseTemplateAccessibility enum
@@ -30,6 +32,8 @@ var AllowedCaseTemplateAccessibilityEnumValues = []CaseTemplateAccessibility{
 	"PROPERTY_MANAGER",
 	"TENANT",
 	"PUBLIC",
+	"OWNER",
+	"AI_AGENT",
 }
 
 func (v *CaseTemplateAccessibility) UnmarshalJSON(src []byte) error {

@@ -26,6 +26,7 @@ const (
 	MEASUREMENTUNITENUM_LITER         MeasurementUnitEnum = "l"
 	MEASUREMENTUNITENUM_GIGACALORIE   MeasurementUnitEnum = "Gcal"
 	MEASUREMENTUNITENUM_GIGAJOULE     MeasurementUnitEnum = "GJ"
+	MEASUREMENTUNITENUM_OTHER         MeasurementUnitEnum = "other"
 )
 
 // All allowed values of MeasurementUnitEnum enum
@@ -36,6 +37,7 @@ var AllowedMeasurementUnitEnumEnumValues = []MeasurementUnitEnum{
 	"l",
 	"Gcal",
 	"GJ",
+	"other",
 }
 
 func (v *MeasurementUnitEnum) UnmarshalJSON(src []byte) error {
